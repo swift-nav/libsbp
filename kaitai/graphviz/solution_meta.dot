@@ -1,0 +1,85 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__solution_meta {
+		label="SolutionMeta";
+		graph[style=dotted];
+
+		solution_meta__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__gnss_input_type {
+			label="SolutionMeta::GnssInputType";
+			graph[style=dotted];
+
+			gnss_input_type__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="flags_pos">0</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_soln_meta {
+			label="SolutionMeta::MsgSolnMeta";
+			graph[style=dotted];
+
+			msg_soln_meta__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="tow_pos">0</TD><TD PORT="tow_size">4</TD><TD>u4le</TD><TD PORT="tow_type">tow</TD></TR>
+				<TR><TD PORT="pdop_pos">4</TD><TD PORT="pdop_size">2</TD><TD>u2le</TD><TD PORT="pdop_type">pdop</TD></TR>
+				<TR><TD PORT="hdop_pos">6</TD><TD PORT="hdop_size">2</TD><TD>u2le</TD><TD PORT="hdop_type">hdop</TD></TR>
+				<TR><TD PORT="vdop_pos">8</TD><TD PORT="vdop_size">2</TD><TD>u2le</TD><TD PORT="vdop_type">vdop</TD></TR>
+				<TR><TD PORT="age_corrections_pos">10</TD><TD PORT="age_corrections_size">2</TD><TD>u2le</TD><TD PORT="age_corrections_type">age_corrections</TD></TR>
+				<TR><TD PORT="age_gnss_pos">12</TD><TD PORT="age_gnss_size">4</TD><TD>u4le</TD><TD PORT="age_gnss_type">age_gnss</TD></TR>
+				<TR><TD PORT="sol_in_pos">16</TD><TD PORT="sol_in_size">2</TD><TD>SolutionInputType</TD><TD PORT="sol_in_type">sol_in</TD></TR>
+				<TR><TD COLSPAN="4" PORT="sol_in__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_soln_meta_dep_a {
+			label="SolutionMeta::MsgSolnMetaDepA";
+			graph[style=dotted];
+
+			msg_soln_meta_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="pdop_pos">0</TD><TD PORT="pdop_size">2</TD><TD>u2le</TD><TD PORT="pdop_type">pdop</TD></TR>
+				<TR><TD PORT="hdop_pos">2</TD><TD PORT="hdop_size">2</TD><TD>u2le</TD><TD PORT="hdop_type">hdop</TD></TR>
+				<TR><TD PORT="vdop_pos">4</TD><TD PORT="vdop_size">2</TD><TD>u2le</TD><TD PORT="vdop_type">vdop</TD></TR>
+				<TR><TD PORT="n_sats_pos">6</TD><TD PORT="n_sats_size">1</TD><TD>u1</TD><TD PORT="n_sats_type">n_sats</TD></TR>
+				<TR><TD PORT="age_corrections_pos">7</TD><TD PORT="age_corrections_size">2</TD><TD>u2le</TD><TD PORT="age_corrections_type">age_corrections</TD></TR>
+				<TR><TD PORT="alignment_status_pos">9</TD><TD PORT="alignment_status_size">1</TD><TD>u1</TD><TD PORT="alignment_status_type">alignment_status</TD></TR>
+				<TR><TD PORT="last_used_gnss_pos_tow_pos">10</TD><TD PORT="last_used_gnss_pos_tow_size">4</TD><TD>u4le</TD><TD PORT="last_used_gnss_pos_tow_type">last_used_gnss_pos_tow</TD></TR>
+				<TR><TD PORT="last_used_gnss_vel_tow_pos">14</TD><TD PORT="last_used_gnss_vel_tow_size">4</TD><TD>u4le</TD><TD PORT="last_used_gnss_vel_tow_type">last_used_gnss_vel_tow</TD></TR>
+				<TR><TD PORT="sol_in_pos">18</TD><TD PORT="sol_in_size">2</TD><TD>SolutionInputType</TD><TD PORT="sol_in_type">sol_in</TD></TR>
+				<TR><TD COLSPAN="4" PORT="sol_in__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__imu_input_type {
+			label="SolutionMeta::ImuInputType";
+			graph[style=dotted];
+
+			imu_input_type__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="flags_pos">0</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__odo_input_type {
+			label="SolutionMeta::OdoInputType";
+			graph[style=dotted];
+
+			odo_input_type__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="flags_pos">0</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__solution_input_type {
+			label="SolutionMeta::SolutionInputType";
+			graph[style=dotted];
+
+			solution_input_type__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sensor_type_pos">0</TD><TD PORT="sensor_type_size">1</TD><TD>u1</TD><TD PORT="sensor_type_type">sensor_type</TD></TR>
+				<TR><TD PORT="flags_pos">1</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+	}
+	msg_soln_meta__seq:sol_in_type -> solution_input_type__seq [style=bold];
+	msg_soln_meta_dep_a__seq:sol_in_type -> solution_input_type__seq [style=bold];
+}

@@ -1,0 +1,60 @@
+# Kaitai Struct definition file for Swift Binary Protocol (((version)))
+
+# Automatically generated with generate.py.
+# Please do not hand edit!
+
+meta:
+  id: sbp
+  file-extension: sbp
+  endian: le
+  imports:
+((* for s in specs *))
+  - (((s.identifier | module_name)))
+((*- endfor *))
+
+seq:
+  - id: message
+    type: message
+    repeat: eos
+
+enums:
+  msg_ids:
+((* for s in specs *))
+  ((* for d in s.definitions *))
+    ((*- if d.sbp_id *))
+    (((d.sbp_id))): (((d.identifier | snake_case)))
+    ((*- endif *))
+  ((*- endfor *))
+((*- endfor *))
+
+types:
+  message:
+    seq:
+      - id: header
+        type: sbp_header
+      - id: payload
+        size: header.length
+        type:
+          switch-on: header.msg_type
+          cases:
+((* for s in specs *))
+  ((* for d in s.definitions *))
+    ((*- if d.sbp_id *))
+            'msg_ids::(((d.identifier | snake_case)))': (((s.identifier | module_name)))::(((d.identifier | snake_case)))
+    ((*- endif *))
+  ((*- endfor *))
+((*- endfor *))
+      - id: crc
+        type: u2
+  sbp_header:
+    seq:
+      - id: preamble
+        contents: [0x55]
+      - id: msg_type
+        type: u2
+        enum: msg_ids
+      - id: sender
+        type: u2
+      - id: length
+        type: u1
+

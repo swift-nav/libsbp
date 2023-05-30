@@ -1,0 +1,280 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Flash format specification</title>
+  </head>
+  <body>
+           <div class="container">
+  <h1>Flash format specification</h1>
+
+      
+<a name='type-flash'></a>
+<h1>Type: Flash</h1>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-flash-msg_flash_done'></a>
+<h2>Type: MsgFlashDone</h2>
+
+<p>This message defines success or failure codes for a variety of flash
+memory requests from the host to the device. Flash read and write
+messages, such as MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return
+this message on failure.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>response</td>
+<td>u1</td>
+<td>Response flags
+</td>
+</tr>
+</table>
+<a name='type-flash-msg_m25_flash_write_status'></a>
+<h2>Type: MsgM25FlashWriteStatus</h2>
+
+<p>The flash status message writes to the 8-bit M25 flash status register.
+The device replies with a MSG_FLASH_DONE message.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>status</td>
+<td>u1</td>
+<td>Byte to write to the M25 flash status register
+</td>
+</tr>
+</table>
+<a name='type-flash-msg_flash_read_resp'></a>
+<h2>Type: MsgFlashReadResp</h2>
+
+<p>The flash read message reads a set of addresses of either the STM or M25
+onboard flash. The device replies with a MSG_FLASH_READ_RESP message
+containing either the read data on success or a MSG_FLASH_DONE message
+containing the return code FLASH_INVALID_LEN (2) if the maximum read
+size is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of
+the allowed range.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>target</td>
+<td>u1</td>
+<td>Target flags
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>addr_start</td>
+<td>u1</td>
+<td>Starting address offset to read from
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>addr_len</td>
+<td>u1</td>
+<td>Length of set of addresses to read, counting up from starting
+address
+</td>
+</tr>
+</table>
+<a name='type-flash-msg_flash_erase'></a>
+<h2>Type: MsgFlashErase</h2>
+
+<p>The flash erase message from the host erases a sector of either the STM
+or M25 onboard flash memory. The device will reply with a MSG_FLASH_DONE
+message containing the return code - FLASH_OK (0) on success or
+FLASH_INVALID_FLASH (1) if the flash specified is invalid.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>target</td>
+<td>u1</td>
+<td>Target flags
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>sector_num</td>
+<td>u4le</td>
+<td>Flash sector number to erase (0-11 for the STM, 0-15 for the M25)
+</td>
+</tr>
+</table>
+<a name='type-flash-msg_stm_unique_id_resp'></a>
+<h2>Type: MsgStmUniqueIdResp</h2>
+
+<p>This message reads the device's hard-coded unique ID. The host requests
+the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
+MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>stm_id</td>
+<td>u1</td>
+<td>Device unique ID
+</td>
+</tr>
+</table>
+<a name='type-flash-msg_stm_unique_id_req'></a>
+<h2>Type: MsgStmUniqueIdReq</h2>
+
+<p>This message reads the device's hard-coded unique ID. The host requests
+the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
+MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-flash-msg_flash_program'></a>
+<h2>Type: MsgFlashProgram</h2>
+
+<p>The flash program message programs a set of addresses of either the STM
+or M25 flash. The device replies with either a MSG_FLASH_DONE message
+containing the return code FLASH_OK (0) on success, or FLASH_INVALID_LEN
+(2) if the maximum write size is exceeded. Note that the sector-
+containing addresses must be erased before addresses can be programmed.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>target</td>
+<td>u1</td>
+<td>Target flags
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>addr_start</td>
+<td>u1</td>
+<td>Starting address offset to program
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>addr_len</td>
+<td>u1</td>
+<td>Length of set of addresses to program, counting up from starting
+address
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>data</td>
+<td>u1</td>
+<td>Data to program addresses with, with length N=addr_len
+</td>
+</tr>
+</table>
+<a name='type-flash-msg_flash_read_req'></a>
+<h2>Type: MsgFlashReadReq</h2>
+
+<p>The flash read message reads a set of addresses of either the STM or M25
+onboard flash. The device replies with a MSG_FLASH_READ_RESP message
+containing either the read data on success or a MSG_FLASH_DONE message
+containing the return code FLASH_INVALID_LEN (2) if the maximum read
+size is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of
+the allowed range.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>target</td>
+<td>u1</td>
+<td>Target flags
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>addr_start</td>
+<td>u1</td>
+<td>Starting address offset to read from
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>addr_len</td>
+<td>u1</td>
+<td>Length of set of addresses to read, counting up from starting
+address
+</td>
+</tr>
+</table>
+<a name='type-flash-msg_stm_flash_unlock_sector'></a>
+<h2>Type: MsgStmFlashUnlockSector</h2>
+
+<p>The flash unlock message unlocks a sector of the STM flash memory. The
+device replies with a MSG_FLASH_DONE message.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sector</td>
+<td>u4le</td>
+<td>Flash sector number to unlock
+</td>
+</tr>
+</table>
+<a name='type-flash-msg_stm_flash_lock_sector'></a>
+<h2>Type: MsgStmFlashLockSector</h2>
+
+<p>The flash lock message locks a sector of the STM flash memory. The
+device replies with a MSG_FLASH_DONE message.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sector</td>
+<td>u4le</td>
+<td>Flash sector number to lock
+</td>
+</tr>
+</table>
+
+  </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>
+      

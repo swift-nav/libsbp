@@ -1,0 +1,4699 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Observation format specification</title>
+  </head>
+  <body>
+           <div class="container">
+  <h1>Observation format specification</h1>
+
+      
+<a name='type-observation'></a>
+<h1>Type: Observation</h1>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-observation-msg_sv_az_el'></a>
+<h2>Type: MsgSvAzEl</h2>
+
+<p>Azimuth and elevation angles of all the visible satellites that the
+device does have ephemeris or almanac for.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>azel</td>
+<td><a href="#type-observation-sv_az_el">SvAzEl</a></td>
+<td>Azimuth and elevation per satellite
+</td>
+</tr>
+</table>
+<a name='type-observation-gnss_capb'></a>
+<h2>Type: GnssCapb</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>gps_active</td>
+<td>u8le</td>
+<td>GPS SV active mask
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>gps_l2c</td>
+<td>u8le</td>
+<td>GPS L2C active mask
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>gps_l5</td>
+<td>u8le</td>
+<td>GPS L5 active mask
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>glo_active</td>
+<td>u4le</td>
+<td>GLO active mask
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>glo_l2of</td>
+<td>u4le</td>
+<td>GLO L2OF active mask
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>glo_l3</td>
+<td>u4le</td>
+<td>GLO L3 active mask
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>sbas_active</td>
+<td>u8le</td>
+<td>SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+</td>
+</tr>
+<tr>
+<td>44</td>
+<td>...</td>
+<td>sbas_l5</td>
+<td>u8le</td>
+<td>SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+</td>
+</tr>
+<tr>
+<td>52</td>
+<td>...</td>
+<td>bds_active</td>
+<td>u8le</td>
+<td>BDS active mask
+</td>
+</tr>
+<tr>
+<td>60</td>
+<td>...</td>
+<td>bds_d2nav</td>
+<td>u8le</td>
+<td>BDS D2NAV active mask
+</td>
+</tr>
+<tr>
+<td>68</td>
+<td>...</td>
+<td>bds_b2</td>
+<td>u8le</td>
+<td>BDS B2 active mask
+</td>
+</tr>
+<tr>
+<td>76</td>
+<td>...</td>
+<td>bds_b2a</td>
+<td>u8le</td>
+<td>BDS B2A active mask
+</td>
+</tr>
+<tr>
+<td>84</td>
+<td>...</td>
+<td>qzss_active</td>
+<td>u4le</td>
+<td>QZSS active mask
+</td>
+</tr>
+<tr>
+<td>88</td>
+<td>...</td>
+<td>gal_active</td>
+<td>u8le</td>
+<td>GAL active mask
+</td>
+</tr>
+<tr>
+<td>96</td>
+<td>...</td>
+<td>gal_e5</td>
+<td>u8le</td>
+<td>GAL E5 active mask
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_group_delay_dep_b'></a>
+<h2>Type: MsgGroupDelayDepB</h2>
+
+<p>Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>t_op</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Data Predict Time of Week
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal_dep">GnssSignalDep</a></td>
+<td>GNSS signal identifier
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>bit-field indicating validity of the values, LSB indicating tgd
+validity etc. 1 = value is valid, 0 = value is not valid.
+</td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>tgd</td>
+<td>s2le</td>
+<td></td>
+</tr>
+<tr>
+<td>13</td>
+<td>...</td>
+<td>isc_l1ca</td>
+<td>s2le</td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td>...</td>
+<td>isc_l2c</td>
+<td>s2le</td>
+<td></td>
+</tr>
+</table>
+<a name='type-observation-observation_header_dep'></a>
+<h2>Type: ObservationHeaderDep</h2>
+
+<p>Header of a GPS observation message.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>t</td>
+<td><a href="#type-gnss-gps_time_dep">GpsTimeDep</a></td>
+<td>GPS time of this observation
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>n_obs</td>
+<td>u1</td>
+<td>Total number of observations. First nibble is the size of the
+sequence (n), second nibble is the zero-indexed counter (ith packet
+of n)
+</td>
+</tr>
+</table>
+<a name='type-observation-almanac_common_content_dep'></a>
+<h2>Type: AlmanacCommonContentDep</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal_dep">GnssSignalDep</a></td>
+<td>GNSS signal identifier
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>toa</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Reference time of almanac
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>ura</td>
+<td>f8le</td>
+<td>User Range Accuracy
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>fit_interval</td>
+<td>u4le</td>
+<td>Curve fit interval
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>Status of almanac, 1 = valid, 0 = invalid
+</td>
+</tr>
+<tr>
+<td>23</td>
+<td>...</td>
+<td>health_bits</td>
+<td>u1</td>
+<td>Satellite health status for GPS:
+  - bits 5-7: NAV data health status. See IS-GPS-200H
+    Table 20-VII: NAV Data Health Indications.
+  - bits 0-4: Signal health status. See IS-GPS-200H
+    Table 20-VIII. Codes for Health of SV Signal
+    Components.
+Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
+details):
+  - bit 0: C(n), "unhealthy" flag that is transmitted within
+    non-immediate data and indicates overall constellation status
+    at the moment of almanac uploading.
+    '0' indicates malfunction of n-satellite.
+    '1' indicates that n-satellite is operational.
+  - bit 1: Bn(ln), '0' indicates the satellite is operational
+    and suitable for navigation.
+</td>
+</tr>
+</table>
+<a name='type-observation-ephemeris_common_content_dep_a'></a>
+<h2>Type: EphemerisCommonContentDepA</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal_dep">GnssSignalDep</a></td>
+<td>GNSS signal identifier
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>toe</td>
+<td><a href="#type-gnss-gps_time_dep">GpsTimeDep</a></td>
+<td>Time of Ephemerides
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>ura</td>
+<td>f8le</td>
+<td>User Range Accuracy
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>fit_interval</td>
+<td>u4le</td>
+<td>Curve fit interval
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>Status of ephemeris, 1 = valid, 0 = invalid
+</td>
+</tr>
+<tr>
+<td>23</td>
+<td>...</td>
+<td>health_bits</td>
+<td>u1</td>
+<td>Satellite health status.
+GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+SBAS: 0 = valid, non-zero = invalid
+GLO: 0 = valid, non-zero = invalid
+</td>
+</tr>
+</table>
+<a name='type-observation-ephemeris_common_content'></a>
+<h2>Type: EphemerisCommonContent</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal">GnssSignal</a></td>
+<td>GNSS signal identifier (16 bit)
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>toe</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Time of Ephemerides
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>ura</td>
+<td>f4le</td>
+<td>User Range Accuracy
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>fit_interval</td>
+<td>u4le</td>
+<td>Curve fit interval
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>Status of ephemeris, 1 = valid, 0 = invalid
+</td>
+</tr>
+<tr>
+<td>17</td>
+<td>...</td>
+<td>health_bits</td>
+<td>u1</td>
+<td>Satellite health status.
+GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+SBAS: 0 = valid, non-zero = invalid
+GLO: 0 = valid, non-zero = invalid
+</td>
+</tr>
+</table>
+<a name='type-observation-packed_obs_content_dep_c'></a>
+<h2>Type: PackedObsContentDepC</h2>
+
+<p>Pseudorange and carrier phase observation for a satellite being tracked.
+The observations are be interoperable with 3rd party receivers and
+conform with typical RTCMv3 GNSS observations.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>p</td>
+<td>u4le</td>
+<td>Pseudorange observation
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>l</td>
+<td><a href="#type-gnss-carrier_phase">CarrierPhase</a></td>
+<td>Carrier phase observation with typical sign convention.
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>cn0</td>
+<td>u1</td>
+<td>Carrier-to-Noise density
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>lock</td>
+<td>u2le</td>
+<td>Lock indicator. This value changes whenever a satellite signal has
+lost and regained lock, indicating that the carrier phase ambiguity
+may have changed.
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal_dep">GnssSignalDep</a></td>
+<td>GNSS signal identifier
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_glo_dep_d'></a>
+<h2>Type: MsgEphemerisGloDepD</h2>
+
+<p>This observation message has been deprecated in favor of ephemeris
+message using floats for size reduction.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content_dep_b">EphemerisCommonContentDepB</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>gamma</td>
+<td>f8le</td>
+<td>Relative deviation of predicted carrier frequency from nominal
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>tau</td>
+<td>f8le</td>
+<td>Correction to the SV time
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>d_tau</td>
+<td>f8le</td>
+<td>Equipment delay between L1 and L2
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>pos</td>
+<td>f8le</td>
+<td>Position of the SV at tb in PZ-90.02 coordinates system
+</td>
+</tr>
+<tr>
+<td>70</td>
+<td>...</td>
+<td>vel</td>
+<td>f8le</td>
+<td>Velocity vector of the SV at tb in PZ-90.02 coordinates system
+</td>
+</tr>
+<tr>
+<td>94</td>
+<td>...</td>
+<td>acc</td>
+<td>f8le</td>
+<td>Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+</td>
+</tr>
+<tr>
+<td>118</td>
+<td>...</td>
+<td>fcn</td>
+<td>u1</td>
+<td>Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+</td>
+</tr>
+<tr>
+<td>119</td>
+<td>...</td>
+<td>iod</td>
+<td>u1</td>
+<td>Issue of data. Equal to the 7 bits of the immediate data word t_b
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_obs_dep_a'></a>
+<h2>Type: MsgObsDepA</h2>
+
+<p>Deprecated.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>header</td>
+<td><a href="#type-observation-observation_header_dep">ObservationHeaderDep</a></td>
+<td>Header of a GPS observation message
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>obs</td>
+<td><a href="#type-observation-packed_obs_content_dep_a">PackedObsContentDepA</a></td>
+<td>Pseudorange and carrier phase observation for a satellite being
+tracked.
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_dep_b'></a>
+<h2>Type: MsgEphemerisDepB</h2>
+
+<p>Deprecated.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tgd</td>
+<td>f8le</td>
+<td>Group delay differential between L1 and L2
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>c_us</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>c_is</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>56</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>64</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>72</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>80</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>88</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>96</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>104</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>112</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>120</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>128</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>136</td>
+<td>...</td>
+<td>af1</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>144</td>
+<td>...</td>
+<td>af2</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>152</td>
+<td>...</td>
+<td>toe_tow</td>
+<td>f8le</td>
+<td>Time of week
+</td>
+</tr>
+<tr>
+<td>160</td>
+<td>...</td>
+<td>toe_wn</td>
+<td>u2le</td>
+<td>Week number
+</td>
+</tr>
+<tr>
+<td>162</td>
+<td>...</td>
+<td>toc_tow</td>
+<td>f8le</td>
+<td>Clock reference time of week
+</td>
+</tr>
+<tr>
+<td>170</td>
+<td>...</td>
+<td>toc_wn</td>
+<td>u2le</td>
+<td>Clock reference week number
+</td>
+</tr>
+<tr>
+<td>172</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>Is valid?
+</td>
+</tr>
+<tr>
+<td>173</td>
+<td>...</td>
+<td>healthy</td>
+<td>u1</td>
+<td>Satellite is healthy?
+</td>
+</tr>
+<tr>
+<td>174</td>
+<td>...</td>
+<td>prn</td>
+<td>u1</td>
+<td>PRN being tracked
+</td>
+</tr>
+<tr>
+<td>175</td>
+<td>...</td>
+<td>iode</td>
+<td>u1</td>
+<td>Issue of ephemeris data
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_obs'></a>
+<h2>Type: MsgObs</h2>
+
+<p>The GPS observations message reports all the raw pseudorange and carrier
+phase observations for the satellites being tracked by the device.
+Carrier phase observation here is represented as a 40-bit fixed point
+number with Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of
+fractional cycles). The observations are be interoperable with 3rd party
+receivers and conform with typical RTCMv3 GNSS observations.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>header</td>
+<td><a href="#type-observation-observation_header">ObservationHeader</a></td>
+<td>Header of a GPS observation message
+</td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>obs</td>
+<td><a href="#type-observation-packed_obs_content">PackedObsContent</a></td>
+<td>Pseudorange and carrier phase observation for a satellite being
+tracked.
+</td>
+</tr>
+</table>
+<a name='type-observation-doppler'></a>
+<h2>Type: Doppler</h2>
+
+<p>Doppler measurement in Hz represented as a 24-bit fixed point number
+with Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of
+fractional doppler. This doppler is defined as positive for approaching
+satellites.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>i</td>
+<td>s2le</td>
+<td>Doppler whole Hz
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>f</td>
+<td>u1</td>
+<td>Doppler fractional part
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_almanac_glo_dep'></a>
+<h2>Type: MsgAlmanacGloDep</h2>
+
+<p>The almanac message returns a set of satellite orbit parameters. Almanac
+data is not very precise and is considered valid for up to several
+months. Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate
+information and almanac" for details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-almanac_common_content_dep">AlmanacCommonContentDep</a></td>
+<td>Values common for all almanac types
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>lambda_na</td>
+<td>f8le</td>
+<td>Longitude of the first ascending node of the orbit in PZ-90.02
+coordinate system
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>t_lambda_na</td>
+<td>f8le</td>
+<td>Time of the first ascending node passage
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>i</td>
+<td>f8le</td>
+<td>Value of inclination at instant of t_lambda
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>t</td>
+<td>f8le</td>
+<td>Value of Draconian period at instant of t_lambda
+</td>
+</tr>
+<tr>
+<td>56</td>
+<td>...</td>
+<td>t_dot</td>
+<td>f8le</td>
+<td>Rate of change of the Draconian period
+</td>
+</tr>
+<tr>
+<td>64</td>
+<td>...</td>
+<td>epsilon</td>
+<td>f8le</td>
+<td>Eccentricity at instant of t_lambda
+</td>
+</tr>
+<tr>
+<td>72</td>
+<td>...</td>
+<td>omega</td>
+<td>f8le</td>
+<td>Argument of perigee at instant of t_lambda
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_almanac_gps_dep'></a>
+<h2>Type: MsgAlmanacGpsDep</h2>
+
+<p>The almanac message returns a set of satellite orbit parameters. Almanac
+data is not very precise and is considered valid for up to several
+months. Please see the Navstar GPS Space Segment/Navigation user
+interfaces (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more
+details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-almanac_common_content_dep">AlmanacCommonContentDep</a></td>
+<td>Values common for all almanac types
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>56</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>64</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>72</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>80</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>88</td>
+<td>...</td>
+<td>af1</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+</table>
+<a name='type-observation-sv_az_el'></a>
+<h2>Type: SvAzEl</h2>
+
+<p>Satellite azimuth and elevation.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal">GnssSignal</a></td>
+<td>GNSS signal identifier
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>az</td>
+<td>u1</td>
+<td>Azimuth angle (range 0..179)
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>el</td>
+<td>s1</td>
+<td>Elevation angle (range -90..90)
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_glo_biases'></a>
+<h2>Type: MsgGloBiases</h2>
+
+<p>The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS
+integer ambiguity resolution for baselines with mixed receiver types
+(e.g. receiver of different manufacturers).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>mask</td>
+<td>u1</td>
+<td>GLONASS FDMA signals mask
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>l1ca_bias</td>
+<td>s2le</td>
+<td>GLONASS L1 C/A Code-Phase Bias
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>l1p_bias</td>
+<td>s2le</td>
+<td>GLONASS L1 P Code-Phase Bias
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>l2ca_bias</td>
+<td>s2le</td>
+<td>GLONASS L2 C/A Code-Phase Bias
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>l2p_bias</td>
+<td>s2le</td>
+<td>GLONASS L2 P Code-Phase Bias
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_sbas_dep_b'></a>
+<h2>Type: MsgEphemerisSbasDepB</h2>
+
+<p>This observation message has been deprecated in favor of ephemeris
+message using floats for size reduction.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content_dep_b">EphemerisCommonContentDepB</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>pos</td>
+<td>f8le</td>
+<td>Position of the GEO at time toe
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>vel</td>
+<td>f8le</td>
+<td>Velocity of the GEO at time toe
+</td>
+</tr>
+<tr>
+<td>70</td>
+<td>...</td>
+<td>acc</td>
+<td>f8le</td>
+<td>Acceleration of the GEO at time toe
+</td>
+</tr>
+<tr>
+<td>94</td>
+<td>...</td>
+<td>a_gf0</td>
+<td>f8le</td>
+<td>Time offset of the GEO clock w.r.t. SBAS Network Time
+</td>
+</tr>
+<tr>
+<td>102</td>
+<td>...</td>
+<td>a_gf1</td>
+<td>f8le</td>
+<td>Drift of the GEO clock w.r.t. SBAS Network Time
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_gps_dep_e'></a>
+<h2>Type: MsgEphemerisGpsDepE</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate GPS satellite position, velocity, and clock offset.
+Please see the Navstar GPS Space Segment/Navigation user interfaces
+(ICD-GPS-200, Table 20-III) for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content_dep_a">EphemerisCommonContentDepA</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>tgd</td>
+<td>f8le</td>
+<td>Group delay differential between L1 and L2
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>56</td>
+<td>...</td>
+<td>c_us</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>64</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>72</td>
+<td>...</td>
+<td>c_is</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>80</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>88</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>96</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>104</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>112</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>120</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>128</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>136</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>144</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>152</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>160</td>
+<td>...</td>
+<td>af1</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>168</td>
+<td>...</td>
+<td>af2</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>176</td>
+<td>...</td>
+<td>toc</td>
+<td><a href="#type-gnss-gps_time_dep">GpsTimeDep</a></td>
+<td>Clock reference
+</td>
+</tr>
+<tr>
+<td>182</td>
+<td>...</td>
+<td>iode</td>
+<td>u1</td>
+<td>Issue of ephemeris data
+</td>
+</tr>
+<tr>
+<td>183</td>
+<td>...</td>
+<td>iodc</td>
+<td>u2le</td>
+<td>Issue of clock data
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_gnss_capb'></a>
+<h2>Type: MsgGnssCapb</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>t_nmct</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Navigation Message Correction Table Validity Time
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>gc</td>
+<td><a href="#type-observation-gnss_capb">GnssCapb</a></td>
+<td>GNSS capabilities masks
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_almanac_gps'></a>
+<h2>Type: MsgAlmanacGps</h2>
+
+<p>The almanac message returns a set of satellite orbit parameters. Almanac
+data is not very precise and is considered valid for up to several
+months. Please see the Navstar GPS Space Segment/Navigation user
+interfaces (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more
+details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-almanac_common_content">AlmanacCommonContent</a></td>
+<td>Values common for all almanac types
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>54</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>62</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>70</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>78</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>86</td>
+<td>...</td>
+<td>af1</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_qzss'></a>
+<h2>Type: MsgEphemerisQzss</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate QZSS satellite position, velocity, and clock
+offset.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content">EphemerisCommonContent</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>tgd</td>
+<td>f4le</td>
+<td>Group delay differential between L1 and L2
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>26</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>34</td>
+<td>...</td>
+<td>c_us</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>42</td>
+<td>...</td>
+<td>c_is</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>54</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>62</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>70</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>78</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>86</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>94</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>102</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>110</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>118</td>
+<td>...</td>
+<td>af0</td>
+<td>f4le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>122</td>
+<td>...</td>
+<td>af1</td>
+<td>f4le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>126</td>
+<td>...</td>
+<td>af2</td>
+<td>f4le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>130</td>
+<td>...</td>
+<td>toc</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Clock reference
+</td>
+</tr>
+<tr>
+<td>136</td>
+<td>...</td>
+<td>iode</td>
+<td>u1</td>
+<td>Issue of ephemeris data
+</td>
+</tr>
+<tr>
+<td>137</td>
+<td>...</td>
+<td>iodc</td>
+<td>u2le</td>
+<td>Issue of clock data
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_group_delay_dep_a'></a>
+<h2>Type: MsgGroupDelayDepA</h2>
+
+<p>Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>t_op</td>
+<td><a href="#type-gnss-gps_time_dep">GpsTimeDep</a></td>
+<td>Data Predict Time of Week
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>prn</td>
+<td>u1</td>
+<td>Satellite number
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>bit-field indicating validity of the values, LSB indicating tgd
+validity etc. 1 = value is valid, 0 = value is not valid.
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>tgd</td>
+<td>s2le</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>isc_l1ca</td>
+<td>s2le</td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>isc_l2c</td>
+<td>s2le</td>
+<td></td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_dep_c'></a>
+<h2>Type: MsgEphemerisDepC</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate GPS satellite position, velocity, and clock offset.
+Please see the Navstar GPS Space Segment/Navigation user interfaces
+(ICD-GPS-200, Table 20-III) for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tgd</td>
+<td>f8le</td>
+<td>Group delay differential between L1 and L2
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>c_us</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>c_is</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>56</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>64</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>72</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>80</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>88</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>96</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>104</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>112</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>120</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>128</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>136</td>
+<td>...</td>
+<td>af1</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>144</td>
+<td>...</td>
+<td>af2</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>152</td>
+<td>...</td>
+<td>toe_tow</td>
+<td>f8le</td>
+<td>Time of week
+</td>
+</tr>
+<tr>
+<td>160</td>
+<td>...</td>
+<td>toe_wn</td>
+<td>u2le</td>
+<td>Week number
+</td>
+</tr>
+<tr>
+<td>162</td>
+<td>...</td>
+<td>toc_tow</td>
+<td>f8le</td>
+<td>Clock reference time of week
+</td>
+</tr>
+<tr>
+<td>170</td>
+<td>...</td>
+<td>toc_wn</td>
+<td>u2le</td>
+<td>Clock reference week number
+</td>
+</tr>
+<tr>
+<td>172</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>Is valid?
+</td>
+</tr>
+<tr>
+<td>173</td>
+<td>...</td>
+<td>healthy</td>
+<td>u1</td>
+<td>Satellite is healthy?
+</td>
+</tr>
+<tr>
+<td>174</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal_dep">GnssSignalDep</a></td>
+<td>GNSS signal identifier
+</td>
+</tr>
+<tr>
+<td>178</td>
+<td>...</td>
+<td>iode</td>
+<td>u1</td>
+<td>Issue of ephemeris data
+</td>
+</tr>
+<tr>
+<td>179</td>
+<td>...</td>
+<td>iodc</td>
+<td>u2le</td>
+<td>Issue of clock data
+</td>
+</tr>
+<tr>
+<td>181</td>
+<td>...</td>
+<td>reserved</td>
+<td>u4le</td>
+<td>Reserved field
+</td>
+</tr>
+</table>
+<a name='type-observation-carrier_phase_dep_a'></a>
+<h2>Type: CarrierPhaseDepA</h2>
+
+<p>Carrier phase measurement in cycles represented as a 40-bit fixed point
+number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
+fractional cycles. This has the opposite sign convention than a typical
+GPS receiver and the phase has the opposite sign as the pseudorange.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>i</td>
+<td>s4le</td>
+<td>Carrier phase whole cycles
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>f</td>
+<td>u1</td>
+<td>Carrier phase fractional part
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_gal'></a>
+<h2>Type: MsgEphemerisGal</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate Galileo satellite position, velocity, and clock
+offset. Please see the Signal In Space ICD OS SIS ICD, Issue 1.3,
+December 2016 for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content">EphemerisCommonContent</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>bgd_e1e5a</td>
+<td>f4le</td>
+<td>E1-E5a Broadcast Group Delay
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>bgd_e1e5b</td>
+<td>f4le</td>
+<td>E1-E5b Broadcast Group Delay
+</td>
+</tr>
+<tr>
+<td>26</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>34</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>c_us</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>42</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>c_is</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>50</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>58</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>66</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>74</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>82</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>90</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>98</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>106</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>114</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>122</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>130</td>
+<td>...</td>
+<td>af1</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>138</td>
+<td>...</td>
+<td>af2</td>
+<td>f4le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>142</td>
+<td>...</td>
+<td>toc</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Clock reference
+</td>
+</tr>
+<tr>
+<td>148</td>
+<td>...</td>
+<td>iode</td>
+<td>u2le</td>
+<td>Issue of data (IODnav)
+</td>
+</tr>
+<tr>
+<td>150</td>
+<td>...</td>
+<td>iodc</td>
+<td>u2le</td>
+<td>Issue of data (IODnav). Always equal to iode
+</td>
+</tr>
+<tr>
+<td>152</td>
+<td>...</td>
+<td>source</td>
+<td>u1</td>
+<td>0=I/NAV, 1=F/NAV
+</td>
+</tr>
+</table>
+<a name='type-observation-packed_osr_content'></a>
+<h2>Type: PackedOsrContent</h2>
+
+<p>Pseudorange and carrier phase network corrections for a satellite
+signal.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>p</td>
+<td>u4le</td>
+<td>Pseudorange observation
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>l</td>
+<td><a href="#type-gnss-carrier_phase">CarrierPhase</a></td>
+<td>Carrier phase observation with typical sign convention.
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>lock</td>
+<td>u1</td>
+<td>Lock timer. This value gives an indication of the time for which a
+signal has maintained continuous phase lock. Whenever a signal has
+lost and regained lock, this value is reset to zero. It is encoded
+according to DF402 from the RTCM 10403.2 Amendment 2 specification.
+Valid values range from 0 to 15 and the most significant nibble is
+reserved for future use.
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Correction flags.
+</td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal">GnssSignal</a></td>
+<td>GNSS signal identifier (16 bit)
+</td>
+</tr>
+<tr>
+<td>13</td>
+<td>...</td>
+<td>iono_std</td>
+<td>u2le</td>
+<td>Slant ionospheric correction standard deviation
+</td>
+</tr>
+<tr>
+<td>15</td>
+<td>...</td>
+<td>tropo_std</td>
+<td>u2le</td>
+<td>Slant tropospheric correction standard deviation
+</td>
+</tr>
+<tr>
+<td>17</td>
+<td>...</td>
+<td>range_std</td>
+<td>u2le</td>
+<td>Orbit/clock/bias correction projected on range standard deviation
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_bds'></a>
+<h2>Type: MsgEphemerisBds</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate BDS satellite position, velocity, and clock offset.
+Please see the BeiDou Navigation Satellite System SIS-ICD Version 2.1,
+Table 5-9 for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content">EphemerisCommonContent</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>tgd1</td>
+<td>f4le</td>
+<td>Group delay differential for B1
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>tgd2</td>
+<td>f4le</td>
+<td>Group delay differential for B2
+</td>
+</tr>
+<tr>
+<td>26</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>34</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>c_us</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>42</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>c_is</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>50</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>58</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>66</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>74</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>82</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>90</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>98</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>106</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>114</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>122</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>130</td>
+<td>...</td>
+<td>af1</td>
+<td>f4le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>134</td>
+<td>...</td>
+<td>af2</td>
+<td>f4le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>138</td>
+<td>...</td>
+<td>toc</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Clock reference
+</td>
+</tr>
+<tr>
+<td>144</td>
+<td>...</td>
+<td>iode</td>
+<td>u1</td>
+<td>Issue of ephemeris data
+Calculated from the navigation data parameter t_oe per RTCM/CSNO
+recommendation: IODE = mod (t_oe / 720, 240)
+</td>
+</tr>
+<tr>
+<td>145</td>
+<td>...</td>
+<td>iodc</td>
+<td>u2le</td>
+<td>Issue of clock data
+Calculated from the navigation data parameter t_oe per RTCM/CSNO
+recommendation: IODE = mod (t_oc / 720, 240)
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_gps_dep_f'></a>
+<h2>Type: MsgEphemerisGpsDepF</h2>
+
+<p>This observation message has been deprecated in favor of ephemeris
+message using floats for size reduction.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content_dep_b">EphemerisCommonContentDepB</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>tgd</td>
+<td>f8le</td>
+<td>Group delay differential between L1 and L2
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>54</td>
+<td>...</td>
+<td>c_us</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>62</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>70</td>
+<td>...</td>
+<td>c_is</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>78</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>86</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>94</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>102</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>110</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>118</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>126</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>134</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>142</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>150</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>158</td>
+<td>...</td>
+<td>af1</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>166</td>
+<td>...</td>
+<td>af2</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>174</td>
+<td>...</td>
+<td>toc</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Clock reference
+</td>
+</tr>
+<tr>
+<td>180</td>
+<td>...</td>
+<td>iode</td>
+<td>u1</td>
+<td>Issue of ephemeris data
+</td>
+</tr>
+<tr>
+<td>181</td>
+<td>...</td>
+<td>iodc</td>
+<td>u2le</td>
+<td>Issue of clock data
+</td>
+</tr>
+</table>
+<a name='type-observation-observation_header'></a>
+<h2>Type: ObservationHeader</h2>
+
+<p>Header of a GNSS observation message.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>t</td>
+<td><a href="#type-gnss-gps_time">GpsTime</a></td>
+<td>GNSS time of this observation
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>n_obs</td>
+<td>u1</td>
+<td>Total number of observations. First nibble is the size of the
+sequence (n), second nibble is the zero-indexed counter (ith packet
+of n)
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_sbas_dep_a'></a>
+<h2>Type: MsgEphemerisSbasDepA</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content_dep_a">EphemerisCommonContentDepA</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>pos</td>
+<td>f8le</td>
+<td>Position of the GEO at time toe
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>vel</td>
+<td>f8le</td>
+<td>Velocity of the GEO at time toe
+</td>
+</tr>
+<tr>
+<td>72</td>
+<td>...</td>
+<td>acc</td>
+<td>f8le</td>
+<td>Acceleration of the GEO at time toe
+</td>
+</tr>
+<tr>
+<td>96</td>
+<td>...</td>
+<td>a_gf0</td>
+<td>f8le</td>
+<td>Time offset of the GEO clock w.r.t. SBAS Network Time
+</td>
+</tr>
+<tr>
+<td>104</td>
+<td>...</td>
+<td>a_gf1</td>
+<td>f8le</td>
+<td>Drift of the GEO clock w.r.t. SBAS Network Time
+</td>
+</tr>
+</table>
+<a name='type-observation-packed_obs_content'></a>
+<h2>Type: PackedObsContent</h2>
+
+<p>Pseudorange and carrier phase observation for a satellite being tracked.
+The observations are interoperable with 3rd party receivers and conform
+with typical RTCM 3.1 message GPS/GLO observations.
+
+Carrier phase observations are not guaranteed to be aligned to the RINEX
+3 or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are
+currently performed.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>p</td>
+<td>u4le</td>
+<td>Pseudorange observation
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>l</td>
+<td><a href="#type-gnss-carrier_phase">CarrierPhase</a></td>
+<td>Carrier phase observation with typical sign convention.
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>d</td>
+<td><a href="#type-observation-doppler">Doppler</a></td>
+<td>Doppler observation with typical sign convention.
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>cn0</td>
+<td>u1</td>
+<td>Carrier-to-Noise density.  Zero implies invalid cn0.
+</td>
+</tr>
+<tr>
+<td>13</td>
+<td>...</td>
+<td>lock</td>
+<td>u1</td>
+<td>Lock timer. This value gives an indication of the time for which a
+signal has maintained continuous phase lock. Whenever a signal has
+lost and regained lock, this value is reset to zero. It is encoded
+according to DF402 from the RTCM 10403.2 Amendment 2 specification.
+Valid values range from 0 to 15 and the most significant nibble is
+reserved for future use.
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Measurement status flags. A bit field of flags providing the status
+of this observation.  If this field is 0 it means only the Cn0
+estimate for the signal is valid.
+</td>
+</tr>
+<tr>
+<td>15</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal">GnssSignal</a></td>
+<td>GNSS signal identifier (16 bit)
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_base_pos_ecef'></a>
+<h2>Type: MsgBasePosEcef</h2>
+
+<p>The base station position message is the position reported by the base
+station itself in absolute Earth Centered Earth Fixed coordinates. It is
+used for pseudo-absolute RTK positioning, and is required to be a high-
+accuracy surveyed location of the base station. Any error here will
+result in an error in the pseudo-absolute position output.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>x</td>
+<td>f8le</td>
+<td>ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>y</td>
+<td>f8le</td>
+<td>ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>z</td>
+<td>f8le</td>
+<td>ECEF Z coordinate
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_glo_dep_a'></a>
+<h2>Type: MsgEphemerisGloDepA</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate GLO satellite position, velocity, and clock offset.
+Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+immediate information (ephemeris parameters)" for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content_dep_a">EphemerisCommonContentDepA</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>gamma</td>
+<td>f8le</td>
+<td>Relative deviation of predicted carrier frequency from nominal
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>tau</td>
+<td>f8le</td>
+<td>Correction to the SV time
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>pos</td>
+<td>f8le</td>
+<td>Position of the SV at tb in PZ-90.02 coordinates system
+</td>
+</tr>
+<tr>
+<td>64</td>
+<td>...</td>
+<td>vel</td>
+<td>f8le</td>
+<td>Velocity vector of the SV at tb in PZ-90.02 coordinates system
+</td>
+</tr>
+<tr>
+<td>88</td>
+<td>...</td>
+<td>acc</td>
+<td>f8le</td>
+<td>Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_group_delay'></a>
+<h2>Type: MsgGroupDelay</h2>
+
+<p>Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>t_op</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Data Predict Time of Week
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal">GnssSignal</a></td>
+<td>GNSS signal identifier
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>bit-field indicating validity of the values, LSB indicating tgd
+validity etc. 1 = value is valid, 0 = value is not valid.
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>tgd</td>
+<td>s2le</td>
+<td></td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>isc_l1ca</td>
+<td>s2le</td>
+<td></td>
+</tr>
+<tr>
+<td>13</td>
+<td>...</td>
+<td>isc_l2c</td>
+<td>s2le</td>
+<td></td>
+</tr>
+</table>
+<a name='type-observation-msg_almanac_glo'></a>
+<h2>Type: MsgAlmanacGlo</h2>
+
+<p>The almanac message returns a set of satellite orbit parameters. Almanac
+data is not very precise and is considered valid for up to several
+months. Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate
+information and almanac" for details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-almanac_common_content">AlmanacCommonContent</a></td>
+<td>Values common for all almanac types
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>lambda_na</td>
+<td>f8le</td>
+<td>Longitude of the first ascending node of the orbit in PZ-90.02
+coordinate system
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>t_lambda_na</td>
+<td>f8le</td>
+<td>Time of the first ascending node passage
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>i</td>
+<td>f8le</td>
+<td>Value of inclination at instant of t_lambda
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>t</td>
+<td>f8le</td>
+<td>Value of Draconian period at instant of t_lambda
+</td>
+</tr>
+<tr>
+<td>54</td>
+<td>...</td>
+<td>t_dot</td>
+<td>f8le</td>
+<td>Rate of change of the Draconian period
+</td>
+</tr>
+<tr>
+<td>62</td>
+<td>...</td>
+<td>epsilon</td>
+<td>f8le</td>
+<td>Eccentricity at instant of t_lambda
+</td>
+</tr>
+<tr>
+<td>70</td>
+<td>...</td>
+<td>omega</td>
+<td>f8le</td>
+<td>Argument of perigee at instant of t_lambda
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_gal_dep_a'></a>
+<h2>Type: MsgEphemerisGalDepA</h2>
+
+<p>This observation message has been deprecated in favor of an ephemeris
+message with explicit source of NAV data.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content">EphemerisCommonContent</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>bgd_e1e5a</td>
+<td>f4le</td>
+<td>E1-E5a Broadcast Group Delay
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>bgd_e1e5b</td>
+<td>f4le</td>
+<td>E1-E5b Broadcast Group Delay
+</td>
+</tr>
+<tr>
+<td>26</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>34</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>c_us</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>42</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>c_is</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>50</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>58</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>66</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>74</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>82</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>90</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>98</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>106</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>114</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>122</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>130</td>
+<td>...</td>
+<td>af1</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>138</td>
+<td>...</td>
+<td>af2</td>
+<td>f4le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>142</td>
+<td>...</td>
+<td>toc</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Clock reference
+</td>
+</tr>
+<tr>
+<td>148</td>
+<td>...</td>
+<td>iode</td>
+<td>u2le</td>
+<td>Issue of data (IODnav)
+</td>
+</tr>
+<tr>
+<td>150</td>
+<td>...</td>
+<td>iodc</td>
+<td>u2le</td>
+<td>Issue of data (IODnav). Always equal to iode
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_obs_dep_b'></a>
+<h2>Type: MsgObsDepB</h2>
+
+<p>This observation message has been deprecated in favor of observations
+that are more interoperable. This message should be used for
+observations referenced to a nominal pseudorange which are not
+interoperable with most 3rd party GNSS receivers or typical RTCMv3
+observations.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>header</td>
+<td><a href="#type-observation-observation_header_dep">ObservationHeaderDep</a></td>
+<td>Header of a GPS observation message
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>obs</td>
+<td><a href="#type-observation-packed_obs_content_dep_b">PackedObsContentDepB</a></td>
+<td>Pseudorange and carrier phase observation for a satellite being
+tracked.
+</td>
+</tr>
+</table>
+<a name='type-observation-packed_obs_content_dep_a'></a>
+<h2>Type: PackedObsContentDepA</h2>
+
+<p>Deprecated.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>p</td>
+<td>u4le</td>
+<td>Pseudorange observation
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>l</td>
+<td><a href="#type-observation-carrier_phase_dep_a">CarrierPhaseDepA</a></td>
+<td>Carrier phase observation with opposite sign from typical convention
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>cn0</td>
+<td>u1</td>
+<td>Carrier-to-Noise density
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>lock</td>
+<td>u2le</td>
+<td>Lock indicator. This value changes whenever a satellite signal has
+lost and regained lock, indicating that the carrier phase ambiguity
+may have changed.
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>prn</td>
+<td>u1</td>
+<td>PRN-1 identifier of the satellite signal
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_glo'></a>
+<h2>Type: MsgEphemerisGlo</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate GLO satellite position, velocity, and clock offset.
+Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+immediate information (ephemeris parameters)" for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content">EphemerisCommonContent</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>gamma</td>
+<td>f4le</td>
+<td>Relative deviation of predicted carrier frequency from nominal
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>tau</td>
+<td>f4le</td>
+<td>Correction to the SV time
+</td>
+</tr>
+<tr>
+<td>26</td>
+<td>...</td>
+<td>d_tau</td>
+<td>f4le</td>
+<td>Equipment delay between L1 and L2
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>pos</td>
+<td>f8le</td>
+<td>Position of the SV at tb in PZ-90.02 coordinates system
+</td>
+</tr>
+<tr>
+<td>54</td>
+<td>...</td>
+<td>vel</td>
+<td>f8le</td>
+<td>Velocity vector of the SV at tb in PZ-90.02 coordinates system
+</td>
+</tr>
+<tr>
+<td>78</td>
+<td>...</td>
+<td>acc</td>
+<td>f4le</td>
+<td>Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+</td>
+</tr>
+<tr>
+<td>90</td>
+<td>...</td>
+<td>fcn</td>
+<td>u1</td>
+<td>Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+</td>
+</tr>
+<tr>
+<td>91</td>
+<td>...</td>
+<td>iod</td>
+<td>u1</td>
+<td>Issue of data. Equal to the 7 bits of the immediate data word t_b
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_iono'></a>
+<h2>Type: MsgIono</h2>
+
+<p>The ionospheric parameters which allow the "L1 only" or "L2 only" user
+to utilize the ionospheric model for computation of the ionospheric
+delay. Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>t_nmct</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Navigation Message Correction Table Validity Time
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>a0</td>
+<td>f8le</td>
+<td></td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>a1</td>
+<td>f8le</td>
+<td></td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>a2</td>
+<td>f8le</td>
+<td></td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>a3</td>
+<td>f8le</td>
+<td></td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>b0</td>
+<td>f8le</td>
+<td></td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>b1</td>
+<td>f8le</td>
+<td></td>
+</tr>
+<tr>
+<td>54</td>
+<td>...</td>
+<td>b2</td>
+<td>f8le</td>
+<td></td>
+</tr>
+<tr>
+<td>62</td>
+<td>...</td>
+<td>b3</td>
+<td>f8le</td>
+<td></td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_dep_d'></a>
+<h2>Type: MsgEphemerisDepD</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate GPS satellite position, velocity, and clock offset.
+Please see the Navstar GPS Space Segment/Navigation user interfaces
+(ICD-GPS-200, Table 20-III) for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tgd</td>
+<td>f8le</td>
+<td>Group delay differential between L1 and L2
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>c_us</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>c_is</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>56</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>64</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>72</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>80</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>88</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>96</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>104</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>112</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>120</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>128</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>136</td>
+<td>...</td>
+<td>af1</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>144</td>
+<td>...</td>
+<td>af2</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>152</td>
+<td>...</td>
+<td>toe_tow</td>
+<td>f8le</td>
+<td>Time of week
+</td>
+</tr>
+<tr>
+<td>160</td>
+<td>...</td>
+<td>toe_wn</td>
+<td>u2le</td>
+<td>Week number
+</td>
+</tr>
+<tr>
+<td>162</td>
+<td>...</td>
+<td>toc_tow</td>
+<td>f8le</td>
+<td>Clock reference time of week
+</td>
+</tr>
+<tr>
+<td>170</td>
+<td>...</td>
+<td>toc_wn</td>
+<td>u2le</td>
+<td>Clock reference week number
+</td>
+</tr>
+<tr>
+<td>172</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>Is valid?
+</td>
+</tr>
+<tr>
+<td>173</td>
+<td>...</td>
+<td>healthy</td>
+<td>u1</td>
+<td>Satellite is healthy?
+</td>
+</tr>
+<tr>
+<td>174</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal_dep">GnssSignalDep</a></td>
+<td>GNSS signal identifier
+</td>
+</tr>
+<tr>
+<td>178</td>
+<td>...</td>
+<td>iode</td>
+<td>u1</td>
+<td>Issue of ephemeris data
+</td>
+</tr>
+<tr>
+<td>179</td>
+<td>...</td>
+<td>iodc</td>
+<td>u2le</td>
+<td>Issue of clock data
+</td>
+</tr>
+<tr>
+<td>181</td>
+<td>...</td>
+<td>reserved</td>
+<td>u4le</td>
+<td>Reserved field
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_gps'></a>
+<h2>Type: MsgEphemerisGps</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate GPS satellite position, velocity, and clock offset.
+Please see the Navstar GPS Space Segment/Navigation user interfaces
+(ICD-GPS-200, Table 20-III) for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content">EphemerisCommonContent</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>tgd</td>
+<td>f4le</td>
+<td>Group delay differential between L1 and L2
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>26</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>34</td>
+<td>...</td>
+<td>c_us</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f4le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>42</td>
+<td>...</td>
+<td>c_is</td>
+<td>f4le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>54</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>62</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>70</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>78</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>86</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>94</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>102</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>110</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>118</td>
+<td>...</td>
+<td>af0</td>
+<td>f4le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>122</td>
+<td>...</td>
+<td>af1</td>
+<td>f4le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>126</td>
+<td>...</td>
+<td>af2</td>
+<td>f4le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>130</td>
+<td>...</td>
+<td>toc</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Clock reference
+</td>
+</tr>
+<tr>
+<td>136</td>
+<td>...</td>
+<td>iode</td>
+<td>u1</td>
+<td>Issue of ephemeris data
+</td>
+</tr>
+<tr>
+<td>137</td>
+<td>...</td>
+<td>iodc</td>
+<td>u2le</td>
+<td>Issue of clock data
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_base_pos_llh'></a>
+<h2>Type: MsgBasePosLlh</h2>
+
+<p>The base station position message is the position reported by the base
+station itself. It is used for pseudo-absolute RTK positioning, and is
+required to be a high-accuracy surveyed location of the base station.
+Any error here will result in an error in the pseudo-absolute position
+output.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>lat</td>
+<td>f8le</td>
+<td>Latitude
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>lon</td>
+<td>f8le</td>
+<td>Longitude
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>height</td>
+<td>f8le</td>
+<td>Height
+</td>
+</tr>
+</table>
+<a name='type-observation-almanac_common_content'></a>
+<h2>Type: AlmanacCommonContent</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal">GnssSignal</a></td>
+<td>GNSS signal identifier
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>toa</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Reference time of almanac
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>ura</td>
+<td>f8le</td>
+<td>User Range Accuracy
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>fit_interval</td>
+<td>u4le</td>
+<td>Curve fit interval
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>Status of almanac, 1 = valid, 0 = invalid
+</td>
+</tr>
+<tr>
+<td>21</td>
+<td>...</td>
+<td>health_bits</td>
+<td>u1</td>
+<td>Satellite health status for GPS:
+  - bits 5-7: NAV data health status. See IS-GPS-200H
+    Table 20-VII: NAV Data Health Indications.
+  - bits 0-4: Signal health status. See IS-GPS-200H
+    Table 20-VIII. Codes for Health of SV Signal
+    Components.
+Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
+details):
+  - bit 0: C(n), "unhealthy" flag that is transmitted within
+    non-immediate data and indicates overall constellation status
+    at the moment of almanac uploading.
+    '0' indicates malfunction of n-satellite.
+    '1' indicates that n-satellite is operational.
+  - bit 1: Bn(ln), '0' indicates the satellite is operational
+    and suitable for navigation.
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_osr'></a>
+<h2>Type: MsgOsr</h2>
+
+<p>The OSR message contains network corrections in an observation-like
+format.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>header</td>
+<td><a href="#type-observation-observation_header">ObservationHeader</a></td>
+<td>Header of a GPS observation message
+</td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>obs</td>
+<td><a href="#type-observation-packed_osr_content">PackedOsrContent</a></td>
+<td>Network correction for a satellite signal.
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_glo_dep_c'></a>
+<h2>Type: MsgEphemerisGloDepC</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate GLO satellite position, velocity, and clock offset.
+Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+immediate information (ephemeris parameters)" for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content_dep_b">EphemerisCommonContentDepB</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>gamma</td>
+<td>f8le</td>
+<td>Relative deviation of predicted carrier frequency from nominal
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>tau</td>
+<td>f8le</td>
+<td>Correction to the SV time
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>d_tau</td>
+<td>f8le</td>
+<td>Equipment delay between L1 and L2
+</td>
+</tr>
+<tr>
+<td>46</td>
+<td>...</td>
+<td>pos</td>
+<td>f8le</td>
+<td>Position of the SV at tb in PZ-90.02 coordinates system
+</td>
+</tr>
+<tr>
+<td>70</td>
+<td>...</td>
+<td>vel</td>
+<td>f8le</td>
+<td>Velocity vector of the SV at tb in PZ-90.02 coordinates system
+</td>
+</tr>
+<tr>
+<td>94</td>
+<td>...</td>
+<td>acc</td>
+<td>f8le</td>
+<td>Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+</td>
+</tr>
+<tr>
+<td>118</td>
+<td>...</td>
+<td>fcn</td>
+<td>u1</td>
+<td>Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_glo_dep_b'></a>
+<h2>Type: MsgEphemerisGloDepB</h2>
+
+<p>The ephemeris message returns a set of satellite orbit parameters that
+is used to calculate GLO satellite position, velocity, and clock offset.
+Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+immediate information (ephemeris parameters)" for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content_dep_b">EphemerisCommonContentDepB</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>gamma</td>
+<td>f8le</td>
+<td>Relative deviation of predicted carrier frequency from nominal
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>tau</td>
+<td>f8le</td>
+<td>Correction to the SV time
+</td>
+</tr>
+<tr>
+<td>38</td>
+<td>...</td>
+<td>pos</td>
+<td>f8le</td>
+<td>Position of the SV at tb in PZ-90.02 coordinates system
+</td>
+</tr>
+<tr>
+<td>62</td>
+<td>...</td>
+<td>vel</td>
+<td>f8le</td>
+<td>Velocity vector of the SV at tb in PZ-90.02 coordinates system
+</td>
+</tr>
+<tr>
+<td>86</td>
+<td>...</td>
+<td>acc</td>
+<td>f8le</td>
+<td>Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_sv_configuration_gps_dep'></a>
+<h2>Type: MsgSvConfigurationGpsDep</h2>
+
+<p>Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>t_nmct</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Navigation Message Correction Table Validity Time
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>l2c_mask</td>
+<td>u4le</td>
+<td>L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_sbas'></a>
+<h2>Type: MsgEphemerisSbas</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>common</td>
+<td><a href="#type-observation-ephemeris_common_content">EphemerisCommonContent</a></td>
+<td>Values common for all ephemeris types
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>pos</td>
+<td>f8le</td>
+<td>Position of the GEO at time toe
+</td>
+</tr>
+<tr>
+<td>42</td>
+<td>...</td>
+<td>vel</td>
+<td>f4le</td>
+<td>Velocity of the GEO at time toe
+</td>
+</tr>
+<tr>
+<td>54</td>
+<td>...</td>
+<td>acc</td>
+<td>f4le</td>
+<td>Acceleration of the GEO at time toe
+</td>
+</tr>
+<tr>
+<td>66</td>
+<td>...</td>
+<td>a_gf0</td>
+<td>f4le</td>
+<td>Time offset of the GEO clock w.r.t. SBAS Network Time
+</td>
+</tr>
+<tr>
+<td>70</td>
+<td>...</td>
+<td>a_gf1</td>
+<td>f4le</td>
+<td>Drift of the GEO clock w.r.t. SBAS Network Time
+</td>
+</tr>
+</table>
+<a name='type-observation-packed_obs_content_dep_b'></a>
+<h2>Type: PackedObsContentDepB</h2>
+
+<p>Pseudorange and carrier phase observation for a satellite being tracked.
+Pseudoranges are referenced to a nominal pseudorange.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>p</td>
+<td>u4le</td>
+<td>Pseudorange observation
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>l</td>
+<td><a href="#type-observation-carrier_phase_dep_a">CarrierPhaseDepA</a></td>
+<td>Carrier phase observation with opposite sign from typical
+convention.
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>cn0</td>
+<td>u1</td>
+<td>Carrier-to-Noise density
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>lock</td>
+<td>u2le</td>
+<td>Lock indicator. This value changes whenever a satellite signal has
+lost and regained lock, indicating that the carrier phase ambiguity
+may have changed.
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal_dep">GnssSignalDep</a></td>
+<td>GNSS signal identifier
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_obs_dep_c'></a>
+<h2>Type: MsgObsDepC</h2>
+
+<p>The GPS observations message reports all the raw pseudorange and carrier
+phase observations for the satellites being tracked by the device.
+Carrier phase observation here is represented as a 40-bit fixed point
+number with Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of
+fractional cycles). The observations are interoperable with 3rd party
+receivers and conform with typical RTCMv3 GNSS observations.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>header</td>
+<td><a href="#type-observation-observation_header_dep">ObservationHeaderDep</a></td>
+<td>Header of a GPS observation message
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>obs</td>
+<td><a href="#type-observation-packed_obs_content_dep_c">PackedObsContentDepC</a></td>
+<td>Pseudorange and carrier phase observation for a satellite being
+tracked.
+</td>
+</tr>
+</table>
+<a name='type-observation-msg_ephemeris_dep_a'></a>
+<h2>Type: MsgEphemerisDepA</h2>
+
+<p>Deprecated.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tgd</td>
+<td>f8le</td>
+<td>Group delay differential between L1 and L2
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>c_rs</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>c_rc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the orbit radius
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>c_uc</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>c_us</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the argument of
+latitude
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>c_ic</td>
+<td>f8le</td>
+<td>Amplitude of the cosine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>c_is</td>
+<td>f8le</td>
+<td>Amplitude of the sine harmonic correction term to the angle of
+inclination
+</td>
+</tr>
+<tr>
+<td>56</td>
+<td>...</td>
+<td>dn</td>
+<td>f8le</td>
+<td>Mean motion difference
+</td>
+</tr>
+<tr>
+<td>64</td>
+<td>...</td>
+<td>m0</td>
+<td>f8le</td>
+<td>Mean anomaly at reference time
+</td>
+</tr>
+<tr>
+<td>72</td>
+<td>...</td>
+<td>ecc</td>
+<td>f8le</td>
+<td>Eccentricity of satellite orbit
+</td>
+</tr>
+<tr>
+<td>80</td>
+<td>...</td>
+<td>sqrta</td>
+<td>f8le</td>
+<td>Square root of the semi-major axis of orbit
+</td>
+</tr>
+<tr>
+<td>88</td>
+<td>...</td>
+<td>omega0</td>
+<td>f8le</td>
+<td>Longitude of ascending node of orbit plane at weekly epoch
+</td>
+</tr>
+<tr>
+<td>96</td>
+<td>...</td>
+<td>omegadot</td>
+<td>f8le</td>
+<td>Rate of right ascension
+</td>
+</tr>
+<tr>
+<td>104</td>
+<td>...</td>
+<td>w</td>
+<td>f8le</td>
+<td>Argument of perigee
+</td>
+</tr>
+<tr>
+<td>112</td>
+<td>...</td>
+<td>inc</td>
+<td>f8le</td>
+<td>Inclination
+</td>
+</tr>
+<tr>
+<td>120</td>
+<td>...</td>
+<td>inc_dot</td>
+<td>f8le</td>
+<td>Inclination first derivative
+</td>
+</tr>
+<tr>
+<td>128</td>
+<td>...</td>
+<td>af0</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock bias)
+</td>
+</tr>
+<tr>
+<td>136</td>
+<td>...</td>
+<td>af1</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (clock drift)
+</td>
+</tr>
+<tr>
+<td>144</td>
+<td>...</td>
+<td>af2</td>
+<td>f8le</td>
+<td>Polynomial clock correction coefficient (rate of clock drift)
+</td>
+</tr>
+<tr>
+<td>152</td>
+<td>...</td>
+<td>toe_tow</td>
+<td>f8le</td>
+<td>Time of week
+</td>
+</tr>
+<tr>
+<td>160</td>
+<td>...</td>
+<td>toe_wn</td>
+<td>u2le</td>
+<td>Week number
+</td>
+</tr>
+<tr>
+<td>162</td>
+<td>...</td>
+<td>toc_tow</td>
+<td>f8le</td>
+<td>Clock reference time of week
+</td>
+</tr>
+<tr>
+<td>170</td>
+<td>...</td>
+<td>toc_wn</td>
+<td>u2le</td>
+<td>Clock reference week number
+</td>
+</tr>
+<tr>
+<td>172</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>Is valid?
+</td>
+</tr>
+<tr>
+<td>173</td>
+<td>...</td>
+<td>healthy</td>
+<td>u1</td>
+<td>Satellite is healthy?
+</td>
+</tr>
+<tr>
+<td>174</td>
+<td>...</td>
+<td>prn</td>
+<td>u1</td>
+<td>PRN being tracked
+</td>
+</tr>
+</table>
+<a name='type-observation-ephemeris_common_content_dep_b'></a>
+<h2>Type: EphemerisCommonContentDepB</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal">GnssSignal</a></td>
+<td>GNSS signal identifier (16 bit)
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>toe</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>Time of Ephemerides
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>ura</td>
+<td>f8le</td>
+<td>User Range Accuracy
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>fit_interval</td>
+<td>u4le</td>
+<td>Curve fit interval
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>valid</td>
+<td>u1</td>
+<td>Status of ephemeris, 1 = valid, 0 = invalid
+</td>
+</tr>
+<tr>
+<td>21</td>
+<td>...</td>
+<td>health_bits</td>
+<td>u1</td>
+<td>Satellite health status.
+GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+Others: 0 = valid, non-zero = invalid
+</td>
+</tr>
+</table>
+
+  </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>
+      

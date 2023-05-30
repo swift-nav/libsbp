@@ -1,0 +1,3627 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Navigation format specification</title>
+  </head>
+  <body>
+           <div class="container">
+  <h1>Navigation format specification</h1>
+
+      
+<a name='type-navigation'></a>
+<h1>Type: Navigation</h1>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-navigation-msg_pos_llh_dep_a'></a>
+<h2>Type: MsgPosLlhDepA</h2>
+
+<p>This position solution message reports the absolute geodetic coordinates
+and the status (single point vs pseudo-absolute RTK) of the position
+solution. If the rover receiver knows the surveyed position of the base
+station and has an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover's RTK baseline
+vector. The full GPS time is given by the preceding MSG_GPS_TIME with
+the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>lat</td>
+<td>f8le</td>
+<td>Latitude
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>lon</td>
+<td>f8le</td>
+<td>Longitude
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>height</td>
+<td>f8le</td>
+<td>Height
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>h_accuracy</td>
+<td>u2le</td>
+<td>Horizontal position accuracy estimate (not implemented). Defaults to
+0.
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>v_accuracy</td>
+<td>u2le</td>
+<td>Vertical position accuracy estimate (not implemented). Defaults to
+0.
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution.
+</td>
+</tr>
+<tr>
+<td>33</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_protection_level_dep_a'></a>
+<h2>Type: MsgProtectionLevelDepA</h2>
+
+<p>This message reports the local vertical and horizontal protection levels
+associated with a given LLH position solution. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week
+(tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>vpl</td>
+<td>u2le</td>
+<td>Vertical protection level
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>hpl</td>
+<td>u2le</td>
+<td>Horizontal protection level
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>lat</td>
+<td>f8le</td>
+<td>Latitude
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>lon</td>
+<td>f8le</td>
+<td>Longitude
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>height</td>
+<td>f8le</td>
+<td>Height
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pos_llh_cov'></a>
+<h2>Type: MsgPosLlhCov</h2>
+
+<p>This position solution message reports the absolute geodetic coordinates
+and the status (single point vs pseudo-absolute RTK) of the position
+solution as well as the upper triangle of the 3x3 covariance matrix.
+The position information and Fix Mode flags follow the MSG_POS_LLH
+message.  Since the covariance matrix is computed in the local-level
+North, East, Down frame, the covariance terms follow that convention.
+Thus, covariances are reported against the "downward" measurement and
+care should be taken with the sign convention.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>lat</td>
+<td>f8le</td>
+<td>Latitude
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>lon</td>
+<td>f8le</td>
+<td>Longitude
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>height</td>
+<td>f8le</td>
+<td>Height above WGS84 ellipsoid
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>cov_n_n</td>
+<td>f4le</td>
+<td>Estimated variance of northing
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>cov_n_e</td>
+<td>f4le</td>
+<td>Covariance of northing and easting
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>cov_n_d</td>
+<td>f4le</td>
+<td>Covariance of northing and downward measurement
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>cov_e_e</td>
+<td>f4le</td>
+<td>Estimated variance of easting
+</td>
+</tr>
+<tr>
+<td>44</td>
+<td>...</td>
+<td>cov_e_d</td>
+<td>f4le</td>
+<td>Covariance of easting and downward measurement
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>cov_d_d</td>
+<td>f4le</td>
+<td>Estimated variance of downward measurement
+</td>
+</tr>
+<tr>
+<td>52</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution.
+</td>
+</tr>
+<tr>
+<td>53</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_ned_dep_a'></a>
+<h2>Type: MsgVelNedDepA</h2>
+
+<p>This message reports the velocity in local North East Down (NED)
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week
+(tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>n</td>
+<td>s4le</td>
+<td>Velocity North coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>e</td>
+<td>s4le</td>
+<td>Velocity East coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>d</td>
+<td>s4le</td>
+<td>Velocity Down coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>h_accuracy</td>
+<td>u2le</td>
+<td>Horizontal velocity accuracy estimate (not implemented). Defaults to
+0.
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>v_accuracy</td>
+<td>u2le</td>
+<td>Vertical velocity accuracy estimate (not implemented). Defaults to
+0.
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>21</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags (reserved)
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_ned_cov'></a>
+<h2>Type: MsgVelNedCov</h2>
+
+<p>This message reports the velocity in local North East Down (NED)
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week
+(tow). This message is similar to the MSG_VEL_NED, but it includes the
+upper triangular portion of the 3x3 covariance matrix.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>n</td>
+<td>s4le</td>
+<td>Velocity North coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>e</td>
+<td>s4le</td>
+<td>Velocity East coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>d</td>
+<td>s4le</td>
+<td>Velocity Down coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>cov_n_n</td>
+<td>f4le</td>
+<td>Estimated variance of northward measurement
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>cov_n_e</td>
+<td>f4le</td>
+<td>Covariance of northward and eastward measurement
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>cov_n_d</td>
+<td>f4le</td>
+<td>Covariance of northward and downward measurement
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>cov_e_e</td>
+<td>f4le</td>
+<td>Estimated variance of eastward measurement
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>cov_e_d</td>
+<td>f4le</td>
+<td>Covariance of eastward and downward measurement
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>cov_d_d</td>
+<td>f4le</td>
+<td>Estimated variance of downward measurement
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>41</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_utc_time'></a>
+<h2>Type: MsgUtcTime</h2>
+
+<p>This message reports the Universal Coordinated Time (UTC).  Note the
+flags which indicate the source of the UTC offset value and source of
+the time fix.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Indicates source and time validity
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS time of week rounded to the nearest millisecond
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>year</td>
+<td>u2le</td>
+<td>Year
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>month</td>
+<td>u1</td>
+<td>Month (range 1 .. 12)
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>day</td>
+<td>u1</td>
+<td>days in the month (range 1-31)
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>hours</td>
+<td>u1</td>
+<td>hours of day (range 0-23)
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>minutes</td>
+<td>u1</td>
+<td>minutes of hour (range 0-59)
+</td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>seconds</td>
+<td>u1</td>
+<td>seconds of minute (range 0-60) rounded down
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>ns</td>
+<td>u4le</td>
+<td>nanoseconds of second (range 0-999999999)
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pos_ecef_cov_gnss'></a>
+<h2>Type: MsgPosEcefCovGnss</h2>
+
+<p>The position solution message reports absolute Earth Centered Earth
+Fixed (ECEF) coordinates and the status (single point vs pseudo-absolute
+RTK) of the position solution. The message also reports the upper
+triangular portion of the 3x3 covariance matrix. If the receiver knows
+the surveyed position of the base station and has an RTK solution, this
+reports a pseudo-absolute position solution using the base station
+position and the rover's RTK baseline vector. The full GPS time is given
+by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>f8le</td>
+<td>ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>y</td>
+<td>f8le</td>
+<td>ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>z</td>
+<td>f8le</td>
+<td>ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>cov_x_x</td>
+<td>f4le</td>
+<td>Estimated variance of x
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>cov_x_y</td>
+<td>f4le</td>
+<td>Estimated covariance of x and y
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>cov_x_z</td>
+<td>f4le</td>
+<td>Estimated covariance of x and z
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>cov_y_y</td>
+<td>f4le</td>
+<td>Estimated variance of y
+</td>
+</tr>
+<tr>
+<td>44</td>
+<td>...</td>
+<td>cov_y_z</td>
+<td>f4le</td>
+<td>Estimated covariance of y and z
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>cov_z_z</td>
+<td>f4le</td>
+<td>Estimated variance of z
+</td>
+</tr>
+<tr>
+<td>52</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>53</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_ned_gnss'></a>
+<h2>Type: MsgVelNedGnss</h2>
+
+<p>This message reports the velocity in local North East Down (NED)
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week
+(tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>n</td>
+<td>s4le</td>
+<td>Velocity North coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>e</td>
+<td>s4le</td>
+<td>Velocity East coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>d</td>
+<td>s4le</td>
+<td>Velocity Down coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>h_accuracy</td>
+<td>u2le</td>
+<td>Horizontal velocity estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>v_accuracy</td>
+<td>u2le</td>
+<td>Vertical velocity estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>21</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_ned_cov_gnss'></a>
+<h2>Type: MsgVelNedCovGnss</h2>
+
+<p>This message reports the velocity in local North East Down (NED)
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week
+(tow). This message is similar to the MSG_VEL_NED, but it includes the
+upper triangular portion of the 3x3 covariance matrix.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>n</td>
+<td>s4le</td>
+<td>Velocity North coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>e</td>
+<td>s4le</td>
+<td>Velocity East coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>d</td>
+<td>s4le</td>
+<td>Velocity Down coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>cov_n_n</td>
+<td>f4le</td>
+<td>Estimated variance of northward measurement
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>cov_n_e</td>
+<td>f4le</td>
+<td>Covariance of northward and eastward measurement
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>cov_n_d</td>
+<td>f4le</td>
+<td>Covariance of northward and downward measurement
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>cov_e_e</td>
+<td>f4le</td>
+<td>Estimated variance of eastward measurement
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>cov_e_d</td>
+<td>f4le</td>
+<td>Covariance of eastward and downward measurement
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>cov_d_d</td>
+<td>f4le</td>
+<td>Estimated variance of downward measurement
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>41</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_baseline_ned_dep_a'></a>
+<h2>Type: MsgBaselineNedDepA</h2>
+
+<p>This message reports the baseline solution in North East Down (NED)
+coordinates. This baseline is the relative vector distance from the base
+station to the rover receiver, and NED coordinate system is defined at
+the local WGS84 tangent plane centered at the base station position.
+The full GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>n</td>
+<td>s4le</td>
+<td>Baseline North coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>e</td>
+<td>s4le</td>
+<td>Baseline East coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>d</td>
+<td>s4le</td>
+<td>Baseline Down coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>h_accuracy</td>
+<td>u2le</td>
+<td>Horizontal position accuracy estimate (not implemented). Defaults to
+0.
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>v_accuracy</td>
+<td>u2le</td>
+<td>Vertical position accuracy estimate (not implemented). Defaults to
+0.
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>21</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_ecef_dep_a'></a>
+<h2>Type: MsgVelEcefDepA</h2>
+
+<p>This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+coordinates. The full GPS time is given by the preceding MSG_GPS_TIME
+with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>s4le</td>
+<td>Velocity ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>y</td>
+<td>s4le</td>
+<td>Velocity ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>z</td>
+<td>s4le</td>
+<td>Velocity ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>accuracy</td>
+<td>u2le</td>
+<td>Velocity accuracy estimate (not implemented). Defaults to 0.
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>19</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags (reserved)
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_reference_frame_param'></a>
+<h2>Type: MsgReferenceFrameParam</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>ssr_iod</td>
+<td>u1</td>
+<td>SSR IOD parameter.
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>sn</td>
+<td>str(ascii)</td>
+<td>Name of source coordinate-system.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>tn</td>
+<td>str(ascii)</td>
+<td>Name of target coordinate-system.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>sin</td>
+<td>u1</td>
+<td>System Identification Number.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>utn</td>
+<td>u2le</td>
+<td>Utilized Transformation Message.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>re_t0</td>
+<td>u2le</td>
+<td>Reference Epoch t0 for transformation parameter set given as
+Modified Julian Day (MJD) Number minus 44244 days.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>delta_x0</td>
+<td>s4le</td>
+<td>Translation in X for Reference Epoch t0.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>delta_y0</td>
+<td>s4le</td>
+<td>Translation in Y for Reference Epoch t0.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>delta_z0</td>
+<td>s4le</td>
+<td>Translation in Z for Reference Epoch t0.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>theta_01</td>
+<td>s4le</td>
+<td>Rotation around the X-axis for Reference Epoch t0.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>theta_02</td>
+<td>s4le</td>
+<td>Rotation around the Y-axis for Reference Epoch t0.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>theta_03</td>
+<td>s4le</td>
+<td>Rotation around the Z-axis for Reference Epoch t0.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>scale</td>
+<td>s4le</td>
+<td>Scale correction for Reference Epoch t0.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>dot_delta_x0</td>
+<td>s4le</td>
+<td>Rate of change of translation in X.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>dot_delta_y0</td>
+<td>s4le</td>
+<td>Rate of change of translation in Y.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>dot_delta_z0</td>
+<td>s4le</td>
+<td>Rate of change of translation in Z.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>dot_theta_01</td>
+<td>s4le</td>
+<td>Rate of change of rotation around the X-axis.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>dot_theta_02</td>
+<td>s4le</td>
+<td>Rate of change of rotation around the Y-axis.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>dot_theta_03</td>
+<td>s4le</td>
+<td>Rate of change of rotation around the Z-axis.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>dot_scale</td>
+<td>s2le</td>
+<td>Rate of change of scale correction.
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pose_relative'></a>
+<h2>Type: MsgPoseRelative</h2>
+
+<p>This solution message reports the relative pose of a sensor between two
+time instances. The relative pose comprises of a rotation and a
+translation which relates the sensor (e.g. camera) frame at a given time
+(first keyframe) to the sensor frame at another time (second keyframe).
+The relative translations is a 3x1 vector described in the first
+keyframe.  Relative rotation is described by a quaternion from second
+keyframe to the first keyframe.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>sensor_id</td>
+<td>u1</td>
+<td>ID of the sensor producing this message
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>timestamp_1</td>
+<td>u4le</td>
+<td>Timestamp of first keyframe
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>timestamp_2</td>
+<td>u4le</td>
+<td>Timestamp of second keyframe
+</td>
+</tr>
+<tr>
+<td>13</td>
+<td>...</td>
+<td>trans</td>
+<td>s4le</td>
+<td>Relative translation [x,y,z] described in first keyframe
+</td>
+</tr>
+<tr>
+<td>25</td>
+<td>...</td>
+<td>w</td>
+<td>s4le</td>
+<td>Real component of quaternion to describe relative rotation (second
+to first keyframe)
+</td>
+</tr>
+<tr>
+<td>29</td>
+<td>...</td>
+<td>x</td>
+<td>s4le</td>
+<td>1st imaginary component of quaternion to describe relative rotation
+(second to first keyframe)
+</td>
+</tr>
+<tr>
+<td>33</td>
+<td>...</td>
+<td>y</td>
+<td>s4le</td>
+<td>2nd imaginary component of quaternion to describe relative rotation
+(second to first keyframe)
+</td>
+</tr>
+<tr>
+<td>37</td>
+<td>...</td>
+<td>z</td>
+<td>s4le</td>
+<td>3rd imaginary component of quaternion to describe relative rotation
+(second to first keyframe)
+</td>
+</tr>
+<tr>
+<td>41</td>
+<td>...</td>
+<td>cov_r_x_x</td>
+<td>f4le</td>
+<td>Estimated variance of x (relative translation)
+</td>
+</tr>
+<tr>
+<td>45</td>
+<td>...</td>
+<td>cov_r_x_y</td>
+<td>f4le</td>
+<td>Covariance of x and y (relative translation)
+</td>
+</tr>
+<tr>
+<td>49</td>
+<td>...</td>
+<td>cov_r_x_z</td>
+<td>f4le</td>
+<td>Covariance of x and z (relative translation)
+</td>
+</tr>
+<tr>
+<td>53</td>
+<td>...</td>
+<td>cov_r_y_y</td>
+<td>f4le</td>
+<td>Estimated variance of y (relative translation)
+</td>
+</tr>
+<tr>
+<td>57</td>
+<td>...</td>
+<td>cov_r_y_z</td>
+<td>f4le</td>
+<td>Covariance of y and z (relative translation)
+</td>
+</tr>
+<tr>
+<td>61</td>
+<td>...</td>
+<td>cov_r_z_z</td>
+<td>f4le</td>
+<td>Estimated variance of z (relative translation)
+</td>
+</tr>
+<tr>
+<td>65</td>
+<td>...</td>
+<td>cov_c_x_x</td>
+<td>f4le</td>
+<td>Estimated variance of x (relative rotation)
+</td>
+</tr>
+<tr>
+<td>69</td>
+<td>...</td>
+<td>cov_c_x_y</td>
+<td>f4le</td>
+<td>Covariance of x and y (relative rotation)
+</td>
+</tr>
+<tr>
+<td>73</td>
+<td>...</td>
+<td>cov_c_x_z</td>
+<td>f4le</td>
+<td>Covariance of x and z (relative rotation)
+</td>
+</tr>
+<tr>
+<td>77</td>
+<td>...</td>
+<td>cov_c_y_y</td>
+<td>f4le</td>
+<td>Estimated variance of y (relative rotation)
+</td>
+</tr>
+<tr>
+<td>81</td>
+<td>...</td>
+<td>cov_c_y_z</td>
+<td>f4le</td>
+<td>Covariance of y and z (relative rotation)
+</td>
+</tr>
+<tr>
+<td>85</td>
+<td>...</td>
+<td>cov_c_z_z</td>
+<td>f4le</td>
+<td>Estimated variance of z (relative rotation)
+</td>
+</tr>
+<tr>
+<td>89</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags of relative translation and rotation
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_ecef_cov'></a>
+<h2>Type: MsgVelEcefCov</h2>
+
+<p>This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+coordinates. The full GPS time is given by the preceding MSG_GPS_TIME
+with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>s4le</td>
+<td>Velocity ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>y</td>
+<td>s4le</td>
+<td>Velocity ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>z</td>
+<td>s4le</td>
+<td>Velocity ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>cov_x_x</td>
+<td>f4le</td>
+<td>Estimated variance of x
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>cov_x_y</td>
+<td>f4le</td>
+<td>Estimated covariance of x and y
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>cov_x_z</td>
+<td>f4le</td>
+<td>Estimated covariance of x and z
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>cov_y_y</td>
+<td>f4le</td>
+<td>Estimated variance of y
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>cov_y_z</td>
+<td>f4le</td>
+<td>Estimated covariance of y and z
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>cov_z_z</td>
+<td>f4le</td>
+<td>Estimated variance of z
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>41</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_body'></a>
+<h2>Type: MsgVelBody</h2>
+
+<p>This message reports the velocity in the Vehicle Body Frame. By
+convention, the x-axis should point out the nose of the vehicle and
+represent the forward direction, while as the y-axis should point out
+the right hand side of the vehicle. Since this is a right handed system,
+z should point out the bottom of the vehicle. The orientation and origin
+of the Vehicle Body Frame are specified via the device settings. The
+full GPS time is given by the preceding MSG_GPS_TIME with the matching
+time-of-week (tow). This message is only produced by inertial versions
+of Swift products and is not available from Piksi Multi or Duro.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>s4le</td>
+<td>Velocity in x direction
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>y</td>
+<td>s4le</td>
+<td>Velocity in y direction
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>z</td>
+<td>s4le</td>
+<td>Velocity in z direction
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>cov_x_x</td>
+<td>f4le</td>
+<td>Estimated variance of x
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>cov_x_y</td>
+<td>f4le</td>
+<td>Covariance of x and y
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>cov_x_z</td>
+<td>f4le</td>
+<td>Covariance of x and z
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>cov_y_y</td>
+<td>f4le</td>
+<td>Estimated variance of y
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>cov_y_z</td>
+<td>f4le</td>
+<td>Covariance of y and z
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>cov_z_z</td>
+<td>f4le</td>
+<td>Estimated variance of z
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>41</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_ecef_gnss'></a>
+<h2>Type: MsgVelEcefGnss</h2>
+
+<p>This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+coordinates. The full GPS time is given by the preceding MSG_GPS_TIME
+with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>s4le</td>
+<td>Velocity ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>y</td>
+<td>s4le</td>
+<td>Velocity ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>z</td>
+<td>s4le</td>
+<td>Velocity ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>accuracy</td>
+<td>u2le</td>
+<td>Velocity estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>19</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_ecef'></a>
+<h2>Type: MsgVelEcef</h2>
+
+<p>This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+coordinates. The full GPS time is given by the preceding MSG_GPS_TIME
+with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>s4le</td>
+<td>Velocity ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>y</td>
+<td>s4le</td>
+<td>Velocity ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>z</td>
+<td>s4le</td>
+<td>Velocity ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>accuracy</td>
+<td>u2le</td>
+<td>Velocity estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>19</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pos_llh_cov_gnss'></a>
+<h2>Type: MsgPosLlhCovGnss</h2>
+
+<p>This position solution message reports the absolute geodetic coordinates
+and the status (single point vs pseudo-absolute RTK) of the position
+solution as well as the upper triangle of the 3x3 covariance matrix.
+The position information and Fix Mode flags should follow the
+MSG_POS_LLH message.  Since the covariance matrix is computed in the
+local-level North, East, Down frame, the covariance terms follow with
+that convention. Thus, covariances are reported against the "downward"
+measurement and care should be taken with the sign convention.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>lat</td>
+<td>f8le</td>
+<td>Latitude
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>lon</td>
+<td>f8le</td>
+<td>Longitude
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>height</td>
+<td>f8le</td>
+<td>Height above WGS84 ellipsoid
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>cov_n_n</td>
+<td>f4le</td>
+<td>Estimated variance of northing
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>cov_n_e</td>
+<td>f4le</td>
+<td>Covariance of northing and easting
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>cov_n_d</td>
+<td>f4le</td>
+<td>Covariance of northing and downward measurement
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>cov_e_e</td>
+<td>f4le</td>
+<td>Estimated variance of easting
+</td>
+</tr>
+<tr>
+<td>44</td>
+<td>...</td>
+<td>cov_e_d</td>
+<td>f4le</td>
+<td>Covariance of easting and downward measurement
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>cov_d_d</td>
+<td>f4le</td>
+<td>Estimated variance of downward measurement
+</td>
+</tr>
+<tr>
+<td>52</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution.
+</td>
+</tr>
+<tr>
+<td>53</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_baseline_ecef'></a>
+<h2>Type: MsgBaselineEcef</h2>
+
+<p>This message reports the baseline solution in Earth Centered Earth Fixed
+(ECEF) coordinates. This baseline is the relative vector distance from
+the base station to the rover receiver. The full GPS time is given by
+the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>s4le</td>
+<td>Baseline ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>y</td>
+<td>s4le</td>
+<td>Baseline ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>z</td>
+<td>s4le</td>
+<td>Baseline ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>accuracy</td>
+<td>u2le</td>
+<td>Position estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>19</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_dops_dep_a'></a>
+<h2>Type: MsgDopsDepA</h2>
+
+<p>This dilution of precision (DOP) message describes the effect of
+navigation satellite geometry on positional measurement precision.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>gdop</td>
+<td>u2le</td>
+<td>Geometric Dilution of Precision
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>pdop</td>
+<td>u2le</td>
+<td>Position Dilution of Precision
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>tdop</td>
+<td>u2le</td>
+<td>Time Dilution of Precision
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>hdop</td>
+<td>u2le</td>
+<td>Horizontal Dilution of Precision
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>vdop</td>
+<td>u2le</td>
+<td>Vertical Dilution of Precision
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pos_ecef'></a>
+<h2>Type: MsgPosEcef</h2>
+
+<p>The position solution message reports absolute Earth Centered Earth
+Fixed (ECEF) coordinates and the status (single point vs pseudo-absolute
+RTK) of the position solution. If the rover receiver knows the surveyed
+position of the base station and has an RTK solution, this reports a
+pseudo-absolute position solution using the base station position and
+the rover's RTK baseline vector. The full GPS time is given by the
+preceding MSG_GPS_TIME with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>f8le</td>
+<td>ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>y</td>
+<td>f8le</td>
+<td>ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>z</td>
+<td>f8le</td>
+<td>ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>accuracy</td>
+<td>u2le</td>
+<td>Position estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>31</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_age_corrections'></a>
+<h2>Type: MsgAgeCorrections</h2>
+
+<p>This message reports the Age of the corrections used for the current
+Differential solution.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>age</td>
+<td>u2le</td>
+<td>Age of the corrections (0xFFFF indicates invalid)
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_ecef_cov_gnss'></a>
+<h2>Type: MsgVelEcefCovGnss</h2>
+
+<p>This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+coordinates. The full GPS time is given by the preceding MSG_GPS_TIME
+with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>s4le</td>
+<td>Velocity ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>y</td>
+<td>s4le</td>
+<td>Velocity ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>z</td>
+<td>s4le</td>
+<td>Velocity ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>cov_x_x</td>
+<td>f4le</td>
+<td>Estimated variance of x
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>cov_x_y</td>
+<td>f4le</td>
+<td>Estimated covariance of x and y
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>cov_x_z</td>
+<td>f4le</td>
+<td>Estimated covariance of x and z
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>cov_y_y</td>
+<td>f4le</td>
+<td>Estimated variance of y
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>cov_y_z</td>
+<td>f4le</td>
+<td>Estimated covariance of y and z
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>cov_z_z</td>
+<td>f4le</td>
+<td>Estimated variance of z
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>41</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_protection_level'></a>
+<h2>Type: MsgProtectionLevel</h2>
+
+<p>This message reports the protection levels associated to the given state
+estimate. The full GPS time is given by the preceding MSG_GPS_TIME with
+the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>wn</td>
+<td>s2le</td>
+<td>GPS week number
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>hpl</td>
+<td>u2le</td>
+<td>Horizontal protection level
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>vpl</td>
+<td>u2le</td>
+<td>Vertical protection level
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>atpl</td>
+<td>u2le</td>
+<td>Along-track position error protection level
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>ctpl</td>
+<td>u2le</td>
+<td>Cross-track position error protection level
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>hvpl</td>
+<td>u2le</td>
+<td>Protection level for the error vector between estimated and true
+along/cross track velocity vector
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>vvpl</td>
+<td>u2le</td>
+<td>Protection level for the velocity in vehicle upright direction
+(different from vertical direction if on a slope)
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>hopl</td>
+<td>u2le</td>
+<td>Heading orientation protection level
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>popl</td>
+<td>u2le</td>
+<td>Pitch orientation protection level
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>ropl</td>
+<td>u2le</td>
+<td>Roll orientation protection level
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>lat</td>
+<td>f8le</td>
+<td>Latitude
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>lon</td>
+<td>f8le</td>
+<td>Longitude
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>height</td>
+<td>f8le</td>
+<td>Height
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>v_x</td>
+<td>s4le</td>
+<td>Velocity in vehicle x direction
+</td>
+</tr>
+<tr>
+<td>52</td>
+<td>...</td>
+<td>v_y</td>
+<td>s4le</td>
+<td>Velocity in vehicle y direction
+</td>
+</tr>
+<tr>
+<td>56</td>
+<td>...</td>
+<td>v_z</td>
+<td>s4le</td>
+<td>Velocity in vehicle z direction
+</td>
+</tr>
+<tr>
+<td>60</td>
+<td>...</td>
+<td>roll</td>
+<td>s4le</td>
+<td>Roll angle
+</td>
+</tr>
+<tr>
+<td>64</td>
+<td>...</td>
+<td>pitch</td>
+<td>s4le</td>
+<td>Pitch angle
+</td>
+</tr>
+<tr>
+<td>68</td>
+<td>...</td>
+<td>heading</td>
+<td>s4le</td>
+<td>Heading angle
+</td>
+</tr>
+<tr>
+<td>72</td>
+<td>...</td>
+<td>flags</td>
+<td>u4le</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pos_ecef_cov'></a>
+<h2>Type: MsgPosEcefCov</h2>
+
+<p>The position solution message reports absolute Earth Centered Earth
+Fixed (ECEF) coordinates and the status (single point vs pseudo-absolute
+RTK) of the position solution. The message also reports the upper
+triangular portion of the 3x3 covariance matrix. If the receiver knows
+the surveyed position of the base station and has an RTK solution, this
+reports a pseudo-absolute position solution using the base station
+position and the rover's RTK baseline vector. The full GPS time is given
+by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>f8le</td>
+<td>ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>y</td>
+<td>f8le</td>
+<td>ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>z</td>
+<td>f8le</td>
+<td>ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>cov_x_x</td>
+<td>f4le</td>
+<td>Estimated variance of x
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>cov_x_y</td>
+<td>f4le</td>
+<td>Estimated covariance of x and y
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>cov_x_z</td>
+<td>f4le</td>
+<td>Estimated covariance of x and z
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>cov_y_y</td>
+<td>f4le</td>
+<td>Estimated variance of y
+</td>
+</tr>
+<tr>
+<td>44</td>
+<td>...</td>
+<td>cov_y_z</td>
+<td>f4le</td>
+<td>Estimated covariance of y and z
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>cov_z_z</td>
+<td>f4le</td>
+<td>Estimated variance of z
+</td>
+</tr>
+<tr>
+<td>52</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>53</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pos_ecef_gnss'></a>
+<h2>Type: MsgPosEcefGnss</h2>
+
+<p>The position solution message reports absolute Earth Centered Earth
+Fixed (ECEF) coordinates and the status (single point vs pseudo-absolute
+RTK) of the position solution. If the rover receiver knows the surveyed
+position of the base station and has an RTK solution, this reports a
+pseudo-absolute position solution using the base station position and
+the rover's RTK baseline vector. The full GPS time is given by the
+preceding MSG_GPS_TIME with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>f8le</td>
+<td>ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>y</td>
+<td>f8le</td>
+<td>ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>z</td>
+<td>f8le</td>
+<td>ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>accuracy</td>
+<td>u2le</td>
+<td>Position estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>31</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_ned'></a>
+<h2>Type: MsgVelNed</h2>
+
+<p>This message reports the velocity in local North East Down (NED)
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week
+(tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>n</td>
+<td>s4le</td>
+<td>Velocity North coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>e</td>
+<td>s4le</td>
+<td>Velocity East coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>d</td>
+<td>s4le</td>
+<td>Velocity Down coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>h_accuracy</td>
+<td>u2le</td>
+<td>Horizontal velocity estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>v_accuracy</td>
+<td>u2le</td>
+<td>Vertical velocity estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>21</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_utc_leap_second'></a>
+<h2>Type: MsgUtcLeapSecond</h2>
+
+<p>UTC-GPST leap seconds before and after the most recent (past, or future,
+for announced insertions) UTC leap second insertion.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>reserved_0</td>
+<td>s2le</td>
+<td>Reserved.
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>reserved_1</td>
+<td>s2le</td>
+<td>Reserved.
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>reserved_2</td>
+<td>s1</td>
+<td>Reserved.
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>count_before</td>
+<td>s1</td>
+<td>Leap second count before insertion.
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>reserved_3</td>
+<td>u2le</td>
+<td>Reserved.
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>reserved_4</td>
+<td>u2le</td>
+<td>Reserved.
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>ref_wn</td>
+<td>u2le</td>
+<td>Leap second reference GPS week number.
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>ref_dn</td>
+<td>u1</td>
+<td>Leap second reference day number.
+</td>
+</tr>
+<tr>
+<td>13</td>
+<td>...</td>
+<td>count_after</td>
+<td>s1</td>
+<td>Leap second count after insertion.
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_gps_time_dep_a'></a>
+<h2>Type: MsgGpsTimeDepA</h2>
+
+<p>This message reports the GPS time, representing the time since the GPS
+epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks
+and seconds of the week. The weeks begin at the Saturday/Sunday
+transition. GPS week 0 began at the beginning of the GPS time scale.
+
+Within each week number, the GPS time of the week is between between 0
+and 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate
+leap seconds, and as of now, has a small offset from UTC. In a message
+stream, this message precedes a set of other navigation messages
+referenced to the same time (but lacking the ns field) and indicates a
+more precise time of these messages.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>wn</td>
+<td>u2le</td>
+<td>GPS week number
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS time of week rounded to the nearest millisecond
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>ns_residual</td>
+<td>s4le</td>
+<td>Nanosecond residual of millisecond-rounded TOW (ranges from -500000
+to 500000)
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags (reserved)
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pos_llh_gnss'></a>
+<h2>Type: MsgPosLlhGnss</h2>
+
+<p>This position solution message reports the absolute geodetic coordinates
+and the status (single point vs pseudo-absolute RTK) of the position
+solution. If the rover receiver knows the surveyed position of the base
+station and has an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover's RTK baseline
+vector. The full GPS time is given by the preceding MSG_GPS_TIME with
+the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>lat</td>
+<td>f8le</td>
+<td>Latitude
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>lon</td>
+<td>f8le</td>
+<td>Longitude
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>height</td>
+<td>f8le</td>
+<td>Height above WGS84 ellipsoid
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>h_accuracy</td>
+<td>u2le</td>
+<td>Horizontal position estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>v_accuracy</td>
+<td>u2le</td>
+<td>Vertical position estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution.
+</td>
+</tr>
+<tr>
+<td>33</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_utc_time_gnss'></a>
+<h2>Type: MsgUtcTimeGnss</h2>
+
+<p>This message reports the Universal Coordinated Time (UTC).  Note the
+flags which indicate the source of the UTC offset value and source of
+the time fix.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Indicates source and time validity
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS time of week rounded to the nearest millisecond
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>year</td>
+<td>u2le</td>
+<td>Year
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>month</td>
+<td>u1</td>
+<td>Month (range 1 .. 12)
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>day</td>
+<td>u1</td>
+<td>days in the month (range 1-31)
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>hours</td>
+<td>u1</td>
+<td>hours of day (range 0-23)
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>minutes</td>
+<td>u1</td>
+<td>minutes of hour (range 0-59)
+</td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>seconds</td>
+<td>u1</td>
+<td>seconds of minute (range 0-60) rounded down
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>ns</td>
+<td>u4le</td>
+<td>nanoseconds of second (range 0-999999999)
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_vel_cog'></a>
+<h2>Type: MsgVelCog</h2>
+
+<p>This message reports the receiver course over ground (COG) and speed
+over  ground (SOG) based on the horizontal (N-E) components of the NED
+velocity  vector. It also includes the vertical velocity coordinate. A
+flag is provided to indicate whether the COG value has been frozen. When
+the flag is set to true, the COG field is set to its last valid value
+until  the system exceeds a minimum velocity threshold. No other fields
+are  affected by this flag.  The NED coordinate system is defined as the
+local WGS84 tangent  plane centered at the current position. The full
+GPS time is given by the  preceding MSG_GPS_TIME with the matching time-
+of-week (tow). Note: course over ground represents the receiver's
+direction of travel,  but not necessarily the device heading.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>cog</td>
+<td>u4le</td>
+<td>Course over ground relative to north direction
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>sog</td>
+<td>u4le</td>
+<td>Speed over ground (based on horizontal velocity)
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>v_up</td>
+<td>s4le</td>
+<td>Vertical velocity component (positive up)
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>cog_accuracy</td>
+<td>u4le</td>
+<td>Course over ground estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>sog_accuracy</td>
+<td>u4le</td>
+<td>Speed over ground estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>v_up_accuracy</td>
+<td>u4le</td>
+<td>Vertical velocity estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>flags</td>
+<td>u2le</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_baseline_ned'></a>
+<h2>Type: MsgBaselineNed</h2>
+
+<p>This message reports the baseline solution in North East Down (NED)
+coordinates. This baseline is the relative vector distance from the base
+station to the rover receiver, and NED coordinate system is defined at
+the local WGS84 tangent plane centered at the base station position.
+The full GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>n</td>
+<td>s4le</td>
+<td>Baseline North coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>e</td>
+<td>s4le</td>
+<td>Baseline East coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>d</td>
+<td>s4le</td>
+<td>Baseline Down coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>h_accuracy</td>
+<td>u2le</td>
+<td>Horizontal position estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>v_accuracy</td>
+<td>u2le</td>
+<td>Vertical position estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>21</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pos_llh'></a>
+<h2>Type: MsgPosLlh</h2>
+
+<p>This position solution message reports the absolute geodetic coordinates
+and the status (single point vs pseudo-absolute RTK) of the position
+solution. If the rover receiver knows the surveyed position of the base
+station and has an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover's RTK baseline
+vector. The full GPS time is given by the preceding MSG_GPS_TIME with
+the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>lat</td>
+<td>f8le</td>
+<td>Latitude
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>lon</td>
+<td>f8le</td>
+<td>Longitude
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>height</td>
+<td>f8le</td>
+<td>Height above WGS84 ellipsoid
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>h_accuracy</td>
+<td>u2le</td>
+<td>Horizontal position estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>v_accuracy</td>
+<td>u2le</td>
+<td>Vertical position estimated standard deviation
+</td>
+</tr>
+<tr>
+<td>32</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution.
+</td>
+</tr>
+<tr>
+<td>33</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_baseline_heading_dep_a'></a>
+<h2>Type: MsgBaselineHeadingDepA</h2>
+
+<p>This message reports the baseline heading pointing from the base station
+to the rover relative to True North. The full GPS time is given by the
+preceding MSG_GPS_TIME with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>heading</td>
+<td>u4le</td>
+<td>Heading
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_gps_time_gnss'></a>
+<h2>Type: MsgGpsTimeGnss</h2>
+
+<p>This message reports the GPS time, representing the time since the GPS
+epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks
+and seconds of the week. The weeks begin at the Saturday/Sunday
+transition. GPS week 0 began at the beginning of the GPS time scale.
+
+Within each week number, the GPS time of the week is between between 0
+and 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate
+leap seconds, and as of now, has a small offset from UTC. In a message
+stream, this message precedes a set of other navigation messages
+referenced to the same time (but lacking the ns field) and indicates a
+more precise time of these messages.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>wn</td>
+<td>u2le</td>
+<td>GPS week number
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS time of week rounded to the nearest millisecond
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>ns_residual</td>
+<td>s4le</td>
+<td>Nanosecond residual of millisecond-rounded TOW (ranges from -500000
+to 500000)
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags (reserved)
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_baseline_ecef_dep_a'></a>
+<h2>Type: MsgBaselineEcefDepA</h2>
+
+<p>This message reports the baseline solution in Earth Centered Earth Fixed
+(ECEF) coordinates. This baseline is the relative vector distance from
+the base station to the rover receiver. The full GPS time is given by
+the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>s4le</td>
+<td>Baseline ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>y</td>
+<td>s4le</td>
+<td>Baseline ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>z</td>
+<td>s4le</td>
+<td>Baseline ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>accuracy</td>
+<td>u2le</td>
+<td>Position accuracy estimate
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>19</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_gps_time'></a>
+<h2>Type: MsgGpsTime</h2>
+
+<p>This message reports the GPS time, representing the time since the GPS
+epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks
+and seconds of the week. The weeks begin at the Saturday/Sunday
+transition. GPS week 0 began at the beginning of the GPS time scale.
+
+Within each week number, the GPS time of the week is between between 0
+and 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate
+leap seconds, and as of now, has a small offset from UTC. In a message
+stream, this message precedes a set of other navigation messages
+referenced to the same time (but lacking the ns field) and indicates a
+more precise time of these messages.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>wn</td>
+<td>u2le</td>
+<td>GPS week number
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS time of week rounded to the nearest millisecond
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>ns_residual</td>
+<td>s4le</td>
+<td>Nanosecond residual of millisecond-rounded TOW (ranges from -500000
+to 500000)
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags (reserved)
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_dops'></a>
+<h2>Type: MsgDops</h2>
+
+<p>This dilution of precision (DOP) message describes the effect of
+navigation satellite geometry on positional measurement precision.  The
+flags field indicated whether the DOP reported corresponds to
+differential or SPP solution.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>gdop</td>
+<td>u2le</td>
+<td>Geometric Dilution of Precision
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>pdop</td>
+<td>u2le</td>
+<td>Position Dilution of Precision
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>tdop</td>
+<td>u2le</td>
+<td>Time Dilution of Precision
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>hdop</td>
+<td>u2le</td>
+<td>Horizontal Dilution of Precision
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>vdop</td>
+<td>u2le</td>
+<td>Vertical Dilution of Precision
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Indicates the position solution with which the DOPS message
+corresponds
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pos_ecef_dep_a'></a>
+<h2>Type: MsgPosEcefDepA</h2>
+
+<p>The position solution message reports absolute Earth Centered Earth
+Fixed (ECEF) coordinates and the status (single point vs pseudo-absolute
+RTK) of the position solution. If the rover receiver knows the surveyed
+position of the base station and has an RTK solution, this reports a
+pseudo-absolute position solution using the base station position and
+the rover's RTK baseline vector. The full GPS time is given by the
+preceding MSG_GPS_TIME with the matching time-of-week (tow).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>x</td>
+<td>f8le</td>
+<td>ECEF X coordinate
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>y</td>
+<td>f8le</td>
+<td>ECEF Y coordinate
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>z</td>
+<td>f8le</td>
+<td>ECEF Z coordinate
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>accuracy</td>
+<td>u2le</td>
+<td>Position accuracy estimate (not implemented). Defaults to 0.
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution
+</td>
+</tr>
+<tr>
+<td>31</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+<a name='type-navigation-estimated_horizontal_error_ellipse'></a>
+<h2>Type: EstimatedHorizontalErrorEllipse</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>semi_major</td>
+<td>f4le</td>
+<td>The semi major axis of the estimated horizontal error ellipse at the
+user-configured confidence level; zero implies invalid.
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>semi_minor</td>
+<td>f4le</td>
+<td>The semi minor axis of the estimated horizontal error ellipse at the
+user-configured confidence level; zero implies invalid.
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>orientation</td>
+<td>f4le</td>
+<td>The orientation of the semi major axis of the estimated horizontal
+error ellipse with respect to North.
+</td>
+</tr>
+</table>
+<a name='type-navigation-msg_pos_llh_acc'></a>
+<h2>Type: MsgPosLlhAcc</h2>
+
+<p>This position solution message reports the absolute geodetic coordinates
+and the status (single point vs pseudo-absolute RTK) of the position
+solution as well as the estimated horizontal, vertical, cross-track and
+along-track errors.  The position information and Fix Mode flags  follow
+the MSG_POS_LLH message. Since the covariance matrix is computed in the
+local-level North, East, Down frame, the estimated error terms follow
+that convention.
+
+The estimated errors are reported at a user-configurable confidence
+level. The user-configured percentile is encoded in the percentile
+field.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS Time of Week
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>lat</td>
+<td>f8le</td>
+<td>Latitude
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>lon</td>
+<td>f8le</td>
+<td>Longitude
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>height</td>
+<td>f8le</td>
+<td>Height above WGS84 ellipsoid
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>orthometric_height</td>
+<td>f8le</td>
+<td>Height above the geoid (i.e. height above mean sea level). See
+confidence_and_geoid for geoid model used.
+</td>
+</tr>
+<tr>
+<td>36</td>
+<td>...</td>
+<td>h_accuracy</td>
+<td>f4le</td>
+<td>Estimated horizontal error at the user-configured confidence level;
+zero implies invalid.
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>v_accuracy</td>
+<td>f4le</td>
+<td>Estimated vertical error at the user-configured confidence level;
+zero implies invalid.
+</td>
+</tr>
+<tr>
+<td>44</td>
+<td>...</td>
+<td>ct_accuracy</td>
+<td>f4le</td>
+<td>Estimated cross-track error at the user-configured confidence level;
+zero implies invalid.
+</td>
+</tr>
+<tr>
+<td>48</td>
+<td>...</td>
+<td>at_accuracy</td>
+<td>f4le</td>
+<td>Estimated along-track error at the user-configured confidence level;
+zero implies invalid.
+</td>
+</tr>
+<tr>
+<td>52</td>
+<td>...</td>
+<td>h_ellipse</td>
+<td><a href="#type-navigation-estimated_horizontal_error_ellipse">EstimatedHorizontalErrorEllipse</a></td>
+<td>The estimated horizontal error ellipse at the user-configured
+confidence level.
+</td>
+</tr>
+<tr>
+<td>64</td>
+<td>...</td>
+<td>confidence_and_geoid</td>
+<td>u1</td>
+<td>The lower bits describe the configured confidence level for the
+estimated position error. The middle bits describe the geoid model
+used to calculate the orthometric height.
+</td>
+</tr>
+<tr>
+<td>65</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites used in solution.
+</td>
+</tr>
+<tr>
+<td>66</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Status flags
+</td>
+</tr>
+</table>
+
+  </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>
+      

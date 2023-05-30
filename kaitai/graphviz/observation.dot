@@ -1,0 +1,1052 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__observation {
+		label="Observation";
+		graph[style=dotted];
+
+		observation__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__msg_sv_az_el {
+			label="Observation::MsgSvAzEl";
+			graph[style=dotted];
+
+			msg_sv_az_el__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="azel_pos">0</TD><TD PORT="azel_size">4</TD><TD>SvAzEl</TD><TD PORT="azel_type">azel</TD></TR>
+				<TR><TD COLSPAN="4" PORT="azel__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__gnss_capb {
+			label="Observation::GnssCapb";
+			graph[style=dotted];
+
+			gnss_capb__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="gps_active_pos">0</TD><TD PORT="gps_active_size">8</TD><TD>u8le</TD><TD PORT="gps_active_type">gps_active</TD></TR>
+				<TR><TD PORT="gps_l2c_pos">8</TD><TD PORT="gps_l2c_size">8</TD><TD>u8le</TD><TD PORT="gps_l2c_type">gps_l2c</TD></TR>
+				<TR><TD PORT="gps_l5_pos">16</TD><TD PORT="gps_l5_size">8</TD><TD>u8le</TD><TD PORT="gps_l5_type">gps_l5</TD></TR>
+				<TR><TD PORT="glo_active_pos">24</TD><TD PORT="glo_active_size">4</TD><TD>u4le</TD><TD PORT="glo_active_type">glo_active</TD></TR>
+				<TR><TD PORT="glo_l2of_pos">28</TD><TD PORT="glo_l2of_size">4</TD><TD>u4le</TD><TD PORT="glo_l2of_type">glo_l2of</TD></TR>
+				<TR><TD PORT="glo_l3_pos">32</TD><TD PORT="glo_l3_size">4</TD><TD>u4le</TD><TD PORT="glo_l3_type">glo_l3</TD></TR>
+				<TR><TD PORT="sbas_active_pos">36</TD><TD PORT="sbas_active_size">8</TD><TD>u8le</TD><TD PORT="sbas_active_type">sbas_active</TD></TR>
+				<TR><TD PORT="sbas_l5_pos">44</TD><TD PORT="sbas_l5_size">8</TD><TD>u8le</TD><TD PORT="sbas_l5_type">sbas_l5</TD></TR>
+				<TR><TD PORT="bds_active_pos">52</TD><TD PORT="bds_active_size">8</TD><TD>u8le</TD><TD PORT="bds_active_type">bds_active</TD></TR>
+				<TR><TD PORT="bds_d2nav_pos">60</TD><TD PORT="bds_d2nav_size">8</TD><TD>u8le</TD><TD PORT="bds_d2nav_type">bds_d2nav</TD></TR>
+				<TR><TD PORT="bds_b2_pos">68</TD><TD PORT="bds_b2_size">8</TD><TD>u8le</TD><TD PORT="bds_b2_type">bds_b2</TD></TR>
+				<TR><TD PORT="bds_b2a_pos">76</TD><TD PORT="bds_b2a_size">8</TD><TD>u8le</TD><TD PORT="bds_b2a_type">bds_b2a</TD></TR>
+				<TR><TD PORT="qzss_active_pos">84</TD><TD PORT="qzss_active_size">4</TD><TD>u4le</TD><TD PORT="qzss_active_type">qzss_active</TD></TR>
+				<TR><TD PORT="gal_active_pos">88</TD><TD PORT="gal_active_size">8</TD><TD>u8le</TD><TD PORT="gal_active_type">gal_active</TD></TR>
+				<TR><TD PORT="gal_e5_pos">96</TD><TD PORT="gal_e5_size">8</TD><TD>u8le</TD><TD PORT="gal_e5_type">gal_e5</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_group_delay_dep_b {
+			label="Observation::MsgGroupDelayDepB";
+			graph[style=dotted];
+
+			msg_group_delay_dep_b__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="t_op_pos">0</TD><TD PORT="t_op_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="t_op_type">t_op</TD></TR>
+				<TR><TD PORT="sid_pos">6</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="valid_pos">10</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="tgd_pos">11</TD><TD PORT="tgd_size">2</TD><TD>s2le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="isc_l1ca_pos">13</TD><TD PORT="isc_l1ca_size">2</TD><TD>s2le</TD><TD PORT="isc_l1ca_type">isc_l1ca</TD></TR>
+				<TR><TD PORT="isc_l2c_pos">15</TD><TD PORT="isc_l2c_size">2</TD><TD>s2le</TD><TD PORT="isc_l2c_type">isc_l2c</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__observation_header_dep {
+			label="Observation::ObservationHeaderDep";
+			graph[style=dotted];
+
+			observation_header_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="t_pos">0</TD><TD PORT="t_size">6</TD><TD>Gnss::GpsTimeDep</TD><TD PORT="t_type">t</TD></TR>
+				<TR><TD PORT="n_obs_pos">6</TD><TD PORT="n_obs_size">1</TD><TD>u1</TD><TD PORT="n_obs_type">n_obs</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__almanac_common_content_dep {
+			label="Observation::AlmanacCommonContentDep";
+			graph[style=dotted];
+
+			almanac_common_content_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sid_pos">0</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="toa_pos">4</TD><TD PORT="toa_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="toa_type">toa</TD></TR>
+				<TR><TD PORT="ura_pos">10</TD><TD PORT="ura_size">8</TD><TD>f8le</TD><TD PORT="ura_type">ura</TD></TR>
+				<TR><TD PORT="fit_interval_pos">18</TD><TD PORT="fit_interval_size">4</TD><TD>u4le</TD><TD PORT="fit_interval_type">fit_interval</TD></TR>
+				<TR><TD PORT="valid_pos">22</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="health_bits_pos">23</TD><TD PORT="health_bits_size">1</TD><TD>u1</TD><TD PORT="health_bits_type">health_bits</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__ephemeris_common_content_dep_a {
+			label="Observation::EphemerisCommonContentDepA";
+			graph[style=dotted];
+
+			ephemeris_common_content_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sid_pos">0</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="toe_pos">4</TD><TD PORT="toe_size">6</TD><TD>Gnss::GpsTimeDep</TD><TD PORT="toe_type">toe</TD></TR>
+				<TR><TD PORT="ura_pos">10</TD><TD PORT="ura_size">8</TD><TD>f8le</TD><TD PORT="ura_type">ura</TD></TR>
+				<TR><TD PORT="fit_interval_pos">18</TD><TD PORT="fit_interval_size">4</TD><TD>u4le</TD><TD PORT="fit_interval_type">fit_interval</TD></TR>
+				<TR><TD PORT="valid_pos">22</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="health_bits_pos">23</TD><TD PORT="health_bits_size">1</TD><TD>u1</TD><TD PORT="health_bits_type">health_bits</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__ephemeris_common_content {
+			label="Observation::EphemerisCommonContent";
+			graph[style=dotted];
+
+			ephemeris_common_content__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sid_pos">0</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="toe_pos">2</TD><TD PORT="toe_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="toe_type">toe</TD></TR>
+				<TR><TD PORT="ura_pos">8</TD><TD PORT="ura_size">4</TD><TD>f4le</TD><TD PORT="ura_type">ura</TD></TR>
+				<TR><TD PORT="fit_interval_pos">12</TD><TD PORT="fit_interval_size">4</TD><TD>u4le</TD><TD PORT="fit_interval_type">fit_interval</TD></TR>
+				<TR><TD PORT="valid_pos">16</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="health_bits_pos">17</TD><TD PORT="health_bits_size">1</TD><TD>u1</TD><TD PORT="health_bits_type">health_bits</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__packed_obs_content_dep_c {
+			label="Observation::PackedObsContentDepC";
+			graph[style=dotted];
+
+			packed_obs_content_dep_c__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="p_pos">0</TD><TD PORT="p_size">4</TD><TD>u4le</TD><TD PORT="p_type">p</TD></TR>
+				<TR><TD PORT="l_pos">4</TD><TD PORT="l_size">5</TD><TD>Gnss::CarrierPhase</TD><TD PORT="l_type">l</TD></TR>
+				<TR><TD PORT="cn0_pos">9</TD><TD PORT="cn0_size">1</TD><TD>u1</TD><TD PORT="cn0_type">cn0</TD></TR>
+				<TR><TD PORT="lock_pos">10</TD><TD PORT="lock_size">2</TD><TD>u2le</TD><TD PORT="lock_type">lock</TD></TR>
+				<TR><TD PORT="sid_pos">12</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_glo_dep_d {
+			label="Observation::MsgEphemerisGloDepD";
+			graph[style=dotted];
+
+			msg_ephemeris_glo_dep_d__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">22</TD><TD>EphemerisCommonContentDepB</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="gamma_pos">22</TD><TD PORT="gamma_size">8</TD><TD>f8le</TD><TD PORT="gamma_type">gamma</TD></TR>
+				<TR><TD PORT="tau_pos">30</TD><TD PORT="tau_size">8</TD><TD>f8le</TD><TD PORT="tau_type">tau</TD></TR>
+				<TR><TD PORT="d_tau_pos">38</TD><TD PORT="d_tau_size">8</TD><TD>f8le</TD><TD PORT="d_tau_type">d_tau</TD></TR>
+				<TR><TD PORT="pos_pos">46</TD><TD PORT="pos_size">8</TD><TD>f8le</TD><TD PORT="pos_type">pos</TD></TR>
+				<TR><TD COLSPAN="4" PORT="pos__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="vel_pos">70</TD><TD PORT="vel_size">8</TD><TD>f8le</TD><TD PORT="vel_type">vel</TD></TR>
+				<TR><TD COLSPAN="4" PORT="vel__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="acc_pos">94</TD><TD PORT="acc_size">8</TD><TD>f8le</TD><TD PORT="acc_type">acc</TD></TR>
+				<TR><TD COLSPAN="4" PORT="acc__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="fcn_pos">118</TD><TD PORT="fcn_size">1</TD><TD>u1</TD><TD PORT="fcn_type">fcn</TD></TR>
+				<TR><TD PORT="iod_pos">119</TD><TD PORT="iod_size">1</TD><TD>u1</TD><TD PORT="iod_type">iod</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_obs_dep_a {
+			label="Observation::MsgObsDepA";
+			graph[style=dotted];
+
+			msg_obs_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="header_pos">0</TD><TD PORT="header_size">7</TD><TD>ObservationHeaderDep</TD><TD PORT="header_type">header</TD></TR>
+				<TR><TD PORT="obs_pos">7</TD><TD PORT="obs_size">13</TD><TD>PackedObsContentDepA</TD><TD PORT="obs_type">obs</TD></TR>
+				<TR><TD COLSPAN="4" PORT="obs__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_dep_b {
+			label="Observation::MsgEphemerisDepB";
+			graph[style=dotted];
+
+			msg_ephemeris_dep_b__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="tgd_pos">0</TD><TD PORT="tgd_size">8</TD><TD>f8le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="c_rs_pos">8</TD><TD PORT="c_rs_size">8</TD><TD>f8le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">16</TD><TD PORT="c_rc_size">8</TD><TD>f8le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">24</TD><TD PORT="c_uc_size">8</TD><TD>f8le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">32</TD><TD PORT="c_us_size">8</TD><TD>f8le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">40</TD><TD PORT="c_ic_size">8</TD><TD>f8le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">48</TD><TD PORT="c_is_size">8</TD><TD>f8le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">56</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">64</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">72</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">80</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">88</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">96</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">104</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">112</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">120</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">128</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">136</TD><TD PORT="af1_size">8</TD><TD>f8le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">144</TD><TD PORT="af2_size">8</TD><TD>f8le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toe_tow_pos">152</TD><TD PORT="toe_tow_size">8</TD><TD>f8le</TD><TD PORT="toe_tow_type">toe_tow</TD></TR>
+				<TR><TD PORT="toe_wn_pos">160</TD><TD PORT="toe_wn_size">2</TD><TD>u2le</TD><TD PORT="toe_wn_type">toe_wn</TD></TR>
+				<TR><TD PORT="toc_tow_pos">162</TD><TD PORT="toc_tow_size">8</TD><TD>f8le</TD><TD PORT="toc_tow_type">toc_tow</TD></TR>
+				<TR><TD PORT="toc_wn_pos">170</TD><TD PORT="toc_wn_size">2</TD><TD>u2le</TD><TD PORT="toc_wn_type">toc_wn</TD></TR>
+				<TR><TD PORT="valid_pos">172</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="healthy_pos">173</TD><TD PORT="healthy_size">1</TD><TD>u1</TD><TD PORT="healthy_type">healthy</TD></TR>
+				<TR><TD PORT="prn_pos">174</TD><TD PORT="prn_size">1</TD><TD>u1</TD><TD PORT="prn_type">prn</TD></TR>
+				<TR><TD PORT="iode_pos">175</TD><TD PORT="iode_size">1</TD><TD>u1</TD><TD PORT="iode_type">iode</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_obs {
+			label="Observation::MsgObs";
+			graph[style=dotted];
+
+			msg_obs__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="header_pos">0</TD><TD PORT="header_size">11</TD><TD>ObservationHeader</TD><TD PORT="header_type">header</TD></TR>
+				<TR><TD PORT="obs_pos">11</TD><TD PORT="obs_size">17</TD><TD>PackedObsContent</TD><TD PORT="obs_type">obs</TD></TR>
+				<TR><TD COLSPAN="4" PORT="obs__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__doppler {
+			label="Observation::Doppler";
+			graph[style=dotted];
+
+			doppler__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="i_pos">0</TD><TD PORT="i_size">2</TD><TD>s2le</TD><TD PORT="i_type">i</TD></TR>
+				<TR><TD PORT="f_pos">2</TD><TD PORT="f_size">1</TD><TD>u1</TD><TD PORT="f_type">f</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_almanac_glo_dep {
+			label="Observation::MsgAlmanacGloDep";
+			graph[style=dotted];
+
+			msg_almanac_glo_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">24</TD><TD>AlmanacCommonContentDep</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="lambda_na_pos">24</TD><TD PORT="lambda_na_size">8</TD><TD>f8le</TD><TD PORT="lambda_na_type">lambda_na</TD></TR>
+				<TR><TD PORT="t_lambda_na_pos">32</TD><TD PORT="t_lambda_na_size">8</TD><TD>f8le</TD><TD PORT="t_lambda_na_type">t_lambda_na</TD></TR>
+				<TR><TD PORT="i_pos">40</TD><TD PORT="i_size">8</TD><TD>f8le</TD><TD PORT="i_type">i</TD></TR>
+				<TR><TD PORT="t_pos">48</TD><TD PORT="t_size">8</TD><TD>f8le</TD><TD PORT="t_type">t</TD></TR>
+				<TR><TD PORT="t_dot_pos">56</TD><TD PORT="t_dot_size">8</TD><TD>f8le</TD><TD PORT="t_dot_type">t_dot</TD></TR>
+				<TR><TD PORT="epsilon_pos">64</TD><TD PORT="epsilon_size">8</TD><TD>f8le</TD><TD PORT="epsilon_type">epsilon</TD></TR>
+				<TR><TD PORT="omega_pos">72</TD><TD PORT="omega_size">8</TD><TD>f8le</TD><TD PORT="omega_type">omega</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_almanac_gps_dep {
+			label="Observation::MsgAlmanacGpsDep";
+			graph[style=dotted];
+
+			msg_almanac_gps_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">24</TD><TD>AlmanacCommonContentDep</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="m0_pos">24</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">32</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">40</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">48</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">56</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">64</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">72</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="af0_pos">80</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">88</TD><TD PORT="af1_size">8</TD><TD>f8le</TD><TD PORT="af1_type">af1</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__sv_az_el {
+			label="Observation::SvAzEl";
+			graph[style=dotted];
+
+			sv_az_el__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sid_pos">0</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="az_pos">2</TD><TD PORT="az_size">1</TD><TD>u1</TD><TD PORT="az_type">az</TD></TR>
+				<TR><TD PORT="el_pos">3</TD><TD PORT="el_size">1</TD><TD>s1</TD><TD PORT="el_type">el</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_glo_biases {
+			label="Observation::MsgGloBiases";
+			graph[style=dotted];
+
+			msg_glo_biases__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="mask_pos">0</TD><TD PORT="mask_size">1</TD><TD>u1</TD><TD PORT="mask_type">mask</TD></TR>
+				<TR><TD PORT="l1ca_bias_pos">1</TD><TD PORT="l1ca_bias_size">2</TD><TD>s2le</TD><TD PORT="l1ca_bias_type">l1ca_bias</TD></TR>
+				<TR><TD PORT="l1p_bias_pos">3</TD><TD PORT="l1p_bias_size">2</TD><TD>s2le</TD><TD PORT="l1p_bias_type">l1p_bias</TD></TR>
+				<TR><TD PORT="l2ca_bias_pos">5</TD><TD PORT="l2ca_bias_size">2</TD><TD>s2le</TD><TD PORT="l2ca_bias_type">l2ca_bias</TD></TR>
+				<TR><TD PORT="l2p_bias_pos">7</TD><TD PORT="l2p_bias_size">2</TD><TD>s2le</TD><TD PORT="l2p_bias_type">l2p_bias</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_sbas_dep_b {
+			label="Observation::MsgEphemerisSbasDepB";
+			graph[style=dotted];
+
+			msg_ephemeris_sbas_dep_b__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">22</TD><TD>EphemerisCommonContentDepB</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="pos_pos">22</TD><TD PORT="pos_size">8</TD><TD>f8le</TD><TD PORT="pos_type">pos</TD></TR>
+				<TR><TD COLSPAN="4" PORT="pos__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="vel_pos">46</TD><TD PORT="vel_size">8</TD><TD>f8le</TD><TD PORT="vel_type">vel</TD></TR>
+				<TR><TD COLSPAN="4" PORT="vel__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="acc_pos">70</TD><TD PORT="acc_size">8</TD><TD>f8le</TD><TD PORT="acc_type">acc</TD></TR>
+				<TR><TD COLSPAN="4" PORT="acc__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="a_gf0_pos">94</TD><TD PORT="a_gf0_size">8</TD><TD>f8le</TD><TD PORT="a_gf0_type">a_gf0</TD></TR>
+				<TR><TD PORT="a_gf1_pos">102</TD><TD PORT="a_gf1_size">8</TD><TD>f8le</TD><TD PORT="a_gf1_type">a_gf1</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_gps_dep_e {
+			label="Observation::MsgEphemerisGpsDepE";
+			graph[style=dotted];
+
+			msg_ephemeris_gps_dep_e__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">24</TD><TD>EphemerisCommonContentDepA</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="tgd_pos">24</TD><TD PORT="tgd_size">8</TD><TD>f8le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="c_rs_pos">32</TD><TD PORT="c_rs_size">8</TD><TD>f8le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">40</TD><TD PORT="c_rc_size">8</TD><TD>f8le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">48</TD><TD PORT="c_uc_size">8</TD><TD>f8le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">56</TD><TD PORT="c_us_size">8</TD><TD>f8le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">64</TD><TD PORT="c_ic_size">8</TD><TD>f8le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">72</TD><TD PORT="c_is_size">8</TD><TD>f8le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">80</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">88</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">96</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">104</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">112</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">120</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">128</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">136</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">144</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">152</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">160</TD><TD PORT="af1_size">8</TD><TD>f8le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">168</TD><TD PORT="af2_size">8</TD><TD>f8le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toc_pos">176</TD><TD PORT="toc_size">6</TD><TD>Gnss::GpsTimeDep</TD><TD PORT="toc_type">toc</TD></TR>
+				<TR><TD PORT="iode_pos">182</TD><TD PORT="iode_size">1</TD><TD>u1</TD><TD PORT="iode_type">iode</TD></TR>
+				<TR><TD PORT="iodc_pos">183</TD><TD PORT="iodc_size">2</TD><TD>u2le</TD><TD PORT="iodc_type">iodc</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_gnss_capb {
+			label="Observation::MsgGnssCapb";
+			graph[style=dotted];
+
+			msg_gnss_capb__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="t_nmct_pos">0</TD><TD PORT="t_nmct_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="t_nmct_type">t_nmct</TD></TR>
+				<TR><TD PORT="gc_pos">6</TD><TD PORT="gc_size">104</TD><TD>GnssCapb</TD><TD PORT="gc_type">gc</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_almanac_gps {
+			label="Observation::MsgAlmanacGps";
+			graph[style=dotted];
+
+			msg_almanac_gps__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">22</TD><TD>AlmanacCommonContent</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="m0_pos">22</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">30</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">38</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">46</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">54</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">62</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">70</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="af0_pos">78</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">86</TD><TD PORT="af1_size">8</TD><TD>f8le</TD><TD PORT="af1_type">af1</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_qzss {
+			label="Observation::MsgEphemerisQzss";
+			graph[style=dotted];
+
+			msg_ephemeris_qzss__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">18</TD><TD>EphemerisCommonContent</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="tgd_pos">18</TD><TD PORT="tgd_size">4</TD><TD>f4le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="c_rs_pos">22</TD><TD PORT="c_rs_size">4</TD><TD>f4le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">26</TD><TD PORT="c_rc_size">4</TD><TD>f4le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">30</TD><TD PORT="c_uc_size">4</TD><TD>f4le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">34</TD><TD PORT="c_us_size">4</TD><TD>f4le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">38</TD><TD PORT="c_ic_size">4</TD><TD>f4le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">42</TD><TD PORT="c_is_size">4</TD><TD>f4le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">46</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">54</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">62</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">70</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">78</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">86</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">94</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">102</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">110</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">118</TD><TD PORT="af0_size">4</TD><TD>f4le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">122</TD><TD PORT="af1_size">4</TD><TD>f4le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">126</TD><TD PORT="af2_size">4</TD><TD>f4le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toc_pos">130</TD><TD PORT="toc_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="toc_type">toc</TD></TR>
+				<TR><TD PORT="iode_pos">136</TD><TD PORT="iode_size">1</TD><TD>u1</TD><TD PORT="iode_type">iode</TD></TR>
+				<TR><TD PORT="iodc_pos">137</TD><TD PORT="iodc_size">2</TD><TD>u2le</TD><TD PORT="iodc_type">iodc</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_group_delay_dep_a {
+			label="Observation::MsgGroupDelayDepA";
+			graph[style=dotted];
+
+			msg_group_delay_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="t_op_pos">0</TD><TD PORT="t_op_size">6</TD><TD>Gnss::GpsTimeDep</TD><TD PORT="t_op_type">t_op</TD></TR>
+				<TR><TD PORT="prn_pos">6</TD><TD PORT="prn_size">1</TD><TD>u1</TD><TD PORT="prn_type">prn</TD></TR>
+				<TR><TD PORT="valid_pos">7</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="tgd_pos">8</TD><TD PORT="tgd_size">2</TD><TD>s2le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="isc_l1ca_pos">10</TD><TD PORT="isc_l1ca_size">2</TD><TD>s2le</TD><TD PORT="isc_l1ca_type">isc_l1ca</TD></TR>
+				<TR><TD PORT="isc_l2c_pos">12</TD><TD PORT="isc_l2c_size">2</TD><TD>s2le</TD><TD PORT="isc_l2c_type">isc_l2c</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_dep_c {
+			label="Observation::MsgEphemerisDepC";
+			graph[style=dotted];
+
+			msg_ephemeris_dep_c__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="tgd_pos">0</TD><TD PORT="tgd_size">8</TD><TD>f8le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="c_rs_pos">8</TD><TD PORT="c_rs_size">8</TD><TD>f8le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">16</TD><TD PORT="c_rc_size">8</TD><TD>f8le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">24</TD><TD PORT="c_uc_size">8</TD><TD>f8le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">32</TD><TD PORT="c_us_size">8</TD><TD>f8le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">40</TD><TD PORT="c_ic_size">8</TD><TD>f8le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">48</TD><TD PORT="c_is_size">8</TD><TD>f8le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">56</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">64</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">72</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">80</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">88</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">96</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">104</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">112</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">120</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">128</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">136</TD><TD PORT="af1_size">8</TD><TD>f8le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">144</TD><TD PORT="af2_size">8</TD><TD>f8le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toe_tow_pos">152</TD><TD PORT="toe_tow_size">8</TD><TD>f8le</TD><TD PORT="toe_tow_type">toe_tow</TD></TR>
+				<TR><TD PORT="toe_wn_pos">160</TD><TD PORT="toe_wn_size">2</TD><TD>u2le</TD><TD PORT="toe_wn_type">toe_wn</TD></TR>
+				<TR><TD PORT="toc_tow_pos">162</TD><TD PORT="toc_tow_size">8</TD><TD>f8le</TD><TD PORT="toc_tow_type">toc_tow</TD></TR>
+				<TR><TD PORT="toc_wn_pos">170</TD><TD PORT="toc_wn_size">2</TD><TD>u2le</TD><TD PORT="toc_wn_type">toc_wn</TD></TR>
+				<TR><TD PORT="valid_pos">172</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="healthy_pos">173</TD><TD PORT="healthy_size">1</TD><TD>u1</TD><TD PORT="healthy_type">healthy</TD></TR>
+				<TR><TD PORT="sid_pos">174</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="iode_pos">178</TD><TD PORT="iode_size">1</TD><TD>u1</TD><TD PORT="iode_type">iode</TD></TR>
+				<TR><TD PORT="iodc_pos">179</TD><TD PORT="iodc_size">2</TD><TD>u2le</TD><TD PORT="iodc_type">iodc</TD></TR>
+				<TR><TD PORT="reserved_pos">181</TD><TD PORT="reserved_size">4</TD><TD>u4le</TD><TD PORT="reserved_type">reserved</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__carrier_phase_dep_a {
+			label="Observation::CarrierPhaseDepA";
+			graph[style=dotted];
+
+			carrier_phase_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="i_pos">0</TD><TD PORT="i_size">4</TD><TD>s4le</TD><TD PORT="i_type">i</TD></TR>
+				<TR><TD PORT="f_pos">4</TD><TD PORT="f_size">1</TD><TD>u1</TD><TD PORT="f_type">f</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_gal {
+			label="Observation::MsgEphemerisGal";
+			graph[style=dotted];
+
+			msg_ephemeris_gal__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">18</TD><TD>EphemerisCommonContent</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="bgd_e1e5a_pos">18</TD><TD PORT="bgd_e1e5a_size">4</TD><TD>f4le</TD><TD PORT="bgd_e1e5a_type">bgd_e1e5a</TD></TR>
+				<TR><TD PORT="bgd_e1e5b_pos">22</TD><TD PORT="bgd_e1e5b_size">4</TD><TD>f4le</TD><TD PORT="bgd_e1e5b_type">bgd_e1e5b</TD></TR>
+				<TR><TD PORT="c_rs_pos">26</TD><TD PORT="c_rs_size">4</TD><TD>f4le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">30</TD><TD PORT="c_rc_size">4</TD><TD>f4le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">34</TD><TD PORT="c_uc_size">4</TD><TD>f4le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">38</TD><TD PORT="c_us_size">4</TD><TD>f4le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">42</TD><TD PORT="c_ic_size">4</TD><TD>f4le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">46</TD><TD PORT="c_is_size">4</TD><TD>f4le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">50</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">58</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">66</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">74</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">82</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">90</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">98</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">106</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">114</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">122</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">130</TD><TD PORT="af1_size">8</TD><TD>f8le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">138</TD><TD PORT="af2_size">4</TD><TD>f4le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toc_pos">142</TD><TD PORT="toc_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="toc_type">toc</TD></TR>
+				<TR><TD PORT="iode_pos">148</TD><TD PORT="iode_size">2</TD><TD>u2le</TD><TD PORT="iode_type">iode</TD></TR>
+				<TR><TD PORT="iodc_pos">150</TD><TD PORT="iodc_size">2</TD><TD>u2le</TD><TD PORT="iodc_type">iodc</TD></TR>
+				<TR><TD PORT="source_pos">152</TD><TD PORT="source_size">1</TD><TD>u1</TD><TD PORT="source_type">source</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__packed_osr_content {
+			label="Observation::PackedOsrContent";
+			graph[style=dotted];
+
+			packed_osr_content__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="p_pos">0</TD><TD PORT="p_size">4</TD><TD>u4le</TD><TD PORT="p_type">p</TD></TR>
+				<TR><TD PORT="l_pos">4</TD><TD PORT="l_size">5</TD><TD>Gnss::CarrierPhase</TD><TD PORT="l_type">l</TD></TR>
+				<TR><TD PORT="lock_pos">9</TD><TD PORT="lock_size">1</TD><TD>u1</TD><TD PORT="lock_type">lock</TD></TR>
+				<TR><TD PORT="flags_pos">10</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+				<TR><TD PORT="sid_pos">11</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="iono_std_pos">13</TD><TD PORT="iono_std_size">2</TD><TD>u2le</TD><TD PORT="iono_std_type">iono_std</TD></TR>
+				<TR><TD PORT="tropo_std_pos">15</TD><TD PORT="tropo_std_size">2</TD><TD>u2le</TD><TD PORT="tropo_std_type">tropo_std</TD></TR>
+				<TR><TD PORT="range_std_pos">17</TD><TD PORT="range_std_size">2</TD><TD>u2le</TD><TD PORT="range_std_type">range_std</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_bds {
+			label="Observation::MsgEphemerisBds";
+			graph[style=dotted];
+
+			msg_ephemeris_bds__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">18</TD><TD>EphemerisCommonContent</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="tgd1_pos">18</TD><TD PORT="tgd1_size">4</TD><TD>f4le</TD><TD PORT="tgd1_type">tgd1</TD></TR>
+				<TR><TD PORT="tgd2_pos">22</TD><TD PORT="tgd2_size">4</TD><TD>f4le</TD><TD PORT="tgd2_type">tgd2</TD></TR>
+				<TR><TD PORT="c_rs_pos">26</TD><TD PORT="c_rs_size">4</TD><TD>f4le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">30</TD><TD PORT="c_rc_size">4</TD><TD>f4le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">34</TD><TD PORT="c_uc_size">4</TD><TD>f4le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">38</TD><TD PORT="c_us_size">4</TD><TD>f4le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">42</TD><TD PORT="c_ic_size">4</TD><TD>f4le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">46</TD><TD PORT="c_is_size">4</TD><TD>f4le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">50</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">58</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">66</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">74</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">82</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">90</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">98</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">106</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">114</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">122</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">130</TD><TD PORT="af1_size">4</TD><TD>f4le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">134</TD><TD PORT="af2_size">4</TD><TD>f4le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toc_pos">138</TD><TD PORT="toc_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="toc_type">toc</TD></TR>
+				<TR><TD PORT="iode_pos">144</TD><TD PORT="iode_size">1</TD><TD>u1</TD><TD PORT="iode_type">iode</TD></TR>
+				<TR><TD PORT="iodc_pos">145</TD><TD PORT="iodc_size">2</TD><TD>u2le</TD><TD PORT="iodc_type">iodc</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_gps_dep_f {
+			label="Observation::MsgEphemerisGpsDepF";
+			graph[style=dotted];
+
+			msg_ephemeris_gps_dep_f__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">22</TD><TD>EphemerisCommonContentDepB</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="tgd_pos">22</TD><TD PORT="tgd_size">8</TD><TD>f8le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="c_rs_pos">30</TD><TD PORT="c_rs_size">8</TD><TD>f8le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">38</TD><TD PORT="c_rc_size">8</TD><TD>f8le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">46</TD><TD PORT="c_uc_size">8</TD><TD>f8le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">54</TD><TD PORT="c_us_size">8</TD><TD>f8le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">62</TD><TD PORT="c_ic_size">8</TD><TD>f8le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">70</TD><TD PORT="c_is_size">8</TD><TD>f8le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">78</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">86</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">94</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">102</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">110</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">118</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">126</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">134</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">142</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">150</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">158</TD><TD PORT="af1_size">8</TD><TD>f8le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">166</TD><TD PORT="af2_size">8</TD><TD>f8le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toc_pos">174</TD><TD PORT="toc_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="toc_type">toc</TD></TR>
+				<TR><TD PORT="iode_pos">180</TD><TD PORT="iode_size">1</TD><TD>u1</TD><TD PORT="iode_type">iode</TD></TR>
+				<TR><TD PORT="iodc_pos">181</TD><TD PORT="iodc_size">2</TD><TD>u2le</TD><TD PORT="iodc_type">iodc</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__observation_header {
+			label="Observation::ObservationHeader";
+			graph[style=dotted];
+
+			observation_header__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="t_pos">0</TD><TD PORT="t_size">10</TD><TD>Gnss::GpsTime</TD><TD PORT="t_type">t</TD></TR>
+				<TR><TD PORT="n_obs_pos">10</TD><TD PORT="n_obs_size">1</TD><TD>u1</TD><TD PORT="n_obs_type">n_obs</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_sbas_dep_a {
+			label="Observation::MsgEphemerisSbasDepA";
+			graph[style=dotted];
+
+			msg_ephemeris_sbas_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">24</TD><TD>EphemerisCommonContentDepA</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="pos_pos">24</TD><TD PORT="pos_size">8</TD><TD>f8le</TD><TD PORT="pos_type">pos</TD></TR>
+				<TR><TD COLSPAN="4" PORT="pos__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="vel_pos">48</TD><TD PORT="vel_size">8</TD><TD>f8le</TD><TD PORT="vel_type">vel</TD></TR>
+				<TR><TD COLSPAN="4" PORT="vel__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="acc_pos">72</TD><TD PORT="acc_size">8</TD><TD>f8le</TD><TD PORT="acc_type">acc</TD></TR>
+				<TR><TD COLSPAN="4" PORT="acc__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="a_gf0_pos">96</TD><TD PORT="a_gf0_size">8</TD><TD>f8le</TD><TD PORT="a_gf0_type">a_gf0</TD></TR>
+				<TR><TD PORT="a_gf1_pos">104</TD><TD PORT="a_gf1_size">8</TD><TD>f8le</TD><TD PORT="a_gf1_type">a_gf1</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__packed_obs_content {
+			label="Observation::PackedObsContent";
+			graph[style=dotted];
+
+			packed_obs_content__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="p_pos">0</TD><TD PORT="p_size">4</TD><TD>u4le</TD><TD PORT="p_type">p</TD></TR>
+				<TR><TD PORT="l_pos">4</TD><TD PORT="l_size">5</TD><TD>Gnss::CarrierPhase</TD><TD PORT="l_type">l</TD></TR>
+				<TR><TD PORT="d_pos">9</TD><TD PORT="d_size">3</TD><TD>Doppler</TD><TD PORT="d_type">d</TD></TR>
+				<TR><TD PORT="cn0_pos">12</TD><TD PORT="cn0_size">1</TD><TD>u1</TD><TD PORT="cn0_type">cn0</TD></TR>
+				<TR><TD PORT="lock_pos">13</TD><TD PORT="lock_size">1</TD><TD>u1</TD><TD PORT="lock_type">lock</TD></TR>
+				<TR><TD PORT="flags_pos">14</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+				<TR><TD PORT="sid_pos">15</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_base_pos_ecef {
+			label="Observation::MsgBasePosEcef";
+			graph[style=dotted];
+
+			msg_base_pos_ecef__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="x_pos">0</TD><TD PORT="x_size">8</TD><TD>f8le</TD><TD PORT="x_type">x</TD></TR>
+				<TR><TD PORT="y_pos">8</TD><TD PORT="y_size">8</TD><TD>f8le</TD><TD PORT="y_type">y</TD></TR>
+				<TR><TD PORT="z_pos">16</TD><TD PORT="z_size">8</TD><TD>f8le</TD><TD PORT="z_type">z</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_glo_dep_a {
+			label="Observation::MsgEphemerisGloDepA";
+			graph[style=dotted];
+
+			msg_ephemeris_glo_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">24</TD><TD>EphemerisCommonContentDepA</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="gamma_pos">24</TD><TD PORT="gamma_size">8</TD><TD>f8le</TD><TD PORT="gamma_type">gamma</TD></TR>
+				<TR><TD PORT="tau_pos">32</TD><TD PORT="tau_size">8</TD><TD>f8le</TD><TD PORT="tau_type">tau</TD></TR>
+				<TR><TD PORT="pos_pos">40</TD><TD PORT="pos_size">8</TD><TD>f8le</TD><TD PORT="pos_type">pos</TD></TR>
+				<TR><TD COLSPAN="4" PORT="pos__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="vel_pos">64</TD><TD PORT="vel_size">8</TD><TD>f8le</TD><TD PORT="vel_type">vel</TD></TR>
+				<TR><TD COLSPAN="4" PORT="vel__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="acc_pos">88</TD><TD PORT="acc_size">8</TD><TD>f8le</TD><TD PORT="acc_type">acc</TD></TR>
+				<TR><TD COLSPAN="4" PORT="acc__repeat">repeat 3 times</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_group_delay {
+			label="Observation::MsgGroupDelay";
+			graph[style=dotted];
+
+			msg_group_delay__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="t_op_pos">0</TD><TD PORT="t_op_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="t_op_type">t_op</TD></TR>
+				<TR><TD PORT="sid_pos">6</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="valid_pos">8</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="tgd_pos">9</TD><TD PORT="tgd_size">2</TD><TD>s2le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="isc_l1ca_pos">11</TD><TD PORT="isc_l1ca_size">2</TD><TD>s2le</TD><TD PORT="isc_l1ca_type">isc_l1ca</TD></TR>
+				<TR><TD PORT="isc_l2c_pos">13</TD><TD PORT="isc_l2c_size">2</TD><TD>s2le</TD><TD PORT="isc_l2c_type">isc_l2c</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_almanac_glo {
+			label="Observation::MsgAlmanacGlo";
+			graph[style=dotted];
+
+			msg_almanac_glo__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">22</TD><TD>AlmanacCommonContent</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="lambda_na_pos">22</TD><TD PORT="lambda_na_size">8</TD><TD>f8le</TD><TD PORT="lambda_na_type">lambda_na</TD></TR>
+				<TR><TD PORT="t_lambda_na_pos">30</TD><TD PORT="t_lambda_na_size">8</TD><TD>f8le</TD><TD PORT="t_lambda_na_type">t_lambda_na</TD></TR>
+				<TR><TD PORT="i_pos">38</TD><TD PORT="i_size">8</TD><TD>f8le</TD><TD PORT="i_type">i</TD></TR>
+				<TR><TD PORT="t_pos">46</TD><TD PORT="t_size">8</TD><TD>f8le</TD><TD PORT="t_type">t</TD></TR>
+				<TR><TD PORT="t_dot_pos">54</TD><TD PORT="t_dot_size">8</TD><TD>f8le</TD><TD PORT="t_dot_type">t_dot</TD></TR>
+				<TR><TD PORT="epsilon_pos">62</TD><TD PORT="epsilon_size">8</TD><TD>f8le</TD><TD PORT="epsilon_type">epsilon</TD></TR>
+				<TR><TD PORT="omega_pos">70</TD><TD PORT="omega_size">8</TD><TD>f8le</TD><TD PORT="omega_type">omega</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_gal_dep_a {
+			label="Observation::MsgEphemerisGalDepA";
+			graph[style=dotted];
+
+			msg_ephemeris_gal_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">18</TD><TD>EphemerisCommonContent</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="bgd_e1e5a_pos">18</TD><TD PORT="bgd_e1e5a_size">4</TD><TD>f4le</TD><TD PORT="bgd_e1e5a_type">bgd_e1e5a</TD></TR>
+				<TR><TD PORT="bgd_e1e5b_pos">22</TD><TD PORT="bgd_e1e5b_size">4</TD><TD>f4le</TD><TD PORT="bgd_e1e5b_type">bgd_e1e5b</TD></TR>
+				<TR><TD PORT="c_rs_pos">26</TD><TD PORT="c_rs_size">4</TD><TD>f4le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">30</TD><TD PORT="c_rc_size">4</TD><TD>f4le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">34</TD><TD PORT="c_uc_size">4</TD><TD>f4le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">38</TD><TD PORT="c_us_size">4</TD><TD>f4le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">42</TD><TD PORT="c_ic_size">4</TD><TD>f4le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">46</TD><TD PORT="c_is_size">4</TD><TD>f4le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">50</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">58</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">66</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">74</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">82</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">90</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">98</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">106</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">114</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">122</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">130</TD><TD PORT="af1_size">8</TD><TD>f8le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">138</TD><TD PORT="af2_size">4</TD><TD>f4le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toc_pos">142</TD><TD PORT="toc_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="toc_type">toc</TD></TR>
+				<TR><TD PORT="iode_pos">148</TD><TD PORT="iode_size">2</TD><TD>u2le</TD><TD PORT="iode_type">iode</TD></TR>
+				<TR><TD PORT="iodc_pos">150</TD><TD PORT="iodc_size">2</TD><TD>u2le</TD><TD PORT="iodc_type">iodc</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_obs_dep_b {
+			label="Observation::MsgObsDepB";
+			graph[style=dotted];
+
+			msg_obs_dep_b__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="header_pos">0</TD><TD PORT="header_size">7</TD><TD>ObservationHeaderDep</TD><TD PORT="header_type">header</TD></TR>
+				<TR><TD PORT="obs_pos">7</TD><TD PORT="obs_size">16</TD><TD>PackedObsContentDepB</TD><TD PORT="obs_type">obs</TD></TR>
+				<TR><TD COLSPAN="4" PORT="obs__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__packed_obs_content_dep_a {
+			label="Observation::PackedObsContentDepA";
+			graph[style=dotted];
+
+			packed_obs_content_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="p_pos">0</TD><TD PORT="p_size">4</TD><TD>u4le</TD><TD PORT="p_type">p</TD></TR>
+				<TR><TD PORT="l_pos">4</TD><TD PORT="l_size">5</TD><TD>CarrierPhaseDepA</TD><TD PORT="l_type">l</TD></TR>
+				<TR><TD PORT="cn0_pos">9</TD><TD PORT="cn0_size">1</TD><TD>u1</TD><TD PORT="cn0_type">cn0</TD></TR>
+				<TR><TD PORT="lock_pos">10</TD><TD PORT="lock_size">2</TD><TD>u2le</TD><TD PORT="lock_type">lock</TD></TR>
+				<TR><TD PORT="prn_pos">12</TD><TD PORT="prn_size">1</TD><TD>u1</TD><TD PORT="prn_type">prn</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_glo {
+			label="Observation::MsgEphemerisGlo";
+			graph[style=dotted];
+
+			msg_ephemeris_glo__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">18</TD><TD>EphemerisCommonContent</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="gamma_pos">18</TD><TD PORT="gamma_size">4</TD><TD>f4le</TD><TD PORT="gamma_type">gamma</TD></TR>
+				<TR><TD PORT="tau_pos">22</TD><TD PORT="tau_size">4</TD><TD>f4le</TD><TD PORT="tau_type">tau</TD></TR>
+				<TR><TD PORT="d_tau_pos">26</TD><TD PORT="d_tau_size">4</TD><TD>f4le</TD><TD PORT="d_tau_type">d_tau</TD></TR>
+				<TR><TD PORT="pos_pos">30</TD><TD PORT="pos_size">8</TD><TD>f8le</TD><TD PORT="pos_type">pos</TD></TR>
+				<TR><TD COLSPAN="4" PORT="pos__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="vel_pos">54</TD><TD PORT="vel_size">8</TD><TD>f8le</TD><TD PORT="vel_type">vel</TD></TR>
+				<TR><TD COLSPAN="4" PORT="vel__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="acc_pos">78</TD><TD PORT="acc_size">4</TD><TD>f4le</TD><TD PORT="acc_type">acc</TD></TR>
+				<TR><TD COLSPAN="4" PORT="acc__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="fcn_pos">90</TD><TD PORT="fcn_size">1</TD><TD>u1</TD><TD PORT="fcn_type">fcn</TD></TR>
+				<TR><TD PORT="iod_pos">91</TD><TD PORT="iod_size">1</TD><TD>u1</TD><TD PORT="iod_type">iod</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_iono {
+			label="Observation::MsgIono";
+			graph[style=dotted];
+
+			msg_iono__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="t_nmct_pos">0</TD><TD PORT="t_nmct_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="t_nmct_type">t_nmct</TD></TR>
+				<TR><TD PORT="a0_pos">6</TD><TD PORT="a0_size">8</TD><TD>f8le</TD><TD PORT="a0_type">a0</TD></TR>
+				<TR><TD PORT="a1_pos">14</TD><TD PORT="a1_size">8</TD><TD>f8le</TD><TD PORT="a1_type">a1</TD></TR>
+				<TR><TD PORT="a2_pos">22</TD><TD PORT="a2_size">8</TD><TD>f8le</TD><TD PORT="a2_type">a2</TD></TR>
+				<TR><TD PORT="a3_pos">30</TD><TD PORT="a3_size">8</TD><TD>f8le</TD><TD PORT="a3_type">a3</TD></TR>
+				<TR><TD PORT="b0_pos">38</TD><TD PORT="b0_size">8</TD><TD>f8le</TD><TD PORT="b0_type">b0</TD></TR>
+				<TR><TD PORT="b1_pos">46</TD><TD PORT="b1_size">8</TD><TD>f8le</TD><TD PORT="b1_type">b1</TD></TR>
+				<TR><TD PORT="b2_pos">54</TD><TD PORT="b2_size">8</TD><TD>f8le</TD><TD PORT="b2_type">b2</TD></TR>
+				<TR><TD PORT="b3_pos">62</TD><TD PORT="b3_size">8</TD><TD>f8le</TD><TD PORT="b3_type">b3</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_dep_d {
+			label="Observation::MsgEphemerisDepD";
+			graph[style=dotted];
+
+			msg_ephemeris_dep_d__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="tgd_pos">0</TD><TD PORT="tgd_size">8</TD><TD>f8le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="c_rs_pos">8</TD><TD PORT="c_rs_size">8</TD><TD>f8le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">16</TD><TD PORT="c_rc_size">8</TD><TD>f8le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">24</TD><TD PORT="c_uc_size">8</TD><TD>f8le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">32</TD><TD PORT="c_us_size">8</TD><TD>f8le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">40</TD><TD PORT="c_ic_size">8</TD><TD>f8le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">48</TD><TD PORT="c_is_size">8</TD><TD>f8le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">56</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">64</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">72</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">80</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">88</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">96</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">104</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">112</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">120</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">128</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">136</TD><TD PORT="af1_size">8</TD><TD>f8le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">144</TD><TD PORT="af2_size">8</TD><TD>f8le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toe_tow_pos">152</TD><TD PORT="toe_tow_size">8</TD><TD>f8le</TD><TD PORT="toe_tow_type">toe_tow</TD></TR>
+				<TR><TD PORT="toe_wn_pos">160</TD><TD PORT="toe_wn_size">2</TD><TD>u2le</TD><TD PORT="toe_wn_type">toe_wn</TD></TR>
+				<TR><TD PORT="toc_tow_pos">162</TD><TD PORT="toc_tow_size">8</TD><TD>f8le</TD><TD PORT="toc_tow_type">toc_tow</TD></TR>
+				<TR><TD PORT="toc_wn_pos">170</TD><TD PORT="toc_wn_size">2</TD><TD>u2le</TD><TD PORT="toc_wn_type">toc_wn</TD></TR>
+				<TR><TD PORT="valid_pos">172</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="healthy_pos">173</TD><TD PORT="healthy_size">1</TD><TD>u1</TD><TD PORT="healthy_type">healthy</TD></TR>
+				<TR><TD PORT="sid_pos">174</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="iode_pos">178</TD><TD PORT="iode_size">1</TD><TD>u1</TD><TD PORT="iode_type">iode</TD></TR>
+				<TR><TD PORT="iodc_pos">179</TD><TD PORT="iodc_size">2</TD><TD>u2le</TD><TD PORT="iodc_type">iodc</TD></TR>
+				<TR><TD PORT="reserved_pos">181</TD><TD PORT="reserved_size">4</TD><TD>u4le</TD><TD PORT="reserved_type">reserved</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_gps {
+			label="Observation::MsgEphemerisGps";
+			graph[style=dotted];
+
+			msg_ephemeris_gps__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">18</TD><TD>EphemerisCommonContent</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="tgd_pos">18</TD><TD PORT="tgd_size">4</TD><TD>f4le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="c_rs_pos">22</TD><TD PORT="c_rs_size">4</TD><TD>f4le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">26</TD><TD PORT="c_rc_size">4</TD><TD>f4le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">30</TD><TD PORT="c_uc_size">4</TD><TD>f4le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">34</TD><TD PORT="c_us_size">4</TD><TD>f4le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">38</TD><TD PORT="c_ic_size">4</TD><TD>f4le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">42</TD><TD PORT="c_is_size">4</TD><TD>f4le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">46</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">54</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">62</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">70</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">78</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">86</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">94</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">102</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">110</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">118</TD><TD PORT="af0_size">4</TD><TD>f4le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">122</TD><TD PORT="af1_size">4</TD><TD>f4le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">126</TD><TD PORT="af2_size">4</TD><TD>f4le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toc_pos">130</TD><TD PORT="toc_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="toc_type">toc</TD></TR>
+				<TR><TD PORT="iode_pos">136</TD><TD PORT="iode_size">1</TD><TD>u1</TD><TD PORT="iode_type">iode</TD></TR>
+				<TR><TD PORT="iodc_pos">137</TD><TD PORT="iodc_size">2</TD><TD>u2le</TD><TD PORT="iodc_type">iodc</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_base_pos_llh {
+			label="Observation::MsgBasePosLlh";
+			graph[style=dotted];
+
+			msg_base_pos_llh__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="lat_pos">0</TD><TD PORT="lat_size">8</TD><TD>f8le</TD><TD PORT="lat_type">lat</TD></TR>
+				<TR><TD PORT="lon_pos">8</TD><TD PORT="lon_size">8</TD><TD>f8le</TD><TD PORT="lon_type">lon</TD></TR>
+				<TR><TD PORT="height_pos">16</TD><TD PORT="height_size">8</TD><TD>f8le</TD><TD PORT="height_type">height</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__almanac_common_content {
+			label="Observation::AlmanacCommonContent";
+			graph[style=dotted];
+
+			almanac_common_content__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sid_pos">0</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="toa_pos">2</TD><TD PORT="toa_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="toa_type">toa</TD></TR>
+				<TR><TD PORT="ura_pos">8</TD><TD PORT="ura_size">8</TD><TD>f8le</TD><TD PORT="ura_type">ura</TD></TR>
+				<TR><TD PORT="fit_interval_pos">16</TD><TD PORT="fit_interval_size">4</TD><TD>u4le</TD><TD PORT="fit_interval_type">fit_interval</TD></TR>
+				<TR><TD PORT="valid_pos">20</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="health_bits_pos">21</TD><TD PORT="health_bits_size">1</TD><TD>u1</TD><TD PORT="health_bits_type">health_bits</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_osr {
+			label="Observation::MsgOsr";
+			graph[style=dotted];
+
+			msg_osr__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="header_pos">0</TD><TD PORT="header_size">11</TD><TD>ObservationHeader</TD><TD PORT="header_type">header</TD></TR>
+				<TR><TD PORT="obs_pos">11</TD><TD PORT="obs_size">19</TD><TD>PackedOsrContent</TD><TD PORT="obs_type">obs</TD></TR>
+				<TR><TD COLSPAN="4" PORT="obs__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_glo_dep_c {
+			label="Observation::MsgEphemerisGloDepC";
+			graph[style=dotted];
+
+			msg_ephemeris_glo_dep_c__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">22</TD><TD>EphemerisCommonContentDepB</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="gamma_pos">22</TD><TD PORT="gamma_size">8</TD><TD>f8le</TD><TD PORT="gamma_type">gamma</TD></TR>
+				<TR><TD PORT="tau_pos">30</TD><TD PORT="tau_size">8</TD><TD>f8le</TD><TD PORT="tau_type">tau</TD></TR>
+				<TR><TD PORT="d_tau_pos">38</TD><TD PORT="d_tau_size">8</TD><TD>f8le</TD><TD PORT="d_tau_type">d_tau</TD></TR>
+				<TR><TD PORT="pos_pos">46</TD><TD PORT="pos_size">8</TD><TD>f8le</TD><TD PORT="pos_type">pos</TD></TR>
+				<TR><TD COLSPAN="4" PORT="pos__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="vel_pos">70</TD><TD PORT="vel_size">8</TD><TD>f8le</TD><TD PORT="vel_type">vel</TD></TR>
+				<TR><TD COLSPAN="4" PORT="vel__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="acc_pos">94</TD><TD PORT="acc_size">8</TD><TD>f8le</TD><TD PORT="acc_type">acc</TD></TR>
+				<TR><TD COLSPAN="4" PORT="acc__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="fcn_pos">118</TD><TD PORT="fcn_size">1</TD><TD>u1</TD><TD PORT="fcn_type">fcn</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_glo_dep_b {
+			label="Observation::MsgEphemerisGloDepB";
+			graph[style=dotted];
+
+			msg_ephemeris_glo_dep_b__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">22</TD><TD>EphemerisCommonContentDepB</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="gamma_pos">22</TD><TD PORT="gamma_size">8</TD><TD>f8le</TD><TD PORT="gamma_type">gamma</TD></TR>
+				<TR><TD PORT="tau_pos">30</TD><TD PORT="tau_size">8</TD><TD>f8le</TD><TD PORT="tau_type">tau</TD></TR>
+				<TR><TD PORT="pos_pos">38</TD><TD PORT="pos_size">8</TD><TD>f8le</TD><TD PORT="pos_type">pos</TD></TR>
+				<TR><TD COLSPAN="4" PORT="pos__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="vel_pos">62</TD><TD PORT="vel_size">8</TD><TD>f8le</TD><TD PORT="vel_type">vel</TD></TR>
+				<TR><TD COLSPAN="4" PORT="vel__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="acc_pos">86</TD><TD PORT="acc_size">8</TD><TD>f8le</TD><TD PORT="acc_type">acc</TD></TR>
+				<TR><TD COLSPAN="4" PORT="acc__repeat">repeat 3 times</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_sv_configuration_gps_dep {
+			label="Observation::MsgSvConfigurationGpsDep";
+			graph[style=dotted];
+
+			msg_sv_configuration_gps_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="t_nmct_pos">0</TD><TD PORT="t_nmct_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="t_nmct_type">t_nmct</TD></TR>
+				<TR><TD PORT="l2c_mask_pos">6</TD><TD PORT="l2c_mask_size">4</TD><TD>u4le</TD><TD PORT="l2c_mask_type">l2c_mask</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_sbas {
+			label="Observation::MsgEphemerisSbas";
+			graph[style=dotted];
+
+			msg_ephemeris_sbas__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="common_pos">0</TD><TD PORT="common_size">18</TD><TD>EphemerisCommonContent</TD><TD PORT="common_type">common</TD></TR>
+				<TR><TD PORT="pos_pos">18</TD><TD PORT="pos_size">8</TD><TD>f8le</TD><TD PORT="pos_type">pos</TD></TR>
+				<TR><TD COLSPAN="4" PORT="pos__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="vel_pos">42</TD><TD PORT="vel_size">4</TD><TD>f4le</TD><TD PORT="vel_type">vel</TD></TR>
+				<TR><TD COLSPAN="4" PORT="vel__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="acc_pos">54</TD><TD PORT="acc_size">4</TD><TD>f4le</TD><TD PORT="acc_type">acc</TD></TR>
+				<TR><TD COLSPAN="4" PORT="acc__repeat">repeat 3 times</TD></TR>
+				<TR><TD PORT="a_gf0_pos">66</TD><TD PORT="a_gf0_size">4</TD><TD>f4le</TD><TD PORT="a_gf0_type">a_gf0</TD></TR>
+				<TR><TD PORT="a_gf1_pos">70</TD><TD PORT="a_gf1_size">4</TD><TD>f4le</TD><TD PORT="a_gf1_type">a_gf1</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__packed_obs_content_dep_b {
+			label="Observation::PackedObsContentDepB";
+			graph[style=dotted];
+
+			packed_obs_content_dep_b__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="p_pos">0</TD><TD PORT="p_size">4</TD><TD>u4le</TD><TD PORT="p_type">p</TD></TR>
+				<TR><TD PORT="l_pos">4</TD><TD PORT="l_size">5</TD><TD>CarrierPhaseDepA</TD><TD PORT="l_type">l</TD></TR>
+				<TR><TD PORT="cn0_pos">9</TD><TD PORT="cn0_size">1</TD><TD>u1</TD><TD PORT="cn0_type">cn0</TD></TR>
+				<TR><TD PORT="lock_pos">10</TD><TD PORT="lock_size">2</TD><TD>u2le</TD><TD PORT="lock_type">lock</TD></TR>
+				<TR><TD PORT="sid_pos">12</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_obs_dep_c {
+			label="Observation::MsgObsDepC";
+			graph[style=dotted];
+
+			msg_obs_dep_c__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="header_pos">0</TD><TD PORT="header_size">7</TD><TD>ObservationHeaderDep</TD><TD PORT="header_type">header</TD></TR>
+				<TR><TD PORT="obs_pos">7</TD><TD PORT="obs_size">16</TD><TD>PackedObsContentDepC</TD><TD PORT="obs_type">obs</TD></TR>
+				<TR><TD COLSPAN="4" PORT="obs__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ephemeris_dep_a {
+			label="Observation::MsgEphemerisDepA";
+			graph[style=dotted];
+
+			msg_ephemeris_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="tgd_pos">0</TD><TD PORT="tgd_size">8</TD><TD>f8le</TD><TD PORT="tgd_type">tgd</TD></TR>
+				<TR><TD PORT="c_rs_pos">8</TD><TD PORT="c_rs_size">8</TD><TD>f8le</TD><TD PORT="c_rs_type">c_rs</TD></TR>
+				<TR><TD PORT="c_rc_pos">16</TD><TD PORT="c_rc_size">8</TD><TD>f8le</TD><TD PORT="c_rc_type">c_rc</TD></TR>
+				<TR><TD PORT="c_uc_pos">24</TD><TD PORT="c_uc_size">8</TD><TD>f8le</TD><TD PORT="c_uc_type">c_uc</TD></TR>
+				<TR><TD PORT="c_us_pos">32</TD><TD PORT="c_us_size">8</TD><TD>f8le</TD><TD PORT="c_us_type">c_us</TD></TR>
+				<TR><TD PORT="c_ic_pos">40</TD><TD PORT="c_ic_size">8</TD><TD>f8le</TD><TD PORT="c_ic_type">c_ic</TD></TR>
+				<TR><TD PORT="c_is_pos">48</TD><TD PORT="c_is_size">8</TD><TD>f8le</TD><TD PORT="c_is_type">c_is</TD></TR>
+				<TR><TD PORT="dn_pos">56</TD><TD PORT="dn_size">8</TD><TD>f8le</TD><TD PORT="dn_type">dn</TD></TR>
+				<TR><TD PORT="m0_pos">64</TD><TD PORT="m0_size">8</TD><TD>f8le</TD><TD PORT="m0_type">m0</TD></TR>
+				<TR><TD PORT="ecc_pos">72</TD><TD PORT="ecc_size">8</TD><TD>f8le</TD><TD PORT="ecc_type">ecc</TD></TR>
+				<TR><TD PORT="sqrta_pos">80</TD><TD PORT="sqrta_size">8</TD><TD>f8le</TD><TD PORT="sqrta_type">sqrta</TD></TR>
+				<TR><TD PORT="omega0_pos">88</TD><TD PORT="omega0_size">8</TD><TD>f8le</TD><TD PORT="omega0_type">omega0</TD></TR>
+				<TR><TD PORT="omegadot_pos">96</TD><TD PORT="omegadot_size">8</TD><TD>f8le</TD><TD PORT="omegadot_type">omegadot</TD></TR>
+				<TR><TD PORT="w_pos">104</TD><TD PORT="w_size">8</TD><TD>f8le</TD><TD PORT="w_type">w</TD></TR>
+				<TR><TD PORT="inc_pos">112</TD><TD PORT="inc_size">8</TD><TD>f8le</TD><TD PORT="inc_type">inc</TD></TR>
+				<TR><TD PORT="inc_dot_pos">120</TD><TD PORT="inc_dot_size">8</TD><TD>f8le</TD><TD PORT="inc_dot_type">inc_dot</TD></TR>
+				<TR><TD PORT="af0_pos">128</TD><TD PORT="af0_size">8</TD><TD>f8le</TD><TD PORT="af0_type">af0</TD></TR>
+				<TR><TD PORT="af1_pos">136</TD><TD PORT="af1_size">8</TD><TD>f8le</TD><TD PORT="af1_type">af1</TD></TR>
+				<TR><TD PORT="af2_pos">144</TD><TD PORT="af2_size">8</TD><TD>f8le</TD><TD PORT="af2_type">af2</TD></TR>
+				<TR><TD PORT="toe_tow_pos">152</TD><TD PORT="toe_tow_size">8</TD><TD>f8le</TD><TD PORT="toe_tow_type">toe_tow</TD></TR>
+				<TR><TD PORT="toe_wn_pos">160</TD><TD PORT="toe_wn_size">2</TD><TD>u2le</TD><TD PORT="toe_wn_type">toe_wn</TD></TR>
+				<TR><TD PORT="toc_tow_pos">162</TD><TD PORT="toc_tow_size">8</TD><TD>f8le</TD><TD PORT="toc_tow_type">toc_tow</TD></TR>
+				<TR><TD PORT="toc_wn_pos">170</TD><TD PORT="toc_wn_size">2</TD><TD>u2le</TD><TD PORT="toc_wn_type">toc_wn</TD></TR>
+				<TR><TD PORT="valid_pos">172</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="healthy_pos">173</TD><TD PORT="healthy_size">1</TD><TD>u1</TD><TD PORT="healthy_type">healthy</TD></TR>
+				<TR><TD PORT="prn_pos">174</TD><TD PORT="prn_size">1</TD><TD>u1</TD><TD PORT="prn_type">prn</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__ephemeris_common_content_dep_b {
+			label="Observation::EphemerisCommonContentDepB";
+			graph[style=dotted];
+
+			ephemeris_common_content_dep_b__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sid_pos">0</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="toe_pos">2</TD><TD PORT="toe_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="toe_type">toe</TD></TR>
+				<TR><TD PORT="ura_pos">8</TD><TD PORT="ura_size">8</TD><TD>f8le</TD><TD PORT="ura_type">ura</TD></TR>
+				<TR><TD PORT="fit_interval_pos">16</TD><TD PORT="fit_interval_size">4</TD><TD>u4le</TD><TD PORT="fit_interval_type">fit_interval</TD></TR>
+				<TR><TD PORT="valid_pos">20</TD><TD PORT="valid_size">1</TD><TD>u1</TD><TD PORT="valid_type">valid</TD></TR>
+				<TR><TD PORT="health_bits_pos">21</TD><TD PORT="health_bits_size">1</TD><TD>u1</TD><TD PORT="health_bits_type">health_bits</TD></TR>
+			</TABLE>>];
+		}
+	}
+	msg_sv_az_el__seq:azel_type -> sv_az_el__seq [style=bold];
+	msg_group_delay_dep_b__seq:t_op_type -> gps_time_sec__seq [style=bold];
+	msg_group_delay_dep_b__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	observation_header_dep__seq:t_type -> gps_time_dep__seq [style=bold];
+	almanac_common_content_dep__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	almanac_common_content_dep__seq:toa_type -> gps_time_sec__seq [style=bold];
+	ephemeris_common_content_dep_a__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	ephemeris_common_content_dep_a__seq:toe_type -> gps_time_dep__seq [style=bold];
+	ephemeris_common_content__seq:sid_type -> gnss_signal__seq [style=bold];
+	ephemeris_common_content__seq:toe_type -> gps_time_sec__seq [style=bold];
+	packed_obs_content_dep_c__seq:l_type -> carrier_phase__seq [style=bold];
+	packed_obs_content_dep_c__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	msg_ephemeris_glo_dep_d__seq:common_type -> ephemeris_common_content_dep_b__seq [style=bold];
+	msg_obs_dep_a__seq:header_type -> observation_header_dep__seq [style=bold];
+	msg_obs_dep_a__seq:obs_type -> packed_obs_content_dep_a__seq [style=bold];
+	msg_obs__seq:header_type -> observation_header__seq [style=bold];
+	msg_obs__seq:obs_type -> packed_obs_content__seq [style=bold];
+	msg_almanac_glo_dep__seq:common_type -> almanac_common_content_dep__seq [style=bold];
+	msg_almanac_gps_dep__seq:common_type -> almanac_common_content_dep__seq [style=bold];
+	sv_az_el__seq:sid_type -> gnss_signal__seq [style=bold];
+	msg_ephemeris_sbas_dep_b__seq:common_type -> ephemeris_common_content_dep_b__seq [style=bold];
+	msg_ephemeris_gps_dep_e__seq:common_type -> ephemeris_common_content_dep_a__seq [style=bold];
+	msg_ephemeris_gps_dep_e__seq:toc_type -> gps_time_dep__seq [style=bold];
+	msg_gnss_capb__seq:t_nmct_type -> gps_time_sec__seq [style=bold];
+	msg_gnss_capb__seq:gc_type -> gnss_capb__seq [style=bold];
+	msg_almanac_gps__seq:common_type -> almanac_common_content__seq [style=bold];
+	msg_ephemeris_qzss__seq:common_type -> ephemeris_common_content__seq [style=bold];
+	msg_ephemeris_qzss__seq:toc_type -> gps_time_sec__seq [style=bold];
+	msg_group_delay_dep_a__seq:t_op_type -> gps_time_dep__seq [style=bold];
+	msg_ephemeris_dep_c__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	msg_ephemeris_gal__seq:common_type -> ephemeris_common_content__seq [style=bold];
+	msg_ephemeris_gal__seq:toc_type -> gps_time_sec__seq [style=bold];
+	packed_osr_content__seq:l_type -> carrier_phase__seq [style=bold];
+	packed_osr_content__seq:sid_type -> gnss_signal__seq [style=bold];
+	msg_ephemeris_bds__seq:common_type -> ephemeris_common_content__seq [style=bold];
+	msg_ephemeris_bds__seq:toc_type -> gps_time_sec__seq [style=bold];
+	msg_ephemeris_gps_dep_f__seq:common_type -> ephemeris_common_content_dep_b__seq [style=bold];
+	msg_ephemeris_gps_dep_f__seq:toc_type -> gps_time_sec__seq [style=bold];
+	observation_header__seq:t_type -> gps_time__seq [style=bold];
+	msg_ephemeris_sbas_dep_a__seq:common_type -> ephemeris_common_content_dep_a__seq [style=bold];
+	packed_obs_content__seq:l_type -> carrier_phase__seq [style=bold];
+	packed_obs_content__seq:d_type -> doppler__seq [style=bold];
+	packed_obs_content__seq:sid_type -> gnss_signal__seq [style=bold];
+	msg_ephemeris_glo_dep_a__seq:common_type -> ephemeris_common_content_dep_a__seq [style=bold];
+	msg_group_delay__seq:t_op_type -> gps_time_sec__seq [style=bold];
+	msg_group_delay__seq:sid_type -> gnss_signal__seq [style=bold];
+	msg_almanac_glo__seq:common_type -> almanac_common_content__seq [style=bold];
+	msg_ephemeris_gal_dep_a__seq:common_type -> ephemeris_common_content__seq [style=bold];
+	msg_ephemeris_gal_dep_a__seq:toc_type -> gps_time_sec__seq [style=bold];
+	msg_obs_dep_b__seq:header_type -> observation_header_dep__seq [style=bold];
+	msg_obs_dep_b__seq:obs_type -> packed_obs_content_dep_b__seq [style=bold];
+	packed_obs_content_dep_a__seq:l_type -> carrier_phase_dep_a__seq [style=bold];
+	msg_ephemeris_glo__seq:common_type -> ephemeris_common_content__seq [style=bold];
+	msg_iono__seq:t_nmct_type -> gps_time_sec__seq [style=bold];
+	msg_ephemeris_dep_d__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	msg_ephemeris_gps__seq:common_type -> ephemeris_common_content__seq [style=bold];
+	msg_ephemeris_gps__seq:toc_type -> gps_time_sec__seq [style=bold];
+	almanac_common_content__seq:sid_type -> gnss_signal__seq [style=bold];
+	almanac_common_content__seq:toa_type -> gps_time_sec__seq [style=bold];
+	msg_osr__seq:header_type -> observation_header__seq [style=bold];
+	msg_osr__seq:obs_type -> packed_osr_content__seq [style=bold];
+	msg_ephemeris_glo_dep_c__seq:common_type -> ephemeris_common_content_dep_b__seq [style=bold];
+	msg_ephemeris_glo_dep_b__seq:common_type -> ephemeris_common_content_dep_b__seq [style=bold];
+	msg_sv_configuration_gps_dep__seq:t_nmct_type -> gps_time_sec__seq [style=bold];
+	msg_ephemeris_sbas__seq:common_type -> ephemeris_common_content__seq [style=bold];
+	packed_obs_content_dep_b__seq:l_type -> carrier_phase_dep_a__seq [style=bold];
+	packed_obs_content_dep_b__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	msg_obs_dep_c__seq:header_type -> observation_header_dep__seq [style=bold];
+	msg_obs_dep_c__seq:obs_type -> packed_obs_content_dep_c__seq [style=bold];
+	ephemeris_common_content_dep_b__seq:sid_type -> gnss_signal__seq [style=bold];
+	ephemeris_common_content_dep_b__seq:toe_type -> gps_time_sec__seq [style=bold];
+}

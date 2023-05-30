@@ -1,0 +1,253 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Settings format specification</title>
+  </head>
+  <body>
+           <div class="container">
+  <h1>Settings format specification</h1>
+
+      
+<a name='type-settings'></a>
+<h1>Type: Settings</h1>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-settings-msg_settings_read_resp'></a>
+<h2>Type: MsgSettingsReadResp</h2>
+
+<p>The setting message with which the device responds after a
+MSG_SETTING_READ_REQ is sent to device. The string field is a NULL-
+terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence
+denotes the NULL character and where quotation marks are omitted. An
+example string that could be sent from device is
+"solution\0soln_freq\010\0".
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>setting</td>
+<td>str(ascii)</td>
+<td>A NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0"
+</td>
+</tr>
+</table>
+<a name='type-settings-msg_settings_write_resp'></a>
+<h2>Type: MsgSettingsWriteResp</h2>
+
+<p>Return the status of a write request with the new value of the setting.
+If the requested value is rejected, the current value will be returned.
+The string field is a NULL-terminated and NULL-delimited string with
+contents "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape
+sequence denotes the NULL character and where quotation marks are
+omitted. An example string that could be sent from device is
+"solution\0soln_freq\010\0".
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>status</td>
+<td>u1</td>
+<td>Write status
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>setting</td>
+<td>str(ascii)</td>
+<td>A NULL-terminated and delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0"
+</td>
+</tr>
+</table>
+<a name='type-settings-msg_settings_register_resp'></a>
+<h2>Type: MsgSettingsRegisterResp</h2>
+
+<p>This message responds to setting registration with the effective value.
+The effective value shall differ from the given default value if setting
+was already registered or is available in the permanent setting storage
+and had a different value.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>status</td>
+<td>u1</td>
+<td>Register status
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>setting</td>
+<td>str(ascii)</td>
+<td>A NULL-terminated and delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
+according to the status field.
+</td>
+</tr>
+</table>
+<a name='type-settings-msg_settings_read_by_index_resp'></a>
+<h2>Type: MsgSettingsReadByIndexResp</h2>
+
+<p>The settings message that reports the value of a setting at an index.
+
+In the string field, it reports NULL-terminated and delimited string
+with contents "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where
+the '\0' escape sequence denotes the NULL character and where quotation
+marks are omitted. The FORMAT_TYPE field is optional and denotes
+possible string values of the setting as a hint to the user. If
+included, the format type portion of the string has the format
+"enum:value1,value2,value3". An example string that could be sent from
+the device is "simulator\0enabled\0True\0enum:True,False\0".
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>index</td>
+<td>u2le</td>
+<td>An index into the device settings, with values ranging from 0 to
+length(settings)
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>setting</td>
+<td>str(ascii)</td>
+<td>A NULL-terminated and delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
+</td>
+</tr>
+</table>
+<a name='type-settings-msg_settings_read_req'></a>
+<h2>Type: MsgSettingsReadReq</h2>
+
+<p>The setting message that reads the device configuration. The string
+field is a NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0" where the '\0' escape sequence denotes the
+NULL character and where quotation marks are omitted. An example string
+that could be sent to a device is "solution\0soln_freq\0". A device will
+only respond to this message when it is received from sender ID 0x42. A
+device should respond with a MSG_SETTINGS_READ_RESP message (msg_id
+0x00A5).
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>setting</td>
+<td>str(ascii)</td>
+<td>A NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0"
+</td>
+</tr>
+</table>
+<a name='type-settings-msg_settings_save'></a>
+<h2>Type: MsgSettingsSave</h2>
+
+<p>The save settings message persists the device's current settings
+configuration to its onboard flash memory file system.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-settings-msg_settings_register'></a>
+<h2>Type: MsgSettingsRegister</h2>
+
+<p>This message registers the presence and default value of a setting with
+a settings daemon.  The host should reply with MSG_SETTINGS_WRITE for
+this setting to set the initial value.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>setting</td>
+<td>str(ascii)</td>
+<td>A NULL-terminated and delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE".
+</td>
+</tr>
+</table>
+<a name='type-settings-msg_settings_read_by_index_req'></a>
+<h2>Type: MsgSettingsReadByIndexReq</h2>
+
+<p>The settings message for iterating through the settings values. A device
+will respond to this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP".
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>index</td>
+<td>u2le</td>
+<td>An index into the device settings, with values ranging from 0 to
+length(settings).
+</td>
+</tr>
+</table>
+<a name='type-settings-msg_settings_read_by_index_done'></a>
+<h2>Type: MsgSettingsReadByIndexDone</h2>
+
+<p>The settings message for indicating end of the settings values.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-settings-msg_settings_write'></a>
+<h2>Type: MsgSettingsWrite</h2>
+
+<p>The setting message writes the device configuration for a particular
+setting via A NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence
+denotes the NULL character and where quotation marks are omitted. A
+device will only process to this message when it is received from sender
+ID 0x42. An example string that could be sent to a device is
+"solution\0soln_freq\010\0".
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>setting</td>
+<td>str(ascii)</td>
+<td>A NULL-terminated and NULL-delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE\0"
+</td>
+</tr>
+</table>
+
+  </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>
+      

@@ -1,0 +1,934 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Piksi format specification</title>
+  </head>
+  <body>
+           <div class="container">
+  <h1>Piksi format specification</h1>
+
+      
+<a name='type-piksi'></a>
+<h1>Type: Piksi</h1>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-piksi-msg_network_state_resp'></a>
+<h2>Type: MsgNetworkStateResp</h2>
+
+<p>The state of a network interface on the Piksi. Data is made to reflect
+output of ifaddrs struct returned by getifaddrs in c.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>ipv4_address</td>
+<td>u1</td>
+<td>IPv4 address (all zero when unavailable)
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>ipv4_mask_size</td>
+<td>u1</td>
+<td>IPv4 netmask CIDR notation
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>ipv6_address</td>
+<td>u1</td>
+<td>IPv6 address (all zero when unavailable)
+</td>
+</tr>
+<tr>
+<td>21</td>
+<td>...</td>
+<td>ipv6_mask_size</td>
+<td>u1</td>
+<td>IPv6 netmask CIDR notation
+</td>
+</tr>
+<tr>
+<td>22</td>
+<td>...</td>
+<td>rx_bytes</td>
+<td>u4le</td>
+<td>Number of Rx bytes
+</td>
+</tr>
+<tr>
+<td>26</td>
+<td>...</td>
+<td>tx_bytes</td>
+<td>u4le</td>
+<td>Number of Tx bytes
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>interface_name</td>
+<td>str(ascii)</td>
+<td>Interface Name
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>flags</td>
+<td>u4le</td>
+<td>Interface flags from SIOCGIFFLAGS
+</td>
+</tr>
+</table>
+<a name='type-piksi-network_usage'></a>
+<h2>Type: NetworkUsage</h2>
+
+<p>The bandwidth usage for each interface can be reported within this
+struct and utilize multiple fields to fully specify the type of traffic
+that is being tracked. As either the interval of collection or the
+collection time may vary, both a timestamp and period field is provided,
+though may not necessarily be populated with a value.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>duration</td>
+<td>u8le</td>
+<td>Duration over which the measurement was collected
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>total_bytes</td>
+<td>u8le</td>
+<td>Number of bytes handled in total within period
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>rx_bytes</td>
+<td>u4le</td>
+<td>Number of bytes transmitted within period
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>tx_bytes</td>
+<td>u4le</td>
+<td>Number of bytes received within period
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>interface_name</td>
+<td>str(ascii)</td>
+<td>Interface Name
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_command_resp'></a>
+<h2>Type: MsgCommandResp</h2>
+
+<p>The response to MSG_COMMAND_REQ with the return code of the command.  A
+return code of zero indicates success.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sequence</td>
+<td>u4le</td>
+<td>Sequence number
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>code</td>
+<td>s4le</td>
+<td>Exit code
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_command_output'></a>
+<h2>Type: MsgCommandOutput</h2>
+
+<p>Returns the standard output and standard error of the command requested
+by MSG_COMMAND_REQ. The sequence number can be used to filter for
+filtering the correct command.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sequence</td>
+<td>u4le</td>
+<td>Sequence number
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>line</td>
+<td>str(ascii)</td>
+<td>Line of standard output or standard error
+</td>
+</tr>
+</table>
+<a name='type-piksi-latency'></a>
+<h2>Type: Latency</h2>
+
+<p>Statistics on the latency of observations received from the base
+station. As observation packets are received their GPS time is compared
+to the current GPS time calculated locally by the receiver to give a
+precise measurement of the end-to-end communication latency in the
+system.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>avg</td>
+<td>s4le</td>
+<td>Average latency
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>lmin</td>
+<td>s4le</td>
+<td>Minimum latency
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>lmax</td>
+<td>s4le</td>
+<td>Maximum latency
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>current</td>
+<td>s4le</td>
+<td>Smoothed estimate of the current latency
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_thread_state'></a>
+<h2>Type: MsgThreadState</h2>
+
+<p>The thread usage message from the device reports real-time operating
+system (RTOS) thread usage statistics for the named thread. The reported
+percentage values must be normalized.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>name</td>
+<td>str(ascii)</td>
+<td>Thread name (NULL terminated)
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>cpu</td>
+<td>u2le</td>
+<td>Percentage cpu use for this thread. Values range from 0 - 1000 and
+needs to be renormalized to 100
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>stack_free</td>
+<td>u4le</td>
+<td>Free stack space for this thread
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_uart_state_depa'></a>
+<h2>Type: MsgUartStateDepa</h2>
+
+<p>Deprecated
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>uart_a</td>
+<td><a href="#type-piksi-uart_channel">UartChannel</a></td>
+<td>State of UART A
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>uart_b</td>
+<td><a href="#type-piksi-uart_channel">UartChannel</a></td>
+<td>State of UART B
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>uart_ftdi</td>
+<td><a href="#type-piksi-uart_channel">UartChannel</a></td>
+<td>State of UART FTDI (USB logger)
+</td>
+</tr>
+<tr>
+<td>42</td>
+<td>...</td>
+<td>latency</td>
+<td><a href="#type-piksi-latency">Latency</a></td>
+<td>UART communication latency
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_network_state_req'></a>
+<h2>Type: MsgNetworkStateReq</h2>
+
+<p>Request state of Piksi network interfaces. Output will be sent in
+MSG_NETWORK_STATE_RESP messages.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-piksi-msg_device_monitor'></a>
+<h2>Type: MsgDeviceMonitor</h2>
+
+<p>This message contains temperature and voltage level measurements from
+the processor's monitoring system and the RF frontend die temperature if
+available.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>dev_vin</td>
+<td>s2le</td>
+<td>Device V_in
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>cpu_vint</td>
+<td>s2le</td>
+<td>Processor V_int
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>cpu_vaux</td>
+<td>s2le</td>
+<td>Processor V_aux
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>cpu_temperature</td>
+<td>s2le</td>
+<td>Processor temperature
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>fe_temperature</td>
+<td>s2le</td>
+<td>Frontend temperature (if available)
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_mask_satellite_dep'></a>
+<h2>Type: MsgMaskSatelliteDep</h2>
+
+<p>Deprecated.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>mask</td>
+<td>u1</td>
+<td>Mask of systems that should ignore this satellite.
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal_dep">GnssSignalDep</a></td>
+<td>GNSS signal for which the mask is applied
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_uart_state'></a>
+<h2>Type: MsgUartState</h2>
+
+<p>The UART message reports data latency and throughput of the UART
+channels providing SBP I/O. On the default Piksi configuration, UARTs A
+and B are used for telemetry radios, but can also be host access ports
+for embedded hosts, or other interfaces in future. The reported
+percentage values must be normalized. Observations latency and period
+can be used to assess the health of the differential corrections link.
+Latency provides the timeliness of received base observations while the
+period indicates their likelihood of transmission.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>uart_a</td>
+<td><a href="#type-piksi-uart_channel">UartChannel</a></td>
+<td>State of UART A
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>uart_b</td>
+<td><a href="#type-piksi-uart_channel">UartChannel</a></td>
+<td>State of UART B
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>uart_ftdi</td>
+<td><a href="#type-piksi-uart_channel">UartChannel</a></td>
+<td>State of UART FTDI (USB logger)
+</td>
+</tr>
+<tr>
+<td>42</td>
+<td>...</td>
+<td>latency</td>
+<td><a href="#type-piksi-latency">Latency</a></td>
+<td>UART communication latency
+</td>
+</tr>
+<tr>
+<td>58</td>
+<td>...</td>
+<td>obs_period</td>
+<td><a href="#type-piksi-period">Period</a></td>
+<td>Observation receipt period
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_specan'></a>
+<h2>Type: MsgSpecan</h2>
+
+<p>Spectrum analyzer packet.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>channel_tag</td>
+<td>u2le</td>
+<td>Channel ID
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>t</td>
+<td><a href="#type-gnss-gps_time">GpsTime</a></td>
+<td>Receiver time of this observation
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>freq_ref</td>
+<td>f4le</td>
+<td>Reference frequency of this packet
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>freq_step</td>
+<td>f4le</td>
+<td>Frequency step of points in this packet
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>amplitude_ref</td>
+<td>f4le</td>
+<td>Reference amplitude of this packet
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>amplitude_unit</td>
+<td>f4le</td>
+<td>Amplitude unit value of points in this packet
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>amplitude_value</td>
+<td>u1</td>
+<td>Amplitude values (in the above units) of points in this packet
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_iar_state'></a>
+<h2>Type: MsgIarState</h2>
+
+<p>This message reports the state of the Integer Ambiguity Resolution (IAR)
+process, which resolves unknown integer ambiguities from double-
+differenced carrier-phase measurements from satellite observations.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>num_hyps</td>
+<td>u4le</td>
+<td>Number of integer ambiguity hypotheses remaining
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_almanac'></a>
+<h2>Type: MsgAlmanac</h2>
+
+<p>This is a legacy message for sending and loading a satellite alamanac
+onto the Piksi's flash memory from the host.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-piksi-msg_reset_filters'></a>
+<h2>Type: MsgResetFilters</h2>
+
+<p>This message resets either the DGNSS Kalman filters or Integer Ambiguity
+Resolution (IAR) process.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>filter</td>
+<td>u1</td>
+<td>Filter flags
+</td>
+</tr>
+</table>
+<a name='type-piksi-uart_channel'></a>
+<h2>Type: UartChannel</h2>
+
+<p>Throughput, utilization, and error counts on the RX/TX buffers of this
+UART channel. The reported percentage values must be normalized.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tx_throughput</td>
+<td>f4le</td>
+<td>UART transmit throughput
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>rx_throughput</td>
+<td>f4le</td>
+<td>UART receive throughput
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>crc_error_count</td>
+<td>u2le</td>
+<td>UART CRC error count
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>io_error_count</td>
+<td>u2le</td>
+<td>UART IO error count
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>tx_buffer_level</td>
+<td>u1</td>
+<td>UART transmit buffer percentage utilization (ranges from 0 to 255)
+</td>
+</tr>
+<tr>
+<td>13</td>
+<td>...</td>
+<td>rx_buffer_level</td>
+<td>u1</td>
+<td>UART receive buffer percentage utilization (ranges from 0 to 255)
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_command_req'></a>
+<h2>Type: MsgCommandReq</h2>
+
+<p>Request the recipient to execute an command. Output will be sent in
+MSG_LOG messages, and the exit code will be returned with
+MSG_COMMAND_RESP.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sequence</td>
+<td>u4le</td>
+<td>Sequence number
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>command</td>
+<td>str(ascii)</td>
+<td>Command line to execute
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_mask_satellite'></a>
+<h2>Type: MsgMaskSatellite</h2>
+
+<p>This message allows setting a mask to prevent a particular satellite
+from being used in various Piksi subsystems.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>mask</td>
+<td>u1</td>
+<td>Mask of systems that should ignore this satellite.
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>sid</td>
+<td><a href="#type-gnss-gnss_signal">GnssSignal</a></td>
+<td>GNSS signal for which the mask is applied
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_network_bandwidth_usage'></a>
+<h2>Type: MsgNetworkBandwidthUsage</h2>
+
+<p>The bandwidth usage, a list of usage by interface.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>interfaces</td>
+<td><a href="#type-piksi-network_usage">NetworkUsage</a></td>
+<td>Usage measurement array
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_reset'></a>
+<h2>Type: MsgReset</h2>
+
+<p>This message from the host resets the Piksi back into the bootloader.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>flags</td>
+<td>u4le</td>
+<td>Reset flags
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_cell_modem_status'></a>
+<h2>Type: MsgCellModemStatus</h2>
+
+<p>If a cell modem is present on a piksi device, this message will be send
+periodically to update the host on the status of the modem and its
+various parameters.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>signal_strength</td>
+<td>s1</td>
+<td>Received cell signal strength in dBm, zero translates to unknown
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>signal_error_rate</td>
+<td>f4le</td>
+<td>BER as reported by the modem, zero translates to unknown
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>reserved</td>
+<td>u1</td>
+<td>Unspecified data TBD for this schema
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_front_end_gain'></a>
+<h2>Type: MsgFrontEndGain</h2>
+
+<p>This message describes the gain of each channel in the receiver
+frontend. Each gain is encoded as a non-dimensional percentage relative
+to the maximum range possible for the gain stage of the frontend. By
+convention, each gain array has 8 entries and the index of the array
+corresponding to the index of the rf channel in the frontend. A gain of
+127 percent encodes that rf channel is not present in the hardware. A
+negative value implies an error for the particular gain stage as
+reported by the frontend.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>rf_gain</td>
+<td>s1</td>
+<td>RF gain for each frontend channel
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>if_gain</td>
+<td>s1</td>
+<td>Intermediate frequency gain for each frontend channel
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_reset_dep'></a>
+<h2>Type: MsgResetDep</h2>
+
+<p>This message from the host resets the Piksi back into the bootloader.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-piksi-msg_set_time'></a>
+<h2>Type: MsgSetTime</h2>
+
+<p>This message sets up timing functionality using a coarse GPS time
+estimate sent by the host.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-piksi-msg_cw_results'></a>
+<h2>Type: MsgCwResults</h2>
+
+<p>This is an unused legacy message for result reporting from the CW
+interference channel on the SwiftNAP. This message will be removed in a
+future release.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-piksi-msg_specan_dep'></a>
+<h2>Type: MsgSpecanDep</h2>
+
+<p>Deprecated.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>channel_tag</td>
+<td>u2le</td>
+<td>Channel ID
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>t</td>
+<td><a href="#type-gnss-gps_time_dep">GpsTimeDep</a></td>
+<td>Receiver time of this observation
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>freq_ref</td>
+<td>f4le</td>
+<td>Reference frequency of this packet
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>freq_step</td>
+<td>f4le</td>
+<td>Frequency step of points in this packet
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>amplitude_ref</td>
+<td>f4le</td>
+<td>Reference amplitude of this packet
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>amplitude_unit</td>
+<td>f4le</td>
+<td>Amplitude unit value of points in this packet
+</td>
+</tr>
+<tr>
+<td>24</td>
+<td>...</td>
+<td>amplitude_value</td>
+<td>u1</td>
+<td>Amplitude values (in the above units) of points in this packet
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_init_base_dep'></a>
+<h2>Type: MsgInitBaseDep</h2>
+
+<p>Deprecated
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-piksi-period'></a>
+<h2>Type: Period</h2>
+
+<p>Statistics on the period of observations received from the base station.
+As complete observation sets are received, their time of reception is
+compared with the prior set''s time of reception. This measurement
+provides a proxy for link quality as incomplete or missing sets will
+increase the period.  Long periods can cause momentary RTK solution
+outages.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>avg</td>
+<td>s4le</td>
+<td>Average period
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>pmin</td>
+<td>s4le</td>
+<td>Minimum period
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>pmax</td>
+<td>s4le</td>
+<td>Maximum period
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>current</td>
+<td>s4le</td>
+<td>Smoothed estimate of the current period
+</td>
+</tr>
+</table>
+<a name='type-piksi-msg_cw_start'></a>
+<h2>Type: MsgCwStart</h2>
+
+<p>This is an unused legacy message from the host for starting the CW
+interference channel on the SwiftNAP. This message will be removed in a
+future release.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+
+  </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>
+      

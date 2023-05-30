@@ -1,0 +1,225 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__tracking {
+		label="Tracking";
+		graph[style=dotted];
+
+		tracking__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__msg_tracking_state_detailed_dep {
+			label="Tracking::MsgTrackingStateDetailedDep";
+			graph[style=dotted];
+
+			msg_tracking_state_detailed_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="recv_time_pos">0</TD><TD PORT="recv_time_size">8</TD><TD>u8le</TD><TD PORT="recv_time_type">recv_time</TD></TR>
+				<TR><TD PORT="tot_pos">8</TD><TD PORT="tot_size">6</TD><TD>Gnss::GpsTimeDep</TD><TD PORT="tot_type">tot</TD></TR>
+				<TR><TD PORT="p_pos">14</TD><TD PORT="p_size">4</TD><TD>u4le</TD><TD PORT="p_type">p</TD></TR>
+				<TR><TD PORT="p_std_pos">18</TD><TD PORT="p_std_size">2</TD><TD>u2le</TD><TD PORT="p_std_type">p_std</TD></TR>
+				<TR><TD PORT="l_pos">20</TD><TD PORT="l_size">5</TD><TD>Gnss::CarrierPhase</TD><TD PORT="l_type">l</TD></TR>
+				<TR><TD PORT="cn0_pos">25</TD><TD PORT="cn0_size">1</TD><TD>u1</TD><TD PORT="cn0_type">cn0</TD></TR>
+				<TR><TD PORT="lock_pos">26</TD><TD PORT="lock_size">2</TD><TD>u2le</TD><TD PORT="lock_type">lock</TD></TR>
+				<TR><TD PORT="sid_pos">28</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="doppler_pos">32</TD><TD PORT="doppler_size">4</TD><TD>s4le</TD><TD PORT="doppler_type">doppler</TD></TR>
+				<TR><TD PORT="doppler_std_pos">36</TD><TD PORT="doppler_std_size">2</TD><TD>u2le</TD><TD PORT="doppler_std_type">doppler_std</TD></TR>
+				<TR><TD PORT="uptime_pos">38</TD><TD PORT="uptime_size">4</TD><TD>u4le</TD><TD PORT="uptime_type">uptime</TD></TR>
+				<TR><TD PORT="clock_offset_pos">42</TD><TD PORT="clock_offset_size">2</TD><TD>s2le</TD><TD PORT="clock_offset_type">clock_offset</TD></TR>
+				<TR><TD PORT="clock_drift_pos">44</TD><TD PORT="clock_drift_size">2</TD><TD>s2le</TD><TD PORT="clock_drift_type">clock_drift</TD></TR>
+				<TR><TD PORT="corr_spacing_pos">46</TD><TD PORT="corr_spacing_size">2</TD><TD>u2le</TD><TD PORT="corr_spacing_type">corr_spacing</TD></TR>
+				<TR><TD PORT="acceleration_pos">48</TD><TD PORT="acceleration_size">1</TD><TD>s1</TD><TD PORT="acceleration_type">acceleration</TD></TR>
+				<TR><TD PORT="sync_flags_pos">49</TD><TD PORT="sync_flags_size">1</TD><TD>u1</TD><TD PORT="sync_flags_type">sync_flags</TD></TR>
+				<TR><TD PORT="tow_flags_pos">50</TD><TD PORT="tow_flags_size">1</TD><TD>u1</TD><TD PORT="tow_flags_type">tow_flags</TD></TR>
+				<TR><TD PORT="track_flags_pos">51</TD><TD PORT="track_flags_size">1</TD><TD>u1</TD><TD PORT="track_flags_type">track_flags</TD></TR>
+				<TR><TD PORT="nav_flags_pos">52</TD><TD PORT="nav_flags_size">1</TD><TD>u1</TD><TD PORT="nav_flags_type">nav_flags</TD></TR>
+				<TR><TD PORT="pset_flags_pos">53</TD><TD PORT="pset_flags_size">1</TD><TD>u1</TD><TD PORT="pset_flags_type">pset_flags</TD></TR>
+				<TR><TD PORT="misc_flags_pos">54</TD><TD PORT="misc_flags_size">1</TD><TD>u1</TD><TD PORT="misc_flags_type">misc_flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__tracking_channel_state_dep_b {
+			label="Tracking::TrackingChannelStateDepB";
+			graph[style=dotted];
+
+			tracking_channel_state_dep_b__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="state_pos">0</TD><TD PORT="state_size">1</TD><TD>u1</TD><TD PORT="state_type">state</TD></TR>
+				<TR><TD PORT="sid_pos">1</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="cn0_pos">5</TD><TD PORT="cn0_size">4</TD><TD>f4le</TD><TD PORT="cn0_type">cn0</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__tracking_channel_state {
+			label="Tracking::TrackingChannelState";
+			graph[style=dotted];
+
+			tracking_channel_state__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sid_pos">0</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="fcn_pos">2</TD><TD PORT="fcn_size">1</TD><TD>u1</TD><TD PORT="fcn_type">fcn</TD></TR>
+				<TR><TD PORT="cn0_pos">3</TD><TD PORT="cn0_size">1</TD><TD>u1</TD><TD PORT="cn0_type">cn0</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_tracking_state {
+			label="Tracking::MsgTrackingState";
+			graph[style=dotted];
+
+			msg_tracking_state__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="states_pos">0</TD><TD PORT="states_size">4</TD><TD>TrackingChannelState</TD><TD PORT="states_type">states</TD></TR>
+				<TR><TD COLSPAN="4" PORT="states__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__tracking_channel_state_dep_a {
+			label="Tracking::TrackingChannelStateDepA";
+			graph[style=dotted];
+
+			tracking_channel_state_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="state_pos">0</TD><TD PORT="state_size">1</TD><TD>u1</TD><TD PORT="state_type">state</TD></TR>
+				<TR><TD PORT="prn_pos">1</TD><TD PORT="prn_size">1</TD><TD>u1</TD><TD PORT="prn_type">prn</TD></TR>
+				<TR><TD PORT="cn0_pos">2</TD><TD PORT="cn0_size">4</TD><TD>f4le</TD><TD PORT="cn0_type">cn0</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_tracking_iq_dep_a {
+			label="Tracking::MsgTrackingIqDepA";
+			graph[style=dotted];
+
+			msg_tracking_iq_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="channel_pos">0</TD><TD PORT="channel_size">1</TD><TD>u1</TD><TD PORT="channel_type">channel</TD></TR>
+				<TR><TD PORT="sid_pos">1</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="corrs_pos">5</TD><TD PORT="corrs_size">8</TD><TD>u8le</TD><TD PORT="corrs_type">corrs</TD></TR>
+				<TR><TD COLSPAN="4" PORT="corrs__repeat">repeat 3 times</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__tracking_channel_correlation_dep {
+			label="Tracking::TrackingChannelCorrelationDep";
+			graph[style=dotted];
+
+			tracking_channel_correlation_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="i_pos">0</TD><TD PORT="i_size">4</TD><TD>s4le</TD><TD PORT="i_type">i</TD></TR>
+				<TR><TD PORT="q_pos">4</TD><TD PORT="q_size">4</TD><TD>s4le</TD><TD PORT="q_type">q</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_tracking_state_dep_a {
+			label="Tracking::MsgTrackingStateDepA";
+			graph[style=dotted];
+
+			msg_tracking_state_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="states_pos">0</TD><TD PORT="states_size">6</TD><TD>TrackingChannelStateDepA</TD><TD PORT="states_type">states</TD></TR>
+				<TR><TD COLSPAN="4" PORT="states__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_measurement_state {
+			label="Tracking::MsgMeasurementState";
+			graph[style=dotted];
+
+			msg_measurement_state__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="states_pos">0</TD><TD PORT="states_size">3</TD><TD>MeasurementState</TD><TD PORT="states_type">states</TD></TR>
+				<TR><TD COLSPAN="4" PORT="states__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__tracking_channel_correlation {
+			label="Tracking::TrackingChannelCorrelation";
+			graph[style=dotted];
+
+			tracking_channel_correlation__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="i_pos">0</TD><TD PORT="i_size">2</TD><TD>s2le</TD><TD PORT="i_type">i</TD></TR>
+				<TR><TD PORT="q_pos">2</TD><TD PORT="q_size">2</TD><TD>s2le</TD><TD PORT="q_type">q</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_tracking_iq {
+			label="Tracking::MsgTrackingIq";
+			graph[style=dotted];
+
+			msg_tracking_iq__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="channel_pos">0</TD><TD PORT="channel_size">1</TD><TD>u1</TD><TD PORT="channel_type">channel</TD></TR>
+				<TR><TD PORT="sid_pos">1</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="corrs_pos">3</TD><TD PORT="corrs_size">8</TD><TD>u8le</TD><TD PORT="corrs_type">corrs</TD></TR>
+				<TR><TD COLSPAN="4" PORT="corrs__repeat">repeat 3 times</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_tracking_state_detailed_dep_a {
+			label="Tracking::MsgTrackingStateDetailedDepA";
+			graph[style=dotted];
+
+			msg_tracking_state_detailed_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="recv_time_pos">0</TD><TD PORT="recv_time_size">8</TD><TD>u8le</TD><TD PORT="recv_time_type">recv_time</TD></TR>
+				<TR><TD PORT="tot_pos">8</TD><TD PORT="tot_size">10</TD><TD>Gnss::GpsTime</TD><TD PORT="tot_type">tot</TD></TR>
+				<TR><TD PORT="p_pos">18</TD><TD PORT="p_size">4</TD><TD>u4le</TD><TD PORT="p_type">p</TD></TR>
+				<TR><TD PORT="p_std_pos">22</TD><TD PORT="p_std_size">2</TD><TD>u2le</TD><TD PORT="p_std_type">p_std</TD></TR>
+				<TR><TD PORT="l_pos">24</TD><TD PORT="l_size">5</TD><TD>Gnss::CarrierPhase</TD><TD PORT="l_type">l</TD></TR>
+				<TR><TD PORT="cn0_pos">29</TD><TD PORT="cn0_size">1</TD><TD>u1</TD><TD PORT="cn0_type">cn0</TD></TR>
+				<TR><TD PORT="lock_pos">30</TD><TD PORT="lock_size">2</TD><TD>u2le</TD><TD PORT="lock_type">lock</TD></TR>
+				<TR><TD PORT="sid_pos">32</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="doppler_pos">34</TD><TD PORT="doppler_size">4</TD><TD>s4le</TD><TD PORT="doppler_type">doppler</TD></TR>
+				<TR><TD PORT="doppler_std_pos">38</TD><TD PORT="doppler_std_size">2</TD><TD>u2le</TD><TD PORT="doppler_std_type">doppler_std</TD></TR>
+				<TR><TD PORT="uptime_pos">40</TD><TD PORT="uptime_size">4</TD><TD>u4le</TD><TD PORT="uptime_type">uptime</TD></TR>
+				<TR><TD PORT="clock_offset_pos">44</TD><TD PORT="clock_offset_size">2</TD><TD>s2le</TD><TD PORT="clock_offset_type">clock_offset</TD></TR>
+				<TR><TD PORT="clock_drift_pos">46</TD><TD PORT="clock_drift_size">2</TD><TD>s2le</TD><TD PORT="clock_drift_type">clock_drift</TD></TR>
+				<TR><TD PORT="corr_spacing_pos">48</TD><TD PORT="corr_spacing_size">2</TD><TD>u2le</TD><TD PORT="corr_spacing_type">corr_spacing</TD></TR>
+				<TR><TD PORT="acceleration_pos">50</TD><TD PORT="acceleration_size">1</TD><TD>s1</TD><TD PORT="acceleration_type">acceleration</TD></TR>
+				<TR><TD PORT="sync_flags_pos">51</TD><TD PORT="sync_flags_size">1</TD><TD>u1</TD><TD PORT="sync_flags_type">sync_flags</TD></TR>
+				<TR><TD PORT="tow_flags_pos">52</TD><TD PORT="tow_flags_size">1</TD><TD>u1</TD><TD PORT="tow_flags_type">tow_flags</TD></TR>
+				<TR><TD PORT="track_flags_pos">53</TD><TD PORT="track_flags_size">1</TD><TD>u1</TD><TD PORT="track_flags_type">track_flags</TD></TR>
+				<TR><TD PORT="nav_flags_pos">54</TD><TD PORT="nav_flags_size">1</TD><TD>u1</TD><TD PORT="nav_flags_type">nav_flags</TD></TR>
+				<TR><TD PORT="pset_flags_pos">55</TD><TD PORT="pset_flags_size">1</TD><TD>u1</TD><TD PORT="pset_flags_type">pset_flags</TD></TR>
+				<TR><TD PORT="misc_flags_pos">56</TD><TD PORT="misc_flags_size">1</TD><TD>u1</TD><TD PORT="misc_flags_type">misc_flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_tracking_state_dep_b {
+			label="Tracking::MsgTrackingStateDepB";
+			graph[style=dotted];
+
+			msg_tracking_state_dep_b__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="states_pos">0</TD><TD PORT="states_size">9</TD><TD>TrackingChannelStateDepB</TD><TD PORT="states_type">states</TD></TR>
+				<TR><TD COLSPAN="4" PORT="states__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__measurement_state {
+			label="Tracking::MeasurementState";
+			graph[style=dotted];
+
+			measurement_state__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="mesid_pos">0</TD><TD PORT="mesid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="mesid_type">mesid</TD></TR>
+				<TR><TD PORT="cn0_pos">2</TD><TD PORT="cn0_size">1</TD><TD>u1</TD><TD PORT="cn0_type">cn0</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_tracking_iq_dep_b {
+			label="Tracking::MsgTrackingIqDepB";
+			graph[style=dotted];
+
+			msg_tracking_iq_dep_b__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="channel_pos">0</TD><TD PORT="channel_size">1</TD><TD>u1</TD><TD PORT="channel_type">channel</TD></TR>
+				<TR><TD PORT="sid_pos">1</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+				<TR><TD PORT="corrs_pos">3</TD><TD PORT="corrs_size">8</TD><TD>u8le</TD><TD PORT="corrs_type">corrs</TD></TR>
+				<TR><TD COLSPAN="4" PORT="corrs__repeat">repeat 3 times</TD></TR>
+			</TABLE>>];
+		}
+	}
+	msg_tracking_state_detailed_dep__seq:tot_type -> gps_time_dep__seq [style=bold];
+	msg_tracking_state_detailed_dep__seq:l_type -> carrier_phase__seq [style=bold];
+	msg_tracking_state_detailed_dep__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	tracking_channel_state_dep_b__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	tracking_channel_state__seq:sid_type -> gnss_signal__seq [style=bold];
+	msg_tracking_state__seq:states_type -> tracking_channel_state__seq [style=bold];
+	msg_tracking_iq_dep_a__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	msg_tracking_state_dep_a__seq:states_type -> tracking_channel_state_dep_a__seq [style=bold];
+	msg_measurement_state__seq:states_type -> measurement_state__seq [style=bold];
+	msg_tracking_iq__seq:sid_type -> gnss_signal__seq [style=bold];
+	msg_tracking_state_detailed_dep_a__seq:tot_type -> gps_time__seq [style=bold];
+	msg_tracking_state_detailed_dep_a__seq:l_type -> carrier_phase__seq [style=bold];
+	msg_tracking_state_detailed_dep_a__seq:sid_type -> gnss_signal__seq [style=bold];
+	msg_tracking_state_dep_b__seq:states_type -> tracking_channel_state_dep_b__seq [style=bold];
+	measurement_state__seq:mesid_type -> gnss_signal__seq [style=bold];
+	msg_tracking_iq_dep_b__seq:sid_type -> gnss_signal__seq [style=bold];
+}

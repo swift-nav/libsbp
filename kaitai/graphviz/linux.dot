@@ -1,0 +1,164 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__linux {
+		label="Linux";
+		graph[style=dotted];
+
+		linux__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__msg_linux_socket_usage {
+			label="Linux::MsgLinuxSocketUsage";
+			graph[style=dotted];
+
+			msg_linux_socket_usage__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="avg_queue_depth_pos">0</TD><TD PORT="avg_queue_depth_size">4</TD><TD>u4le</TD><TD PORT="avg_queue_depth_type">avg_queue_depth</TD></TR>
+				<TR><TD PORT="max_queue_depth_pos">4</TD><TD PORT="max_queue_depth_size">4</TD><TD>u4le</TD><TD PORT="max_queue_depth_type">max_queue_depth</TD></TR>
+				<TR><TD PORT="socket_state_counts_pos">8</TD><TD PORT="socket_state_counts_size">2</TD><TD>u2le</TD><TD PORT="socket_state_counts_type">socket_state_counts</TD></TR>
+				<TR><TD COLSPAN="4" PORT="socket_state_counts__repeat">repeat 16 times</TD></TR>
+				<TR><TD PORT="socket_type_counts_pos">40</TD><TD PORT="socket_type_counts_size">2</TD><TD>u2le</TD><TD PORT="socket_type_counts_type">socket_type_counts</TD></TR>
+				<TR><TD COLSPAN="4" PORT="socket_type_counts__repeat">repeat 16 times</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_linux_sys_state {
+			label="Linux::MsgLinuxSysState";
+			graph[style=dotted];
+
+			msg_linux_sys_state__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="mem_total_pos">0</TD><TD PORT="mem_total_size">2</TD><TD>u2le</TD><TD PORT="mem_total_type">mem_total</TD></TR>
+				<TR><TD PORT="pcpu_pos">2</TD><TD PORT="pcpu_size">1</TD><TD>u1</TD><TD PORT="pcpu_type">pcpu</TD></TR>
+				<TR><TD PORT="pmem_pos">3</TD><TD PORT="pmem_size">1</TD><TD>u1</TD><TD PORT="pmem_type">pmem</TD></TR>
+				<TR><TD PORT="procs_starting_pos">4</TD><TD PORT="procs_starting_size">2</TD><TD>u2le</TD><TD PORT="procs_starting_type">procs_starting</TD></TR>
+				<TR><TD PORT="procs_stopping_pos">6</TD><TD PORT="procs_stopping_size">2</TD><TD>u2le</TD><TD PORT="procs_stopping_type">procs_stopping</TD></TR>
+				<TR><TD PORT="pid_count_pos">8</TD><TD PORT="pid_count_size">2</TD><TD>u2le</TD><TD PORT="pid_count_type">pid_count</TD></TR>
+				<TR><TD PORT="time_pos">10</TD><TD PORT="time_size">4</TD><TD>u4le</TD><TD PORT="time_type">time</TD></TR>
+				<TR><TD PORT="flags_pos">14</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_linux_cpu_state_dep_a {
+			label="Linux::MsgLinuxCpuStateDepA";
+			graph[style=dotted];
+
+			msg_linux_cpu_state_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="index_pos">0</TD><TD PORT="index_size">1</TD><TD>u1</TD><TD PORT="index_type">index</TD></TR>
+				<TR><TD PORT="pid_pos">1</TD><TD PORT="pid_size">2</TD><TD>u2le</TD><TD PORT="pid_type">pid</TD></TR>
+				<TR><TD PORT="pcpu_pos">3</TD><TD PORT="pcpu_size">1</TD><TD>u1</TD><TD PORT="pcpu_type">pcpu</TD></TR>
+				<TR><TD PORT="tname_pos">4</TD><TD PORT="tname_size">⇲</TD><TD>str(ascii)</TD><TD PORT="tname_type">tname</TD></TR>
+				<TR><TD PORT="cmdline_pos">...</TD><TD PORT="cmdline_size">⇲</TD><TD>str(ascii)</TD><TD PORT="cmdline_type">cmdline</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_linux_mem_state {
+			label="Linux::MsgLinuxMemState";
+			graph[style=dotted];
+
+			msg_linux_mem_state__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="index_pos">0</TD><TD PORT="index_size">1</TD><TD>u1</TD><TD PORT="index_type">index</TD></TR>
+				<TR><TD PORT="pid_pos">1</TD><TD PORT="pid_size">2</TD><TD>u2le</TD><TD PORT="pid_type">pid</TD></TR>
+				<TR><TD PORT="pmem_pos">3</TD><TD PORT="pmem_size">1</TD><TD>u1</TD><TD PORT="pmem_type">pmem</TD></TR>
+				<TR><TD PORT="time_pos">4</TD><TD PORT="time_size">4</TD><TD>u4le</TD><TD PORT="time_type">time</TD></TR>
+				<TR><TD PORT="flags_pos">8</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+				<TR><TD PORT="tname_pos">9</TD><TD PORT="tname_size">⇲</TD><TD>str(ascii)</TD><TD PORT="tname_type">tname</TD></TR>
+				<TR><TD PORT="cmdline_pos">...</TD><TD PORT="cmdline_size">⇲</TD><TD>str(ascii)</TD><TD PORT="cmdline_type">cmdline</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_linux_process_fd_count {
+			label="Linux::MsgLinuxProcessFdCount";
+			graph[style=dotted];
+
+			msg_linux_process_fd_count__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="index_pos">0</TD><TD PORT="index_size">1</TD><TD>u1</TD><TD PORT="index_type">index</TD></TR>
+				<TR><TD PORT="pid_pos">1</TD><TD PORT="pid_size">2</TD><TD>u2le</TD><TD PORT="pid_type">pid</TD></TR>
+				<TR><TD PORT="fd_count_pos">3</TD><TD PORT="fd_count_size">2</TD><TD>u2le</TD><TD PORT="fd_count_type">fd_count</TD></TR>
+				<TR><TD PORT="cmdline_pos">5</TD><TD PORT="cmdline_size">⇲</TD><TD>str(ascii)</TD><TD PORT="cmdline_type">cmdline</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_linux_mem_state_dep_a {
+			label="Linux::MsgLinuxMemStateDepA";
+			graph[style=dotted];
+
+			msg_linux_mem_state_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="index_pos">0</TD><TD PORT="index_size">1</TD><TD>u1</TD><TD PORT="index_type">index</TD></TR>
+				<TR><TD PORT="pid_pos">1</TD><TD PORT="pid_size">2</TD><TD>u2le</TD><TD PORT="pid_type">pid</TD></TR>
+				<TR><TD PORT="pmem_pos">3</TD><TD PORT="pmem_size">1</TD><TD>u1</TD><TD PORT="pmem_type">pmem</TD></TR>
+				<TR><TD PORT="tname_pos">4</TD><TD PORT="tname_size">⇲</TD><TD>str(ascii)</TD><TD PORT="tname_type">tname</TD></TR>
+				<TR><TD PORT="cmdline_pos">...</TD><TD PORT="cmdline_size">⇲</TD><TD>str(ascii)</TD><TD PORT="cmdline_type">cmdline</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_linux_process_socket_queues {
+			label="Linux::MsgLinuxProcessSocketQueues";
+			graph[style=dotted];
+
+			msg_linux_process_socket_queues__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="index_pos">0</TD><TD PORT="index_size">1</TD><TD>u1</TD><TD PORT="index_type">index</TD></TR>
+				<TR><TD PORT="pid_pos">1</TD><TD PORT="pid_size">2</TD><TD>u2le</TD><TD PORT="pid_type">pid</TD></TR>
+				<TR><TD PORT="recv_queued_pos">3</TD><TD PORT="recv_queued_size">2</TD><TD>u2le</TD><TD PORT="recv_queued_type">recv_queued</TD></TR>
+				<TR><TD PORT="send_queued_pos">5</TD><TD PORT="send_queued_size">2</TD><TD>u2le</TD><TD PORT="send_queued_type">send_queued</TD></TR>
+				<TR><TD PORT="socket_types_pos">7</TD><TD PORT="socket_types_size">2</TD><TD>u2le</TD><TD PORT="socket_types_type">socket_types</TD></TR>
+				<TR><TD PORT="socket_states_pos">9</TD><TD PORT="socket_states_size">2</TD><TD>u2le</TD><TD PORT="socket_states_type">socket_states</TD></TR>
+				<TR><TD PORT="address_of_largest_pos">11</TD><TD PORT="address_of_largest_size">⇲</TD><TD>str(ascii)</TD><TD PORT="address_of_largest_type">address_of_largest</TD></TR>
+				<TR><TD PORT="cmdline_pos">...</TD><TD PORT="cmdline_size">⇲</TD><TD>str(ascii)</TD><TD PORT="cmdline_type">cmdline</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_linux_sys_state_dep_a {
+			label="Linux::MsgLinuxSysStateDepA";
+			graph[style=dotted];
+
+			msg_linux_sys_state_dep_a__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="mem_total_pos">0</TD><TD PORT="mem_total_size">2</TD><TD>u2le</TD><TD PORT="mem_total_type">mem_total</TD></TR>
+				<TR><TD PORT="pcpu_pos">2</TD><TD PORT="pcpu_size">1</TD><TD>u1</TD><TD PORT="pcpu_type">pcpu</TD></TR>
+				<TR><TD PORT="pmem_pos">3</TD><TD PORT="pmem_size">1</TD><TD>u1</TD><TD PORT="pmem_type">pmem</TD></TR>
+				<TR><TD PORT="procs_starting_pos">4</TD><TD PORT="procs_starting_size">2</TD><TD>u2le</TD><TD PORT="procs_starting_type">procs_starting</TD></TR>
+				<TR><TD PORT="procs_stopping_pos">6</TD><TD PORT="procs_stopping_size">2</TD><TD>u2le</TD><TD PORT="procs_stopping_type">procs_stopping</TD></TR>
+				<TR><TD PORT="pid_count_pos">8</TD><TD PORT="pid_count_size">2</TD><TD>u2le</TD><TD PORT="pid_count_type">pid_count</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_linux_process_fd_summary {
+			label="Linux::MsgLinuxProcessFdSummary";
+			graph[style=dotted];
+
+			msg_linux_process_fd_summary__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sys_fd_count_pos">0</TD><TD PORT="sys_fd_count_size">4</TD><TD>u4le</TD><TD PORT="sys_fd_count_type">sys_fd_count</TD></TR>
+				<TR><TD PORT="most_opened_pos">4</TD><TD PORT="most_opened_size">⇲</TD><TD>str(ascii)</TD><TD PORT="most_opened_type">most_opened</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_linux_cpu_state {
+			label="Linux::MsgLinuxCpuState";
+			graph[style=dotted];
+
+			msg_linux_cpu_state__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="index_pos">0</TD><TD PORT="index_size">1</TD><TD>u1</TD><TD PORT="index_type">index</TD></TR>
+				<TR><TD PORT="pid_pos">1</TD><TD PORT="pid_size">2</TD><TD>u2le</TD><TD PORT="pid_type">pid</TD></TR>
+				<TR><TD PORT="pcpu_pos">3</TD><TD PORT="pcpu_size">1</TD><TD>u1</TD><TD PORT="pcpu_type">pcpu</TD></TR>
+				<TR><TD PORT="time_pos">4</TD><TD PORT="time_size">4</TD><TD>u4le</TD><TD PORT="time_type">time</TD></TR>
+				<TR><TD PORT="flags_pos">8</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+				<TR><TD PORT="tname_pos">9</TD><TD PORT="tname_size">⇲</TD><TD>str(ascii)</TD><TD PORT="tname_type">tname</TD></TR>
+				<TR><TD PORT="cmdline_pos">...</TD><TD PORT="cmdline_size">⇲</TD><TD>str(ascii)</TD><TD PORT="cmdline_type">cmdline</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_linux_process_socket_counts {
+			label="Linux::MsgLinuxProcessSocketCounts";
+			graph[style=dotted];
+
+			msg_linux_process_socket_counts__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="index_pos">0</TD><TD PORT="index_size">1</TD><TD>u1</TD><TD PORT="index_type">index</TD></TR>
+				<TR><TD PORT="pid_pos">1</TD><TD PORT="pid_size">2</TD><TD>u2le</TD><TD PORT="pid_type">pid</TD></TR>
+				<TR><TD PORT="socket_count_pos">3</TD><TD PORT="socket_count_size">2</TD><TD>u2le</TD><TD PORT="socket_count_type">socket_count</TD></TR>
+				<TR><TD PORT="socket_types_pos">5</TD><TD PORT="socket_types_size">2</TD><TD>u2le</TD><TD PORT="socket_types_type">socket_types</TD></TR>
+				<TR><TD PORT="socket_states_pos">7</TD><TD PORT="socket_states_size">2</TD><TD>u2le</TD><TD PORT="socket_states_type">socket_states</TD></TR>
+				<TR><TD PORT="cmdline_pos">9</TD><TD PORT="cmdline_size">⇲</TD><TD>str(ascii)</TD><TD PORT="cmdline_type">cmdline</TD></TR>
+			</TABLE>>];
+		}
+	}
+}

@@ -1,0 +1,288 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>SolutionMeta format specification</title>
+  </head>
+  <body>
+           <div class="container">
+  <h1>SolutionMeta format specification</h1>
+
+      
+<a name='type-solution_meta'></a>
+<h1>Type: SolutionMeta</h1>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-solution_meta-gnss_input_type'></a>
+<h2>Type: GnssInputType</h2>
+
+<p>Metadata around the GNSS sensors involved in the fuzed solution.
+Accessible through sol_in[N].flags in a MSG_SOLN_META.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>flags that store all relevant info specific to this sensor type.
+</td>
+</tr>
+</table>
+<a name='type-solution_meta-msg_soln_meta'></a>
+<h2>Type: MsgSolnMeta</h2>
+
+<p>This message contains all metadata about the sensors received and/or
+used in computing the sensorfusion solution. It focuses primarily, but
+not only, on GNSS metadata. Regarding the age of the last received valid
+GNSS solution, the highest two bits are time status, indicating whether
+age gnss can or can not be used to retrieve time of measurement (noted
+TOM, also known as time of validity) If it can, subtract 'age gnss' from
+'tow' in navigation messages to get TOM. Can be used before alignment is
+complete in the Fusion Engine, when output solution is the last received
+valid GNSS solution and its tow is not a TOM.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS time of week rounded to the nearest millisecond
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>pdop</td>
+<td>u2le</td>
+<td>Position Dilution of Precision as per last available DOPS from PVT
+engine (0xFFFF indicates invalid)
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>hdop</td>
+<td>u2le</td>
+<td>Horizontal Dilution of Precision as per last available DOPS from PVT
+engine (0xFFFF indicates invalid)
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>vdop</td>
+<td>u2le</td>
+<td>Vertical Dilution of Precision as per last available DOPS from PVT
+engine (0xFFFF indicates invalid)
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>age_corrections</td>
+<td>u2le</td>
+<td>Age of corrections as per last available AGE_CORRECTIONS from PVT
+engine (0xFFFF indicates invalid)
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>age_gnss</td>
+<td>u4le</td>
+<td>Age and Time Status of the last received valid GNSS solution.
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>sol_in</td>
+<td><a href="#type-solution_meta-solution_input_type">SolutionInputType</a></td>
+<td>Array of Metadata describing the sensors potentially involved in the
+solution. Each element in the array represents a single sensor type
+and consists of flags containing (meta)data pertaining to that
+specific single sensor. Refer to each (XX)InputType descriptor in
+the present doc.
+</td>
+</tr>
+</table>
+<a name='type-solution_meta-msg_soln_meta_dep_a'></a>
+<h2>Type: MsgSolnMetaDepA</h2>
+
+<p>Deprecated.
+
+This message contains all metadata about the sensors received and/or
+used in computing the Fuzed Solution. It focuses primarily, but not
+only, on GNSS metadata.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>pdop</td>
+<td>u2le</td>
+<td>Position Dilution of Precision as per last available DOPS from PVT
+engine (0xFFFF indicates invalid)
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>hdop</td>
+<td>u2le</td>
+<td>Horizontal Dilution of Precision as per last available DOPS from PVT
+engine (0xFFFF indicates invalid)
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>vdop</td>
+<td>u2le</td>
+<td>Vertical Dilution of Precision as per last available DOPS from PVT
+engine (0xFFFF indicates invalid)
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>n_sats</td>
+<td>u1</td>
+<td>Number of satellites as per last available solution from PVT engine
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>age_corrections</td>
+<td>u2le</td>
+<td>Age of corrections as per last available AGE_CORRECTIONS from PVT
+engine (0xFFFF indicates invalid)
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>alignment_status</td>
+<td>u1</td>
+<td>State of alignment and the status and receipt of the alignment
+inputs
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>last_used_gnss_pos_tow</td>
+<td>u4le</td>
+<td>Tow of last-used GNSS position measurement
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>last_used_gnss_vel_tow</td>
+<td>u4le</td>
+<td>Tow of last-used GNSS velocity measurement
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>sol_in</td>
+<td><a href="#type-solution_meta-solution_input_type">SolutionInputType</a></td>
+<td>Array of Metadata describing the sensors potentially involved in the
+solution. Each element in the array represents a single sensor type
+and consists of flags containing (meta)data pertaining to that
+specific single sensor. Refer to each (XX)InputType descriptor in
+the present doc.
+</td>
+</tr>
+</table>
+<a name='type-solution_meta-imu_input_type'></a>
+<h2>Type: ImuInputType</h2>
+
+<p>Metadata around the IMU sensors involved in the fuzed solution.
+Accessible through sol_in[N].flags in a MSG_SOLN_META.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Instrument time, grade, and architecture for a sensor.
+</td>
+</tr>
+</table>
+<a name='type-solution_meta-odo_input_type'></a>
+<h2>Type: OdoInputType</h2>
+
+<p>Metadata around the Odometry sensors involved in the fuzed solution.
+Accessible through sol_in[N].flags in a MSG_SOLN_META.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Instrument ODO rate, grade, and quality.
+</td>
+</tr>
+</table>
+<a name='type-solution_meta-solution_input_type'></a>
+<h2>Type: SolutionInputType</h2>
+
+<p>Metadata describing which sensors were involved in the solution. The
+structure is fixed no matter what the actual sensor type is. The
+sensor_type field tells you which sensor we are talking about. It also
+tells you whether the sensor data was actually used or not. The flags
+field, always a u8, contains the sensor-specific data. The content of
+flags, for each sensor type, is described in the relevant structures in
+this section.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sensor_type</td>
+<td>u1</td>
+<td>The type of sensor
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Refer to each InputType description
+</td>
+</tr>
+</table>
+
+  </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>
+      

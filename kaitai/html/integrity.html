@@ -1,0 +1,495 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Integrity format specification</title>
+  </head>
+  <body>
+           <div class="container">
+  <h1>Integrity format specification</h1>
+
+      
+<a name='type-integrity'></a>
+<h1>Type: Integrity</h1>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-integrity-msg_ssr_flag_satellites'></a>
+<h2>Type: MsgSsrFlagSatellites</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>obs_time</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>GNSS reference time of the observation used to generate the flag.
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>num_msgs</td>
+<td>u1</td>
+<td>Number of messages in the dataset
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>seq_num</td>
+<td>u1</td>
+<td>Position of this message in the dataset
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>ssr_sol_id</td>
+<td>u1</td>
+<td>SSR Solution ID.
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>chain_id</td>
+<td>u1</td>
+<td>Chain and type of flag.
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>const_id</td>
+<td>u1</td>
+<td>Constellation ID.
+</td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>n_faulty_sats</td>
+<td>u1</td>
+<td>Number of faulty satellites.
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>faulty_sats</td>
+<td>u1</td>
+<td>List of faulty satellites.
+</td>
+</tr>
+</table>
+<a name='type-integrity-msg_ssr_flag_iono_tile_sat_los'></a>
+<h2>Type: MsgSsrFlagIonoTileSatLos</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>header</td>
+<td><a href="#type-integrity-integrity_ssr_header">IntegritySsrHeader</a></td>
+<td>Header of an integrity message.
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>n_faulty_los</td>
+<td>u1</td>
+<td>Number of faulty LOS.
+</td>
+</tr>
+<tr>
+<td>15</td>
+<td>...</td>
+<td>faulty_los</td>
+<td><a href="#type-gnss-sv_id">SvId</a></td>
+<td>List of faulty LOS
+</td>
+</tr>
+</table>
+<a name='type-integrity-msg_ssr_flag_iono_grid_point_sat_los'></a>
+<h2>Type: MsgSsrFlagIonoGridPointSatLos</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>header</td>
+<td><a href="#type-integrity-integrity_ssr_header">IntegritySsrHeader</a></td>
+<td>Header of an integrity message.
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>grid_point_id</td>
+<td>u2le</td>
+<td>Index of the grid point.
+</td>
+</tr>
+<tr>
+<td>16</td>
+<td>...</td>
+<td>n_faulty_los</td>
+<td>u1</td>
+<td>Number of faulty LOS.
+</td>
+</tr>
+<tr>
+<td>17</td>
+<td>...</td>
+<td>faulty_los</td>
+<td><a href="#type-gnss-sv_id">SvId</a></td>
+<td>List of faulty LOS
+</td>
+</tr>
+</table>
+<a name='type-integrity-integrity_ssr_header'></a>
+<h2>Type: IntegritySsrHeader</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>obs_time</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>GNSS reference time of the observation used to generate the flag.
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>num_msgs</td>
+<td>u1</td>
+<td>Number of messages in the dataset
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>seq_num</td>
+<td>u1</td>
+<td>Position of this message in the dataset
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>ssr_sol_id</td>
+<td>u1</td>
+<td>SSR Solution ID.
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>tile_set_id</td>
+<td>u2le</td>
+<td>Unique identifier of the set this tile belongs to.
+</td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>tile_id</td>
+<td>u2le</td>
+<td>Unique identifier of this tile in the tile set.
+</td>
+</tr>
+<tr>
+<td>13</td>
+<td>...</td>
+<td>chain_id</td>
+<td>u1</td>
+<td>Chain and type of flag.
+</td>
+</tr>
+</table>
+<a name='type-integrity-msg_acknowledge'></a>
+<h2>Type: MsgAcknowledge</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>request_id</td>
+<td>u1</td>
+<td>Echo of the request ID field from the corresponding CRA message, or
+255 if no request ID was provided.
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>area_id</td>
+<td>u4le</td>
+<td>Echo of the Area ID field from the corresponding CRA message.
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>response_code</td>
+<td>u1</td>
+<td>Reported status of the request.
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>correction_mask_on_demand</td>
+<td>u2le</td>
+<td>Contains the message group(s) that will be sent in response from the
+corresponding CRA correction mask. An echo of the correction mask
+field from the corresponding CRA message.
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>correction_mask_stream</td>
+<td>u2le</td>
+<td>For future expansion. Always set to 0.
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>solution_id</td>
+<td>u1</td>
+<td>The solution ID of the instance providing the corrections.
+</td>
+</tr>
+</table>
+<a name='type-integrity-msg_ssr_flag_iono_grid_points'></a>
+<h2>Type: MsgSsrFlagIonoGridPoints</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>header</td>
+<td><a href="#type-integrity-integrity_ssr_header">IntegritySsrHeader</a></td>
+<td>Header of an integrity message.
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>n_faulty_points</td>
+<td>u1</td>
+<td>Number of faulty grid points.
+</td>
+</tr>
+<tr>
+<td>15</td>
+<td>...</td>
+<td>faulty_points</td>
+<td>u2le</td>
+<td>List of faulty grid points.
+</td>
+</tr>
+</table>
+<a name='type-integrity-msg_ssr_flag_tropo_grid_points'></a>
+<h2>Type: MsgSsrFlagTropoGridPoints</h2>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>header</td>
+<td><a href="#type-integrity-integrity_ssr_header">IntegritySsrHeader</a></td>
+<td>Header of an integrity message.
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>n_faulty_points</td>
+<td>u1</td>
+<td>Number of faulty grid points.
+</td>
+</tr>
+<tr>
+<td>15</td>
+<td>...</td>
+<td>faulty_points</td>
+<td>u2le</td>
+<td>List of faulty grid points.
+</td>
+</tr>
+</table>
+<a name='type-integrity-msg_ssr_flag_high_level'></a>
+<h2>Type: MsgSsrFlagHighLevel</h2>
+
+<p>Integrity monitoring flags for multiple aggregated elements. An element
+could be a satellite, SSR grid point, or SSR tile. A group of aggregated
+elements being monitored for integrity could refer to:
+
+- Satellites in a particular {GPS, GAL, BDS} constellation.
+
+- Satellites in the line-of-sight of a particular SSR tile.
+
+- Satellites in the line-of-sight of a particular SSR grid point.
+
+The integrity usage for a group of aggregated elements varies according
+to the integrity flag of the satellites comprising that group.
+
+SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the
+integrity check and have flag INTEGRITY_FLAG_OK.
+
+SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group
+failed the integrity check. Refer to more granular integrity messages
+for details on the specific failing elements.
+
+SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the
+integrity check, do not use for positioning.
+
+SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag
+of elements in the group.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>obs_time</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>GNSS reference time of the observation used to generate the flag.
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>corr_time</td>
+<td><a href="#type-gnss-gps_time_sec">GpsTimeSec</a></td>
+<td>GNSS reference time of the correction associated to the flag.
+</td>
+</tr>
+<tr>
+<td>12</td>
+<td>...</td>
+<td>ssr_sol_id</td>
+<td>u1</td>
+<td>SSR Solution ID.
+</td>
+</tr>
+<tr>
+<td>13</td>
+<td>...</td>
+<td>tile_set_id</td>
+<td>u2le</td>
+<td>Unique identifier of the set this tile belongs to.
+</td>
+</tr>
+<tr>
+<td>15</td>
+<td>...</td>
+<td>tile_id</td>
+<td>u2le</td>
+<td>Unique identifier of this tile in the tile set.
+</td>
+</tr>
+<tr>
+<td>17</td>
+<td>...</td>
+<td>chain_id</td>
+<td>u1</td>
+<td>Chain and type of flag.
+</td>
+</tr>
+<tr>
+<td>18</td>
+<td>...</td>
+<td>use_gps_sat</td>
+<td>u1</td>
+<td>Use GPS satellites.
+</td>
+</tr>
+<tr>
+<td>19</td>
+<td>...</td>
+<td>use_gal_sat</td>
+<td>u1</td>
+<td>Use GAL satellites.
+</td>
+</tr>
+<tr>
+<td>20</td>
+<td>...</td>
+<td>use_bds_sat</td>
+<td>u1</td>
+<td>Use BDS satellites.
+</td>
+</tr>
+<tr>
+<td>21</td>
+<td>...</td>
+<td>reserved</td>
+<td>u1</td>
+<td>Reserved
+</td>
+</tr>
+<tr>
+<td>27</td>
+<td>...</td>
+<td>use_tropo_grid_points</td>
+<td>u1</td>
+<td>Use tropo grid points.
+</td>
+</tr>
+<tr>
+<td>28</td>
+<td>...</td>
+<td>use_iono_grid_points</td>
+<td>u1</td>
+<td>Use iono grid points.
+</td>
+</tr>
+<tr>
+<td>29</td>
+<td>...</td>
+<td>use_iono_tile_sat_los</td>
+<td>u1</td>
+<td>Use iono tile satellite LoS.
+</td>
+</tr>
+<tr>
+<td>30</td>
+<td>...</td>
+<td>use_iono_grid_point_sat_los</td>
+<td>u1</td>
+<td>Use iono grid point satellite LoS.
+</td>
+</tr>
+</table>
+
+  </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>
+      

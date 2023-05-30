@@ -1,0 +1,644 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Linux format specification</title>
+  </head>
+  <body>
+           <div class="container">
+  <h1>Linux format specification</h1>
+
+      
+<a name='type-linux'></a>
+<h1>Type: Linux</h1>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-linux-msg_linux_socket_usage'></a>
+<h2>Type: MsgLinuxSocketUsage</h2>
+
+<p>Summaries the socket usage across the system.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>avg_queue_depth</td>
+<td>u4le</td>
+<td>average socket queue depths across all sockets on the system
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>max_queue_depth</td>
+<td>u4le</td>
+<td>the max queue depth seen within the reporting period
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>socket_state_counts</td>
+<td>u2le</td>
+<td>A count for each socket type reported in the `socket_types_reported`
+field, the first entry corresponds to the first enabled bit in
+`types_reported`.
+</td>
+</tr>
+<tr>
+<td>40</td>
+<td>...</td>
+<td>socket_type_counts</td>
+<td>u2le</td>
+<td>A count for each socket type reported in the `socket_types_reported`
+field, the first entry corresponds to the first enabled bit in
+`types_reported`.
+</td>
+</tr>
+</table>
+<a name='type-linux-msg_linux_sys_state'></a>
+<h2>Type: MsgLinuxSysState</h2>
+
+<p>This presents a summary of CPU and memory utilization, including a
+timestamp.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>mem_total</td>
+<td>u2le</td>
+<td>total system memory, in MiB
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>pcpu</td>
+<td>u1</td>
+<td>percent of CPU used, expressed as a fraction of 256
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>pmem</td>
+<td>u1</td>
+<td>percent of memory used, expressed as a fraction of 256
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>procs_starting</td>
+<td>u2le</td>
+<td>number of processes that started during collection phase
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>procs_stopping</td>
+<td>u2le</td>
+<td>number of processes that stopped during collection phase
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>pid_count</td>
+<td>u2le</td>
+<td>the count of processes on the system
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>time</td>
+<td>u4le</td>
+<td>timestamp of message, refer to flags field for how to interpret
+</td>
+</tr>
+<tr>
+<td>14</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>flags
+</td>
+</tr>
+</table>
+<a name='type-linux-msg_linux_cpu_state_dep_a'></a>
+<h2>Type: MsgLinuxCpuStateDepA</h2>
+
+<p>This message indicates the process state of the top 10 heaviest
+consumers of CPU on the system.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>index</td>
+<td>u1</td>
+<td>sequence of this status message, values from 0-9
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>pid</td>
+<td>u2le</td>
+<td>the PID of the process
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>pcpu</td>
+<td>u1</td>
+<td>percent of cpu used, expressed as a fraction of 256
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>tname</td>
+<td>str(ascii)</td>
+<td>fixed length string representing the thread name
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>cmdline</td>
+<td>str(ascii)</td>
+<td>the command line (as much as it fits in the remaining packet)
+</td>
+</tr>
+</table>
+<a name='type-linux-msg_linux_mem_state'></a>
+<h2>Type: MsgLinuxMemState</h2>
+
+<p>This message indicates the process state of the top 10 heaviest
+consumers of memory on the system, including a timestamp.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>index</td>
+<td>u1</td>
+<td>sequence of this status message, values from 0-9
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>pid</td>
+<td>u2le</td>
+<td>the PID of the process
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>pmem</td>
+<td>u1</td>
+<td>percent of memory used, expressed as a fraction of 256
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>time</td>
+<td>u4le</td>
+<td>timestamp of message, refer to flags field for how to interpret
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>flags
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>tname</td>
+<td>str(ascii)</td>
+<td>fixed length string representing the thread name
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>cmdline</td>
+<td>str(ascii)</td>
+<td>the command line (as much as it fits in the remaining packet)
+</td>
+</tr>
+</table>
+<a name='type-linux-msg_linux_process_fd_count'></a>
+<h2>Type: MsgLinuxProcessFdCount</h2>
+
+<p>Top 10 list of processes with a large number of open file descriptors.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>index</td>
+<td>u1</td>
+<td>sequence of this status message, values from 0-9
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>pid</td>
+<td>u2le</td>
+<td>the PID of the process in question
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>fd_count</td>
+<td>u2le</td>
+<td>a count of the number of file descriptors opened by the process
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>cmdline</td>
+<td>str(ascii)</td>
+<td>the command line of the process in question
+</td>
+</tr>
+</table>
+<a name='type-linux-msg_linux_mem_state_dep_a'></a>
+<h2>Type: MsgLinuxMemStateDepA</h2>
+
+<p>This message indicates the process state of the top 10 heaviest
+consumers of memory on the system.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>index</td>
+<td>u1</td>
+<td>sequence of this status message, values from 0-9
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>pid</td>
+<td>u2le</td>
+<td>the PID of the process
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>pmem</td>
+<td>u1</td>
+<td>percent of memory used, expressed as a fraction of 256
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>tname</td>
+<td>str(ascii)</td>
+<td>fixed length string representing the thread name
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>cmdline</td>
+<td>str(ascii)</td>
+<td>the command line (as much as it fits in the remaining packet)
+</td>
+</tr>
+</table>
+<a name='type-linux-msg_linux_process_socket_queues'></a>
+<h2>Type: MsgLinuxProcessSocketQueues</h2>
+
+<p>Top 10 list of sockets with deep queues.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>index</td>
+<td>u1</td>
+<td>sequence of this status message, values from 0-9
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>pid</td>
+<td>u2le</td>
+<td>the PID of the process in question
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>recv_queued</td>
+<td>u2le</td>
+<td>the total amount of receive data queued for this process
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>send_queued</td>
+<td>u2le</td>
+<td>the total amount of send data queued for this process
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>socket_types</td>
+<td>u2le</td>
+<td>A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp),
+0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000
+(unknown)
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>socket_states</td>
+<td>u2le</td>
+<td>A bitfield indicating the socket states: 0x1 (established), 0x2
+(syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2),
+0x20 (time-wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-
+ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected), and
+0x8000 (unknown)
+</td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>address_of_largest</td>
+<td>str(ascii)</td>
+<td>Address of the largest queue, remote or local depending on the
+directionality of the connection.
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>cmdline</td>
+<td>str(ascii)</td>
+<td>the command line of the process in question
+</td>
+</tr>
+</table>
+<a name='type-linux-msg_linux_sys_state_dep_a'></a>
+<h2>Type: MsgLinuxSysStateDepA</h2>
+
+<p>This presents a summary of CPU and memory utilization.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>mem_total</td>
+<td>u2le</td>
+<td>total system memory
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>pcpu</td>
+<td>u1</td>
+<td>percent of total cpu currently utilized
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>pmem</td>
+<td>u1</td>
+<td>percent of total memory currently utilized
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>procs_starting</td>
+<td>u2le</td>
+<td>number of processes that started during collection phase
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>procs_stopping</td>
+<td>u2le</td>
+<td>number of processes that stopped during collection phase
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>pid_count</td>
+<td>u2le</td>
+<td>the count of processes on the system
+</td>
+</tr>
+</table>
+<a name='type-linux-msg_linux_process_fd_summary'></a>
+<h2>Type: MsgLinuxProcessFdSummary</h2>
+
+<p>Summary of open file descriptors on the system.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>sys_fd_count</td>
+<td>u4le</td>
+<td>count of total FDs open on the system
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>most_opened</td>
+<td>str(ascii)</td>
+<td>A null delimited list of strings which alternates between a string
+representation of the process count and the file name whose count it
+being reported.  That is, in C string syntax
+"32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being
+2 NULL terminators in a row.
+</td>
+</tr>
+</table>
+<a name='type-linux-msg_linux_cpu_state'></a>
+<h2>Type: MsgLinuxCpuState</h2>
+
+<p>This message indicates the process state of the top 10 heaviest
+consumers of CPU on the system, including a timestamp.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>index</td>
+<td>u1</td>
+<td>sequence of this status message, values from 0-9
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>pid</td>
+<td>u2le</td>
+<td>the PID of the process
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>pcpu</td>
+<td>u1</td>
+<td>percent of CPU used, expressed as a fraction of 256
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>...</td>
+<td>time</td>
+<td>u4le</td>
+<td>timestamp of message, refer to flags field for how to interpret
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>flags
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>tname</td>
+<td>str(ascii)</td>
+<td>fixed length string representing the thread name
+</td>
+</tr>
+<tr>
+<td>???</td>
+<td>...</td>
+<td>cmdline</td>
+<td>str(ascii)</td>
+<td>the command line (as much as it fits in the remaining packet)
+</td>
+</tr>
+</table>
+<a name='type-linux-msg_linux_process_socket_counts'></a>
+<h2>Type: MsgLinuxProcessSocketCounts</h2>
+
+<p>Top 10 list of processes with high socket counts.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>index</td>
+<td>u1</td>
+<td>sequence of this status message, values from 0-9
+</td>
+</tr>
+<tr>
+<td>1</td>
+<td>...</td>
+<td>pid</td>
+<td>u2le</td>
+<td>the PID of the process in question
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>...</td>
+<td>socket_count</td>
+<td>u2le</td>
+<td>the number of sockets the process is using
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>...</td>
+<td>socket_types</td>
+<td>u2le</td>
+<td>A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp),
+0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000
+(unknown)
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>...</td>
+<td>socket_states</td>
+<td>u2le</td>
+<td>A bitfield indicating the socket states: 0x1 (established), 0x2
+(syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2),
+0x20 (time-wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-
+ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected), and
+0x8000 (unknown)
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>...</td>
+<td>cmdline</td>
+<td>str(ascii)</td>
+<td>the command line of the process in question
+</td>
+</tr>
+</table>
+
+  </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>
+      

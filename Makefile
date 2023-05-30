@@ -19,7 +19,7 @@ SBP_STAGING := $(shell git describe --match 'libsbp-staging*' --always --tags | 
 
 CHANGELOG_MAX_ISSUES := 100
 
-.PHONY: help test release dist clean all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping rust deps-rust gen-rust test-rust deps-jsonschema gen-jsonschema test-jsonschema verify-prereq-jsonschema deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript verify-prereq-quicktype-typescript deps-quicktype-javascript gen-quicktype-javascript test-quicktype-javascript verify-prereq-quicktype-javascript deps-quicktype-elm gen-quicktype-elm test-quicktype-elm verify-prereq-quicktype-elm
+.PHONY: help test release dist clean all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf deps-kaitai gen-kaitai test-kaitai verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf verify-prereq-kaitai mapping rust deps-rust gen-rust test-rust deps-jsonschema gen-jsonschema test-jsonschema verify-prereq-jsonschema deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript verify-prereq-quicktype-typescript deps-quicktype-javascript gen-quicktype-javascript test-quicktype-javascript verify-prereq-quicktype-javascript deps-quicktype-elm gen-quicktype-elm test-quicktype-elm verify-prereq-quicktype-elm
 
 # Functions
 define announce-begin
@@ -55,6 +55,7 @@ help:
 	@echo "  java         to make Java bindings"
 	@echo "  rust         to make Rust bindings"
 	@echo "  protobuf     to make Protocol Buffer bindings"
+	@echo "  kaitai       to make Kaitai Struct format descriptions"
 	@echo "  jsonschema   to make JSON Schema definitions"
 	@echo "  release      to handle some release tasks"
 	@echo "  test         to run all tests"
@@ -67,7 +68,7 @@ help:
 
 packaged-languages: c python haskell rust javascript
 
-non-packaged-languages: java protobuf jsonschema quicktype
+non-packaged-languages: java protobuf kaitai jsonschema quicktype
 
 all: packaged-languages docs non-packaged-languages
 
@@ -87,6 +88,7 @@ java:       deps-java       gen-java       test-java       java-examples
 haskell:    deps-haskell    gen-haskell    test-haskell
 rust:       deps-rust       gen-rust       test-rust
 protobuf:   deps-protobuf   gen-protobuf   test-protobuf
+kaitai  :   deps-kaitai     gen-kaitai     test-kaitai
 jsonschema: deps-jsonschema gen-jsonschema test-jsonschema
 
 quicktype-typescript: deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript
@@ -136,6 +138,9 @@ verify-prereq-rust:
 
 verify-prereq-protobuf: ;
 
+verify-prereq-kaitai:
+	@command -v kaitai-struct-compiler 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`kaitai-struct-compiler\` but it's not installed. Aborting.\n"; exit 1; }
+
 verify-prereq-jsonschema: ;
 
 verify-prereq-quicktype:
@@ -169,6 +174,8 @@ deps-rust: verify-prereq-rust
 
 deps-protobuf: verify-prereq-protobuf
 
+deps-kaitai: verify-prereq-kaitai
+
 deps-jsonschema: verify-prereq-jsonschema
 
 deps-quicktype-typescript: verify-prereq-quicktype
@@ -179,7 +186,7 @@ deps-quicktype-elm: verify-prereq-quicktype
 
 # Generators
 
-gen: gen-c gen-python gen-javascript gen-java gen-haskell gen-rust gen-protobuf gen-jsonschema gen-quicktype
+gen: gen-c gen-python gen-javascript gen-java gen-haskell gen-rust gen-protobuf gen-kaitai gen-jsonschema gen-quicktype
 gen-quicktype: gen-quicktype-typescript gen-quicktype-elm
 
 gen-c_args = -i $(SBP_SPEC_DIR) \
@@ -309,6 +316,15 @@ gen-protobuf:
 					--protobuf
 	$(call announce-begin,"Finished generating Protocol Buffers bindings")
 
+gen-kaitai:
+	$(call announce-begin,"Generating Kaitai Struct Format Description")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+					-o $(SWIFTNAV_ROOT)/kaitai/ \
+					-r $(SBP_VERSION) \
+					--kaitai
+	$(call announce-begin,"Finished generating Protocol Buffers bindings")
+
 gen-jsonschema:
 	$(call announce-begin,"Generating JSON Schema definitions")
 	cd $(SWIFTNAV_ROOT)/generator; \
@@ -394,6 +410,10 @@ test-rust:
 test-protobuf:
 	$(call announce-begin,"Running Protocol Buffer tests")
 	$(call announce-end,"Finished running Protocol Buffer tests")
+
+test-kaitai:
+	$(call announce-begin,"Running Kaitai Struct tests")
+	$(call announce-end,"Finished running Kaitai Struct tests")
 
 test-jsonschema:
 	$(call announce-begin,"Running JSON Schema tests")

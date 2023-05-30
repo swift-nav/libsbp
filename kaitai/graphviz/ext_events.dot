@@ -1,0 +1,25 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__ext_events {
+		label="ExtEvents";
+		graph[style=dotted];
+
+		ext_events__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__msg_ext_event {
+			label="ExtEvents::MsgExtEvent";
+			graph[style=dotted];
+
+			msg_ext_event__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="wn_pos">0</TD><TD PORT="wn_size">2</TD><TD>u2le</TD><TD PORT="wn_type">wn</TD></TR>
+				<TR><TD PORT="tow_pos">2</TD><TD PORT="tow_size">4</TD><TD>u4le</TD><TD PORT="tow_type">tow</TD></TR>
+				<TR><TD PORT="ns_residual_pos">6</TD><TD PORT="ns_residual_size">4</TD><TD>s4le</TD><TD PORT="ns_residual_type">ns_residual</TD></TR>
+				<TR><TD PORT="flags_pos">10</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+				<TR><TD PORT="pin_pos">11</TD><TD PORT="pin_size">1</TD><TD>u1</TD><TD PORT="pin_type">pin</TD></TR>
+			</TABLE>>];
+		}
+	}
+}

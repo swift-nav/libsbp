@@ -1,0 +1,343 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__piksi {
+		label="Piksi";
+		graph[style=dotted];
+
+		piksi__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__msg_network_state_resp {
+			label="Piksi::MsgNetworkStateResp";
+			graph[style=dotted];
+
+			msg_network_state_resp__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="ipv4_address_pos">0</TD><TD PORT="ipv4_address_size">1</TD><TD>u1</TD><TD PORT="ipv4_address_type">ipv4_address</TD></TR>
+				<TR><TD COLSPAN="4" PORT="ipv4_address__repeat">repeat 4 times</TD></TR>
+				<TR><TD PORT="ipv4_mask_size_pos">4</TD><TD PORT="ipv4_mask_size_size">1</TD><TD>u1</TD><TD PORT="ipv4_mask_size_type">ipv4_mask_size</TD></TR>
+				<TR><TD PORT="ipv6_address_pos">5</TD><TD PORT="ipv6_address_size">1</TD><TD>u1</TD><TD PORT="ipv6_address_type">ipv6_address</TD></TR>
+				<TR><TD COLSPAN="4" PORT="ipv6_address__repeat">repeat 16 times</TD></TR>
+				<TR><TD PORT="ipv6_mask_size_pos">21</TD><TD PORT="ipv6_mask_size_size">1</TD><TD>u1</TD><TD PORT="ipv6_mask_size_type">ipv6_mask_size</TD></TR>
+				<TR><TD PORT="rx_bytes_pos">22</TD><TD PORT="rx_bytes_size">4</TD><TD>u4le</TD><TD PORT="rx_bytes_type">rx_bytes</TD></TR>
+				<TR><TD PORT="tx_bytes_pos">26</TD><TD PORT="tx_bytes_size">4</TD><TD>u4le</TD><TD PORT="tx_bytes_type">tx_bytes</TD></TR>
+				<TR><TD PORT="interface_name_pos">30</TD><TD PORT="interface_name_size">⇲</TD><TD>str(ascii)</TD><TD PORT="interface_name_type">interface_name</TD></TR>
+				<TR><TD PORT="flags_pos">...</TD><TD PORT="flags_size">4</TD><TD>u4le</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__network_usage {
+			label="Piksi::NetworkUsage";
+			graph[style=dotted];
+
+			network_usage__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="duration_pos">0</TD><TD PORT="duration_size">8</TD><TD>u8le</TD><TD PORT="duration_type">duration</TD></TR>
+				<TR><TD PORT="total_bytes_pos">8</TD><TD PORT="total_bytes_size">8</TD><TD>u8le</TD><TD PORT="total_bytes_type">total_bytes</TD></TR>
+				<TR><TD PORT="rx_bytes_pos">16</TD><TD PORT="rx_bytes_size">4</TD><TD>u4le</TD><TD PORT="rx_bytes_type">rx_bytes</TD></TR>
+				<TR><TD PORT="tx_bytes_pos">20</TD><TD PORT="tx_bytes_size">4</TD><TD>u4le</TD><TD PORT="tx_bytes_type">tx_bytes</TD></TR>
+				<TR><TD PORT="interface_name_pos">24</TD><TD PORT="interface_name_size">⇲</TD><TD>str(ascii)</TD><TD PORT="interface_name_type">interface_name</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_command_resp {
+			label="Piksi::MsgCommandResp";
+			graph[style=dotted];
+
+			msg_command_resp__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sequence_pos">0</TD><TD PORT="sequence_size">4</TD><TD>u4le</TD><TD PORT="sequence_type">sequence</TD></TR>
+				<TR><TD PORT="code_pos">4</TD><TD PORT="code_size">4</TD><TD>s4le</TD><TD PORT="code_type">code</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_command_output {
+			label="Piksi::MsgCommandOutput";
+			graph[style=dotted];
+
+			msg_command_output__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sequence_pos">0</TD><TD PORT="sequence_size">4</TD><TD>u4le</TD><TD PORT="sequence_type">sequence</TD></TR>
+				<TR><TD PORT="line_pos">4</TD><TD PORT="line_size">⇲</TD><TD>str(ascii)</TD><TD PORT="line_type">line</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__latency {
+			label="Piksi::Latency";
+			graph[style=dotted];
+
+			latency__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="avg_pos">0</TD><TD PORT="avg_size">4</TD><TD>s4le</TD><TD PORT="avg_type">avg</TD></TR>
+				<TR><TD PORT="lmin_pos">4</TD><TD PORT="lmin_size">4</TD><TD>s4le</TD><TD PORT="lmin_type">lmin</TD></TR>
+				<TR><TD PORT="lmax_pos">8</TD><TD PORT="lmax_size">4</TD><TD>s4le</TD><TD PORT="lmax_type">lmax</TD></TR>
+				<TR><TD PORT="current_pos">12</TD><TD PORT="current_size">4</TD><TD>s4le</TD><TD PORT="current_type">current</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_thread_state {
+			label="Piksi::MsgThreadState";
+			graph[style=dotted];
+
+			msg_thread_state__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="name_pos">0</TD><TD PORT="name_size">⇲</TD><TD>str(ascii)</TD><TD PORT="name_type">name</TD></TR>
+				<TR><TD PORT="cpu_pos">...</TD><TD PORT="cpu_size">2</TD><TD>u2le</TD><TD PORT="cpu_type">cpu</TD></TR>
+				<TR><TD PORT="stack_free_pos">...</TD><TD PORT="stack_free_size">4</TD><TD>u4le</TD><TD PORT="stack_free_type">stack_free</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_uart_state_depa {
+			label="Piksi::MsgUartStateDepa";
+			graph[style=dotted];
+
+			msg_uart_state_depa__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="uart_a_pos">0</TD><TD PORT="uart_a_size">14</TD><TD>UartChannel</TD><TD PORT="uart_a_type">uart_a</TD></TR>
+				<TR><TD PORT="uart_b_pos">14</TD><TD PORT="uart_b_size">14</TD><TD>UartChannel</TD><TD PORT="uart_b_type">uart_b</TD></TR>
+				<TR><TD PORT="uart_ftdi_pos">28</TD><TD PORT="uart_ftdi_size">14</TD><TD>UartChannel</TD><TD PORT="uart_ftdi_type">uart_ftdi</TD></TR>
+				<TR><TD PORT="latency_pos">42</TD><TD PORT="latency_size">16</TD><TD>Latency</TD><TD PORT="latency_type">latency</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_network_state_req {
+			label="Piksi::MsgNetworkStateReq";
+			graph[style=dotted];
+
+			msg_network_state_req__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_device_monitor {
+			label="Piksi::MsgDeviceMonitor";
+			graph[style=dotted];
+
+			msg_device_monitor__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="dev_vin_pos">0</TD><TD PORT="dev_vin_size">2</TD><TD>s2le</TD><TD PORT="dev_vin_type">dev_vin</TD></TR>
+				<TR><TD PORT="cpu_vint_pos">2</TD><TD PORT="cpu_vint_size">2</TD><TD>s2le</TD><TD PORT="cpu_vint_type">cpu_vint</TD></TR>
+				<TR><TD PORT="cpu_vaux_pos">4</TD><TD PORT="cpu_vaux_size">2</TD><TD>s2le</TD><TD PORT="cpu_vaux_type">cpu_vaux</TD></TR>
+				<TR><TD PORT="cpu_temperature_pos">6</TD><TD PORT="cpu_temperature_size">2</TD><TD>s2le</TD><TD PORT="cpu_temperature_type">cpu_temperature</TD></TR>
+				<TR><TD PORT="fe_temperature_pos">8</TD><TD PORT="fe_temperature_size">2</TD><TD>s2le</TD><TD PORT="fe_temperature_type">fe_temperature</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_mask_satellite_dep {
+			label="Piksi::MsgMaskSatelliteDep";
+			graph[style=dotted];
+
+			msg_mask_satellite_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="mask_pos">0</TD><TD PORT="mask_size">1</TD><TD>u1</TD><TD PORT="mask_type">mask</TD></TR>
+				<TR><TD PORT="sid_pos">1</TD><TD PORT="sid_size">4</TD><TD>Gnss::GnssSignalDep</TD><TD PORT="sid_type">sid</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_uart_state {
+			label="Piksi::MsgUartState";
+			graph[style=dotted];
+
+			msg_uart_state__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="uart_a_pos">0</TD><TD PORT="uart_a_size">14</TD><TD>UartChannel</TD><TD PORT="uart_a_type">uart_a</TD></TR>
+				<TR><TD PORT="uart_b_pos">14</TD><TD PORT="uart_b_size">14</TD><TD>UartChannel</TD><TD PORT="uart_b_type">uart_b</TD></TR>
+				<TR><TD PORT="uart_ftdi_pos">28</TD><TD PORT="uart_ftdi_size">14</TD><TD>UartChannel</TD><TD PORT="uart_ftdi_type">uart_ftdi</TD></TR>
+				<TR><TD PORT="latency_pos">42</TD><TD PORT="latency_size">16</TD><TD>Latency</TD><TD PORT="latency_type">latency</TD></TR>
+				<TR><TD PORT="obs_period_pos">58</TD><TD PORT="obs_period_size">16</TD><TD>Period</TD><TD PORT="obs_period_type">obs_period</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_specan {
+			label="Piksi::MsgSpecan";
+			graph[style=dotted];
+
+			msg_specan__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="channel_tag_pos">0</TD><TD PORT="channel_tag_size">2</TD><TD>u2le</TD><TD PORT="channel_tag_type">channel_tag</TD></TR>
+				<TR><TD PORT="t_pos">2</TD><TD PORT="t_size">10</TD><TD>Gnss::GpsTime</TD><TD PORT="t_type">t</TD></TR>
+				<TR><TD PORT="freq_ref_pos">12</TD><TD PORT="freq_ref_size">4</TD><TD>f4le</TD><TD PORT="freq_ref_type">freq_ref</TD></TR>
+				<TR><TD PORT="freq_step_pos">16</TD><TD PORT="freq_step_size">4</TD><TD>f4le</TD><TD PORT="freq_step_type">freq_step</TD></TR>
+				<TR><TD PORT="amplitude_ref_pos">20</TD><TD PORT="amplitude_ref_size">4</TD><TD>f4le</TD><TD PORT="amplitude_ref_type">amplitude_ref</TD></TR>
+				<TR><TD PORT="amplitude_unit_pos">24</TD><TD PORT="amplitude_unit_size">4</TD><TD>f4le</TD><TD PORT="amplitude_unit_type">amplitude_unit</TD></TR>
+				<TR><TD PORT="amplitude_value_pos">28</TD><TD PORT="amplitude_value_size">1</TD><TD>u1</TD><TD PORT="amplitude_value_type">amplitude_value</TD></TR>
+				<TR><TD COLSPAN="4" PORT="amplitude_value__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_iar_state {
+			label="Piksi::MsgIarState";
+			graph[style=dotted];
+
+			msg_iar_state__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="num_hyps_pos">0</TD><TD PORT="num_hyps_size">4</TD><TD>u4le</TD><TD PORT="num_hyps_type">num_hyps</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_almanac {
+			label="Piksi::MsgAlmanac";
+			graph[style=dotted];
+
+			msg_almanac__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_reset_filters {
+			label="Piksi::MsgResetFilters";
+			graph[style=dotted];
+
+			msg_reset_filters__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="filter_pos">0</TD><TD PORT="filter_size">1</TD><TD>u1</TD><TD PORT="filter_type">filter</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__uart_channel {
+			label="Piksi::UartChannel";
+			graph[style=dotted];
+
+			uart_channel__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="tx_throughput_pos">0</TD><TD PORT="tx_throughput_size">4</TD><TD>f4le</TD><TD PORT="tx_throughput_type">tx_throughput</TD></TR>
+				<TR><TD PORT="rx_throughput_pos">4</TD><TD PORT="rx_throughput_size">4</TD><TD>f4le</TD><TD PORT="rx_throughput_type">rx_throughput</TD></TR>
+				<TR><TD PORT="crc_error_count_pos">8</TD><TD PORT="crc_error_count_size">2</TD><TD>u2le</TD><TD PORT="crc_error_count_type">crc_error_count</TD></TR>
+				<TR><TD PORT="io_error_count_pos">10</TD><TD PORT="io_error_count_size">2</TD><TD>u2le</TD><TD PORT="io_error_count_type">io_error_count</TD></TR>
+				<TR><TD PORT="tx_buffer_level_pos">12</TD><TD PORT="tx_buffer_level_size">1</TD><TD>u1</TD><TD PORT="tx_buffer_level_type">tx_buffer_level</TD></TR>
+				<TR><TD PORT="rx_buffer_level_pos">13</TD><TD PORT="rx_buffer_level_size">1</TD><TD>u1</TD><TD PORT="rx_buffer_level_type">rx_buffer_level</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_command_req {
+			label="Piksi::MsgCommandReq";
+			graph[style=dotted];
+
+			msg_command_req__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="sequence_pos">0</TD><TD PORT="sequence_size">4</TD><TD>u4le</TD><TD PORT="sequence_type">sequence</TD></TR>
+				<TR><TD PORT="command_pos">4</TD><TD PORT="command_size">⇲</TD><TD>str(ascii)</TD><TD PORT="command_type">command</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_mask_satellite {
+			label="Piksi::MsgMaskSatellite";
+			graph[style=dotted];
+
+			msg_mask_satellite__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="mask_pos">0</TD><TD PORT="mask_size">1</TD><TD>u1</TD><TD PORT="mask_type">mask</TD></TR>
+				<TR><TD PORT="sid_pos">1</TD><TD PORT="sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="sid_type">sid</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_network_bandwidth_usage {
+			label="Piksi::MsgNetworkBandwidthUsage";
+			graph[style=dotted];
+
+			msg_network_bandwidth_usage__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="interfaces_pos">0</TD><TD PORT="interfaces_size">...</TD><TD>NetworkUsage</TD><TD PORT="interfaces_type">interfaces</TD></TR>
+				<TR><TD COLSPAN="4" PORT="interfaces__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_reset {
+			label="Piksi::MsgReset";
+			graph[style=dotted];
+
+			msg_reset__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="flags_pos">0</TD><TD PORT="flags_size">4</TD><TD>u4le</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_cell_modem_status {
+			label="Piksi::MsgCellModemStatus";
+			graph[style=dotted];
+
+			msg_cell_modem_status__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="signal_strength_pos">0</TD><TD PORT="signal_strength_size">1</TD><TD>s1</TD><TD PORT="signal_strength_type">signal_strength</TD></TR>
+				<TR><TD PORT="signal_error_rate_pos">1</TD><TD PORT="signal_error_rate_size">4</TD><TD>f4le</TD><TD PORT="signal_error_rate_type">signal_error_rate</TD></TR>
+				<TR><TD PORT="reserved_pos">5</TD><TD PORT="reserved_size">1</TD><TD>u1</TD><TD PORT="reserved_type">reserved</TD></TR>
+				<TR><TD COLSPAN="4" PORT="reserved__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_front_end_gain {
+			label="Piksi::MsgFrontEndGain";
+			graph[style=dotted];
+
+			msg_front_end_gain__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="rf_gain_pos">0</TD><TD PORT="rf_gain_size">1</TD><TD>s1</TD><TD PORT="rf_gain_type">rf_gain</TD></TR>
+				<TR><TD COLSPAN="4" PORT="rf_gain__repeat">repeat 8 times</TD></TR>
+				<TR><TD PORT="if_gain_pos">8</TD><TD PORT="if_gain_size">1</TD><TD>s1</TD><TD PORT="if_gain_type">if_gain</TD></TR>
+				<TR><TD COLSPAN="4" PORT="if_gain__repeat">repeat 8 times</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_reset_dep {
+			label="Piksi::MsgResetDep";
+			graph[style=dotted];
+
+			msg_reset_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_set_time {
+			label="Piksi::MsgSetTime";
+			graph[style=dotted];
+
+			msg_set_time__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_cw_results {
+			label="Piksi::MsgCwResults";
+			graph[style=dotted];
+
+			msg_cw_results__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_specan_dep {
+			label="Piksi::MsgSpecanDep";
+			graph[style=dotted];
+
+			msg_specan_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="channel_tag_pos">0</TD><TD PORT="channel_tag_size">2</TD><TD>u2le</TD><TD PORT="channel_tag_type">channel_tag</TD></TR>
+				<TR><TD PORT="t_pos">2</TD><TD PORT="t_size">6</TD><TD>Gnss::GpsTimeDep</TD><TD PORT="t_type">t</TD></TR>
+				<TR><TD PORT="freq_ref_pos">8</TD><TD PORT="freq_ref_size">4</TD><TD>f4le</TD><TD PORT="freq_ref_type">freq_ref</TD></TR>
+				<TR><TD PORT="freq_step_pos">12</TD><TD PORT="freq_step_size">4</TD><TD>f4le</TD><TD PORT="freq_step_type">freq_step</TD></TR>
+				<TR><TD PORT="amplitude_ref_pos">16</TD><TD PORT="amplitude_ref_size">4</TD><TD>f4le</TD><TD PORT="amplitude_ref_type">amplitude_ref</TD></TR>
+				<TR><TD PORT="amplitude_unit_pos">20</TD><TD PORT="amplitude_unit_size">4</TD><TD>f4le</TD><TD PORT="amplitude_unit_type">amplitude_unit</TD></TR>
+				<TR><TD PORT="amplitude_value_pos">24</TD><TD PORT="amplitude_value_size">1</TD><TD>u1</TD><TD PORT="amplitude_value_type">amplitude_value</TD></TR>
+				<TR><TD COLSPAN="4" PORT="amplitude_value__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_init_base_dep {
+			label="Piksi::MsgInitBaseDep";
+			graph[style=dotted];
+
+			msg_init_base_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__period {
+			label="Piksi::Period";
+			graph[style=dotted];
+
+			period__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="avg_pos">0</TD><TD PORT="avg_size">4</TD><TD>s4le</TD><TD PORT="avg_type">avg</TD></TR>
+				<TR><TD PORT="pmin_pos">4</TD><TD PORT="pmin_size">4</TD><TD>s4le</TD><TD PORT="pmin_type">pmin</TD></TR>
+				<TR><TD PORT="pmax_pos">8</TD><TD PORT="pmax_size">4</TD><TD>s4le</TD><TD PORT="pmax_type">pmax</TD></TR>
+				<TR><TD PORT="current_pos">12</TD><TD PORT="current_size">4</TD><TD>s4le</TD><TD PORT="current_type">current</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_cw_start {
+			label="Piksi::MsgCwStart";
+			graph[style=dotted];
+
+			msg_cw_start__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+			</TABLE>>];
+		}
+	}
+	msg_uart_state_depa__seq:uart_a_type -> uart_channel__seq [style=bold];
+	msg_uart_state_depa__seq:uart_b_type -> uart_channel__seq [style=bold];
+	msg_uart_state_depa__seq:uart_ftdi_type -> uart_channel__seq [style=bold];
+	msg_uart_state_depa__seq:latency_type -> latency__seq [style=bold];
+	msg_mask_satellite_dep__seq:sid_type -> gnss_signal_dep__seq [style=bold];
+	msg_uart_state__seq:uart_a_type -> uart_channel__seq [style=bold];
+	msg_uart_state__seq:uart_b_type -> uart_channel__seq [style=bold];
+	msg_uart_state__seq:uart_ftdi_type -> uart_channel__seq [style=bold];
+	msg_uart_state__seq:latency_type -> latency__seq [style=bold];
+	msg_uart_state__seq:obs_period_type -> period__seq [style=bold];
+	msg_specan__seq:t_type -> gps_time__seq [style=bold];
+	msg_mask_satellite__seq:sid_type -> gnss_signal__seq [style=bold];
+	msg_network_bandwidth_usage__seq:interfaces_type -> network_usage__seq [style=bold];
+	msg_specan_dep__seq:t_type -> gps_time_dep__seq [style=bold];
+}

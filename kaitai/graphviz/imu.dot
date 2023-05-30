@@ -1,0 +1,39 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__imu {
+		label="Imu";
+		graph[style=dotted];
+
+		imu__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__msg_imu_raw {
+			label="Imu::MsgImuRaw";
+			graph[style=dotted];
+
+			msg_imu_raw__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="tow_pos">0</TD><TD PORT="tow_size">4</TD><TD>u4le</TD><TD PORT="tow_type">tow</TD></TR>
+				<TR><TD PORT="tow_f_pos">4</TD><TD PORT="tow_f_size">1</TD><TD>u1</TD><TD PORT="tow_f_type">tow_f</TD></TR>
+				<TR><TD PORT="acc_x_pos">5</TD><TD PORT="acc_x_size">2</TD><TD>s2le</TD><TD PORT="acc_x_type">acc_x</TD></TR>
+				<TR><TD PORT="acc_y_pos">7</TD><TD PORT="acc_y_size">2</TD><TD>s2le</TD><TD PORT="acc_y_type">acc_y</TD></TR>
+				<TR><TD PORT="acc_z_pos">9</TD><TD PORT="acc_z_size">2</TD><TD>s2le</TD><TD PORT="acc_z_type">acc_z</TD></TR>
+				<TR><TD PORT="gyr_x_pos">11</TD><TD PORT="gyr_x_size">2</TD><TD>s2le</TD><TD PORT="gyr_x_type">gyr_x</TD></TR>
+				<TR><TD PORT="gyr_y_pos">13</TD><TD PORT="gyr_y_size">2</TD><TD>s2le</TD><TD PORT="gyr_y_type">gyr_y</TD></TR>
+				<TR><TD PORT="gyr_z_pos">15</TD><TD PORT="gyr_z_size">2</TD><TD>s2le</TD><TD PORT="gyr_z_type">gyr_z</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_imu_aux {
+			label="Imu::MsgImuAux";
+			graph[style=dotted];
+
+			msg_imu_aux__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="imu_type_pos">0</TD><TD PORT="imu_type_size">1</TD><TD>u1</TD><TD PORT="imu_type_type">imu_type</TD></TR>
+				<TR><TD PORT="temp_pos">1</TD><TD PORT="temp_size">2</TD><TD>s2le</TD><TD PORT="temp_type">temp</TD></TR>
+				<TR><TD PORT="imu_conf_pos">3</TD><TD PORT="imu_conf_size">1</TD><TD>u1</TD><TD PORT="imu_conf_type">imu_conf</TD></TR>
+			</TABLE>>];
+		}
+	}
+}

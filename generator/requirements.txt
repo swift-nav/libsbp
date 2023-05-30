@@ -3,6 +3,7 @@ dataclasses~=0.6
 docutils==0.17.*
 flake8~=4.0
 Jinja2~=3.0
+kaitaistruct==0.10
 mccabe~=0.6
 pybase64~=1.2
 python-rapidjson~=1.5

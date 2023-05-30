@@ -1,0 +1,33 @@
+# (((description|comment_links|hashWordWrap )))
+
+# Automatically generated from spec/yaml/(((filepath))) with generate.py.
+# Please do not hand edit!
+
+meta:
+  id: (((name)))
+  endian: le
+  imports: [ (((imports))) ]
+
+types:
+((* for m in msgs *))
+  ((*- if m.static *))
+  ((( m.identifier | snake_case ))):
+    ((*- if m.desc *))
+    doc: |
+      ((( m.desc | commentify(width=72, indent=6) )))
+    ((*- endif *))
+    ((*- if m.fields *))
+    seq:
+      ((*- for f in m.fields *))
+      - id: ((( f.identifier | snake_case )))
+        ((*- if f.desc *))
+        doc: |
+          ((( f.desc | commentify(width=68, indent=10) )))
+        ((*- endif *))
+        type: ((( f | get_type )))
+      ((*- endfor *))
+    ((*- else *))
+    seq: []
+    ((*- endif *))
+  ((* endif *))
+((*- endfor *))

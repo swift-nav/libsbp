@@ -85,6 +85,7 @@ RUN \
       python3.10 python3.10-dev python3.10-distutils \
       dpkg-dev \
       cmake \
+      kaitai-struct-compiler
   && curl -sSL https://get.haskellstack.org/ | sh \
   && rm -rf /var/lib/apt/lists/* /tmp/* \
   && curl -s "https://get.sdkman.io" | bash \

@@ -1,0 +1,43 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__logging {
+		label="Logging";
+		graph[style=dotted];
+
+		logging__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__msg_log {
+			label="Logging::MsgLog";
+			graph[style=dotted];
+
+			msg_log__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="level_pos">0</TD><TD PORT="level_size">1</TD><TD>u1</TD><TD PORT="level_type">level</TD></TR>
+				<TR><TD PORT="text_pos">1</TD><TD PORT="text_size">⇲</TD><TD>str(ascii)</TD><TD PORT="text_type">text</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_fwd {
+			label="Logging::MsgFwd";
+			graph[style=dotted];
+
+			msg_fwd__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="source_pos">0</TD><TD PORT="source_size">1</TD><TD>u1</TD><TD PORT="source_type">source</TD></TR>
+				<TR><TD PORT="protocol_pos">1</TD><TD PORT="protocol_size">1</TD><TD>u1</TD><TD PORT="protocol_type">protocol</TD></TR>
+				<TR><TD PORT="fwd_payload_pos">2</TD><TD PORT="fwd_payload_size">1</TD><TD>u1</TD><TD PORT="fwd_payload_type">fwd_payload</TD></TR>
+				<TR><TD COLSPAN="4" PORT="fwd_payload__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_print_dep {
+			label="Logging::MsgPrintDep";
+			graph[style=dotted];
+
+			msg_print_dep__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="text_pos">0</TD><TD PORT="text_size">⇲</TD><TD>str(ascii)</TD><TD PORT="text_type">text</TD></TR>
+			</TABLE>>];
+		}
+	}
+}

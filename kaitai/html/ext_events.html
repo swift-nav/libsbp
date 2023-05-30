@@ -1,0 +1,84 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>ExtEvents format specification</title>
+  </head>
+  <body>
+           <div class="container">
+  <h1>ExtEvents format specification</h1>
+
+      
+<a name='type-ext_events'></a>
+<h1>Type: ExtEvents</h1>
+
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+</table>
+<a name='type-ext_events-msg_ext_event'></a>
+<h2>Type: MsgExtEvent</h2>
+
+<p>Reports detection of an external event, the GPS time it occurred, which
+pin it was and whether it was rising or falling.
+</p>
+<table class="table">
+<tr><th>Offset</th><th>Size</th><th>ID</th><th>Type</th><th>Note</th></tr>
+<tr>
+<td>0</td>
+<td>...</td>
+<td>wn</td>
+<td>u2le</td>
+<td>GPS week number
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>...</td>
+<td>tow</td>
+<td>u4le</td>
+<td>GPS time of week rounded to the nearest millisecond
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>...</td>
+<td>ns_residual</td>
+<td>s4le</td>
+<td>Nanosecond residual of millisecond-rounded TOW (ranges from -500000
+to 500000)
+</td>
+</tr>
+<tr>
+<td>10</td>
+<td>...</td>
+<td>flags</td>
+<td>u1</td>
+<td>Flags
+</td>
+</tr>
+<tr>
+<td>11</td>
+<td>...</td>
+<td>pin</td>
+<td>u1</td>
+<td>Pin number.  0..9 = DEBUG0..9.
+</td>
+</tr>
+</table>
+
+  </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+</html>
+      

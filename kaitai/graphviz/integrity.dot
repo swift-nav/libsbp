@@ -1,0 +1,140 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__integrity {
+		label="Integrity";
+		graph[style=dotted];
+
+		integrity__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__msg_ssr_flag_satellites {
+			label="Integrity::MsgSsrFlagSatellites";
+			graph[style=dotted];
+
+			msg_ssr_flag_satellites__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="obs_time_pos">0</TD><TD PORT="obs_time_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="obs_time_type">obs_time</TD></TR>
+				<TR><TD PORT="num_msgs_pos">6</TD><TD PORT="num_msgs_size">1</TD><TD>u1</TD><TD PORT="num_msgs_type">num_msgs</TD></TR>
+				<TR><TD PORT="seq_num_pos">7</TD><TD PORT="seq_num_size">1</TD><TD>u1</TD><TD PORT="seq_num_type">seq_num</TD></TR>
+				<TR><TD PORT="ssr_sol_id_pos">8</TD><TD PORT="ssr_sol_id_size">1</TD><TD>u1</TD><TD PORT="ssr_sol_id_type">ssr_sol_id</TD></TR>
+				<TR><TD PORT="chain_id_pos">9</TD><TD PORT="chain_id_size">1</TD><TD>u1</TD><TD PORT="chain_id_type">chain_id</TD></TR>
+				<TR><TD PORT="const_id_pos">10</TD><TD PORT="const_id_size">1</TD><TD>u1</TD><TD PORT="const_id_type">const_id</TD></TR>
+				<TR><TD PORT="n_faulty_sats_pos">11</TD><TD PORT="n_faulty_sats_size">1</TD><TD>u1</TD><TD PORT="n_faulty_sats_type">n_faulty_sats</TD></TR>
+				<TR><TD PORT="faulty_sats_pos">12</TD><TD PORT="faulty_sats_size">1</TD><TD>u1</TD><TD PORT="faulty_sats_type">faulty_sats</TD></TR>
+				<TR><TD COLSPAN="4" PORT="faulty_sats__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ssr_flag_iono_tile_sat_los {
+			label="Integrity::MsgSsrFlagIonoTileSatLos";
+			graph[style=dotted];
+
+			msg_ssr_flag_iono_tile_sat_los__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="header_pos">0</TD><TD PORT="header_size">14</TD><TD>IntegritySsrHeader</TD><TD PORT="header_type">header</TD></TR>
+				<TR><TD PORT="n_faulty_los_pos">14</TD><TD PORT="n_faulty_los_size">1</TD><TD>u1</TD><TD PORT="n_faulty_los_type">n_faulty_los</TD></TR>
+				<TR><TD PORT="faulty_los_pos">15</TD><TD PORT="faulty_los_size">2</TD><TD>Gnss::SvId</TD><TD PORT="faulty_los_type">faulty_los</TD></TR>
+				<TR><TD COLSPAN="4" PORT="faulty_los__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ssr_flag_iono_grid_point_sat_los {
+			label="Integrity::MsgSsrFlagIonoGridPointSatLos";
+			graph[style=dotted];
+
+			msg_ssr_flag_iono_grid_point_sat_los__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="header_pos">0</TD><TD PORT="header_size">14</TD><TD>IntegritySsrHeader</TD><TD PORT="header_type">header</TD></TR>
+				<TR><TD PORT="grid_point_id_pos">14</TD><TD PORT="grid_point_id_size">2</TD><TD>u2le</TD><TD PORT="grid_point_id_type">grid_point_id</TD></TR>
+				<TR><TD PORT="n_faulty_los_pos">16</TD><TD PORT="n_faulty_los_size">1</TD><TD>u1</TD><TD PORT="n_faulty_los_type">n_faulty_los</TD></TR>
+				<TR><TD PORT="faulty_los_pos">17</TD><TD PORT="faulty_los_size">2</TD><TD>Gnss::SvId</TD><TD PORT="faulty_los_type">faulty_los</TD></TR>
+				<TR><TD COLSPAN="4" PORT="faulty_los__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__integrity_ssr_header {
+			label="Integrity::IntegritySsrHeader";
+			graph[style=dotted];
+
+			integrity_ssr_header__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="obs_time_pos">0</TD><TD PORT="obs_time_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="obs_time_type">obs_time</TD></TR>
+				<TR><TD PORT="num_msgs_pos">6</TD><TD PORT="num_msgs_size">1</TD><TD>u1</TD><TD PORT="num_msgs_type">num_msgs</TD></TR>
+				<TR><TD PORT="seq_num_pos">7</TD><TD PORT="seq_num_size">1</TD><TD>u1</TD><TD PORT="seq_num_type">seq_num</TD></TR>
+				<TR><TD PORT="ssr_sol_id_pos">8</TD><TD PORT="ssr_sol_id_size">1</TD><TD>u1</TD><TD PORT="ssr_sol_id_type">ssr_sol_id</TD></TR>
+				<TR><TD PORT="tile_set_id_pos">9</TD><TD PORT="tile_set_id_size">2</TD><TD>u2le</TD><TD PORT="tile_set_id_type">tile_set_id</TD></TR>
+				<TR><TD PORT="tile_id_pos">11</TD><TD PORT="tile_id_size">2</TD><TD>u2le</TD><TD PORT="tile_id_type">tile_id</TD></TR>
+				<TR><TD PORT="chain_id_pos">13</TD><TD PORT="chain_id_size">1</TD><TD>u1</TD><TD PORT="chain_id_type">chain_id</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_acknowledge {
+			label="Integrity::MsgAcknowledge";
+			graph[style=dotted];
+
+			msg_acknowledge__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="request_id_pos">0</TD><TD PORT="request_id_size">1</TD><TD>u1</TD><TD PORT="request_id_type">request_id</TD></TR>
+				<TR><TD PORT="area_id_pos">1</TD><TD PORT="area_id_size">4</TD><TD>u4le</TD><TD PORT="area_id_type">area_id</TD></TR>
+				<TR><TD PORT="response_code_pos">5</TD><TD PORT="response_code_size">1</TD><TD>u1</TD><TD PORT="response_code_type">response_code</TD></TR>
+				<TR><TD PORT="correction_mask_on_demand_pos">6</TD><TD PORT="correction_mask_on_demand_size">2</TD><TD>u2le</TD><TD PORT="correction_mask_on_demand_type">correction_mask_on_demand</TD></TR>
+				<TR><TD PORT="correction_mask_stream_pos">8</TD><TD PORT="correction_mask_stream_size">2</TD><TD>u2le</TD><TD PORT="correction_mask_stream_type">correction_mask_stream</TD></TR>
+				<TR><TD PORT="solution_id_pos">10</TD><TD PORT="solution_id_size">1</TD><TD>u1</TD><TD PORT="solution_id_type">solution_id</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ssr_flag_iono_grid_points {
+			label="Integrity::MsgSsrFlagIonoGridPoints";
+			graph[style=dotted];
+
+			msg_ssr_flag_iono_grid_points__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="header_pos">0</TD><TD PORT="header_size">14</TD><TD>IntegritySsrHeader</TD><TD PORT="header_type">header</TD></TR>
+				<TR><TD PORT="n_faulty_points_pos">14</TD><TD PORT="n_faulty_points_size">1</TD><TD>u1</TD><TD PORT="n_faulty_points_type">n_faulty_points</TD></TR>
+				<TR><TD PORT="faulty_points_pos">15</TD><TD PORT="faulty_points_size">2</TD><TD>u2le</TD><TD PORT="faulty_points_type">faulty_points</TD></TR>
+				<TR><TD COLSPAN="4" PORT="faulty_points__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ssr_flag_tropo_grid_points {
+			label="Integrity::MsgSsrFlagTropoGridPoints";
+			graph[style=dotted];
+
+			msg_ssr_flag_tropo_grid_points__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="header_pos">0</TD><TD PORT="header_size">14</TD><TD>IntegritySsrHeader</TD><TD PORT="header_type">header</TD></TR>
+				<TR><TD PORT="n_faulty_points_pos">14</TD><TD PORT="n_faulty_points_size">1</TD><TD>u1</TD><TD PORT="n_faulty_points_type">n_faulty_points</TD></TR>
+				<TR><TD PORT="faulty_points_pos">15</TD><TD PORT="faulty_points_size">2</TD><TD>u2le</TD><TD PORT="faulty_points_type">faulty_points</TD></TR>
+				<TR><TD COLSPAN="4" PORT="faulty_points__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ssr_flag_high_level {
+			label="Integrity::MsgSsrFlagHighLevel";
+			graph[style=dotted];
+
+			msg_ssr_flag_high_level__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="obs_time_pos">0</TD><TD PORT="obs_time_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="obs_time_type">obs_time</TD></TR>
+				<TR><TD PORT="corr_time_pos">6</TD><TD PORT="corr_time_size">6</TD><TD>Gnss::GpsTimeSec</TD><TD PORT="corr_time_type">corr_time</TD></TR>
+				<TR><TD PORT="ssr_sol_id_pos">12</TD><TD PORT="ssr_sol_id_size">1</TD><TD>u1</TD><TD PORT="ssr_sol_id_type">ssr_sol_id</TD></TR>
+				<TR><TD PORT="tile_set_id_pos">13</TD><TD PORT="tile_set_id_size">2</TD><TD>u2le</TD><TD PORT="tile_set_id_type">tile_set_id</TD></TR>
+				<TR><TD PORT="tile_id_pos">15</TD><TD PORT="tile_id_size">2</TD><TD>u2le</TD><TD PORT="tile_id_type">tile_id</TD></TR>
+				<TR><TD PORT="chain_id_pos">17</TD><TD PORT="chain_id_size">1</TD><TD>u1</TD><TD PORT="chain_id_type">chain_id</TD></TR>
+				<TR><TD PORT="use_gps_sat_pos">18</TD><TD PORT="use_gps_sat_size">1</TD><TD>u1</TD><TD PORT="use_gps_sat_type">use_gps_sat</TD></TR>
+				<TR><TD PORT="use_gal_sat_pos">19</TD><TD PORT="use_gal_sat_size">1</TD><TD>u1</TD><TD PORT="use_gal_sat_type">use_gal_sat</TD></TR>
+				<TR><TD PORT="use_bds_sat_pos">20</TD><TD PORT="use_bds_sat_size">1</TD><TD>u1</TD><TD PORT="use_bds_sat_type">use_bds_sat</TD></TR>
+				<TR><TD PORT="reserved_pos">21</TD><TD PORT="reserved_size">1</TD><TD>u1</TD><TD PORT="reserved_type">reserved</TD></TR>
+				<TR><TD COLSPAN="4" PORT="reserved__repeat">repeat 6 times</TD></TR>
+				<TR><TD PORT="use_tropo_grid_points_pos">27</TD><TD PORT="use_tropo_grid_points_size">1</TD><TD>u1</TD><TD PORT="use_tropo_grid_points_type">use_tropo_grid_points</TD></TR>
+				<TR><TD PORT="use_iono_grid_points_pos">28</TD><TD PORT="use_iono_grid_points_size">1</TD><TD>u1</TD><TD PORT="use_iono_grid_points_type">use_iono_grid_points</TD></TR>
+				<TR><TD PORT="use_iono_tile_sat_los_pos">29</TD><TD PORT="use_iono_tile_sat_los_size">1</TD><TD>u1</TD><TD PORT="use_iono_tile_sat_los_type">use_iono_tile_sat_los</TD></TR>
+				<TR><TD PORT="use_iono_grid_point_sat_los_pos">30</TD><TD PORT="use_iono_grid_point_sat_los_size">1</TD><TD>u1</TD><TD PORT="use_iono_grid_point_sat_los_type">use_iono_grid_point_sat_los</TD></TR>
+			</TABLE>>];
+		}
+	}
+	msg_ssr_flag_satellites__seq:obs_time_type -> gps_time_sec__seq [style=bold];
+	msg_ssr_flag_iono_tile_sat_los__seq:header_type -> integrity_ssr_header__seq [style=bold];
+	msg_ssr_flag_iono_tile_sat_los__seq:faulty_los_type -> sv_id__seq [style=bold];
+	msg_ssr_flag_iono_grid_point_sat_los__seq:header_type -> integrity_ssr_header__seq [style=bold];
+	msg_ssr_flag_iono_grid_point_sat_los__seq:faulty_los_type -> sv_id__seq [style=bold];
+	integrity_ssr_header__seq:obs_time_type -> gps_time_sec__seq [style=bold];
+	msg_ssr_flag_iono_grid_points__seq:header_type -> integrity_ssr_header__seq [style=bold];
+	msg_ssr_flag_tropo_grid_points__seq:header_type -> integrity_ssr_header__seq [style=bold];
+	msg_ssr_flag_high_level__seq:obs_time_type -> gps_time_sec__seq [style=bold];
+	msg_ssr_flag_high_level__seq:corr_time_type -> gps_time_sec__seq [style=bold];
+}

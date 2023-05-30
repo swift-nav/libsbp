@@ -1,0 +1,191 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__system {
+		label="System";
+		graph[style=dotted];
+
+		system__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__msg_heartbeat {
+			label="System::MsgHeartbeat";
+			graph[style=dotted];
+
+			msg_heartbeat__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="flags_pos">0</TD><TD PORT="flags_size">4</TD><TD>u4le</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_status_journal {
+			label="System::MsgStatusJournal";
+			graph[style=dotted];
+
+			msg_status_journal__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="reporting_system_pos">0</TD><TD PORT="reporting_system_size">2</TD><TD>u2le</TD><TD PORT="reporting_system_type">reporting_system</TD></TR>
+				<TR><TD PORT="sbp_version_pos">2</TD><TD PORT="sbp_version_size">2</TD><TD>u2le</TD><TD PORT="sbp_version_type">sbp_version</TD></TR>
+				<TR><TD PORT="total_status_reports_pos">4</TD><TD PORT="total_status_reports_size">4</TD><TD>u4le</TD><TD PORT="total_status_reports_type">total_status_reports</TD></TR>
+				<TR><TD PORT="sequence_descriptor_pos">8</TD><TD PORT="sequence_descriptor_size">1</TD><TD>u1</TD><TD PORT="sequence_descriptor_type">sequence_descriptor</TD></TR>
+				<TR><TD PORT="journal_pos">9</TD><TD PORT="journal_size">8</TD><TD>StatusJournalItem</TD><TD PORT="journal_type">journal</TD></TR>
+				<TR><TD COLSPAN="4" PORT="journal__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ins_status {
+			label="System::MsgInsStatus";
+			graph[style=dotted];
+
+			msg_ins_status__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="flags_pos">0</TD><TD PORT="flags_size">4</TD><TD>u4le</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_gnss_time_offset {
+			label="System::MsgGnssTimeOffset";
+			graph[style=dotted];
+
+			msg_gnss_time_offset__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="weeks_pos">0</TD><TD PORT="weeks_size">2</TD><TD>s2le</TD><TD PORT="weeks_type">weeks</TD></TR>
+				<TR><TD PORT="milliseconds_pos">2</TD><TD PORT="milliseconds_size">4</TD><TD>s4le</TD><TD PORT="milliseconds_type">milliseconds</TD></TR>
+				<TR><TD PORT="microseconds_pos">6</TD><TD PORT="microseconds_size">2</TD><TD>s2le</TD><TD PORT="microseconds_type">microseconds</TD></TR>
+				<TR><TD PORT="flags_pos">8</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_csac_telemetry {
+			label="System::MsgCsacTelemetry";
+			graph[style=dotted];
+
+			msg_csac_telemetry__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="id_pos">0</TD><TD PORT="id_size">1</TD><TD>u1</TD><TD PORT="id_type">id</TD></TR>
+				<TR><TD PORT="telemetry_pos">1</TD><TD PORT="telemetry_size">⇲</TD><TD>str(ascii)</TD><TD PORT="telemetry_type">telemetry</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_pps_time {
+			label="System::MsgPpsTime";
+			graph[style=dotted];
+
+			msg_pps_time__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="time_pos">0</TD><TD PORT="time_size">8</TD><TD>u8le</TD><TD PORT="time_type">time</TD></TR>
+				<TR><TD PORT="flags_pos">8</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_ins_updates {
+			label="System::MsgInsUpdates";
+			graph[style=dotted];
+
+			msg_ins_updates__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="tow_pos">0</TD><TD PORT="tow_size">4</TD><TD>u4le</TD><TD PORT="tow_type">tow</TD></TR>
+				<TR><TD PORT="gnsspos_pos">4</TD><TD PORT="gnsspos_size">1</TD><TD>u1</TD><TD PORT="gnsspos_type">gnsspos</TD></TR>
+				<TR><TD PORT="gnssvel_pos">5</TD><TD PORT="gnssvel_size">1</TD><TD>u1</TD><TD PORT="gnssvel_type">gnssvel</TD></TR>
+				<TR><TD PORT="wheelticks_pos">6</TD><TD PORT="wheelticks_size">1</TD><TD>u1</TD><TD PORT="wheelticks_type">wheelticks</TD></TR>
+				<TR><TD PORT="speed_pos">7</TD><TD PORT="speed_size">1</TD><TD>u1</TD><TD PORT="speed_type">speed</TD></TR>
+				<TR><TD PORT="nhc_pos">8</TD><TD PORT="nhc_size">1</TD><TD>u1</TD><TD PORT="nhc_type">nhc</TD></TR>
+				<TR><TD PORT="zerovel_pos">9</TD><TD PORT="zerovel_size">1</TD><TD>u1</TD><TD PORT="zerovel_type">zerovel</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_dgnss_status {
+			label="System::MsgDgnssStatus";
+			graph[style=dotted];
+
+			msg_dgnss_status__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="flags_pos">0</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+				<TR><TD PORT="latency_pos">1</TD><TD PORT="latency_size">2</TD><TD>u2le</TD><TD PORT="latency_type">latency</TD></TR>
+				<TR><TD PORT="num_signals_pos">3</TD><TD PORT="num_signals_size">1</TD><TD>u1</TD><TD PORT="num_signals_type">num_signals</TD></TR>
+				<TR><TD PORT="source_pos">4</TD><TD PORT="source_size">⇲</TD><TD>str(ascii)</TD><TD PORT="source_type">source</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_csac_telemetry_labels {
+			label="System::MsgCsacTelemetryLabels";
+			graph[style=dotted];
+
+			msg_csac_telemetry_labels__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="id_pos">0</TD><TD PORT="id_size">1</TD><TD>u1</TD><TD PORT="id_type">id</TD></TR>
+				<TR><TD PORT="telemetry_labels_pos">1</TD><TD PORT="telemetry_labels_size">⇲</TD><TD>str(ascii)</TD><TD PORT="telemetry_labels_type">telemetry_labels</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_startup {
+			label="System::MsgStartup";
+			graph[style=dotted];
+
+			msg_startup__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="cause_pos">0</TD><TD PORT="cause_size">1</TD><TD>u1</TD><TD PORT="cause_type">cause</TD></TR>
+				<TR><TD PORT="startup_type_pos">1</TD><TD PORT="startup_type_size">1</TD><TD>u1</TD><TD PORT="startup_type_type">startup_type</TD></TR>
+				<TR><TD PORT="reserved_pos">2</TD><TD PORT="reserved_size">2</TD><TD>u2le</TD><TD PORT="reserved_type">reserved</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_group_meta {
+			label="System::MsgGroupMeta";
+			graph[style=dotted];
+
+			msg_group_meta__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="group_id_pos">0</TD><TD PORT="group_id_size">1</TD><TD>u1</TD><TD PORT="group_id_type">group_id</TD></TR>
+				<TR><TD PORT="flags_pos">1</TD><TD PORT="flags_size">1</TD><TD>u1</TD><TD PORT="flags_type">flags</TD></TR>
+				<TR><TD PORT="n_group_msgs_pos">2</TD><TD PORT="n_group_msgs_size">1</TD><TD>u1</TD><TD PORT="n_group_msgs_type">n_group_msgs</TD></TR>
+				<TR><TD PORT="group_msgs_pos">3</TD><TD PORT="group_msgs_size">2</TD><TD>u2le</TD><TD PORT="group_msgs_type">group_msgs</TD></TR>
+				<TR><TD COLSPAN="4" PORT="group_msgs__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_sensor_aid_event {
+			label="System::MsgSensorAidEvent";
+			graph[style=dotted];
+
+			msg_sensor_aid_event__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="time_pos">0</TD><TD PORT="time_size">4</TD><TD>u4le</TD><TD PORT="time_type">time</TD></TR>
+				<TR><TD PORT="sensor_type_pos">4</TD><TD PORT="sensor_type_size">1</TD><TD>u1</TD><TD PORT="sensor_type_type">sensor_type</TD></TR>
+				<TR><TD PORT="sensor_id_pos">5</TD><TD PORT="sensor_id_size">2</TD><TD>u2le</TD><TD PORT="sensor_id_type">sensor_id</TD></TR>
+				<TR><TD PORT="sensor_state_pos">7</TD><TD PORT="sensor_state_size">1</TD><TD>u1</TD><TD PORT="sensor_state_type">sensor_state</TD></TR>
+				<TR><TD PORT="n_available_meas_pos">8</TD><TD PORT="n_available_meas_size">1</TD><TD>u1</TD><TD PORT="n_available_meas_type">n_available_meas</TD></TR>
+				<TR><TD PORT="n_attempted_meas_pos">9</TD><TD PORT="n_attempted_meas_size">1</TD><TD>u1</TD><TD PORT="n_attempted_meas_type">n_attempted_meas</TD></TR>
+				<TR><TD PORT="n_accepted_meas_pos">10</TD><TD PORT="n_accepted_meas_size">1</TD><TD>u1</TD><TD PORT="n_accepted_meas_type">n_accepted_meas</TD></TR>
+				<TR><TD PORT="flags_pos">11</TD><TD PORT="flags_size">4</TD><TD>u4le</TD><TD PORT="flags_type">flags</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__sub_system_report {
+			label="System::SubSystemReport";
+			graph[style=dotted];
+
+			sub_system_report__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="component_pos">0</TD><TD PORT="component_size">2</TD><TD>u2le</TD><TD PORT="component_type">component</TD></TR>
+				<TR><TD PORT="generic_pos">2</TD><TD PORT="generic_size">1</TD><TD>u1</TD><TD PORT="generic_type">generic</TD></TR>
+				<TR><TD PORT="specific_pos">3</TD><TD PORT="specific_size">1</TD><TD>u1</TD><TD PORT="specific_type">specific</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__msg_status_report {
+			label="System::MsgStatusReport";
+			graph[style=dotted];
+
+			msg_status_report__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="reporting_system_pos">0</TD><TD PORT="reporting_system_size">2</TD><TD>u2le</TD><TD PORT="reporting_system_type">reporting_system</TD></TR>
+				<TR><TD PORT="sbp_version_pos">2</TD><TD PORT="sbp_version_size">2</TD><TD>u2le</TD><TD PORT="sbp_version_type">sbp_version</TD></TR>
+				<TR><TD PORT="sequence_pos">4</TD><TD PORT="sequence_size">4</TD><TD>u4le</TD><TD PORT="sequence_type">sequence</TD></TR>
+				<TR><TD PORT="uptime_pos">8</TD><TD PORT="uptime_size">4</TD><TD>u4le</TD><TD PORT="uptime_type">uptime</TD></TR>
+				<TR><TD PORT="status_pos">12</TD><TD PORT="status_size">4</TD><TD>SubSystemReport</TD><TD PORT="status_type">status</TD></TR>
+				<TR><TD COLSPAN="4" PORT="status__repeat">repeat to end of stream</TD></TR>
+			</TABLE>>];
+		}
+		subgraph cluster__status_journal_item {
+			label="System::StatusJournalItem";
+			graph[style=dotted];
+
+			status_journal_item__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="uptime_pos">0</TD><TD PORT="uptime_size">4</TD><TD>u4le</TD><TD PORT="uptime_type">uptime</TD></TR>
+				<TR><TD PORT="report_pos">4</TD><TD PORT="report_size">4</TD><TD>SubSystemReport</TD><TD PORT="report_type">report</TD></TR>
+			</TABLE>>];
+		}
+	}
+	msg_status_journal__seq:journal_type -> status_journal_item__seq [style=bold];
+	msg_status_report__seq:status_type -> sub_system_report__seq [style=bold];
+	status_journal_item__seq:report_type -> sub_system_report__seq [style=bold];
+}

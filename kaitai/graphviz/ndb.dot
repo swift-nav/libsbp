@@ -1,0 +1,30 @@
+digraph {
+	rankdir=LR;
+	node [shape=plaintext];
+	subgraph cluster__ndb {
+		label="Ndb";
+		graph[style=dotted];
+
+		ndb__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+			<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+		</TABLE>>];
+		subgraph cluster__msg_ndb_event {
+			label="Ndb::MsgNdbEvent";
+			graph[style=dotted];
+
+			msg_ndb_event__seq [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+				<TR><TD BGCOLOR="#E0FFE0">pos</TD><TD BGCOLOR="#E0FFE0">size</TD><TD BGCOLOR="#E0FFE0">type</TD><TD BGCOLOR="#E0FFE0">id</TD></TR>
+				<TR><TD PORT="recv_time_pos">0</TD><TD PORT="recv_time_size">8</TD><TD>u8le</TD><TD PORT="recv_time_type">recv_time</TD></TR>
+				<TR><TD PORT="event_pos">8</TD><TD PORT="event_size">1</TD><TD>u1</TD><TD PORT="event_type">event</TD></TR>
+				<TR><TD PORT="object_type_pos">9</TD><TD PORT="object_type_size">1</TD><TD>u1</TD><TD PORT="object_type_type">object_type</TD></TR>
+				<TR><TD PORT="result_pos">10</TD><TD PORT="result_size">1</TD><TD>u1</TD><TD PORT="result_type">result</TD></TR>
+				<TR><TD PORT="data_source_pos">11</TD><TD PORT="data_source_size">1</TD><TD>u1</TD><TD PORT="data_source_type">data_source</TD></TR>
+				<TR><TD PORT="object_sid_pos">12</TD><TD PORT="object_sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="object_sid_type">object_sid</TD></TR>
+				<TR><TD PORT="src_sid_pos">14</TD><TD PORT="src_sid_size">2</TD><TD>Gnss::GnssSignal</TD><TD PORT="src_sid_type">src_sid</TD></TR>
+				<TR><TD PORT="original_sender_pos">16</TD><TD PORT="original_sender_size">2</TD><TD>u2le</TD><TD PORT="original_sender_type">original_sender</TD></TR>
+			</TABLE>>];
+		}
+	}
+	msg_ndb_event__seq:object_sid_type -> gnss_signal__seq [style=bold];
+	msg_ndb_event__seq:src_sid_type -> gnss_signal__seq [style=bold];
+}
