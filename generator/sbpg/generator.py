@@ -71,7 +71,7 @@ def get_args():
                       help='Target language: Protocol Buffers.')
   parser.add_argument('--kaitai',
                       action="store_true",
-                      help='Target language: Kaitai Struct Format Description).')
+                      help='Target language: Kaitai Struct Format Description.')
   parser.add_argument('--jsonschema',
                       action="store_true",
                       help='Target language: JSON Schema.')

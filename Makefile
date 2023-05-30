@@ -351,7 +351,7 @@ gen-quicktype-elm:
 
 # Testers
 
-test: test-all-begin test-c test-c-v4 test-java test-python test-haskell test-javascript test-rust test-all-end
+test: test-all-begin test-c test-c-v4 test-java test-python test-haskell test-javascript test-rust test-kaitai test-all-end
 
 test-all-begin:
 	$(call announce-begin,"Running all tests")

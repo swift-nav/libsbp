@@ -23,6 +23,6 @@ jobs:
             -Dsonar.organization=swift-nav
             -Dsonar.projectKey=swift-nav_libsbp_auto
             -Dsonar.sources=.
-            -Dsonar.exclusions=java/**
+            -Dsonar.exclusions=java/**,kaitai/java/**
             -Dsonar.verbose=true
             -Dsonar.c.file.suffixes=- -Dsonar.cpp.file.suffixes=-
