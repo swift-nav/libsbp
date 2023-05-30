@@ -274,18 +274,24 @@ resulting files can be found in the [`kaitai/ksy`](./kaitai/ksy) directory.
 This target also runs the Kaitai Struct compiler to generate parsing code for
 the following targets, which can be found in their respective subdirectories:
 
-* graphviz
 * csharp
 * perl
-* java
 * go
 * cpp_stl
 * php
 * lua
 * python
 * nim
-* html
 * ruby
+
+The format specification files can also be used to generate bindings
+for additional targets, including:
+
+* graphviz
+* rust
+* java
+* html
+* construct
 * javascript
 
 The resulting python bindings allow for significantly faster parsing in

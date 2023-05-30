@@ -50,7 +50,7 @@ OUTPUT_LANGUAGES = [
   'csharp',
   #'rust',
   'perl',
-  'java',
+  #'java',
   'go',
   'cpp_stl',
   'php',
@@ -60,7 +60,7 @@ OUTPUT_LANGUAGES = [
   #'html',
   'ruby',
   #'construct',
-  'javascript'
+  #'javascript'
 ]
 
 def get_custom_type(type_id):
