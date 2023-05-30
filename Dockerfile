@@ -118,8 +118,12 @@ RUN npm install npm@latest mocha quicktype -g && sudo rm -rf /tmp/*
 # isntall kaitai struct compiler
 RUN \
      cd /tmp \
-  && curl -LO https://github.com/kaitai-io/kaitai_struct_compiler/releases/download/0.10/kaitai-struct-compiler_0.10_all.deb \
-  && apt-get install ./kaitai-struct-compiler_0.10_all.deb
+  && curl -LO https://github.com/kaitai-io/kaitai_struct_compiler/releases/download/0.10/kaitai-struct-compiler-0.10.zip \
+  && unzip kaitai-struct-compiler-0.10.zip \
+  && mv kaitai-struct-compiler-0.10 /opt \
+  && ln -sf /opt/kaitai-struct-compiler-0.10/bin/kaitai-struct-compiler /usr/local/bin \
+  && kaitai-struct-compiler --version \
+  && rm -rf /tmp/*
 
 ARG UID=1000
 
