@@ -85,7 +85,6 @@ RUN \
       python3.10 python3.10-dev python3.10-distutils \
       dpkg-dev \
       cmake \
-      kaitai-struct-compiler \
   && curl -sSL https://get.haskellstack.org/ | sh \
   && rm -rf /var/lib/apt/lists/* /tmp/* \
   && curl -s "https://get.sdkman.io" | bash \
@@ -115,6 +114,12 @@ ENV NODE_PATH=$NVM_DIR/versions/node/$NODE_VERSION/lib/node_modules
 ENV PATH=$NVM_DIR/versions/node/$NODE_VERSION/bin:${PATH}
 
 RUN npm install npm@latest mocha quicktype -g && sudo rm -rf /tmp/*
+
+# isntall kaitai struct compiler
+RUN \
+  cd /tmp \
+  curl -LO https://github.com/kaitai-io/kaitai_struct_compiler/releases/download/0.10/kaitai-struct-compiler_0.10_all.deb \
+  sudo apt-get install ./kaitai-struct-compiler_0.10_all.deb
 
 ARG UID=1000
 
