@@ -1,5 +1,9 @@
 # Changelog
 
+## [v4.15.0](https://github.com/swift-nav/libsbp/tree/v4.15.0) (2023-05-29)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.14.1...v4.15.0)
+
 ## [v4.14.1](https://github.com/swift-nav/libsbp/tree/v4.14.1)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.14.0...v4.14.1)
