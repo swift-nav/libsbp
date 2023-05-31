@@ -323,7 +323,7 @@ gen-kaitai:
 					-o $(SWIFTNAV_ROOT)/kaitai/ \
 					-r $(SBP_VERSION) \
 					--kaitai
-	$(call announce-begin,"Finished generating Protocol Buffers bindings")
+	$(call announce-begin,"Finished generating Kaitai Struct Format Description")
 
 gen-jsonschema:
 	$(call announce-begin,"Generating JSON Schema definitions")
@@ -413,7 +413,7 @@ test-protobuf:
 
 test-kaitai:
 	$(call announce-begin,"Running Kaitai Struct tests")
-	cd $(SWIFTNAV_ROOT) && PYTHONPATH=.:python pytest -s kaitai/python/tests/test_*.py
+	cd $(SWIFTNAV_ROOT) && pytest -s kaitai/python/tests/test_*.py
 	$(call announce-end,"Finished running Kaitai Struct tests")
 
 test-jsonschema:
