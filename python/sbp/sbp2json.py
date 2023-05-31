@@ -5,6 +5,7 @@ import sys
 import io
 
 import json
+import struct
 
 from construct.core import StreamError
 
@@ -96,19 +97,35 @@ def sbp_main(args):
         while True:
             bytes_available = read_offset - unconsumed_offset
             b = buf[unconsumed_offset:(unconsumed_offset + bytes_available)]
-            if len(b) == 0:
-                break
-            if b[0] != SBP_PREAMBLE:
+
+            m = None
+            if len(b) > 0 and b[0] != SBP_PREAMBLE:
                 consumed = 1
             else:
-                try:
-                    m = sbp.msg.SBP.unpack(b)
-                    if not include or m.msg_type in include:
-                        m = sbp.table.dispatch(m)
-                        dump(args, m)
-                    consumed = header_len + m.length + 2
-                except (UnpackError, StreamError, ValueError):
-                    consumed = 1
+                if len(b) < header_len:
+                    # insufficient data, keep retrying until enough data becomes
+                    # available
+                    consumed = 0
+                else:
+                    preamble, msg_type, sender, payload_len = struct.unpack("<BHHB", b[:header_len])
+                    if len(b) < header_len + payload_len + 2:
+                        # insufficient data, keep retrying until enough data becomes
+                        # available
+                        consumed = 0
+                    else:
+                        try:
+                            m = sbp.msg.SBP.unpack(b)
+                            consumed = header_len + m.length + 2
+                        except (UnpackError, StreamError, ValueError):
+                            consumed = 1
+
+            if consumed == 0:
+                break
+
+            if m is not None and (not include or m.msg_type in include):
+                m = sbp.table.dispatch(m)
+                dump(args, m)
+
             unconsumed_offset += consumed
 
 
