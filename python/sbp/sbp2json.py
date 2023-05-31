@@ -6,6 +6,7 @@ import io
 
 import json
 import struct
+import binascii
 
 from construct.core import StreamError
 
@@ -113,18 +114,25 @@ def sbp_main(args):
                         # available
                         consumed = 0
                     else:
-                        try:
-                            m = sbp.msg.SBP.unpack(b)
-                            consumed = header_len + m.length + 2
-                        except (UnpackError, StreamError, ValueError):
+                        # check CRC
+                        crc_read, = struct.unpack("<H", b[header_len + payload_len:header_len + payload_len + 2])
+                        crc_expected = binascii.crc_hqx(b[1:header_len + payload_len], 0)
+                        if crc_read == crc_expected:
+                            m = sbp.msg.SBP(msg_type, sender, payload_len, b[header_len:header_len + payload_len], crc_read)
+                            consumed = header_len + payload_len + 2
+                        else:
+                            sys.stderr.write("CRC error: {} vs {} for msg type {}\n".format(crc_read, crc_expected, msg_type))
                             consumed = 1
 
             if consumed == 0:
                 break
 
             if m is not None and (not include or m.msg_type in include):
-                m = sbp.table.dispatch(m)
-                dump(args, m)
+                try:
+                    m = sbp.table.dispatch(m)
+                    dump(args, m)
+                except (StreamError, ValueError):
+                    pass
 
             unconsumed_offset += consumed
 
