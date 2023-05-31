@@ -14,7 +14,6 @@ import sbp.msg
 import sbp.table
 
 from sbp.msg import SBP_PREAMBLE
-from sbp.msg import UnpackError
 
 
 DEFAULT_JSON='rapidjson'
