@@ -413,7 +413,7 @@ test-protobuf:
 
 test-kaitai:
 	$(call announce-begin,"Running Kaitai Struct tests")
-	cd $(SWIFTNAV_ROOT) && pytest -s kaitai/python/tests/test_*.py
+	cd $(SWIFTNAV_ROOT) && tox -c kaitai/python/tests/tox.ini kaitai/python/tests/test_*.py
 	$(call announce-end,"Finished running Kaitai Struct tests")
 
 test-jsonschema:
