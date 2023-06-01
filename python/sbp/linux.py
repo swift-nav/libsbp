@@ -34,8 +34,7 @@ class MsgLinuxCpuStateDepA(SBP):
   of its fields.
 
   
-  This message indicates the process state of the top 10 heaviest consumers of
-  CPU on the system.
+  Deprecated.
 
   Parameters
   ----------
@@ -150,8 +149,7 @@ class MsgLinuxMemStateDepA(SBP):
   of its fields.
 
   
-  This message indicates the process state of the top 10 heaviest consumers of
-  memory on the system.
+  Deprecated.
 
   Parameters
   ----------
@@ -266,7 +264,7 @@ class MsgLinuxSysStateDepA(SBP):
   of its fields.
 
   
-  This presents a summary of CPU and memory utilization.
+  Deprecated.
 
   Parameters
   ----------

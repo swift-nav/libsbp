@@ -515,12 +515,7 @@ msgSsrStecCorrectionDep = 0x05FB
 
 -- | SBP class for message MSG_SSR_STEC_CORRECTION_DEP (0x05FB).
 --
--- The Slant Total Electron Content per space vehicle, given as polynomial
--- approximation for a given tile. This should be combined with the
--- MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
--- the atmospheric delay.
---
--- It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+-- Deprecated.
 data MsgSsrStecCorrectionDep = MsgSsrStecCorrectionDep
   { _msgSsrStecCorrectionDep_header      :: !STECHeader
     -- ^ Header of a STEC polynomial coefficient message.
@@ -764,13 +759,7 @@ msgSsrTileDefinitionDepA = 0x05F6
 
 -- | SBP class for message MSG_SSR_TILE_DEFINITION_DEP_A (0x05F6).
 --
--- Provides the correction point coordinates for the atmospheric correction
--- values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
--- messages.
---
--- Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
--- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
--- correction points, not lists of points.
+-- Deprecated.
 data MsgSsrTileDefinitionDepA = MsgSsrTileDefinitionDepA
   { _msgSsrTileDefinitionDepA_tile_set_id :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
@@ -862,13 +851,7 @@ msgSsrTileDefinitionDepB = 0x05F7
 
 -- | SBP class for message MSG_SSR_TILE_DEFINITION_DEP_B (0x05F7).
 --
--- Provides the correction point coordinates for the atmospheric correction
--- values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
--- messages.
---
--- Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
--- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
--- correction points, not lists of points.
+-- Deprecated.
 data MsgSsrTileDefinitionDepB = MsgSsrTileDefinitionDepB
   { _msgSsrTileDefinitionDepB_ssr_sol_id  :: !Word8
     -- ^ SSR Solution ID.
@@ -1111,6 +1094,9 @@ $(makeLenses ''SatelliteAPC)
 msgSsrSatelliteApcDep :: Word16
 msgSsrSatelliteApcDep = 0x0604
 
+-- | SBP class for message MSG_SSR_SATELLITE_APC_DEP (0x0604).
+--
+-- Deprecated.
 data MsgSsrSatelliteApcDep = MsgSsrSatelliteApcDep
   { _msgSsrSatelliteApcDep_apc :: ![SatelliteAPC]
     -- ^ Satellite antenna phase center corrections
@@ -1169,6 +1155,9 @@ $(makeLenses ''MsgSsrSatelliteApc)
 msgSsrOrbitClockDepA :: Word16
 msgSsrOrbitClockDepA = 0x05DC
 
+-- | SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
+--
+-- Deprecated.
 data MsgSsrOrbitClockDepA = MsgSsrOrbitClockDepA
   { _msgSsrOrbitClockDepA_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -1365,6 +1354,9 @@ $(makeLenses ''GridDefinitionHeaderDepA)
 msgSsrStecCorrectionDepA :: Word16
 msgSsrStecCorrectionDepA = 0x05EB
 
+-- | SBP class for message MSG_SSR_STEC_CORRECTION_DEP_A (0x05EB).
+--
+-- Deprecated.
 data MsgSsrStecCorrectionDepA = MsgSsrStecCorrectionDepA
   { _msgSsrStecCorrectionDepA_header      :: !STECHeaderDepA
     -- ^ Header of a STEC message
@@ -1389,6 +1381,9 @@ $(makeLenses ''MsgSsrStecCorrectionDepA)
 msgSsrGriddedCorrectionNoStdDepA :: Word16
 msgSsrGriddedCorrectionNoStdDepA = 0x05F0
 
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A (0x05F0).
+--
+-- Deprecated.
 data MsgSsrGriddedCorrectionNoStdDepA = MsgSsrGriddedCorrectionNoStdDepA
   { _msgSsrGriddedCorrectionNoStdDepA_header               :: !GriddedCorrectionHeaderDepA
     -- ^ Header of a Gridded Correction message
@@ -1421,6 +1416,9 @@ $(makeLenses ''MsgSsrGriddedCorrectionNoStdDepA)
 msgSsrGriddedCorrectionDepA :: Word16
 msgSsrGriddedCorrectionDepA = 0x05FA
 
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05FA).
+--
+-- Deprecated.
 data MsgSsrGriddedCorrectionDepA = MsgSsrGriddedCorrectionDepA
   { _msgSsrGriddedCorrectionDepA_header               :: !GriddedCorrectionHeaderDepA
     -- ^ Header of a Gridded Correction message
@@ -1453,6 +1451,9 @@ $(makeLenses ''MsgSsrGriddedCorrectionDepA)
 msgSsrGridDefinitionDepA :: Word16
 msgSsrGridDefinitionDepA = 0x05F5
 
+-- | SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
+--
+-- Deprecated.
 data MsgSsrGridDefinitionDepA = MsgSsrGridDefinitionDepA
   { _msgSsrGridDefinitionDepA_header :: !GridDefinitionHeaderDepA
     -- ^ Header of a Gridded Correction message
@@ -1582,11 +1583,11 @@ data CodePhaseBiasesSatSig = CodePhaseBiasesSatSig
   , _codePhaseBiasesSatSig_code_bias_bound_mu :: !Word8
     -- ^ Code Bias Mean. Range: 0-1.275 m
   , _codePhaseBiasesSatSig_code_bias_bound_sig :: !Word8
-    -- ^ Code Bias Standard Deviation.  Range: 0-1.275 m
+    -- ^ Code Bias Standard Deviation. Range: 0-1.275 m
   , _codePhaseBiasesSatSig_phase_bias_bound_mu :: !Word8
     -- ^ Phase Bias Mean. Range: 0-1.275 m
   , _codePhaseBiasesSatSig_phase_bias_bound_sig :: !Word8
-    -- ^ Phase Bias Standard Deviation.  Range: 0-1.275 m
+    -- ^ Phase Bias Standard Deviation. Range: 0-1.275 m
   } deriving ( Show, Read, Eq )
 
 instance Binary CodePhaseBiasesSatSig where

@@ -39,9 +39,9 @@ extern "C" {
  * SBP_MSG_GROUP_DELAY_DEP_A
  *
  *****************************************************************************/
-/** Group Delay
+/** Deprecated
  *
- * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ * Deprecated.
  */
 typedef struct {
   /**

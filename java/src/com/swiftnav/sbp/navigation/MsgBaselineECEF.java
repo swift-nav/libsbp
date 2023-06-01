@@ -27,6 +27,8 @@ import org.json.JSONObject;
  * <p>This message reports the baseline solution in Earth Centered Earth Fixed (ECEF) coordinates.
  * This baseline is the relative vector distance from the base station to the rover receiver. The
  * full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ *
+ * <p>The values in this message are from GNSS measurements only.
  */
 public class MsgBaselineECEF extends SBPMessage {
     public static final int TYPE = 0x020B;

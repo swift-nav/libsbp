@@ -19,6 +19,14 @@ import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * SBP class for message MSG_ED25519_CERTIFICATE_DEP (0x0C02).
+ *
+ * <p>You can have MSG_ED25519_CERTIFICATE_DEP inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
+ *
+ * <p>Deprecated.
+ */
 public class MsgEd25519CertificateDep extends SBPMessage {
     public static final int TYPE = 0x0C02;
 

@@ -38,14 +38,9 @@ extern "C" {
  * SBP_MSG_BASELINE_NED_DEP_A
  *
  *****************************************************************************/
-/** Baseline in NED
+/** Deprecated
  *
- * This message reports the baseline solution in North East Down (NED)
- * coordinates. This baseline is the relative vector distance from the base
- * station to the rover receiver, and NED coordinate system is defined at the
- * local WGS84 tangent plane centered at the base station position.  The full
- * GPS time is given by the preceding MSG_GPS_TIME with the matching
- * time-of-week (tow).
+ * Deprecated.
  */
 typedef struct {
   /**

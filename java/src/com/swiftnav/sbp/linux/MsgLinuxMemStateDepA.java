@@ -24,8 +24,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_LINUX_MEM_STATE_DEP_A inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>This message indicates the process state of the top 10 heaviest consumers of memory on the
- * system.
+ * <p>Deprecated.
  */
 public class MsgLinuxMemStateDepA extends SBPMessage {
     public static final int TYPE = 0x7F01;

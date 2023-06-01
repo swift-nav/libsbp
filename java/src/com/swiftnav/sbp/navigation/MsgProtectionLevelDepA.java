@@ -24,9 +24,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_PROTECTION_LEVEL_DEP_A inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>This message reports the local vertical and horizontal protection levels associated with a
- * given LLH position solution. The full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow).
+ * <p>Deprecated.
  */
 public class MsgProtectionLevelDepA extends SBPMessage {
     public static final int TYPE = 0x0216;

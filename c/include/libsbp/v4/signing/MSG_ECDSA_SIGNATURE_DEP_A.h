@@ -38,9 +38,9 @@ extern "C" {
  * SBP_MSG_ECDSA_SIGNATURE_DEP_A
  *
  *****************************************************************************/
-/** An ECDSA signature
+/** Deprecated
  *
- * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ * Deprecated.
  */
 typedef struct {
   /**

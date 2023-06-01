@@ -38,6 +38,10 @@ extern "C" {
  * SBP_MSG_ED25519_SIGNATURE_DEP_B
  *
  *****************************************************************************/
+/** Deprecated
+ *
+ * Deprecated.
+ */
 typedef struct {
   /**
    * Signature message counter. Zero indexed and incremented with each signature

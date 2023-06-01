@@ -38,11 +38,12 @@ extern "C" {
  * SBP_MSG_VEL_ECEF_COV
  *
  *****************************************************************************/
-/** Velocity in ECEF
+/** Velocity in ECEF with Covariances
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
+ *
  */
 typedef struct {
   /**

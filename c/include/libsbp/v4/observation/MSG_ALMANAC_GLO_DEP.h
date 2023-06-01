@@ -39,12 +39,9 @@ extern "C" {
  * SBP_MSG_ALMANAC_GLO_DEP
  *
  *****************************************************************************/
-/** Satellite broadcast ephemeris for GLO
+/** Deprecated
  *
- * The almanac message returns a set of satellite orbit parameters. Almanac data
- * is not very precise and is considered valid for up to several months. Please
- * see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and almanac" for
- * details.
+ * Deprecated.
  */
 typedef struct {
   /**

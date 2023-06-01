@@ -30,6 +30,9 @@ import org.json.JSONObject;
  * message. Since the covariance matrix is computed in the local-level North, East, Down frame, the
  * covariance terms follow that convention. Thus, covariances are reported against the "downward"
  * measurement and care should be taken with the sign convention.
+ *
+ * <p>The values in this message are from GNSS measurements fused with inertial measurements. To get
+ * values from GNSS measurements only use MSG_POS_LLH_COV_GNSS.
  */
 public class MsgPosLLHCov extends SBPMessage {
     public static final int TYPE = 0x0211;

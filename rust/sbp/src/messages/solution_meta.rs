@@ -533,10 +533,6 @@ pub mod msg_soln_meta_dep_a {
     ///
     /// Deprecated.
     ///
-    /// This message contains all metadata about the sensors received and/or used
-    /// in computing the Fuzed Solution. It focuses primarily, but not only, on
-    /// GNSS metadata.
-    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]

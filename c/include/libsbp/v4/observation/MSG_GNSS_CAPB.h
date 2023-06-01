@@ -40,6 +40,10 @@ extern "C" {
  * SBP_MSG_GNSS_CAPB
  *
  *****************************************************************************/
+/** GNSS capabilities masks
+ *
+ * Bit masks of signal capabilities for each GNSS satellite PRN.
+ */
 typedef struct {
   /**
    * Navigation Message Correction Table Validity Time

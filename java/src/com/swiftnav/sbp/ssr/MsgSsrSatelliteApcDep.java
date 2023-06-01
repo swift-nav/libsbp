@@ -20,6 +20,14 @@ import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
 import org.json.JSONObject;
 
+/**
+ * SBP class for message MSG_SSR_SATELLITE_APC_DEP (0x0604).
+ *
+ * <p>You can have MSG_SSR_SATELLITE_APC_DEP inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
+ *
+ * <p>Deprecated.
+ */
 public class MsgSsrSatelliteApcDep extends SBPMessage {
     public static final int TYPE = 0x0604;
 

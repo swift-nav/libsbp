@@ -99,6 +99,11 @@ typedef struct SBP_ATTR_PACKED {
                                         `http(s)://certs.swiftnav.com/chain`. */
 } msg_certificate_chain_t;
 
+/** Deprecated
+ *
+ * Deprecated.
+ */
+
 typedef struct SBP_ATTR_PACKED {
   u8 root_certificate[20];         /**< SHA-1 fingerprint of the root
                                         certificate */
@@ -159,9 +164,9 @@ typedef struct SBP_ATTR_PACKED {
                                     CRCs covered. */
 } msg_ecdsa_signature_t;
 
-/** An ECDSA signature
+/** Deprecated
  *
- * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -198,9 +203,9 @@ typedef struct SBP_ATTR_PACKED {
                               CRCs covered. */
 } msg_ecdsa_signature_dep_b_t;
 
-/** An ECDSA signature
+/** Deprecated
  *
- * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -233,6 +238,11 @@ typedef struct SBP_ATTR_PACKED {
                               CRCs covered. */
 } msg_ecdsa_signature_dep_a_t;
 
+/** Deprecated
+ *
+ * Deprecated.
+ */
+
 typedef struct SBP_ATTR_PACKED {
   u8 n_msg;                /**< Total number messages that make up the
                                 certificate. First nibble is the size of the
@@ -243,11 +253,21 @@ typedef struct SBP_ATTR_PACKED {
   u8 certificate_bytes[0]; /**< ED25519 certificate bytes. */
 } msg_ed25519_certificate_dep_t;
 
+/** Deprecated
+ *
+ * Deprecated.
+ */
+
 typedef struct SBP_ATTR_PACKED {
   u8 signature[64];   /**< ED25519 signature for messages. */
   u8 fingerprint[20]; /**< SHA-1 fingerprint of the associated certificate. */
   u32 signed_messages[0]; /**< CRCs of signed messages. */
 } msg_ed25519_signature_dep_a_t;
+
+/** Deprecated
+ *
+ * Deprecated.
+ */
 
 typedef struct SBP_ATTR_PACKED {
   u8 stream_counter;      /**< Signature message counter. Zero indexed and

@@ -337,9 +337,10 @@ message GnssCapb {
     uint64 gal_e5 = 15;
 }
 
-/** GNSS capabilities
+/** GNSS capabilities masks
  *
-None
+ * Bit masks of signal capabilities for each GNSS satellite PRN.
+ * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
  */
 message MsgGnssCapb {
     gnss.GpsTimeSec t_nmct = 1;
@@ -372,7 +373,7 @@ message AlmanacCommonContent {
     uint32 health_bits = 6;
 }
 
-/** Satellite broadcast ephemeris for GPS
+/** Satellite broadcast almanac for GPS
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
  * data is not very precise and is considered valid for up to several months.
@@ -392,7 +393,7 @@ message MsgAlmanacGps {
     double af1 = 10;
 }
 
-/** Satellite broadcast ephemeris for GLO
+/** Satellite broadcast almanac for GLO
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
  * data is not very precise and is considered valid for up to several months.

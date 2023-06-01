@@ -409,7 +409,7 @@ pub enum Sbp {
     MsgInitBaseDep(MsgInitBaseDep),
     /// Mask a satellite from use in Piksi subsystems
     MsgMaskSatellite(MsgMaskSatellite),
-    /// Tracking channel correlations
+    /// Deprecated
     MsgTrackingIqDepB(MsgTrackingIqDepB),
     /// Tracking channel correlations
     MsgTrackingIq(MsgTrackingIq),
@@ -427,7 +427,7 @@ pub enum Sbp {
     MsgObsDepA(MsgObsDepA),
     /// Deprecated
     MsgEphemerisDepB(MsgEphemerisDepB),
-    /// Satellite broadcast ephemeris
+    /// Deprecated
     MsgEphemerisDepC(MsgEphemerisDepC),
     /// Base station position in ECEF
     MsgBasePosEcef(MsgBasePosEcef),
@@ -445,31 +445,31 @@ pub enum Sbp {
     MsgSetTime(MsgSetTime),
     /// Legacy message to load satellite almanac (host => Piksi)
     MsgAlmanac(MsgAlmanac),
-    /// Satellite broadcast ephemeris for GPS
+    /// Deprecated
     MsgAlmanacGpsDep(MsgAlmanacGpsDep),
-    /// Satellite broadcast ephemeris for GLO
+    /// Deprecated
     MsgAlmanacGloDep(MsgAlmanacGloDep),
-    /// Satellite broadcast ephemeris for GPS
+    /// Satellite broadcast almanac for GPS
     MsgAlmanacGps(MsgAlmanacGps),
-    /// Satellite broadcast ephemeris for GLO
+    /// Satellite broadcast almanac for GLO
     MsgAlmanacGlo(MsgAlmanacGlo),
     /// GLONASS L1/L2 Code-Phase biases
     MsgGloBiases(MsgGloBiases),
-    /// Satellite broadcast ephemeris
+    /// Deprecated
     MsgEphemerisDepD(MsgEphemerisDepD),
-    /// Satellite broadcast ephemeris for GPS
+    /// Deprecated
     MsgEphemerisGpsDepE(MsgEphemerisGpsDepE),
-    /// Satellite broadcast ephemeris for SBAS
+    /// Deprecated
     MsgEphemerisSbasDepA(MsgEphemerisSbasDepA),
-    /// Satellite broadcast ephemeris for GLO
+    /// Deprecated
     MsgEphemerisGloDepA(MsgEphemerisGloDepA),
     /// Deprecated
     MsgEphemerisSbasDepB(MsgEphemerisSbasDepB),
-    /// Satellite broadcast ephemeris for GLO
+    /// Deprecated
     MsgEphemerisGloDepB(MsgEphemerisGloDepB),
     /// Deprecated
     MsgEphemerisGpsDepF(MsgEphemerisGpsDepF),
-    /// Satellite broadcast ephemeris for GLO
+    /// Deprecated
     MsgEphemerisGloDepC(MsgEphemerisGloDepC),
     /// Deprecated
     MsgEphemerisGloDepD(MsgEphemerisGloDepD),
@@ -487,17 +487,17 @@ pub enum Sbp {
     MsgEphemerisQzss(MsgEphemerisQzss),
     /// Iono corrections
     MsgIono(MsgIono),
-    /// L2C capability mask
+    /// Deprecated
     MsgSvConfigurationGpsDep(MsgSvConfigurationGpsDep),
-    /// Group Delay
+    /// Deprecated
     MsgGroupDelayDepA(MsgGroupDelayDepA),
-    /// Group Delay
+    /// Deprecated
     MsgGroupDelayDepB(MsgGroupDelayDepB),
     /// Group Delay
     MsgGroupDelay(MsgGroupDelay),
     /// Deprecated
     MsgEphemerisGalDepA(MsgEphemerisGalDepA),
-    /// GNSS capabilities
+    /// GNSS capabilities masks
     MsgGnssCapb(MsgGnssCapb),
     /// Satellite azimuths and elevations
     MsgSvAzEl(MsgSvAzEl),
@@ -537,7 +537,7 @@ pub enum Sbp {
     MsgBootloaderHandshakeDepA(MsgBootloaderHandshakeDepA),
     /// Bootloader jump to application (host => device)
     MsgBootloaderJumpToApp(MsgBootloaderJumpToApp),
-    /// Reset the device (host => Piksi)
+    /// Deprecated
     MsgResetDep(MsgResetDep),
     /// Bootloading handshake request (host => device)
     MsgBootloaderHandshakeReq(MsgBootloaderHandshakeReq),
@@ -591,47 +591,47 @@ pub enum Sbp {
     MsgStmUniqueIdReq(MsgStmUniqueIdReq),
     /// Write M25 flash status register (host => device)
     MsgM25FlashWriteStatus(MsgM25FlashWriteStatus),
-    /// GPS Time (v1.0)
+    /// Deprecated
     MsgGpsTimeDepA(MsgGpsTimeDepA),
     /// Reports timestamped external pin event
     MsgExtEvent(MsgExtEvent),
-    /// GPS Time
+    /// GPS Time (GNSS + inertial)
     MsgGpsTime(MsgGpsTime),
     /// UTC Time
     MsgUtcTime(MsgUtcTime),
-    /// GPS Time
+    /// GNSS-only GPS Time
     MsgGpsTimeGnss(MsgGpsTimeGnss),
-    /// UTC Time
+    /// GNSS-only UTC Time
     MsgUtcTimeGnss(MsgUtcTimeGnss),
     /// Per-signal telemetry
     MsgTelSv(MsgTelSv),
     /// Register setting and default value (device <= host)
     MsgSettingsRegisterResp(MsgSettingsRegisterResp),
-    /// Single-point position in ECEF
+    /// Deprecated
     MsgPosEcefDepA(MsgPosEcefDepA),
-    /// Geodetic Position
+    /// Deprecated
     MsgPosLlhDepA(MsgPosLlhDepA),
-    /// Baseline Position in ECEF
+    /// Deprecated
     MsgBaselineEcefDepA(MsgBaselineEcefDepA),
-    /// Baseline in NED
+    /// Deprecated
     MsgBaselineNedDepA(MsgBaselineNedDepA),
-    /// Velocity in ECEF
+    /// Deprecated
     MsgVelEcefDepA(MsgVelEcefDepA),
-    /// Velocity in NED
+    /// Deprecated
     MsgVelNedDepA(MsgVelNedDepA),
-    /// Dilution of Precision
+    /// Deprecated
     MsgDopsDepA(MsgDopsDepA),
-    /// Heading relative to True North
+    /// Deprecated
     MsgBaselineHeadingDepA(MsgBaselineHeadingDepA),
-    /// Dilution of Precision
+    /// GNSS-only Dilution of Precision
     MsgDops(MsgDops),
-    /// Single-point position in ECEF
+    /// Position in ECEF
     MsgPosEcef(MsgPosEcef),
     /// Geodetic Position
     MsgPosLlh(MsgPosLlh),
-    /// Baseline Position in ECEF
+    /// GNSS-only Baseline Position in ECEF
     MsgBaselineEcef(MsgBaselineEcef),
-    /// Baseline in NED
+    /// GNSS-only Baseline in NED
     MsgBaselineNed(MsgBaselineNed),
     /// Velocity in ECEF
     MsgVelEcef(MsgVelEcef),
@@ -641,17 +641,17 @@ pub enum Sbp {
     MsgBaselineHeading(MsgBaselineHeading),
     /// Age of corrections
     MsgAgeCorrections(MsgAgeCorrections),
-    /// Geodetic Position
+    /// Geodetic Position with Covariances
     MsgPosLlhCov(MsgPosLlhCov),
-    /// Velocity in NED
+    /// Velocity in NED with Covariances
     MsgVelNedCov(MsgVelNedCov),
     /// Velocity in User Frame
     MsgVelBody(MsgVelBody),
-    /// Single-point position in ECEF
+    /// Position in ECEF with Covariances
     MsgPosEcefCov(MsgPosEcefCov),
-    /// Velocity in ECEF
+    /// Velocity in ECEF with Covariances
     MsgVelEcefCov(MsgVelEcefCov),
-    /// Computed Position and Protection Level
+    /// Deprecated
     MsgProtectionLevelDepA(MsgProtectionLevelDepA),
     /// Computed state and Protection Levels
     MsgProtectionLevel(MsgProtectionLevel),
@@ -673,13 +673,13 @@ pub enum Sbp {
     MsgVelEcefGnss(MsgVelEcefGnss),
     /// GNSS-only Velocity in NED
     MsgVelNedGnss(MsgVelNedGnss),
-    /// GNSS-only Geodetic Position
+    /// GNSS-only Geodetic Position with Covariances
     MsgPosLlhCovGnss(MsgPosLlhCovGnss),
-    /// GNSS-only Velocity in NED
+    /// GNSS-only Velocity in NED with Covariances
     MsgVelNedCovGnss(MsgVelNedCovGnss),
-    /// GNSS-only Position in ECEF
+    /// GNSS-only Position in ECEF with Covariances
     MsgPosEcefCovGnss(MsgPosEcefCovGnss),
-    /// GNSS-only Velocity in ECEF
+    /// GNSS-only Velocity in ECEF with Covariances
     MsgVelEcefCovGnss(MsgVelEcefCovGnss),
     /// Leap second SBP message.
     MsgUtcLeapSecond(MsgUtcLeapSecond),
@@ -713,15 +713,15 @@ pub enum Sbp {
     MsgSsrGriddedCorrectionNoStdDepA(MsgSsrGriddedCorrectionNoStdDepA),
     /// Deprecated
     MsgSsrGridDefinitionDepA(MsgSsrGridDefinitionDepA),
-    /// Definition of a SSR atmospheric correction tile.
+    /// Deprecated
     MsgSsrTileDefinitionDepA(MsgSsrTileDefinitionDepA),
-    /// Definition of a SSR atmospheric correction tile.
+    /// Deprecated
     MsgSsrTileDefinitionDepB(MsgSsrTileDefinitionDepB),
     /// Definition of a SSR atmospheric correction tile.
     MsgSsrTileDefinition(MsgSsrTileDefinition),
     /// Deprecated
     MsgSsrGriddedCorrectionDepA(MsgSsrGriddedCorrectionDepA),
-    /// STEC correction polynomial coefficients
+    /// Deprecated
     MsgSsrStecCorrectionDep(MsgSsrStecCorrectionDep),
     /// Gridded troposphere and STEC correction residuals
     MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
@@ -729,7 +729,7 @@ pub enum Sbp {
     MsgSsrStecCorrection(MsgSsrStecCorrection),
     /// Gridded troposhere and STEC correction residuals bounds
     MsgSsrGriddedCorrectionBounds(MsgSsrGriddedCorrectionBounds),
-    /// Satellite antenna phase center corrections
+    /// Deprecated
     MsgSsrSatelliteApcDep(MsgSsrSatelliteApcDep),
     /// Satellite antenna phase center corrections
     MsgSsrSatelliteApc(MsgSsrSatelliteApc),
@@ -763,15 +763,17 @@ pub enum Sbp {
     MsgAcknowledge(MsgAcknowledge),
     /// Deprecated
     MsgEd25519SignatureDepA(MsgEd25519SignatureDepA),
+    /// Deprecated
     MsgEd25519CertificateDep(MsgEd25519CertificateDep),
+    /// Deprecated
     MsgEd25519SignatureDepB(MsgEd25519SignatureDepB),
     /// An ECDSA certificate split over multiple messages
     MsgEcdsaCertificate(MsgEcdsaCertificate),
-    /// The certificate chain
+    /// Deprecated
     MsgCertificateChainDep(MsgCertificateChainDep),
-    /// An ECDSA signature
+    /// Deprecated
     MsgEcdsaSignatureDepA(MsgEcdsaSignatureDepA),
-    /// An ECDSA signature
+    /// Deprecated
     MsgEcdsaSignatureDepB(MsgEcdsaSignatureDepB),
     /// An ECDSA signature
     MsgEcdsaSignature(MsgEcdsaSignature),
@@ -783,11 +785,11 @@ pub enum Sbp {
     MsgFileioConfigResp(MsgFileioConfigResp),
     /// Raw SBAS data
     MsgSbasRaw(MsgSbasRaw),
-    /// List CPU state on the system. DEPRECATED
+    /// Deprecated
     MsgLinuxCpuStateDepA(MsgLinuxCpuStateDepA),
-    /// List memory state on the system. DEPRECATED
+    /// Deprecated
     MsgLinuxMemStateDepA(MsgLinuxMemStateDepA),
-    /// CPU, Memory and Process Starts/Stops. DEPRECATED
+    /// Deprecated
     MsgLinuxSysStateDepA(MsgLinuxSysStateDepA),
     /// A list of processes with high socket counts
     MsgLinuxProcessSocketCounts(MsgLinuxProcessSocketCounts),

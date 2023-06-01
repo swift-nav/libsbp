@@ -182,6 +182,9 @@ $(makeLenses ''MsgCertificateChain)
 msgCertificateChainDep :: Word16
 msgCertificateChainDep = 0x0C05
 
+-- | SBP class for message MSG_CERTIFICATE_CHAIN_DEP (0x0C05).
+--
+-- Deprecated.
 data MsgCertificateChainDep = MsgCertificateChainDep
   { _msgCertificateChainDep_root_certificate       :: ![Word8]
     -- ^ SHA-1 fingerprint of the root certificate
@@ -280,7 +283,7 @@ msgEcdsaSignatureDepB = 0x0C07
 
 -- | SBP class for message MSG_ECDSA_SIGNATURE_DEP_B (0x0C07).
 --
--- An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+-- Deprecated.
 data MsgEcdsaSignatureDepB = MsgEcdsaSignatureDepB
   { _msgEcdsaSignatureDepB_flags           :: !Word8
     -- ^ Describes the format of the `signed\_messages` field below.
@@ -341,7 +344,7 @@ msgEcdsaSignatureDepA = 0x0C06
 
 -- | SBP class for message MSG_ECDSA_SIGNATURE_DEP_A (0x0C06).
 --
--- An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+-- Deprecated.
 data MsgEcdsaSignatureDepA = MsgEcdsaSignatureDepA
   { _msgEcdsaSignatureDepA_flags           :: !Word8
     -- ^ Describes the format of the `signed\_messages` field below.
@@ -393,6 +396,9 @@ $(makeLenses ''MsgEcdsaSignatureDepA)
 msgEd25519CertificateDep :: Word16
 msgEd25519CertificateDep = 0x0C02
 
+-- | SBP class for message MSG_ED25519_CERTIFICATE_DEP (0x0C02).
+--
+-- Deprecated.
 data MsgEd25519CertificateDep = MsgEd25519CertificateDep
   { _msgEd25519CertificateDep_n_msg           :: !Word8
     -- ^ Total number messages that make up the certificate. First nibble is the
@@ -423,6 +429,9 @@ $(makeLenses ''MsgEd25519CertificateDep)
 msgEd25519SignatureDepA :: Word16
 msgEd25519SignatureDepA = 0x0C01
 
+-- | SBP class for message MSG_ED25519_SIGNATURE_DEP_A (0x0C01).
+--
+-- Deprecated.
 data MsgEd25519SignatureDepA = MsgEd25519SignatureDepA
   { _msgEd25519SignatureDepA_signature     :: ![Word8]
     -- ^ ED25519 signature for messages.
@@ -451,6 +460,9 @@ $(makeLenses ''MsgEd25519SignatureDepA)
 msgEd25519SignatureDepB :: Word16
 msgEd25519SignatureDepB = 0x0C03
 
+-- | SBP class for message MSG_ED25519_SIGNATURE_DEP_B (0x0C03).
+--
+-- Deprecated.
 data MsgEd25519SignatureDepB = MsgEd25519SignatureDepB
   { _msgEd25519SignatureDepB_stream_counter  :: !Word8
     -- ^ Signature message counter. Zero indexed and incremented with each

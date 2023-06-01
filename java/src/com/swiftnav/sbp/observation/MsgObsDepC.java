@@ -26,11 +26,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_OBS_DEP_C inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>The GPS observations message reports all the raw pseudorange and carrier phase observations
- * for the satellites being tracked by the device. Carrier phase observation here is represented as
- * a 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of
- * fractional cycles). The observations are interoperable with 3rd party receivers and conform with
- * typical RTCMv3 GNSS observations.
+ * <p>Deprecated.
  */
 public class MsgObsDepC extends SBPMessage {
     public static final int TYPE = 0x0049;

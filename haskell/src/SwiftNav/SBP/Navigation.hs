@@ -73,6 +73,10 @@ msgGpsTime = 0x0102
 -- this message precedes a set of other navigation messages referenced to the
 -- same time (but lacking the ns field) and indicates a more precise time of
 -- these messages.
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements. To get values from GNSS measurements only use
+-- MSG_GPS_TIME_GNSS.
 data MsgGpsTime = MsgGpsTime
   { _msgGpsTime_wn        :: !Word16
     -- ^ GPS week number
@@ -119,6 +123,9 @@ msgGpsTimeGnss = 0x0104
 -- this message precedes a set of other navigation messages referenced to the
 -- same time (but lacking the ns field) and indicates a more precise time of
 -- these messages.
+--
+-- The values in this message are from GNSS measurements only. To get values
+-- fused with inertial measurements use MSG_GPS_TIME.
 data MsgGpsTimeGnss = MsgGpsTimeGnss
   { _msgGpsTimeGnss_wn        :: !Word16
     -- ^ GPS week number
@@ -157,6 +164,10 @@ msgUtcTime = 0x0103
 -- This message reports the Universal Coordinated Time (UTC).  Note the flags
 -- which indicate the source of the UTC offset value and source of the time
 -- fix.
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements. To get values from GNSS measurements only use
+-- MSG_UTC_TIME_GNSS.
 data MsgUtcTime = MsgUtcTime
   { _msgUtcTime_flags :: !Word8
     -- ^ Indicates source and time validity
@@ -214,6 +225,9 @@ msgUtcTimeGnss = 0x0105
 -- This message reports the Universal Coordinated Time (UTC).  Note the flags
 -- which indicate the source of the UTC offset value and source of the time
 -- fix.
+--
+-- The values in this message are from GNSS measurements only. To get values
+-- fused with inertial measurements use MSG_UTC_TIME.
 data MsgUtcTimeGnss = MsgUtcTimeGnss
   { _msgUtcTimeGnss_flags :: !Word8
     -- ^ Indicates source and time validity
@@ -272,6 +286,8 @@ msgDops = 0x0208
 -- satellite geometry on positional measurement precision.  The flags field
 -- indicated whether the DOP reported corresponds to differential or SPP
 -- solution.
+--
+-- The values in this message are from GNSS measurements only.
 data MsgDops = MsgDops
   { _msgDops_tow :: !Word32
     -- ^ GPS Time of Week
@@ -325,6 +341,10 @@ msgPosEcef = 0x0209
 -- position solution using the base station position and the rover's RTK
 -- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
 -- with the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements. To get values from GNSS measurements only use
+-- MSG_POS_ECEF_GNSS.
 data MsgPosEcef = MsgPosEcef
   { _msgPosEcef_tow    :: !Word32
     -- ^ GPS Time of Week
@@ -379,6 +399,10 @@ msgPosEcefCov = 0x0214
 -- pseudo-absolute position solution using the base station position and the
 -- rover's RTK baseline vector. The full GPS time is given by the preceding
 -- MSG_GPS_TIME with the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements. To get values from GNSS measurements only use
+-- MSG_POS_ECEF_COV_GNSS.
 data MsgPosEcefCov = MsgPosEcefCov
   { _msgPosEcefCov_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -452,6 +476,10 @@ msgPosLlh = 0x020A
 -- solution using the base station position and the rover's RTK baseline
 -- vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 -- matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements. To get values from GNSS measurements only use
+-- MSG_POS_LLH_GNSS.
 data MsgPosLlh = MsgPosLlh
   { _msgPosLlh_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -510,6 +538,10 @@ msgPosLlhCov = 0x0211
 -- Down frame, the covariance terms follow that convention. Thus, covariances
 -- are reported against the "downward" measurement and care should be taken
 -- with the sign convention.
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements. To get values from GNSS measurements only use
+-- MSG_POS_LLH_COV_GNSS.
 data MsgPosLlhCov = MsgPosLlhCov
   { _msgPosLlhCov_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -613,6 +645,9 @@ msgPosLlhAcc = 0x0218
 --
 -- The estimated errors are reported at a user-configurable confidence level.
 -- The user-configured percentile is encoded in the percentile field.
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements.
 data MsgPosLlhAcc = MsgPosLlhAcc
   { _msgPosLlhAcc_tow                :: !Word32
     -- ^ GPS Time of Week
@@ -695,6 +730,8 @@ msgBaselineEcef = 0x020B
 -- (ECEF) coordinates. This baseline is the relative vector distance from the
 -- base station to the rover receiver. The full GPS time is given by the
 -- preceding MSG_GPS_TIME with the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements only.
 data MsgBaselineEcef = MsgBaselineEcef
   { _msgBaselineEcef_tow    :: !Word32
     -- ^ GPS Time of Week
@@ -747,6 +784,8 @@ msgBaselineNed = 0x020C
 -- local WGS84 tangent plane centered at the base station position.  The full
 -- GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
 -- week (tow).
+--
+-- The values in this message are from GNSS measurements only.
 data MsgBaselineNed = MsgBaselineNed
   { _msgBaselineNed_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -800,6 +839,10 @@ msgVelEcef = 0x020D
 -- This message reports the velocity in Earth Centered Earth Fixed (ECEF)
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 -- the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements. To get values from GNSS measurements only use
+-- MSG_VEL_ECEF_GNSS.
 data MsgVelEcef = MsgVelEcef
   { _msgVelEcef_tow    :: !Word32
     -- ^ GPS Time of Week
@@ -849,6 +892,10 @@ msgVelEcefCov = 0x0215
 -- This message reports the velocity in Earth Centered Earth Fixed (ECEF)
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 -- the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements. To get values from GNSS measurements only use
+-- MSG_VEL_ECEF_COV_GNSS.
 data MsgVelEcefCov = MsgVelEcefCov
   { _msgVelEcefCov_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -919,6 +966,10 @@ msgVelNed = 0x020E
 -- coordinates. The NED coordinate system is defined as the local WGS84
 -- tangent plane centered at the current position. The full GPS time is given
 -- by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements. To get values from GNSS measurements only use
+-- MSG_VEL_NED_GNSS.
 data MsgVelNed = MsgVelNed
   { _msgVelNed_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -975,6 +1026,10 @@ msgVelNedCov = 0x0212
 -- by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
 -- message is similar to the MSG_VEL_NED, but it includes the upper triangular
 -- portion of the 3x3 covariance matrix.
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements. To get values from GNSS measurements only use
+-- MSG_VEL_NED_COV_GNSS.
 data MsgVelNedCov = MsgVelNedCov
   { _msgVelNedCov_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -1046,8 +1101,11 @@ msgPosEcefGnss = 0x0229
 -- the position solution. If the rover receiver knows the surveyed position of
 -- the base station and has an RTK solution, this reports a pseudo-absolute
 -- position solution using the base station position and the rover's RTK
--- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
--- with the matching time-of-week (tow).
+-- baseline vector. The full GPS time is given by the preceding
+-- MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements only. To get values
+-- fused with inertial measurements use MSG_POS_ECEF.
 data MsgPosEcefGnss = MsgPosEcefGnss
   { _msgPosEcefGnss_tow    :: !Word32
     -- ^ GPS Time of Week
@@ -1101,7 +1159,10 @@ msgPosEcefCovGnss = 0x0234
 -- position of the base station and has an RTK solution, this reports a
 -- pseudo-absolute position solution using the base station position and the
 -- rover's RTK baseline vector. The full GPS time is given by the preceding
--- MSG_GPS_TIME with the matching time-of-week (tow).
+-- MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements only. To get values
+-- fused with inertial measurements use MSG_POS_ECEF_COV.
 data MsgPosEcefCovGnss = MsgPosEcefCovGnss
   { _msgPosEcefCovGnss_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -1173,8 +1234,11 @@ msgPosLlhGnss = 0x022A
 -- solution. If the rover receiver knows the surveyed position of the base
 -- station and has an RTK solution, this reports a pseudo-absolute position
 -- solution using the base station position and the rover's RTK baseline
--- vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
--- matching time-of-week (tow).
+-- vector. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with
+-- the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements only. To get values
+-- fused with inertial measurements use MSG_POS_LLH.
 data MsgPosLlhGnss = MsgPosLlhGnss
   { _msgPosLlhGnss_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -1228,11 +1292,14 @@ msgPosLlhCovGnss = 0x0231
 -- This position solution message reports the absolute geodetic coordinates
 -- and the status (single point vs pseudo-absolute RTK) of the position
 -- solution as well as the upper triangle of the 3x3 covariance matrix.  The
--- position information and Fix Mode flags should follow the MSG_POS_LLH
+-- position information and Fix Mode flags should follow the MSG_POS_LLH_GNSS
 -- message.  Since the covariance matrix is computed in the local-level North,
 -- East, Down frame, the covariance terms follow with that convention. Thus,
 -- covariances are reported against the "downward" measurement and care should
 -- be taken with the sign convention.
+--
+-- The values in this message are from GNSS measurements only. To get values
+-- fused with inertial measurements use MSG_POS_LLH_COV.
 data MsgPosLlhCovGnss = MsgPosLlhCovGnss
   { _msgPosLlhCovGnss_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -1300,8 +1367,11 @@ msgVelEcefGnss = 0x022D
 -- | SBP class for message MSG_VEL_ECEF_GNSS (0x022D).
 --
 -- This message reports the velocity in Earth Centered Earth Fixed (ECEF)
--- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
--- the matching time-of-week (tow).
+-- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
+-- with the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements only. To get values
+-- fused with inertial measurements use MSG_VEL_ECEF.
 data MsgVelEcefGnss = MsgVelEcefGnss
   { _msgVelEcefGnss_tow    :: !Word32
     -- ^ GPS Time of Week
@@ -1349,8 +1419,11 @@ msgVelEcefCovGnss = 0x0235
 -- | SBP class for message MSG_VEL_ECEF_COV_GNSS (0x0235).
 --
 -- This message reports the velocity in Earth Centered Earth Fixed (ECEF)
--- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
--- the matching time-of-week (tow).
+-- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
+-- with the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements only. To get values
+-- fused with inertial measurements use MSG_VEL_ECEF_COV.
 data MsgVelEcefCovGnss = MsgVelEcefCovGnss
   { _msgVelEcefCovGnss_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -1420,7 +1493,10 @@ msgVelNedGnss = 0x022E
 -- This message reports the velocity in local North East Down (NED)
 -- coordinates. The NED coordinate system is defined as the local WGS84
 -- tangent plane centered at the current position. The full GPS time is given
--- by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-- by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+--
+-- The values in this message are from GNSS measurements only. To get values
+-- fused with inertial measurements use MSG_VEL_NED.
 data MsgVelNedGnss = MsgVelNedGnss
   { _msgVelNedGnss_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -1474,9 +1550,12 @@ msgVelNedCovGnss = 0x0232
 -- This message reports the velocity in local North East Down (NED)
 -- coordinates. The NED coordinate system is defined as the local WGS84
 -- tangent plane centered at the current position. The full GPS time is given
--- by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
--- message is similar to the MSG_VEL_NED, but it includes the upper triangular
--- portion of the 3x3 covariance matrix.
+-- by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+-- This message is similar to the MSG_VEL_NED_GNSS, but it includes the upper
+-- triangular portion of the 3x3 covariance matrix.
+--
+-- The values in this message are from GNSS measurements only. To get values
+-- fused with inertial measurements use MSG_VEL_NED_COV.
 data MsgVelNedCovGnss = MsgVelNedCovGnss
   { _msgVelNedCovGnss_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -1552,6 +1631,9 @@ msgVelBody = 0x0213
 -- preceding MSG_GPS_TIME with the matching time-of-week (tow). This message
 -- is only produced by inertial versions of Swift products and is not
 -- available from Piksi Multi or Duro.
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements.
 data MsgVelBody = MsgVelBody
   { _msgVelBody_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -1621,14 +1703,17 @@ msgVelCog = 0x021C
 -- This message reports the receiver course over ground (COG) and speed over
 -- ground (SOG) based on the horizontal (N-E) components of the NED velocity
 -- vector. It also includes the vertical velocity coordinate. A flag is
--- provided to indicate whether the COG value has been frozen. When  the flag
--- is set to true, the COG field is set to its last valid value until  the
--- system exceeds a minimum velocity threshold. No other fields are  affected
--- by this flag.  The NED coordinate system is defined as the local WGS84
--- tangent  plane centered at the current position. The full GPS time is given
--- by the  preceding MSG_GPS_TIME with the matching time-of-week (tow). Note:
--- course over ground represents the receiver's direction of travel,  but not
+-- provided to indicate whether the COG value has been frozen. When the flag
+-- is set to true, the COG field is set to its last valid value until the
+-- system exceeds a minimum velocity threshold. No other fields are affected
+-- by this flag. The NED coordinate system is defined as the local WGS84
+-- tangent plane centered at the current position. The full GPS time is given
+-- by the preceding MSG_GPS_TIME with the matching time-of-week (tow). Note:
+-- course over ground represents the receiver's direction of travel, but not
 -- necessarily the device heading.
+--
+-- The values in this message are from GNSS measurements fused with inertial
+-- measurements.
 data MsgVelCog = MsgVelCog
   { _msgVelCog_tow         :: !Word32
     -- ^ GPS Time of Week
@@ -1707,17 +1792,7 @@ msgGpsTimeDepA = 0x0100
 
 -- | SBP class for message MSG_GPS_TIME_DEP_A (0x0100).
 --
--- This message reports the GPS time, representing the time since the GPS
--- epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
--- seconds of the week. The weeks begin at the Saturday/Sunday transition. GPS
--- week 0 began at the beginning of the GPS time scale.
---
--- Within each week number, the GPS time of the week is between between 0 and
--- 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate leap
--- seconds, and as of now, has a small offset from UTC. In a message stream,
--- this message precedes a set of other navigation messages referenced to the
--- same time (but lacking the ns field) and indicates a more precise time of
--- these messages.
+-- Deprecated.
 data MsgGpsTimeDepA = MsgGpsTimeDepA
   { _msgGpsTimeDepA_wn        :: !Word16
     -- ^ GPS week number
@@ -1753,8 +1828,7 @@ msgDopsDepA = 0x0206
 
 -- | SBP class for message MSG_DOPS_DEP_A (0x0206).
 --
--- This dilution of precision (DOP) message describes the effect of navigation
--- satellite geometry on positional measurement precision.
+-- Deprecated.
 data MsgDopsDepA = MsgDopsDepA
   { _msgDopsDepA_tow :: !Word32
     -- ^ GPS Time of Week
@@ -1797,13 +1871,7 @@ msgPosEcefDepA = 0x0200
 
 -- | SBP class for message MSG_POS_ECEF_DEP_A (0x0200).
 --
--- The position solution message reports absolute Earth Centered Earth Fixed
--- (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
--- the position solution. If the rover receiver knows the surveyed position of
--- the base station and has an RTK solution, this reports a pseudo-absolute
--- position solution using the base station position and the rover's RTK
--- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
--- with the matching time-of-week (tow).
+-- Deprecated.
 data MsgPosEcefDepA = MsgPosEcefDepA
   { _msgPosEcefDepA_tow    :: !Word32
     -- ^ GPS Time of Week
@@ -1850,13 +1918,7 @@ msgPosLlhDepA = 0x0201
 
 -- | SBP class for message MSG_POS_LLH_DEP_A (0x0201).
 --
--- This position solution message reports the absolute geodetic coordinates
--- and the status (single point vs pseudo-absolute RTK) of the position
--- solution. If the rover receiver knows the surveyed position of the base
--- station and has an RTK solution, this reports a pseudo-absolute position
--- solution using the base station position and the rover's RTK baseline
--- vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
--- matching time-of-week (tow).
+-- Deprecated.
 data MsgPosLlhDepA = MsgPosLlhDepA
   { _msgPosLlhDepA_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -1907,10 +1969,7 @@ msgBaselineEcefDepA = 0x0202
 
 -- | SBP class for message MSG_BASELINE_ECEF_DEP_A (0x0202).
 --
--- This message reports the baseline solution in Earth Centered Earth Fixed
--- (ECEF) coordinates. This baseline is the relative vector distance from the
--- base station to the rover receiver. The full GPS time is given by the
--- preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-- Deprecated.
 data MsgBaselineEcefDepA = MsgBaselineEcefDepA
   { _msgBaselineEcefDepA_tow    :: !Word32
     -- ^ GPS Time of Week
@@ -1957,12 +2016,7 @@ msgBaselineNedDepA = 0x0203
 
 -- | SBP class for message MSG_BASELINE_NED_DEP_A (0x0203).
 --
--- This message reports the baseline solution in North East Down (NED)
--- coordinates. This baseline is the relative vector distance from the base
--- station to the rover receiver, and NED coordinate system is defined at the
--- local WGS84 tangent plane centered at the base station position.  The full
--- GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
--- week (tow).
+-- Deprecated.
 data MsgBaselineNedDepA = MsgBaselineNedDepA
   { _msgBaselineNedDepA_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -2013,9 +2067,7 @@ msgVelEcefDepA = 0x0204
 
 -- | SBP class for message MSG_VEL_ECEF_DEP_A (0x0204).
 --
--- This message reports the velocity in Earth Centered Earth Fixed (ECEF)
--- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
--- the matching time-of-week (tow).
+-- Deprecated.
 data MsgVelEcefDepA = MsgVelEcefDepA
   { _msgVelEcefDepA_tow    :: !Word32
     -- ^ GPS Time of Week
@@ -2062,10 +2114,7 @@ msgVelNedDepA = 0x0205
 
 -- | SBP class for message MSG_VEL_NED_DEP_A (0x0205).
 --
--- This message reports the velocity in local North East Down (NED)
--- coordinates. The NED coordinate system is defined as the local WGS84
--- tangent plane centered at the current position. The full GPS time is given
--- by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-- Deprecated.
 data MsgVelNedDepA = MsgVelNedDepA
   { _msgVelNedDepA_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -2116,9 +2165,7 @@ msgBaselineHeadingDepA = 0x0207
 
 -- | SBP class for message MSG_BASELINE_HEADING_DEP_A (0x0207).
 --
--- This message reports the baseline heading pointing from the base station to
--- the rover relative to True North. The full GPS time is given by the
--- preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-- Deprecated.
 data MsgBaselineHeadingDepA = MsgBaselineHeadingDepA
   { _msgBaselineHeadingDepA_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -2153,9 +2200,7 @@ msgProtectionLevelDepA = 0x0216
 
 -- | SBP class for message MSG_PROTECTION_LEVEL_DEP_A (0x0216).
 --
--- This message reports the local vertical and horizontal protection levels
--- associated with a given LLH position solution. The full GPS time is given
--- by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-- Deprecated.
 data MsgProtectionLevelDepA = MsgProtectionLevelDepA
   { _msgProtectionLevelDepA_tow  :: !Word32
     -- ^ GPS Time of Week

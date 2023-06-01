@@ -226,12 +226,14 @@ pub mod msg_baseline_ecef {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Baseline Position in ECEF
+    /// GNSS-only Baseline Position in ECEF
     ///
     /// This message reports the baseline solution in Earth Centered Earth Fixed
     /// (ECEF) coordinates. This baseline is the relative vector distance from the
     /// base station to the rover receiver. The full GPS time is given by the
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements only.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -414,12 +416,9 @@ pub mod msg_baseline_ecef_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Baseline Position in ECEF
+    /// Deprecated
     ///
-    /// This message reports the baseline solution in Earth Centered Earth Fixed
-    /// (ECEF) coordinates. This baseline is the relative vector distance from the
-    /// base station to the rover receiver. The full GPS time is given by the
-    /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -686,11 +685,9 @@ pub mod msg_baseline_heading_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Heading relative to True North
+    /// Deprecated
     ///
-    /// This message reports the baseline heading pointing from the base station
-    /// to the rover relative to True North. The full GPS time is given by the
-    /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -936,7 +933,7 @@ pub mod msg_baseline_ned {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Baseline in NED
+    /// GNSS-only Baseline in NED
     ///
     /// This message reports the baseline solution in North East Down (NED)
     /// coordinates. This baseline is the relative vector distance from the base
@@ -944,6 +941,8 @@ pub mod msg_baseline_ned {
     /// local WGS84 tangent plane centered at the base station position.  The full
     /// GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
     /// week (tow).
+    ///
+    /// The values in this message are from GNSS measurements only.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1133,14 +1132,9 @@ pub mod msg_baseline_ned_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Baseline in NED
+    /// Deprecated
     ///
-    /// This message reports the baseline solution in North East Down (NED)
-    /// coordinates. This baseline is the relative vector distance from the base
-    /// station to the rover receiver, and NED coordinate system is defined at the
-    /// local WGS84 tangent plane centered at the base station position.  The full
-    /// GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
-    /// week (tow).
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1414,12 +1408,14 @@ pub mod msg_dops {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Dilution of Precision
+    /// GNSS-only Dilution of Precision
     ///
     /// This dilution of precision (DOP) message describes the effect of
     /// navigation satellite geometry on positional measurement precision.  The
     /// flags field indicated whether the DOP reported corresponds to differential
     /// or SPP solution.
+    ///
+    /// The values in this message are from GNSS measurements only.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1628,10 +1624,9 @@ pub mod msg_dops_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Dilution of Precision
+    /// Deprecated
     ///
-    /// This dilution of precision (DOP) message describes the effect of
-    /// navigation satellite geometry on positional measurement precision.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1751,7 +1746,7 @@ pub mod msg_gps_time {
     use super::*;
     use crate::messages::lib::*;
 
-    /// GPS Time
+    /// GPS Time (GNSS + inertial)
     ///
     /// This message reports the GPS time, representing the time since the GPS
     /// epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
@@ -1764,6 +1759,10 @@ pub mod msg_gps_time {
     /// this message precedes a set of other navigation messages referenced to the
     /// same time (but lacking the ns field) and indicates a more precise time of
     /// these messages.
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements. To get values from GNSS measurements only use
+    /// MSG_GPS_TIME_GNSS.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1926,19 +1925,9 @@ pub mod msg_gps_time_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// GPS Time (v1.0)
+    /// Deprecated
     ///
-    /// This message reports the GPS time, representing the time since the GPS
-    /// epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
-    /// seconds of the week. The weeks begin at the Saturday/Sunday transition.
-    /// GPS week 0 began at the beginning of the GPS time scale.
-    ///
-    /// Within each week number, the GPS time of the week is between between 0 and
-    /// 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate leap
-    /// seconds, and as of now, has a small offset from UTC. In a message stream,
-    /// this message precedes a set of other navigation messages referenced to the
-    /// same time (but lacking the ns field) and indicates a more precise time of
-    /// these messages.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -2050,7 +2039,7 @@ pub mod msg_gps_time_gnss {
     use super::*;
     use crate::messages::lib::*;
 
-    /// GPS Time
+    /// GNSS-only GPS Time
     ///
     /// This message reports the GPS time, representing the time since the GPS
     /// epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
@@ -2063,6 +2052,9 @@ pub mod msg_gps_time_gnss {
     /// this message precedes a set of other navigation messages referenced to the
     /// same time (but lacking the ns field) and indicates a more precise time of
     /// these messages.
+    ///
+    /// The values in this message are from GNSS measurements only. To get values
+    /// fused with inertial measurements use MSG_GPS_TIME.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -2614,7 +2606,7 @@ pub mod msg_pos_ecef {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Single-point position in ECEF
+    /// Position in ECEF
     ///
     /// The position solution message reports absolute Earth Centered Earth Fixed
     /// (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
@@ -2623,6 +2615,10 @@ pub mod msg_pos_ecef {
     /// absolute position solution using the base station position and the rover's
     /// RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements. To get values from GNSS measurements only use
+    /// MSG_POS_ECEF_GNSS.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -2911,7 +2907,7 @@ pub mod msg_pos_ecef_cov {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Single-point position in ECEF
+    /// Position in ECEF with Covariances
     ///
     /// The position solution message reports absolute Earth Centered Earth Fixed
     /// (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
@@ -2921,6 +2917,10 @@ pub mod msg_pos_ecef_cov {
     /// pseudo-absolute position solution using the base station position and the
     /// rover's RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements. To get values from GNSS measurements only use
+    /// MSG_POS_ECEF_COV_GNSS.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -3244,7 +3244,7 @@ pub mod msg_pos_ecef_cov_gnss {
     use super::*;
     use crate::messages::lib::*;
 
-    /// GNSS-only Position in ECEF
+    /// GNSS-only Position in ECEF with Covariances
     ///
     /// The position solution message reports absolute Earth Centered Earth Fixed
     /// (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
@@ -3253,7 +3253,10 @@ pub mod msg_pos_ecef_cov_gnss {
     /// position of the base station and has an RTK solution, this reports a
     /// pseudo-absolute position solution using the base station position and the
     /// rover's RTK baseline vector. The full GPS time is given by the preceding
-    /// MSG_GPS_TIME with the matching time-of-week (tow).
+    /// MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements only. To get values
+    /// fused with inertial measurements use MSG_POS_ECEF_COV.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -3481,15 +3484,9 @@ pub mod msg_pos_ecef_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Single-point position in ECEF
+    /// Deprecated
     ///
-    /// The position solution message reports absolute Earth Centered Earth Fixed
-    /// (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
-    /// the position solution. If the rover receiver knows the surveyed position
-    /// of the base station and has an RTK solution, this reports a pseudo-
-    /// absolute position solution using the base station position and the rover's
-    /// RTK baseline vector. The full GPS time is given by the preceding
-    /// MSG_GPS_TIME with the matching time-of-week (tow).
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -3769,7 +3766,10 @@ pub mod msg_pos_ecef_gnss {
     /// of the base station and has an RTK solution, this reports a pseudo-
     /// absolute position solution using the base station position and the rover's
     /// RTK baseline vector. The full GPS time is given by the preceding
-    /// MSG_GPS_TIME with the matching time-of-week (tow).
+    /// MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements only. To get values
+    /// fused with inertial measurements use MSG_POS_ECEF.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -3971,6 +3971,10 @@ pub mod msg_pos_llh {
     /// solution using the base station position and the rover's RTK baseline
     /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
     /// matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements. To get values from GNSS measurements only use
+    /// MSG_POS_LLH_GNSS.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -4278,6 +4282,9 @@ pub mod msg_pos_llh_acc {
     ///
     /// The estimated errors are reported at a user-configurable confidence level.
     /// The user-configured percentile is encoded in the percentile field.
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -4721,7 +4728,7 @@ pub mod msg_pos_llh_cov {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Geodetic Position
+    /// Geodetic Position with Covariances
     ///
     /// This position solution message reports the absolute geodetic coordinates
     /// and the status (single point vs pseudo-absolute RTK) of the position
@@ -4731,6 +4738,10 @@ pub mod msg_pos_llh_cov {
     /// Down frame, the covariance terms follow that convention. Thus, covariances
     /// are reported against the "downward" measurement and care should be taken
     /// with the sign convention.
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements. To get values from GNSS measurements only use
+    /// MSG_POS_LLH_COV_GNSS.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -5054,16 +5065,19 @@ pub mod msg_pos_llh_cov_gnss {
     use super::*;
     use crate::messages::lib::*;
 
-    /// GNSS-only Geodetic Position
+    /// GNSS-only Geodetic Position with Covariances
     ///
     /// This position solution message reports the absolute geodetic coordinates
     /// and the status (single point vs pseudo-absolute RTK) of the position
     /// solution as well as the upper triangle of the 3x3 covariance matrix.  The
-    /// position information and Fix Mode flags should follow the MSG_POS_LLH
+    /// position information and Fix Mode flags should follow the MSG_POS_LLH_GNSS
     /// message.  Since the covariance matrix is computed in the local-level
     /// North, East, Down frame, the covariance terms follow with that convention.
     /// Thus, covariances are reported against the "downward" measurement and care
     /// should be taken with the sign convention.
+    ///
+    /// The values in this message are from GNSS measurements only. To get values
+    /// fused with inertial measurements use MSG_POS_LLH_COV.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -5296,15 +5310,9 @@ pub mod msg_pos_llh_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Geodetic Position
+    /// Deprecated
     ///
-    /// This position solution message reports the absolute geodetic coordinates
-    /// and the status (single point vs pseudo-absolute RTK) of the position
-    /// solution. If the rover receiver knows the surveyed position of the base
-    /// station and has an RTK solution, this reports a pseudo-absolute position
-    /// solution using the base station position and the rover's RTK baseline
-    /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
-    /// matching time-of-week (tow).
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -5636,8 +5644,11 @@ pub mod msg_pos_llh_gnss {
     /// solution. If the rover receiver knows the surveyed position of the base
     /// station and has an RTK solution, this reports a pseudo-absolute position
     /// solution using the base station position and the rover's RTK baseline
-    /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
-    /// matching time-of-week (tow).
+    /// vector. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with
+    /// the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements only. To get values
+    /// fused with inertial measurements use MSG_POS_LLH.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -6373,11 +6384,9 @@ pub mod msg_protection_level_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Computed Position and Protection Level
+    /// Deprecated
     ///
-    /// This message reports the local vertical and horizontal protection levels
-    /// associated with a given LLH position solution. The full GPS time is given
-    /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -6921,6 +6930,10 @@ pub mod msg_utc_time {
     /// which indicate the source of the UTC offset value and source of the time
     /// fix.
     ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements. To get values from GNSS measurements only use
+    /// MSG_UTC_TIME_GNSS.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -7160,11 +7173,14 @@ pub mod msg_utc_time_gnss {
     use super::*;
     use crate::messages::lib::*;
 
-    /// UTC Time
+    /// GNSS-only UTC Time
     ///
     /// This message reports the Universal Coordinated Time (UTC).  Note the flags
     /// which indicate the source of the UTC offset value and source of the time
     /// fix.
+    ///
+    /// The values in this message are from GNSS measurements only. To get values
+    /// fused with inertial measurements use MSG_UTC_TIME.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -7416,6 +7432,9 @@ pub mod msg_vel_body {
     /// time is given by the preceding MSG_GPS_TIME with the matching time-of-week
     /// (tow). This message is only produced by inertial versions of Swift
     /// products and is not available from Piksi Multi or Duro.
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -7682,14 +7701,17 @@ pub mod msg_vel_cog {
     /// This message reports the receiver course over ground (COG) and speed over
     /// ground (SOG) based on the horizontal (N-E) components of the NED velocity
     /// vector. It also includes the vertical velocity coordinate. A flag is
-    /// provided to indicate whether the COG value has been frozen. When  the flag
-    /// is set to true, the COG field is set to its last valid value until  the
-    /// system exceeds a minimum velocity threshold. No other fields are  affected
-    /// by this flag.  The NED coordinate system is defined as the local WGS84
-    /// tangent  plane centered at the current position. The full GPS time is
-    /// given by the  preceding MSG_GPS_TIME with the matching time-of-week (tow).
-    /// Note: course over ground represents the receiver's direction of travel,
-    /// but not necessarily the device heading.
+    /// provided to indicate whether the COG value has been frozen. When the flag
+    /// is set to true, the COG field is set to its last valid value until the
+    /// system exceeds a minimum velocity threshold. No other fields are affected
+    /// by this flag. The NED coordinate system is defined as the local WGS84
+    /// tangent plane centered at the current position. The full GPS time is given
+    /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow). Note:
+    /// course over ground represents the receiver's direction of travel, but not
+    /// necessarily the device heading.
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -8154,6 +8176,10 @@ pub mod msg_vel_ecef {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements. To get values from GNSS measurements only use
+    /// MSG_VEL_ECEF_GNSS.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -8423,11 +8449,15 @@ pub mod msg_vel_ecef_cov {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Velocity in ECEF
+    /// Velocity in ECEF with Covariances
     ///
     /// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements. To get values from GNSS measurements only use
+    /// MSG_VEL_ECEF_COV_GNSS.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -8733,11 +8763,14 @@ pub mod msg_vel_ecef_cov_gnss {
     use super::*;
     use crate::messages::lib::*;
 
-    /// GNSS-only Velocity in ECEF
+    /// GNSS-only Velocity in ECEF with Covariances
     ///
     /// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
-    /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
-    /// the matching time-of-week (tow).
+    /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
+    /// with the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements only. To get values
+    /// fused with inertial measurements use MSG_VEL_ECEF_COV.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -8950,11 +8983,9 @@ pub mod msg_vel_ecef_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Velocity in ECEF
+    /// Deprecated
     ///
-    /// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
-    /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
-    /// the matching time-of-week (tow).
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -9084,8 +9115,11 @@ pub mod msg_vel_ecef_gnss {
     /// GNSS-only Velocity in ECEF
     ///
     /// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
-    /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
-    /// the matching time-of-week (tow).
+    /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
+    /// with the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements only. To get values
+    /// fused with inertial measurements use MSG_VEL_ECEF.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -9269,6 +9303,10 @@ pub mod msg_vel_ned {
     /// coordinates. The NED coordinate system is defined as the local WGS84
     /// tangent plane centered at the current position. The full GPS time is given
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements. To get values from GNSS measurements only use
+    /// MSG_VEL_NED_GNSS.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -9546,7 +9584,7 @@ pub mod msg_vel_ned_cov {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Velocity in NED
+    /// Velocity in NED with Covariances
     ///
     /// This message reports the velocity in local North East Down (NED)
     /// coordinates. The NED coordinate system is defined as the local WGS84
@@ -9554,6 +9592,10 @@ pub mod msg_vel_ned_cov {
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
     /// message is similar to the MSG_VEL_NED, but it includes the upper
     /// triangular portion of the 3x3 covariance matrix.
+    ///
+    /// The values in this message are from GNSS measurements fused with inertial
+    /// measurements. To get values from GNSS measurements only use
+    /// MSG_VEL_NED_COV_GNSS.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -9859,14 +9901,17 @@ pub mod msg_vel_ned_cov_gnss {
     use super::*;
     use crate::messages::lib::*;
 
-    /// GNSS-only Velocity in NED
+    /// GNSS-only Velocity in NED with Covariances
     ///
     /// This message reports the velocity in local North East Down (NED)
     /// coordinates. The NED coordinate system is defined as the local WGS84
     /// tangent plane centered at the current position. The full GPS time is given
-    /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
-    /// message is similar to the MSG_VEL_NED, but it includes the upper
+    /// by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+    /// This message is similar to the MSG_VEL_NED_GNSS, but it includes the upper
     /// triangular portion of the 3x3 covariance matrix.
+    ///
+    /// The values in this message are from GNSS measurements only. To get values
+    /// fused with inertial measurements use MSG_VEL_NED_COV.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -10079,12 +10124,9 @@ pub mod msg_vel_ned_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Velocity in NED
+    /// Deprecated
     ///
-    /// This message reports the velocity in local North East Down (NED)
-    /// coordinates. The NED coordinate system is defined as the local WGS84
-    /// tangent plane centered at the current position. The full GPS time is given
-    /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -10223,7 +10265,10 @@ pub mod msg_vel_ned_gnss {
     /// This message reports the velocity in local North East Down (NED)
     /// coordinates. The NED coordinate system is defined as the local WGS84
     /// tangent plane centered at the current position. The full GPS time is given
-    /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    /// by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+    ///
+    /// The values in this message are from GNSS measurements only. To get values
+    /// fused with inertial measurements use MSG_VEL_NED.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]

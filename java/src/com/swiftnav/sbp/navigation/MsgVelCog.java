@@ -32,6 +32,8 @@ import org.json.JSONObject;
  * is defined as the local WGS84 tangent plane centered at the current position. The full GPS time
  * is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). Note: course over
  * ground represents the receiver's direction of travel, but not necessarily the device heading.
+ *
+ * <p>The values in this message are from GNSS measurements fused with inertial measurements.
  */
 public class MsgVelCog extends SBPMessage {
     public static final int TYPE = 0x021C;

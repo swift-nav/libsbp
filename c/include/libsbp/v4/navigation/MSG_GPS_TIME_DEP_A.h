@@ -38,13 +38,9 @@ extern "C" {
  * SBP_MSG_GPS_TIME_DEP_A
  *
  *****************************************************************************/
-/** GPS Time (v1.0)
+/** Deprecated
  *
- * This message reports the GPS time, representing the time since the GPS epoch
- * began on midnight January 6, 1980 UTC. GPS time counts the weeks and seconds
- * of the week. The weeks begin at the Saturday/Sunday transition. GPS week 0
- * began at the beginning of the GPS time scale.
- *
+ * Deprecated.
  */
 typedef struct {
   /**

@@ -39,7 +39,7 @@ extern "C" {
  * SBP_MSG_ALMANAC_GPS
  *
  *****************************************************************************/
-/** Satellite broadcast ephemeris for GPS
+/** Satellite broadcast almanac for GPS
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac data
  * is not very precise and is considered valid for up to several months. Please

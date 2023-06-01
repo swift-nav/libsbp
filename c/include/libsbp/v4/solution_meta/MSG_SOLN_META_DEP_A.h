@@ -42,7 +42,6 @@ extern "C" {
 /** Deprecated
  *
  * Deprecated.
- *
  */
 typedef struct {
   /**

@@ -31,14 +31,16 @@ class Framer(six.Iterator):
       Stream of bytes to read from.
     write : port
       Stream of bytes to write to.
-    verbose: boolean
+    verbose : boolean
       Increased verbosity of stdout / stderr. Default False
-    dispatcher: function
+    dispatcher : function
       function to call on each deframed message
-    skip_medata: boolean
+    skip_medata : boolean
       do not add "time" and "session-uuid" metadata
-    sender_id_filter: list
-      list of integer sender_ids to frame, with the exclusion of all others
+    sender_id_filter_list : list
+      list of integer sender_ids to handle, at the exclusion of all others. If the list is empty, will handle all senders.
+    message_type_filter : list
+      list of integer message types to handle, at the exclusion of all others. If the list is empty, will handle all senders.
     """
 
     def __init__(self,
@@ -48,7 +50,8 @@ class Framer(six.Iterator):
                  dispatcher=dispatch,
                  into_buffer=True,
                  skip_metadata=False,
-                 sender_id_filter_list=[]):
+                 sender_id_filter_list=[],
+                 message_type_filter=[]):
         self._read = read
         self._write = write
         self._verbose = verbose
@@ -59,6 +62,13 @@ class Framer(six.Iterator):
         self._into_buffer = into_buffer
         self._skip_metadata = skip_metadata
         self._sender_id_filter_list = sender_id_filter_list
+        self._message_type_filter = message_type_filter
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        self.breakiter()
 
     def __iter__(self):
         self._broken = False
@@ -142,7 +152,8 @@ class Framer(six.Iterator):
             if self._verbose:
                 print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
             return None
-        if (len(self._sender_id_filter_list) == 0 or sender in self._sender_id_filter_list):
+        if ((len(self._sender_id_filter_list) == 0 or sender in self._sender_id_filter_list) and
+            (len(self._message_type_filter) == 0 or msg_type in self._message_type_filter)):
             msg = SBP(msg_type, sender, msg_len, data, crc)
             try:
                 msg = self._dispatch(msg)

@@ -22,11 +22,11 @@ definitions:
 
  - MSG_LINUX_CPU_STATE_DEP_A:
     id: 0x7F00
-    short_desc: List CPU state on the system. DEPRECATED
+    short_desc: Deprecated
+    desc: Deprecated.
     public: false
-    desc: >
-      This message indicates the process state of the top 10 heaviest
-      consumers of CPU on the system.
+    replaced_by:
+      - MSG_LINUX_CPU_STATE
     fields:
       - index:
           type: u8
@@ -48,11 +48,11 @@ definitions:
 
  - MSG_LINUX_MEM_STATE_DEP_A:
     id: 0x7F01
-    short_desc: List memory state on the system. DEPRECATED
+    short_desc: Deprecated
+    desc: Deprecated.
     public: false
-    desc: >
-      This message indicates the process state of the top 10 heaviest
-      consumers of memory on the system.
+    replaced_by:
+      - MSG_LINUX_MEM_STATE
     fields:
       - index:
           type: u8
@@ -74,10 +74,11 @@ definitions:
 
  - MSG_LINUX_SYS_STATE_DEP_A:
     id: 0x7F02
+    short_desc: Deprecated
+    desc: Deprecated.
     public: false
-    short_desc: CPU, Memory and Process Starts/Stops. DEPRECATED
-    desc: >
-      This presents a summary of CPU and memory utilization.
+    replaced_by:
+      - MSG_LINUX_SYS_STATE
     fields:
       - mem_total:
           type: u16

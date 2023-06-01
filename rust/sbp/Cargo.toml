@@ -1,13 +1,13 @@
-#######################################################################
-###                                                                 ###
-### WARNING: This file is generated, please update the template at: ###
-###            generator/sbpg/targets/resources/sbp-cargo.toml      ###
-###                                                                 ###
-#######################################################################
+#########################################################################
+###                                                                   ###
+### WARNING: This file is generated, please update the template at:   ###
+###            generator/sbpg/targets/resources/rust/sbp-cargo.toml   ###
+###                                                                   ###
+#########################################################################
 
 [package]
 name = "sbp"
-version = "4.13.1-alpha"
+version = "4.15.1-alpha"
 description = "Rust native implementation of SBP (Swift Binary Protocol) for communicating with devices made by Swift Navigation"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 repository = "https://github.com/swift-nav/libsbp"
@@ -68,3 +68,7 @@ default-features = false
 
 [dev-dependencies]
 serialport = "2.1.0"
+
+[package.metadata.docs.rs]
+# Whether to pass `--all-features` to Cargo when building docs for docs.rs
+all-features = true

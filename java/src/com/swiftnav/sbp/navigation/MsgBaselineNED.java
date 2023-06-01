@@ -28,6 +28,8 @@ import org.json.JSONObject;
  * is the relative vector distance from the base station to the rover receiver, and NED coordinate
  * system is defined at the local WGS84 tangent plane centered at the base station position. The
  * full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of- week (tow).
+ *
+ * <p>The values in this message are from GNSS measurements only.
  */
 public class MsgBaselineNED extends SBPMessage {
     public static final int TYPE = 0x020C;

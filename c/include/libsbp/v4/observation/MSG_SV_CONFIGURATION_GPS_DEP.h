@@ -39,9 +39,9 @@ extern "C" {
  * SBP_MSG_SV_CONFIGURATION_GPS_DEP
  *
  *****************************************************************************/
-/** L2C capability mask
+/** Deprecated
  *
- * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ * Deprecated.
  */
 typedef struct {
   /**

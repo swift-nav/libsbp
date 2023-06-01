@@ -38,7 +38,7 @@ extern "C" {
  * SBP_MSG_POS_ECEF_COV
  *
  *****************************************************************************/
-/** Single-point position in ECEF
+/** Position in ECEF with Covariances
  *
  * The position solution message reports absolute Earth Centered Earth Fixed
  * (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
@@ -48,6 +48,7 @@ extern "C" {
  * position solution using the base station position and the rover's RTK
  * baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
  * with the matching time-of-week (tow).
+ *
  */
 typedef struct {
   /**

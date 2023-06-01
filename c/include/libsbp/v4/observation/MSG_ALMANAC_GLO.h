@@ -39,7 +39,7 @@ extern "C" {
  * SBP_MSG_ALMANAC_GLO
  *
  *****************************************************************************/
-/** Satellite broadcast ephemeris for GLO
+/** Satellite broadcast almanac for GLO
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac data
  * is not very precise and is considered valid for up to several months. Please

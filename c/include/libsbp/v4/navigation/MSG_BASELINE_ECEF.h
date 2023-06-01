@@ -38,12 +38,13 @@ extern "C" {
  * SBP_MSG_BASELINE_ECEF
  *
  *****************************************************************************/
-/** Baseline Position in ECEF
+/** GNSS-only Baseline Position in ECEF
  *
  * This message reports the baseline solution in Earth Centered Earth Fixed
  * (ECEF) coordinates. This baseline is the relative vector distance from the
  * base station to the rover receiver. The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ *
  */
 typedef struct {
   /**

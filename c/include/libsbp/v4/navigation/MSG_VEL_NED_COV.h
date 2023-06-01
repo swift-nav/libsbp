@@ -38,7 +38,7 @@ extern "C" {
  * SBP_MSG_VEL_NED_COV
  *
  *****************************************************************************/
-/** Velocity in NED
+/** Velocity in NED with Covariances
  *
  * This message reports the velocity in local North East Down (NED) coordinates.
  * The NED coordinate system is defined as the local WGS84 tangent plane
@@ -46,6 +46,7 @@ extern "C" {
  * MSG_GPS_TIME with the matching time-of-week (tow). This message is similar to
  * the MSG_VEL_NED, but it includes the upper triangular portion of the 3x3
  * covariance matrix.
+ *
  */
 typedef struct {
   /**

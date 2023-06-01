@@ -40,13 +40,9 @@ extern "C" {
  * SBP_MSG_SSR_STEC_CORRECTION_DEP
  *
  *****************************************************************************/
-/** STEC correction polynomial coefficients
+/** Deprecated
  *
- * The Slant Total Electron Content per space vehicle, given as polynomial
- * approximation for a given tile. This should be combined with the
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
- * the atmospheric delay.
- *
+ * Deprecated.
  */
 typedef struct {
   /**

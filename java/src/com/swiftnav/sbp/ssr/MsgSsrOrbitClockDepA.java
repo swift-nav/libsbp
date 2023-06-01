@@ -19,6 +19,14 @@ import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
 import org.json.JSONObject;
 
+/**
+ * SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
+ *
+ * <p>You can have MSG_SSR_ORBIT_CLOCK_DEP_A inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
+ *
+ * <p>Deprecated.
+ */
 public class MsgSsrOrbitClockDepA extends SBPMessage {
     public static final int TYPE = 0x05DC;
 

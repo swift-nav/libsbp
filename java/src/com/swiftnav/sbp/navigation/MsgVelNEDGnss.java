@@ -26,7 +26,11 @@ import org.json.JSONObject;
  *
  * <p>This message reports the velocity in local North East Down (NED) coordinates. The NED
  * coordinate system is defined as the local WGS84 tangent plane centered at the current position.
- * The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week
+ * (tow).
+ *
+ * <p>The values in this message are from GNSS measurements only. To get values fused with inertial
+ * measurements use MSG_VEL_NED.
  */
 public class MsgVelNEDGnss extends SBPMessage {
     public static final int TYPE = 0x022E;

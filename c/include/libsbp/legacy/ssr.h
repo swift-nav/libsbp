@@ -249,14 +249,9 @@ typedef struct SBP_ATTR_PACKED {
                                          a satellite being tracked. */
 } msg_ssr_phase_biases_t;
 
-/** STEC correction polynomial coefficients
+/** Deprecated
  *
- * The Slant Total Electron Content per space vehicle, given as polynomial
- * approximation for a given tile. This should be combined with the
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
- * the atmospheric delay.
- *
- * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -358,16 +353,9 @@ typedef struct SBP_ATTR_PACKED {
                                                       vehicle. */
 } msg_ssr_gridded_correction_bounds_t;
 
-/** Definition of a SSR atmospheric correction tile.
-
+/** Deprecated
  *
- * Provides the correction point coordinates for the atmospheric correction
- * values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
- * messages.
- *
- * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
- * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
- * correction points, not lists of points.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -433,16 +421,9 @@ typedef struct SBP_ATTR_PACKED {
                           bits is inverted. */
 } msg_ssr_tile_definition_dep_a_t;
 
-/** Definition of a SSR atmospheric correction tile.
-
+/** Deprecated
  *
- * Provides the correction point coordinates for the atmospheric correction
- * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
- * messages.
- *
- * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
- * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
- * correction points, not lists of points.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -607,6 +588,11 @@ typedef struct SBP_ATTR_PACKED {
                    degree increments. [1 mm] */
 } satellite_apc_t;
 
+/** Deprecated
+ *
+ * Deprecated.
+ */
+
 typedef struct SBP_ATTR_PACKED {
   satellite_apc_t apc[0]; /**< Satellite antenna phase center corrections */
 } msg_ssr_satellite_apc_dep_t;
@@ -623,6 +609,11 @@ typedef struct SBP_ATTR_PACKED {
   satellite_apc_t apc[0]; /**< Satellite antenna phase center
                                corrections */
 } msg_ssr_satellite_apc_t;
+
+/** Deprecated
+ *
+ * Deprecated.
+ */
 
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;   /**< GNSS reference time of the
@@ -705,11 +696,21 @@ typedef struct SBP_ATTR_PACKED {
   u8 seq_num;             /**< Position of this message in the dataset */
 } grid_definition_header_dep_a_t;
 
+/** Deprecated
+ *
+ * Deprecated.
+ */
+
 typedef struct SBP_ATTR_PACKED {
   stec_header_dep_a_t header;          /**< Header of a STEC message */
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC information for each
                                             space vehicle */
 } msg_ssr_stec_correction_dep_a_t;
+
+/** Deprecated
+ *
+ * Deprecated.
+ */
 
 typedef struct SBP_ATTR_PACKED {
   gridded_correction_header_dep_a_t header; /**< Header of
@@ -727,6 +728,11 @@ typedef struct SBP_ATTR_PACKED {
                                                  each satellite */
 } msg_ssr_gridded_correction_no_std_dep_a_t;
 
+/** Deprecated
+ *
+ * Deprecated.
+ */
+
 typedef struct SBP_ATTR_PACKED {
   gridded_correction_header_dep_a_t header; /**< Header of
                                                  a Gridded
@@ -742,6 +748,11 @@ typedef struct SBP_ATTR_PACKED {
   stec_residual_t stec_residuals[0]; /**< STEC residuals for each
                                           satellite (mean, stddev) */
 } msg_ssr_gridded_correction_dep_a_t;
+
+/** Deprecated
+ *
+ * Deprecated.
+ */
 
 typedef struct SBP_ATTR_PACKED {
   grid_definition_header_dep_a_t header; /**< Header of a Gridded
@@ -801,10 +812,10 @@ typedef struct SBP_ATTR_PACKED {
                                 (Galileo) or DF467 (BDS) depending on the
                                 constellation. */
   u8 code_bias_bound_mu;   /**< Code Bias Mean. Range: 0-1.275 m [0.005 m] */
-  u8 code_bias_bound_sig;  /**< Code Bias Standard Deviation.  Range:
+  u8 code_bias_bound_sig;  /**< Code Bias Standard Deviation. Range:
                                 0-1.275 m [0.005 m] */
   u8 phase_bias_bound_mu;  /**< Phase Bias Mean. Range: 0-1.275 m [0.005 m] */
-  u8 phase_bias_bound_sig; /**< Phase Bias Standard Deviation.  Range:
+  u8 phase_bias_bound_sig; /**< Phase Bias Standard Deviation. Range:
                                 0-1.275 m [0.005 m] */
 } code_phase_biases_sat_sig_t;
 

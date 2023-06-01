@@ -64,7 +64,6 @@ class Handler(object):
             for msg, metadata in self._source:
                 if msg.msg_type:
                     yield (msg, metadata)
-
         messages = gen_messages()
         while True:
             msg_and_metadata = None

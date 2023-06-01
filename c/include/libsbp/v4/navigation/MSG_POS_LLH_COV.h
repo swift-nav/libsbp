@@ -38,7 +38,7 @@ extern "C" {
  * SBP_MSG_POS_LLH_COV
  *
  *****************************************************************************/
-/** Geodetic Position
+/** Geodetic Position with Covariances
  *
  * This position solution message reports the absolute geodetic coordinates and
  * the status (single point vs pseudo-absolute RTK) of the position solution as
@@ -48,6 +48,7 @@ extern "C" {
  * covariance terms follow that convention. Thus, covariances are reported
  * against the "downward" measurement and care should be taken with the sign
  * convention.
+ *
  */
 typedef struct {
   /**

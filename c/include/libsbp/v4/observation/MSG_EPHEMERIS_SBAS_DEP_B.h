@@ -41,8 +41,7 @@ extern "C" {
  *****************************************************************************/
 /** Deprecated
  *
- * This observation message has been deprecated in favor of ephemeris message
- * using floats for size reduction.
+ * Deprecated.
  */
 typedef struct {
   /**

@@ -26,12 +26,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_SSR_TILE_DEFINITION_DEP_B inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>Provides the correction point coordinates for the atmospheric correction values in the
- * MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION messages.
- *
- * <p>Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information element
- * GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of correction points, not lists of
- * points.
+ * <p>Deprecated.
  */
 public class MsgSsrTileDefinitionDepB extends SBPMessage {
     public static final int TYPE = 0x05F7;

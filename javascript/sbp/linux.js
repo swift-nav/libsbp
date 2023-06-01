@@ -26,8 +26,7 @@ let UInt64 = require('cuint').UINT64;
 /**
  * SBP class for message MSG_LINUX_CPU_STATE_DEP_A (0x7F00).
  *
- * This message indicates the process state of the top 10 heaviest consumers of CPU
- * on the system.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field index number (unsigned 8-bit int, 1 byte) sequence of this status message, values from 0-9
@@ -66,8 +65,7 @@ MsgLinuxCpuStateDepA.prototype.fieldSpec.push(['cmdline', 'string', null]);
 /**
  * SBP class for message MSG_LINUX_MEM_STATE_DEP_A (0x7F01).
  *
- * This message indicates the process state of the top 10 heaviest consumers of
- * memory on the system.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field index number (unsigned 8-bit int, 1 byte) sequence of this status message, values from 0-9
@@ -106,7 +104,7 @@ MsgLinuxMemStateDepA.prototype.fieldSpec.push(['cmdline', 'string', null]);
 /**
  * SBP class for message MSG_LINUX_SYS_STATE_DEP_A (0x7F02).
  *
- * This presents a summary of CPU and memory utilization.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field mem_total number (unsigned 16-bit int, 2 bytes) total system memory

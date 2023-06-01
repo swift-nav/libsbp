@@ -40,10 +40,9 @@ extern "C" {
  * SBP_MSG_TRACKING_IQ_DEP_B
  *
  *****************************************************************************/
-/** Tracking channel correlations
+/** Deprecated
  *
- * When enabled, a tracking channel can output the correlations at each update
- * interval.
+ * Deprecated.
  */
 typedef struct {
   /**
