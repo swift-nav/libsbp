@@ -1,12 +1,23 @@
-import timeit
-from kaitai.python.tests.utils import get_next_msg_construct, get_next_msg_ksy, get_next_msg_hybrid1, get_next_msg_hybrid2
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-FILENAME = "test_data/benchmark.sbp"
+import timeit
+from kaitai.python.tests.utils import count_messages, get_next_msg_construct, get_next_msg_kaitai, get_next_msg_hybrid1, get_next_msg_hybrid2
+
+
+TEST_DATA = "test_data/benchmark.sbp"
 COUNT = 1
 
 # Compare speeds of different parsers
 def test_benchmarks():
-    print("construct: {}".format(timeit.timeit('[x for x in get_next_msg_construct(FILENAME)]', number=COUNT, globals=globals())))
-    print("ksy: {}".format(timeit.timeit('[x for x in get_next_msg_ksy(FILENAME)]', number=COUNT, globals=globals())))
-    print("hybrid1: {}".format(timeit.timeit('[x for x in get_next_msg_hybrid1(FILENAME)]', number=COUNT, globals=globals())))
-    print("hybrid2: {}".format(timeit.timeit('[x for x in get_next_msg_hybrid2(FILENAME)]', number=COUNT, globals=globals())))
+    print("construct: {}".format(timeit.timeit('count_messages(TEST_DATA, get_next_msg_construct)', number=COUNT, globals=globals())))
+    print("kaitai: {}".format(timeit.timeit('count_messages(TEST_DATA, get_next_msg_kaitai)', number=COUNT, globals=globals())))
+    print("hybrid1: {}".format(timeit.timeit('count_messages(TEST_DATA, get_next_msg_hybrid1)', number=COUNT, globals=globals())))
+    print("hybrid2: {}".format(timeit.timeit('count_messages(TEST_DATA, get_next_msg_hybrid2)', number=COUNT, globals=globals())))
