@@ -51,7 +51,7 @@ def kaitai2json(obj):
 
     message = dictify(obj.payload)
     message["preamble"] = ord(obj.header.preamble)
-    message["msg_type"] = obj.header.msg_type.value
+    message["msg_type"] = obj.header.msg_type
     message["sender"] = obj.header.sender
     message["length"] = obj.header.length
     message["crc"] = obj.crc
@@ -201,14 +201,13 @@ def get_next_msg_kaitai(fp):
 
         # check CRC
         crc_read = obj.crc
-        length = obj.header.length
-        crc_expected = binascii.crc_hqx(stream.get_crc_bytes(length), 0)
+        crc_expected = binascii.crc_hqx(stream.get_crc_bytes(obj.header.length), 0)
         if crc_read != crc_expected:
             sys.stderr.write("Bad CRC: {} vs {}\n".format(crc_read, crc_expected))
             stream.seek(1)
             continue
 
-        if type(obj.header.msg_type) != kaitai_sbp.Sbp.MsgIds:
+        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.header.msg_type) == obj.header.msg_type:
             sys.stderr.write("Skipping unknown message type: {}\n".format(obj.header.msg_type))
             stream.seek(1)
             continue
@@ -223,7 +222,7 @@ def get_next_msg_hybrid1(fileobj):
         stream = KaitaiStream(io.BytesIO(buf))
         obj = kaitai_sbp.Sbp.Message(stream)
 
-        if type(obj.header.msg_type) != kaitai_sbp.Sbp.MsgIds:
+        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.header.msg_type) == obj.header.msg_type:
             sys.stderr.write("Skipping unknown message type: {}\n".format(obj.header.msg_type))
             continue
 
@@ -241,7 +240,7 @@ def get_next_msg_hybrid2(fileobj):
         stream = KaitaiStream(io.BytesIO(msg.to_binary()))
         obj = kaitai_sbp.Sbp.Message(stream)
 
-        if type(obj.header.msg_type) != kaitai_sbp.Sbp.MsgIds:
+        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.header.msg_type) == obj.header.msg_type:
             sys.stderr.write("Skipping unknown message type: {}\n".format(obj.header.msg_type))
             continue
 

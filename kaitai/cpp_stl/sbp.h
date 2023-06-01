@@ -315,7 +315,7 @@ public:
 
     private:
         std::string m_preamble;
-        msg_ids_t m_msg_type;
+        uint16_t m_msg_type;
         uint16_t m_sender;
         uint8_t m_length;
         sbp_t* m__root;
@@ -323,7 +323,7 @@ public:
 
     public:
         std::string preamble() const { return m_preamble; }
-        msg_ids_t msg_type() const { return m_msg_type; }
+        uint16_t msg_type() const { return m_msg_type; }
         uint16_t sender() const { return m_sender; }
         uint8_t length() const { return m_length; }
         sbp_t* _root() const { return m__root; }

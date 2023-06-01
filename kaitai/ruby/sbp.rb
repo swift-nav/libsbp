@@ -267,938 +267,938 @@ class Sbp < Kaitai::Struct::Struct
     def _read
       @header = SbpHeader.new(@_io, self, @_root)
       case header.msg_type
-      when :msg_ids_msg_baseline_ecef
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgBaselineEcef.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_bds
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisBds.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_glo_dep_d
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisGloDepD.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ecdsa_signature_dep_b
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Signing::MsgEcdsaSignatureDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_settings_read_by_index_req
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Settings::MsgSettingsReadByIndexReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_flag_high_level
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Integrity::MsgSsrFlagHighLevel.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_fileio_config_req
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = FileIo::MsgFileioConfigReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_odometry
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Vehicle::MsgOdometry.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_stec_correction_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrStecCorrectionDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ed25519_signature_dep_b
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Signing::MsgEd25519SignatureDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_stm_unique_id_req
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Flash::MsgStmUniqueIdReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_front_end_gain
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgFrontEndGain.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_base_pos_llh
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgBasePosLlh.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_orbit_clock
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrOrbitClock.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_reset
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgReset.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_stm_flash_lock_sector
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Flash::MsgStmFlashLockSector.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_process_fd_summary
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Linux::MsgLinuxProcessFdSummary.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_status_journal
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgStatusJournal.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_csac_telemetry
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgCsacTelemetry.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_age_corrections
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgAgeCorrections.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_orient_euler
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Orientation::MsgOrientEuler.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_satellite_apc_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrSatelliteApcDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_baseline_ned
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgBaselineNed.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_ecef_gnss
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelEcefGnss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_measurement_state
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Tracking::MsgMeasurementState.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_iono
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgIono.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_base_pos_ecef
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgBasePosEcef.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_flash_program
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Flash::MsgFlashProgram.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_acq_result
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Acquisition::MsgAcqResult.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pps_time
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgPpsTime.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_obs
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgObs.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_sbas_dep_b
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisSbasDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_tracking_iq
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Tracking::MsgTrackingIq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_flag_iono_tile_sat_los
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Integrity::MsgSsrFlagIonoTileSatLos.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_tracking_state_detailed_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Tracking::MsgTrackingStateDetailedDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_bootloader_handshake_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Bootload::MsgBootloaderHandshakeDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_utc_leap_second
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgUtcLeapSecond.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_gridded_correction_no_std_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrGriddedCorrectionNoStdDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_bootloader_handshake_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Bootload::MsgBootloaderHandshakeResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_baseline_heading
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Orientation::MsgBaselineHeading.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_status_report
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgStatusReport.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_ned_cov
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelNedCov.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_set_time
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgSetTime.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_cpu_state
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Linux::MsgLinuxCpuState.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_gps_time_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgGpsTimeDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_sbas_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisSbasDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_acq_result_dep_b
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Acquisition::MsgAcqResultDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_settings_register_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Settings::MsgSettingsRegisterResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ecdsa_signature_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Signing::MsgEcdsaSignatureDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_gal
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisGal.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_bootloader_jump_to_app
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Bootload::MsgBootloaderJumpToApp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_phase_biases
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrPhaseBiases.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_fileio_read_dir_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = FileIo::MsgFileioReadDirResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_ecef_gnss
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosEcefGnss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_almanac_glo_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgAlmanacGloDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_ecef_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelEcefDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_thread_state
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgThreadState.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_gps_time
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgGpsTime.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_code_phase_biases_bounds
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrCodePhaseBiasesBounds.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_settings_write_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Settings::MsgSettingsWriteResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_tracking_state
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Tracking::MsgTrackingState.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_ecef
+      when 525
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Navigation::MsgVelEcef.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_glo_dep_a
+      when 141
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisGloDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ed25519_certificate_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Signing::MsgEd25519CertificateDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_baseline_ned_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgBaselineNedDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_specan_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgSpecanDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_sbas
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisSbas.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_group_delay
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgGroupDelay.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_ecef
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosEcef.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_almanac
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgAlmanac.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_settings_read_req
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Settings::MsgSettingsReadReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_flag_tropo_grid_points
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Integrity::MsgSsrFlagTropoGridPoints.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_gridded_correction_bounds
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrGriddedCorrectionBounds.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_stm_unique_id_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Flash::MsgStmUniqueIdResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_tel_sv
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Telemetry::MsgTelSv.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_flag_satellites
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Integrity::MsgSsrFlagSatellites.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_imu_aux
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Imu::MsgImuAux.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_grid_definition_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrGridDefinitionDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_llh_acc
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosLlhAcc.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_sv_configuration_gps_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgSvConfigurationGpsDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_mem_state
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Linux::MsgLinuxMemState.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_sys_state
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Linux::MsgLinuxSysState.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_settings_read_by_index_done
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Settings::MsgSettingsReadByIndexDone.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_reset_filters
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgResetFilters.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ecdsa_signature
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Signing::MsgEcdsaSignature.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_gps_dep_e
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisGpsDepE.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_m25_flash_write_status
+        @payload = Observation::MsgEphemerisGal.new(_io__raw_payload, self, @_root)
+      when 243
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Flash::MsgM25FlashWriteStatus.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_gps
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisGps.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_command_output
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgCommandOutput.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_flag_iono_grid_points
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Integrity::MsgSsrFlagIonoGridPoints.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_ned_cov_gnss
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelNedCovGnss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_network_state_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgNetworkStateResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_stec_correction_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrStecCorrectionDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_command_req
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgCommandReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_acknowledge
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Integrity::MsgAcknowledge.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_tracking_iq_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Tracking::MsgTrackingIqDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_gal_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisGalDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_specan
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgSpecan.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_acq_sv_profile_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Acquisition::MsgAcqSvProfileDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_utc_time
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgUtcTime.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_dep_d
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisDepD.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_process_socket_queues
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Linux::MsgLinuxProcessSocketQueues.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_utc_time_gnss
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgUtcTimeGnss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ndb_event
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ndb::MsgNdbEvent.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_bootloader_handshake_req
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Bootload::MsgBootloaderHandshakeReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_user_data
+      when 2048
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = User::MsgUserData.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_sensor_aid_event
+      when 3079
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgSensorAidEvent.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_orbit_clock_bounds
+        @payload = Signing::MsgEcdsaSignatureDepB.new(_io__raw_payload, self, @_root)
+      when 184
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrOrbitClockBounds.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_llh_gnss
+        @payload = Piksi::MsgCommandReq.new(_io__raw_payload, self, @_root)
+      when 105
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosLlhGnss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_init_base_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgInitBaseDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_fileio_read_req
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = FileIo::MsgFileioReadReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_tracking_iq_dep_b
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Tracking::MsgTrackingIqDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_acq_result_dep_c
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Acquisition::MsgAcqResultDepC.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_command_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgCommandResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_fileio_remove
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = FileIo::MsgFileioRemove.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_obs_dep_c
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgObsDepC.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_tile_definition_dep_b
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrTileDefinitionDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_csac_telemetry_labels
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgCsacTelemetryLabels.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_ned
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelNed.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_settings_read_by_index_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Settings::MsgSettingsReadByIndexResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_qzss
+        @payload = Piksi::MsgAlmanac.new(_io__raw_payload, self, @_root)
+      when 142
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Observation::MsgEphemerisQzss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_stec_correction
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrStecCorrection.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_baseline_ecef_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgBaselineEcefDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ins_updates
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgInsUpdates.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_ecef_cov
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosEcefCov.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_ned_gnss
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelNedGnss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_mask_satellite
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgMaskSatellite.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_group_delay_dep_b
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgGroupDelayDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_orbit_clock_bounds_degradation
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrOrbitClockBoundsDegradation.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_flash_erase
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Flash::MsgFlashErase.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_cw_start
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgCwStart.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_orbit_clock_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrOrbitClockDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_dops
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgDops.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_network_bandwidth_usage
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgNetworkBandwidthUsage.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ecdsa_certificate
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Signing::MsgEcdsaCertificate.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_llh_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosLlhDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_sv_az_el
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgSvAzEl.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_fileio_read_dir_req
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = FileIo::MsgFileioReadDirReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_dep_b
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_ecef_cov
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelEcefCov.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_dgnss_status
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgDgnssStatus.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_tile_definition_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrTileDefinitionDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_log
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Logging::MsgLog.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_mask_satellite_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgMaskSatelliteDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ext_event
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = ExtEvents::MsgExtEvent.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_cell_modem_status
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgCellModemStatus.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_orient_quat
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Orientation::MsgOrientQuat.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_heartbeat
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgHeartbeat.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_almanac_gps_dep
+      when 112
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Observation::MsgAlmanacGpsDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_nap_device_dna_req
+      when 177
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Bootload::MsgNapDeviceDnaReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_almanac_gps
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgAlmanacGps.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_ecef_cov_gnss
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelEcefCovGnss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ed25519_signature_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Signing::MsgEd25519SignatureDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_angular_rate
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Orientation::MsgAngularRate.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_body
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelBody.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_certificate_chain
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Signing::MsgCertificateChain.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_soln_meta_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = SolutionMeta::MsgSolnMetaDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_gridded_correction_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrGriddedCorrectionDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_glo_dep_c
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisGloDepC.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_process_fd_count
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Linux::MsgLinuxProcessFdCount.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_fileio_read_resp
+        @payload = Bootload::MsgBootloaderJumpToApp.new(_io__raw_payload, self, @_root)
+      when 163
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = FileIo::MsgFileioReadResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_sys_state_dep_a
+      when 257
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Linux::MsgLinuxSysStateDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_sbas_raw
+        @payload = ExtEvents::MsgExtEvent.new(_io__raw_payload, self, @_root)
+      when 4097
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Sbas::MsgSbasRaw.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_ecef_cov_gnss
+        @payload = FileIo::MsgFileioConfigReq.new(_io__raw_payload, self, @_root)
+      when 17
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosEcefCovGnss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_flag_iono_grid_point_sat_los
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Integrity::MsgSsrFlagIonoGridPointSatLos.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_fileio_write_req
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = FileIo::MsgFileioWriteReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_acq_sv_profile
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Acquisition::MsgAcqSvProfile.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_glo_dep_b
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisGloDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_socket_usage
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Linux::MsgLinuxSocketUsage.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_network_state_req
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgNetworkStateReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_protection_level_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgProtectionLevelDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_imu_raw
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Imu::MsgImuRaw.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_reset_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgResetDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_mag_raw
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Mag::MsgMagRaw.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_startup
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgStartup.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_glo_biases
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgGloBiases.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_tracking_state_detailed_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Tracking::MsgTrackingStateDetailedDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_llh_cov_gnss
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosLlhCovGnss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_settings_write
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Settings::MsgSettingsWrite.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_settings_save
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Settings::MsgSettingsSave.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_almanac_glo
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgAlmanacGlo.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_stm_flash_unlock_sector
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Flash::MsgStmFlashUnlockSector.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_gps_time_gnss
+        @payload = Tracking::MsgTrackingStateDetailedDep.new(_io__raw_payload, self, @_root)
+      when 260
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Navigation::MsgGpsTimeGnss.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_flash_read_req
+      when 1525
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Flash::MsgFlashReadReq.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_glo
+        @payload = Ssr::MsgSsrGridDefinitionDepA.new(_io__raw_payload, self, @_root)
+      when 131
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisGlo.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_baseline_heading_dep_a
+        @payload = Observation::MsgEphemerisGloDepA.new(_io__raw_payload, self, @_root)
+      when 167
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgBaselineHeadingDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_settings_register
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Settings::MsgSettingsRegister.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_gnss_capb
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgGnssCapb.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_tracking_state_dep_b
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Tracking::MsgTrackingStateDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_fwd
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Logging::MsgFwd.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_soln_meta
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = SolutionMeta::MsgSolnMeta.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_obs_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgObsDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_device_monitor
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgDeviceMonitor.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_process_socket_counts
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Linux::MsgLinuxProcessSocketCounts.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_cog
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelCog.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_print_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Logging::MsgPrintDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_cw_results
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgCwResults.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_nap_device_dna_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Bootload::MsgNapDeviceDnaResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_dops_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgDopsDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_ecef_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosEcefDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_settings_read_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Settings::MsgSettingsReadResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_mem_state_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Linux::MsgLinuxMemStateDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_dep_c
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisDepC.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_fileio_write_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = FileIo::MsgFileioWriteResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_wheeltick
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Vehicle::MsgWheeltick.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_uart_state_depa
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgUartStateDepa.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_reference_frame_param
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgReferenceFrameParam.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pose_relative
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPoseRelative.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_iar_state
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgIarState.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_uart_state
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Piksi::MsgUartState.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_tile_definition
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrTileDefinition.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_satellite_apc
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrSatelliteApc.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_osr
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgOsr.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_llh_cov
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosLlhCov.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_group_delay_dep_a
+        @payload = Settings::MsgSettingsReadByIndexResp.new(_io__raw_payload, self, @_root)
+      when 146
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Observation::MsgGroupDelayDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_protection_level
+      when 47
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgProtectionLevel.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_obs_dep_b
+        @payload = Acquisition::MsgAcqResult.new(_io__raw_payload, self, @_root)
+      when 136
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgObsDepB.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_pos_llh
+        @payload = Observation::MsgEphemerisGloDepD.new(_io__raw_payload, self, @_root)
+      when 73
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgPosLlh.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_flash_done
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Flash::MsgFlashDone.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_acq_result_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Acquisition::MsgAcqResultDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_code_biases
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrCodeBiases.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_certificate_chain_dep
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Signing::MsgCertificateChainDep.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ssr_gridded_correction
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Ssr::MsgSsrGriddedCorrection.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_group_meta
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgGroupMeta.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_fileio_config_resp
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = FileIo::MsgFileioConfigResp.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_vel_ned_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Navigation::MsgVelNedDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_gnss_time_offset
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = System::MsgGnssTimeOffset.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_tracking_state_dep_a
-        @_raw_payload = @_io.read_bytes(header.length)
-        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Tracking::MsgTrackingStateDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ins_status
+        @payload = Observation::MsgObsDepC.new(_io__raw_payload, self, @_root)
+      when 65283
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = System::MsgInsStatus.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_ephemeris_gps_dep_f
+      when 32513
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
-        @payload = Observation::MsgEphemerisGpsDepF.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_linux_cpu_state_dep_a
+        @payload = Linux::MsgLinuxMemStateDepA.new(_io__raw_payload, self, @_root)
+      when 545
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Orientation::MsgOrientEuler.new(_io__raw_payload, self, @_root)
+      when 65534
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgStatusReport.new(_io__raw_payload, self, @_root)
+      when 533
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelEcefCov.new(_io__raw_payload, self, @_root)
+      when 513
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosLlhDepA.new(_io__raw_payload, self, @_root)
+      when 46
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Acquisition::MsgAcqSvProfile.new(_io__raw_payload, self, @_root)
+      when 81
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgSpecan.new(_io__raw_payload, self, @_root)
+      when 169
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = FileIo::MsgFileioReadDirReq.new(_io__raw_payload, self, @_root)
+      when 162
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Settings::MsgSettingsReadByIndexReq.new(_io__raw_payload, self, @_root)
+      when 546
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Orientation::MsgAngularRate.new(_io__raw_payload, self, @_root)
+      when 531
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelBody.new(_io__raw_payload, self, @_root)
+      when 224
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Flash::MsgFlashDone.new(_io__raw_payload, self, @_root)
+      when 24
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgUartStateDepa.new(_io__raw_payload, self, @_root)
+      when 230
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Flash::MsgFlashProgram.new(_io__raw_payload, self, @_root)
+      when 65285
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgCsacTelemetryLabels.new(_io__raw_payload, self, @_root)
+      when 35
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgInitBaseDep.new(_io__raw_payload, self, @_root)
+      when 1528
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrTileDefinition.new(_io__raw_payload, self, @_root)
+      when 519
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgBaselineHeadingDepA.new(_io__raw_payload, self, @_root)
+      when 20
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Acquisition::MsgAcqResultDepB.new(_io__raw_payload, self, @_root)
+      when 570
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgUtcLeapSecond.new(_io__raw_payload, self, @_root)
+      when 32520
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Linux::MsgLinuxCpuState.new(_io__raw_payload, self, @_root)
+      when 1505
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrCodeBiases.new(_io__raw_payload, self, @_root)
+      when 113
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgAlmanacGloDep.new(_io__raw_payload, self, @_root)
+      when 1515
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrStecCorrectionDepA.new(_io__raw_payload, self, @_root)
+      when 558
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelNedGnss.new(_io__raw_payload, self, @_root)
+      when 530
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelNedCov.new(_io__raw_payload, self, @_root)
+      when 288
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Telemetry::MsgTelSv.new(_io__raw_payload, self, @_root)
+      when 1026
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Logging::MsgFwd.new(_io__raw_payload, self, @_root)
+      when 65286
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgInsUpdates.new(_io__raw_payload, self, @_root)
+      when 65284
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgCsacTelemetry.new(_io__raw_payload, self, @_root)
+      when 191
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgFrontEndGain.new(_io__raw_payload, self, @_root)
+      when 520
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgDops.new(_io__raw_payload, self, @_root)
+      when 27
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgMaskSatelliteDep.new(_io__raw_payload, self, @_root)
+      when 1516
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrCodePhaseBiasesBounds.new(_io__raw_payload, self, @_root)
+      when 150
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgGnssCapb.new(_io__raw_payload, self, @_root)
+      when 97
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Tracking::MsgMeasurementState.new(_io__raw_payload, self, @_root)
+      when 529
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosLlhCov.new(_io__raw_payload, self, @_root)
+      when 431
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Settings::MsgSettingsRegisterResp.new(_io__raw_payload, self, @_root)
+      when 65533
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgStatusJournal.new(_io__raw_payload, self, @_root)
+      when 145
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgSvConfigurationGpsDep.new(_io__raw_payload, self, @_root)
+      when 32522
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Linux::MsgLinuxSysState.new(_io__raw_payload, self, @_root)
+      when 3076
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgEcdsaCertificate.new(_io__raw_payload, self, @_root)
+      when 144
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgIono.new(_io__raw_payload, self, @_root)
+      when 65294
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = SolutionMeta::MsgSolnMeta.new(_io__raw_payload, self, @_root)
+      when 532
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosEcefCov.new(_io__raw_payload, self, @_root)
+      when 45
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Tracking::MsgTrackingIq.new(_io__raw_payload, self, @_root)
+      when 561
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosLlhCovGnss.new(_io__raw_payload, self, @_root)
+      when 1502
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrOrbitClockBounds.new(_io__raw_payload, self, @_root)
+      when 149
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisGalDepA.new(_io__raw_payload, self, @_root)
+      when 115
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgAlmanacGlo.new(_io__raw_payload, self, @_root)
+      when 32512
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Linux::MsgLinuxCpuStateDepA.new(_io__raw_payload, self, @_root)
-      when :msg_ids_msg_flash_read_resp
+      when 32521
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Linux::MsgLinuxMemState.new(_io__raw_payload, self, @_root)
+      when 522
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosLlh.new(_io__raw_payload, self, @_root)
+      when 104
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgSetTime.new(_io__raw_payload, self, @_root)
+      when 32519
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Linux::MsgLinuxProcessFdSummary.new(_io__raw_payload, self, @_root)
+      when 4098
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = FileIo::MsgFileioConfigResp.new(_io__raw_payload, self, @_root)
+      when 32517
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Linux::MsgLinuxSocketUsage.new(_io__raw_payload, self, @_root)
+      when 2306
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Mag::MsgMagRaw.new(_io__raw_payload, self, @_root)
+      when 67
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgObsDepB.new(_io__raw_payload, self, @_root)
+      when 69
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgObsDepA.new(_io__raw_payload, self, @_root)
+      when 512
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosEcefDepA.new(_io__raw_payload, self, @_root)
+      when 137
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisBds.new(_io__raw_payload, self, @_root)
+      when 65288
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgPpsTime.new(_io__raw_payload, self, @_root)
+      when 3074
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgEd25519CertificateDep.new(_io__raw_payload, self, @_root)
+      when 562
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelNedCovGnss.new(_io__raw_payload, self, @_root)
+      when 580
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgReferenceFrameParam.new(_io__raw_payload, self, @_root)
+      when 524
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgBaselineNed.new(_io__raw_payload, self, @_root)
+      when 161
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Settings::MsgSettingsSave.new(_io__raw_payload, self, @_root)
+      when 138
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisGps.new(_io__raw_payload, self, @_root)
+      when 544
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Orientation::MsgOrientQuat.new(_io__raw_payload, self, @_root)
+      when 192
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgCwResults.new(_io__raw_payload, self, @_root)
+      when 165
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Settings::MsgSettingsReadResp.new(_io__raw_payload, self, @_root)
+      when 33
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Tracking::MsgTrackingStateDetailedDepA.new(_io__raw_payload, self, @_root)
+      when 1527
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrTileDefinitionDepB.new(_io__raw_payload, self, @_root)
+      when 65535
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgHeartbeat.new(_io__raw_payload, self, @_root)
+      when 3081
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgCertificateChain.new(_io__raw_payload, self, @_root)
+      when 514
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgBaselineEcefDepA.new(_io__raw_payload, self, @_root)
+      when 185
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgCommandResp.new(_io__raw_payload, self, @_root)
+      when 180
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Bootload::MsgBootloaderHandshakeResp.new(_io__raw_payload, self, @_root)
+      when 19
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Tracking::MsgTrackingStateDepB.new(_io__raw_payload, self, @_root)
+      when 3015
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Integrity::MsgSsrFlagIonoGridPoints.new(_io__raw_payload, self, @_root)
+      when 186
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgNetworkStateReq.new(_io__raw_payload, self, @_root)
+      when 32518
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Linux::MsgLinuxProcessFdCount.new(_io__raw_payload, self, @_root)
+      when 1530
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrGriddedCorrectionDepA.new(_io__raw_payload, self, @_root)
+      when 1541
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrSatelliteApc.new(_io__raw_payload, self, @_root)
+      when 30583
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Sbas::MsgSbasRaw.new(_io__raw_payload, self, @_root)
+      when 23
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgThreadState.new(_io__raw_payload, self, @_root)
+      when 221
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Bootload::MsgNapDeviceDnaResp.new(_io__raw_payload, self, @_root)
+      when 227
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Flash::MsgStmFlashLockSector.new(_io__raw_payload, self, @_root)
+      when 188
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgCommandOutput.new(_io__raw_payload, self, @_root)
+      when 65282
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgDgnssStatus.new(_io__raw_payload, self, @_root)
+      when 178
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgResetDep.new(_io__raw_payload, self, @_root)
+      when 1533
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrStecCorrection.new(_io__raw_payload, self, @_root)
+      when 3011
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Integrity::MsgSsrFlagTropoGridPoints.new(_io__raw_payload, self, @_root)
+      when 3005
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Integrity::MsgSsrFlagSatellites.new(_io__raw_payload, self, @_root)
+      when 160
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Settings::MsgSettingsWrite.new(_io__raw_payload, self, @_root)
+      when 540
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelCog.new(_io__raw_payload, self, @_root)
+      when 174
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Settings::MsgSettingsRegister.new(_io__raw_payload, self, @_root)
+      when 176
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Bootload::MsgBootloaderHandshakeDepA.new(_io__raw_payload, self, @_root)
+      when 1024
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ndb::MsgNdbEvent.new(_io__raw_payload, self, @_root)
+      when 166
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Settings::MsgSettingsReadByIndexDone.new(_io__raw_payload, self, @_root)
+      when 114
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgAlmanacGps.new(_io__raw_payload, self, @_root)
+      when 564
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosEcefCovGnss.new(_io__raw_payload, self, @_root)
+      when 259
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgUtcTime.new(_io__raw_payload, self, @_root)
+      when 181
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgDeviceMonitor.new(_io__raw_payload, self, @_root)
+      when 521
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosEcef.new(_io__raw_payload, self, @_root)
+      when 2307
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Vehicle::MsgOdometry.new(_io__raw_payload, self, @_root)
+      when 148
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgGroupDelay.new(_io__raw_payload, self, @_root)
+      when 117
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgGloBiases.new(_io__raw_payload, self, @_root)
+      when 3025
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Integrity::MsgSsrFlagIonoGridPointSatLos.new(_io__raw_payload, self, @_root)
+      when 65
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Tracking::MsgTrackingState.new(_io__raw_payload, self, @_root)
+      when 1534
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrGriddedCorrectionBounds.new(_io__raw_payload, self, @_root)
+      when 44
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Tracking::MsgTrackingIqDepB.new(_io__raw_payload, self, @_root)
+      when 3073
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgEd25519SignatureDepA.new(_io__raw_payload, self, @_root)
+      when 231
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Flash::MsgFlashReadReq.new(_io__raw_payload, self, @_root)
+      when 140
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisSbas.new(_io__raw_payload, self, @_root)
+      when 226
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Flash::MsgFlashErase.new(_io__raw_payload, self, @_root)
+      when 515
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgBaselineNedDepA.new(_io__raw_payload, self, @_root)
+      when 2308
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Vehicle::MsgWheeltick.new(_io__raw_payload, self, @_root)
+      when 535
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgProtectionLevel.new(_io__raw_payload, self, @_root)
+      when 179
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Bootload::MsgBootloaderHandshakeReq.new(_io__raw_payload, self, @_root)
+      when 172
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = FileIo::MsgFileioRemove.new(_io__raw_payload, self, @_root)
+      when 130
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisSbasDepA.new(_io__raw_payload, self, @_root)
+      when 187
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgNetworkStateResp.new(_io__raw_payload, self, @_root)
+      when 1501
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrOrbitClock.new(_io__raw_payload, self, @_root)
+      when 21
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Acquisition::MsgAcqResultDepA.new(_io__raw_payload, self, @_root)
+      when 1500
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrOrbitClockDepA.new(_io__raw_payload, self, @_root)
+      when 225
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Flash::MsgFlashReadResp.new(_io__raw_payload, self, @_root)
+      when 534
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgProtectionLevelDepA.new(_io__raw_payload, self, @_root)
+      when 232
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Flash::MsgStmUniqueIdReq.new(_io__raw_payload, self, @_root)
+      when 2304
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Imu::MsgImuRaw.new(_io__raw_payload, self, @_root)
+      when 229
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Flash::MsgStmUniqueIdResp.new(_io__raw_payload, self, @_root)
+      when 32515
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Linux::MsgLinuxProcessSocketCounts.new(_io__raw_payload, self, @_root)
+      when 65295
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = SolutionMeta::MsgSolnMetaDepA.new(_io__raw_payload, self, @_root)
+      when 3075
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgEd25519SignatureDepB.new(_io__raw_payload, self, @_root)
+      when 258
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgGpsTime.new(_io__raw_payload, self, @_root)
+      when 32516
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Linux::MsgLinuxProcessSocketQueues.new(_io__raw_payload, self, @_root)
+      when 170
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = FileIo::MsgFileioReadDirResp.new(_io__raw_payload, self, @_root)
+      when 256
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgGpsTimeDepA.new(_io__raw_payload, self, @_root)
+      when 32514
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Linux::MsgLinuxSysStateDepA.new(_io__raw_payload, self, @_root)
+      when 518
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgDopsDepA.new(_io__raw_payload, self, @_root)
+      when 553
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosEcefGnss.new(_io__raw_payload, self, @_root)
+      when 517
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelNedDepA.new(_io__raw_payload, self, @_root)
+      when 164
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Settings::MsgSettingsReadReq.new(_io__raw_payload, self, @_root)
+      when 182
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgReset.new(_io__raw_payload, self, @_root)
+      when 189
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgNetworkBandwidthUsage.new(_io__raw_payload, self, @_root)
+      when 72
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgBasePosEcef.new(_io__raw_payload, self, @_root)
+      when 71
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisDepC.new(_io__raw_payload, self, @_root)
+      when 1025
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Logging::MsgLog.new(_io__raw_payload, self, @_root)
+      when 168
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = FileIo::MsgFileioReadReq.new(_io__raw_payload, self, @_root)
+      when 581
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPoseRelative.new(_io__raw_payload, self, @_root)
+      when 171
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = FileIo::MsgFileioWriteResp.new(_io__raw_payload, self, @_root)
+      when 70
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisDepB.new(_io__raw_payload, self, @_root)
+      when 28
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Tracking::MsgTrackingIqDepA.new(_io__raw_payload, self, @_root)
+      when 193
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgCwStart.new(_io__raw_payload, self, @_root)
+      when 133
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisGloDepB.new(_io__raw_payload, self, @_root)
+      when 129
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisGpsDepE.new(_io__raw_payload, self, @_root)
+      when 74
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgObs.new(_io__raw_payload, self, @_root)
+      when 3080
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgEcdsaSignature.new(_io__raw_payload, self, @_root)
+      when 151
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgSvAzEl.new(_io__raw_payload, self, @_root)
+      when 16
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Logging::MsgPrintDep.new(_io__raw_payload, self, @_root)
+      when 147
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgGroupDelayDepB.new(_io__raw_payload, self, @_root)
+      when 527
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Orientation::MsgBaselineHeading.new(_io__raw_payload, self, @_root)
+      when 134
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisGpsDepF.new(_io__raw_payload, self, @_root)
+      when 3078
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgEcdsaSignatureDepA.new(_io__raw_payload, self, @_root)
+      when 80
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgSpecanDep.new(_io__raw_payload, self, @_root)
+      when 68
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgBasePosLlh.new(_io__raw_payload, self, @_root)
+      when 1532
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrGriddedCorrection.new(_io__raw_payload, self, @_root)
+      when 1503
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrOrbitClockBoundsDegradation.new(_io__raw_payload, self, @_root)
+      when 516
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelEcefDepA.new(_io__raw_payload, self, @_root)
+      when 26
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisDepA.new(_io__raw_payload, self, @_root)
+      when 139
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisGlo.new(_io__raw_payload, self, @_root)
+      when 65280
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgStartup.new(_io__raw_payload, self, @_root)
+      when 31
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Acquisition::MsgAcqResultDepC.new(_io__raw_payload, self, @_root)
+      when 565
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelEcefCovGnss.new(_io__raw_payload, self, @_root)
+      when 135
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisGloDepC.new(_io__raw_payload, self, @_root)
+      when 3026
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Integrity::MsgAcknowledge.new(_io__raw_payload, self, @_root)
+      when 34
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgResetFilters.new(_io__raw_payload, self, @_root)
+      when 1600
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgOsr.new(_io__raw_payload, self, @_root)
+      when 536
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosLlhAcc.new(_io__raw_payload, self, @_root)
+      when 65287
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgGnssTimeOffset.new(_io__raw_payload, self, @_root)
+      when 1526
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrTileDefinitionDepA.new(_io__raw_payload, self, @_root)
+      when 1540
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrSatelliteApcDep.new(_io__raw_payload, self, @_root)
+      when 29
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgUartState.new(_io__raw_payload, self, @_root)
+      when 132
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisSbasDepB.new(_io__raw_payload, self, @_root)
+      when 1510
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrPhaseBiases.new(_io__raw_payload, self, @_root)
+      when 65290
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgGroupMeta.new(_io__raw_payload, self, @_root)
+      when 175
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Settings::MsgSettingsWriteResp.new(_io__raw_payload, self, @_root)
+      when 557
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelEcefGnss.new(_io__raw_payload, self, @_root)
+      when 526
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgVelNed.new(_io__raw_payload, self, @_root)
+      when 1520
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrGriddedCorrectionNoStdDepA.new(_io__raw_payload, self, @_root)
+      when 2305
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Imu::MsgImuAux.new(_io__raw_payload, self, @_root)
+      when 190
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgCellModemStatus.new(_io__raw_payload, self, @_root)
+      when 1531
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Ssr::MsgSsrStecCorrectionDep.new(_io__raw_payload, self, @_root)
+      when 528
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgAgeCorrections.new(_io__raw_payload, self, @_root)
+      when 3077
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgCertificateChainDep.new(_io__raw_payload, self, @_root)
+      when 25
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgIarState.new(_io__raw_payload, self, @_root)
+      when 43
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Piksi::MsgMaskSatellite.new(_io__raw_payload, self, @_root)
+      when 228
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Flash::MsgStmFlashUnlockSector.new(_io__raw_payload, self, @_root)
+      when 523
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgBaselineEcef.new(_io__raw_payload, self, @_root)
+      when 554
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgPosLlhGnss.new(_io__raw_payload, self, @_root)
+      when 65289
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = System::MsgSensorAidEvent.new(_io__raw_payload, self, @_root)
+      when 22
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Tracking::MsgTrackingStateDepA.new(_io__raw_payload, self, @_root)
+      when 3001
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Integrity::MsgSsrFlagHighLevel.new(_io__raw_payload, self, @_root)
+      when 30
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Acquisition::MsgAcqSvProfileDep.new(_io__raw_payload, self, @_root)
+      when 261
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Navigation::MsgUtcTimeGnss.new(_io__raw_payload, self, @_root)
+      when 3021
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Integrity::MsgSsrFlagIonoTileSatLos.new(_io__raw_payload, self, @_root)
+      when 173
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = FileIo::MsgFileioWriteReq.new(_io__raw_payload, self, @_root)
+      when 128
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Observation::MsgEphemerisDepD.new(_io__raw_payload, self, @_root)
+      when 222
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Bootload::MsgNapDeviceDnaReq.new(_io__raw_payload, self, @_root)
       else
         @payload = @_io.read_bytes(header.length)
       end
@@ -1219,7 +1219,7 @@ class Sbp < Kaitai::Struct::Struct
     def _read
       @preamble = @_io.read_bytes(1)
       raise Kaitai::Struct::ValidationNotEqualError.new([85].pack('C*'), preamble, _io, "/types/sbp_header/seq/0") if not preamble == [85].pack('C*')
-      @msg_type = Kaitai::Struct::Stream::resolve_enum(Sbp::MSG_IDS, @_io.read_u2le)
+      @msg_type = @_io.read_u2le
       @sender = @_io.read_u2le
       @length = @_io.read_u1
       self
