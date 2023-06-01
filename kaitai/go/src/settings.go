@@ -33,14 +33,14 @@ type Settings_MsgSettingsReadResp struct {
 	Setting string
 	_io *kaitai.Stream
 	_root *Settings
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSettings_MsgSettingsReadResp() *Settings_MsgSettingsReadResp {
 	return &Settings_MsgSettingsReadResp{
 	}
 }
 
-func (this *Settings_MsgSettingsReadResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Settings) (err error) {
+func (this *Settings_MsgSettingsReadResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Settings) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -73,14 +73,14 @@ type Settings_MsgSettingsWriteResp struct {
 	Setting string
 	_io *kaitai.Stream
 	_root *Settings
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSettings_MsgSettingsWriteResp() *Settings_MsgSettingsWriteResp {
 	return &Settings_MsgSettingsWriteResp{
 	}
 }
 
-func (this *Settings_MsgSettingsWriteResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Settings) (err error) {
+func (this *Settings_MsgSettingsWriteResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Settings) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -119,14 +119,14 @@ type Settings_MsgSettingsRegisterResp struct {
 	Setting string
 	_io *kaitai.Stream
 	_root *Settings
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSettings_MsgSettingsRegisterResp() *Settings_MsgSettingsRegisterResp {
 	return &Settings_MsgSettingsRegisterResp{
 	}
 }
 
-func (this *Settings_MsgSettingsRegisterResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Settings) (err error) {
+func (this *Settings_MsgSettingsRegisterResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Settings) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -172,14 +172,14 @@ type Settings_MsgSettingsReadByIndexResp struct {
 	Setting string
 	_io *kaitai.Stream
 	_root *Settings
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSettings_MsgSettingsReadByIndexResp() *Settings_MsgSettingsReadByIndexResp {
 	return &Settings_MsgSettingsReadByIndexResp{
 	}
 }
 
-func (this *Settings_MsgSettingsReadByIndexResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Settings) (err error) {
+func (this *Settings_MsgSettingsReadByIndexResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Settings) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -222,14 +222,14 @@ type Settings_MsgSettingsReadReq struct {
 	Setting string
 	_io *kaitai.Stream
 	_root *Settings
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSettings_MsgSettingsReadReq() *Settings_MsgSettingsReadReq {
 	return &Settings_MsgSettingsReadReq{
 	}
 }
 
-func (this *Settings_MsgSettingsReadReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *Settings) (err error) {
+func (this *Settings_MsgSettingsReadReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Settings) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -255,14 +255,14 @@ func (this *Settings_MsgSettingsReadReq) Read(io *kaitai.Stream, parent *Sbp_Mes
 type Settings_MsgSettingsSave struct {
 	_io *kaitai.Stream
 	_root *Settings
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSettings_MsgSettingsSave() *Settings_MsgSettingsSave {
 	return &Settings_MsgSettingsSave{
 	}
 }
 
-func (this *Settings_MsgSettingsSave) Read(io *kaitai.Stream, parent *Sbp_Message, root *Settings) (err error) {
+func (this *Settings_MsgSettingsSave) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Settings) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -279,14 +279,14 @@ type Settings_MsgSettingsRegister struct {
 	Setting string
 	_io *kaitai.Stream
 	_root *Settings
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSettings_MsgSettingsRegister() *Settings_MsgSettingsRegister {
 	return &Settings_MsgSettingsRegister{
 	}
 }
 
-func (this *Settings_MsgSettingsRegister) Read(io *kaitai.Stream, parent *Sbp_Message, root *Settings) (err error) {
+func (this *Settings_MsgSettingsRegister) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Settings) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -313,14 +313,14 @@ type Settings_MsgSettingsReadByIndexReq struct {
 	Index uint16
 	_io *kaitai.Stream
 	_root *Settings
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSettings_MsgSettingsReadByIndexReq() *Settings_MsgSettingsReadByIndexReq {
 	return &Settings_MsgSettingsReadByIndexReq{
 	}
 }
 
-func (this *Settings_MsgSettingsReadByIndexReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *Settings) (err error) {
+func (this *Settings_MsgSettingsReadByIndexReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Settings) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -344,14 +344,14 @@ func (this *Settings_MsgSettingsReadByIndexReq) Read(io *kaitai.Stream, parent *
 type Settings_MsgSettingsReadByIndexDone struct {
 	_io *kaitai.Stream
 	_root *Settings
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSettings_MsgSettingsReadByIndexDone() *Settings_MsgSettingsReadByIndexDone {
 	return &Settings_MsgSettingsReadByIndexDone{
 	}
 }
 
-func (this *Settings_MsgSettingsReadByIndexDone) Read(io *kaitai.Stream, parent *Sbp_Message, root *Settings) (err error) {
+func (this *Settings_MsgSettingsReadByIndexDone) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Settings) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -372,14 +372,14 @@ type Settings_MsgSettingsWrite struct {
 	Setting string
 	_io *kaitai.Stream
 	_root *Settings
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSettings_MsgSettingsWrite() *Settings_MsgSettingsWrite {
 	return &Settings_MsgSettingsWrite{
 	}
 }
 
-func (this *Settings_MsgSettingsWrite) Read(io *kaitai.Stream, parent *Sbp_Message, root *Settings) (err error) {
+func (this *Settings_MsgSettingsWrite) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Settings) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

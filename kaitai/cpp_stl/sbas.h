@@ -34,7 +34,7 @@ public:
 
     public:
 
-        msg_sbas_raw_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, sbas_t* p__root = 0);
+        msg_sbas_raw_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, sbas_t* p__root = 0);
 
     private:
         void _read();
@@ -49,7 +49,7 @@ public:
         uint8_t m_message_type;
         std::vector<uint8_t>* m_data;
         sbas_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -73,7 +73,7 @@ public:
          */
         std::vector<uint8_t>* data() const { return m_data; }
         sbas_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

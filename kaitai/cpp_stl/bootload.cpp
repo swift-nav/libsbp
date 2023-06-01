@@ -24,7 +24,7 @@ bootload_t::~bootload_t() {
 void bootload_t::_clean_up() {
 }
 
-bootload_t::msg_nap_device_dna_req_t::msg_nap_device_dna_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
+bootload_t::msg_nap_device_dna_req_t::msg_nap_device_dna_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -46,7 +46,7 @@ bootload_t::msg_nap_device_dna_req_t::~msg_nap_device_dna_req_t() {
 void bootload_t::msg_nap_device_dna_req_t::_clean_up() {
 }
 
-bootload_t::msg_bootloader_jump_to_app_t::msg_bootloader_jump_to_app_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
+bootload_t::msg_bootloader_jump_to_app_t::msg_bootloader_jump_to_app_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -69,7 +69,7 @@ bootload_t::msg_bootloader_jump_to_app_t::~msg_bootloader_jump_to_app_t() {
 void bootload_t::msg_bootloader_jump_to_app_t::_clean_up() {
 }
 
-bootload_t::msg_bootloader_handshake_resp_t::msg_bootloader_handshake_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
+bootload_t::msg_bootloader_handshake_resp_t::msg_bootloader_handshake_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -93,7 +93,7 @@ bootload_t::msg_bootloader_handshake_resp_t::~msg_bootloader_handshake_resp_t() 
 void bootload_t::msg_bootloader_handshake_resp_t::_clean_up() {
 }
 
-bootload_t::msg_nap_device_dna_resp_t::msg_nap_device_dna_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
+bootload_t::msg_nap_device_dna_resp_t::msg_nap_device_dna_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_dna = 0;
@@ -124,7 +124,7 @@ void bootload_t::msg_nap_device_dna_resp_t::_clean_up() {
     }
 }
 
-bootload_t::msg_bootloader_handshake_req_t::msg_bootloader_handshake_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
+bootload_t::msg_bootloader_handshake_req_t::msg_bootloader_handshake_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -146,7 +146,7 @@ bootload_t::msg_bootloader_handshake_req_t::~msg_bootloader_handshake_req_t() {
 void bootload_t::msg_bootloader_handshake_req_t::_clean_up() {
 }
 
-bootload_t::msg_bootloader_handshake_dep_a_t::msg_bootloader_handshake_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
+bootload_t::msg_bootloader_handshake_dep_a_t::msg_bootloader_handshake_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, bootload_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_handshake = 0;

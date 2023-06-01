@@ -32,7 +32,7 @@ public:
 
     public:
 
-        msg_mag_raw_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, mag_t* p__root = 0);
+        msg_mag_raw_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, mag_t* p__root = 0);
 
     private:
         void _read();
@@ -48,7 +48,7 @@ public:
         int16_t m_mag_y;
         int16_t m_mag_z;
         mag_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -78,7 +78,7 @@ public:
          */
         int16_t mag_z() const { return m_mag_z; }
         mag_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

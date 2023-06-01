@@ -180,7 +180,7 @@ namespace Kaitai
                 return new MsgSsrStecCorrectionDep(new KaitaiStream(fileName));
             }
 
-            public MsgSsrStecCorrectionDep(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrStecCorrectionDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -201,7 +201,7 @@ namespace Kaitai
             private StecHeader _header;
             private List<StecSatElement> _stecSatList;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a STEC polynomial coefficient message.
@@ -213,7 +213,7 @@ namespace Kaitai
             /// </summary>
             public List<StecSatElement> StecSatList { get { return _stecSatList; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Kaitai
                 return new MsgSsrOrbitClockDepA(new KaitaiStream(fileName));
             }
 
-            public MsgSsrOrbitClockDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrOrbitClockDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -324,7 +324,7 @@ namespace Kaitai
             private int _c1;
             private int _c2;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GNSS reference time of the correction
@@ -401,7 +401,7 @@ namespace Kaitai
             /// </summary>
             public int C2 { get { return _c2; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class MsgSsrStecCorrection : KaitaiStruct
         {
@@ -410,7 +410,7 @@ namespace Kaitai
                 return new MsgSsrStecCorrection(new KaitaiStream(fileName));
             }
 
-            public MsgSsrStecCorrection(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrStecCorrection(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -439,7 +439,7 @@ namespace Kaitai
             private byte _nSats;
             private List<StecSatElement> _stecSatList;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a STEC correction with bounds message.
@@ -471,7 +471,7 @@ namespace Kaitai
             /// </summary>
             public List<StecSatElement> StecSatList { get { return _stecSatList; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -486,7 +486,7 @@ namespace Kaitai
                 return new MsgSsrOrbitClock(new KaitaiStream(fileName));
             }
 
-            public MsgSsrOrbitClock(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrOrbitClock(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -524,7 +524,7 @@ namespace Kaitai
             private int _c1;
             private int _c2;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GNSS reference time of the correction
@@ -601,7 +601,7 @@ namespace Kaitai
             /// </summary>
             public int C2 { get { return _c2; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class BoundsHeader : KaitaiStruct
         {
@@ -672,7 +672,7 @@ namespace Kaitai
                 return new MsgSsrGriddedCorrection(new KaitaiStream(fileName));
             }
 
-            public MsgSsrGriddedCorrection(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrGriddedCorrection(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -697,7 +697,7 @@ namespace Kaitai
             private TroposphericDelayCorrection _tropoDelayCorrection;
             private List<StecResidual> _stecResiduals;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a gridded correction message
@@ -719,7 +719,7 @@ namespace Kaitai
             /// </summary>
             public List<StecResidual> StecResiduals { get { return _stecResiduals; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1195,7 +1195,7 @@ namespace Kaitai
                 return new MsgSsrStecCorrectionDepA(new KaitaiStream(fileName));
             }
 
-            public MsgSsrStecCorrectionDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrStecCorrectionDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1216,7 +1216,7 @@ namespace Kaitai
             private StecHeaderDepA _header;
             private List<StecSatElement> _stecSatList;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a STEC message
@@ -1228,7 +1228,7 @@ namespace Kaitai
             /// </summary>
             public List<StecSatElement> StecSatList { get { return _stecSatList; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1315,7 +1315,7 @@ namespace Kaitai
                 return new MsgSsrOrbitClockBounds(new KaitaiStream(fileName));
             }
 
-            public MsgSsrOrbitClockBounds(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrOrbitClockBounds(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1342,7 +1342,7 @@ namespace Kaitai
             private byte _nSats;
             private List<OrbitClockBound> _orbitClockBounds;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a bounds message.
@@ -1369,7 +1369,7 @@ namespace Kaitai
             /// </summary>
             public List<OrbitClockBound> OrbitClockBounds { get { return _orbitClockBounds; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1383,7 +1383,7 @@ namespace Kaitai
                 return new MsgSsrGriddedCorrectionBounds(new KaitaiStream(fileName));
             }
 
-            public MsgSsrGriddedCorrectionBounds(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrGriddedCorrectionBounds(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1426,7 +1426,7 @@ namespace Kaitai
             private byte _nSats;
             private List<StecSatElementIntegrity> _stecSatList;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a bounds message.
@@ -1494,7 +1494,7 @@ namespace Kaitai
             /// </summary>
             public List<StecSatElementIntegrity> StecSatList { get { return _stecSatList; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1507,7 +1507,7 @@ namespace Kaitai
                 return new MsgSsrGridDefinitionDepA(new KaitaiStream(fileName));
             }
 
-            public MsgSsrGridDefinitionDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrGridDefinitionDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1528,7 +1528,7 @@ namespace Kaitai
             private GridDefinitionHeaderDepA _header;
             private List<byte> _rleList;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a Gridded Correction message
@@ -1543,7 +1543,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> RleList { get { return _rleList; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1593,7 +1593,7 @@ namespace Kaitai
                 return new MsgSsrSatelliteApc(new KaitaiStream(fileName));
             }
 
-            public MsgSsrSatelliteApc(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrSatelliteApc(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1620,7 +1620,7 @@ namespace Kaitai
             private byte _iodSsr;
             private List<SatelliteApc> _apc;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GNSS reference time of the correction
@@ -1649,7 +1649,7 @@ namespace Kaitai
             /// </summary>
             public List<SatelliteApc> Apc { get { return _apc; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1724,7 +1724,7 @@ namespace Kaitai
                 return new MsgSsrTileDefinitionDepA(new KaitaiStream(fileName));
             }
 
-            public MsgSsrTileDefinitionDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrTileDefinitionDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1752,7 +1752,7 @@ namespace Kaitai
             private ushort _cols;
             private ulong _bitmask;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Unique identifier of the tile set this tile belongs to.
@@ -1837,7 +1837,7 @@ namespace Kaitai
             /// </summary>
             public ulong Bitmask { get { return _bitmask; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1939,7 +1939,7 @@ namespace Kaitai
                 return new MsgSsrGriddedCorrectionDepA(new KaitaiStream(fileName));
             }
 
-            public MsgSsrGriddedCorrectionDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrGriddedCorrectionDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1964,7 +1964,7 @@ namespace Kaitai
             private TroposphericDelayCorrection _tropoDelayCorrection;
             private List<StecResidual> _stecResiduals;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a Gridded Correction message
@@ -1986,7 +1986,7 @@ namespace Kaitai
             /// </summary>
             public List<StecResidual> StecResiduals { get { return _stecResiduals; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class MsgSsrOrbitClockBoundsDegradation : KaitaiStruct
         {
@@ -1995,7 +1995,7 @@ namespace Kaitai
                 return new MsgSsrOrbitClockBoundsDegradation(new KaitaiStream(fileName));
             }
 
-            public MsgSsrOrbitClockBoundsDegradation(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrOrbitClockBoundsDegradation(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2015,7 +2015,7 @@ namespace Kaitai
             private ulong _satBitmask;
             private OrbitClockBoundDegradation _orbitClockBoundsDegradation;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a bounds message.
@@ -2044,7 +2044,7 @@ namespace Kaitai
             /// </summary>
             public OrbitClockBoundDegradation OrbitClockBoundsDegradation { get { return _orbitClockBoundsDegradation; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2057,7 +2057,7 @@ namespace Kaitai
                 return new MsgSsrGriddedCorrectionNoStdDepA(new KaitaiStream(fileName));
             }
 
-            public MsgSsrGriddedCorrectionNoStdDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrGriddedCorrectionNoStdDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2082,7 +2082,7 @@ namespace Kaitai
             private TroposphericDelayCorrectionNoStd _tropoDelayCorrection;
             private List<StecResidualNoStd> _stecResiduals;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a Gridded Correction message
@@ -2104,7 +2104,7 @@ namespace Kaitai
             /// </summary>
             public List<StecResidualNoStd> StecResiduals { get { return _stecResiduals; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class MsgSsrCodePhaseBiasesBounds : KaitaiStruct
         {
@@ -2113,7 +2113,7 @@ namespace Kaitai
                 return new MsgSsrCodePhaseBiasesBounds(new KaitaiStream(fileName));
             }
 
-            public MsgSsrCodePhaseBiasesBounds(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrCodePhaseBiasesBounds(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2140,7 +2140,7 @@ namespace Kaitai
             private byte _nSatsSignals;
             private List<CodePhaseBiasesSatSig> _satellitesSignals;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a bounds message.
@@ -2167,7 +2167,7 @@ namespace Kaitai
             /// </summary>
             public List<CodePhaseBiasesSatSig> SatellitesSignals { get { return _satellitesSignals; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2182,7 +2182,7 @@ namespace Kaitai
                 return new MsgSsrCodeBiases(new KaitaiStream(fileName));
             }
 
-            public MsgSsrCodeBiases(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrCodeBiases(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2209,7 +2209,7 @@ namespace Kaitai
             private byte _iodSsr;
             private List<CodeBiasesContent> _biases;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GNSS reference time of the correction
@@ -2238,7 +2238,7 @@ namespace Kaitai
             /// </summary>
             public List<CodeBiasesContent> Biases { get { return _biases; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2257,7 +2257,7 @@ namespace Kaitai
                 return new MsgSsrTileDefinition(new KaitaiStream(fileName));
             }
 
-            public MsgSsrTileDefinition(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrTileDefinition(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2293,7 +2293,7 @@ namespace Kaitai
             private ushort _cols;
             private ulong _bitmask;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GNSS reference time of the correction
@@ -2394,7 +2394,7 @@ namespace Kaitai
             /// </summary>
             public ulong Bitmask { get { return _bitmask; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2491,7 +2491,7 @@ namespace Kaitai
                 return new MsgSsrSatelliteApcDep(new KaitaiStream(fileName));
             }
 
-            public MsgSsrSatelliteApcDep(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrSatelliteApcDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2510,14 +2510,14 @@ namespace Kaitai
             }
             private List<SatelliteApc> _apc;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Satellite antenna phase center corrections
             /// </summary>
             public List<SatelliteApc> Apc { get { return _apc; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2578,7 +2578,7 @@ namespace Kaitai
                 return new MsgSsrTileDefinitionDepB(new KaitaiStream(fileName));
             }
 
-            public MsgSsrTileDefinitionDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrTileDefinitionDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2608,7 +2608,7 @@ namespace Kaitai
             private ushort _cols;
             private ulong _bitmask;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// SSR Solution ID.
@@ -2698,7 +2698,7 @@ namespace Kaitai
             /// </summary>
             public ulong Bitmask { get { return _bitmask; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2715,7 +2715,7 @@ namespace Kaitai
                 return new MsgSsrPhaseBiases(new KaitaiStream(fileName));
             }
 
-            public MsgSsrPhaseBiases(KaitaiStream p__io, Sbp.Message p__parent = null, Ssr p__root = null) : base(p__io)
+            public MsgSsrPhaseBiases(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ssr p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2750,7 +2750,7 @@ namespace Kaitai
             private sbyte _yawRate;
             private List<PhaseBiasesContent> _biases;
             private Ssr m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GNSS reference time of the correction
@@ -2799,7 +2799,7 @@ namespace Kaitai
             /// </summary>
             public List<PhaseBiasesContent> Biases { get { return _biases; } }
             public Ssr M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Ssr m_root;
         private KaitaiStruct m_parent;

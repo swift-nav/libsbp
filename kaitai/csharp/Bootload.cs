@@ -36,7 +36,7 @@ namespace Kaitai
                 return new MsgNapDeviceDnaReq(new KaitaiStream(fileName));
             }
 
-            public MsgNapDeviceDnaReq(KaitaiStream p__io, Sbp.Message p__parent = null, Bootload p__root = null) : base(p__io)
+            public MsgNapDeviceDnaReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Bootload p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -46,9 +46,9 @@ namespace Kaitai
             {
             }
             private Bootload m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Bootload M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Kaitai
                 return new MsgBootloaderJumpToApp(new KaitaiStream(fileName));
             }
 
-            public MsgBootloaderJumpToApp(KaitaiStream p__io, Sbp.Message p__parent = null, Bootload p__root = null) : base(p__io)
+            public MsgBootloaderJumpToApp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Bootload p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -73,14 +73,14 @@ namespace Kaitai
             }
             private byte _jump;
             private Bootload m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Ignored by the device
             /// </summary>
             public byte Jump { get { return _jump; } }
             public Bootload M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Kaitai
                 return new MsgBootloaderHandshakeResp(new KaitaiStream(fileName));
             }
 
-            public MsgBootloaderHandshakeResp(KaitaiStream p__io, Sbp.Message p__parent = null, Bootload p__root = null) : base(p__io)
+            public MsgBootloaderHandshakeResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Bootload p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -110,7 +110,7 @@ namespace Kaitai
             private uint _flags;
             private string _version;
             private Bootload m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Bootloader flags
@@ -122,7 +122,7 @@ namespace Kaitai
             /// </summary>
             public string Version { get { return _version; } }
             public Bootload M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Kaitai
                 return new MsgNapDeviceDnaResp(new KaitaiStream(fileName));
             }
 
-            public MsgNapDeviceDnaResp(KaitaiStream p__io, Sbp.Message p__parent = null, Bootload p__root = null) : base(p__io)
+            public MsgNapDeviceDnaResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Bootload p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -156,7 +156,7 @@ namespace Kaitai
             }
             private List<byte> _dna;
             private Bootload m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the
@@ -164,7 +164,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> Dna { get { return _dna; } }
             public Bootload M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Kaitai
                 return new MsgBootloaderHandshakeReq(new KaitaiStream(fileName));
             }
 
-            public MsgBootloaderHandshakeReq(KaitaiStream p__io, Sbp.Message p__parent = null, Bootload p__root = null) : base(p__io)
+            public MsgBootloaderHandshakeReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Bootload p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -189,9 +189,9 @@ namespace Kaitai
             {
             }
             private Bootload m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Bootload M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Kaitai
                 return new MsgBootloaderHandshakeDepA(new KaitaiStream(fileName));
             }
 
-            public MsgBootloaderHandshakeDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Bootload p__root = null) : base(p__io)
+            public MsgBootloaderHandshakeDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Bootload p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -223,14 +223,14 @@ namespace Kaitai
             }
             private List<byte> _handshake;
             private Bootload m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Version number string (not NULL terminated)
             /// </summary>
             public List<byte> Handshake { get { return _handshake; } }
             public Bootload M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Bootload m_root;
         private KaitaiStruct m_parent;

@@ -43,7 +43,7 @@ public:
 
     public:
 
-        msg_certificate_chain_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, signing_t* p__root = 0);
+        msg_certificate_chain_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, signing_t* p__root = 0);
 
     private:
         void _read();
@@ -59,7 +59,7 @@ public:
         utc_time_t* m_expiration;
         std::vector<uint8_t>* m_signature;
         signing_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -94,7 +94,7 @@ public:
          */
         std::vector<uint8_t>* signature() const { return m_signature; }
         signing_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -105,7 +105,7 @@ public:
 
     public:
 
-        msg_ed25519_signature_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, signing_t* p__root = 0);
+        msg_ed25519_signature_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, signing_t* p__root = 0);
 
     private:
         void _read();
@@ -121,7 +121,7 @@ public:
         std::vector<uint8_t>* m_fingerprint;
         std::vector<uint32_t>* m_signed_messages;
         signing_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -157,7 +157,7 @@ public:
          */
         std::vector<uint32_t>* signed_messages() const { return m_signed_messages; }
         signing_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -168,7 +168,7 @@ public:
 
     public:
 
-        msg_ed25519_certificate_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, signing_t* p__root = 0);
+        msg_ed25519_certificate_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, signing_t* p__root = 0);
 
     private:
         void _read();
@@ -182,7 +182,7 @@ public:
         std::vector<uint8_t>* m_fingerprint;
         std::vector<uint8_t>* m_certificate_bytes;
         signing_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -203,7 +203,7 @@ public:
          */
         std::vector<uint8_t>* certificate_bytes() const { return m_certificate_bytes; }
         signing_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class utc_time_t : public kaitai::kstruct {
@@ -315,7 +315,7 @@ public:
 
     public:
 
-        msg_ed25519_signature_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, signing_t* p__root = 0);
+        msg_ed25519_signature_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, signing_t* p__root = 0);
 
     private:
         void _read();
@@ -329,7 +329,7 @@ public:
         std::vector<uint8_t>* m_fingerprint;
         std::vector<uint32_t>* m_signed_messages;
         signing_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -348,14 +348,14 @@ public:
          */
         std::vector<uint32_t>* signed_messages() const { return m_signed_messages; }
         signing_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class msg_certificate_chain_t : public kaitai::kstruct {
 
     public:
 
-        msg_certificate_chain_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, signing_t* p__root = 0);
+        msg_certificate_chain_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, signing_t* p__root = 0);
 
     private:
         void _read();
@@ -371,7 +371,7 @@ public:
         utc_time_t* m_expiration;
         ecdsa_signature_t* m_signature;
         signing_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -408,7 +408,7 @@ public:
          */
         ecdsa_signature_t* signature() const { return m_signature; }
         signing_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -419,7 +419,7 @@ public:
 
     public:
 
-        msg_ecdsa_certificate_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, signing_t* p__root = 0);
+        msg_ecdsa_certificate_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, signing_t* p__root = 0);
 
     private:
         void _read();
@@ -434,7 +434,7 @@ public:
         uint8_t m_flags;
         std::vector<uint8_t>* m_certificate_bytes;
         signing_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -457,7 +457,7 @@ public:
          */
         std::vector<uint8_t>* certificate_bytes() const { return m_certificate_bytes; }
         signing_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -468,7 +468,7 @@ public:
 
     public:
 
-        msg_ecdsa_signature_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, signing_t* p__root = 0);
+        msg_ecdsa_signature_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, signing_t* p__root = 0);
 
     private:
         void _read();
@@ -486,7 +486,7 @@ public:
         std::vector<uint8_t>* m_signature;
         std::vector<uint8_t>* m_signed_messages;
         signing_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -539,7 +539,7 @@ public:
          */
         std::vector<uint8_t>* signed_messages() const { return m_signed_messages; }
         signing_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -550,7 +550,7 @@ public:
 
     public:
 
-        msg_ecdsa_signature_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, signing_t* p__root = 0);
+        msg_ecdsa_signature_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, signing_t* p__root = 0);
 
     private:
         void _read();
@@ -567,7 +567,7 @@ public:
         ecdsa_signature_t* m_signature;
         std::vector<uint8_t>* m_signed_messages;
         signing_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -612,7 +612,7 @@ public:
          */
         std::vector<uint8_t>* signed_messages() const { return m_signed_messages; }
         signing_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -623,7 +623,7 @@ public:
 
     public:
 
-        msg_ecdsa_signature_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, signing_t* p__root = 0);
+        msg_ecdsa_signature_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, signing_t* p__root = 0);
 
     private:
         void _read();
@@ -640,7 +640,7 @@ public:
         std::vector<uint8_t>* m_signature;
         std::vector<uint8_t>* m_signed_messages;
         signing_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -686,7 +686,7 @@ public:
          */
         std::vector<uint8_t>* signed_messages() const { return m_signed_messages; }
         signing_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

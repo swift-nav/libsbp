@@ -24,7 +24,7 @@ flash_t::~flash_t() {
 void flash_t::_clean_up() {
 }
 
-flash_t::msg_flash_done_t::msg_flash_done_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
+flash_t::msg_flash_done_t::msg_flash_done_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -47,7 +47,7 @@ flash_t::msg_flash_done_t::~msg_flash_done_t() {
 void flash_t::msg_flash_done_t::_clean_up() {
 }
 
-flash_t::msg_m25_flash_write_status_t::msg_m25_flash_write_status_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
+flash_t::msg_m25_flash_write_status_t::msg_m25_flash_write_status_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_status = 0;
@@ -78,7 +78,7 @@ void flash_t::msg_m25_flash_write_status_t::_clean_up() {
     }
 }
 
-flash_t::msg_flash_read_resp_t::msg_flash_read_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
+flash_t::msg_flash_read_resp_t::msg_flash_read_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_addr_start = 0;
@@ -111,7 +111,7 @@ void flash_t::msg_flash_read_resp_t::_clean_up() {
     }
 }
 
-flash_t::msg_flash_erase_t::msg_flash_erase_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
+flash_t::msg_flash_erase_t::msg_flash_erase_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -135,7 +135,7 @@ flash_t::msg_flash_erase_t::~msg_flash_erase_t() {
 void flash_t::msg_flash_erase_t::_clean_up() {
 }
 
-flash_t::msg_stm_unique_id_resp_t::msg_stm_unique_id_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
+flash_t::msg_stm_unique_id_resp_t::msg_stm_unique_id_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_stm_id = 0;
@@ -166,7 +166,7 @@ void flash_t::msg_stm_unique_id_resp_t::_clean_up() {
     }
 }
 
-flash_t::msg_stm_unique_id_req_t::msg_stm_unique_id_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
+flash_t::msg_stm_unique_id_req_t::msg_stm_unique_id_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -188,7 +188,7 @@ flash_t::msg_stm_unique_id_req_t::~msg_stm_unique_id_req_t() {
 void flash_t::msg_stm_unique_id_req_t::_clean_up() {
 }
 
-flash_t::msg_flash_program_t::msg_flash_program_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
+flash_t::msg_flash_program_t::msg_flash_program_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_addr_start = 0;
@@ -233,7 +233,7 @@ void flash_t::msg_flash_program_t::_clean_up() {
     }
 }
 
-flash_t::msg_flash_read_req_t::msg_flash_read_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
+flash_t::msg_flash_read_req_t::msg_flash_read_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_addr_start = 0;
@@ -266,7 +266,7 @@ void flash_t::msg_flash_read_req_t::_clean_up() {
     }
 }
 
-flash_t::msg_stm_flash_unlock_sector_t::msg_stm_flash_unlock_sector_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
+flash_t::msg_stm_flash_unlock_sector_t::msg_stm_flash_unlock_sector_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -289,7 +289,7 @@ flash_t::msg_stm_flash_unlock_sector_t::~msg_stm_flash_unlock_sector_t() {
 void flash_t::msg_stm_flash_unlock_sector_t::_clean_up() {
 }
 
-flash_t::msg_stm_flash_lock_sector_t::msg_stm_flash_lock_sector_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
+flash_t::msg_stm_flash_lock_sector_t::msg_stm_flash_lock_sector_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, flash_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

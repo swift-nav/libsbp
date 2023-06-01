@@ -30,14 +30,14 @@ type Integrity_MsgSsrFlagSatellites struct {
 	FaultySats []uint8
 	_io *kaitai.Stream
 	_root *Integrity
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewIntegrity_MsgSsrFlagSatellites() *Integrity_MsgSsrFlagSatellites {
 	return &Integrity_MsgSsrFlagSatellites{
 	}
 }
 
-func (this *Integrity_MsgSsrFlagSatellites) Read(io *kaitai.Stream, parent *Sbp_Message, root *Integrity) (err error) {
+func (this *Integrity_MsgSsrFlagSatellites) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Integrity) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -132,14 +132,14 @@ type Integrity_MsgSsrFlagIonoTileSatLos struct {
 	FaultyLos []*Gnss_SvId
 	_io *kaitai.Stream
 	_root *Integrity
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewIntegrity_MsgSsrFlagIonoTileSatLos() *Integrity_MsgSsrFlagIonoTileSatLos {
 	return &Integrity_MsgSsrFlagIonoTileSatLos{
 	}
 }
 
-func (this *Integrity_MsgSsrFlagIonoTileSatLos) Read(io *kaitai.Stream, parent *Sbp_Message, root *Integrity) (err error) {
+func (this *Integrity_MsgSsrFlagIonoTileSatLos) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Integrity) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -191,14 +191,14 @@ type Integrity_MsgSsrFlagIonoGridPointSatLos struct {
 	FaultyLos []*Gnss_SvId
 	_io *kaitai.Stream
 	_root *Integrity
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewIntegrity_MsgSsrFlagIonoGridPointSatLos() *Integrity_MsgSsrFlagIonoGridPointSatLos {
 	return &Integrity_MsgSsrFlagIonoGridPointSatLos{
 	}
 }
 
-func (this *Integrity_MsgSsrFlagIonoGridPointSatLos) Read(io *kaitai.Stream, parent *Sbp_Message, root *Integrity) (err error) {
+func (this *Integrity_MsgSsrFlagIonoGridPointSatLos) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Integrity) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -349,14 +349,14 @@ type Integrity_MsgAcknowledge struct {
 	SolutionId uint8
 	_io *kaitai.Stream
 	_root *Integrity
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewIntegrity_MsgAcknowledge() *Integrity_MsgAcknowledge {
 	return &Integrity_MsgAcknowledge{
 	}
 }
 
-func (this *Integrity_MsgAcknowledge) Read(io *kaitai.Stream, parent *Sbp_Message, root *Integrity) (err error) {
+func (this *Integrity_MsgAcknowledge) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Integrity) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -426,14 +426,14 @@ type Integrity_MsgSsrFlagIonoGridPoints struct {
 	FaultyPoints []uint16
 	_io *kaitai.Stream
 	_root *Integrity
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewIntegrity_MsgSsrFlagIonoGridPoints() *Integrity_MsgSsrFlagIonoGridPoints {
 	return &Integrity_MsgSsrFlagIonoGridPoints{
 	}
 }
 
-func (this *Integrity_MsgSsrFlagIonoGridPoints) Read(io *kaitai.Stream, parent *Sbp_Message, root *Integrity) (err error) {
+func (this *Integrity_MsgSsrFlagIonoGridPoints) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Integrity) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -483,14 +483,14 @@ type Integrity_MsgSsrFlagTropoGridPoints struct {
 	FaultyPoints []uint16
 	_io *kaitai.Stream
 	_root *Integrity
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewIntegrity_MsgSsrFlagTropoGridPoints() *Integrity_MsgSsrFlagTropoGridPoints {
 	return &Integrity_MsgSsrFlagTropoGridPoints{
 	}
 }
 
-func (this *Integrity_MsgSsrFlagTropoGridPoints) Read(io *kaitai.Stream, parent *Sbp_Message, root *Integrity) (err error) {
+func (this *Integrity_MsgSsrFlagTropoGridPoints) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Integrity) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -579,14 +579,14 @@ type Integrity_MsgSsrFlagHighLevel struct {
 	UseIonoGridPointSatLos uint8
 	_io *kaitai.Stream
 	_root *Integrity
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewIntegrity_MsgSsrFlagHighLevel() *Integrity_MsgSsrFlagHighLevel {
 	return &Integrity_MsgSsrFlagHighLevel{
 	}
 }
 
-func (this *Integrity_MsgSsrFlagHighLevel) Read(io *kaitai.Stream, parent *Sbp_Message, root *Integrity) (err error) {
+func (this *Integrity_MsgSsrFlagHighLevel) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Integrity) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

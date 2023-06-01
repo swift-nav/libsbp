@@ -24,7 +24,7 @@ ndb_t::~ndb_t() {
 void ndb_t::_clean_up() {
 }
 
-ndb_t::msg_ndb_event_t::msg_ndb_event_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ndb_t* p__root) : kaitai::kstruct(p__io) {
+ndb_t::msg_ndb_event_t::msg_ndb_event_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ndb_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_object_sid = 0;

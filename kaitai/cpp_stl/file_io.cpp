@@ -24,7 +24,7 @@ file_io_t::~file_io_t() {
 void file_io_t::_clean_up() {
 }
 
-file_io_t::msg_fileio_write_req_t::msg_fileio_write_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
+file_io_t::msg_fileio_write_req_t::msg_fileio_write_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_data = 0;
@@ -61,7 +61,7 @@ void file_io_t::msg_fileio_write_req_t::_clean_up() {
     }
 }
 
-file_io_t::msg_fileio_config_resp_t::msg_fileio_config_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
+file_io_t::msg_fileio_config_resp_t::msg_fileio_config_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -87,7 +87,7 @@ file_io_t::msg_fileio_config_resp_t::~msg_fileio_config_resp_t() {
 void file_io_t::msg_fileio_config_resp_t::_clean_up() {
 }
 
-file_io_t::msg_fileio_remove_t::msg_fileio_remove_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
+file_io_t::msg_fileio_remove_t::msg_fileio_remove_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -110,7 +110,7 @@ file_io_t::msg_fileio_remove_t::~msg_fileio_remove_t() {
 void file_io_t::msg_fileio_remove_t::_clean_up() {
 }
 
-file_io_t::msg_fileio_config_req_t::msg_fileio_config_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
+file_io_t::msg_fileio_config_req_t::msg_fileio_config_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -133,7 +133,7 @@ file_io_t::msg_fileio_config_req_t::~msg_fileio_config_req_t() {
 void file_io_t::msg_fileio_config_req_t::_clean_up() {
 }
 
-file_io_t::msg_fileio_read_dir_req_t::msg_fileio_read_dir_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
+file_io_t::msg_fileio_read_dir_req_t::msg_fileio_read_dir_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -158,7 +158,7 @@ file_io_t::msg_fileio_read_dir_req_t::~msg_fileio_read_dir_req_t() {
 void file_io_t::msg_fileio_read_dir_req_t::_clean_up() {
 }
 
-file_io_t::msg_fileio_write_resp_t::msg_fileio_write_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
+file_io_t::msg_fileio_write_resp_t::msg_fileio_write_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -181,7 +181,7 @@ file_io_t::msg_fileio_write_resp_t::~msg_fileio_write_resp_t() {
 void file_io_t::msg_fileio_write_resp_t::_clean_up() {
 }
 
-file_io_t::msg_fileio_read_dir_resp_t::msg_fileio_read_dir_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
+file_io_t::msg_fileio_read_dir_resp_t::msg_fileio_read_dir_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_contents = 0;
@@ -216,7 +216,7 @@ void file_io_t::msg_fileio_read_dir_resp_t::_clean_up() {
     }
 }
 
-file_io_t::msg_fileio_read_req_t::msg_fileio_read_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
+file_io_t::msg_fileio_read_req_t::msg_fileio_read_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -242,7 +242,7 @@ file_io_t::msg_fileio_read_req_t::~msg_fileio_read_req_t() {
 void file_io_t::msg_fileio_read_req_t::_clean_up() {
 }
 
-file_io_t::msg_fileio_read_resp_t::msg_fileio_read_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
+file_io_t::msg_fileio_read_resp_t::msg_fileio_read_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, file_io_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_contents = 0;

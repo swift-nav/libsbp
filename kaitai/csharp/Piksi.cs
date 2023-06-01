@@ -32,7 +32,7 @@ namespace Kaitai
                 return new MsgNetworkStateResp(new KaitaiStream(fileName));
             }
 
-            public MsgNetworkStateResp(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgNetworkStateResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -66,7 +66,7 @@ namespace Kaitai
             private string _interfaceName;
             private uint _flags;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// IPv4 address (all zero when unavailable)
@@ -108,7 +108,7 @@ namespace Kaitai
             /// </summary>
             public uint Flags { get { return _flags; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Kaitai
                 return new MsgCommandResp(new KaitaiStream(fileName));
             }
 
-            public MsgCommandResp(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgCommandResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -200,7 +200,7 @@ namespace Kaitai
             private uint _sequence;
             private int _code;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Sequence number
@@ -212,7 +212,7 @@ namespace Kaitai
             /// </summary>
             public int Code { get { return _code; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Kaitai
                 return new MsgCommandOutput(new KaitaiStream(fileName));
             }
 
-            public MsgCommandOutput(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgCommandOutput(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -241,7 +241,7 @@ namespace Kaitai
             private uint _sequence;
             private string _line;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Sequence number
@@ -253,7 +253,7 @@ namespace Kaitai
             /// </summary>
             public string Line { get { return _line; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Kaitai
                 return new MsgThreadState(new KaitaiStream(fileName));
             }
 
-            public MsgThreadState(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgThreadState(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -341,7 +341,7 @@ namespace Kaitai
             private ushort _cpu;
             private uint _stackFree;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Thread name (NULL terminated)
@@ -359,7 +359,7 @@ namespace Kaitai
             /// </summary>
             public uint StackFree { get { return _stackFree; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace Kaitai
                 return new MsgUartStateDepa(new KaitaiStream(fileName));
             }
 
-            public MsgUartStateDepa(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgUartStateDepa(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -390,7 +390,7 @@ namespace Kaitai
             private UartChannel _uartFtdi;
             private Latency _latency;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// State of UART A
@@ -412,7 +412,7 @@ namespace Kaitai
             /// </summary>
             public Latency Latency { get { return _latency; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace Kaitai
                 return new MsgNetworkStateReq(new KaitaiStream(fileName));
             }
 
-            public MsgNetworkStateReq(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgNetworkStateReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -436,9 +436,9 @@ namespace Kaitai
             {
             }
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace Kaitai
                 return new MsgDeviceMonitor(new KaitaiStream(fileName));
             }
 
-            public MsgDeviceMonitor(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgDeviceMonitor(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -473,7 +473,7 @@ namespace Kaitai
             private short _cpuTemperature;
             private short _feTemperature;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Device V_in
@@ -500,7 +500,7 @@ namespace Kaitai
             /// </summary>
             public short FeTemperature { get { return _feTemperature; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -513,7 +513,7 @@ namespace Kaitai
                 return new MsgMaskSatelliteDep(new KaitaiStream(fileName));
             }
 
-            public MsgMaskSatelliteDep(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgMaskSatelliteDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -527,7 +527,7 @@ namespace Kaitai
             private byte _mask;
             private Gnss.GnssSignalDep _sid;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Mask of systems that should ignore this satellite.
@@ -539,7 +539,7 @@ namespace Kaitai
             /// </summary>
             public Gnss.GnssSignalDep Sid { get { return _sid; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -559,7 +559,7 @@ namespace Kaitai
                 return new MsgUartState(new KaitaiStream(fileName));
             }
 
-            public MsgUartState(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgUartState(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -579,7 +579,7 @@ namespace Kaitai
             private Latency _latency;
             private Period _obsPeriod;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// State of UART A
@@ -606,7 +606,7 @@ namespace Kaitai
             /// </summary>
             public Period ObsPeriod { get { return _obsPeriod; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -619,7 +619,7 @@ namespace Kaitai
                 return new MsgSpecan(new KaitaiStream(fileName));
             }
 
-            public MsgSpecan(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgSpecan(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -650,7 +650,7 @@ namespace Kaitai
             private float _amplitudeUnit;
             private List<byte> _amplitudeValue;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Channel ID
@@ -687,7 +687,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> AmplitudeValue { get { return _amplitudeValue; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -702,7 +702,7 @@ namespace Kaitai
                 return new MsgIarState(new KaitaiStream(fileName));
             }
 
-            public MsgIarState(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgIarState(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -714,14 +714,14 @@ namespace Kaitai
             }
             private uint _numHyps;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Number of integer ambiguity hypotheses remaining
             /// </summary>
             public uint NumHyps { get { return _numHyps; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -735,7 +735,7 @@ namespace Kaitai
                 return new MsgAlmanac(new KaitaiStream(fileName));
             }
 
-            public MsgAlmanac(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgAlmanac(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -745,9 +745,9 @@ namespace Kaitai
             {
             }
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -761,7 +761,7 @@ namespace Kaitai
                 return new MsgResetFilters(new KaitaiStream(fileName));
             }
 
-            public MsgResetFilters(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgResetFilters(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -773,14 +773,14 @@ namespace Kaitai
             }
             private byte _filter;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Filter flags
             /// </summary>
             public byte Filter { get { return _filter; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -863,7 +863,7 @@ namespace Kaitai
                 return new MsgCommandReq(new KaitaiStream(fileName));
             }
 
-            public MsgCommandReq(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgCommandReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -877,7 +877,7 @@ namespace Kaitai
             private uint _sequence;
             private string _command;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Sequence number
@@ -889,7 +889,7 @@ namespace Kaitai
             /// </summary>
             public string Command { get { return _command; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -903,7 +903,7 @@ namespace Kaitai
                 return new MsgMaskSatellite(new KaitaiStream(fileName));
             }
 
-            public MsgMaskSatellite(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgMaskSatellite(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -917,7 +917,7 @@ namespace Kaitai
             private byte _mask;
             private Gnss.GnssSignal _sid;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Mask of systems that should ignore this satellite.
@@ -929,7 +929,7 @@ namespace Kaitai
             /// </summary>
             public Gnss.GnssSignal Sid { get { return _sid; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -942,7 +942,7 @@ namespace Kaitai
                 return new MsgNetworkBandwidthUsage(new KaitaiStream(fileName));
             }
 
-            public MsgNetworkBandwidthUsage(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgNetworkBandwidthUsage(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -961,14 +961,14 @@ namespace Kaitai
             }
             private List<NetworkUsage> _interfaces;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Usage measurement array
             /// </summary>
             public List<NetworkUsage> Interfaces { get { return _interfaces; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -981,7 +981,7 @@ namespace Kaitai
                 return new MsgReset(new KaitaiStream(fileName));
             }
 
-            public MsgReset(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgReset(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -993,14 +993,14 @@ namespace Kaitai
             }
             private uint _flags;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Reset flags
             /// </summary>
             public uint Flags { get { return _flags; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1015,7 +1015,7 @@ namespace Kaitai
                 return new MsgCellModemStatus(new KaitaiStream(fileName));
             }
 
-            public MsgCellModemStatus(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgCellModemStatus(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1038,7 +1038,7 @@ namespace Kaitai
             private float _signalErrorRate;
             private List<byte> _reserved;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Received cell signal strength in dBm, zero translates to unknown
@@ -1055,7 +1055,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> Reserved { get { return _reserved; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1075,7 +1075,7 @@ namespace Kaitai
                 return new MsgFrontEndGain(new KaitaiStream(fileName));
             }
 
-            public MsgFrontEndGain(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgFrontEndGain(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1097,7 +1097,7 @@ namespace Kaitai
             private List<sbyte> _rfGain;
             private List<sbyte> _ifGain;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// RF gain for each frontend channel
@@ -1109,7 +1109,7 @@ namespace Kaitai
             /// </summary>
             public List<sbyte> IfGain { get { return _ifGain; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1122,7 +1122,7 @@ namespace Kaitai
                 return new MsgResetDep(new KaitaiStream(fileName));
             }
 
-            public MsgResetDep(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgResetDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1132,9 +1132,9 @@ namespace Kaitai
             {
             }
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1148,7 +1148,7 @@ namespace Kaitai
                 return new MsgSetTime(new KaitaiStream(fileName));
             }
 
-            public MsgSetTime(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgSetTime(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1158,9 +1158,9 @@ namespace Kaitai
             {
             }
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1175,7 +1175,7 @@ namespace Kaitai
                 return new MsgCwResults(new KaitaiStream(fileName));
             }
 
-            public MsgCwResults(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgCwResults(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1185,9 +1185,9 @@ namespace Kaitai
             {
             }
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1200,7 +1200,7 @@ namespace Kaitai
                 return new MsgSpecanDep(new KaitaiStream(fileName));
             }
 
-            public MsgSpecanDep(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgSpecanDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1231,7 +1231,7 @@ namespace Kaitai
             private float _amplitudeUnit;
             private List<byte> _amplitudeValue;
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Channel ID
@@ -1268,7 +1268,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> AmplitudeValue { get { return _amplitudeValue; } }
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1281,7 +1281,7 @@ namespace Kaitai
                 return new MsgInitBaseDep(new KaitaiStream(fileName));
             }
 
-            public MsgInitBaseDep(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgInitBaseDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1291,9 +1291,9 @@ namespace Kaitai
             {
             }
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1366,7 +1366,7 @@ namespace Kaitai
                 return new MsgCwStart(new KaitaiStream(fileName));
             }
 
-            public MsgCwStart(KaitaiStream p__io, Sbp.Message p__parent = null, Piksi p__root = null) : base(p__io)
+            public MsgCwStart(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Piksi p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1376,9 +1376,9 @@ namespace Kaitai
             {
             }
             private Piksi m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Piksi M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Piksi m_root;
         private KaitaiStruct m_parent;

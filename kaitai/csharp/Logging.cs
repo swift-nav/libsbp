@@ -33,7 +33,7 @@ namespace Kaitai
                 return new MsgLog(new KaitaiStream(fileName));
             }
 
-            public MsgLog(KaitaiStream p__io, Sbp.Message p__parent = null, Logging p__root = null) : base(p__io)
+            public MsgLog(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Logging p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -47,7 +47,7 @@ namespace Kaitai
             private byte _level;
             private string _text;
             private Logging m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Logging level
@@ -59,7 +59,7 @@ namespace Kaitai
             /// </summary>
             public string Text { get { return _text; } }
             public Logging M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Kaitai
                 return new MsgFwd(new KaitaiStream(fileName));
             }
 
-            public MsgFwd(KaitaiStream p__io, Sbp.Message p__parent = null, Logging p__root = null) : base(p__io)
+            public MsgFwd(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Logging p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -102,7 +102,7 @@ namespace Kaitai
             private byte _protocol;
             private List<byte> _fwdPayload;
             private Logging m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// source identifier
@@ -119,7 +119,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> FwdPayload { get { return _fwdPayload; } }
             public Logging M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Kaitai
                 return new MsgPrintDep(new KaitaiStream(fileName));
             }
 
-            public MsgPrintDep(KaitaiStream p__io, Sbp.Message p__parent = null, Logging p__root = null) : base(p__io)
+            public MsgPrintDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Logging p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -144,14 +144,14 @@ namespace Kaitai
             }
             private string _text;
             private Logging m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Human-readable string
             /// </summary>
             public string Text { get { return _text; } }
             public Logging M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Logging m_root;
         private KaitaiStruct m_parent;

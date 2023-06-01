@@ -37,7 +37,7 @@ public:
 
     public:
 
-        msg_log_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, logging_t* p__root = 0);
+        msg_log_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, logging_t* p__root = 0);
 
     private:
         void _read();
@@ -50,7 +50,7 @@ public:
         uint8_t m_level;
         std::string m_text;
         logging_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -64,7 +64,7 @@ public:
          */
         std::string text() const { return m_text; }
         logging_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -82,7 +82,7 @@ public:
 
     public:
 
-        msg_fwd_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, logging_t* p__root = 0);
+        msg_fwd_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, logging_t* p__root = 0);
 
     private:
         void _read();
@@ -96,7 +96,7 @@ public:
         uint8_t m_protocol;
         std::vector<uint8_t>* m_fwd_payload;
         logging_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -115,7 +115,7 @@ public:
          */
         std::vector<uint8_t>* fwd_payload() const { return m_fwd_payload; }
         logging_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -126,7 +126,7 @@ public:
 
     public:
 
-        msg_print_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, logging_t* p__root = 0);
+        msg_print_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, logging_t* p__root = 0);
 
     private:
         void _read();
@@ -138,7 +138,7 @@ public:
     private:
         std::string m_text;
         logging_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -147,7 +147,7 @@ public:
          */
         std::string text() const { return m_text; }
         logging_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

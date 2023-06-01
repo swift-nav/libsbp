@@ -253,12 +253,12 @@ class Sbp < Kaitai::Struct::Struct
     @message = []
     i = 0
     while not @_io.eof?
-      @message << Message.new(@_io, self, @_root)
+      @message << SbpMessage.new(@_io, self, @_root)
       i += 1
     end
     self
   end
-  class Message < Kaitai::Struct::Struct
+  class SbpMessage < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
       _read

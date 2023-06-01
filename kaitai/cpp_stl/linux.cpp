@@ -24,7 +24,7 @@ linux_t::~linux_t() {
 void linux_t::_clean_up() {
 }
 
-linux_t::msg_linux_socket_usage_t::msg_linux_socket_usage_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_socket_usage_t::msg_linux_socket_usage_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_socket_state_counts = 0;
@@ -66,7 +66,7 @@ void linux_t::msg_linux_socket_usage_t::_clean_up() {
     }
 }
 
-linux_t::msg_linux_sys_state_t::msg_linux_sys_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_sys_state_t::msg_linux_sys_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -96,7 +96,7 @@ linux_t::msg_linux_sys_state_t::~msg_linux_sys_state_t() {
 void linux_t::msg_linux_sys_state_t::_clean_up() {
 }
 
-linux_t::msg_linux_cpu_state_dep_a_t::msg_linux_cpu_state_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_cpu_state_dep_a_t::msg_linux_cpu_state_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -123,7 +123,7 @@ linux_t::msg_linux_cpu_state_dep_a_t::~msg_linux_cpu_state_dep_a_t() {
 void linux_t::msg_linux_cpu_state_dep_a_t::_clean_up() {
 }
 
-linux_t::msg_linux_mem_state_t::msg_linux_mem_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_mem_state_t::msg_linux_mem_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -152,7 +152,7 @@ linux_t::msg_linux_mem_state_t::~msg_linux_mem_state_t() {
 void linux_t::msg_linux_mem_state_t::_clean_up() {
 }
 
-linux_t::msg_linux_process_fd_count_t::msg_linux_process_fd_count_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_process_fd_count_t::msg_linux_process_fd_count_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -178,7 +178,7 @@ linux_t::msg_linux_process_fd_count_t::~msg_linux_process_fd_count_t() {
 void linux_t::msg_linux_process_fd_count_t::_clean_up() {
 }
 
-linux_t::msg_linux_mem_state_dep_a_t::msg_linux_mem_state_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_mem_state_dep_a_t::msg_linux_mem_state_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -205,7 +205,7 @@ linux_t::msg_linux_mem_state_dep_a_t::~msg_linux_mem_state_dep_a_t() {
 void linux_t::msg_linux_mem_state_dep_a_t::_clean_up() {
 }
 
-linux_t::msg_linux_process_socket_queues_t::msg_linux_process_socket_queues_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_process_socket_queues_t::msg_linux_process_socket_queues_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -235,7 +235,7 @@ linux_t::msg_linux_process_socket_queues_t::~msg_linux_process_socket_queues_t()
 void linux_t::msg_linux_process_socket_queues_t::_clean_up() {
 }
 
-linux_t::msg_linux_sys_state_dep_a_t::msg_linux_sys_state_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_sys_state_dep_a_t::msg_linux_sys_state_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -263,7 +263,7 @@ linux_t::msg_linux_sys_state_dep_a_t::~msg_linux_sys_state_dep_a_t() {
 void linux_t::msg_linux_sys_state_dep_a_t::_clean_up() {
 }
 
-linux_t::msg_linux_process_fd_summary_t::msg_linux_process_fd_summary_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_process_fd_summary_t::msg_linux_process_fd_summary_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -287,7 +287,7 @@ linux_t::msg_linux_process_fd_summary_t::~msg_linux_process_fd_summary_t() {
 void linux_t::msg_linux_process_fd_summary_t::_clean_up() {
 }
 
-linux_t::msg_linux_cpu_state_t::msg_linux_cpu_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_cpu_state_t::msg_linux_cpu_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -316,7 +316,7 @@ linux_t::msg_linux_cpu_state_t::~msg_linux_cpu_state_t() {
 void linux_t::msg_linux_cpu_state_t::_clean_up() {
 }
 
-linux_t::msg_linux_process_socket_counts_t::msg_linux_process_socket_counts_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
+linux_t::msg_linux_process_socket_counts_t::msg_linux_process_socket_counts_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, linux_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

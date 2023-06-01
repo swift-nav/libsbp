@@ -24,7 +24,7 @@ integrity_t::~integrity_t() {
 void integrity_t::_clean_up() {
 }
 
-integrity_t::msg_ssr_flag_satellites_t::msg_ssr_flag_satellites_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
+integrity_t::msg_ssr_flag_satellites_t::msg_ssr_flag_satellites_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_obs_time = 0;
@@ -69,7 +69,7 @@ void integrity_t::msg_ssr_flag_satellites_t::_clean_up() {
     }
 }
 
-integrity_t::msg_ssr_flag_iono_tile_sat_los_t::msg_ssr_flag_iono_tile_sat_los_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
+integrity_t::msg_ssr_flag_iono_tile_sat_los_t::msg_ssr_flag_iono_tile_sat_los_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -112,7 +112,7 @@ void integrity_t::msg_ssr_flag_iono_tile_sat_los_t::_clean_up() {
     }
 }
 
-integrity_t::msg_ssr_flag_iono_grid_point_sat_los_t::msg_ssr_flag_iono_grid_point_sat_los_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
+integrity_t::msg_ssr_flag_iono_grid_point_sat_los_t::msg_ssr_flag_iono_grid_point_sat_los_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -189,7 +189,7 @@ void integrity_t::integrity_ssr_header_t::_clean_up() {
     }
 }
 
-integrity_t::msg_acknowledge_t::msg_acknowledge_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
+integrity_t::msg_acknowledge_t::msg_acknowledge_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -217,7 +217,7 @@ integrity_t::msg_acknowledge_t::~msg_acknowledge_t() {
 void integrity_t::msg_acknowledge_t::_clean_up() {
 }
 
-integrity_t::msg_ssr_flag_iono_grid_points_t::msg_ssr_flag_iono_grid_points_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
+integrity_t::msg_ssr_flag_iono_grid_points_t::msg_ssr_flag_iono_grid_points_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -257,7 +257,7 @@ void integrity_t::msg_ssr_flag_iono_grid_points_t::_clean_up() {
     }
 }
 
-integrity_t::msg_ssr_flag_tropo_grid_points_t::msg_ssr_flag_tropo_grid_points_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
+integrity_t::msg_ssr_flag_tropo_grid_points_t::msg_ssr_flag_tropo_grid_points_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -297,7 +297,7 @@ void integrity_t::msg_ssr_flag_tropo_grid_points_t::_clean_up() {
     }
 }
 
-integrity_t::msg_ssr_flag_high_level_t::msg_ssr_flag_high_level_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
+integrity_t::msg_ssr_flag_high_level_t::msg_ssr_flag_high_level_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, integrity_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_obs_time = 0;

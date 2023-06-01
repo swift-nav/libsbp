@@ -24,7 +24,7 @@ logging_t::~logging_t() {
 void logging_t::_clean_up() {
 }
 
-logging_t::msg_log_t::msg_log_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, logging_t* p__root) : kaitai::kstruct(p__io) {
+logging_t::msg_log_t::msg_log_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, logging_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -48,7 +48,7 @@ logging_t::msg_log_t::~msg_log_t() {
 void logging_t::msg_log_t::_clean_up() {
 }
 
-logging_t::msg_fwd_t::msg_fwd_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, logging_t* p__root) : kaitai::kstruct(p__io) {
+logging_t::msg_fwd_t::msg_fwd_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, logging_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_fwd_payload = 0;
@@ -84,7 +84,7 @@ void logging_t::msg_fwd_t::_clean_up() {
     }
 }
 
-logging_t::msg_print_dep_t::msg_print_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, logging_t* p__root) : kaitai::kstruct(p__io) {
+logging_t::msg_print_dep_t::msg_print_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, logging_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

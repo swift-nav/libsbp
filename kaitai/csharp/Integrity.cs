@@ -27,7 +27,7 @@ namespace Kaitai
                 return new MsgSsrFlagSatellites(new KaitaiStream(fileName));
             }
 
-            public MsgSsrFlagSatellites(KaitaiStream p__io, Sbp.Message p__parent = null, Integrity p__root = null) : base(p__io)
+            public MsgSsrFlagSatellites(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Integrity p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -60,7 +60,7 @@ namespace Kaitai
             private byte _nFaultySats;
             private List<byte> _faultySats;
             private Integrity m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GNSS reference time of the observation used to generate the flag.
@@ -102,7 +102,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> FaultySats { get { return _faultySats; } }
             public Integrity M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class MsgSsrFlagIonoTileSatLos : KaitaiStruct
         {
@@ -111,7 +111,7 @@ namespace Kaitai
                 return new MsgSsrFlagIonoTileSatLos(new KaitaiStream(fileName));
             }
 
-            public MsgSsrFlagIonoTileSatLos(KaitaiStream p__io, Sbp.Message p__parent = null, Integrity p__root = null) : base(p__io)
+            public MsgSsrFlagIonoTileSatLos(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Integrity p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -134,7 +134,7 @@ namespace Kaitai
             private byte _nFaultyLos;
             private List<Gnss.SvId> _faultyLos;
             private Integrity m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of an integrity message.
@@ -151,7 +151,7 @@ namespace Kaitai
             /// </summary>
             public List<Gnss.SvId> FaultyLos { get { return _faultyLos; } }
             public Integrity M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class MsgSsrFlagIonoGridPointSatLos : KaitaiStruct
         {
@@ -160,7 +160,7 @@ namespace Kaitai
                 return new MsgSsrFlagIonoGridPointSatLos(new KaitaiStream(fileName));
             }
 
-            public MsgSsrFlagIonoGridPointSatLos(KaitaiStream p__io, Sbp.Message p__parent = null, Integrity p__root = null) : base(p__io)
+            public MsgSsrFlagIonoGridPointSatLos(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Integrity p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -185,7 +185,7 @@ namespace Kaitai
             private byte _nFaultyLos;
             private List<Gnss.SvId> _faultyLos;
             private Integrity m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of an integrity message.
@@ -207,7 +207,7 @@ namespace Kaitai
             /// </summary>
             public List<Gnss.SvId> FaultyLos { get { return _faultyLos; } }
             public Integrity M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class IntegritySsrHeader : KaitaiStruct
         {
@@ -286,7 +286,7 @@ namespace Kaitai
                 return new MsgAcknowledge(new KaitaiStream(fileName));
             }
 
-            public MsgAcknowledge(KaitaiStream p__io, Sbp.Message p__parent = null, Integrity p__root = null) : base(p__io)
+            public MsgAcknowledge(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Integrity p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -308,7 +308,7 @@ namespace Kaitai
             private ushort _correctionMaskStream;
             private byte _solutionId;
             private Integrity m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Echo of the request ID field from the corresponding CRA message, or
@@ -343,7 +343,7 @@ namespace Kaitai
             /// </summary>
             public byte SolutionId { get { return _solutionId; } }
             public Integrity M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class MsgSsrFlagIonoGridPoints : KaitaiStruct
         {
@@ -352,7 +352,7 @@ namespace Kaitai
                 return new MsgSsrFlagIonoGridPoints(new KaitaiStream(fileName));
             }
 
-            public MsgSsrFlagIonoGridPoints(KaitaiStream p__io, Sbp.Message p__parent = null, Integrity p__root = null) : base(p__io)
+            public MsgSsrFlagIonoGridPoints(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Integrity p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -375,7 +375,7 @@ namespace Kaitai
             private byte _nFaultyPoints;
             private List<ushort> _faultyPoints;
             private Integrity m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of an integrity message.
@@ -392,7 +392,7 @@ namespace Kaitai
             /// </summary>
             public List<ushort> FaultyPoints { get { return _faultyPoints; } }
             public Integrity M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class MsgSsrFlagTropoGridPoints : KaitaiStruct
         {
@@ -401,7 +401,7 @@ namespace Kaitai
                 return new MsgSsrFlagTropoGridPoints(new KaitaiStream(fileName));
             }
 
-            public MsgSsrFlagTropoGridPoints(KaitaiStream p__io, Sbp.Message p__parent = null, Integrity p__root = null) : base(p__io)
+            public MsgSsrFlagTropoGridPoints(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Integrity p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -424,7 +424,7 @@ namespace Kaitai
             private byte _nFaultyPoints;
             private List<ushort> _faultyPoints;
             private Integrity m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of an integrity message.
@@ -441,7 +441,7 @@ namespace Kaitai
             /// </summary>
             public List<ushort> FaultyPoints { get { return _faultyPoints; } }
             public Integrity M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -478,7 +478,7 @@ namespace Kaitai
                 return new MsgSsrFlagHighLevel(new KaitaiStream(fileName));
             }
 
-            public MsgSsrFlagHighLevel(KaitaiStream p__io, Sbp.Message p__parent = null, Integrity p__root = null) : base(p__io)
+            public MsgSsrFlagHighLevel(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Integrity p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -520,7 +520,7 @@ namespace Kaitai
             private byte _useIonoTileSatLos;
             private byte _useIonoGridPointSatLos;
             private Integrity m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GNSS reference time of the observation used to generate the flag.
@@ -592,7 +592,7 @@ namespace Kaitai
             /// </summary>
             public byte UseIonoGridPointSatLos { get { return _useIonoGridPointSatLos; } }
             public Integrity M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Integrity m_root;
         private KaitaiStruct m_parent;

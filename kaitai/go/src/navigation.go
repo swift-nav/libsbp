@@ -34,14 +34,14 @@ type Navigation_MsgPosLlhDepA struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosLlhDepA() *Navigation_MsgPosLlhDepA {
 	return &Navigation_MsgPosLlhDepA{
 	}
 }
 
-func (this *Navigation_MsgPosLlhDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosLlhDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -136,14 +136,14 @@ type Navigation_MsgProtectionLevelDepA struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgProtectionLevelDepA() *Navigation_MsgProtectionLevelDepA {
 	return &Navigation_MsgProtectionLevelDepA{
 	}
 }
 
-func (this *Navigation_MsgProtectionLevelDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgProtectionLevelDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -243,14 +243,14 @@ type Navigation_MsgPosLlhCov struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosLlhCov() *Navigation_MsgPosLlhCov {
 	return &Navigation_MsgPosLlhCov{
 	}
 }
 
-func (this *Navigation_MsgPosLlhCov) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosLlhCov) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -380,14 +380,14 @@ type Navigation_MsgVelNedDepA struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelNedDepA() *Navigation_MsgVelNedDepA {
 	return &Navigation_MsgVelNedDepA{
 	}
 }
 
-func (this *Navigation_MsgVelNedDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelNedDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -496,14 +496,14 @@ type Navigation_MsgVelNedCov struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelNedCov() *Navigation_MsgVelNedCov {
 	return &Navigation_MsgVelNedCov{
 	}
 }
 
-func (this *Navigation_MsgVelNedCov) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelNedCov) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -640,14 +640,14 @@ type Navigation_MsgUtcTime struct {
 	Ns uint32
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgUtcTime() *Navigation_MsgUtcTime {
 	return &Navigation_MsgUtcTime{
 	}
 }
 
-func (this *Navigation_MsgUtcTime) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgUtcTime) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -764,14 +764,14 @@ type Navigation_MsgPosEcefCovGnss struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosEcefCovGnss() *Navigation_MsgPosEcefCovGnss {
 	return &Navigation_MsgPosEcefCovGnss{
 	}
 }
 
-func (this *Navigation_MsgPosEcefCovGnss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosEcefCovGnss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -908,14 +908,14 @@ type Navigation_MsgVelNedGnss struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelNedGnss() *Navigation_MsgVelNedGnss {
 	return &Navigation_MsgVelNedGnss{
 	}
 }
 
-func (this *Navigation_MsgVelNedGnss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelNedGnss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1021,14 +1021,14 @@ type Navigation_MsgVelNedCovGnss struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelNedCovGnss() *Navigation_MsgVelNedCovGnss {
 	return &Navigation_MsgVelNedCovGnss{
 	}
 }
 
-func (this *Navigation_MsgVelNedCovGnss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelNedCovGnss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1158,14 +1158,14 @@ type Navigation_MsgBaselineNedDepA struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgBaselineNedDepA() *Navigation_MsgBaselineNedDepA {
 	return &Navigation_MsgBaselineNedDepA{
 	}
 }
 
-func (this *Navigation_MsgBaselineNedDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgBaselineNedDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1260,14 +1260,14 @@ type Navigation_MsgVelEcefDepA struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelEcefDepA() *Navigation_MsgVelEcefDepA {
 	return &Navigation_MsgVelEcefDepA{
 	}
 }
 
-func (this *Navigation_MsgVelEcefDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelEcefDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1360,14 +1360,14 @@ type Navigation_MsgReferenceFrameParam struct {
 	DotScale int16
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgReferenceFrameParam() *Navigation_MsgReferenceFrameParam {
 	return &Navigation_MsgReferenceFrameParam{
 	}
 }
 
-func (this *Navigation_MsgReferenceFrameParam) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgReferenceFrameParam) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1592,14 +1592,14 @@ type Navigation_MsgPoseRelative struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPoseRelative() *Navigation_MsgPoseRelative {
 	return &Navigation_MsgPoseRelative{
 	}
 }
 
-func (this *Navigation_MsgPoseRelative) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPoseRelative) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1836,14 +1836,14 @@ type Navigation_MsgVelEcefCov struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelEcefCov() *Navigation_MsgVelEcefCov {
 	return &Navigation_MsgVelEcefCov{
 	}
 }
 
-func (this *Navigation_MsgVelEcefCov) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelEcefCov) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1988,14 +1988,14 @@ type Navigation_MsgVelBody struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelBody() *Navigation_MsgVelBody {
 	return &Navigation_MsgVelBody{
 	}
 }
 
-func (this *Navigation_MsgVelBody) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelBody) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2129,14 +2129,14 @@ type Navigation_MsgVelEcefGnss struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelEcefGnss() *Navigation_MsgVelEcefGnss {
 	return &Navigation_MsgVelEcefGnss{
 	}
 }
 
-func (this *Navigation_MsgVelEcefGnss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelEcefGnss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2226,14 +2226,14 @@ type Navigation_MsgVelEcef struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelEcef() *Navigation_MsgVelEcef {
 	return &Navigation_MsgVelEcef{
 	}
 }
 
-func (this *Navigation_MsgVelEcef) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelEcef) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2333,14 +2333,14 @@ type Navigation_MsgPosLlhCovGnss struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosLlhCovGnss() *Navigation_MsgPosLlhCovGnss {
 	return &Navigation_MsgPosLlhCovGnss{
 	}
 }
 
-func (this *Navigation_MsgPosLlhCovGnss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosLlhCovGnss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2474,14 +2474,14 @@ type Navigation_MsgBaselineEcef struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgBaselineEcef() *Navigation_MsgBaselineEcef {
 	return &Navigation_MsgBaselineEcef{
 	}
 }
 
-func (this *Navigation_MsgBaselineEcef) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgBaselineEcef) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2564,14 +2564,14 @@ type Navigation_MsgDopsDepA struct {
 	Vdop uint16
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgDopsDepA() *Navigation_MsgDopsDepA {
 	return &Navigation_MsgDopsDepA{
 	}
 }
 
-func (this *Navigation_MsgDopsDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgDopsDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2656,14 +2656,14 @@ type Navigation_MsgPosEcef struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosEcef() *Navigation_MsgPosEcef {
 	return &Navigation_MsgPosEcef{
 	}
 }
 
-func (this *Navigation_MsgPosEcef) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosEcef) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2743,14 +2743,14 @@ type Navigation_MsgAgeCorrections struct {
 	Age uint16
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgAgeCorrections() *Navigation_MsgAgeCorrections {
 	return &Navigation_MsgAgeCorrections{
 	}
 }
 
-func (this *Navigation_MsgAgeCorrections) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgAgeCorrections) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2799,14 +2799,14 @@ type Navigation_MsgVelEcefCovGnss struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelEcefCovGnss() *Navigation_MsgVelEcefCovGnss {
 	return &Navigation_MsgVelEcefCovGnss{
 	}
 }
 
-func (this *Navigation_MsgVelEcefCovGnss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelEcefCovGnss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2951,14 +2951,14 @@ type Navigation_MsgProtectionLevel struct {
 	Flags uint32
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgProtectionLevel() *Navigation_MsgProtectionLevel {
 	return &Navigation_MsgProtectionLevel{
 	}
 }
 
-func (this *Navigation_MsgProtectionLevel) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgProtectionLevel) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3186,14 +3186,14 @@ type Navigation_MsgPosEcefCov struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosEcefCov() *Navigation_MsgPosEcefCov {
 	return &Navigation_MsgPosEcefCov{
 	}
 }
 
-func (this *Navigation_MsgPosEcefCov) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosEcefCov) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3331,14 +3331,14 @@ type Navigation_MsgPosEcefGnss struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosEcefGnss() *Navigation_MsgPosEcefGnss {
 	return &Navigation_MsgPosEcefGnss{
 	}
 }
 
-func (this *Navigation_MsgPosEcefGnss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosEcefGnss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3431,14 +3431,14 @@ type Navigation_MsgVelNed struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelNed() *Navigation_MsgVelNed {
 	return &Navigation_MsgVelNed{
 	}
 }
 
-func (this *Navigation_MsgVelNed) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelNed) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3534,14 +3534,14 @@ type Navigation_MsgUtcLeapSecond struct {
 	CountAfter int8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgUtcLeapSecond() *Navigation_MsgUtcLeapSecond {
 	return &Navigation_MsgUtcLeapSecond{
 	}
 }
 
-func (this *Navigation_MsgUtcLeapSecond) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgUtcLeapSecond) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3640,14 +3640,14 @@ type Navigation_MsgGpsTimeDepA struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgGpsTimeDepA() *Navigation_MsgGpsTimeDepA {
 	return &Navigation_MsgGpsTimeDepA{
 	}
 }
 
-func (this *Navigation_MsgGpsTimeDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgGpsTimeDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3715,14 +3715,14 @@ type Navigation_MsgPosLlhGnss struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosLlhGnss() *Navigation_MsgPosLlhGnss {
 	return &Navigation_MsgPosLlhGnss{
 	}
 }
 
-func (this *Navigation_MsgPosLlhGnss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosLlhGnss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3822,14 +3822,14 @@ type Navigation_MsgUtcTimeGnss struct {
 	Ns uint32
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgUtcTimeGnss() *Navigation_MsgUtcTimeGnss {
 	return &Navigation_MsgUtcTimeGnss{
 	}
 }
 
-func (this *Navigation_MsgUtcTimeGnss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgUtcTimeGnss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3945,14 +3945,14 @@ type Navigation_MsgVelCog struct {
 	Flags uint16
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgVelCog() *Navigation_MsgVelCog {
 	return &Navigation_MsgVelCog{
 	}
 }
 
-func (this *Navigation_MsgVelCog) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgVelCog) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4053,14 +4053,14 @@ type Navigation_MsgBaselineNed struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgBaselineNed() *Navigation_MsgBaselineNed {
 	return &Navigation_MsgBaselineNed{
 	}
 }
 
-func (this *Navigation_MsgBaselineNed) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgBaselineNed) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4164,14 +4164,14 @@ type Navigation_MsgPosLlh struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosLlh() *Navigation_MsgPosLlh {
 	return &Navigation_MsgPosLlh{
 	}
 }
 
-func (this *Navigation_MsgPosLlh) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosLlh) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4261,14 +4261,14 @@ type Navigation_MsgBaselineHeadingDepA struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgBaselineHeadingDepA() *Navigation_MsgBaselineHeadingDepA {
 	return &Navigation_MsgBaselineHeadingDepA{
 	}
 }
 
-func (this *Navigation_MsgBaselineHeadingDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgBaselineHeadingDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4335,14 +4335,14 @@ type Navigation_MsgGpsTimeGnss struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgGpsTimeGnss() *Navigation_MsgGpsTimeGnss {
 	return &Navigation_MsgGpsTimeGnss{
 	}
 }
 
-func (this *Navigation_MsgGpsTimeGnss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgGpsTimeGnss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4400,14 +4400,14 @@ type Navigation_MsgBaselineEcefDepA struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgBaselineEcefDepA() *Navigation_MsgBaselineEcefDepA {
 	return &Navigation_MsgBaselineEcefDepA{
 	}
 }
 
-func (this *Navigation_MsgBaselineEcefDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgBaselineEcefDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4502,14 +4502,14 @@ type Navigation_MsgGpsTime struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgGpsTime() *Navigation_MsgGpsTime {
 	return &Navigation_MsgGpsTime{
 	}
 }
 
-func (this *Navigation_MsgGpsTime) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgGpsTime) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4572,14 +4572,14 @@ type Navigation_MsgDops struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgDops() *Navigation_MsgDops {
 	return &Navigation_MsgDops{
 	}
 }
 
-func (this *Navigation_MsgDops) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgDops) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4664,14 +4664,14 @@ type Navigation_MsgPosEcefDepA struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosEcefDepA() *Navigation_MsgPosEcefDepA {
 	return &Navigation_MsgPosEcefDepA{
 	}
 }
 
-func (this *Navigation_MsgPosEcefDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosEcefDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4824,14 +4824,14 @@ type Navigation_MsgPosLlhAcc struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Navigation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNavigation_MsgPosLlhAcc() *Navigation_MsgPosLlhAcc {
 	return &Navigation_MsgPosLlhAcc{
 	}
 }
 
-func (this *Navigation_MsgPosLlhAcc) Read(io *kaitai.Stream, parent *Sbp_Message, root *Navigation) (err error) {
+func (this *Navigation_MsgPosLlhAcc) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Navigation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

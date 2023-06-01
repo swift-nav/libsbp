@@ -17,11 +17,11 @@ sbp_t::sbp_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, sbp_t* p__root)
 }
 
 void sbp_t::_read() {
-    m_message = new std::vector<message_t*>();
+    m_message = new std::vector<sbp_message_t*>();
     {
         int i = 0;
         while (!m__io->is_eof()) {
-            m_message->push_back(new message_t(m__io, this, m__root));
+            m_message->push_back(new sbp_message_t(m__io, this, m__root));
             i++;
         }
     }
@@ -33,14 +33,14 @@ sbp_t::~sbp_t() {
 
 void sbp_t::_clean_up() {
     if (m_message) {
-        for (std::vector<message_t*>::iterator it = m_message->begin(); it != m_message->end(); ++it) {
+        for (std::vector<sbp_message_t*>::iterator it = m_message->begin(); it != m_message->end(); ++it) {
             delete *it;
         }
         delete m_message; m_message = 0;
     }
 }
 
-sbp_t::message_t::message_t(kaitai::kstream* p__io, sbp_t* p__parent, sbp_t* p__root) : kaitai::kstruct(p__io) {
+sbp_t::sbp_message_t::sbp_message_t(kaitai::kstream* p__io, sbp_t* p__parent, sbp_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -54,7 +54,7 @@ sbp_t::message_t::message_t(kaitai::kstream* p__io, sbp_t* p__parent, sbp_t* p__
     }
 }
 
-void sbp_t::message_t::_read() {
+void sbp_t::sbp_message_t::_read() {
     m_header = new sbp_header_t(m__io, this, m__root);
     n_payload = true;
     switch (header()->msg_type()) {
@@ -1697,11 +1697,11 @@ void sbp_t::message_t::_read() {
     m_crc = m__io->read_u2le();
 }
 
-sbp_t::message_t::~message_t() {
+sbp_t::sbp_message_t::~sbp_message_t() {
     _clean_up();
 }
 
-void sbp_t::message_t::_clean_up() {
+void sbp_t::sbp_message_t::_clean_up() {
     if (m_header) {
         delete m_header; m_header = 0;
     }
@@ -1715,7 +1715,7 @@ void sbp_t::message_t::_clean_up() {
     }
 }
 
-sbp_t::sbp_header_t::sbp_header_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, sbp_t* p__root) : kaitai::kstruct(p__io) {
+sbp_t::sbp_header_t::sbp_header_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, sbp_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

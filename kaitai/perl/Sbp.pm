@@ -270,7 +270,7 @@ sub _read {
 
     $self->{message} = ();
     while (!$self->{_io}->is_eof()) {
-        push @{$self->{message}}, Sbp::Message->new($self->{_io}, $self, $self->{_root});
+        push @{$self->{message}}, Sbp::SbpMessage->new($self->{_io}, $self, $self->{_root});
     }
 }
 
@@ -280,7 +280,7 @@ sub message {
 }
 
 ########################################################################
-package Sbp::Message;
+package Sbp::SbpMessage;
 
 our @ISA = 'IO::KaitaiStruct::Struct';
 

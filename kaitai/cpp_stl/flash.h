@@ -45,7 +45,7 @@ public:
 
     public:
 
-        msg_flash_done_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, flash_t* p__root = 0);
+        msg_flash_done_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, flash_t* p__root = 0);
 
     private:
         void _read();
@@ -57,7 +57,7 @@ public:
     private:
         uint8_t m_response;
         flash_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -66,7 +66,7 @@ public:
          */
         uint8_t response() const { return m_response; }
         flash_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -78,7 +78,7 @@ public:
 
     public:
 
-        msg_m25_flash_write_status_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, flash_t* p__root = 0);
+        msg_m25_flash_write_status_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, flash_t* p__root = 0);
 
     private:
         void _read();
@@ -90,7 +90,7 @@ public:
     private:
         std::vector<uint8_t>* m_status;
         flash_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -99,7 +99,7 @@ public:
          */
         std::vector<uint8_t>* status() const { return m_status; }
         flash_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -115,7 +115,7 @@ public:
 
     public:
 
-        msg_flash_read_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, flash_t* p__root = 0);
+        msg_flash_read_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, flash_t* p__root = 0);
 
     private:
         void _read();
@@ -129,7 +129,7 @@ public:
         std::vector<uint8_t>* m_addr_start;
         uint8_t m_addr_len;
         flash_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -149,7 +149,7 @@ public:
          */
         uint8_t addr_len() const { return m_addr_len; }
         flash_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -163,7 +163,7 @@ public:
 
     public:
 
-        msg_flash_erase_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, flash_t* p__root = 0);
+        msg_flash_erase_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, flash_t* p__root = 0);
 
     private:
         void _read();
@@ -176,7 +176,7 @@ public:
         uint8_t m_target;
         uint32_t m_sector_num;
         flash_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -190,7 +190,7 @@ public:
          */
         uint32_t sector_num() const { return m_sector_num; }
         flash_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -203,7 +203,7 @@ public:
 
     public:
 
-        msg_stm_unique_id_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, flash_t* p__root = 0);
+        msg_stm_unique_id_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, flash_t* p__root = 0);
 
     private:
         void _read();
@@ -215,7 +215,7 @@ public:
     private:
         std::vector<uint8_t>* m_stm_id;
         flash_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -224,7 +224,7 @@ public:
          */
         std::vector<uint8_t>* stm_id() const { return m_stm_id; }
         flash_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -237,7 +237,7 @@ public:
 
     public:
 
-        msg_stm_unique_id_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, flash_t* p__root = 0);
+        msg_stm_unique_id_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, flash_t* p__root = 0);
 
     private:
         void _read();
@@ -248,11 +248,11 @@ public:
 
     private:
         flash_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
         flash_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -267,7 +267,7 @@ public:
 
     public:
 
-        msg_flash_program_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, flash_t* p__root = 0);
+        msg_flash_program_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, flash_t* p__root = 0);
 
     private:
         void _read();
@@ -282,7 +282,7 @@ public:
         uint8_t m_addr_len;
         std::vector<uint8_t>* m_data;
         flash_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -307,7 +307,7 @@ public:
          */
         std::vector<uint8_t>* data() const { return m_data; }
         flash_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -323,7 +323,7 @@ public:
 
     public:
 
-        msg_flash_read_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, flash_t* p__root = 0);
+        msg_flash_read_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, flash_t* p__root = 0);
 
     private:
         void _read();
@@ -337,7 +337,7 @@ public:
         std::vector<uint8_t>* m_addr_start;
         uint8_t m_addr_len;
         flash_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -357,7 +357,7 @@ public:
          */
         uint8_t addr_len() const { return m_addr_len; }
         flash_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -369,7 +369,7 @@ public:
 
     public:
 
-        msg_stm_flash_unlock_sector_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, flash_t* p__root = 0);
+        msg_stm_flash_unlock_sector_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, flash_t* p__root = 0);
 
     private:
         void _read();
@@ -381,7 +381,7 @@ public:
     private:
         uint32_t m_sector;
         flash_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -390,7 +390,7 @@ public:
          */
         uint32_t sector() const { return m_sector; }
         flash_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -402,7 +402,7 @@ public:
 
     public:
 
-        msg_stm_flash_lock_sector_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, flash_t* p__root = 0);
+        msg_stm_flash_lock_sector_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, flash_t* p__root = 0);
 
     private:
         void _read();
@@ -414,7 +414,7 @@ public:
     private:
         uint32_t m_sector;
         flash_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -423,7 +423,7 @@ public:
          */
         uint32_t sector() const { return m_sector; }
         flash_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

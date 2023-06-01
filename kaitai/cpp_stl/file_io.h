@@ -47,7 +47,7 @@ public:
 
     public:
 
-        msg_fileio_write_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, file_io_t* p__root = 0);
+        msg_fileio_write_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, file_io_t* p__root = 0);
 
     private:
         void _read();
@@ -62,7 +62,7 @@ public:
         std::string m_filename;
         std::vector<uint8_t>* m_data;
         file_io_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -86,7 +86,7 @@ public:
          */
         std::vector<uint8_t>* data() const { return m_data; }
         file_io_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -100,7 +100,7 @@ public:
 
     public:
 
-        msg_fileio_config_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, file_io_t* p__root = 0);
+        msg_fileio_config_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, file_io_t* p__root = 0);
 
     private:
         void _read();
@@ -115,7 +115,7 @@ public:
         uint32_t m_batch_size;
         uint32_t m_fileio_version;
         file_io_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -139,7 +139,7 @@ public:
          */
         uint32_t fileio_version() const { return m_fileio_version; }
         file_io_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -153,7 +153,7 @@ public:
 
     public:
 
-        msg_fileio_remove_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, file_io_t* p__root = 0);
+        msg_fileio_remove_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, file_io_t* p__root = 0);
 
     private:
         void _read();
@@ -165,7 +165,7 @@ public:
     private:
         std::string m_filename;
         file_io_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -174,7 +174,7 @@ public:
          */
         std::string filename() const { return m_filename; }
         file_io_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -188,7 +188,7 @@ public:
 
     public:
 
-        msg_fileio_config_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, file_io_t* p__root = 0);
+        msg_fileio_config_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, file_io_t* p__root = 0);
 
     private:
         void _read();
@@ -200,7 +200,7 @@ public:
     private:
         uint32_t m_sequence;
         file_io_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -209,7 +209,7 @@ public:
          */
         uint32_t sequence() const { return m_sequence; }
         file_io_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -228,7 +228,7 @@ public:
 
     public:
 
-        msg_fileio_read_dir_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, file_io_t* p__root = 0);
+        msg_fileio_read_dir_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, file_io_t* p__root = 0);
 
     private:
         void _read();
@@ -242,7 +242,7 @@ public:
         uint32_t m_offset;
         std::string m_dirname;
         file_io_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -261,7 +261,7 @@ public:
          */
         std::string dirname() const { return m_dirname; }
         file_io_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -275,7 +275,7 @@ public:
 
     public:
 
-        msg_fileio_write_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, file_io_t* p__root = 0);
+        msg_fileio_write_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, file_io_t* p__root = 0);
 
     private:
         void _read();
@@ -287,7 +287,7 @@ public:
     private:
         uint32_t m_sequence;
         file_io_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -296,7 +296,7 @@ public:
          */
         uint32_t sequence() const { return m_sequence; }
         file_io_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -312,7 +312,7 @@ public:
 
     public:
 
-        msg_fileio_read_dir_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, file_io_t* p__root = 0);
+        msg_fileio_read_dir_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, file_io_t* p__root = 0);
 
     private:
         void _read();
@@ -325,7 +325,7 @@ public:
         uint32_t m_sequence;
         std::vector<uint8_t>* m_contents;
         file_io_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -339,7 +339,7 @@ public:
          */
         std::vector<uint8_t>* contents() const { return m_contents; }
         file_io_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -356,7 +356,7 @@ public:
 
     public:
 
-        msg_fileio_read_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, file_io_t* p__root = 0);
+        msg_fileio_read_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, file_io_t* p__root = 0);
 
     private:
         void _read();
@@ -371,7 +371,7 @@ public:
         uint8_t m_chunk_size;
         std::string m_filename;
         file_io_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -395,7 +395,7 @@ public:
          */
         std::string filename() const { return m_filename; }
         file_io_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -409,7 +409,7 @@ public:
 
     public:
 
-        msg_fileio_read_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, file_io_t* p__root = 0);
+        msg_fileio_read_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, file_io_t* p__root = 0);
 
     private:
         void _read();
@@ -422,7 +422,7 @@ public:
         uint32_t m_sequence;
         std::vector<uint8_t>* m_contents;
         file_io_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -436,7 +436,7 @@ public:
          */
         std::vector<uint8_t>* contents() const { return m_contents; }
         file_io_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

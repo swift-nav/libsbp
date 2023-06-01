@@ -31,14 +31,14 @@ type Mag_MsgMagRaw struct {
 	MagZ int16
 	_io *kaitai.Stream
 	_root *Mag
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewMag_MsgMagRaw() *Mag_MsgMagRaw {
 	return &Mag_MsgMagRaw{
 	}
 }
 
-func (this *Mag_MsgMagRaw) Read(io *kaitai.Stream, parent *Sbp_Message, root *Mag) (err error) {
+func (this *Mag_MsgMagRaw) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Mag) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

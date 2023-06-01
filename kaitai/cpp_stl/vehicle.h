@@ -41,7 +41,7 @@ public:
 
     public:
 
-        msg_odometry_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, vehicle_t* p__root = 0);
+        msg_odometry_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, vehicle_t* p__root = 0);
 
     private:
         void _read();
@@ -55,7 +55,7 @@ public:
         int32_t m_velocity;
         uint8_t m_flags;
         vehicle_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -76,7 +76,7 @@ public:
          */
         uint8_t flags() const { return m_flags; }
         vehicle_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -98,7 +98,7 @@ public:
 
     public:
 
-        msg_wheeltick_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, vehicle_t* p__root = 0);
+        msg_wheeltick_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, vehicle_t* p__root = 0);
 
     private:
         void _read();
@@ -113,7 +113,7 @@ public:
         uint8_t m_source;
         int32_t m_ticks;
         vehicle_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -142,7 +142,7 @@ public:
          */
         int32_t ticks() const { return m_ticks; }
         vehicle_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

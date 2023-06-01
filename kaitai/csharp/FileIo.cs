@@ -37,7 +37,7 @@ namespace Kaitai
                 return new MsgFileioWriteReq(new KaitaiStream(fileName));
             }
 
-            public MsgFileioWriteReq(KaitaiStream p__io, Sbp.Message p__parent = null, FileIo p__root = null) : base(p__io)
+            public MsgFileioWriteReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, FileIo p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -62,7 +62,7 @@ namespace Kaitai
             private string _filename;
             private List<byte> _data;
             private FileIo m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Write sequence number
@@ -84,7 +84,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> Data { get { return _data; } }
             public FileIo M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Kaitai
                 return new MsgFileioConfigResp(new KaitaiStream(fileName));
             }
 
-            public MsgFileioConfigResp(KaitaiStream p__io, Sbp.Message p__parent = null, FileIo p__root = null) : base(p__io)
+            public MsgFileioConfigResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, FileIo p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -118,7 +118,7 @@ namespace Kaitai
             private uint _batchSize;
             private uint _fileioVersion;
             private FileIo m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Advice sequence number
@@ -140,7 +140,7 @@ namespace Kaitai
             /// </summary>
             public uint FileioVersion { get { return _fileioVersion; } }
             public FileIo M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Kaitai
                 return new MsgFileioRemove(new KaitaiStream(fileName));
             }
 
-            public MsgFileioRemove(KaitaiStream p__io, Sbp.Message p__parent = null, FileIo p__root = null) : base(p__io)
+            public MsgFileioRemove(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, FileIo p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -168,14 +168,14 @@ namespace Kaitai
             }
             private string _filename;
             private FileIo m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Name of the file to delete
             /// </summary>
             public string Filename { get { return _filename; } }
             public FileIo M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Kaitai
                 return new MsgFileioConfigReq(new KaitaiStream(fileName));
             }
 
-            public MsgFileioConfigReq(KaitaiStream p__io, Sbp.Message p__parent = null, FileIo p__root = null) : base(p__io)
+            public MsgFileioConfigReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, FileIo p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -203,14 +203,14 @@ namespace Kaitai
             }
             private uint _sequence;
             private FileIo m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Advice sequence number
             /// </summary>
             public uint Sequence { get { return _sequence; } }
             public FileIo M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Kaitai
                 return new MsgFileioReadDirReq(new KaitaiStream(fileName));
             }
 
-            public MsgFileioReadDirReq(KaitaiStream p__io, Sbp.Message p__parent = null, FileIo p__root = null) : base(p__io)
+            public MsgFileioReadDirReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, FileIo p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -247,7 +247,7 @@ namespace Kaitai
             private uint _offset;
             private string _dirname;
             private FileIo m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Read sequence number
@@ -264,7 +264,7 @@ namespace Kaitai
             /// </summary>
             public string Dirname { get { return _dirname; } }
             public FileIo M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Kaitai
                 return new MsgFileioWriteResp(new KaitaiStream(fileName));
             }
 
-            public MsgFileioWriteResp(KaitaiStream p__io, Sbp.Message p__parent = null, FileIo p__root = null) : base(p__io)
+            public MsgFileioWriteResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, FileIo p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -292,14 +292,14 @@ namespace Kaitai
             }
             private uint _sequence;
             private FileIo m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Write sequence number
             /// </summary>
             public uint Sequence { get { return _sequence; } }
             public FileIo M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Kaitai
                 return new MsgFileioReadDirResp(new KaitaiStream(fileName));
             }
 
-            public MsgFileioReadDirResp(KaitaiStream p__io, Sbp.Message p__parent = null, FileIo p__root = null) : base(p__io)
+            public MsgFileioReadDirResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, FileIo p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -338,7 +338,7 @@ namespace Kaitai
             private uint _sequence;
             private List<byte> _contents;
             private FileIo m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Read sequence number
@@ -350,7 +350,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> Contents { get { return _contents; } }
             public FileIo M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace Kaitai
                 return new MsgFileioReadReq(new KaitaiStream(fileName));
             }
 
-            public MsgFileioReadReq(KaitaiStream p__io, Sbp.Message p__parent = null, FileIo p__root = null) : base(p__io)
+            public MsgFileioReadReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, FileIo p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -387,7 +387,7 @@ namespace Kaitai
             private byte _chunkSize;
             private string _filename;
             private FileIo m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Read sequence number
@@ -409,7 +409,7 @@ namespace Kaitai
             /// </summary>
             public string Filename { get { return _filename; } }
             public FileIo M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Kaitai
                 return new MsgFileioReadResp(new KaitaiStream(fileName));
             }
 
-            public MsgFileioReadResp(KaitaiStream p__io, Sbp.Message p__parent = null, FileIo p__root = null) : base(p__io)
+            public MsgFileioReadResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, FileIo p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -446,7 +446,7 @@ namespace Kaitai
             private uint _sequence;
             private List<byte> _contents;
             private FileIo m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Read sequence number
@@ -458,7 +458,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> Contents { get { return _contents; } }
             public FileIo M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private FileIo m_root;
         private KaitaiStruct m_parent;

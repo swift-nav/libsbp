@@ -39,7 +39,7 @@ public:
 
     public:
 
-        msg_baseline_heading_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, orientation_t* p__root = 0);
+        msg_baseline_heading_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, orientation_t* p__root = 0);
 
     private:
         void _read();
@@ -54,7 +54,7 @@ public:
         uint8_t m_n_sats;
         uint8_t m_flags;
         orientation_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -78,7 +78,7 @@ public:
          */
         uint8_t flags() const { return m_flags; }
         orientation_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -94,7 +94,7 @@ public:
 
     public:
 
-        msg_orient_quat_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, orientation_t* p__root = 0);
+        msg_orient_quat_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, orientation_t* p__root = 0);
 
     private:
         void _read();
@@ -115,7 +115,7 @@ public:
         float m_z_accuracy;
         uint8_t m_flags;
         orientation_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -169,7 +169,7 @@ public:
          */
         uint8_t flags() const { return m_flags; }
         orientation_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -185,7 +185,7 @@ public:
 
     public:
 
-        msg_orient_euler_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, orientation_t* p__root = 0);
+        msg_orient_euler_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, orientation_t* p__root = 0);
 
     private:
         void _read();
@@ -204,7 +204,7 @@ public:
         float m_yaw_accuracy;
         uint8_t m_flags;
         orientation_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -248,7 +248,7 @@ public:
          */
         uint8_t flags() const { return m_flags; }
         orientation_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -268,7 +268,7 @@ public:
 
     public:
 
-        msg_angular_rate_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, orientation_t* p__root = 0);
+        msg_angular_rate_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, orientation_t* p__root = 0);
 
     private:
         void _read();
@@ -284,7 +284,7 @@ public:
         int32_t m_z;
         uint8_t m_flags;
         orientation_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -313,7 +313,7 @@ public:
          */
         uint8_t flags() const { return m_flags; }
         orientation_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

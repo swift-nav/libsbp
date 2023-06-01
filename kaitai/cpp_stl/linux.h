@@ -43,7 +43,7 @@ public:
 
     public:
 
-        msg_linux_socket_usage_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_socket_usage_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -58,7 +58,7 @@ public:
         std::vector<uint16_t>* m_socket_state_counts;
         std::vector<uint16_t>* m_socket_type_counts;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -86,7 +86,7 @@ public:
          */
         std::vector<uint16_t>* socket_type_counts() const { return m_socket_type_counts; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -98,7 +98,7 @@ public:
 
     public:
 
-        msg_linux_sys_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_sys_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -117,7 +117,7 @@ public:
         uint32_t m_time;
         uint8_t m_flags;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -161,7 +161,7 @@ public:
          */
         uint8_t flags() const { return m_flags; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -172,7 +172,7 @@ public:
 
     public:
 
-        msg_linux_cpu_state_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_cpu_state_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -188,7 +188,7 @@ public:
         std::string m_tname;
         std::string m_cmdline;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -217,7 +217,7 @@ public:
          */
         std::string cmdline() const { return m_cmdline; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -229,7 +229,7 @@ public:
 
     public:
 
-        msg_linux_mem_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_mem_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -247,7 +247,7 @@ public:
         std::string m_tname;
         std::string m_cmdline;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -286,7 +286,7 @@ public:
          */
         std::string cmdline() const { return m_cmdline; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -297,7 +297,7 @@ public:
 
     public:
 
-        msg_linux_process_fd_count_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_process_fd_count_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -312,7 +312,7 @@ public:
         uint16_t m_fd_count;
         std::string m_cmdline;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -336,7 +336,7 @@ public:
          */
         std::string cmdline() const { return m_cmdline; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -347,7 +347,7 @@ public:
 
     public:
 
-        msg_linux_mem_state_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_mem_state_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -363,7 +363,7 @@ public:
         std::string m_tname;
         std::string m_cmdline;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -392,7 +392,7 @@ public:
          */
         std::string cmdline() const { return m_cmdline; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -403,7 +403,7 @@ public:
 
     public:
 
-        msg_linux_process_socket_queues_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_process_socket_queues_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -422,7 +422,7 @@ public:
         std::string m_address_of_largest;
         std::string m_cmdline;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -473,7 +473,7 @@ public:
          */
         std::string cmdline() const { return m_cmdline; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -484,7 +484,7 @@ public:
 
     public:
 
-        msg_linux_sys_state_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_sys_state_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -501,7 +501,7 @@ public:
         uint16_t m_procs_stopping;
         uint16_t m_pid_count;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -535,7 +535,7 @@ public:
          */
         uint16_t pid_count() const { return m_pid_count; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -546,7 +546,7 @@ public:
 
     public:
 
-        msg_linux_process_fd_summary_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_process_fd_summary_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -559,7 +559,7 @@ public:
         uint32_t m_sys_fd_count;
         std::string m_most_opened;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -577,7 +577,7 @@ public:
          */
         std::string most_opened() const { return m_most_opened; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -589,7 +589,7 @@ public:
 
     public:
 
-        msg_linux_cpu_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_cpu_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -607,7 +607,7 @@ public:
         std::string m_tname;
         std::string m_cmdline;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -646,7 +646,7 @@ public:
          */
         std::string cmdline() const { return m_cmdline; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -657,7 +657,7 @@ public:
 
     public:
 
-        msg_linux_process_socket_counts_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, linux_t* p__root = 0);
+        msg_linux_process_socket_counts_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, linux_t* p__root = 0);
 
     private:
         void _read();
@@ -674,7 +674,7 @@ public:
         uint16_t m_socket_states;
         std::string m_cmdline;
         linux_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -714,7 +714,7 @@ public:
          */
         std::string cmdline() const { return m_cmdline; }
         linux_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

@@ -36,14 +36,14 @@ type FileIo_MsgFileioWriteReq struct {
 	Data []uint8
 	_io *kaitai.Stream
 	_root *FileIo
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFileIo_MsgFileioWriteReq() *FileIo_MsgFileioWriteReq {
 	return &FileIo_MsgFileioWriteReq{
 	}
 }
 
-func (this *FileIo_MsgFileioWriteReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *FileIo) (err error) {
+func (this *FileIo_MsgFileioWriteReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *FileIo) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -110,14 +110,14 @@ type FileIo_MsgFileioConfigResp struct {
 	FileioVersion uint32
 	_io *kaitai.Stream
 	_root *FileIo
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFileIo_MsgFileioConfigResp() *FileIo_MsgFileioConfigResp {
 	return &FileIo_MsgFileioConfigResp{
 	}
 }
 
-func (this *FileIo_MsgFileioConfigResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *FileIo) (err error) {
+func (this *FileIo_MsgFileioConfigResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *FileIo) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -171,14 +171,14 @@ type FileIo_MsgFileioRemove struct {
 	Filename string
 	_io *kaitai.Stream
 	_root *FileIo
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFileIo_MsgFileioRemove() *FileIo_MsgFileioRemove {
 	return &FileIo_MsgFileioRemove{
 	}
 }
 
-func (this *FileIo_MsgFileioRemove) Read(io *kaitai.Stream, parent *Sbp_Message, root *FileIo) (err error) {
+func (this *FileIo_MsgFileioRemove) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *FileIo) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -206,14 +206,14 @@ type FileIo_MsgFileioConfigReq struct {
 	Sequence uint32
 	_io *kaitai.Stream
 	_root *FileIo
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFileIo_MsgFileioConfigReq() *FileIo_MsgFileioConfigReq {
 	return &FileIo_MsgFileioConfigReq{
 	}
 }
 
-func (this *FileIo_MsgFileioConfigReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *FileIo) (err error) {
+func (this *FileIo_MsgFileioConfigReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *FileIo) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -247,14 +247,14 @@ type FileIo_MsgFileioReadDirReq struct {
 	Dirname string
 	_io *kaitai.Stream
 	_root *FileIo
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFileIo_MsgFileioReadDirReq() *FileIo_MsgFileioReadDirReq {
 	return &FileIo_MsgFileioReadDirReq{
 	}
 }
 
-func (this *FileIo_MsgFileioReadDirReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *FileIo) (err error) {
+func (this *FileIo_MsgFileioReadDirReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *FileIo) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -300,14 +300,14 @@ type FileIo_MsgFileioWriteResp struct {
 	Sequence uint32
 	_io *kaitai.Stream
 	_root *FileIo
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFileIo_MsgFileioWriteResp() *FileIo_MsgFileioWriteResp {
 	return &FileIo_MsgFileioWriteResp{
 	}
 }
 
-func (this *FileIo_MsgFileioWriteResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *FileIo) (err error) {
+func (this *FileIo_MsgFileioWriteResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *FileIo) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -337,14 +337,14 @@ type FileIo_MsgFileioReadDirResp struct {
 	Contents []uint8
 	_io *kaitai.Stream
 	_root *FileIo
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFileIo_MsgFileioReadDirResp() *FileIo_MsgFileioReadDirResp {
 	return &FileIo_MsgFileioReadDirResp{
 	}
 }
 
-func (this *FileIo_MsgFileioReadDirResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *FileIo) (err error) {
+func (this *FileIo_MsgFileioReadDirResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *FileIo) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -395,14 +395,14 @@ type FileIo_MsgFileioReadReq struct {
 	Filename string
 	_io *kaitai.Stream
 	_root *FileIo
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFileIo_MsgFileioReadReq() *FileIo_MsgFileioReadReq {
 	return &FileIo_MsgFileioReadReq{
 	}
 }
 
-func (this *FileIo_MsgFileioReadReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *FileIo) (err error) {
+func (this *FileIo_MsgFileioReadReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *FileIo) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -458,14 +458,14 @@ type FileIo_MsgFileioReadResp struct {
 	Contents []uint8
 	_io *kaitai.Stream
 	_root *FileIo
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFileIo_MsgFileioReadResp() *FileIo_MsgFileioReadResp {
 	return &FileIo_MsgFileioReadResp{
 	}
 }
 
-func (this *FileIo_MsgFileioReadResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *FileIo) (err error) {
+func (this *FileIo_MsgFileioReadResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *FileIo) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

@@ -36,7 +36,7 @@ public:
 
     public:
 
-        msg_ssr_flag_satellites_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, integrity_t* p__root = 0);
+        msg_ssr_flag_satellites_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, integrity_t* p__root = 0);
 
     private:
         void _read();
@@ -55,7 +55,7 @@ public:
         uint8_t m_n_faulty_sats;
         std::vector<uint8_t>* m_faulty_sats;
         integrity_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -99,14 +99,14 @@ public:
          */
         std::vector<uint8_t>* faulty_sats() const { return m_faulty_sats; }
         integrity_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class msg_ssr_flag_iono_tile_sat_los_t : public kaitai::kstruct {
 
     public:
 
-        msg_ssr_flag_iono_tile_sat_los_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, integrity_t* p__root = 0);
+        msg_ssr_flag_iono_tile_sat_los_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, integrity_t* p__root = 0);
 
     private:
         void _read();
@@ -120,7 +120,7 @@ public:
         uint8_t m_n_faulty_los;
         std::vector<gnss_t::sv_id_t*>* m_faulty_los;
         integrity_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -139,14 +139,14 @@ public:
          */
         std::vector<gnss_t::sv_id_t*>* faulty_los() const { return m_faulty_los; }
         integrity_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class msg_ssr_flag_iono_grid_point_sat_los_t : public kaitai::kstruct {
 
     public:
 
-        msg_ssr_flag_iono_grid_point_sat_los_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, integrity_t* p__root = 0);
+        msg_ssr_flag_iono_grid_point_sat_los_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, integrity_t* p__root = 0);
 
     private:
         void _read();
@@ -161,7 +161,7 @@ public:
         uint8_t m_n_faulty_los;
         std::vector<gnss_t::sv_id_t*>* m_faulty_los;
         integrity_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -185,7 +185,7 @@ public:
          */
         std::vector<gnss_t::sv_id_t*>* faulty_los() const { return m_faulty_los; }
         integrity_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class integrity_ssr_header_t : public kaitai::kstruct {
@@ -256,7 +256,7 @@ public:
 
     public:
 
-        msg_acknowledge_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, integrity_t* p__root = 0);
+        msg_acknowledge_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, integrity_t* p__root = 0);
 
     private:
         void _read();
@@ -273,7 +273,7 @@ public:
         uint16_t m_correction_mask_stream;
         uint8_t m_solution_id;
         integrity_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -310,14 +310,14 @@ public:
          */
         uint8_t solution_id() const { return m_solution_id; }
         integrity_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class msg_ssr_flag_iono_grid_points_t : public kaitai::kstruct {
 
     public:
 
-        msg_ssr_flag_iono_grid_points_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, integrity_t* p__root = 0);
+        msg_ssr_flag_iono_grid_points_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, integrity_t* p__root = 0);
 
     private:
         void _read();
@@ -331,7 +331,7 @@ public:
         uint8_t m_n_faulty_points;
         std::vector<uint16_t>* m_faulty_points;
         integrity_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -350,14 +350,14 @@ public:
          */
         std::vector<uint16_t>* faulty_points() const { return m_faulty_points; }
         integrity_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class msg_ssr_flag_tropo_grid_points_t : public kaitai::kstruct {
 
     public:
 
-        msg_ssr_flag_tropo_grid_points_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, integrity_t* p__root = 0);
+        msg_ssr_flag_tropo_grid_points_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, integrity_t* p__root = 0);
 
     private:
         void _read();
@@ -371,7 +371,7 @@ public:
         uint8_t m_n_faulty_points;
         std::vector<uint16_t>* m_faulty_points;
         integrity_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -390,7 +390,7 @@ public:
          */
         std::vector<uint16_t>* faulty_points() const { return m_faulty_points; }
         integrity_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -425,7 +425,7 @@ public:
 
     public:
 
-        msg_ssr_flag_high_level_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, integrity_t* p__root = 0);
+        msg_ssr_flag_high_level_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, integrity_t* p__root = 0);
 
     private:
         void _read();
@@ -450,7 +450,7 @@ public:
         uint8_t m_use_iono_tile_sat_los;
         uint8_t m_use_iono_grid_point_sat_los;
         integrity_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -524,7 +524,7 @@ public:
          */
         uint8_t use_iono_grid_point_sat_los() const { return m_use_iono_grid_point_sat_los; }
         integrity_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

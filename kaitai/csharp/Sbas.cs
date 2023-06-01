@@ -32,7 +32,7 @@ namespace Kaitai
                 return new MsgSbasRaw(new KaitaiStream(fileName));
             }
 
-            public MsgSbasRaw(KaitaiStream p__io, Sbp.Message p__parent = null, Sbas p__root = null) : base(p__io)
+            public MsgSbasRaw(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Sbas p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -54,7 +54,7 @@ namespace Kaitai
             private byte _messageType;
             private List<byte> _data;
             private Sbas m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GNSS signal identifier.
@@ -76,7 +76,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> Data { get { return _data; } }
             public Sbas M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Sbas m_root;
         private KaitaiStruct m_parent;

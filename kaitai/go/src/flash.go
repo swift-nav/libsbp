@@ -30,14 +30,14 @@ type Flash_MsgFlashDone struct {
 	Response uint8
 	_io *kaitai.Stream
 	_root *Flash
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFlash_MsgFlashDone() *Flash_MsgFlashDone {
 	return &Flash_MsgFlashDone{
 	}
 }
 
-func (this *Flash_MsgFlashDone) Read(io *kaitai.Stream, parent *Sbp_Message, root *Flash) (err error) {
+func (this *Flash_MsgFlashDone) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Flash) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -62,14 +62,14 @@ type Flash_MsgM25FlashWriteStatus struct {
 	Status []uint8
 	_io *kaitai.Stream
 	_root *Flash
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFlash_MsgM25FlashWriteStatus() *Flash_MsgM25FlashWriteStatus {
 	return &Flash_MsgM25FlashWriteStatus{
 	}
 }
 
-func (this *Flash_MsgM25FlashWriteStatus) Read(io *kaitai.Stream, parent *Sbp_Message, root *Flash) (err error) {
+func (this *Flash_MsgM25FlashWriteStatus) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Flash) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -103,14 +103,14 @@ type Flash_MsgFlashReadResp struct {
 	AddrLen uint8
 	_io *kaitai.Stream
 	_root *Flash
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFlash_MsgFlashReadResp() *Flash_MsgFlashReadResp {
 	return &Flash_MsgFlashReadResp{
 	}
 }
 
-func (this *Flash_MsgFlashReadResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Flash) (err error) {
+func (this *Flash_MsgFlashReadResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Flash) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -160,14 +160,14 @@ type Flash_MsgFlashErase struct {
 	SectorNum uint32
 	_io *kaitai.Stream
 	_root *Flash
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFlash_MsgFlashErase() *Flash_MsgFlashErase {
 	return &Flash_MsgFlashErase{
 	}
 }
 
-func (this *Flash_MsgFlashErase) Read(io *kaitai.Stream, parent *Sbp_Message, root *Flash) (err error) {
+func (this *Flash_MsgFlashErase) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Flash) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -202,14 +202,14 @@ type Flash_MsgStmUniqueIdResp struct {
 	StmId []uint8
 	_io *kaitai.Stream
 	_root *Flash
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFlash_MsgStmUniqueIdResp() *Flash_MsgStmUniqueIdResp {
 	return &Flash_MsgStmUniqueIdResp{
 	}
 }
 
-func (this *Flash_MsgStmUniqueIdResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Flash) (err error) {
+func (this *Flash_MsgStmUniqueIdResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Flash) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -237,14 +237,14 @@ func (this *Flash_MsgStmUniqueIdResp) Read(io *kaitai.Stream, parent *Sbp_Messag
 type Flash_MsgStmUniqueIdReq struct {
 	_io *kaitai.Stream
 	_root *Flash
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFlash_MsgStmUniqueIdReq() *Flash_MsgStmUniqueIdReq {
 	return &Flash_MsgStmUniqueIdReq{
 	}
 }
 
-func (this *Flash_MsgStmUniqueIdReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *Flash) (err error) {
+func (this *Flash_MsgStmUniqueIdReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Flash) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -266,14 +266,14 @@ type Flash_MsgFlashProgram struct {
 	Data []uint8
 	_io *kaitai.Stream
 	_root *Flash
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFlash_MsgFlashProgram() *Flash_MsgFlashProgram {
 	return &Flash_MsgFlashProgram{
 	}
 }
 
-func (this *Flash_MsgFlashProgram) Read(io *kaitai.Stream, parent *Sbp_Message, root *Flash) (err error) {
+func (this *Flash_MsgFlashProgram) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Flash) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -344,14 +344,14 @@ type Flash_MsgFlashReadReq struct {
 	AddrLen uint8
 	_io *kaitai.Stream
 	_root *Flash
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFlash_MsgFlashReadReq() *Flash_MsgFlashReadReq {
 	return &Flash_MsgFlashReadReq{
 	}
 }
 
-func (this *Flash_MsgFlashReadReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *Flash) (err error) {
+func (this *Flash_MsgFlashReadReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Flash) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -398,14 +398,14 @@ type Flash_MsgStmFlashUnlockSector struct {
 	Sector uint32
 	_io *kaitai.Stream
 	_root *Flash
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFlash_MsgStmFlashUnlockSector() *Flash_MsgStmFlashUnlockSector {
 	return &Flash_MsgStmFlashUnlockSector{
 	}
 }
 
-func (this *Flash_MsgStmFlashUnlockSector) Read(io *kaitai.Stream, parent *Sbp_Message, root *Flash) (err error) {
+func (this *Flash_MsgStmFlashUnlockSector) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Flash) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -430,14 +430,14 @@ type Flash_MsgStmFlashLockSector struct {
 	Sector uint32
 	_io *kaitai.Stream
 	_root *Flash
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewFlash_MsgStmFlashLockSector() *Flash_MsgStmFlashLockSector {
 	return &Flash_MsgStmFlashLockSector{
 	}
 }
 
-func (this *Flash_MsgStmFlashLockSector) Read(io *kaitai.Stream, parent *Sbp_Message, root *Flash) (err error) {
+func (this *Flash_MsgStmFlashLockSector) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Flash) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

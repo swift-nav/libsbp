@@ -32,7 +32,7 @@ namespace Kaitai
                 return new MsgUserData(new KaitaiStream(fileName));
             }
 
-            public MsgUserData(KaitaiStream p__io, Sbp.Message p__parent = null, User p__root = null) : base(p__io)
+            public MsgUserData(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, User p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -51,14 +51,14 @@ namespace Kaitai
             }
             private List<byte> _contents;
             private User m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// User data payload
             /// </summary>
             public List<byte> Contents { get { return _contents; } }
             public User M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private User m_root;
         private KaitaiStruct m_parent;

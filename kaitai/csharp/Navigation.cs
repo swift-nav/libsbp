@@ -31,7 +31,7 @@ namespace Kaitai
                 return new MsgPosLlhDepA(new KaitaiStream(fileName));
             }
 
-            public MsgPosLlhDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosLlhDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -57,7 +57,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -101,7 +101,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Kaitai
                 return new MsgProtectionLevelDepA(new KaitaiStream(fileName));
             }
 
-            public MsgProtectionLevelDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgProtectionLevelDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -138,7 +138,7 @@ namespace Kaitai
             private double _height;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -175,7 +175,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Kaitai
                 return new MsgPosLlhCov(new KaitaiStream(fileName));
             }
 
-            public MsgPosLlhCov(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosLlhCov(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -233,7 +233,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -295,7 +295,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Kaitai
                 return new MsgVelNedDepA(new KaitaiStream(fileName));
             }
 
-            public MsgVelNedDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelNedDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -334,7 +334,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -378,7 +378,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace Kaitai
                 return new MsgVelNedCov(new KaitaiStream(fileName));
             }
 
-            public MsgVelNedCov(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelNedCov(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -434,7 +434,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -496,7 +496,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -515,7 +515,7 @@ namespace Kaitai
                 return new MsgUtcTime(new KaitaiStream(fileName));
             }
 
-            public MsgUtcTime(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgUtcTime(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -543,7 +543,7 @@ namespace Kaitai
             private byte _seconds;
             private uint _ns;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Indicates source and time validity
@@ -590,7 +590,7 @@ namespace Kaitai
             /// </summary>
             public uint Ns { get { return _ns; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -613,7 +613,7 @@ namespace Kaitai
                 return new MsgPosEcefCovGnss(new KaitaiStream(fileName));
             }
 
-            public MsgPosEcefCovGnss(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosEcefCovGnss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -647,7 +647,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -709,7 +709,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -729,7 +729,7 @@ namespace Kaitai
                 return new MsgVelNedGnss(new KaitaiStream(fileName));
             }
 
-            public MsgVelNedGnss(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelNedGnss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -755,7 +755,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -797,7 +797,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -818,7 +818,7 @@ namespace Kaitai
                 return new MsgVelNedCovGnss(new KaitaiStream(fileName));
             }
 
-            public MsgVelNedCovGnss(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelNedCovGnss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -852,7 +852,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -914,7 +914,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -927,7 +927,7 @@ namespace Kaitai
                 return new MsgBaselineNedDepA(new KaitaiStream(fileName));
             }
 
-            public MsgBaselineNedDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgBaselineNedDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -953,7 +953,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -997,7 +997,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1010,7 +1010,7 @@ namespace Kaitai
                 return new MsgVelEcefDepA(new KaitaiStream(fileName));
             }
 
-            public MsgVelEcefDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelEcefDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1034,7 +1034,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -1071,7 +1071,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class MsgReferenceFrameParam : KaitaiStruct
         {
@@ -1080,7 +1080,7 @@ namespace Kaitai
                 return new MsgReferenceFrameParam(new KaitaiStream(fileName));
             }
 
-            public MsgReferenceFrameParam(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgReferenceFrameParam(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1130,7 +1130,7 @@ namespace Kaitai
             private int _dotTheta03;
             private short _dotScale;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// SSR IOD parameter.
@@ -1233,7 +1233,7 @@ namespace Kaitai
             /// </summary>
             public short DotScale { get { return _dotScale; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1252,7 +1252,7 @@ namespace Kaitai
                 return new MsgPoseRelative(new KaitaiStream(fileName));
             }
 
-            public MsgPoseRelative(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPoseRelative(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1310,7 +1310,7 @@ namespace Kaitai
             private float _covCZZ;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -1426,7 +1426,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1445,7 +1445,7 @@ namespace Kaitai
                 return new MsgVelEcefCov(new KaitaiStream(fileName));
             }
 
-            public MsgVelEcefCov(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelEcefCov(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1479,7 +1479,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -1541,7 +1541,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1565,7 +1565,7 @@ namespace Kaitai
                 return new MsgVelBody(new KaitaiStream(fileName));
             }
 
-            public MsgVelBody(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelBody(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1599,7 +1599,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -1661,7 +1661,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1679,7 +1679,7 @@ namespace Kaitai
                 return new MsgVelEcefGnss(new KaitaiStream(fileName));
             }
 
-            public MsgVelEcefGnss(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelEcefGnss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1703,7 +1703,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -1740,7 +1740,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1759,7 +1759,7 @@ namespace Kaitai
                 return new MsgVelEcef(new KaitaiStream(fileName));
             }
 
-            public MsgVelEcef(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelEcef(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1783,7 +1783,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -1820,7 +1820,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1844,7 +1844,7 @@ namespace Kaitai
                 return new MsgPosLlhCovGnss(new KaitaiStream(fileName));
             }
 
-            public MsgPosLlhCovGnss(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosLlhCovGnss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1878,7 +1878,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -1940,7 +1940,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1958,7 +1958,7 @@ namespace Kaitai
                 return new MsgBaselineEcef(new KaitaiStream(fileName));
             }
 
-            public MsgBaselineEcef(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgBaselineEcef(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1982,7 +1982,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -2019,7 +2019,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2032,7 +2032,7 @@ namespace Kaitai
                 return new MsgDopsDepA(new KaitaiStream(fileName));
             }
 
-            public MsgDopsDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgDopsDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2054,7 +2054,7 @@ namespace Kaitai
             private ushort _hdop;
             private ushort _vdop;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -2086,7 +2086,7 @@ namespace Kaitai
             /// </summary>
             public ushort Vdop { get { return _vdop; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2109,7 +2109,7 @@ namespace Kaitai
                 return new MsgPosEcef(new KaitaiStream(fileName));
             }
 
-            public MsgPosEcef(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosEcef(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2133,7 +2133,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -2170,7 +2170,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2184,7 +2184,7 @@ namespace Kaitai
                 return new MsgAgeCorrections(new KaitaiStream(fileName));
             }
 
-            public MsgAgeCorrections(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgAgeCorrections(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2198,7 +2198,7 @@ namespace Kaitai
             private uint _tow;
             private ushort _age;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -2210,7 +2210,7 @@ namespace Kaitai
             /// </summary>
             public ushort Age { get { return _age; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2228,7 +2228,7 @@ namespace Kaitai
                 return new MsgVelEcefCovGnss(new KaitaiStream(fileName));
             }
 
-            public MsgVelEcefCovGnss(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelEcefCovGnss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2262,7 +2262,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -2324,7 +2324,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2339,7 +2339,7 @@ namespace Kaitai
                 return new MsgProtectionLevel(new KaitaiStream(fileName));
             }
 
-            public MsgProtectionLevel(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgProtectionLevel(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2391,7 +2391,7 @@ namespace Kaitai
             private int _heading;
             private uint _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -2500,7 +2500,7 @@ namespace Kaitai
             /// </summary>
             public uint Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2524,7 +2524,7 @@ namespace Kaitai
                 return new MsgPosEcefCov(new KaitaiStream(fileName));
             }
 
-            public MsgPosEcefCov(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosEcefCov(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2558,7 +2558,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -2620,7 +2620,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2642,7 +2642,7 @@ namespace Kaitai
                 return new MsgPosEcefGnss(new KaitaiStream(fileName));
             }
 
-            public MsgPosEcefGnss(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosEcefGnss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2666,7 +2666,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -2703,7 +2703,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2724,7 +2724,7 @@ namespace Kaitai
                 return new MsgVelNed(new KaitaiStream(fileName));
             }
 
-            public MsgVelNed(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelNed(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2750,7 +2750,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -2792,7 +2792,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2806,7 +2806,7 @@ namespace Kaitai
                 return new MsgUtcLeapSecond(new KaitaiStream(fileName));
             }
 
-            public MsgUtcLeapSecond(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgUtcLeapSecond(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2834,7 +2834,7 @@ namespace Kaitai
             private byte _refDn;
             private sbyte _countAfter;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Reserved.
@@ -2881,7 +2881,7 @@ namespace Kaitai
             /// </summary>
             public sbyte CountAfter { get { return _countAfter; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2894,7 +2894,7 @@ namespace Kaitai
                 return new MsgGpsTimeDepA(new KaitaiStream(fileName));
             }
 
-            public MsgGpsTimeDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgGpsTimeDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2912,7 +2912,7 @@ namespace Kaitai
             private int _nsResidual;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS week number
@@ -2935,7 +2935,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2957,7 +2957,7 @@ namespace Kaitai
                 return new MsgPosLlhGnss(new KaitaiStream(fileName));
             }
 
-            public MsgPosLlhGnss(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosLlhGnss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2983,7 +2983,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -3025,7 +3025,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3043,7 +3043,7 @@ namespace Kaitai
                 return new MsgUtcTimeGnss(new KaitaiStream(fileName));
             }
 
-            public MsgUtcTimeGnss(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgUtcTimeGnss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3071,7 +3071,7 @@ namespace Kaitai
             private byte _seconds;
             private uint _ns;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Indicates source and time validity
@@ -3118,7 +3118,7 @@ namespace Kaitai
             /// </summary>
             public uint Ns { get { return _ns; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3144,7 +3144,7 @@ namespace Kaitai
                 return new MsgVelCog(new KaitaiStream(fileName));
             }
 
-            public MsgVelCog(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgVelCog(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3170,7 +3170,7 @@ namespace Kaitai
             private uint _vUpAccuracy;
             private ushort _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -3212,7 +3212,7 @@ namespace Kaitai
             /// </summary>
             public ushort Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3232,7 +3232,7 @@ namespace Kaitai
                 return new MsgBaselineNed(new KaitaiStream(fileName));
             }
 
-            public MsgBaselineNed(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgBaselineNed(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3258,7 +3258,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -3300,7 +3300,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3323,7 +3323,7 @@ namespace Kaitai
                 return new MsgPosLlh(new KaitaiStream(fileName));
             }
 
-            public MsgPosLlh(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosLlh(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3349,7 +3349,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -3391,7 +3391,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3404,7 +3404,7 @@ namespace Kaitai
                 return new MsgBaselineHeadingDepA(new KaitaiStream(fileName));
             }
 
-            public MsgBaselineHeadingDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgBaselineHeadingDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3422,7 +3422,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -3444,7 +3444,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3470,7 +3470,7 @@ namespace Kaitai
                 return new MsgGpsTimeGnss(new KaitaiStream(fileName));
             }
 
-            public MsgGpsTimeGnss(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgGpsTimeGnss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3488,7 +3488,7 @@ namespace Kaitai
             private int _nsResidual;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS week number
@@ -3511,7 +3511,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3524,7 +3524,7 @@ namespace Kaitai
                 return new MsgBaselineEcefDepA(new KaitaiStream(fileName));
             }
 
-            public MsgBaselineEcefDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgBaselineEcefDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3548,7 +3548,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -3585,7 +3585,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3612,7 +3612,7 @@ namespace Kaitai
                 return new MsgGpsTime(new KaitaiStream(fileName));
             }
 
-            public MsgGpsTime(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgGpsTime(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3630,7 +3630,7 @@ namespace Kaitai
             private int _nsResidual;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS week number
@@ -3653,7 +3653,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3671,7 +3671,7 @@ namespace Kaitai
                 return new MsgDops(new KaitaiStream(fileName));
             }
 
-            public MsgDops(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgDops(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3695,7 +3695,7 @@ namespace Kaitai
             private ushort _vdop;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -3733,7 +3733,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3746,7 +3746,7 @@ namespace Kaitai
                 return new MsgPosEcefDepA(new KaitaiStream(fileName));
             }
 
-            public MsgPosEcefDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosEcefDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3770,7 +3770,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -3807,7 +3807,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class EstimatedHorizontalErrorEllipse : KaitaiStruct
         {
@@ -3878,7 +3878,7 @@ namespace Kaitai
                 return new MsgPosLlhAcc(new KaitaiStream(fileName));
             }
 
-            public MsgPosLlhAcc(KaitaiStream p__io, Sbp.Message p__parent = null, Navigation p__root = null) : base(p__io)
+            public MsgPosLlhAcc(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Navigation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3914,7 +3914,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Navigation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -3989,7 +3989,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Navigation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Navigation m_root;
         private KaitaiStruct m_parent;

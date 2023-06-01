@@ -31,7 +31,7 @@ namespace Kaitai
                 return new MsgCertificateChainDep(new KaitaiStream(fileName));
             }
 
-            public MsgCertificateChainDep(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            public MsgCertificateChainDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -67,7 +67,7 @@ namespace Kaitai
             private UtcTime _expiration;
             private List<byte> _signature;
             private Signing m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// SHA-1 fingerprint of the root certificate
@@ -100,7 +100,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> Signature { get { return _signature; } }
             public Signing M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Kaitai
                 return new MsgEd25519SignatureDepB(new KaitaiStream(fileName));
             }
 
-            public MsgEd25519SignatureDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            public MsgEd25519SignatureDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -148,7 +148,7 @@ namespace Kaitai
             private List<byte> _fingerprint;
             private List<uint> _signedMessages;
             private Signing m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Signature message counter. Zero indexed and incremented with each
@@ -182,7 +182,7 @@ namespace Kaitai
             /// </summary>
             public List<uint> SignedMessages { get { return _signedMessages; } }
             public Signing M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Kaitai
                 return new MsgEd25519CertificateDep(new KaitaiStream(fileName));
             }
 
-            public MsgEd25519CertificateDep(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            public MsgEd25519CertificateDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -222,7 +222,7 @@ namespace Kaitai
             private List<byte> _fingerprint;
             private List<byte> _certificateBytes;
             private Signing m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Total number messages that make up the certificate. First nibble is
@@ -241,7 +241,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> CertificateBytes { get { return _certificateBytes; } }
             public Signing M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class UtcTime : KaitaiStruct
         {
@@ -366,7 +366,7 @@ namespace Kaitai
                 return new MsgEd25519SignatureDepA(new KaitaiStream(fileName));
             }
 
-            public MsgEd25519SignatureDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            public MsgEd25519SignatureDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -397,7 +397,7 @@ namespace Kaitai
             private List<byte> _fingerprint;
             private List<uint> _signedMessages;
             private Signing m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// ED25519 signature for messages.
@@ -414,7 +414,7 @@ namespace Kaitai
             /// </summary>
             public List<uint> SignedMessages { get { return _signedMessages; } }
             public Signing M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class MsgCertificateChain : KaitaiStruct
         {
@@ -423,7 +423,7 @@ namespace Kaitai
                 return new MsgCertificateChain(new KaitaiStream(fileName));
             }
 
-            public MsgCertificateChain(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            public MsgCertificateChain(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -455,7 +455,7 @@ namespace Kaitai
             private UtcTime _expiration;
             private EcdsaSignature _signature;
             private Signing m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// SHA-1 fingerprint of the root certificate
@@ -490,7 +490,7 @@ namespace Kaitai
             /// </summary>
             public EcdsaSignature Signature { get { return _signature; } }
             public Signing M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace Kaitai
                 return new MsgEcdsaCertificate(new KaitaiStream(fileName));
             }
 
-            public MsgEcdsaCertificate(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            public MsgEcdsaCertificate(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -532,7 +532,7 @@ namespace Kaitai
             private byte _flags;
             private List<byte> _certificateBytes;
             private Signing m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Total number messages that make up the certificate. The first nibble
@@ -553,7 +553,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> CertificateBytes { get { return _certificateBytes; } }
             public Signing M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -566,7 +566,7 @@ namespace Kaitai
                 return new MsgEcdsaSignatureDepB(new KaitaiStream(fileName));
             }
 
-            public MsgEcdsaSignatureDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            public MsgEcdsaSignatureDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -605,7 +605,7 @@ namespace Kaitai
             private List<byte> _signature;
             private List<byte> _signedMessages;
             private Signing m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Describes the format of the `signed\_messages` field below.
@@ -656,7 +656,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> SignedMessages { get { return _signedMessages; } }
             public Signing M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -669,7 +669,7 @@ namespace Kaitai
                 return new MsgEcdsaSignature(new KaitaiStream(fileName));
             }
 
-            public MsgEcdsaSignature(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            public MsgEcdsaSignature(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -702,7 +702,7 @@ namespace Kaitai
             private EcdsaSignature _signature;
             private List<byte> _signedMessages;
             private Signing m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Describes the format of the `signed\_messages` field below.
@@ -745,7 +745,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> SignedMessages { get { return _signedMessages; } }
             public Signing M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -758,7 +758,7 @@ namespace Kaitai
                 return new MsgEcdsaSignatureDepA(new KaitaiStream(fileName));
             }
 
-            public MsgEcdsaSignatureDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            public MsgEcdsaSignatureDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -795,7 +795,7 @@ namespace Kaitai
             private List<byte> _signature;
             private List<byte> _signedMessages;
             private Signing m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Describes the format of the `signed\_messages` field below.
@@ -839,7 +839,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> SignedMessages { get { return _signedMessages; } }
             public Signing M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Signing m_root;
         private KaitaiStruct m_parent;

@@ -43,7 +43,7 @@ public:
 
     public:
 
-        msg_nap_device_dna_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, bootload_t* p__root = 0);
+        msg_nap_device_dna_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, bootload_t* p__root = 0);
 
     private:
         void _read();
@@ -54,11 +54,11 @@ public:
 
     private:
         bootload_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
         bootload_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -69,7 +69,7 @@ public:
 
     public:
 
-        msg_bootloader_jump_to_app_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, bootload_t* p__root = 0);
+        msg_bootloader_jump_to_app_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, bootload_t* p__root = 0);
 
     private:
         void _read();
@@ -81,7 +81,7 @@ public:
     private:
         uint8_t m_jump;
         bootload_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -90,7 +90,7 @@ public:
          */
         uint8_t jump() const { return m_jump; }
         bootload_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -104,7 +104,7 @@ public:
 
     public:
 
-        msg_bootloader_handshake_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, bootload_t* p__root = 0);
+        msg_bootloader_handshake_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, bootload_t* p__root = 0);
 
     private:
         void _read();
@@ -117,7 +117,7 @@ public:
         uint32_t m_flags;
         std::string m_version;
         bootload_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -131,7 +131,7 @@ public:
          */
         std::string version() const { return m_version; }
         bootload_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -147,7 +147,7 @@ public:
 
     public:
 
-        msg_nap_device_dna_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, bootload_t* p__root = 0);
+        msg_nap_device_dna_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, bootload_t* p__root = 0);
 
     private:
         void _read();
@@ -159,7 +159,7 @@ public:
     private:
         std::vector<uint8_t>* m_dna;
         bootload_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -169,7 +169,7 @@ public:
          */
         std::vector<uint8_t>* dna() const { return m_dna; }
         bootload_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -182,7 +182,7 @@ public:
 
     public:
 
-        msg_bootloader_handshake_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, bootload_t* p__root = 0);
+        msg_bootloader_handshake_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, bootload_t* p__root = 0);
 
     private:
         void _read();
@@ -193,11 +193,11 @@ public:
 
     private:
         bootload_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
         bootload_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -208,7 +208,7 @@ public:
 
     public:
 
-        msg_bootloader_handshake_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, bootload_t* p__root = 0);
+        msg_bootloader_handshake_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, bootload_t* p__root = 0);
 
     private:
         void _read();
@@ -220,7 +220,7 @@ public:
     private:
         std::vector<uint8_t>* m_handshake;
         bootload_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -229,7 +229,7 @@ public:
          */
         std::vector<uint8_t>* handshake() const { return m_handshake; }
         bootload_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

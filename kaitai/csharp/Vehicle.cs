@@ -39,7 +39,7 @@ namespace Kaitai
                 return new MsgOdometry(new KaitaiStream(fileName));
             }
 
-            public MsgOdometry(KaitaiStream p__io, Sbp.Message p__parent = null, Vehicle p__root = null) : base(p__io)
+            public MsgOdometry(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Vehicle p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -55,7 +55,7 @@ namespace Kaitai
             private int _velocity;
             private byte _flags;
             private Vehicle m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Time field representing either milliseconds in the GPS Week or local
@@ -74,7 +74,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Vehicle M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Kaitai
                 return new MsgWheeltick(new KaitaiStream(fileName));
             }
 
-            public MsgWheeltick(KaitaiStream p__io, Sbp.Message p__parent = null, Vehicle p__root = null) : base(p__io)
+            public MsgWheeltick(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Vehicle p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -116,7 +116,7 @@ namespace Kaitai
             private byte _source;
             private int _ticks;
             private Vehicle m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Time field representing either microseconds since the last PPS,
@@ -143,7 +143,7 @@ namespace Kaitai
             /// </summary>
             public int Ticks { get { return _ticks; } }
             public Vehicle M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Vehicle m_root;
         private KaitaiStruct m_parent;

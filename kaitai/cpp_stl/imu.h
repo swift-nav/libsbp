@@ -44,7 +44,7 @@ public:
 
     public:
 
-        msg_imu_raw_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, imu_t* p__root = 0);
+        msg_imu_raw_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, imu_t* p__root = 0);
 
     private:
         void _read();
@@ -63,7 +63,7 @@ public:
         int16_t m_gyr_y;
         int16_t m_gyr_z;
         imu_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -107,7 +107,7 @@ public:
          */
         int16_t gyr_z() const { return m_gyr_z; }
         imu_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -120,7 +120,7 @@ public:
 
     public:
 
-        msg_imu_aux_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, imu_t* p__root = 0);
+        msg_imu_aux_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, imu_t* p__root = 0);
 
     private:
         void _read();
@@ -134,7 +134,7 @@ public:
         int16_t m_temp;
         uint8_t m_imu_conf;
         imu_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -153,7 +153,7 @@ public:
          */
         uint8_t imu_conf() const { return m_imu_conf; }
         imu_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

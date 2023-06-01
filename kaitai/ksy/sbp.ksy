@@ -38,7 +38,7 @@ meta:
 
 seq:
   - id: message
-    type: message
+    type: sbp_message
     repeat: eos
 
 enums:
@@ -305,7 +305,7 @@ enums:
     2308: msg_wheeltick
 
 types:
-  message:
+  sbp_message:
     seq:
       - id: header
         type: sbp_header

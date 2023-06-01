@@ -24,7 +24,7 @@ imu_t::~imu_t() {
 void imu_t::_clean_up() {
 }
 
-imu_t::msg_imu_raw_t::msg_imu_raw_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, imu_t* p__root) : kaitai::kstruct(p__io) {
+imu_t::msg_imu_raw_t::msg_imu_raw_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, imu_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -54,7 +54,7 @@ imu_t::msg_imu_raw_t::~msg_imu_raw_t() {
 void imu_t::msg_imu_raw_t::_clean_up() {
 }
 
-imu_t::msg_imu_aux_t::msg_imu_aux_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, imu_t* p__root) : kaitai::kstruct(p__io) {
+imu_t::msg_imu_aux_t::msg_imu_aux_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, imu_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

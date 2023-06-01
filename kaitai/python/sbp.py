@@ -280,11 +280,11 @@ class Sbp(KaitaiStruct):
         self.message = []
         i = 0
         while not self._io.is_eof():
-            self.message.append(Sbp.Message(self._io, self, self._root))
+            self.message.append(Sbp.SbpMessage(self._io, self, self._root))
             i += 1
 
 
-    class Message(KaitaiStruct):
+    class SbpMessage(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent

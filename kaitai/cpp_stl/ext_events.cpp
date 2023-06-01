@@ -24,7 +24,7 @@ ext_events_t::~ext_events_t() {
 void ext_events_t::_clean_up() {
 }
 
-ext_events_t::msg_ext_event_t::msg_ext_event_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ext_events_t* p__root) : kaitai::kstruct(p__io) {
+ext_events_t::msg_ext_event_t::msg_ext_event_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ext_events_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

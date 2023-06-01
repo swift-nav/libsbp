@@ -30,14 +30,14 @@ type Acquisition_MsgAcqResultDepC struct {
 	Sid *Gnss_GnssSignalDep
 	_io *kaitai.Stream
 	_root *Acquisition
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewAcquisition_MsgAcqResultDepC() *Acquisition_MsgAcqResultDepC {
 	return &Acquisition_MsgAcqResultDepC{
 	}
 }
 
-func (this *Acquisition_MsgAcqResultDepC) Read(io *kaitai.Stream, parent *Sbp_Message, root *Acquisition) (err error) {
+func (this *Acquisition_MsgAcqResultDepC) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Acquisition) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -92,14 +92,14 @@ type Acquisition_MsgAcqResultDepB struct {
 	Sid *Gnss_GnssSignalDep
 	_io *kaitai.Stream
 	_root *Acquisition
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewAcquisition_MsgAcqResultDepB() *Acquisition_MsgAcqResultDepB {
 	return &Acquisition_MsgAcqResultDepB{
 	}
 }
 
-func (this *Acquisition_MsgAcqResultDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Acquisition) (err error) {
+func (this *Acquisition_MsgAcqResultDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Acquisition) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -297,14 +297,14 @@ type Acquisition_MsgAcqSvProfile struct {
 	AcqSvProfile []*Acquisition_AcqSvProfile
 	_io *kaitai.Stream
 	_root *Acquisition
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewAcquisition_MsgAcqSvProfile() *Acquisition_MsgAcqSvProfile {
 	return &Acquisition_MsgAcqSvProfile{
 	}
 }
 
-func (this *Acquisition_MsgAcqSvProfile) Read(io *kaitai.Stream, parent *Sbp_Message, root *Acquisition) (err error) {
+func (this *Acquisition_MsgAcqSvProfile) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Acquisition) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -486,14 +486,14 @@ type Acquisition_MsgAcqResult struct {
 	Sid *Gnss_GnssSignal
 	_io *kaitai.Stream
 	_root *Acquisition
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewAcquisition_MsgAcqResult() *Acquisition_MsgAcqResult {
 	return &Acquisition_MsgAcqResult{
 	}
 }
 
-func (this *Acquisition_MsgAcqResult) Read(io *kaitai.Stream, parent *Sbp_Message, root *Acquisition) (err error) {
+func (this *Acquisition_MsgAcqResult) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Acquisition) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -548,14 +548,14 @@ type Acquisition_MsgAcqResultDepA struct {
 	Prn uint8
 	_io *kaitai.Stream
 	_root *Acquisition
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewAcquisition_MsgAcqResultDepA() *Acquisition_MsgAcqResultDepA {
 	return &Acquisition_MsgAcqResultDepA{
 	}
 }
 
-func (this *Acquisition_MsgAcqResultDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Acquisition) (err error) {
+func (this *Acquisition_MsgAcqResultDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Acquisition) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -608,14 +608,14 @@ type Acquisition_MsgAcqSvProfileDep struct {
 	AcqSvProfile []*Acquisition_AcqSvProfileDep
 	_io *kaitai.Stream
 	_root *Acquisition
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewAcquisition_MsgAcqSvProfileDep() *Acquisition_MsgAcqSvProfileDep {
 	return &Acquisition_MsgAcqSvProfileDep{
 	}
 }
 
-func (this *Acquisition_MsgAcqSvProfileDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Acquisition) (err error) {
+func (this *Acquisition_MsgAcqSvProfileDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Acquisition) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

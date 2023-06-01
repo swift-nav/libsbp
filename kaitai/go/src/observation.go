@@ -28,14 +28,14 @@ type Observation_MsgSvAzEl struct {
 	Azel []*Observation_SvAzEl
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgSvAzEl() *Observation_MsgSvAzEl {
 	return &Observation_MsgSvAzEl{
 	}
 }
 
-func (this *Observation_MsgSvAzEl) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgSvAzEl) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -243,14 +243,14 @@ type Observation_MsgGroupDelayDepB struct {
 	IscL2c int16
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgGroupDelayDepB() *Observation_MsgGroupDelayDepB {
 	return &Observation_MsgGroupDelayDepB{
 	}
 }
 
-func (this *Observation_MsgGroupDelayDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgGroupDelayDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -697,14 +697,14 @@ type Observation_MsgEphemerisGloDepD struct {
 	Iod uint8
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisGloDepD() *Observation_MsgEphemerisGloDepD {
 	return &Observation_MsgEphemerisGloDepD{
 	}
 }
 
-func (this *Observation_MsgEphemerisGloDepD) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisGloDepD) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -811,14 +811,14 @@ type Observation_MsgObsDepA struct {
 	Obs []*Observation_PackedObsContentDepA
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgObsDepA() *Observation_MsgObsDepA {
 	return &Observation_MsgObsDepA{
 	}
 }
 
-func (this *Observation_MsgObsDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgObsDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -889,14 +889,14 @@ type Observation_MsgEphemerisDepB struct {
 	Iode uint8
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisDepB() *Observation_MsgEphemerisDepB {
 	return &Observation_MsgEphemerisDepB{
 	}
 }
 
-func (this *Observation_MsgEphemerisDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1164,14 +1164,14 @@ type Observation_MsgObs struct {
 	Obs []*Observation_PackedObsContent
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgObs() *Observation_MsgObs {
 	return &Observation_MsgObs{
 	}
 }
 
-func (this *Observation_MsgObs) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgObs) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1267,14 +1267,14 @@ type Observation_MsgAlmanacGloDep struct {
 	Omega float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgAlmanacGloDep() *Observation_MsgAlmanacGloDep {
 	return &Observation_MsgAlmanacGloDep{
 	}
 }
 
-func (this *Observation_MsgAlmanacGloDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgAlmanacGloDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1372,14 +1372,14 @@ type Observation_MsgAlmanacGpsDep struct {
 	Af1 float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgAlmanacGpsDep() *Observation_MsgAlmanacGpsDep {
 	return &Observation_MsgAlmanacGpsDep{
 	}
 }
 
-func (this *Observation_MsgAlmanacGpsDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgAlmanacGpsDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1543,14 +1543,14 @@ type Observation_MsgGloBiases struct {
 	L2pBias int16
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgGloBiases() *Observation_MsgGloBiases {
 	return &Observation_MsgGloBiases{
 	}
 }
 
-func (this *Observation_MsgGloBiases) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgGloBiases) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1615,14 +1615,14 @@ type Observation_MsgEphemerisSbasDepB struct {
 	AGf1 float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisSbasDepB() *Observation_MsgEphemerisSbasDepB {
 	return &Observation_MsgEphemerisSbasDepB{
 	}
 }
 
-func (this *Observation_MsgEphemerisSbasDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisSbasDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1723,14 +1723,14 @@ type Observation_MsgEphemerisGpsDepE struct {
 	Iodc uint16
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisGpsDepE() *Observation_MsgEphemerisGpsDepE {
 	return &Observation_MsgEphemerisGpsDepE{
 	}
 }
 
-func (this *Observation_MsgEphemerisGpsDepE) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisGpsDepE) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1960,14 +1960,14 @@ type Observation_MsgGnssCapb struct {
 	Gc *Observation_GnssCapb
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgGnssCapb() *Observation_MsgGnssCapb {
 	return &Observation_MsgGnssCapb{
 	}
 }
 
-func (this *Observation_MsgGnssCapb) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgGnssCapb) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2015,14 +2015,14 @@ type Observation_MsgAlmanacGps struct {
 	Af1 float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgAlmanacGps() *Observation_MsgAlmanacGps {
 	return &Observation_MsgAlmanacGps{
 	}
 }
 
-func (this *Observation_MsgAlmanacGps) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgAlmanacGps) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2152,14 +2152,14 @@ type Observation_MsgEphemerisQzss struct {
 	Iodc uint16
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisQzss() *Observation_MsgEphemerisQzss {
 	return &Observation_MsgEphemerisQzss{
 	}
 }
 
-func (this *Observation_MsgEphemerisQzss) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisQzss) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2392,14 +2392,14 @@ type Observation_MsgGroupDelayDepA struct {
 	IscL2c int16
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgGroupDelayDepA() *Observation_MsgGroupDelayDepA {
 	return &Observation_MsgGroupDelayDepA{
 	}
 }
 
-func (this *Observation_MsgGroupDelayDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgGroupDelayDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2486,14 +2486,14 @@ type Observation_MsgEphemerisDepC struct {
 	Reserved uint32
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisDepC() *Observation_MsgEphemerisDepC {
 	return &Observation_MsgEphemerisDepC{
 	}
 }
 
-func (this *Observation_MsgEphemerisDepC) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisDepC) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2845,14 +2845,14 @@ type Observation_MsgEphemerisGal struct {
 	Source uint8
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisGal() *Observation_MsgEphemerisGal {
 	return &Observation_MsgEphemerisGal{
 	}
 }
 
-func (this *Observation_MsgEphemerisGal) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisGal) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3233,14 +3233,14 @@ type Observation_MsgEphemerisBds struct {
 	Iodc uint16
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisBds() *Observation_MsgEphemerisBds {
 	return &Observation_MsgEphemerisBds{
 	}
 }
 
-func (this *Observation_MsgEphemerisBds) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisBds) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3503,14 +3503,14 @@ type Observation_MsgEphemerisGpsDepF struct {
 	Iodc uint16
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisGpsDepF() *Observation_MsgEphemerisGpsDepF {
 	return &Observation_MsgEphemerisGpsDepF{
 	}
 }
 
-func (this *Observation_MsgEphemerisGpsDepF) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisGpsDepF) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3787,14 +3787,14 @@ type Observation_MsgEphemerisSbasDepA struct {
 	AGf1 float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisSbasDepA() *Observation_MsgEphemerisSbasDepA {
 	return &Observation_MsgEphemerisSbasDepA{
 	}
 }
 
-func (this *Observation_MsgEphemerisSbasDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisSbasDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3986,14 +3986,14 @@ type Observation_MsgBasePosEcef struct {
 	Z float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgBasePosEcef() *Observation_MsgBasePosEcef {
 	return &Observation_MsgBasePosEcef{
 	}
 }
 
-func (this *Observation_MsgBasePosEcef) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgBasePosEcef) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4040,14 +4040,14 @@ type Observation_MsgEphemerisGloDepA struct {
 	Acc []float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisGloDepA() *Observation_MsgEphemerisGloDepA {
 	return &Observation_MsgEphemerisGloDepA{
 	}
 }
 
-func (this *Observation_MsgEphemerisGloDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisGloDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4131,14 +4131,14 @@ type Observation_MsgGroupDelay struct {
 	IscL2c int16
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgGroupDelay() *Observation_MsgGroupDelay {
 	return &Observation_MsgGroupDelay{
 	}
 }
 
-func (this *Observation_MsgGroupDelay) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgGroupDelay) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4208,14 +4208,14 @@ type Observation_MsgAlmanacGlo struct {
 	Omega float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgAlmanacGlo() *Observation_MsgAlmanacGlo {
 	return &Observation_MsgAlmanacGlo{
 	}
 }
 
-func (this *Observation_MsgAlmanacGlo) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgAlmanacGlo) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4327,14 +4327,14 @@ type Observation_MsgEphemerisGalDepA struct {
 	Iodc uint16
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisGalDepA() *Observation_MsgEphemerisGalDepA {
 	return &Observation_MsgEphemerisGalDepA{
 	}
 }
 
-func (this *Observation_MsgEphemerisGalDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisGalDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4572,14 +4572,14 @@ type Observation_MsgObsDepB struct {
 	Obs []*Observation_PackedObsContentDepB
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgObsDepB() *Observation_MsgObsDepB {
 	return &Observation_MsgObsDepB{
 	}
 }
 
-func (this *Observation_MsgObsDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgObsDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4709,14 +4709,14 @@ type Observation_MsgEphemerisGlo struct {
 	Iod uint8
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisGlo() *Observation_MsgEphemerisGlo {
 	return &Observation_MsgEphemerisGlo{
 	}
 }
 
-func (this *Observation_MsgEphemerisGlo) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisGlo) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4832,14 +4832,14 @@ type Observation_MsgIono struct {
 	B3 float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgIono() *Observation_MsgIono {
 	return &Observation_MsgIono{
 	}
 }
 
-func (this *Observation_MsgIono) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgIono) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -4932,14 +4932,14 @@ type Observation_MsgEphemerisDepD struct {
 	Reserved uint32
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisDepD() *Observation_MsgEphemerisDepD {
 	return &Observation_MsgEphemerisDepD{
 	}
 }
 
-func (this *Observation_MsgEphemerisDepD) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisDepD) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -5245,14 +5245,14 @@ type Observation_MsgEphemerisGps struct {
 	Iodc uint16
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisGps() *Observation_MsgEphemerisGps {
 	return &Observation_MsgEphemerisGps{
 	}
 }
 
-func (this *Observation_MsgEphemerisGps) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisGps) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -5486,14 +5486,14 @@ type Observation_MsgBasePosLlh struct {
 	Height float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgBasePosLlh() *Observation_MsgBasePosLlh {
 	return &Observation_MsgBasePosLlh{
 	}
 }
 
-func (this *Observation_MsgBasePosLlh) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgBasePosLlh) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -5630,14 +5630,14 @@ type Observation_MsgOsr struct {
 	Obs []*Observation_PackedOsrContent
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgOsr() *Observation_MsgOsr {
 	return &Observation_MsgOsr{
 	}
 }
 
-func (this *Observation_MsgOsr) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgOsr) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -5691,14 +5691,14 @@ type Observation_MsgEphemerisGloDepC struct {
 	Fcn uint8
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisGloDepC() *Observation_MsgEphemerisGloDepC {
 	return &Observation_MsgEphemerisGloDepC{
 	}
 }
 
-func (this *Observation_MsgEphemerisGloDepC) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisGloDepC) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -5800,14 +5800,14 @@ type Observation_MsgEphemerisGloDepB struct {
 	Acc []float64
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisGloDepB() *Observation_MsgEphemerisGloDepB {
 	return &Observation_MsgEphemerisGloDepB{
 	}
 }
 
-func (this *Observation_MsgEphemerisGloDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisGloDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -5887,14 +5887,14 @@ type Observation_MsgSvConfigurationGpsDep struct {
 	L2cMask uint32
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgSvConfigurationGpsDep() *Observation_MsgSvConfigurationGpsDep {
 	return &Observation_MsgSvConfigurationGpsDep{
 	}
 }
 
-func (this *Observation_MsgSvConfigurationGpsDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgSvConfigurationGpsDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -5929,14 +5929,14 @@ type Observation_MsgEphemerisSbas struct {
 	AGf1 float32
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisSbas() *Observation_MsgEphemerisSbas {
 	return &Observation_MsgEphemerisSbas{
 	}
 }
 
-func (this *Observation_MsgEphemerisSbas) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisSbas) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -6093,14 +6093,14 @@ type Observation_MsgObsDepC struct {
 	Obs []*Observation_PackedObsContentDepC
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgObsDepC() *Observation_MsgObsDepC {
 	return &Observation_MsgObsDepC{
 	}
 }
 
-func (this *Observation_MsgObsDepC) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgObsDepC) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -6170,14 +6170,14 @@ type Observation_MsgEphemerisDepA struct {
 	Prn uint8
 	_io *kaitai.Stream
 	_root *Observation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewObservation_MsgEphemerisDepA() *Observation_MsgEphemerisDepA {
 	return &Observation_MsgEphemerisDepA{
 	}
 }
 
-func (this *Observation_MsgEphemerisDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Observation) (err error) {
+func (this *Observation_MsgEphemerisDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Observation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

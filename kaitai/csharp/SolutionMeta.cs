@@ -72,7 +72,7 @@ namespace Kaitai
                 return new MsgSolnMeta(new KaitaiStream(fileName));
             }
 
-            public MsgSolnMeta(KaitaiStream p__io, Sbp.Message p__parent = null, SolutionMeta p__root = null) : base(p__io)
+            public MsgSolnMeta(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, SolutionMeta p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -103,7 +103,7 @@ namespace Kaitai
             private uint _ageGnss;
             private List<SolutionInputType> _solIn;
             private SolutionMeta m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS time of week rounded to the nearest millisecond
@@ -148,7 +148,7 @@ namespace Kaitai
             /// </summary>
             public List<SolutionInputType> SolIn { get { return _solIn; } }
             public SolutionMeta M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Kaitai
                 return new MsgSolnMetaDepA(new KaitaiStream(fileName));
             }
 
-            public MsgSolnMetaDepA(KaitaiStream p__io, Sbp.Message p__parent = null, SolutionMeta p__root = null) : base(p__io)
+            public MsgSolnMetaDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, SolutionMeta p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -196,7 +196,7 @@ namespace Kaitai
             private uint _lastUsedGnssVelTow;
             private List<SolutionInputType> _solIn;
             private SolutionMeta m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Position Dilution of Precision as per last available DOPS from PVT
@@ -252,7 +252,7 @@ namespace Kaitai
             /// </summary>
             public List<SolutionInputType> SolIn { get { return _solIn; } }
             public SolutionMeta M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>

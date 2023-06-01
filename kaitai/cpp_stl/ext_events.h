@@ -33,7 +33,7 @@ public:
 
     public:
 
-        msg_ext_event_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ext_events_t* p__root = 0);
+        msg_ext_event_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ext_events_t* p__root = 0);
 
     private:
         void _read();
@@ -49,7 +49,7 @@ public:
         uint8_t m_flags;
         uint8_t m_pin;
         ext_events_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -79,7 +79,7 @@ public:
          */
         uint8_t pin() const { return m_pin; }
         ext_events_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

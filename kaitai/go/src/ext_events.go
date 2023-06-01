@@ -32,14 +32,14 @@ type ExtEvents_MsgExtEvent struct {
 	Pin uint8
 	_io *kaitai.Stream
 	_root *ExtEvents
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewExtEvents_MsgExtEvent() *ExtEvents_MsgExtEvent {
 	return &ExtEvents_MsgExtEvent{
 	}
 }
 
-func (this *ExtEvents_MsgExtEvent) Read(io *kaitai.Stream, parent *Sbp_Message, root *ExtEvents) (err error) {
+func (this *ExtEvents_MsgExtEvent) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *ExtEvents) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

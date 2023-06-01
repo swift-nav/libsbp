@@ -31,7 +31,7 @@ namespace Kaitai
                 return new MsgTrackingStateDetailedDep(new KaitaiStream(fileName));
             }
 
-            public MsgTrackingStateDetailedDep(KaitaiStream p__io, Sbp.Message p__parent = null, Tracking p__root = null) : base(p__io)
+            public MsgTrackingStateDetailedDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Tracking p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -83,7 +83,7 @@ namespace Kaitai
             private byte _psetFlags;
             private byte _miscFlags;
             private Tracking m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Receiver clock time.
@@ -197,7 +197,7 @@ namespace Kaitai
             /// </summary>
             public byte MiscFlags { get { return _miscFlags; } }
             public Tracking M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Kaitai
                 return new MsgTrackingState(new KaitaiStream(fileName));
             }
 
-            public MsgTrackingState(KaitaiStream p__io, Sbp.Message p__parent = null, Tracking p__root = null) : base(p__io)
+            public MsgTrackingState(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Tracking p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -324,14 +324,14 @@ namespace Kaitai
             }
             private List<TrackingChannelState> _states;
             private Tracking m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Signal tracking channel state
             /// </summary>
             public List<TrackingChannelState> States { get { return _states; } }
             public Tracking M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Kaitai
                 return new MsgTrackingIqDepA(new KaitaiStream(fileName));
             }
 
-            public MsgTrackingIqDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Tracking p__root = null) : base(p__io)
+            public MsgTrackingIqDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Tracking p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -410,7 +410,7 @@ namespace Kaitai
             private Gnss.GnssSignalDep _sid;
             private List<ulong> _corrs;
             private Tracking m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Tracking channel of origin
@@ -427,7 +427,7 @@ namespace Kaitai
             /// </summary>
             public List<ulong> Corrs { get { return _corrs; } }
             public Tracking M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -479,7 +479,7 @@ namespace Kaitai
                 return new MsgTrackingStateDepA(new KaitaiStream(fileName));
             }
 
-            public MsgTrackingStateDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Tracking p__root = null) : base(p__io)
+            public MsgTrackingStateDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Tracking p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -498,14 +498,14 @@ namespace Kaitai
             }
             private List<TrackingChannelStateDepA> _states;
             private Tracking m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Satellite tracking channel state
             /// </summary>
             public List<TrackingChannelStateDepA> States { get { return _states; } }
             public Tracking M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Kaitai
                 return new MsgMeasurementState(new KaitaiStream(fileName));
             }
 
-            public MsgMeasurementState(KaitaiStream p__io, Sbp.Message p__parent = null, Tracking p__root = null) : base(p__io)
+            public MsgMeasurementState(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Tracking p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -539,14 +539,14 @@ namespace Kaitai
             }
             private List<MeasurementState> _states;
             private Tracking m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// ME signal tracking channel state
             /// </summary>
             public List<MeasurementState> States { get { return _states; } }
             public Tracking M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -599,7 +599,7 @@ namespace Kaitai
                 return new MsgTrackingIq(new KaitaiStream(fileName));
             }
 
-            public MsgTrackingIq(KaitaiStream p__io, Sbp.Message p__parent = null, Tracking p__root = null) : base(p__io)
+            public MsgTrackingIq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Tracking p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -619,7 +619,7 @@ namespace Kaitai
             private Gnss.GnssSignal _sid;
             private List<ulong> _corrs;
             private Tracking m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Tracking channel of origin
@@ -636,7 +636,7 @@ namespace Kaitai
             /// </summary>
             public List<ulong> Corrs { get { return _corrs; } }
             public Tracking M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -650,7 +650,7 @@ namespace Kaitai
                 return new MsgTrackingStateDetailedDepA(new KaitaiStream(fileName));
             }
 
-            public MsgTrackingStateDetailedDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Tracking p__root = null) : base(p__io)
+            public MsgTrackingStateDetailedDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Tracking p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -702,7 +702,7 @@ namespace Kaitai
             private byte _psetFlags;
             private byte _miscFlags;
             private Tracking m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Receiver clock time.
@@ -816,7 +816,7 @@ namespace Kaitai
             /// </summary>
             public byte MiscFlags { get { return _miscFlags; } }
             public Tracking M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -829,7 +829,7 @@ namespace Kaitai
                 return new MsgTrackingStateDepB(new KaitaiStream(fileName));
             }
 
-            public MsgTrackingStateDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Tracking p__root = null) : base(p__io)
+            public MsgTrackingStateDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Tracking p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -848,14 +848,14 @@ namespace Kaitai
             }
             private List<TrackingChannelStateDepB> _states;
             private Tracking m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Signal tracking channel state
             /// </summary>
             public List<TrackingChannelStateDepB> States { get { return _states; } }
             public Tracking M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -911,7 +911,7 @@ namespace Kaitai
                 return new MsgTrackingIqDepB(new KaitaiStream(fileName));
             }
 
-            public MsgTrackingIqDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Tracking p__root = null) : base(p__io)
+            public MsgTrackingIqDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Tracking p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -931,7 +931,7 @@ namespace Kaitai
             private Gnss.GnssSignal _sid;
             private List<ulong> _corrs;
             private Tracking m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Tracking channel of origin
@@ -948,7 +948,7 @@ namespace Kaitai
             /// </summary>
             public List<ulong> Corrs { get { return _corrs; } }
             public Tracking M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Tracking m_root;
         private KaitaiStruct m_parent;

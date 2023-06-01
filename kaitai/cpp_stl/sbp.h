@@ -14,7 +14,7 @@
 class sbp_t : public kaitai::kstruct {
 
 public:
-    class message_t;
+    class sbp_message_t;
     class sbp_header_t;
 
     enum msg_ids_t {
@@ -262,18 +262,18 @@ private:
 public:
     ~sbp_t();
 
-    class message_t : public kaitai::kstruct {
+    class sbp_message_t : public kaitai::kstruct {
 
     public:
 
-        message_t(kaitai::kstream* p__io, sbp_t* p__parent = 0, sbp_t* p__root = 0);
+        sbp_message_t(kaitai::kstream* p__io, sbp_t* p__parent = 0, sbp_t* p__root = 0);
 
     private:
         void _read();
         void _clean_up();
 
     public:
-        ~message_t();
+        ~sbp_message_t();
 
     private:
         sbp_header_t* m_header;
@@ -304,7 +304,7 @@ public:
 
     public:
 
-        sbp_header_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, sbp_t* p__root = 0);
+        sbp_header_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, sbp_t* p__root = 0);
 
     private:
         void _read();
@@ -319,7 +319,7 @@ public:
         uint16_t m_sender;
         uint8_t m_length;
         sbp_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
         std::string preamble() const { return m_preamble; }
@@ -327,16 +327,16 @@ public:
         uint16_t sender() const { return m_sender; }
         uint8_t length() const { return m_length; }
         sbp_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:
-    std::vector<message_t*>* m_message;
+    std::vector<sbp_message_t*>* m_message;
     sbp_t* m__root;
     kaitai::kstruct* m__parent;
 
 public:
-    std::vector<message_t*>* message() const { return m_message; }
+    std::vector<sbp_message_t*>* message() const { return m_message; }
     sbp_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
 };

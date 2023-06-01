@@ -32,7 +32,7 @@ namespace Kaitai
                 return new MsgSvAzEl(new KaitaiStream(fileName));
             }
 
-            public MsgSvAzEl(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgSvAzEl(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -51,14 +51,14 @@ namespace Kaitai
             }
             private List<SvAzEl> _azel;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Azimuth and elevation per satellite
             /// </summary>
             public List<SvAzEl> Azel { get { return _azel; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class GnssCapb : KaitaiStruct
         {
@@ -199,7 +199,7 @@ namespace Kaitai
                 return new MsgGroupDelayDepB(new KaitaiStream(fileName));
             }
 
-            public MsgGroupDelayDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgGroupDelayDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -221,7 +221,7 @@ namespace Kaitai
             private short _iscL1ca;
             private short _iscL2c;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Data Predict Time of Week
@@ -242,7 +242,7 @@ namespace Kaitai
             public short IscL1ca { get { return _iscL1ca; } }
             public short IscL2c { get { return _iscL2c; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -570,7 +570,7 @@ namespace Kaitai
                 return new MsgEphemerisGloDepD(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisGloDepD(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisGloDepD(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -610,7 +610,7 @@ namespace Kaitai
             private byte _fcn;
             private byte _iod;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -657,7 +657,7 @@ namespace Kaitai
             /// </summary>
             public byte Iod { get { return _iod; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -670,7 +670,7 @@ namespace Kaitai
                 return new MsgObsDepA(new KaitaiStream(fileName));
             }
 
-            public MsgObsDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgObsDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -691,7 +691,7 @@ namespace Kaitai
             private ObservationHeaderDep _header;
             private List<PackedObsContentDepA> _obs;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a GPS observation message
@@ -704,7 +704,7 @@ namespace Kaitai
             /// </summary>
             public List<PackedObsContentDepA> Obs { get { return _obs; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -717,7 +717,7 @@ namespace Kaitai
                 return new MsgEphemerisDepB(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -781,7 +781,7 @@ namespace Kaitai
             private byte _prn;
             private byte _iode;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Group delay differential between L1 and L2
@@ -922,7 +922,7 @@ namespace Kaitai
             /// </summary>
             public byte Iode { get { return _iode; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -940,7 +940,7 @@ namespace Kaitai
                 return new MsgObs(new KaitaiStream(fileName));
             }
 
-            public MsgObs(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgObs(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -961,7 +961,7 @@ namespace Kaitai
             private ObservationHeader _header;
             private List<PackedObsContent> _obs;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a GPS observation message
@@ -974,7 +974,7 @@ namespace Kaitai
             /// </summary>
             public List<PackedObsContent> Obs { get { return _obs; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1029,7 +1029,7 @@ namespace Kaitai
                 return new MsgAlmanacGloDep(new KaitaiStream(fileName));
             }
 
-            public MsgAlmanacGloDep(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgAlmanacGloDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1055,7 +1055,7 @@ namespace Kaitai
             private double _epsilon;
             private double _omega;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all almanac types
@@ -1098,7 +1098,7 @@ namespace Kaitai
             /// </summary>
             public double Omega { get { return _omega; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1111,7 +1111,7 @@ namespace Kaitai
                 return new MsgAlmanacGpsDep(new KaitaiStream(fileName));
             }
 
-            public MsgAlmanacGpsDep(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgAlmanacGpsDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1141,7 +1141,7 @@ namespace Kaitai
             private double _af0;
             private double _af1;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all almanac types
@@ -1193,7 +1193,7 @@ namespace Kaitai
             /// </summary>
             public double Af1 { get { return _af1; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1254,7 +1254,7 @@ namespace Kaitai
                 return new MsgGloBiases(new KaitaiStream(fileName));
             }
 
-            public MsgGloBiases(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgGloBiases(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1274,7 +1274,7 @@ namespace Kaitai
             private short _l2caBias;
             private short _l2pBias;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GLONASS FDMA signals mask
@@ -1301,7 +1301,7 @@ namespace Kaitai
             /// </summary>
             public short L2pBias { get { return _l2pBias; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1314,7 +1314,7 @@ namespace Kaitai
                 return new MsgEphemerisSbasDepB(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisSbasDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisSbasDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1348,7 +1348,7 @@ namespace Kaitai
             private double _aGf0;
             private double _aGf1;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -1380,7 +1380,7 @@ namespace Kaitai
             /// </summary>
             public double AGf1 { get { return _aGf1; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1393,7 +1393,7 @@ namespace Kaitai
                 return new MsgEphemerisGpsDepE(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisGpsDepE(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisGpsDepE(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1449,7 +1449,7 @@ namespace Kaitai
             private byte _iode;
             private ushort _iodc;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -1570,7 +1570,7 @@ namespace Kaitai
             /// </summary>
             public ushort Iodc { get { return _iodc; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1584,7 +1584,7 @@ namespace Kaitai
                 return new MsgGnssCapb(new KaitaiStream(fileName));
             }
 
-            public MsgGnssCapb(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgGnssCapb(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1598,7 +1598,7 @@ namespace Kaitai
             private Gnss.GpsTimeSec _tNmct;
             private GnssCapb _gc;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Navigation Message Correction Table Validity Time
@@ -1610,7 +1610,7 @@ namespace Kaitai
             /// </summary>
             public GnssCapb Gc { get { return _gc; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1627,7 +1627,7 @@ namespace Kaitai
                 return new MsgAlmanacGps(new KaitaiStream(fileName));
             }
 
-            public MsgAlmanacGps(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgAlmanacGps(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1657,7 +1657,7 @@ namespace Kaitai
             private double _af0;
             private double _af1;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all almanac types
@@ -1709,7 +1709,7 @@ namespace Kaitai
             /// </summary>
             public double Af1 { get { return _af1; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1724,7 +1724,7 @@ namespace Kaitai
                 return new MsgEphemerisQzss(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisQzss(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisQzss(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1780,7 +1780,7 @@ namespace Kaitai
             private byte _iode;
             private ushort _iodc;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -1901,7 +1901,7 @@ namespace Kaitai
             /// </summary>
             public ushort Iodc { get { return _iodc; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1914,7 +1914,7 @@ namespace Kaitai
                 return new MsgGroupDelayDepA(new KaitaiStream(fileName));
             }
 
-            public MsgGroupDelayDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgGroupDelayDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1936,7 +1936,7 @@ namespace Kaitai
             private short _iscL1ca;
             private short _iscL2c;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Data Predict Time of Week
@@ -1957,7 +1957,7 @@ namespace Kaitai
             public short IscL1ca { get { return _iscL1ca; } }
             public short IscL2c { get { return _iscL2c; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -1970,7 +1970,7 @@ namespace Kaitai
                 return new MsgEphemerisDepC(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisDepC(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisDepC(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2038,7 +2038,7 @@ namespace Kaitai
             private ushort _iodc;
             private uint _reserved;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Group delay differential between L1 and L2
@@ -2189,7 +2189,7 @@ namespace Kaitai
             /// </summary>
             public uint Reserved { get { return _reserved; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2247,7 +2247,7 @@ namespace Kaitai
                 return new MsgEphemerisGal(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisGal(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisGal(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2307,7 +2307,7 @@ namespace Kaitai
             private ushort _iodc;
             private byte _source;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -2438,7 +2438,7 @@ namespace Kaitai
             /// </summary>
             public byte Source { get { return _source; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2541,7 +2541,7 @@ namespace Kaitai
                 return new MsgEphemerisBds(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisBds(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisBds(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2599,7 +2599,7 @@ namespace Kaitai
             private byte _iode;
             private ushort _iodc;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -2729,7 +2729,7 @@ namespace Kaitai
             /// </summary>
             public ushort Iodc { get { return _iodc; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2742,7 +2742,7 @@ namespace Kaitai
                 return new MsgEphemerisGpsDepF(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisGpsDepF(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisGpsDepF(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -2798,7 +2798,7 @@ namespace Kaitai
             private byte _iode;
             private ushort _iodc;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -2919,7 +2919,7 @@ namespace Kaitai
             /// </summary>
             public ushort Iodc { get { return _iodc; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -2973,7 +2973,7 @@ namespace Kaitai
                 return new MsgEphemerisSbasDepA(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisSbasDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisSbasDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3007,7 +3007,7 @@ namespace Kaitai
             private double _aGf0;
             private double _aGf1;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -3039,7 +3039,7 @@ namespace Kaitai
             /// </summary>
             public double AGf1 { get { return _aGf1; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3143,7 +3143,7 @@ namespace Kaitai
                 return new MsgBasePosEcef(new KaitaiStream(fileName));
             }
 
-            public MsgBasePosEcef(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgBasePosEcef(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3159,7 +3159,7 @@ namespace Kaitai
             private double _y;
             private double _z;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// ECEF X coordinate
@@ -3176,7 +3176,7 @@ namespace Kaitai
             /// </summary>
             public double Z { get { return _z; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3189,7 +3189,7 @@ namespace Kaitai
                 return new MsgEphemerisGloDepA(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisGloDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisGloDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3223,7 +3223,7 @@ namespace Kaitai
             private List<double> _vel;
             private List<double> _acc;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -3255,7 +3255,7 @@ namespace Kaitai
             /// </summary>
             public List<double> Acc { get { return _acc; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3268,7 +3268,7 @@ namespace Kaitai
                 return new MsgGroupDelay(new KaitaiStream(fileName));
             }
 
-            public MsgGroupDelay(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgGroupDelay(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3290,7 +3290,7 @@ namespace Kaitai
             private short _iscL1ca;
             private short _iscL2c;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Data Predict Time of Week
@@ -3311,7 +3311,7 @@ namespace Kaitai
             public short IscL1ca { get { return _iscL1ca; } }
             public short IscL2c { get { return _iscL2c; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3327,7 +3327,7 @@ namespace Kaitai
                 return new MsgAlmanacGlo(new KaitaiStream(fileName));
             }
 
-            public MsgAlmanacGlo(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgAlmanacGlo(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3353,7 +3353,7 @@ namespace Kaitai
             private double _epsilon;
             private double _omega;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all almanac types
@@ -3396,7 +3396,7 @@ namespace Kaitai
             /// </summary>
             public double Omega { get { return _omega; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3409,7 +3409,7 @@ namespace Kaitai
                 return new MsgEphemerisGalDepA(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisGalDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisGalDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3467,7 +3467,7 @@ namespace Kaitai
             private ushort _iode;
             private ushort _iodc;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -3593,7 +3593,7 @@ namespace Kaitai
             /// </summary>
             public ushort Iodc { get { return _iodc; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3606,7 +3606,7 @@ namespace Kaitai
                 return new MsgObsDepB(new KaitaiStream(fileName));
             }
 
-            public MsgObsDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgObsDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3627,7 +3627,7 @@ namespace Kaitai
             private ObservationHeaderDep _header;
             private List<PackedObsContentDepB> _obs;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a GPS observation message
@@ -3640,7 +3640,7 @@ namespace Kaitai
             /// </summary>
             public List<PackedObsContentDepB> Obs { get { return _obs; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3718,7 +3718,7 @@ namespace Kaitai
                 return new MsgEphemerisGlo(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisGlo(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisGlo(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3758,7 +3758,7 @@ namespace Kaitai
             private byte _fcn;
             private byte _iod;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -3805,7 +3805,7 @@ namespace Kaitai
             /// </summary>
             public byte Iod { get { return _iod; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3820,7 +3820,7 @@ namespace Kaitai
                 return new MsgIono(new KaitaiStream(fileName));
             }
 
-            public MsgIono(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgIono(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3848,7 +3848,7 @@ namespace Kaitai
             private double _b2;
             private double _b3;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Navigation Message Correction Table Validity Time
@@ -3863,7 +3863,7 @@ namespace Kaitai
             public double B2 { get { return _b2; } }
             public double B3 { get { return _b3; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -3876,7 +3876,7 @@ namespace Kaitai
                 return new MsgEphemerisDepD(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisDepD(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisDepD(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -3944,7 +3944,7 @@ namespace Kaitai
             private ushort _iodc;
             private uint _reserved;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Group delay differential between L1 and L2
@@ -4095,7 +4095,7 @@ namespace Kaitai
             /// </summary>
             public uint Reserved { get { return _reserved; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -4111,7 +4111,7 @@ namespace Kaitai
                 return new MsgEphemerisGps(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisGps(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisGps(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -4167,7 +4167,7 @@ namespace Kaitai
             private byte _iode;
             private ushort _iodc;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -4288,7 +4288,7 @@ namespace Kaitai
             /// </summary>
             public ushort Iodc { get { return _iodc; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -4305,7 +4305,7 @@ namespace Kaitai
                 return new MsgBasePosLlh(new KaitaiStream(fileName));
             }
 
-            public MsgBasePosLlh(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgBasePosLlh(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -4321,7 +4321,7 @@ namespace Kaitai
             private double _lon;
             private double _height;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Latitude
@@ -4338,7 +4338,7 @@ namespace Kaitai
             /// </summary>
             public double Height { get { return _height; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class AlmanacCommonContent : KaitaiStruct
         {
@@ -4429,7 +4429,7 @@ namespace Kaitai
                 return new MsgOsr(new KaitaiStream(fileName));
             }
 
-            public MsgOsr(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgOsr(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -4450,7 +4450,7 @@ namespace Kaitai
             private ObservationHeader _header;
             private List<PackedOsrContent> _obs;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a GPS observation message
@@ -4462,7 +4462,7 @@ namespace Kaitai
             /// </summary>
             public List<PackedOsrContent> Obs { get { return _obs; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -4478,7 +4478,7 @@ namespace Kaitai
                 return new MsgEphemerisGloDepC(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisGloDepC(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisGloDepC(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -4516,7 +4516,7 @@ namespace Kaitai
             private List<double> _acc;
             private byte _fcn;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -4558,7 +4558,7 @@ namespace Kaitai
             /// </summary>
             public byte Fcn { get { return _fcn; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -4571,7 +4571,7 @@ namespace Kaitai
                 return new MsgEphemerisGloDepB(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisGloDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisGloDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -4605,7 +4605,7 @@ namespace Kaitai
             private List<double> _vel;
             private List<double> _acc;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -4637,7 +4637,7 @@ namespace Kaitai
             /// </summary>
             public List<double> Acc { get { return _acc; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -4650,7 +4650,7 @@ namespace Kaitai
                 return new MsgSvConfigurationGpsDep(new KaitaiStream(fileName));
             }
 
-            public MsgSvConfigurationGpsDep(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgSvConfigurationGpsDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -4664,7 +4664,7 @@ namespace Kaitai
             private Gnss.GpsTimeSec _tNmct;
             private uint _l2cMask;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Navigation Message Correction Table Validity Time
@@ -4676,7 +4676,7 @@ namespace Kaitai
             /// </summary>
             public uint L2cMask { get { return _l2cMask; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class MsgEphemerisSbas : KaitaiStruct
         {
@@ -4685,7 +4685,7 @@ namespace Kaitai
                 return new MsgEphemerisSbas(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisSbas(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisSbas(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -4719,7 +4719,7 @@ namespace Kaitai
             private float _aGf0;
             private float _aGf1;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Values common for all ephemeris types
@@ -4751,7 +4751,7 @@ namespace Kaitai
             /// </summary>
             public float AGf1 { get { return _aGf1; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -4828,7 +4828,7 @@ namespace Kaitai
                 return new MsgObsDepC(new KaitaiStream(fileName));
             }
 
-            public MsgObsDepC(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgObsDepC(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -4849,7 +4849,7 @@ namespace Kaitai
             private ObservationHeaderDep _header;
             private List<PackedObsContentDepC> _obs;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Header of a GPS observation message
@@ -4862,7 +4862,7 @@ namespace Kaitai
             /// </summary>
             public List<PackedObsContentDepC> Obs { get { return _obs; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -4875,7 +4875,7 @@ namespace Kaitai
                 return new MsgEphemerisDepA(new KaitaiStream(fileName));
             }
 
-            public MsgEphemerisDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Observation p__root = null) : base(p__io)
+            public MsgEphemerisDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Observation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -4937,7 +4937,7 @@ namespace Kaitai
             private byte _healthy;
             private byte _prn;
             private Observation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Group delay differential between L1 and L2
@@ -5073,7 +5073,7 @@ namespace Kaitai
             /// </summary>
             public byte Prn { get { return _prn; } }
             public Observation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         public partial class EphemerisCommonContentDepB : KaitaiStruct
         {

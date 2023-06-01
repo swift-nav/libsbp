@@ -33,7 +33,7 @@ public:
 
     public:
 
-        msg_ndb_event_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ndb_t* p__root = 0);
+        msg_ndb_event_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ndb_t* p__root = 0);
 
     private:
         void _read();
@@ -52,7 +52,7 @@ public:
         gnss_t::gnss_signal_t* m_src_sid;
         uint16_t m_original_sender;
         ndb_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -102,7 +102,7 @@ public:
          */
         uint16_t original_sender() const { return m_original_sender; }
         ndb_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

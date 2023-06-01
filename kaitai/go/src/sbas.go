@@ -31,14 +31,14 @@ type Sbas_MsgSbasRaw struct {
 	Data []uint8
 	_io *kaitai.Stream
 	_root *Sbas
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSbas_MsgSbasRaw() *Sbas_MsgSbasRaw {
 	return &Sbas_MsgSbasRaw{
 	}
 }
 
-func (this *Sbas_MsgSbasRaw) Read(io *kaitai.Stream, parent *Sbp_Message, root *Sbas) (err error) {
+func (this *Sbas_MsgSbasRaw) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Sbas) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

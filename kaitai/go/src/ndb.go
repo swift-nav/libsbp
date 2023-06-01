@@ -35,14 +35,14 @@ type Ndb_MsgNdbEvent struct {
 	OriginalSender uint16
 	_io *kaitai.Stream
 	_root *Ndb
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewNdb_MsgNdbEvent() *Ndb_MsgNdbEvent {
 	return &Ndb_MsgNdbEvent{
 	}
 }
 
-func (this *Ndb_MsgNdbEvent) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ndb) (err error) {
+func (this *Ndb_MsgNdbEvent) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ndb) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

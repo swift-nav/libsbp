@@ -39,7 +39,7 @@ namespace Kaitai
                 return new MsgHeartbeat(new KaitaiStream(fileName));
             }
 
-            public MsgHeartbeat(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgHeartbeat(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -51,14 +51,14 @@ namespace Kaitai
             }
             private uint _flags;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Status flags
             /// </summary>
             public uint Flags { get { return _flags; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Kaitai
                 return new MsgStatusJournal(new KaitaiStream(fileName));
             }
 
-            public MsgStatusJournal(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgStatusJournal(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -100,7 +100,7 @@ namespace Kaitai
             private byte _sequenceDescriptor;
             private List<StatusJournalItem> _journal;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Identity of reporting system
@@ -129,7 +129,7 @@ namespace Kaitai
             /// </summary>
             public List<StatusJournalItem> Journal { get { return _journal; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Kaitai
                 return new MsgInsStatus(new KaitaiStream(fileName));
             }
 
-            public MsgInsStatus(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgInsStatus(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -155,14 +155,14 @@ namespace Kaitai
             }
             private uint _flags;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Status flags
             /// </summary>
             public uint Flags { get { return _flags; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Kaitai
                 return new MsgGnssTimeOffset(new KaitaiStream(fileName));
             }
 
-            public MsgGnssTimeOffset(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgGnssTimeOffset(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -195,7 +195,7 @@ namespace Kaitai
             private short _microseconds;
             private byte _flags;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Weeks portion of the time offset
@@ -217,7 +217,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Kaitai
                 return new MsgCsacTelemetry(new KaitaiStream(fileName));
             }
 
-            public MsgCsacTelemetry(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgCsacTelemetry(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -246,7 +246,7 @@ namespace Kaitai
             private byte _id;
             private string _telemetry;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Index representing the type of telemetry in use.  It is
@@ -259,7 +259,7 @@ namespace Kaitai
             /// </summary>
             public string Telemetry { get { return _telemetry; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Kaitai
                 return new MsgPpsTime(new KaitaiStream(fileName));
             }
 
-            public MsgPpsTime(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgPpsTime(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -297,7 +297,7 @@ namespace Kaitai
             private ulong _time;
             private byte _flags;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Local time in microseconds
@@ -309,7 +309,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Kaitai
                 return new MsgInsUpdates(new KaitaiStream(fileName));
             }
 
-            public MsgInsUpdates(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgInsUpdates(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -348,7 +348,7 @@ namespace Kaitai
             private byte _nhc;
             private byte _zerovel;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -385,7 +385,7 @@ namespace Kaitai
             /// </summary>
             public byte Zerovel { get { return _zerovel; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace Kaitai
                 return new MsgDgnssStatus(new KaitaiStream(fileName));
             }
 
-            public MsgDgnssStatus(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgDgnssStatus(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -418,7 +418,7 @@ namespace Kaitai
             private byte _numSignals;
             private string _source;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Status flags
@@ -440,7 +440,7 @@ namespace Kaitai
             /// </summary>
             public string Source { get { return _source; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace Kaitai
                 return new MsgCsacTelemetryLabels(new KaitaiStream(fileName));
             }
 
-            public MsgCsacTelemetryLabels(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgCsacTelemetryLabels(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -469,7 +469,7 @@ namespace Kaitai
             private byte _id;
             private string _telemetryLabels;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Index representing the type of telemetry in use.  It is
@@ -482,7 +482,7 @@ namespace Kaitai
             /// </summary>
             public string TelemetryLabels { get { return _telemetryLabels; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace Kaitai
                 return new MsgStartup(new KaitaiStream(fileName));
             }
 
-            public MsgStartup(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgStartup(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -513,7 +513,7 @@ namespace Kaitai
             private byte _startupType;
             private ushort _reserved;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Cause of startup
@@ -530,7 +530,7 @@ namespace Kaitai
             /// </summary>
             public ushort Reserved { get { return _reserved; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -545,7 +545,7 @@ namespace Kaitai
                 return new MsgGroupMeta(new KaitaiStream(fileName));
             }
 
-            public MsgGroupMeta(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgGroupMeta(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -570,7 +570,7 @@ namespace Kaitai
             private byte _nGroupMsgs;
             private List<ushort> _groupMsgs;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
@@ -593,7 +593,7 @@ namespace Kaitai
             /// </summary>
             public List<ushort> GroupMsgs { get { return _groupMsgs; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace Kaitai
                 return new MsgSensorAidEvent(new KaitaiStream(fileName));
             }
 
-            public MsgSensorAidEvent(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgSensorAidEvent(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -635,7 +635,7 @@ namespace Kaitai
             private byte _nAcceptedMeas;
             private uint _flags;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Update timestamp in milliseconds.
@@ -677,7 +677,7 @@ namespace Kaitai
             /// </summary>
             public uint Flags { get { return _flags; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -744,7 +744,7 @@ namespace Kaitai
                 return new MsgStatusReport(new KaitaiStream(fileName));
             }
 
-            public MsgStatusReport(KaitaiStream p__io, Sbp.Message p__parent = null, System p__root = null) : base(p__io)
+            public MsgStatusReport(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, System p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -771,7 +771,7 @@ namespace Kaitai
             private uint _uptime;
             private List<SubSystemReport> _status;
             private System m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Identity of reporting system
@@ -798,7 +798,7 @@ namespace Kaitai
             /// </summary>
             public List<SubSystemReport> Status { get { return _status; } }
             public System M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>

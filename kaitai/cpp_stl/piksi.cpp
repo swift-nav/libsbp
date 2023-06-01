@@ -24,7 +24,7 @@ piksi_t::~piksi_t() {
 void piksi_t::_clean_up() {
 }
 
-piksi_t::msg_network_state_resp_t::msg_network_state_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_network_state_resp_t::msg_network_state_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_ipv4_address = 0;
@@ -97,7 +97,7 @@ piksi_t::network_usage_t::~network_usage_t() {
 void piksi_t::network_usage_t::_clean_up() {
 }
 
-piksi_t::msg_command_resp_t::msg_command_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_command_resp_t::msg_command_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -121,7 +121,7 @@ piksi_t::msg_command_resp_t::~msg_command_resp_t() {
 void piksi_t::msg_command_resp_t::_clean_up() {
 }
 
-piksi_t::msg_command_output_t::msg_command_output_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_command_output_t::msg_command_output_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -171,7 +171,7 @@ piksi_t::latency_t::~latency_t() {
 void piksi_t::latency_t::_clean_up() {
 }
 
-piksi_t::msg_thread_state_t::msg_thread_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_thread_state_t::msg_thread_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -196,7 +196,7 @@ piksi_t::msg_thread_state_t::~msg_thread_state_t() {
 void piksi_t::msg_thread_state_t::_clean_up() {
 }
 
-piksi_t::msg_uart_state_depa_t::msg_uart_state_depa_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_uart_state_depa_t::msg_uart_state_depa_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_uart_a = 0;
@@ -238,7 +238,7 @@ void piksi_t::msg_uart_state_depa_t::_clean_up() {
     }
 }
 
-piksi_t::msg_network_state_req_t::msg_network_state_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_network_state_req_t::msg_network_state_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -260,7 +260,7 @@ piksi_t::msg_network_state_req_t::~msg_network_state_req_t() {
 void piksi_t::msg_network_state_req_t::_clean_up() {
 }
 
-piksi_t::msg_device_monitor_t::msg_device_monitor_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_device_monitor_t::msg_device_monitor_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -287,7 +287,7 @@ piksi_t::msg_device_monitor_t::~msg_device_monitor_t() {
 void piksi_t::msg_device_monitor_t::_clean_up() {
 }
 
-piksi_t::msg_mask_satellite_dep_t::msg_mask_satellite_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_mask_satellite_dep_t::msg_mask_satellite_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;
@@ -315,7 +315,7 @@ void piksi_t::msg_mask_satellite_dep_t::_clean_up() {
     }
 }
 
-piksi_t::msg_uart_state_t::msg_uart_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_uart_state_t::msg_uart_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_uart_a = 0;
@@ -362,7 +362,7 @@ void piksi_t::msg_uart_state_t::_clean_up() {
     }
 }
 
-piksi_t::msg_specan_t::msg_specan_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_specan_t::msg_specan_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_t = 0;
@@ -406,7 +406,7 @@ void piksi_t::msg_specan_t::_clean_up() {
     }
 }
 
-piksi_t::msg_iar_state_t::msg_iar_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_iar_state_t::msg_iar_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -429,7 +429,7 @@ piksi_t::msg_iar_state_t::~msg_iar_state_t() {
 void piksi_t::msg_iar_state_t::_clean_up() {
 }
 
-piksi_t::msg_almanac_t::msg_almanac_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_almanac_t::msg_almanac_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -451,7 +451,7 @@ piksi_t::msg_almanac_t::~msg_almanac_t() {
 void piksi_t::msg_almanac_t::_clean_up() {
 }
 
-piksi_t::msg_reset_filters_t::msg_reset_filters_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_reset_filters_t::msg_reset_filters_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -502,7 +502,7 @@ piksi_t::uart_channel_t::~uart_channel_t() {
 void piksi_t::uart_channel_t::_clean_up() {
 }
 
-piksi_t::msg_command_req_t::msg_command_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_command_req_t::msg_command_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -526,7 +526,7 @@ piksi_t::msg_command_req_t::~msg_command_req_t() {
 void piksi_t::msg_command_req_t::_clean_up() {
 }
 
-piksi_t::msg_mask_satellite_t::msg_mask_satellite_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_mask_satellite_t::msg_mask_satellite_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;
@@ -554,7 +554,7 @@ void piksi_t::msg_mask_satellite_t::_clean_up() {
     }
 }
 
-piksi_t::msg_network_bandwidth_usage_t::msg_network_bandwidth_usage_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_network_bandwidth_usage_t::msg_network_bandwidth_usage_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_interfaces = 0;
@@ -591,7 +591,7 @@ void piksi_t::msg_network_bandwidth_usage_t::_clean_up() {
     }
 }
 
-piksi_t::msg_reset_t::msg_reset_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_reset_t::msg_reset_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -614,7 +614,7 @@ piksi_t::msg_reset_t::~msg_reset_t() {
 void piksi_t::msg_reset_t::_clean_up() {
 }
 
-piksi_t::msg_cell_modem_status_t::msg_cell_modem_status_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_cell_modem_status_t::msg_cell_modem_status_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_reserved = 0;
@@ -650,7 +650,7 @@ void piksi_t::msg_cell_modem_status_t::_clean_up() {
     }
 }
 
-piksi_t::msg_front_end_gain_t::msg_front_end_gain_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_front_end_gain_t::msg_front_end_gain_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_rf_gain = 0;
@@ -690,7 +690,7 @@ void piksi_t::msg_front_end_gain_t::_clean_up() {
     }
 }
 
-piksi_t::msg_reset_dep_t::msg_reset_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_reset_dep_t::msg_reset_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -712,7 +712,7 @@ piksi_t::msg_reset_dep_t::~msg_reset_dep_t() {
 void piksi_t::msg_reset_dep_t::_clean_up() {
 }
 
-piksi_t::msg_set_time_t::msg_set_time_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_set_time_t::msg_set_time_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -734,7 +734,7 @@ piksi_t::msg_set_time_t::~msg_set_time_t() {
 void piksi_t::msg_set_time_t::_clean_up() {
 }
 
-piksi_t::msg_cw_results_t::msg_cw_results_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_cw_results_t::msg_cw_results_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -756,7 +756,7 @@ piksi_t::msg_cw_results_t::~msg_cw_results_t() {
 void piksi_t::msg_cw_results_t::_clean_up() {
 }
 
-piksi_t::msg_specan_dep_t::msg_specan_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_specan_dep_t::msg_specan_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_t = 0;
@@ -800,7 +800,7 @@ void piksi_t::msg_specan_dep_t::_clean_up() {
     }
 }
 
-piksi_t::msg_init_base_dep_t::msg_init_base_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_init_base_dep_t::msg_init_base_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -848,7 +848,7 @@ piksi_t::period_t::~period_t() {
 void piksi_t::period_t::_clean_up() {
 }
 
-piksi_t::msg_cw_start_t::msg_cw_start_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
+piksi_t::msg_cw_start_t::msg_cw_start_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, piksi_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

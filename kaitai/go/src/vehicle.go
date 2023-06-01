@@ -37,14 +37,14 @@ type Vehicle_MsgOdometry struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Vehicle
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewVehicle_MsgOdometry() *Vehicle_MsgOdometry {
 	return &Vehicle_MsgOdometry{
 	}
 }
 
-func (this *Vehicle_MsgOdometry) Read(io *kaitai.Stream, parent *Sbp_Message, root *Vehicle) (err error) {
+func (this *Vehicle_MsgOdometry) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Vehicle) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -102,14 +102,14 @@ type Vehicle_MsgWheeltick struct {
 	Ticks int32
 	_io *kaitai.Stream
 	_root *Vehicle
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewVehicle_MsgWheeltick() *Vehicle_MsgWheeltick {
 	return &Vehicle_MsgWheeltick{
 	}
 }
 
-func (this *Vehicle_MsgWheeltick) Read(io *kaitai.Stream, parent *Sbp_Message, root *Vehicle) (err error) {
+func (this *Vehicle_MsgWheeltick) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Vehicle) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

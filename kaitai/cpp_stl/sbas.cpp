@@ -24,7 +24,7 @@ sbas_t::~sbas_t() {
 void sbas_t::_clean_up() {
 }
 
-sbas_t::msg_sbas_raw_t::msg_sbas_raw_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, sbas_t* p__root) : kaitai::kstruct(p__io) {
+sbas_t::msg_sbas_raw_t::msg_sbas_raw_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, sbas_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;

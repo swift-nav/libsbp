@@ -256,23 +256,23 @@ namespace Kaitai
         }
         private void _read()
         {
-            _message = new List<Message>();
+            _message = new List<SbpMessage>();
             {
                 var i = 0;
                 while (!m_io.IsEof) {
-                    _message.Add(new Message(m_io, this, m_root));
+                    _message.Add(new SbpMessage(m_io, this, m_root));
                     i++;
                 }
             }
         }
-        public partial class Message : KaitaiStruct
+        public partial class SbpMessage : KaitaiStruct
         {
-            public static Message FromFile(string fileName)
+            public static SbpMessage FromFile(string fileName)
             {
-                return new Message(new KaitaiStream(fileName));
+                return new SbpMessage(new KaitaiStream(fileName));
             }
 
-            public Message(KaitaiStream p__io, Sbp p__parent = null, Sbp p__root = null) : base(p__io)
+            public SbpMessage(KaitaiStream p__io, Sbp p__parent = null, Sbp p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1707,7 +1707,7 @@ namespace Kaitai
                 return new SbpHeader(new KaitaiStream(fileName));
             }
 
-            public SbpHeader(KaitaiStream p__io, Sbp.Message p__parent = null, Sbp p__root = null) : base(p__io)
+            public SbpHeader(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Sbp p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -1729,18 +1729,18 @@ namespace Kaitai
             private ushort _sender;
             private byte _length;
             private Sbp m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public byte[] Preamble { get { return _preamble; } }
             public ushort MsgType { get { return _msgType; } }
             public ushort Sender { get { return _sender; } }
             public byte Length { get { return _length; } }
             public Sbp M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
-        private List<Message> _message;
+        private List<SbpMessage> _message;
         private Sbp m_root;
         private KaitaiStruct m_parent;
-        public List<Message> Message { get { return _message; } }
+        public List<SbpMessage> Message { get { return _message; } }
         public Sbp M_Root { get { return m_root; } }
         public KaitaiStruct M_Parent { get { return m_parent; } }
     }

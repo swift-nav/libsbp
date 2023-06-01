@@ -141,14 +141,14 @@ type Telemetry_MsgTelSv struct {
 	SvTel []*Telemetry_TelemetrySv
 	_io *kaitai.Stream
 	_root *Telemetry
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewTelemetry_MsgTelSv() *Telemetry_MsgTelSv {
 	return &Telemetry_MsgTelSv{
 	}
 }
 
-func (this *Telemetry_MsgTelSv) Read(io *kaitai.Stream, parent *Sbp_Message, root *Telemetry) (err error) {
+func (this *Telemetry_MsgTelSv) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Telemetry) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

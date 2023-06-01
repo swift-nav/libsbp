@@ -31,14 +31,14 @@ func (this *Bootload) Read(io *kaitai.Stream, parent interface{}, root *Bootload
 type Bootload_MsgNapDeviceDnaReq struct {
 	_io *kaitai.Stream
 	_root *Bootload
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewBootload_MsgNapDeviceDnaReq() *Bootload_MsgNapDeviceDnaReq {
 	return &Bootload_MsgNapDeviceDnaReq{
 	}
 }
 
-func (this *Bootload_MsgNapDeviceDnaReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *Bootload) (err error) {
+func (this *Bootload_MsgNapDeviceDnaReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Bootload) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -53,14 +53,14 @@ type Bootload_MsgBootloaderJumpToApp struct {
 	Jump uint8
 	_io *kaitai.Stream
 	_root *Bootload
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewBootload_MsgBootloaderJumpToApp() *Bootload_MsgBootloaderJumpToApp {
 	return &Bootload_MsgBootloaderJumpToApp{
 	}
 }
 
-func (this *Bootload_MsgBootloaderJumpToApp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Bootload) (err error) {
+func (this *Bootload_MsgBootloaderJumpToApp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Bootload) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -88,14 +88,14 @@ type Bootload_MsgBootloaderHandshakeResp struct {
 	Version string
 	_io *kaitai.Stream
 	_root *Bootload
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewBootload_MsgBootloaderHandshakeResp() *Bootload_MsgBootloaderHandshakeResp {
 	return &Bootload_MsgBootloaderHandshakeResp{
 	}
 }
 
-func (this *Bootload_MsgBootloaderHandshakeResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Bootload) (err error) {
+func (this *Bootload_MsgBootloaderHandshakeResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Bootload) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -134,14 +134,14 @@ type Bootload_MsgNapDeviceDnaResp struct {
 	Dna []uint8
 	_io *kaitai.Stream
 	_root *Bootload
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewBootload_MsgNapDeviceDnaResp() *Bootload_MsgNapDeviceDnaResp {
 	return &Bootload_MsgNapDeviceDnaResp{
 	}
 }
 
-func (this *Bootload_MsgNapDeviceDnaResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Bootload) (err error) {
+func (this *Bootload_MsgNapDeviceDnaResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Bootload) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -170,14 +170,14 @@ func (this *Bootload_MsgNapDeviceDnaResp) Read(io *kaitai.Stream, parent *Sbp_Me
 type Bootload_MsgBootloaderHandshakeReq struct {
 	_io *kaitai.Stream
 	_root *Bootload
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewBootload_MsgBootloaderHandshakeReq() *Bootload_MsgBootloaderHandshakeReq {
 	return &Bootload_MsgBootloaderHandshakeReq{
 	}
 }
 
-func (this *Bootload_MsgBootloaderHandshakeReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *Bootload) (err error) {
+func (this *Bootload_MsgBootloaderHandshakeReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Bootload) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -192,14 +192,14 @@ type Bootload_MsgBootloaderHandshakeDepA struct {
 	Handshake []uint8
 	_io *kaitai.Stream
 	_root *Bootload
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewBootload_MsgBootloaderHandshakeDepA() *Bootload_MsgBootloaderHandshakeDepA {
 	return &Bootload_MsgBootloaderHandshakeDepA{
 	}
 }
 
-func (this *Bootload_MsgBootloaderHandshakeDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Bootload) (err error) {
+func (this *Bootload_MsgBootloaderHandshakeDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Bootload) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

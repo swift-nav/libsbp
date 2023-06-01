@@ -243,7 +243,7 @@ const (
 	Sbp_MsgIds__MsgHeartbeat Sbp_MsgIds = 65535
 )
 type Sbp struct {
-	Message []*Sbp_Message
+	Message []*Sbp_SbpMessage
 	_io *kaitai.Stream
 	_root *Sbp
 	_parent interface{}
@@ -266,7 +266,7 @@ func (this *Sbp) Read(io *kaitai.Stream, parent interface{}, root *Sbp) (err err
 		if tmp1 {
 			break
 		}
-		tmp2 := NewSbp_Message()
+		tmp2 := NewSbp_SbpMessage()
 		err = tmp2.Read(this._io, this, this._root)
 		if err != nil {
 			return err
@@ -275,7 +275,7 @@ func (this *Sbp) Read(io *kaitai.Stream, parent interface{}, root *Sbp) (err err
 	}
 	return err
 }
-type Sbp_Message struct {
+type Sbp_SbpMessage struct {
 	Header *Sbp_SbpHeader
 	Payload interface{}
 	Crc uint16
@@ -284,12 +284,12 @@ type Sbp_Message struct {
 	_parent *Sbp
 	_raw_Payload []byte
 }
-func NewSbp_Message() *Sbp_Message {
-	return &Sbp_Message{
+func NewSbp_SbpMessage() *Sbp_SbpMessage {
+	return &Sbp_SbpMessage{
 	}
 }
 
-func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err error) {
+func (this *Sbp_SbpMessage) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3585,14 +3585,14 @@ type Sbp_SbpHeader struct {
 	Length uint8
 	_io *kaitai.Stream
 	_root *Sbp
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSbp_SbpHeader() *Sbp_SbpHeader {
 	return &Sbp_SbpHeader{
 	}
 }
 
-func (this *Sbp_SbpHeader) Read(io *kaitai.Stream, parent *Sbp_Message, root *Sbp) (err error) {
+func (this *Sbp_SbpHeader) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Sbp) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

@@ -79,7 +79,7 @@ public:
 
     public:
 
-        msg_soln_meta_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, solution_meta_t* p__root = 0);
+        msg_soln_meta_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, solution_meta_t* p__root = 0);
 
     private:
         void _read();
@@ -97,7 +97,7 @@ public:
         uint32_t m_age_gnss;
         std::vector<solution_input_type_t*>* m_sol_in;
         solution_meta_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -144,7 +144,7 @@ public:
          */
         std::vector<solution_input_type_t*>* sol_in() const { return m_sol_in; }
         solution_meta_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -155,7 +155,7 @@ public:
 
     public:
 
-        msg_soln_meta_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, solution_meta_t* p__root = 0);
+        msg_soln_meta_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, solution_meta_t* p__root = 0);
 
     private:
         void _read();
@@ -175,7 +175,7 @@ public:
         uint32_t m_last_used_gnss_vel_tow;
         std::vector<solution_input_type_t*>* m_sol_in;
         solution_meta_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -233,7 +233,7 @@ public:
          */
         std::vector<solution_input_type_t*>* sol_in() const { return m_sol_in; }
         solution_meta_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**

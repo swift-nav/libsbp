@@ -212,7 +212,7 @@ public:
 
     public:
 
-        msg_ssr_stec_correction_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_stec_correction_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -225,7 +225,7 @@ public:
         stec_header_t* m_header;
         std::vector<stec_sat_element_t*>* m_stec_sat_list;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -239,7 +239,7 @@ public:
          */
         std::vector<stec_sat_element_t*>* stec_sat_list() const { return m_stec_sat_list; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -306,7 +306,7 @@ public:
 
     public:
 
-        msg_ssr_orbit_clock_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_orbit_clock_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -331,7 +331,7 @@ public:
         int32_t m_c1;
         int32_t m_c2;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -410,14 +410,14 @@ public:
          */
         int32_t c2() const { return m_c2; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class msg_ssr_stec_correction_t : public kaitai::kstruct {
 
     public:
 
-        msg_ssr_stec_correction_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_stec_correction_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -434,7 +434,7 @@ public:
         uint8_t m_n_sats;
         std::vector<stec_sat_element_t*>* m_stec_sat_list;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -468,7 +468,7 @@ public:
          */
         std::vector<stec_sat_element_t*>* stec_sat_list() const { return m_stec_sat_list; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -481,7 +481,7 @@ public:
 
     public:
 
-        msg_ssr_orbit_clock_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_orbit_clock_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -506,7 +506,7 @@ public:
         int32_t m_c1;
         int32_t m_c2;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -585,7 +585,7 @@ public:
          */
         int32_t c2() const { return m_c2; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class bounds_header_t : public kaitai::kstruct {
@@ -650,7 +650,7 @@ public:
 
     public:
 
-        msg_ssr_gridded_correction_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_gridded_correction_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -665,7 +665,7 @@ public:
         tropospheric_delay_correction_t* m_tropo_delay_correction;
         std::vector<stec_residual_t*>* m_stec_residuals;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -689,7 +689,7 @@ public:
          */
         std::vector<stec_residual_t*>* stec_residuals() const { return m_stec_residuals; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -1121,7 +1121,7 @@ public:
 
     public:
 
-        msg_ssr_stec_correction_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_stec_correction_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -1134,7 +1134,7 @@ public:
         stec_header_dep_a_t* m_header;
         std::vector<stec_sat_element_t*>* m_stec_sat_list;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -1148,7 +1148,7 @@ public:
          */
         std::vector<stec_sat_element_t*>* stec_sat_list() const { return m_stec_sat_list; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -1228,7 +1228,7 @@ public:
 
     public:
 
-        msg_ssr_orbit_clock_bounds_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_orbit_clock_bounds_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -1244,7 +1244,7 @@ public:
         uint8_t m_n_sats;
         std::vector<orbit_clock_bound_t*>* m_orbit_clock_bounds;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -1273,7 +1273,7 @@ public:
          */
         std::vector<orbit_clock_bound_t*>* orbit_clock_bounds() const { return m_orbit_clock_bounds; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -1285,7 +1285,7 @@ public:
 
     public:
 
-        msg_ssr_gridded_correction_bounds_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_gridded_correction_bounds_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -1309,7 +1309,7 @@ public:
         uint8_t m_n_sats;
         std::vector<stec_sat_element_integrity_t*>* m_stec_sat_list;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -1379,7 +1379,7 @@ public:
          */
         std::vector<stec_sat_element_integrity_t*>* stec_sat_list() const { return m_stec_sat_list; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -1390,7 +1390,7 @@ public:
 
     public:
 
-        msg_ssr_grid_definition_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_grid_definition_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -1403,7 +1403,7 @@ public:
         grid_definition_header_dep_a_t* m_header;
         std::vector<uint8_t>* m_rle_list;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -1420,7 +1420,7 @@ public:
          */
         std::vector<uint8_t>* rle_list() const { return m_rle_list; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -1467,7 +1467,7 @@ public:
 
     public:
 
-        msg_ssr_satellite_apc_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_satellite_apc_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -1483,7 +1483,7 @@ public:
         uint8_t m_iod_ssr;
         std::vector<satellite_apc_t*>* m_apc;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -1514,7 +1514,7 @@ public:
          */
         std::vector<satellite_apc_t*>* apc() const { return m_apc; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -1583,7 +1583,7 @@ public:
 
     public:
 
-        msg_ssr_tile_definition_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_tile_definition_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -1603,7 +1603,7 @@ public:
         uint16_t m_cols;
         uint64_t m_bitmask;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -1690,7 +1690,7 @@ public:
          */
         uint64_t bitmask() const { return m_bitmask; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -1782,7 +1782,7 @@ public:
 
     public:
 
-        msg_ssr_gridded_correction_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_gridded_correction_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -1797,7 +1797,7 @@ public:
         tropospheric_delay_correction_t* m_tropo_delay_correction;
         std::vector<stec_residual_t*>* m_stec_residuals;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -1821,14 +1821,14 @@ public:
          */
         std::vector<stec_residual_t*>* stec_residuals() const { return m_stec_residuals; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class msg_ssr_orbit_clock_bounds_degradation_t : public kaitai::kstruct {
 
     public:
 
-        msg_ssr_orbit_clock_bounds_degradation_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_orbit_clock_bounds_degradation_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -1844,7 +1844,7 @@ public:
         uint64_t m_sat_bitmask;
         orbit_clock_bound_degradation_t* m_orbit_clock_bounds_degradation;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -1875,7 +1875,7 @@ public:
          */
         orbit_clock_bound_degradation_t* orbit_clock_bounds_degradation() const { return m_orbit_clock_bounds_degradation; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -1886,7 +1886,7 @@ public:
 
     public:
 
-        msg_ssr_gridded_correction_no_std_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_gridded_correction_no_std_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -1901,7 +1901,7 @@ public:
         tropospheric_delay_correction_no_std_t* m_tropo_delay_correction;
         std::vector<stec_residual_no_std_t*>* m_stec_residuals;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -1925,14 +1925,14 @@ public:
          */
         std::vector<stec_residual_no_std_t*>* stec_residuals() const { return m_stec_residuals; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     class msg_ssr_code_phase_biases_bounds_t : public kaitai::kstruct {
 
     public:
 
-        msg_ssr_code_phase_biases_bounds_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_code_phase_biases_bounds_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -1948,7 +1948,7 @@ public:
         uint8_t m_n_sats_signals;
         std::vector<code_phase_biases_sat_sig_t*>* m_satellites_signals;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -1977,7 +1977,7 @@ public:
          */
         std::vector<code_phase_biases_sat_sig_t*>* satellites_signals() const { return m_satellites_signals; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -1990,7 +1990,7 @@ public:
 
     public:
 
-        msg_ssr_code_biases_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_code_biases_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -2006,7 +2006,7 @@ public:
         uint8_t m_iod_ssr;
         std::vector<code_biases_content_t*>* m_biases;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -2037,7 +2037,7 @@ public:
          */
         std::vector<code_biases_content_t*>* biases() const { return m_biases; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -2054,7 +2054,7 @@ public:
 
     public:
 
-        msg_ssr_tile_definition_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_tile_definition_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -2078,7 +2078,7 @@ public:
         uint16_t m_cols;
         uint64_t m_bitmask;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -2181,7 +2181,7 @@ public:
          */
         uint64_t bitmask() const { return m_bitmask; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -2269,7 +2269,7 @@ public:
 
     public:
 
-        msg_ssr_satellite_apc_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_satellite_apc_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -2281,7 +2281,7 @@ public:
     private:
         std::vector<satellite_apc_t*>* m_apc;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -2290,7 +2290,7 @@ public:
          */
         std::vector<satellite_apc_t*>* apc() const { return m_apc; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -2347,7 +2347,7 @@ public:
 
     public:
 
-        msg_ssr_tile_definition_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_tile_definition_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -2368,7 +2368,7 @@ public:
         uint16_t m_cols;
         uint64_t m_bitmask;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -2460,7 +2460,7 @@ public:
          */
         uint64_t bitmask() const { return m_bitmask; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -2475,7 +2475,7 @@ public:
 
     public:
 
-        msg_ssr_phase_biases_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, ssr_t* p__root = 0);
+        msg_ssr_phase_biases_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, ssr_t* p__root = 0);
 
     private:
         void _read();
@@ -2495,7 +2495,7 @@ public:
         int8_t m_yaw_rate;
         std::vector<phase_biases_content_t*>* m_biases;
         ssr_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -2546,7 +2546,7 @@ public:
          */
         std::vector<phase_biases_content_t*>* biases() const { return m_biases; }
         ssr_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

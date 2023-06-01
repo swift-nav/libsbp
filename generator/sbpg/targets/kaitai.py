@@ -92,6 +92,13 @@ def get_type(f, type_map=KAITAI_CODE):
       else:
         ret += """
         size-eos: true"""
+# would be nice to have, but this prevents us from producing identical output
+# to the existing construct-based implementation of sbp2json
+#      if 'encoding' in f.options:
+#        e = f.options["encoding"].value
+#        if e == 'null_terminated' or e == 'double_null_terminated':
+#          ret += """
+#        terminator: 0"""
       return ret
   elif f.type_id == 'array':
     fill = f.options['fill'].value

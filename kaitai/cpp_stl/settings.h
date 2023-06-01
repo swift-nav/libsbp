@@ -47,7 +47,7 @@ public:
 
     public:
 
-        msg_settings_read_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, settings_t* p__root = 0);
+        msg_settings_read_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, settings_t* p__root = 0);
 
     private:
         void _read();
@@ -59,7 +59,7 @@ public:
     private:
         std::string m_setting;
         settings_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -69,7 +69,7 @@ public:
          */
         std::string setting() const { return m_setting; }
         settings_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -86,7 +86,7 @@ public:
 
     public:
 
-        msg_settings_write_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, settings_t* p__root = 0);
+        msg_settings_write_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, settings_t* p__root = 0);
 
     private:
         void _read();
@@ -99,7 +99,7 @@ public:
         uint8_t m_status;
         std::string m_setting;
         settings_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -114,7 +114,7 @@ public:
          */
         std::string setting() const { return m_setting; }
         settings_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -128,7 +128,7 @@ public:
 
     public:
 
-        msg_settings_register_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, settings_t* p__root = 0);
+        msg_settings_register_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, settings_t* p__root = 0);
 
     private:
         void _read();
@@ -141,7 +141,7 @@ public:
         uint8_t m_status;
         std::string m_setting;
         settings_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -157,7 +157,7 @@ public:
          */
         std::string setting() const { return m_setting; }
         settings_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -177,7 +177,7 @@ public:
 
     public:
 
-        msg_settings_read_by_index_resp_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, settings_t* p__root = 0);
+        msg_settings_read_by_index_resp_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, settings_t* p__root = 0);
 
     private:
         void _read();
@@ -190,7 +190,7 @@ public:
         uint16_t m_index;
         std::string m_setting;
         settings_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -206,7 +206,7 @@ public:
          */
         std::string setting() const { return m_setting; }
         settings_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -224,7 +224,7 @@ public:
 
     public:
 
-        msg_settings_read_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, settings_t* p__root = 0);
+        msg_settings_read_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, settings_t* p__root = 0);
 
     private:
         void _read();
@@ -236,7 +236,7 @@ public:
     private:
         std::string m_setting;
         settings_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -246,7 +246,7 @@ public:
          */
         std::string setting() const { return m_setting; }
         settings_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -258,7 +258,7 @@ public:
 
     public:
 
-        msg_settings_save_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, settings_t* p__root = 0);
+        msg_settings_save_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, settings_t* p__root = 0);
 
     private:
         void _read();
@@ -269,11 +269,11 @@ public:
 
     private:
         settings_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
         settings_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -286,7 +286,7 @@ public:
 
     public:
 
-        msg_settings_register_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, settings_t* p__root = 0);
+        msg_settings_register_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, settings_t* p__root = 0);
 
     private:
         void _read();
@@ -298,7 +298,7 @@ public:
     private:
         std::string m_setting;
         settings_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -308,7 +308,7 @@ public:
          */
         std::string setting() const { return m_setting; }
         settings_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -320,7 +320,7 @@ public:
 
     public:
 
-        msg_settings_read_by_index_req_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, settings_t* p__root = 0);
+        msg_settings_read_by_index_req_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, settings_t* p__root = 0);
 
     private:
         void _read();
@@ -332,7 +332,7 @@ public:
     private:
         uint16_t m_index;
         settings_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -342,7 +342,7 @@ public:
          */
         uint16_t index() const { return m_index; }
         settings_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -353,7 +353,7 @@ public:
 
     public:
 
-        msg_settings_read_by_index_done_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, settings_t* p__root = 0);
+        msg_settings_read_by_index_done_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, settings_t* p__root = 0);
 
     private:
         void _read();
@@ -364,11 +364,11 @@ public:
 
     private:
         settings_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
         settings_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -385,7 +385,7 @@ public:
 
     public:
 
-        msg_settings_write_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, settings_t* p__root = 0);
+        msg_settings_write_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, settings_t* p__root = 0);
 
     private:
         void _read();
@@ -397,7 +397,7 @@ public:
     private:
         std::string m_setting;
         settings_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -407,7 +407,7 @@ public:
          */
         std::string setting() const { return m_setting; }
         settings_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

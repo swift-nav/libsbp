@@ -30,14 +30,14 @@ type Logging_MsgLog struct {
 	Text string
 	_io *kaitai.Stream
 	_root *Logging
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLogging_MsgLog() *Logging_MsgLog {
 	return &Logging_MsgLog{
 	}
 }
 
-func (this *Logging_MsgLog) Read(io *kaitai.Stream, parent *Sbp_Message, root *Logging) (err error) {
+func (this *Logging_MsgLog) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Logging) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -80,14 +80,14 @@ type Logging_MsgFwd struct {
 	FwdPayload []uint8
 	_io *kaitai.Stream
 	_root *Logging
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLogging_MsgFwd() *Logging_MsgFwd {
 	return &Logging_MsgFwd{
 	}
 }
 
-func (this *Logging_MsgFwd) Read(io *kaitai.Stream, parent *Sbp_Message, root *Logging) (err error) {
+func (this *Logging_MsgFwd) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Logging) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -138,14 +138,14 @@ type Logging_MsgPrintDep struct {
 	Text string
 	_io *kaitai.Stream
 	_root *Logging
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLogging_MsgPrintDep() *Logging_MsgPrintDep {
 	return &Logging_MsgPrintDep{
 	}
 }
 
-func (this *Logging_MsgPrintDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Logging) (err error) {
+func (this *Logging_MsgPrintDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Logging) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

@@ -24,7 +24,7 @@ acquisition_t::~acquisition_t() {
 void acquisition_t::_clean_up() {
 }
 
-acquisition_t::msg_acq_result_dep_c_t::msg_acq_result_dep_c_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
+acquisition_t::msg_acq_result_dep_c_t::msg_acq_result_dep_c_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;
@@ -54,7 +54,7 @@ void acquisition_t::msg_acq_result_dep_c_t::_clean_up() {
     }
 }
 
-acquisition_t::msg_acq_result_dep_b_t::msg_acq_result_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
+acquisition_t::msg_acq_result_dep_b_t::msg_acq_result_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;
@@ -122,7 +122,7 @@ void acquisition_t::acq_sv_profile_t::_clean_up() {
     }
 }
 
-acquisition_t::msg_acq_sv_profile_t::msg_acq_sv_profile_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
+acquisition_t::msg_acq_sv_profile_t::msg_acq_sv_profile_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_acq_sv_profile = 0;
@@ -197,7 +197,7 @@ void acquisition_t::acq_sv_profile_dep_t::_clean_up() {
     }
 }
 
-acquisition_t::msg_acq_result_t::msg_acq_result_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
+acquisition_t::msg_acq_result_t::msg_acq_result_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;
@@ -227,7 +227,7 @@ void acquisition_t::msg_acq_result_t::_clean_up() {
     }
 }
 
-acquisition_t::msg_acq_result_dep_a_t::msg_acq_result_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
+acquisition_t::msg_acq_result_dep_a_t::msg_acq_result_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -253,7 +253,7 @@ acquisition_t::msg_acq_result_dep_a_t::~msg_acq_result_dep_a_t() {
 void acquisition_t::msg_acq_result_dep_a_t::_clean_up() {
 }
 
-acquisition_t::msg_acq_sv_profile_dep_t::msg_acq_sv_profile_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
+acquisition_t::msg_acq_sv_profile_dep_t::msg_acq_sv_profile_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, acquisition_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_acq_sv_profile = 0;

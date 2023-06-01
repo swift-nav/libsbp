@@ -31,7 +31,7 @@ namespace Kaitai
                 return new MsgLinuxSocketUsage(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxSocketUsage(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxSocketUsage(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -57,7 +57,7 @@ namespace Kaitai
             private List<ushort> _socketStateCounts;
             private List<ushort> _socketTypeCounts;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// average socket queue depths across all sockets on the system
@@ -83,7 +83,7 @@ namespace Kaitai
             /// </summary>
             public List<ushort> SocketTypeCounts { get { return _socketTypeCounts; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Kaitai
                 return new MsgLinuxSysState(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxSysState(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxSysState(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -123,7 +123,7 @@ namespace Kaitai
             private uint _time;
             private byte _flags;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// total system memory, in MiB
@@ -165,7 +165,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Kaitai
                 return new MsgLinuxCpuStateDepA(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxCpuStateDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxCpuStateDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -198,7 +198,7 @@ namespace Kaitai
             private string _tname;
             private string _cmdline;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// sequence of this status message, values from 0-9
@@ -225,7 +225,7 @@ namespace Kaitai
             /// </summary>
             public string Cmdline { get { return _cmdline; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Kaitai
                 return new MsgLinuxMemState(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxMemState(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxMemState(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -263,7 +263,7 @@ namespace Kaitai
             private string _tname;
             private string _cmdline;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// sequence of this status message, values from 0-9
@@ -300,7 +300,7 @@ namespace Kaitai
             /// </summary>
             public string Cmdline { get { return _cmdline; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Kaitai
                 return new MsgLinuxProcessFdCount(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxProcessFdCount(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxProcessFdCount(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -331,7 +331,7 @@ namespace Kaitai
             private ushort _fdCount;
             private string _cmdline;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// sequence of this status message, values from 0-9
@@ -353,7 +353,7 @@ namespace Kaitai
             /// </summary>
             public string Cmdline { get { return _cmdline; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Kaitai
                 return new MsgLinuxMemStateDepA(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxMemStateDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxMemStateDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -386,7 +386,7 @@ namespace Kaitai
             private string _tname;
             private string _cmdline;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// sequence of this status message, values from 0-9
@@ -413,7 +413,7 @@ namespace Kaitai
             /// </summary>
             public string Cmdline { get { return _cmdline; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace Kaitai
                 return new MsgLinuxProcessSocketQueues(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxProcessSocketQueues(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxProcessSocketQueues(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -452,7 +452,7 @@ namespace Kaitai
             private string _addressOfLargest;
             private string _cmdline;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// sequence of this status message, values from 0-9
@@ -501,7 +501,7 @@ namespace Kaitai
             /// </summary>
             public string Cmdline { get { return _cmdline; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -514,7 +514,7 @@ namespace Kaitai
                 return new MsgLinuxSysStateDepA(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxSysStateDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxSysStateDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -536,7 +536,7 @@ namespace Kaitai
             private ushort _procsStopping;
             private ushort _pidCount;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// total system memory
@@ -568,7 +568,7 @@ namespace Kaitai
             /// </summary>
             public ushort PidCount { get { return _pidCount; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -581,7 +581,7 @@ namespace Kaitai
                 return new MsgLinuxProcessFdSummary(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxProcessFdSummary(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxProcessFdSummary(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -595,7 +595,7 @@ namespace Kaitai
             private uint _sysFdCount;
             private string _mostOpened;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// count of total FDs open on the system
@@ -611,7 +611,7 @@ namespace Kaitai
             /// </summary>
             public string MostOpened { get { return _mostOpened; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -625,7 +625,7 @@ namespace Kaitai
                 return new MsgLinuxCpuState(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxCpuState(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxCpuState(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -649,7 +649,7 @@ namespace Kaitai
             private string _tname;
             private string _cmdline;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// sequence of this status message, values from 0-9
@@ -686,7 +686,7 @@ namespace Kaitai
             /// </summary>
             public string Cmdline { get { return _cmdline; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -699,7 +699,7 @@ namespace Kaitai
                 return new MsgLinuxProcessSocketCounts(new KaitaiStream(fileName));
             }
 
-            public MsgLinuxProcessSocketCounts(KaitaiStream p__io, Sbp.Message p__parent = null, Linux p__root = null) : base(p__io)
+            public MsgLinuxProcessSocketCounts(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Linux p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -721,7 +721,7 @@ namespace Kaitai
             private ushort _socketStates;
             private string _cmdline;
             private Linux m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// sequence of this status message, values from 0-9
@@ -759,7 +759,7 @@ namespace Kaitai
             /// </summary>
             public string Cmdline { get { return _cmdline; } }
             public Linux M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Linux m_root;
         private KaitaiStruct m_parent;

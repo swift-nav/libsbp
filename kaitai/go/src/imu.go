@@ -45,14 +45,14 @@ type Imu_MsgImuRaw struct {
 	GyrZ int16
 	_io *kaitai.Stream
 	_root *Imu
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewImu_MsgImuRaw() *Imu_MsgImuRaw {
 	return &Imu_MsgImuRaw{
 	}
 }
 
-func (this *Imu_MsgImuRaw) Read(io *kaitai.Stream, parent *Sbp_Message, root *Imu) (err error) {
+func (this *Imu_MsgImuRaw) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Imu) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -143,14 +143,14 @@ type Imu_MsgImuAux struct {
 	ImuConf uint8
 	_io *kaitai.Stream
 	_root *Imu
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewImu_MsgImuAux() *Imu_MsgImuAux {
 	return &Imu_MsgImuAux{
 	}
 }
 
-func (this *Imu_MsgImuAux) Read(io *kaitai.Stream, parent *Sbp_Message, root *Imu) (err error) {
+func (this *Imu_MsgImuAux) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Imu) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

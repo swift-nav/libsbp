@@ -34,7 +34,7 @@ namespace Kaitai
                 return new MsgFlashDone(new KaitaiStream(fileName));
             }
 
-            public MsgFlashDone(KaitaiStream p__io, Sbp.Message p__parent = null, Flash p__root = null) : base(p__io)
+            public MsgFlashDone(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Flash p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -46,14 +46,14 @@ namespace Kaitai
             }
             private byte _response;
             private Flash m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Response flags
             /// </summary>
             public byte Response { get { return _response; } }
             public Flash M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Kaitai
                 return new MsgM25FlashWriteStatus(new KaitaiStream(fileName));
             }
 
-            public MsgM25FlashWriteStatus(KaitaiStream p__io, Sbp.Message p__parent = null, Flash p__root = null) : base(p__io)
+            public MsgM25FlashWriteStatus(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Flash p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -83,14 +83,14 @@ namespace Kaitai
             }
             private List<byte> _status;
             private Flash m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Byte to write to the M25 flash status register
             /// </summary>
             public List<byte> Status { get { return _status; } }
             public Flash M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Kaitai
                 return new MsgFlashReadResp(new KaitaiStream(fileName));
             }
 
-            public MsgFlashReadResp(KaitaiStream p__io, Sbp.Message p__parent = null, Flash p__root = null) : base(p__io)
+            public MsgFlashReadResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Flash p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -128,7 +128,7 @@ namespace Kaitai
             private List<byte> _addrStart;
             private byte _addrLen;
             private Flash m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Target flags
@@ -146,7 +146,7 @@ namespace Kaitai
             /// </summary>
             public byte AddrLen { get { return _addrLen; } }
             public Flash M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Kaitai
                 return new MsgFlashErase(new KaitaiStream(fileName));
             }
 
-            public MsgFlashErase(KaitaiStream p__io, Sbp.Message p__parent = null, Flash p__root = null) : base(p__io)
+            public MsgFlashErase(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Flash p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -176,7 +176,7 @@ namespace Kaitai
             private byte _target;
             private uint _sectorNum;
             private Flash m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Target flags
@@ -188,7 +188,7 @@ namespace Kaitai
             /// </summary>
             public uint SectorNum { get { return _sectorNum; } }
             public Flash M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Kaitai
                 return new MsgStmUniqueIdResp(new KaitaiStream(fileName));
             }
 
-            public MsgStmUniqueIdResp(KaitaiStream p__io, Sbp.Message p__parent = null, Flash p__root = null) : base(p__io)
+            public MsgStmUniqueIdResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Flash p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -219,14 +219,14 @@ namespace Kaitai
             }
             private List<byte> _stmId;
             private Flash m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Device unique ID
             /// </summary>
             public List<byte> StmId { get { return _stmId; } }
             public Flash M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Kaitai
                 return new MsgStmUniqueIdReq(new KaitaiStream(fileName));
             }
 
-            public MsgStmUniqueIdReq(KaitaiStream p__io, Sbp.Message p__parent = null, Flash p__root = null) : base(p__io)
+            public MsgStmUniqueIdReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Flash p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -251,9 +251,9 @@ namespace Kaitai
             {
             }
             private Flash m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Flash M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace Kaitai
                 return new MsgFlashProgram(new KaitaiStream(fileName));
             }
 
-            public MsgFlashProgram(KaitaiStream p__io, Sbp.Message p__parent = null, Flash p__root = null) : base(p__io)
+            public MsgFlashProgram(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Flash p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -299,7 +299,7 @@ namespace Kaitai
             private byte _addrLen;
             private List<byte> _data;
             private Flash m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Target flags
@@ -322,7 +322,7 @@ namespace Kaitai
             /// </summary>
             public List<byte> Data { get { return _data; } }
             public Flash M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Kaitai
                 return new MsgFlashReadReq(new KaitaiStream(fileName));
             }
 
-            public MsgFlashReadReq(KaitaiStream p__io, Sbp.Message p__parent = null, Flash p__root = null) : base(p__io)
+            public MsgFlashReadReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Flash p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -360,7 +360,7 @@ namespace Kaitai
             private List<byte> _addrStart;
             private byte _addrLen;
             private Flash m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Target flags
@@ -378,7 +378,7 @@ namespace Kaitai
             /// </summary>
             public byte AddrLen { get { return _addrLen; } }
             public Flash M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Kaitai
                 return new MsgStmFlashUnlockSector(new KaitaiStream(fileName));
             }
 
-            public MsgStmFlashUnlockSector(KaitaiStream p__io, Sbp.Message p__parent = null, Flash p__root = null) : base(p__io)
+            public MsgStmFlashUnlockSector(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Flash p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -404,14 +404,14 @@ namespace Kaitai
             }
             private uint _sector;
             private Flash m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Flash sector number to unlock
             /// </summary>
             public uint Sector { get { return _sector; } }
             public Flash M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Kaitai
                 return new MsgStmFlashLockSector(new KaitaiStream(fileName));
             }
 
-            public MsgStmFlashLockSector(KaitaiStream p__io, Sbp.Message p__parent = null, Flash p__root = null) : base(p__io)
+            public MsgStmFlashLockSector(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Flash p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -437,14 +437,14 @@ namespace Kaitai
             }
             private uint _sector;
             private Flash m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Flash sector number to lock
             /// </summary>
             public uint Sector { get { return _sector; } }
             public Flash M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Flash m_root;
         private KaitaiStruct m_parent;

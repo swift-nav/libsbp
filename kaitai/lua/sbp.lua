@@ -256,22 +256,22 @@ function Sbp:_read()
   self.message = {}
   local i = 0
   while not self._io:is_eof() do
-    self.message[i + 1] = Sbp.Message(self._io, self, self._root)
+    self.message[i + 1] = Sbp.SbpMessage(self._io, self, self._root)
     i = i + 1
   end
 end
 
 
-Sbp.Message = class.class(KaitaiStruct)
+Sbp.SbpMessage = class.class(KaitaiStruct)
 
-function Sbp.Message:_init(io, parent, root)
+function Sbp.SbpMessage:_init(io, parent, root)
   KaitaiStruct._init(self, io)
   self._parent = parent
   self._root = root or self
   self:_read()
 end
 
-function Sbp.Message:_read()
+function Sbp.SbpMessage:_read()
   self.header = Sbp.SbpHeader(self._io, self, self._root)
   local _on = self.header.msg_type
   if _on == 525 then

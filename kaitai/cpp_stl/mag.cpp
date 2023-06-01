@@ -24,7 +24,7 @@ mag_t::~mag_t() {
 void mag_t::_clean_up() {
 }
 
-mag_t::msg_mag_raw_t::msg_mag_raw_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, mag_t* p__root) : kaitai::kstruct(p__io) {
+mag_t::msg_mag_raw_t::msg_mag_raw_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, mag_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

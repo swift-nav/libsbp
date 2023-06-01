@@ -30,14 +30,14 @@ type Linux_MsgLinuxSocketUsage struct {
 	SocketTypeCounts []uint16
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxSocketUsage() *Linux_MsgLinuxSocketUsage {
 	return &Linux_MsgLinuxSocketUsage{
 	}
 }
 
-func (this *Linux_MsgLinuxSocketUsage) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxSocketUsage) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -106,14 +106,14 @@ type Linux_MsgLinuxSysState struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxSysState() *Linux_MsgLinuxSysState {
 	return &Linux_MsgLinuxSysState{
 	}
 }
 
-func (this *Linux_MsgLinuxSysState) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxSysState) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -204,14 +204,14 @@ type Linux_MsgLinuxCpuStateDepA struct {
 	Cmdline string
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxCpuStateDepA() *Linux_MsgLinuxCpuStateDepA {
 	return &Linux_MsgLinuxCpuStateDepA{
 	}
 }
 
-func (this *Linux_MsgLinuxCpuStateDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxCpuStateDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -280,14 +280,14 @@ type Linux_MsgLinuxMemState struct {
 	Cmdline string
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxMemState() *Linux_MsgLinuxMemState {
 	return &Linux_MsgLinuxMemState{
 	}
 }
 
-func (this *Linux_MsgLinuxMemState) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxMemState) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -370,14 +370,14 @@ type Linux_MsgLinuxProcessFdCount struct {
 	Cmdline string
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxProcessFdCount() *Linux_MsgLinuxProcessFdCount {
 	return &Linux_MsgLinuxProcessFdCount{
 	}
 }
 
-func (this *Linux_MsgLinuxProcessFdCount) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxProcessFdCount) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -433,14 +433,14 @@ type Linux_MsgLinuxMemStateDepA struct {
 	Cmdline string
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxMemStateDepA() *Linux_MsgLinuxMemStateDepA {
 	return &Linux_MsgLinuxMemStateDepA{
 	}
 }
 
-func (this *Linux_MsgLinuxMemStateDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxMemStateDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -509,14 +509,14 @@ type Linux_MsgLinuxProcessSocketQueues struct {
 	Cmdline string
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxProcessSocketQueues() *Linux_MsgLinuxProcessSocketQueues {
 	return &Linux_MsgLinuxProcessSocketQueues{
 	}
 }
 
-func (this *Linux_MsgLinuxProcessSocketQueues) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxProcessSocketQueues) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -617,14 +617,14 @@ type Linux_MsgLinuxSysStateDepA struct {
 	PidCount uint16
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxSysStateDepA() *Linux_MsgLinuxSysStateDepA {
 	return &Linux_MsgLinuxSysStateDepA{
 	}
 }
 
-func (this *Linux_MsgLinuxSysStateDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxSysStateDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -694,14 +694,14 @@ type Linux_MsgLinuxProcessFdSummary struct {
 	MostOpened string
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxProcessFdSummary() *Linux_MsgLinuxProcessFdSummary {
 	return &Linux_MsgLinuxProcessFdSummary{
 	}
 }
 
-func (this *Linux_MsgLinuxProcessFdSummary) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxProcessFdSummary) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -746,14 +746,14 @@ type Linux_MsgLinuxCpuState struct {
 	Cmdline string
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxCpuState() *Linux_MsgLinuxCpuState {
 	return &Linux_MsgLinuxCpuState{
 	}
 }
 
-func (this *Linux_MsgLinuxCpuState) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxCpuState) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -838,14 +838,14 @@ type Linux_MsgLinuxProcessSocketCounts struct {
 	Cmdline string
 	_io *kaitai.Stream
 	_root *Linux
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewLinux_MsgLinuxProcessSocketCounts() *Linux_MsgLinuxProcessSocketCounts {
 	return &Linux_MsgLinuxProcessSocketCounts{
 	}
 }
 
-func (this *Linux_MsgLinuxProcessSocketCounts) Read(io *kaitai.Stream, parent *Sbp_Message, root *Linux) (err error) {
+func (this *Linux_MsgLinuxProcessSocketCounts) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Linux) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

@@ -24,7 +24,7 @@ vehicle_t::~vehicle_t() {
 void vehicle_t::_clean_up() {
 }
 
-vehicle_t::msg_odometry_t::msg_odometry_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, vehicle_t* p__root) : kaitai::kstruct(p__io) {
+vehicle_t::msg_odometry_t::msg_odometry_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, vehicle_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -49,7 +49,7 @@ vehicle_t::msg_odometry_t::~msg_odometry_t() {
 void vehicle_t::msg_odometry_t::_clean_up() {
 }
 
-vehicle_t::msg_wheeltick_t::msg_wheeltick_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, vehicle_t* p__root) : kaitai::kstruct(p__io) {
+vehicle_t::msg_wheeltick_t::msg_wheeltick_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, vehicle_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

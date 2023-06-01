@@ -24,7 +24,7 @@ tracking_t::~tracking_t() {
 void tracking_t::_clean_up() {
 }
 
-tracking_t::msg_tracking_state_detailed_dep_t::msg_tracking_state_detailed_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
+tracking_t::msg_tracking_state_detailed_dep_t::msg_tracking_state_detailed_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_tot = 0;
@@ -137,7 +137,7 @@ void tracking_t::tracking_channel_state_t::_clean_up() {
     }
 }
 
-tracking_t::msg_tracking_state_t::msg_tracking_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
+tracking_t::msg_tracking_state_t::msg_tracking_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_states = 0;
@@ -199,7 +199,7 @@ tracking_t::tracking_channel_state_dep_a_t::~tracking_channel_state_dep_a_t() {
 void tracking_t::tracking_channel_state_dep_a_t::_clean_up() {
 }
 
-tracking_t::msg_tracking_iq_dep_a_t::msg_tracking_iq_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
+tracking_t::msg_tracking_iq_dep_a_t::msg_tracking_iq_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;
@@ -260,7 +260,7 @@ tracking_t::tracking_channel_correlation_dep_t::~tracking_channel_correlation_de
 void tracking_t::tracking_channel_correlation_dep_t::_clean_up() {
 }
 
-tracking_t::msg_tracking_state_dep_a_t::msg_tracking_state_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
+tracking_t::msg_tracking_state_dep_a_t::msg_tracking_state_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_states = 0;
@@ -297,7 +297,7 @@ void tracking_t::msg_tracking_state_dep_a_t::_clean_up() {
     }
 }
 
-tracking_t::msg_measurement_state_t::msg_measurement_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
+tracking_t::msg_measurement_state_t::msg_measurement_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_states = 0;
@@ -358,7 +358,7 @@ tracking_t::tracking_channel_correlation_t::~tracking_channel_correlation_t() {
 void tracking_t::tracking_channel_correlation_t::_clean_up() {
 }
 
-tracking_t::msg_tracking_iq_t::msg_tracking_iq_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
+tracking_t::msg_tracking_iq_t::msg_tracking_iq_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;
@@ -395,7 +395,7 @@ void tracking_t::msg_tracking_iq_t::_clean_up() {
     }
 }
 
-tracking_t::msg_tracking_state_detailed_dep_a_t::msg_tracking_state_detailed_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
+tracking_t::msg_tracking_state_detailed_dep_a_t::msg_tracking_state_detailed_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_tot = 0;
@@ -450,7 +450,7 @@ void tracking_t::msg_tracking_state_detailed_dep_a_t::_clean_up() {
     }
 }
 
-tracking_t::msg_tracking_state_dep_b_t::msg_tracking_state_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
+tracking_t::msg_tracking_state_dep_b_t::msg_tracking_state_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_states = 0;
@@ -515,7 +515,7 @@ void tracking_t::measurement_state_t::_clean_up() {
     }
 }
 
-tracking_t::msg_tracking_iq_dep_b_t::msg_tracking_iq_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
+tracking_t::msg_tracking_iq_dep_b_t::msg_tracking_iq_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, tracking_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;

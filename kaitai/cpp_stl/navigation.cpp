@@ -24,7 +24,7 @@ navigation_t::~navigation_t() {
 void navigation_t::_clean_up() {
 }
 
-navigation_t::msg_pos_llh_dep_a_t::msg_pos_llh_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_llh_dep_a_t::msg_pos_llh_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -54,7 +54,7 @@ navigation_t::msg_pos_llh_dep_a_t::~msg_pos_llh_dep_a_t() {
 void navigation_t::msg_pos_llh_dep_a_t::_clean_up() {
 }
 
-navigation_t::msg_protection_level_dep_a_t::msg_protection_level_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_protection_level_dep_a_t::msg_protection_level_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -83,7 +83,7 @@ navigation_t::msg_protection_level_dep_a_t::~msg_protection_level_dep_a_t() {
 void navigation_t::msg_protection_level_dep_a_t::_clean_up() {
 }
 
-navigation_t::msg_pos_llh_cov_t::msg_pos_llh_cov_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_llh_cov_t::msg_pos_llh_cov_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -117,7 +117,7 @@ navigation_t::msg_pos_llh_cov_t::~msg_pos_llh_cov_t() {
 void navigation_t::msg_pos_llh_cov_t::_clean_up() {
 }
 
-navigation_t::msg_vel_ned_dep_a_t::msg_vel_ned_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_ned_dep_a_t::msg_vel_ned_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -147,7 +147,7 @@ navigation_t::msg_vel_ned_dep_a_t::~msg_vel_ned_dep_a_t() {
 void navigation_t::msg_vel_ned_dep_a_t::_clean_up() {
 }
 
-navigation_t::msg_vel_ned_cov_t::msg_vel_ned_cov_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_ned_cov_t::msg_vel_ned_cov_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -181,7 +181,7 @@ navigation_t::msg_vel_ned_cov_t::~msg_vel_ned_cov_t() {
 void navigation_t::msg_vel_ned_cov_t::_clean_up() {
 }
 
-navigation_t::msg_utc_time_t::msg_utc_time_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_utc_time_t::msg_utc_time_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -212,7 +212,7 @@ navigation_t::msg_utc_time_t::~msg_utc_time_t() {
 void navigation_t::msg_utc_time_t::_clean_up() {
 }
 
-navigation_t::msg_pos_ecef_cov_gnss_t::msg_pos_ecef_cov_gnss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_ecef_cov_gnss_t::msg_pos_ecef_cov_gnss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -246,7 +246,7 @@ navigation_t::msg_pos_ecef_cov_gnss_t::~msg_pos_ecef_cov_gnss_t() {
 void navigation_t::msg_pos_ecef_cov_gnss_t::_clean_up() {
 }
 
-navigation_t::msg_vel_ned_gnss_t::msg_vel_ned_gnss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_ned_gnss_t::msg_vel_ned_gnss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -276,7 +276,7 @@ navigation_t::msg_vel_ned_gnss_t::~msg_vel_ned_gnss_t() {
 void navigation_t::msg_vel_ned_gnss_t::_clean_up() {
 }
 
-navigation_t::msg_vel_ned_cov_gnss_t::msg_vel_ned_cov_gnss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_ned_cov_gnss_t::msg_vel_ned_cov_gnss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -310,7 +310,7 @@ navigation_t::msg_vel_ned_cov_gnss_t::~msg_vel_ned_cov_gnss_t() {
 void navigation_t::msg_vel_ned_cov_gnss_t::_clean_up() {
 }
 
-navigation_t::msg_baseline_ned_dep_a_t::msg_baseline_ned_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_baseline_ned_dep_a_t::msg_baseline_ned_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -340,7 +340,7 @@ navigation_t::msg_baseline_ned_dep_a_t::~msg_baseline_ned_dep_a_t() {
 void navigation_t::msg_baseline_ned_dep_a_t::_clean_up() {
 }
 
-navigation_t::msg_vel_ecef_dep_a_t::msg_vel_ecef_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_ecef_dep_a_t::msg_vel_ecef_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -369,7 +369,7 @@ navigation_t::msg_vel_ecef_dep_a_t::~msg_vel_ecef_dep_a_t() {
 void navigation_t::msg_vel_ecef_dep_a_t::_clean_up() {
 }
 
-navigation_t::msg_reference_frame_param_t::msg_reference_frame_param_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_reference_frame_param_t::msg_reference_frame_param_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -411,7 +411,7 @@ navigation_t::msg_reference_frame_param_t::~msg_reference_frame_param_t() {
 void navigation_t::msg_reference_frame_param_t::_clean_up() {
 }
 
-navigation_t::msg_pose_relative_t::msg_pose_relative_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pose_relative_t::msg_pose_relative_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_trans = 0;
@@ -463,7 +463,7 @@ void navigation_t::msg_pose_relative_t::_clean_up() {
     }
 }
 
-navigation_t::msg_vel_ecef_cov_t::msg_vel_ecef_cov_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_ecef_cov_t::msg_vel_ecef_cov_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -497,7 +497,7 @@ navigation_t::msg_vel_ecef_cov_t::~msg_vel_ecef_cov_t() {
 void navigation_t::msg_vel_ecef_cov_t::_clean_up() {
 }
 
-navigation_t::msg_vel_body_t::msg_vel_body_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_body_t::msg_vel_body_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -531,7 +531,7 @@ navigation_t::msg_vel_body_t::~msg_vel_body_t() {
 void navigation_t::msg_vel_body_t::_clean_up() {
 }
 
-navigation_t::msg_vel_ecef_gnss_t::msg_vel_ecef_gnss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_ecef_gnss_t::msg_vel_ecef_gnss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -560,7 +560,7 @@ navigation_t::msg_vel_ecef_gnss_t::~msg_vel_ecef_gnss_t() {
 void navigation_t::msg_vel_ecef_gnss_t::_clean_up() {
 }
 
-navigation_t::msg_vel_ecef_t::msg_vel_ecef_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_ecef_t::msg_vel_ecef_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -589,7 +589,7 @@ navigation_t::msg_vel_ecef_t::~msg_vel_ecef_t() {
 void navigation_t::msg_vel_ecef_t::_clean_up() {
 }
 
-navigation_t::msg_pos_llh_cov_gnss_t::msg_pos_llh_cov_gnss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_llh_cov_gnss_t::msg_pos_llh_cov_gnss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -623,7 +623,7 @@ navigation_t::msg_pos_llh_cov_gnss_t::~msg_pos_llh_cov_gnss_t() {
 void navigation_t::msg_pos_llh_cov_gnss_t::_clean_up() {
 }
 
-navigation_t::msg_baseline_ecef_t::msg_baseline_ecef_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_baseline_ecef_t::msg_baseline_ecef_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -652,7 +652,7 @@ navigation_t::msg_baseline_ecef_t::~msg_baseline_ecef_t() {
 void navigation_t::msg_baseline_ecef_t::_clean_up() {
 }
 
-navigation_t::msg_dops_dep_a_t::msg_dops_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_dops_dep_a_t::msg_dops_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -680,7 +680,7 @@ navigation_t::msg_dops_dep_a_t::~msg_dops_dep_a_t() {
 void navigation_t::msg_dops_dep_a_t::_clean_up() {
 }
 
-navigation_t::msg_pos_ecef_t::msg_pos_ecef_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_ecef_t::msg_pos_ecef_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -709,7 +709,7 @@ navigation_t::msg_pos_ecef_t::~msg_pos_ecef_t() {
 void navigation_t::msg_pos_ecef_t::_clean_up() {
 }
 
-navigation_t::msg_age_corrections_t::msg_age_corrections_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_age_corrections_t::msg_age_corrections_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -733,7 +733,7 @@ navigation_t::msg_age_corrections_t::~msg_age_corrections_t() {
 void navigation_t::msg_age_corrections_t::_clean_up() {
 }
 
-navigation_t::msg_vel_ecef_cov_gnss_t::msg_vel_ecef_cov_gnss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_ecef_cov_gnss_t::msg_vel_ecef_cov_gnss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -767,7 +767,7 @@ navigation_t::msg_vel_ecef_cov_gnss_t::~msg_vel_ecef_cov_gnss_t() {
 void navigation_t::msg_vel_ecef_cov_gnss_t::_clean_up() {
 }
 
-navigation_t::msg_protection_level_t::msg_protection_level_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_protection_level_t::msg_protection_level_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -810,7 +810,7 @@ navigation_t::msg_protection_level_t::~msg_protection_level_t() {
 void navigation_t::msg_protection_level_t::_clean_up() {
 }
 
-navigation_t::msg_pos_ecef_cov_t::msg_pos_ecef_cov_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_ecef_cov_t::msg_pos_ecef_cov_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -844,7 +844,7 @@ navigation_t::msg_pos_ecef_cov_t::~msg_pos_ecef_cov_t() {
 void navigation_t::msg_pos_ecef_cov_t::_clean_up() {
 }
 
-navigation_t::msg_pos_ecef_gnss_t::msg_pos_ecef_gnss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_ecef_gnss_t::msg_pos_ecef_gnss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -873,7 +873,7 @@ navigation_t::msg_pos_ecef_gnss_t::~msg_pos_ecef_gnss_t() {
 void navigation_t::msg_pos_ecef_gnss_t::_clean_up() {
 }
 
-navigation_t::msg_vel_ned_t::msg_vel_ned_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_ned_t::msg_vel_ned_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -903,7 +903,7 @@ navigation_t::msg_vel_ned_t::~msg_vel_ned_t() {
 void navigation_t::msg_vel_ned_t::_clean_up() {
 }
 
-navigation_t::msg_utc_leap_second_t::msg_utc_leap_second_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_utc_leap_second_t::msg_utc_leap_second_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -934,7 +934,7 @@ navigation_t::msg_utc_leap_second_t::~msg_utc_leap_second_t() {
 void navigation_t::msg_utc_leap_second_t::_clean_up() {
 }
 
-navigation_t::msg_gps_time_dep_a_t::msg_gps_time_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_gps_time_dep_a_t::msg_gps_time_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -960,7 +960,7 @@ navigation_t::msg_gps_time_dep_a_t::~msg_gps_time_dep_a_t() {
 void navigation_t::msg_gps_time_dep_a_t::_clean_up() {
 }
 
-navigation_t::msg_pos_llh_gnss_t::msg_pos_llh_gnss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_llh_gnss_t::msg_pos_llh_gnss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -990,7 +990,7 @@ navigation_t::msg_pos_llh_gnss_t::~msg_pos_llh_gnss_t() {
 void navigation_t::msg_pos_llh_gnss_t::_clean_up() {
 }
 
-navigation_t::msg_utc_time_gnss_t::msg_utc_time_gnss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_utc_time_gnss_t::msg_utc_time_gnss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1021,7 +1021,7 @@ navigation_t::msg_utc_time_gnss_t::~msg_utc_time_gnss_t() {
 void navigation_t::msg_utc_time_gnss_t::_clean_up() {
 }
 
-navigation_t::msg_vel_cog_t::msg_vel_cog_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_vel_cog_t::msg_vel_cog_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1051,7 +1051,7 @@ navigation_t::msg_vel_cog_t::~msg_vel_cog_t() {
 void navigation_t::msg_vel_cog_t::_clean_up() {
 }
 
-navigation_t::msg_baseline_ned_t::msg_baseline_ned_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_baseline_ned_t::msg_baseline_ned_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1081,7 +1081,7 @@ navigation_t::msg_baseline_ned_t::~msg_baseline_ned_t() {
 void navigation_t::msg_baseline_ned_t::_clean_up() {
 }
 
-navigation_t::msg_pos_llh_t::msg_pos_llh_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_llh_t::msg_pos_llh_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1111,7 +1111,7 @@ navigation_t::msg_pos_llh_t::~msg_pos_llh_t() {
 void navigation_t::msg_pos_llh_t::_clean_up() {
 }
 
-navigation_t::msg_baseline_heading_dep_a_t::msg_baseline_heading_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_baseline_heading_dep_a_t::msg_baseline_heading_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1137,7 +1137,7 @@ navigation_t::msg_baseline_heading_dep_a_t::~msg_baseline_heading_dep_a_t() {
 void navigation_t::msg_baseline_heading_dep_a_t::_clean_up() {
 }
 
-navigation_t::msg_gps_time_gnss_t::msg_gps_time_gnss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_gps_time_gnss_t::msg_gps_time_gnss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1163,7 +1163,7 @@ navigation_t::msg_gps_time_gnss_t::~msg_gps_time_gnss_t() {
 void navigation_t::msg_gps_time_gnss_t::_clean_up() {
 }
 
-navigation_t::msg_baseline_ecef_dep_a_t::msg_baseline_ecef_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_baseline_ecef_dep_a_t::msg_baseline_ecef_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1192,7 +1192,7 @@ navigation_t::msg_baseline_ecef_dep_a_t::~msg_baseline_ecef_dep_a_t() {
 void navigation_t::msg_baseline_ecef_dep_a_t::_clean_up() {
 }
 
-navigation_t::msg_gps_time_t::msg_gps_time_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_gps_time_t::msg_gps_time_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1218,7 +1218,7 @@ navigation_t::msg_gps_time_t::~msg_gps_time_t() {
 void navigation_t::msg_gps_time_t::_clean_up() {
 }
 
-navigation_t::msg_dops_t::msg_dops_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_dops_t::msg_dops_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1247,7 +1247,7 @@ navigation_t::msg_dops_t::~msg_dops_t() {
 void navigation_t::msg_dops_t::_clean_up() {
 }
 
-navigation_t::msg_pos_ecef_dep_a_t::msg_pos_ecef_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_ecef_dep_a_t::msg_pos_ecef_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1301,7 +1301,7 @@ navigation_t::estimated_horizontal_error_ellipse_t::~estimated_horizontal_error_
 void navigation_t::estimated_horizontal_error_ellipse_t::_clean_up() {
 }
 
-navigation_t::msg_pos_llh_acc_t::msg_pos_llh_acc_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
+navigation_t::msg_pos_llh_acc_t::msg_pos_llh_acc_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, navigation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_h_ellipse = 0;

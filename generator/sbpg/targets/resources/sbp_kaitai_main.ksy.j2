@@ -14,7 +14,7 @@ meta:
 
 seq:
   - id: message
-    type: message
+    type: sbp_message
     repeat: eos
 
 enums:
@@ -28,7 +28,7 @@ enums:
 ((*- endfor *))
 
 types:
-  message:
+  sbp_message:
     seq:
       - id: header
         type: sbp_header

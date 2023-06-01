@@ -28,14 +28,14 @@ type User_MsgUserData struct {
 	Contents []uint8
 	_io *kaitai.Stream
 	_root *User
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewUser_MsgUserData() *User_MsgUserData {
 	return &User_MsgUserData{
 	}
 }
 
-func (this *User_MsgUserData) Read(io *kaitai.Stream, parent *Sbp_Message, root *User) (err error) {
+func (this *User_MsgUserData) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *User) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

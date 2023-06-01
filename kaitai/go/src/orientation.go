@@ -34,14 +34,14 @@ type Orientation_MsgBaselineHeading struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Orientation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewOrientation_MsgBaselineHeading() *Orientation_MsgBaselineHeading {
 	return &Orientation_MsgBaselineHeading{
 	}
 }
 
-func (this *Orientation_MsgBaselineHeading) Read(io *kaitai.Stream, parent *Sbp_Message, root *Orientation) (err error) {
+func (this *Orientation_MsgBaselineHeading) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Orientation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -106,14 +106,14 @@ type Orientation_MsgOrientQuat struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Orientation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewOrientation_MsgOrientQuat() *Orientation_MsgOrientQuat {
 	return &Orientation_MsgOrientQuat{
 	}
 }
 
-func (this *Orientation_MsgOrientQuat) Read(io *kaitai.Stream, parent *Sbp_Message, root *Orientation) (err error) {
+func (this *Orientation_MsgOrientQuat) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Orientation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -230,14 +230,14 @@ type Orientation_MsgOrientEuler struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Orientation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewOrientation_MsgOrientEuler() *Orientation_MsgOrientEuler {
 	return &Orientation_MsgOrientEuler{
 	}
 }
 
-func (this *Orientation_MsgOrientEuler) Read(io *kaitai.Stream, parent *Sbp_Message, root *Orientation) (err error) {
+func (this *Orientation_MsgOrientEuler) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Orientation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -337,14 +337,14 @@ type Orientation_MsgAngularRate struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *Orientation
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewOrientation_MsgAngularRate() *Orientation_MsgAngularRate {
 	return &Orientation_MsgAngularRate{
 	}
 }
 
-func (this *Orientation_MsgAngularRate) Read(io *kaitai.Stream, parent *Sbp_Message, root *Orientation) (err error) {
+func (this *Orientation_MsgAngularRate) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Orientation) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

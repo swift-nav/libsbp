@@ -35,14 +35,14 @@ type Piksi_MsgNetworkStateResp struct {
 	Flags uint32
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgNetworkStateResp() *Piksi_MsgNetworkStateResp {
 	return &Piksi_MsgNetworkStateResp{
 	}
 }
 
-func (this *Piksi_MsgNetworkStateResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgNetworkStateResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -214,14 +214,14 @@ type Piksi_MsgCommandResp struct {
 	Code int32
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgCommandResp() *Piksi_MsgCommandResp {
 	return &Piksi_MsgCommandResp{
 	}
 }
 
-func (this *Piksi_MsgCommandResp) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgCommandResp) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -257,14 +257,14 @@ type Piksi_MsgCommandOutput struct {
 	Line string
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgCommandOutput() *Piksi_MsgCommandOutput {
 	return &Piksi_MsgCommandOutput{
 	}
 }
 
-func (this *Piksi_MsgCommandOutput) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgCommandOutput) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -367,14 +367,14 @@ type Piksi_MsgThreadState struct {
 	StackFree uint32
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgThreadState() *Piksi_MsgThreadState {
 	return &Piksi_MsgThreadState{
 	}
 }
 
-func (this *Piksi_MsgThreadState) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgThreadState) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -421,14 +421,14 @@ type Piksi_MsgUartStateDepa struct {
 	Latency *Piksi_Latency
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgUartStateDepa() *Piksi_MsgUartStateDepa {
 	return &Piksi_MsgUartStateDepa{
 	}
 }
 
-func (this *Piksi_MsgUartStateDepa) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgUartStateDepa) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -483,14 +483,14 @@ func (this *Piksi_MsgUartStateDepa) Read(io *kaitai.Stream, parent *Sbp_Message,
 type Piksi_MsgNetworkStateReq struct {
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgNetworkStateReq() *Piksi_MsgNetworkStateReq {
 	return &Piksi_MsgNetworkStateReq{
 	}
 }
 
-func (this *Piksi_MsgNetworkStateReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgNetworkStateReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -511,14 +511,14 @@ type Piksi_MsgDeviceMonitor struct {
 	FeTemperature int16
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgDeviceMonitor() *Piksi_MsgDeviceMonitor {
 	return &Piksi_MsgDeviceMonitor{
 	}
 }
 
-func (this *Piksi_MsgDeviceMonitor) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgDeviceMonitor) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -579,14 +579,14 @@ type Piksi_MsgMaskSatelliteDep struct {
 	Sid *Gnss_GnssSignalDep
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgMaskSatelliteDep() *Piksi_MsgMaskSatelliteDep {
 	return &Piksi_MsgMaskSatelliteDep{
 	}
 }
 
-func (this *Piksi_MsgMaskSatelliteDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgMaskSatelliteDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -631,14 +631,14 @@ type Piksi_MsgUartState struct {
 	ObsPeriod *Piksi_Period
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgUartState() *Piksi_MsgUartState {
 	return &Piksi_MsgUartState{
 	}
 }
 
-func (this *Piksi_MsgUartState) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgUartState) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -709,14 +709,14 @@ type Piksi_MsgSpecan struct {
 	AmplitudeValue []uint8
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgSpecan() *Piksi_MsgSpecan {
 	return &Piksi_MsgSpecan{
 	}
 }
 
-func (this *Piksi_MsgSpecan) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgSpecan) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -806,14 +806,14 @@ type Piksi_MsgIarState struct {
 	NumHyps uint32
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgIarState() *Piksi_MsgIarState {
 	return &Piksi_MsgIarState{
 	}
 }
 
-func (this *Piksi_MsgIarState) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgIarState) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -837,14 +837,14 @@ func (this *Piksi_MsgIarState) Read(io *kaitai.Stream, parent *Sbp_Message, root
 type Piksi_MsgAlmanac struct {
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgAlmanac() *Piksi_MsgAlmanac {
 	return &Piksi_MsgAlmanac{
 	}
 }
 
-func (this *Piksi_MsgAlmanac) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgAlmanac) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -860,14 +860,14 @@ type Piksi_MsgResetFilters struct {
 	Filter uint8
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgResetFilters() *Piksi_MsgResetFilters {
 	return &Piksi_MsgResetFilters{
 	}
 }
 
-func (this *Piksi_MsgResetFilters) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgResetFilters) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -976,14 +976,14 @@ type Piksi_MsgCommandReq struct {
 	Command string
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgCommandReq() *Piksi_MsgCommandReq {
 	return &Piksi_MsgCommandReq{
 	}
 }
 
-func (this *Piksi_MsgCommandReq) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgCommandReq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1019,14 +1019,14 @@ type Piksi_MsgMaskSatellite struct {
 	Sid *Gnss_GnssSignal
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgMaskSatellite() *Piksi_MsgMaskSatellite {
 	return &Piksi_MsgMaskSatellite{
 	}
 }
 
-func (this *Piksi_MsgMaskSatellite) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgMaskSatellite) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1060,14 +1060,14 @@ type Piksi_MsgNetworkBandwidthUsage struct {
 	Interfaces []*Piksi_NetworkUsage
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgNetworkBandwidthUsage() *Piksi_MsgNetworkBandwidthUsage {
 	return &Piksi_MsgNetworkBandwidthUsage{
 	}
 }
 
-func (this *Piksi_MsgNetworkBandwidthUsage) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgNetworkBandwidthUsage) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1101,14 +1101,14 @@ type Piksi_MsgReset struct {
 	Flags uint32
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgReset() *Piksi_MsgReset {
 	return &Piksi_MsgReset{
 	}
 }
 
-func (this *Piksi_MsgReset) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgReset) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1136,14 +1136,14 @@ type Piksi_MsgCellModemStatus struct {
 	Reserved []uint8
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgCellModemStatus() *Piksi_MsgCellModemStatus {
 	return &Piksi_MsgCellModemStatus{
 	}
 }
 
-func (this *Piksi_MsgCellModemStatus) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgCellModemStatus) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1202,14 +1202,14 @@ type Piksi_MsgFrontEndGain struct {
 	IfGain []int8
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgFrontEndGain() *Piksi_MsgFrontEndGain {
 	return &Piksi_MsgFrontEndGain{
 	}
 }
 
-func (this *Piksi_MsgFrontEndGain) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgFrontEndGain) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1247,14 +1247,14 @@ func (this *Piksi_MsgFrontEndGain) Read(io *kaitai.Stream, parent *Sbp_Message, 
 type Piksi_MsgResetDep struct {
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgResetDep() *Piksi_MsgResetDep {
 	return &Piksi_MsgResetDep{
 	}
 }
 
-func (this *Piksi_MsgResetDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgResetDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1269,14 +1269,14 @@ func (this *Piksi_MsgResetDep) Read(io *kaitai.Stream, parent *Sbp_Message, root
 type Piksi_MsgSetTime struct {
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgSetTime() *Piksi_MsgSetTime {
 	return &Piksi_MsgSetTime{
 	}
 }
 
-func (this *Piksi_MsgSetTime) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgSetTime) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1292,14 +1292,14 @@ func (this *Piksi_MsgSetTime) Read(io *kaitai.Stream, parent *Sbp_Message, root 
 type Piksi_MsgCwResults struct {
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgCwResults() *Piksi_MsgCwResults {
 	return &Piksi_MsgCwResults{
 	}
 }
 
-func (this *Piksi_MsgCwResults) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgCwResults) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1320,14 +1320,14 @@ type Piksi_MsgSpecanDep struct {
 	AmplitudeValue []uint8
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgSpecanDep() *Piksi_MsgSpecanDep {
 	return &Piksi_MsgSpecanDep{
 	}
 }
 
-func (this *Piksi_MsgSpecanDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgSpecanDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1414,14 +1414,14 @@ func (this *Piksi_MsgSpecanDep) Read(io *kaitai.Stream, parent *Sbp_Message, roo
 type Piksi_MsgInitBaseDep struct {
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgInitBaseDep() *Piksi_MsgInitBaseDep {
 	return &Piksi_MsgInitBaseDep{
 	}
 }
 
-func (this *Piksi_MsgInitBaseDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgInitBaseDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1503,14 +1503,14 @@ func (this *Piksi_Period) Read(io *kaitai.Stream, parent *Piksi_MsgUartState, ro
 type Piksi_MsgCwStart struct {
 	_io *kaitai.Stream
 	_root *Piksi
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewPiksi_MsgCwStart() *Piksi_MsgCwStart {
 	return &Piksi_MsgCwStart{
 	}
 }
 
-func (this *Piksi_MsgCwStart) Read(io *kaitai.Stream, parent *Sbp_Message, root *Piksi) (err error) {
+func (this *Piksi_MsgCwStart) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Piksi) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

@@ -24,7 +24,7 @@ system_t::~system_t() {
 void system_t::_clean_up() {
 }
 
-system_t::msg_heartbeat_t::msg_heartbeat_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_heartbeat_t::msg_heartbeat_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -47,7 +47,7 @@ system_t::msg_heartbeat_t::~msg_heartbeat_t() {
 void system_t::msg_heartbeat_t::_clean_up() {
 }
 
-system_t::msg_status_journal_t::msg_status_journal_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_status_journal_t::msg_status_journal_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_journal = 0;
@@ -88,7 +88,7 @@ void system_t::msg_status_journal_t::_clean_up() {
     }
 }
 
-system_t::msg_ins_status_t::msg_ins_status_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_ins_status_t::msg_ins_status_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -111,7 +111,7 @@ system_t::msg_ins_status_t::~msg_ins_status_t() {
 void system_t::msg_ins_status_t::_clean_up() {
 }
 
-system_t::msg_gnss_time_offset_t::msg_gnss_time_offset_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_gnss_time_offset_t::msg_gnss_time_offset_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -137,7 +137,7 @@ system_t::msg_gnss_time_offset_t::~msg_gnss_time_offset_t() {
 void system_t::msg_gnss_time_offset_t::_clean_up() {
 }
 
-system_t::msg_csac_telemetry_t::msg_csac_telemetry_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_csac_telemetry_t::msg_csac_telemetry_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -161,7 +161,7 @@ system_t::msg_csac_telemetry_t::~msg_csac_telemetry_t() {
 void system_t::msg_csac_telemetry_t::_clean_up() {
 }
 
-system_t::msg_pps_time_t::msg_pps_time_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_pps_time_t::msg_pps_time_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -185,7 +185,7 @@ system_t::msg_pps_time_t::~msg_pps_time_t() {
 void system_t::msg_pps_time_t::_clean_up() {
 }
 
-system_t::msg_ins_updates_t::msg_ins_updates_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_ins_updates_t::msg_ins_updates_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -214,7 +214,7 @@ system_t::msg_ins_updates_t::~msg_ins_updates_t() {
 void system_t::msg_ins_updates_t::_clean_up() {
 }
 
-system_t::msg_dgnss_status_t::msg_dgnss_status_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_dgnss_status_t::msg_dgnss_status_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -240,7 +240,7 @@ system_t::msg_dgnss_status_t::~msg_dgnss_status_t() {
 void system_t::msg_dgnss_status_t::_clean_up() {
 }
 
-system_t::msg_csac_telemetry_labels_t::msg_csac_telemetry_labels_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_csac_telemetry_labels_t::msg_csac_telemetry_labels_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -264,7 +264,7 @@ system_t::msg_csac_telemetry_labels_t::~msg_csac_telemetry_labels_t() {
 void system_t::msg_csac_telemetry_labels_t::_clean_up() {
 }
 
-system_t::msg_startup_t::msg_startup_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_startup_t::msg_startup_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -289,7 +289,7 @@ system_t::msg_startup_t::~msg_startup_t() {
 void system_t::msg_startup_t::_clean_up() {
 }
 
-system_t::msg_group_meta_t::msg_group_meta_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_group_meta_t::msg_group_meta_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_group_msgs = 0;
@@ -326,7 +326,7 @@ void system_t::msg_group_meta_t::_clean_up() {
     }
 }
 
-system_t::msg_sensor_aid_event_t::msg_sensor_aid_event_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_sensor_aid_event_t::msg_sensor_aid_event_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -381,7 +381,7 @@ system_t::sub_system_report_t::~sub_system_report_t() {
 void system_t::sub_system_report_t::_clean_up() {
 }
 
-system_t::msg_status_report_t::msg_status_report_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
+system_t::msg_status_report_t::msg_status_report_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, system_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_status = 0;

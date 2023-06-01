@@ -59,7 +59,7 @@ void telemetry_t::telemetry_sv_t::_clean_up() {
     }
 }
 
-telemetry_t::msg_tel_sv_t::msg_tel_sv_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, telemetry_t* p__root) : kaitai::kstruct(p__io) {
+telemetry_t::msg_tel_sv_t::msg_tel_sv_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, telemetry_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sv_tel = 0;

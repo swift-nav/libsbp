@@ -47,14 +47,14 @@ type Tracking_MsgTrackingStateDetailedDep struct {
 	MiscFlags uint8
 	_io *kaitai.Stream
 	_root *Tracking
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewTracking_MsgTrackingStateDetailedDep() *Tracking_MsgTrackingStateDetailedDep {
 	return &Tracking_MsgTrackingStateDetailedDep{
 	}
 }
 
-func (this *Tracking_MsgTrackingStateDetailedDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Tracking) (err error) {
+func (this *Tracking_MsgTrackingStateDetailedDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Tracking) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -375,14 +375,14 @@ type Tracking_MsgTrackingState struct {
 	States []*Tracking_TrackingChannelState
 	_io *kaitai.Stream
 	_root *Tracking
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewTracking_MsgTrackingState() *Tracking_MsgTrackingState {
 	return &Tracking_MsgTrackingState{
 	}
 }
 
-func (this *Tracking_MsgTrackingState) Read(io *kaitai.Stream, parent *Sbp_Message, root *Tracking) (err error) {
+func (this *Tracking_MsgTrackingState) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Tracking) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -469,14 +469,14 @@ type Tracking_MsgTrackingIqDepA struct {
 	Corrs []uint64
 	_io *kaitai.Stream
 	_root *Tracking
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewTracking_MsgTrackingIqDepA() *Tracking_MsgTrackingIqDepA {
 	return &Tracking_MsgTrackingIqDepA{
 	}
 }
 
-func (this *Tracking_MsgTrackingIqDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Tracking) (err error) {
+func (this *Tracking_MsgTrackingIqDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Tracking) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -563,14 +563,14 @@ type Tracking_MsgTrackingStateDepA struct {
 	States []*Tracking_TrackingChannelStateDepA
 	_io *kaitai.Stream
 	_root *Tracking
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewTracking_MsgTrackingStateDepA() *Tracking_MsgTrackingStateDepA {
 	return &Tracking_MsgTrackingStateDepA{
 	}
 }
 
-func (this *Tracking_MsgTrackingStateDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Tracking) (err error) {
+func (this *Tracking_MsgTrackingStateDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Tracking) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -606,14 +606,14 @@ type Tracking_MsgMeasurementState struct {
 	States []*Tracking_MeasurementState
 	_io *kaitai.Stream
 	_root *Tracking
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewTracking_MsgMeasurementState() *Tracking_MsgMeasurementState {
 	return &Tracking_MsgMeasurementState{
 	}
 }
 
-func (this *Tracking_MsgMeasurementState) Read(io *kaitai.Stream, parent *Sbp_Message, root *Tracking) (err error) {
+func (this *Tracking_MsgMeasurementState) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Tracking) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -691,14 +691,14 @@ type Tracking_MsgTrackingIq struct {
 	Corrs []uint64
 	_io *kaitai.Stream
 	_root *Tracking
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewTracking_MsgTrackingIq() *Tracking_MsgTrackingIq {
 	return &Tracking_MsgTrackingIq{
 	}
 }
 
-func (this *Tracking_MsgTrackingIq) Read(io *kaitai.Stream, parent *Sbp_Message, root *Tracking) (err error) {
+func (this *Tracking_MsgTrackingIq) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Tracking) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -765,14 +765,14 @@ type Tracking_MsgTrackingStateDetailedDepA struct {
 	MiscFlags uint8
 	_io *kaitai.Stream
 	_root *Tracking
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewTracking_MsgTrackingStateDetailedDepA() *Tracking_MsgTrackingStateDetailedDepA {
 	return &Tracking_MsgTrackingStateDetailedDepA{
 	}
 }
 
-func (this *Tracking_MsgTrackingStateDetailedDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Tracking) (err error) {
+func (this *Tracking_MsgTrackingStateDetailedDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Tracking) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -986,14 +986,14 @@ type Tracking_MsgTrackingStateDepB struct {
 	States []*Tracking_TrackingChannelStateDepB
 	_io *kaitai.Stream
 	_root *Tracking
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewTracking_MsgTrackingStateDepB() *Tracking_MsgTrackingStateDepB {
 	return &Tracking_MsgTrackingStateDepB{
 	}
 }
 
-func (this *Tracking_MsgTrackingStateDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Tracking) (err error) {
+func (this *Tracking_MsgTrackingStateDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Tracking) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1075,14 +1075,14 @@ type Tracking_MsgTrackingIqDepB struct {
 	Corrs []uint64
 	_io *kaitai.Stream
 	_root *Tracking
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewTracking_MsgTrackingIqDepB() *Tracking_MsgTrackingIqDepB {
 	return &Tracking_MsgTrackingIqDepB{
 	}
 }
 
-func (this *Tracking_MsgTrackingIqDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Tracking) (err error) {
+func (this *Tracking_MsgTrackingIqDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Tracking) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

@@ -35,7 +35,7 @@ namespace Kaitai
                 return new MsgBaselineHeading(new KaitaiStream(fileName));
             }
 
-            public MsgBaselineHeading(KaitaiStream p__io, Sbp.Message p__parent = null, Orientation p__root = null) : base(p__io)
+            public MsgBaselineHeading(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Orientation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -53,7 +53,7 @@ namespace Kaitai
             private byte _nSats;
             private byte _flags;
             private Orientation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -75,7 +75,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Orientation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Kaitai
                 return new MsgOrientQuat(new KaitaiStream(fileName));
             }
 
-            public MsgOrientQuat(KaitaiStream p__io, Sbp.Message p__parent = null, Orientation p__root = null) : base(p__io)
+            public MsgOrientQuat(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Orientation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -123,7 +123,7 @@ namespace Kaitai
             private float _zAccuracy;
             private byte _flags;
             private Orientation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -175,7 +175,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Orientation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Kaitai
                 return new MsgOrientEuler(new KaitaiStream(fileName));
             }
 
-            public MsgOrientEuler(KaitaiStream p__io, Sbp.Message p__parent = null, Orientation p__root = null) : base(p__io)
+            public MsgOrientEuler(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Orientation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -219,7 +219,7 @@ namespace Kaitai
             private float _yawAccuracy;
             private byte _flags;
             private Orientation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -261,7 +261,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Orientation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Kaitai
                 return new MsgAngularRate(new KaitaiStream(fileName));
             }
 
-            public MsgAngularRate(KaitaiStream p__io, Sbp.Message p__parent = null, Orientation p__root = null) : base(p__io)
+            public MsgAngularRate(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Orientation p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -303,7 +303,7 @@ namespace Kaitai
             private int _z;
             private byte _flags;
             private Orientation m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS Time of Week
@@ -330,7 +330,7 @@ namespace Kaitai
             /// </summary>
             public byte Flags { get { return _flags; } }
             public Orientation M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Orientation m_root;
         private KaitaiStruct m_parent;

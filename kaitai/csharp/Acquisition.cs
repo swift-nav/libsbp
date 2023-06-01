@@ -31,7 +31,7 @@ namespace Kaitai
                 return new MsgAcqResultDepC(new KaitaiStream(fileName));
             }
 
-            public MsgAcqResultDepC(KaitaiStream p__io, Sbp.Message p__parent = null, Acquisition p__root = null) : base(p__io)
+            public MsgAcqResultDepC(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Acquisition p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -49,7 +49,7 @@ namespace Kaitai
             private float _cf;
             private Gnss.GnssSignalDep _sid;
             private Acquisition m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// CN/0 of best point
@@ -71,7 +71,7 @@ namespace Kaitai
             /// </summary>
             public Gnss.GnssSignalDep Sid { get { return _sid; } }
             public Acquisition M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Kaitai
                 return new MsgAcqResultDepB(new KaitaiStream(fileName));
             }
 
-            public MsgAcqResultDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Acquisition p__root = null) : base(p__io)
+            public MsgAcqResultDepB(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Acquisition p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -102,7 +102,7 @@ namespace Kaitai
             private float _cf;
             private Gnss.GnssSignalDep _sid;
             private Acquisition m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// SNR of best point. Currently in arbitrary SNR points, but will be in
@@ -125,7 +125,7 @@ namespace Kaitai
             /// </summary>
             public Gnss.GnssSignalDep Sid { get { return _sid; } }
             public Acquisition M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Kaitai
                 return new MsgAcqSvProfile(new KaitaiStream(fileName));
             }
 
-            public MsgAcqSvProfile(KaitaiStream p__io, Sbp.Message p__parent = null, Acquisition p__root = null) : base(p__io)
+            public MsgAcqSvProfile(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Acquisition p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -269,14 +269,14 @@ namespace Kaitai
             }
             private List<AcqSvProfile> _acqSvProfile;
             private Acquisition m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// SV profiles during acquisition time
             /// </summary>
             public List<AcqSvProfile> AcqSvProfile { get { return _acqSvProfile; } }
             public Acquisition M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace Kaitai
                 return new MsgAcqResult(new KaitaiStream(fileName));
             }
 
-            public MsgAcqResult(KaitaiStream p__io, Sbp.Message p__parent = null, Acquisition p__root = null) : base(p__io)
+            public MsgAcqResult(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Acquisition p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -419,7 +419,7 @@ namespace Kaitai
             private float _cf;
             private Gnss.GnssSignal _sid;
             private Acquisition m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// CN/0 of best point
@@ -441,7 +441,7 @@ namespace Kaitai
             /// </summary>
             public Gnss.GnssSignal Sid { get { return _sid; } }
             public Acquisition M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace Kaitai
                 return new MsgAcqResultDepA(new KaitaiStream(fileName));
             }
 
-            public MsgAcqResultDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Acquisition p__root = null) : base(p__io)
+            public MsgAcqResultDepA(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Acquisition p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -472,7 +472,7 @@ namespace Kaitai
             private float _cf;
             private byte _prn;
             private Acquisition m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// SNR of best point. Currently dimensionless, but will have units of
@@ -496,7 +496,7 @@ namespace Kaitai
             /// </summary>
             public byte Prn { get { return _prn; } }
             public Acquisition M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Kaitai
                 return new MsgAcqSvProfileDep(new KaitaiStream(fileName));
             }
 
-            public MsgAcqSvProfileDep(KaitaiStream p__io, Sbp.Message p__parent = null, Acquisition p__root = null) : base(p__io)
+            public MsgAcqSvProfileDep(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Acquisition p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -528,14 +528,14 @@ namespace Kaitai
             }
             private List<AcqSvProfileDep> _acqSvProfile;
             private Acquisition m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// SV profiles during acquisition time
             /// </summary>
             public List<AcqSvProfileDep> AcqSvProfile { get { return _acqSvProfile; } }
             public Acquisition M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Acquisition m_root;
         private KaitaiStruct m_parent;

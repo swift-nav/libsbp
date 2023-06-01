@@ -32,7 +32,7 @@ namespace Kaitai
                 return new MsgNdbEvent(new KaitaiStream(fileName));
             }
 
-            public MsgNdbEvent(KaitaiStream p__io, Sbp.Message p__parent = null, Ndb p__root = null) : base(p__io)
+            public MsgNdbEvent(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Ndb p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -58,7 +58,7 @@ namespace Kaitai
             private Gnss.GnssSignal _srcSid;
             private ushort _originalSender;
             private Ndb m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// HW time in milliseconds.
@@ -106,7 +106,7 @@ namespace Kaitai
             /// </summary>
             public ushort OriginalSender { get { return _originalSender; } }
             public Ndb M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Ndb m_root;
         private KaitaiStruct m_parent;

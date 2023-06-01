@@ -24,7 +24,7 @@ observation_t::~observation_t() {
 void observation_t::_clean_up() {
 }
 
-observation_t::msg_sv_az_el_t::msg_sv_az_el_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_sv_az_el_t::msg_sv_az_el_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_azel = 0;
@@ -98,7 +98,7 @@ observation_t::gnss_capb_t::~gnss_capb_t() {
 void observation_t::gnss_capb_t::_clean_up() {
 }
 
-observation_t::msg_group_delay_dep_b_t::msg_group_delay_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_group_delay_dep_b_t::msg_group_delay_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_t_op = 0;
@@ -305,7 +305,7 @@ void observation_t::packed_obs_content_dep_c_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_glo_dep_d_t::msg_ephemeris_glo_dep_d_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_glo_dep_d_t::msg_ephemeris_glo_dep_d_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -364,7 +364,7 @@ void observation_t::msg_ephemeris_glo_dep_d_t::_clean_up() {
     }
 }
 
-observation_t::msg_obs_dep_a_t::msg_obs_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_obs_dep_a_t::msg_obs_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -406,7 +406,7 @@ void observation_t::msg_obs_dep_a_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_dep_b_t::msg_ephemeris_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_dep_b_t::msg_ephemeris_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -455,7 +455,7 @@ observation_t::msg_ephemeris_dep_b_t::~msg_ephemeris_dep_b_t() {
 void observation_t::msg_ephemeris_dep_b_t::_clean_up() {
 }
 
-observation_t::msg_obs_t::msg_obs_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_obs_t::msg_obs_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -521,7 +521,7 @@ observation_t::doppler_t::~doppler_t() {
 void observation_t::doppler_t::_clean_up() {
 }
 
-observation_t::msg_almanac_glo_dep_t::msg_almanac_glo_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_almanac_glo_dep_t::msg_almanac_glo_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -555,7 +555,7 @@ void observation_t::msg_almanac_glo_dep_t::_clean_up() {
     }
 }
 
-observation_t::msg_almanac_gps_dep_t::msg_almanac_gps_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_almanac_gps_dep_t::msg_almanac_gps_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -620,7 +620,7 @@ void observation_t::sv_az_el_t::_clean_up() {
     }
 }
 
-observation_t::msg_glo_biases_t::msg_glo_biases_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_glo_biases_t::msg_glo_biases_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -647,7 +647,7 @@ observation_t::msg_glo_biases_t::~msg_glo_biases_t() {
 void observation_t::msg_glo_biases_t::_clean_up() {
 }
 
-observation_t::msg_ephemeris_sbas_dep_b_t::msg_ephemeris_sbas_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_sbas_dep_b_t::msg_ephemeris_sbas_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -703,7 +703,7 @@ void observation_t::msg_ephemeris_sbas_dep_b_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_gps_dep_e_t::msg_ephemeris_gps_dep_e_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_gps_dep_e_t::msg_ephemeris_gps_dep_e_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -756,7 +756,7 @@ void observation_t::msg_ephemeris_gps_dep_e_t::_clean_up() {
     }
 }
 
-observation_t::msg_gnss_capb_t::msg_gnss_capb_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_gnss_capb_t::msg_gnss_capb_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_t_nmct = 0;
@@ -788,7 +788,7 @@ void observation_t::msg_gnss_capb_t::_clean_up() {
     }
 }
 
-observation_t::msg_almanac_gps_t::msg_almanac_gps_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_almanac_gps_t::msg_almanac_gps_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -824,7 +824,7 @@ void observation_t::msg_almanac_gps_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_qzss_t::msg_ephemeris_qzss_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_qzss_t::msg_ephemeris_qzss_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -877,7 +877,7 @@ void observation_t::msg_ephemeris_qzss_t::_clean_up() {
     }
 }
 
-observation_t::msg_group_delay_dep_a_t::msg_group_delay_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_group_delay_dep_a_t::msg_group_delay_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_t_op = 0;
@@ -909,7 +909,7 @@ void observation_t::msg_group_delay_dep_a_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_dep_c_t::msg_ephemeris_dep_c_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_dep_c_t::msg_ephemeris_dep_c_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;
@@ -988,7 +988,7 @@ observation_t::carrier_phase_dep_a_t::~carrier_phase_dep_a_t() {
 void observation_t::carrier_phase_dep_a_t::_clean_up() {
 }
 
-observation_t::msg_ephemeris_gal_t::msg_ephemeris_gal_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_gal_t::msg_ephemeris_gal_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -1081,7 +1081,7 @@ void observation_t::packed_osr_content_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_bds_t::msg_ephemeris_bds_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_bds_t::msg_ephemeris_bds_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -1135,7 +1135,7 @@ void observation_t::msg_ephemeris_bds_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_gps_dep_f_t::msg_ephemeris_gps_dep_f_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_gps_dep_f_t::msg_ephemeris_gps_dep_f_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -1216,7 +1216,7 @@ void observation_t::observation_header_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_sbas_dep_a_t::msg_ephemeris_sbas_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_sbas_dep_a_t::msg_ephemeris_sbas_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -1313,7 +1313,7 @@ void observation_t::packed_obs_content_t::_clean_up() {
     }
 }
 
-observation_t::msg_base_pos_ecef_t::msg_base_pos_ecef_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_base_pos_ecef_t::msg_base_pos_ecef_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1338,7 +1338,7 @@ observation_t::msg_base_pos_ecef_t::~msg_base_pos_ecef_t() {
 void observation_t::msg_base_pos_ecef_t::_clean_up() {
 }
 
-observation_t::msg_ephemeris_glo_dep_a_t::msg_ephemeris_glo_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_glo_dep_a_t::msg_ephemeris_glo_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -1394,7 +1394,7 @@ void observation_t::msg_ephemeris_glo_dep_a_t::_clean_up() {
     }
 }
 
-observation_t::msg_group_delay_t::msg_group_delay_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_group_delay_t::msg_group_delay_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_t_op = 0;
@@ -1430,7 +1430,7 @@ void observation_t::msg_group_delay_t::_clean_up() {
     }
 }
 
-observation_t::msg_almanac_glo_t::msg_almanac_glo_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_almanac_glo_t::msg_almanac_glo_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -1464,7 +1464,7 @@ void observation_t::msg_almanac_glo_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_gal_dep_a_t::msg_ephemeris_gal_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_gal_dep_a_t::msg_ephemeris_gal_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -1518,7 +1518,7 @@ void observation_t::msg_ephemeris_gal_dep_a_t::_clean_up() {
     }
 }
 
-observation_t::msg_obs_dep_b_t::msg_obs_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_obs_dep_b_t::msg_obs_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -1591,7 +1591,7 @@ void observation_t::packed_obs_content_dep_a_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_glo_t::msg_ephemeris_glo_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_glo_t::msg_ephemeris_glo_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -1650,7 +1650,7 @@ void observation_t::msg_ephemeris_glo_t::_clean_up() {
     }
 }
 
-observation_t::msg_iono_t::msg_iono_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_iono_t::msg_iono_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_t_nmct = 0;
@@ -1685,7 +1685,7 @@ void observation_t::msg_iono_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_dep_d_t::msg_ephemeris_dep_d_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_dep_d_t::msg_ephemeris_dep_d_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_sid = 0;
@@ -1740,7 +1740,7 @@ void observation_t::msg_ephemeris_dep_d_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_gps_t::msg_ephemeris_gps_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_gps_t::msg_ephemeris_gps_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -1793,7 +1793,7 @@ void observation_t::msg_ephemeris_gps_t::_clean_up() {
     }
 }
 
-observation_t::msg_base_pos_llh_t::msg_base_pos_llh_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_base_pos_llh_t::msg_base_pos_llh_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1854,7 +1854,7 @@ void observation_t::almanac_common_content_t::_clean_up() {
     }
 }
 
-observation_t::msg_osr_t::msg_osr_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_osr_t::msg_osr_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -1896,7 +1896,7 @@ void observation_t::msg_osr_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_glo_dep_c_t::msg_ephemeris_glo_dep_c_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_glo_dep_c_t::msg_ephemeris_glo_dep_c_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -1954,7 +1954,7 @@ void observation_t::msg_ephemeris_glo_dep_c_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_glo_dep_b_t::msg_ephemeris_glo_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_glo_dep_b_t::msg_ephemeris_glo_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -2010,7 +2010,7 @@ void observation_t::msg_ephemeris_glo_dep_b_t::_clean_up() {
     }
 }
 
-observation_t::msg_sv_configuration_gps_dep_t::msg_sv_configuration_gps_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_sv_configuration_gps_dep_t::msg_sv_configuration_gps_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_t_nmct = 0;
@@ -2038,7 +2038,7 @@ void observation_t::msg_sv_configuration_gps_dep_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_sbas_t::msg_ephemeris_sbas_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_sbas_t::msg_ephemeris_sbas_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_common = 0;
@@ -2129,7 +2129,7 @@ void observation_t::packed_obs_content_dep_b_t::_clean_up() {
     }
 }
 
-observation_t::msg_obs_dep_c_t::msg_obs_dep_c_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_obs_dep_c_t::msg_obs_dep_c_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -2171,7 +2171,7 @@ void observation_t::msg_obs_dep_c_t::_clean_up() {
     }
 }
 
-observation_t::msg_ephemeris_dep_a_t::msg_ephemeris_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
+observation_t::msg_ephemeris_dep_a_t::msg_ephemeris_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, observation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

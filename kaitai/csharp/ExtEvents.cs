@@ -32,7 +32,7 @@ namespace Kaitai
                 return new MsgExtEvent(new KaitaiStream(fileName));
             }
 
-            public MsgExtEvent(KaitaiStream p__io, Sbp.Message p__parent = null, ExtEvents p__root = null) : base(p__io)
+            public MsgExtEvent(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, ExtEvents p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -52,7 +52,7 @@ namespace Kaitai
             private byte _flags;
             private byte _pin;
             private ExtEvents m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// GPS week number
@@ -80,7 +80,7 @@ namespace Kaitai
             /// </summary>
             public byte Pin { get { return _pin; } }
             public ExtEvents M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private ExtEvents m_root;
         private KaitaiStruct m_parent;

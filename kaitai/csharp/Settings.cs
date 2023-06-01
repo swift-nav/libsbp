@@ -37,7 +37,7 @@ namespace Kaitai
                 return new MsgSettingsReadResp(new KaitaiStream(fileName));
             }
 
-            public MsgSettingsReadResp(KaitaiStream p__io, Sbp.Message p__parent = null, Settings p__root = null) : base(p__io)
+            public MsgSettingsReadResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Settings p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -49,7 +49,7 @@ namespace Kaitai
             }
             private string _setting;
             private Settings m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// A NULL-terminated and NULL-delimited string with contents
@@ -57,7 +57,7 @@ namespace Kaitai
             /// </summary>
             public string Setting { get { return _setting; } }
             public Settings M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Kaitai
                 return new MsgSettingsWriteResp(new KaitaiStream(fileName));
             }
 
-            public MsgSettingsWriteResp(KaitaiStream p__io, Sbp.Message p__parent = null, Settings p__root = null) : base(p__io)
+            public MsgSettingsWriteResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Settings p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -90,7 +90,7 @@ namespace Kaitai
             private byte _status;
             private string _setting;
             private Settings m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Write status
@@ -103,7 +103,7 @@ namespace Kaitai
             /// </summary>
             public string Setting { get { return _setting; } }
             public Settings M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Kaitai
                 return new MsgSettingsRegisterResp(new KaitaiStream(fileName));
             }
 
-            public MsgSettingsRegisterResp(KaitaiStream p__io, Sbp.Message p__parent = null, Settings p__root = null) : base(p__io)
+            public MsgSettingsRegisterResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Settings p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -133,7 +133,7 @@ namespace Kaitai
             private byte _status;
             private string _setting;
             private Settings m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Register status
@@ -147,7 +147,7 @@ namespace Kaitai
             /// </summary>
             public string Setting { get { return _setting; } }
             public Settings M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Kaitai
                 return new MsgSettingsReadByIndexResp(new KaitaiStream(fileName));
             }
 
-            public MsgSettingsReadByIndexResp(KaitaiStream p__io, Sbp.Message p__parent = null, Settings p__root = null) : base(p__io)
+            public MsgSettingsReadByIndexResp(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Settings p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -183,7 +183,7 @@ namespace Kaitai
             private ushort _index;
             private string _setting;
             private Settings m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// An index into the device settings, with values ranging from 0 to
@@ -197,7 +197,7 @@ namespace Kaitai
             /// </summary>
             public string Setting { get { return _setting; } }
             public Settings M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Kaitai
                 return new MsgSettingsReadReq(new KaitaiStream(fileName));
             }
 
-            public MsgSettingsReadReq(KaitaiStream p__io, Sbp.Message p__parent = null, Settings p__root = null) : base(p__io)
+            public MsgSettingsReadReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Settings p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -229,7 +229,7 @@ namespace Kaitai
             }
             private string _setting;
             private Settings m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// A NULL-terminated and NULL-delimited string with contents
@@ -237,7 +237,7 @@ namespace Kaitai
             /// </summary>
             public string Setting { get { return _setting; } }
             public Settings M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Kaitai
                 return new MsgSettingsSave(new KaitaiStream(fileName));
             }
 
-            public MsgSettingsSave(KaitaiStream p__io, Sbp.Message p__parent = null, Settings p__root = null) : base(p__io)
+            public MsgSettingsSave(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Settings p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -261,9 +261,9 @@ namespace Kaitai
             {
             }
             private Settings m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Settings M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Kaitai
                 return new MsgSettingsRegister(new KaitaiStream(fileName));
             }
 
-            public MsgSettingsRegister(KaitaiStream p__io, Sbp.Message p__parent = null, Settings p__root = null) : base(p__io)
+            public MsgSettingsRegister(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Settings p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -290,7 +290,7 @@ namespace Kaitai
             }
             private string _setting;
             private Settings m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// A NULL-terminated and delimited string with contents
@@ -298,7 +298,7 @@ namespace Kaitai
             /// </summary>
             public string Setting { get { return _setting; } }
             public Settings M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Kaitai
                 return new MsgSettingsReadByIndexReq(new KaitaiStream(fileName));
             }
 
-            public MsgSettingsReadByIndexReq(KaitaiStream p__io, Sbp.Message p__parent = null, Settings p__root = null) : base(p__io)
+            public MsgSettingsReadByIndexReq(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Settings p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -324,7 +324,7 @@ namespace Kaitai
             }
             private ushort _index;
             private Settings m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// An index into the device settings, with values ranging from 0 to
@@ -332,7 +332,7 @@ namespace Kaitai
             /// </summary>
             public ushort Index { get { return _index; } }
             public Settings M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Kaitai
                 return new MsgSettingsReadByIndexDone(new KaitaiStream(fileName));
             }
 
-            public MsgSettingsReadByIndexDone(KaitaiStream p__io, Sbp.Message p__parent = null, Settings p__root = null) : base(p__io)
+            public MsgSettingsReadByIndexDone(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Settings p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -355,9 +355,9 @@ namespace Kaitai
             {
             }
             private Settings m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
             public Settings M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace Kaitai
                 return new MsgSettingsWrite(new KaitaiStream(fileName));
             }
 
-            public MsgSettingsWrite(KaitaiStream p__io, Sbp.Message p__parent = null, Settings p__root = null) : base(p__io)
+            public MsgSettingsWrite(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Settings p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -388,7 +388,7 @@ namespace Kaitai
             }
             private string _setting;
             private Settings m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// A NULL-terminated and NULL-delimited string with contents
@@ -396,7 +396,7 @@ namespace Kaitai
             /// </summary>
             public string Setting { get { return _setting; } }
             public Settings M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Settings m_root;
         private KaitaiStruct m_parent;

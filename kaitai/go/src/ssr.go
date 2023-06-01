@@ -196,14 +196,14 @@ type Ssr_MsgSsrStecCorrectionDep struct {
 	StecSatList []*Ssr_StecSatElement
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrStecCorrectionDep() *Ssr_MsgSsrStecCorrectionDep {
 	return &Ssr_MsgSsrStecCorrectionDep{
 	}
 }
 
-func (this *Ssr_MsgSsrStecCorrectionDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrStecCorrectionDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -332,14 +332,14 @@ type Ssr_MsgSsrOrbitClockDepA struct {
 	C2 int32
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrOrbitClockDepA() *Ssr_MsgSsrOrbitClockDepA {
 	return &Ssr_MsgSsrOrbitClockDepA{
 	}
 }
 
-func (this *Ssr_MsgSsrOrbitClockDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrOrbitClockDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -488,14 +488,14 @@ type Ssr_MsgSsrStecCorrection struct {
 	StecSatList []*Ssr_StecSatElement
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrStecCorrection() *Ssr_MsgSsrStecCorrection {
 	return &Ssr_MsgSsrStecCorrection{
 	}
 }
 
-func (this *Ssr_MsgSsrStecCorrection) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrStecCorrection) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -590,14 +590,14 @@ type Ssr_MsgSsrOrbitClock struct {
 	C2 int32
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrOrbitClock() *Ssr_MsgSsrOrbitClock {
 	return &Ssr_MsgSsrOrbitClock{
 	}
 }
 
-func (this *Ssr_MsgSsrOrbitClock) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrOrbitClock) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -818,14 +818,14 @@ type Ssr_MsgSsrGriddedCorrection struct {
 	StecResiduals []*Ssr_StecResidual
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrGriddedCorrection() *Ssr_MsgSsrGriddedCorrection {
 	return &Ssr_MsgSsrGriddedCorrection{
 	}
 }
 
-func (this *Ssr_MsgSsrGriddedCorrection) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrGriddedCorrection) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1438,14 +1438,14 @@ type Ssr_MsgSsrStecCorrectionDepA struct {
 	StecSatList []*Ssr_StecSatElement
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrStecCorrectionDepA() *Ssr_MsgSsrStecCorrectionDepA {
 	return &Ssr_MsgSsrStecCorrectionDepA{
 	}
 }
 
-func (this *Ssr_MsgSsrStecCorrectionDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrStecCorrectionDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1582,14 +1582,14 @@ type Ssr_MsgSsrOrbitClockBounds struct {
 	OrbitClockBounds []*Ssr_OrbitClockBound
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrOrbitClockBounds() *Ssr_MsgSsrOrbitClockBounds {
 	return &Ssr_MsgSsrOrbitClockBounds{
 	}
 }
 
-func (this *Ssr_MsgSsrOrbitClockBounds) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrOrbitClockBounds) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1673,14 +1673,14 @@ type Ssr_MsgSsrGriddedCorrectionBounds struct {
 	StecSatList []*Ssr_StecSatElementIntegrity
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrGriddedCorrectionBounds() *Ssr_MsgSsrGriddedCorrectionBounds {
 	return &Ssr_MsgSsrGriddedCorrectionBounds{
 	}
 }
 
-func (this *Ssr_MsgSsrGriddedCorrectionBounds) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrGriddedCorrectionBounds) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1826,14 +1826,14 @@ type Ssr_MsgSsrGridDefinitionDepA struct {
 	RleList []uint8
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrGridDefinitionDepA() *Ssr_MsgSsrGridDefinitionDepA {
 	return &Ssr_MsgSsrGridDefinitionDepA{
 	}
 }
 
-func (this *Ssr_MsgSsrGridDefinitionDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrGridDefinitionDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -1922,14 +1922,14 @@ type Ssr_MsgSsrSatelliteApc struct {
 	Apc []*Ssr_SatelliteApc
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrSatelliteApc() *Ssr_MsgSsrSatelliteApc {
 	return &Ssr_MsgSsrSatelliteApc{
 	}
 }
 
-func (this *Ssr_MsgSsrSatelliteApc) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrSatelliteApc) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2083,14 +2083,14 @@ type Ssr_MsgSsrTileDefinitionDepA struct {
 	Bitmask uint64
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrTileDefinitionDepA() *Ssr_MsgSsrTileDefinitionDepA {
 	return &Ssr_MsgSsrTileDefinitionDepA{
 	}
 }
 
-func (this *Ssr_MsgSsrTileDefinitionDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrTileDefinitionDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2339,14 +2339,14 @@ type Ssr_MsgSsrGriddedCorrectionDepA struct {
 	StecResiduals []*Ssr_StecResidual
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrGriddedCorrectionDepA() *Ssr_MsgSsrGriddedCorrectionDepA {
 	return &Ssr_MsgSsrGriddedCorrectionDepA{
 	}
 }
 
-func (this *Ssr_MsgSsrGriddedCorrectionDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrGriddedCorrectionDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2409,14 +2409,14 @@ type Ssr_MsgSsrOrbitClockBoundsDegradation struct {
 	OrbitClockBoundsDegradation *Ssr_OrbitClockBoundDegradation
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrOrbitClockBoundsDegradation() *Ssr_MsgSsrOrbitClockBoundsDegradation {
 	return &Ssr_MsgSsrOrbitClockBoundsDegradation{
 	}
 }
 
-func (this *Ssr_MsgSsrOrbitClockBoundsDegradation) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrOrbitClockBoundsDegradation) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2483,14 +2483,14 @@ type Ssr_MsgSsrGriddedCorrectionNoStdDepA struct {
 	StecResiduals []*Ssr_StecResidualNoStd
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrGriddedCorrectionNoStdDepA() *Ssr_MsgSsrGriddedCorrectionNoStdDepA {
 	return &Ssr_MsgSsrGriddedCorrectionNoStdDepA{
 	}
 }
 
-func (this *Ssr_MsgSsrGriddedCorrectionNoStdDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrGriddedCorrectionNoStdDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2553,14 +2553,14 @@ type Ssr_MsgSsrCodePhaseBiasesBounds struct {
 	SatellitesSignals []*Ssr_CodePhaseBiasesSatSig
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrCodePhaseBiasesBounds() *Ssr_MsgSsrCodePhaseBiasesBounds {
 	return &Ssr_MsgSsrCodePhaseBiasesBounds{
 	}
 }
 
-func (this *Ssr_MsgSsrCodePhaseBiasesBounds) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrCodePhaseBiasesBounds) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2637,14 +2637,14 @@ type Ssr_MsgSsrCodeBiases struct {
 	Biases []*Ssr_CodeBiasesContent
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrCodeBiases() *Ssr_MsgSsrCodeBiases {
 	return &Ssr_MsgSsrCodeBiases{
 	}
 }
 
-func (this *Ssr_MsgSsrCodeBiases) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrCodeBiases) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -2736,14 +2736,14 @@ type Ssr_MsgSsrTileDefinition struct {
 	Bitmask uint64
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrTileDefinition() *Ssr_MsgSsrTileDefinition {
 	return &Ssr_MsgSsrTileDefinition{
 	}
 }
 
-func (this *Ssr_MsgSsrTileDefinition) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrTileDefinition) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3014,14 +3014,14 @@ type Ssr_MsgSsrSatelliteApcDep struct {
 	Apc []*Ssr_SatelliteApc
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrSatelliteApcDep() *Ssr_MsgSsrSatelliteApcDep {
 	return &Ssr_MsgSsrSatelliteApcDep{
 	}
 }
 
-func (this *Ssr_MsgSsrSatelliteApcDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrSatelliteApcDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3117,14 +3117,14 @@ type Ssr_MsgSsrTileDefinitionDepB struct {
 	Bitmask uint64
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrTileDefinitionDepB() *Ssr_MsgSsrTileDefinitionDepB {
 	return &Ssr_MsgSsrTileDefinitionDepB{
 	}
 }
 
-func (this *Ssr_MsgSsrTileDefinitionDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrTileDefinitionDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -3279,14 +3279,14 @@ type Ssr_MsgSsrPhaseBiases struct {
 	Biases []*Ssr_PhaseBiasesContent
 	_io *kaitai.Stream
 	_root *Ssr
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSsr_MsgSsrPhaseBiases() *Ssr_MsgSsrPhaseBiases {
 	return &Ssr_MsgSsrPhaseBiases{
 	}
 }
 
-func (this *Ssr_MsgSsrPhaseBiases) Read(io *kaitai.Stream, parent *Sbp_Message, root *Ssr) (err error) {
+func (this *Ssr_MsgSsrPhaseBiases) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Ssr) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

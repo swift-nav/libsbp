@@ -24,7 +24,7 @@ orientation_t::~orientation_t() {
 void orientation_t::_clean_up() {
 }
 
-orientation_t::msg_baseline_heading_t::msg_baseline_heading_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, orientation_t* p__root) : kaitai::kstruct(p__io) {
+orientation_t::msg_baseline_heading_t::msg_baseline_heading_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, orientation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -50,7 +50,7 @@ orientation_t::msg_baseline_heading_t::~msg_baseline_heading_t() {
 void orientation_t::msg_baseline_heading_t::_clean_up() {
 }
 
-orientation_t::msg_orient_quat_t::msg_orient_quat_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, orientation_t* p__root) : kaitai::kstruct(p__io) {
+orientation_t::msg_orient_quat_t::msg_orient_quat_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, orientation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -82,7 +82,7 @@ orientation_t::msg_orient_quat_t::~msg_orient_quat_t() {
 void orientation_t::msg_orient_quat_t::_clean_up() {
 }
 
-orientation_t::msg_orient_euler_t::msg_orient_euler_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, orientation_t* p__root) : kaitai::kstruct(p__io) {
+orientation_t::msg_orient_euler_t::msg_orient_euler_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, orientation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -112,7 +112,7 @@ orientation_t::msg_orient_euler_t::~msg_orient_euler_t() {
 void orientation_t::msg_orient_euler_t::_clean_up() {
 }
 
-orientation_t::msg_angular_rate_t::msg_angular_rate_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, orientation_t* p__root) : kaitai::kstruct(p__io) {
+orientation_t::msg_angular_rate_t::msg_angular_rate_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, orientation_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 

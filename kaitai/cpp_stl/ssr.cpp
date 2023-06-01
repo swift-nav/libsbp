@@ -104,7 +104,7 @@ ssr_t::tropospheric_delay_correction_no_std_t::~tropospheric_delay_correction_no
 void ssr_t::tropospheric_delay_correction_no_std_t::_clean_up() {
 }
 
-ssr_t::msg_ssr_stec_correction_dep_t::msg_ssr_stec_correction_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_stec_correction_dep_t::msg_ssr_stec_correction_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -177,7 +177,7 @@ void ssr_t::stec_sat_element_integrity_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_orbit_clock_dep_a_t::msg_ssr_orbit_clock_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_orbit_clock_dep_a_t::msg_ssr_orbit_clock_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_time = 0;
@@ -221,7 +221,7 @@ void ssr_t::msg_ssr_orbit_clock_dep_a_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_stec_correction_t::msg_ssr_stec_correction_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_stec_correction_t::msg_ssr_stec_correction_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -267,7 +267,7 @@ void ssr_t::msg_ssr_stec_correction_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_orbit_clock_t::msg_ssr_orbit_clock_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_orbit_clock_t::msg_ssr_orbit_clock_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_time = 0;
@@ -342,7 +342,7 @@ void ssr_t::bounds_header_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_gridded_correction_t::msg_ssr_gridded_correction_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_gridded_correction_t::msg_ssr_gridded_correction_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -629,7 +629,7 @@ void ssr_t::stec_header_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_stec_correction_dep_a_t::msg_ssr_stec_correction_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_stec_correction_dep_a_t::msg_ssr_stec_correction_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -703,7 +703,7 @@ void ssr_t::gridded_correction_header_dep_a_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_orbit_clock_bounds_t::msg_ssr_orbit_clock_bounds_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_orbit_clock_bounds_t::msg_ssr_orbit_clock_bounds_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -748,7 +748,7 @@ void ssr_t::msg_ssr_orbit_clock_bounds_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_gridded_correction_bounds_t::msg_ssr_gridded_correction_bounds_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_gridded_correction_bounds_t::msg_ssr_gridded_correction_bounds_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -805,7 +805,7 @@ void ssr_t::msg_ssr_gridded_correction_bounds_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_grid_definition_dep_a_t::msg_ssr_grid_definition_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_grid_definition_dep_a_t::msg_ssr_grid_definition_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -868,7 +868,7 @@ ssr_t::code_biases_content_t::~code_biases_content_t() {
 void ssr_t::code_biases_content_t::_clean_up() {
 }
 
-ssr_t::msg_ssr_satellite_apc_t::msg_ssr_satellite_apc_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_satellite_apc_t::msg_ssr_satellite_apc_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_time = 0;
@@ -940,7 +940,7 @@ ssr_t::phase_biases_content_t::~phase_biases_content_t() {
 void ssr_t::phase_biases_content_t::_clean_up() {
 }
 
-ssr_t::msg_ssr_tile_definition_dep_a_t::msg_ssr_tile_definition_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_tile_definition_dep_a_t::msg_ssr_tile_definition_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1002,7 +1002,7 @@ ssr_t::orbit_clock_bound_t::~orbit_clock_bound_t() {
 void ssr_t::orbit_clock_bound_t::_clean_up() {
 }
 
-ssr_t::msg_ssr_gridded_correction_dep_a_t::msg_ssr_gridded_correction_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_gridded_correction_dep_a_t::msg_ssr_gridded_correction_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -1050,7 +1050,7 @@ void ssr_t::msg_ssr_gridded_correction_dep_a_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_orbit_clock_bounds_degradation_t::msg_ssr_orbit_clock_bounds_degradation_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_orbit_clock_bounds_degradation_t::msg_ssr_orbit_clock_bounds_degradation_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -1085,7 +1085,7 @@ void ssr_t::msg_ssr_orbit_clock_bounds_degradation_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_gridded_correction_no_std_dep_a_t::msg_ssr_gridded_correction_no_std_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_gridded_correction_no_std_dep_a_t::msg_ssr_gridded_correction_no_std_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -1133,7 +1133,7 @@ void ssr_t::msg_ssr_gridded_correction_no_std_dep_a_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_code_phase_biases_bounds_t::msg_ssr_code_phase_biases_bounds_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_code_phase_biases_bounds_t::msg_ssr_code_phase_biases_bounds_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_header = 0;
@@ -1178,7 +1178,7 @@ void ssr_t::msg_ssr_code_phase_biases_bounds_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_code_biases_t::msg_ssr_code_biases_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_code_biases_t::msg_ssr_code_biases_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_time = 0;
@@ -1227,7 +1227,7 @@ void ssr_t::msg_ssr_code_biases_t::_clean_up() {
     }
 }
 
-ssr_t::msg_ssr_tile_definition_t::msg_ssr_tile_definition_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_tile_definition_t::msg_ssr_tile_definition_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_time = 0;
@@ -1296,7 +1296,7 @@ ssr_t::orbit_clock_bound_degradation_t::~orbit_clock_bound_degradation_t() {
 void ssr_t::orbit_clock_bound_degradation_t::_clean_up() {
 }
 
-ssr_t::msg_ssr_satellite_apc_dep_t::msg_ssr_satellite_apc_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_satellite_apc_dep_t::msg_ssr_satellite_apc_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_apc = 0;
@@ -1358,7 +1358,7 @@ ssr_t::tropospheric_delay_correction_t::~tropospheric_delay_correction_t() {
 void ssr_t::tropospheric_delay_correction_t::_clean_up() {
 }
 
-ssr_t::msg_ssr_tile_definition_dep_b_t::msg_ssr_tile_definition_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_tile_definition_dep_b_t::msg_ssr_tile_definition_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1390,7 +1390,7 @@ ssr_t::msg_ssr_tile_definition_dep_b_t::~msg_ssr_tile_definition_dep_b_t() {
 void ssr_t::msg_ssr_tile_definition_dep_b_t::_clean_up() {
 }
 
-ssr_t::msg_ssr_phase_biases_t::msg_ssr_phase_biases_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
+ssr_t::msg_ssr_phase_biases_t::msg_ssr_phase_biases_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, ssr_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_time = 0;

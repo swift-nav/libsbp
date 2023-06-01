@@ -112,7 +112,7 @@ public:
 
     public:
 
-        msg_tel_sv_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, telemetry_t* p__root = 0);
+        msg_tel_sv_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, telemetry_t* p__root = 0);
 
     private:
         void _read();
@@ -128,7 +128,7 @@ public:
         uint8_t m_origin_flags;
         std::vector<telemetry_sv_t*>* m_sv_tel;
         telemetry_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -160,7 +160,7 @@ public:
          */
         std::vector<telemetry_sv_t*>* sv_tel() const { return m_sv_tel; }
         telemetry_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

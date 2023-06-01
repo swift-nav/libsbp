@@ -24,7 +24,7 @@ user_t::~user_t() {
 void user_t::_clean_up() {
 }
 
-user_t::msg_user_data_t::msg_user_data_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, user_t* p__root) : kaitai::kstruct(p__io) {
+user_t::msg_user_data_t::msg_user_data_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, user_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_contents = 0;

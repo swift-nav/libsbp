@@ -47,7 +47,7 @@ public:
 
     public:
 
-        msg_tracking_state_detailed_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, tracking_t* p__root = 0);
+        msg_tracking_state_detailed_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, tracking_t* p__root = 0);
 
     private:
         void _read();
@@ -79,7 +79,7 @@ public:
         uint8_t m_pset_flags;
         uint8_t m_misc_flags;
         tracking_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -195,7 +195,7 @@ public:
          */
         uint8_t misc_flags() const { return m_misc_flags; }
         tracking_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -297,7 +297,7 @@ public:
 
     public:
 
-        msg_tracking_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, tracking_t* p__root = 0);
+        msg_tracking_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, tracking_t* p__root = 0);
 
     private:
         void _read();
@@ -309,7 +309,7 @@ public:
     private:
         std::vector<tracking_channel_state_t*>* m_states;
         tracking_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -318,7 +318,7 @@ public:
          */
         std::vector<tracking_channel_state_t*>* states() const { return m_states; }
         tracking_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -373,7 +373,7 @@ public:
 
     public:
 
-        msg_tracking_iq_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, tracking_t* p__root = 0);
+        msg_tracking_iq_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, tracking_t* p__root = 0);
 
     private:
         void _read();
@@ -387,7 +387,7 @@ public:
         gnss_t::gnss_signal_dep_t* m_sid;
         std::vector<uint64_t>* m_corrs;
         tracking_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -406,7 +406,7 @@ public:
          */
         std::vector<uint64_t>* corrs() const { return m_corrs; }
         tracking_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -455,7 +455,7 @@ public:
 
     public:
 
-        msg_tracking_state_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, tracking_t* p__root = 0);
+        msg_tracking_state_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, tracking_t* p__root = 0);
 
     private:
         void _read();
@@ -467,7 +467,7 @@ public:
     private:
         std::vector<tracking_channel_state_dep_a_t*>* m_states;
         tracking_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -476,7 +476,7 @@ public:
          */
         std::vector<tracking_channel_state_dep_a_t*>* states() const { return m_states; }
         tracking_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -489,7 +489,7 @@ public:
 
     public:
 
-        msg_measurement_state_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, tracking_t* p__root = 0);
+        msg_measurement_state_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, tracking_t* p__root = 0);
 
     private:
         void _read();
@@ -501,7 +501,7 @@ public:
     private:
         std::vector<measurement_state_t*>* m_states;
         tracking_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -510,7 +510,7 @@ public:
          */
         std::vector<measurement_state_t*>* states() const { return m_states; }
         tracking_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -560,7 +560,7 @@ public:
 
     public:
 
-        msg_tracking_iq_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, tracking_t* p__root = 0);
+        msg_tracking_iq_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, tracking_t* p__root = 0);
 
     private:
         void _read();
@@ -574,7 +574,7 @@ public:
         gnss_t::gnss_signal_t* m_sid;
         std::vector<uint64_t>* m_corrs;
         tracking_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -593,7 +593,7 @@ public:
          */
         std::vector<uint64_t>* corrs() const { return m_corrs; }
         tracking_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -605,7 +605,7 @@ public:
 
     public:
 
-        msg_tracking_state_detailed_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, tracking_t* p__root = 0);
+        msg_tracking_state_detailed_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, tracking_t* p__root = 0);
 
     private:
         void _read();
@@ -637,7 +637,7 @@ public:
         uint8_t m_pset_flags;
         uint8_t m_misc_flags;
         tracking_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -753,7 +753,7 @@ public:
          */
         uint8_t misc_flags() const { return m_misc_flags; }
         tracking_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -764,7 +764,7 @@ public:
 
     public:
 
-        msg_tracking_state_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, tracking_t* p__root = 0);
+        msg_tracking_state_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, tracking_t* p__root = 0);
 
     private:
         void _read();
@@ -776,7 +776,7 @@ public:
     private:
         std::vector<tracking_channel_state_dep_b_t*>* m_states;
         tracking_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -785,7 +785,7 @@ public:
          */
         std::vector<tracking_channel_state_dep_b_t*>* states() const { return m_states; }
         tracking_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -838,7 +838,7 @@ public:
 
     public:
 
-        msg_tracking_iq_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, tracking_t* p__root = 0);
+        msg_tracking_iq_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, tracking_t* p__root = 0);
 
     private:
         void _read();
@@ -852,7 +852,7 @@ public:
         gnss_t::gnss_signal_t* m_sid;
         std::vector<uint64_t>* m_corrs;
         tracking_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -871,7 +871,7 @@ public:
          */
         std::vector<uint64_t>* corrs() const { return m_corrs; }
         tracking_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

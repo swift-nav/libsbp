@@ -73,14 +73,14 @@ type SolutionMeta_MsgSolnMeta struct {
 	SolIn []*SolutionMeta_SolutionInputType
 	_io *kaitai.Stream
 	_root *SolutionMeta
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSolutionMeta_MsgSolnMeta() *SolutionMeta_MsgSolnMeta {
 	return &SolutionMeta_MsgSolnMeta{
 	}
 }
 
-func (this *SolutionMeta_MsgSolnMeta) Read(io *kaitai.Stream, parent *Sbp_Message, root *SolutionMeta) (err error) {
+func (this *SolutionMeta_MsgSolnMeta) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *SolutionMeta) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -184,14 +184,14 @@ type SolutionMeta_MsgSolnMetaDepA struct {
 	SolIn []*SolutionMeta_SolutionInputType
 	_io *kaitai.Stream
 	_root *SolutionMeta
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSolutionMeta_MsgSolnMetaDepA() *SolutionMeta_MsgSolnMetaDepA {
 	return &SolutionMeta_MsgSolnMetaDepA{
 	}
 }
 
-func (this *SolutionMeta_MsgSolnMetaDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *SolutionMeta) (err error) {
+func (this *SolutionMeta_MsgSolnMetaDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *SolutionMeta) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

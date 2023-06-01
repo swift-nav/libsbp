@@ -34,7 +34,7 @@ public:
 
     public:
 
-        msg_user_data_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, user_t* p__root = 0);
+        msg_user_data_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, user_t* p__root = 0);
 
     private:
         void _read();
@@ -46,7 +46,7 @@ public:
     private:
         std::vector<uint8_t>* m_contents;
         user_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -55,7 +55,7 @@ public:
          */
         std::vector<uint8_t>* contents() const { return m_contents; }
         user_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

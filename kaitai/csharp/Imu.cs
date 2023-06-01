@@ -42,7 +42,7 @@ namespace Kaitai
                 return new MsgImuRaw(new KaitaiStream(fileName));
             }
 
-            public MsgImuRaw(KaitaiStream p__io, Sbp.Message p__parent = null, Imu p__root = null) : base(p__io)
+            public MsgImuRaw(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Imu p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -68,7 +68,7 @@ namespace Kaitai
             private short _gyrY;
             private short _gyrZ;
             private Imu m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// Milliseconds since reference epoch and time status.
@@ -110,7 +110,7 @@ namespace Kaitai
             /// </summary>
             public short GyrZ { get { return _gyrZ; } }
             public Imu M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Kaitai
                 return new MsgImuAux(new KaitaiStream(fileName));
             }
 
-            public MsgImuAux(KaitaiStream p__io, Sbp.Message p__parent = null, Imu p__root = null) : base(p__io)
+            public MsgImuAux(KaitaiStream p__io, Sbp.SbpMessage p__parent = null, Imu p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -141,7 +141,7 @@ namespace Kaitai
             private short _temp;
             private byte _imuConf;
             private Imu m_root;
-            private Sbp.Message m_parent;
+            private Sbp.SbpMessage m_parent;
 
             /// <summary>
             /// IMU type
@@ -158,7 +158,7 @@ namespace Kaitai
             /// </summary>
             public byte ImuConf { get { return _imuConf; } }
             public Imu M_Root { get { return m_root; } }
-            public Sbp.Message M_Parent { get { return m_parent; } }
+            public Sbp.SbpMessage M_Parent { get { return m_parent; } }
         }
         private Imu m_root;
         private KaitaiStruct m_parent;

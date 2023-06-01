@@ -40,7 +40,7 @@ public:
 
     public:
 
-        msg_acq_result_dep_c_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, acquisition_t* p__root = 0);
+        msg_acq_result_dep_c_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, acquisition_t* p__root = 0);
 
     private:
         void _read();
@@ -55,7 +55,7 @@ public:
         float m_cf;
         gnss_t::gnss_signal_dep_t* m_sid;
         acquisition_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -79,7 +79,7 @@ public:
          */
         gnss_t::gnss_signal_dep_t* sid() const { return m_sid; }
         acquisition_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -90,7 +90,7 @@ public:
 
     public:
 
-        msg_acq_result_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, acquisition_t* p__root = 0);
+        msg_acq_result_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, acquisition_t* p__root = 0);
 
     private:
         void _read();
@@ -105,7 +105,7 @@ public:
         float m_cf;
         gnss_t::gnss_signal_dep_t* m_sid;
         acquisition_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -130,7 +130,7 @@ public:
          */
         gnss_t::gnss_signal_dep_t* sid() const { return m_sid; }
         acquisition_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -242,7 +242,7 @@ public:
 
     public:
 
-        msg_acq_sv_profile_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, acquisition_t* p__root = 0);
+        msg_acq_sv_profile_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, acquisition_t* p__root = 0);
 
     private:
         void _read();
@@ -254,7 +254,7 @@ public:
     private:
         std::vector<acq_sv_profile_t*>* m_acq_sv_profile;
         acquisition_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -263,7 +263,7 @@ public:
          */
         std::vector<acq_sv_profile_t*>* acq_sv_profile() const { return m_acq_sv_profile; }
         acquisition_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -375,7 +375,7 @@ public:
 
     public:
 
-        msg_acq_result_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, acquisition_t* p__root = 0);
+        msg_acq_result_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, acquisition_t* p__root = 0);
 
     private:
         void _read();
@@ -390,7 +390,7 @@ public:
         float m_cf;
         gnss_t::gnss_signal_t* m_sid;
         acquisition_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -414,7 +414,7 @@ public:
          */
         gnss_t::gnss_signal_t* sid() const { return m_sid; }
         acquisition_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -425,7 +425,7 @@ public:
 
     public:
 
-        msg_acq_result_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, acquisition_t* p__root = 0);
+        msg_acq_result_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, acquisition_t* p__root = 0);
 
     private:
         void _read();
@@ -440,7 +440,7 @@ public:
         float m_cf;
         uint8_t m_prn;
         acquisition_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -466,7 +466,7 @@ public:
          */
         uint8_t prn() const { return m_prn; }
         acquisition_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
     /**
@@ -477,7 +477,7 @@ public:
 
     public:
 
-        msg_acq_sv_profile_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent = 0, acquisition_t* p__root = 0);
+        msg_acq_sv_profile_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, acquisition_t* p__root = 0);
 
     private:
         void _read();
@@ -489,7 +489,7 @@ public:
     private:
         std::vector<acq_sv_profile_dep_t*>* m_acq_sv_profile;
         acquisition_t* m__root;
-        sbp_t::message_t* m__parent;
+        sbp_t::sbp_message_t* m__parent;
 
     public:
 
@@ -498,7 +498,7 @@ public:
          */
         std::vector<acq_sv_profile_dep_t*>* acq_sv_profile() const { return m_acq_sv_profile; }
         acquisition_t* _root() const { return m__root; }
-        sbp_t::message_t* _parent() const { return m__parent; }
+        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:

@@ -31,14 +31,14 @@ type Signing_MsgCertificateChainDep struct {
 	Signature []uint8
 	_io *kaitai.Stream
 	_root *Signing
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSigning_MsgCertificateChainDep() *Signing_MsgCertificateChainDep {
 	return &Signing_MsgCertificateChainDep{
 	}
 }
 
-func (this *Signing_MsgCertificateChainDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+func (this *Signing_MsgCertificateChainDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Signing) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -121,14 +121,14 @@ type Signing_MsgEd25519SignatureDepB struct {
 	SignedMessages []uint32
 	_io *kaitai.Stream
 	_root *Signing
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSigning_MsgEd25519SignatureDepB() *Signing_MsgEd25519SignatureDepB {
 	return &Signing_MsgEd25519SignatureDepB{
 	}
 }
 
-func (this *Signing_MsgEd25519SignatureDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+func (this *Signing_MsgEd25519SignatureDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Signing) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -212,14 +212,14 @@ type Signing_MsgEd25519CertificateDep struct {
 	CertificateBytes []uint8
 	_io *kaitai.Stream
 	_root *Signing
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSigning_MsgEd25519CertificateDep() *Signing_MsgEd25519CertificateDep {
 	return &Signing_MsgEd25519CertificateDep{
 	}
 }
 
-func (this *Signing_MsgEd25519CertificateDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+func (this *Signing_MsgEd25519CertificateDep) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Signing) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -407,14 +407,14 @@ type Signing_MsgEd25519SignatureDepA struct {
 	SignedMessages []uint32
 	_io *kaitai.Stream
 	_root *Signing
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSigning_MsgEd25519SignatureDepA() *Signing_MsgEd25519SignatureDepA {
 	return &Signing_MsgEd25519SignatureDepA{
 	}
 }
 
-func (this *Signing_MsgEd25519SignatureDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+func (this *Signing_MsgEd25519SignatureDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Signing) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -471,14 +471,14 @@ type Signing_MsgCertificateChain struct {
 	Signature *Signing_EcdsaSignature
 	_io *kaitai.Stream
 	_root *Signing
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSigning_MsgCertificateChain() *Signing_MsgCertificateChain {
 	return &Signing_MsgCertificateChain{
 	}
 }
 
-func (this *Signing_MsgCertificateChain) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+func (this *Signing_MsgCertificateChain) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Signing) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -560,14 +560,14 @@ type Signing_MsgEcdsaCertificate struct {
 	CertificateBytes []uint8
 	_io *kaitai.Stream
 	_root *Signing
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSigning_MsgEcdsaCertificate() *Signing_MsgEcdsaCertificate {
 	return &Signing_MsgEcdsaCertificate{
 	}
 }
 
-func (this *Signing_MsgEcdsaCertificate) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+func (this *Signing_MsgEcdsaCertificate) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Signing) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -635,14 +635,14 @@ type Signing_MsgEcdsaSignatureDepB struct {
 	SignedMessages []uint8
 	_io *kaitai.Stream
 	_root *Signing
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSigning_MsgEcdsaSignatureDepB() *Signing_MsgEcdsaSignatureDepB {
 	return &Signing_MsgEcdsaSignatureDepB{
 	}
 }
 
-func (this *Signing_MsgEcdsaSignatureDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+func (this *Signing_MsgEcdsaSignatureDepB) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Signing) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -754,14 +754,14 @@ type Signing_MsgEcdsaSignature struct {
 	SignedMessages []uint8
 	_io *kaitai.Stream
 	_root *Signing
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSigning_MsgEcdsaSignature() *Signing_MsgEcdsaSignature {
 	return &Signing_MsgEcdsaSignature{
 	}
 }
 
-func (this *Signing_MsgEcdsaSignature) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+func (this *Signing_MsgEcdsaSignature) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Signing) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -859,14 +859,14 @@ type Signing_MsgEcdsaSignatureDepA struct {
 	SignedMessages []uint8
 	_io *kaitai.Stream
 	_root *Signing
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSigning_MsgEcdsaSignatureDepA() *Signing_MsgEcdsaSignatureDepA {
 	return &Signing_MsgEcdsaSignatureDepA{
 	}
 }
 
-func (this *Signing_MsgEcdsaSignatureDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+func (this *Signing_MsgEcdsaSignatureDepA) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Signing) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

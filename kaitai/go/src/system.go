@@ -35,14 +35,14 @@ type System_MsgHeartbeat struct {
 	Flags uint32
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgHeartbeat() *System_MsgHeartbeat {
 	return &System_MsgHeartbeat{
 	}
 }
 
-func (this *System_MsgHeartbeat) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgHeartbeat) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -72,14 +72,14 @@ type System_MsgStatusJournal struct {
 	Journal []*System_StatusJournalItem
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgStatusJournal() *System_MsgStatusJournal {
 	return &System_MsgStatusJournal{
 	}
 }
 
-func (this *System_MsgStatusJournal) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgStatusJournal) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -152,14 +152,14 @@ type System_MsgInsStatus struct {
 	Flags uint32
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgInsStatus() *System_MsgInsStatus {
 	return &System_MsgInsStatus{
 	}
 }
 
-func (this *System_MsgInsStatus) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgInsStatus) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -188,14 +188,14 @@ type System_MsgGnssTimeOffset struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgGnssTimeOffset() *System_MsgGnssTimeOffset {
 	return &System_MsgGnssTimeOffset{
 	}
 }
 
-func (this *System_MsgGnssTimeOffset) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgGnssTimeOffset) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -249,14 +249,14 @@ type System_MsgCsacTelemetry struct {
 	Telemetry string
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgCsacTelemetry() *System_MsgCsacTelemetry {
 	return &System_MsgCsacTelemetry{
 	}
 }
 
-func (this *System_MsgCsacTelemetry) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgCsacTelemetry) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -303,14 +303,14 @@ type System_MsgPpsTime struct {
 	Flags uint8
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgPpsTime() *System_MsgPpsTime {
 	return &System_MsgPpsTime{
 	}
 }
 
-func (this *System_MsgPpsTime) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgPpsTime) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -351,14 +351,14 @@ type System_MsgInsUpdates struct {
 	Zerovel uint8
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgInsUpdates() *System_MsgInsUpdates {
 	return &System_MsgInsUpdates{
 	}
 }
 
-func (this *System_MsgInsUpdates) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgInsUpdates) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -441,14 +441,14 @@ type System_MsgDgnssStatus struct {
 	Source string
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgDgnssStatus() *System_MsgDgnssStatus {
 	return &System_MsgDgnssStatus{
 	}
 }
 
-func (this *System_MsgDgnssStatus) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgDgnssStatus) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -503,14 +503,14 @@ type System_MsgCsacTelemetryLabels struct {
 	TelemetryLabels string
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgCsacTelemetryLabels() *System_MsgCsacTelemetryLabels {
 	return &System_MsgCsacTelemetryLabels{
 	}
 }
 
-func (this *System_MsgCsacTelemetryLabels) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgCsacTelemetryLabels) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -549,14 +549,14 @@ type System_MsgStartup struct {
 	Reserved uint16
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgStartup() *System_MsgStartup {
 	return &System_MsgStartup{
 	}
 }
 
-func (this *System_MsgStartup) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgStartup) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -603,14 +603,14 @@ type System_MsgGroupMeta struct {
 	GroupMsgs []uint16
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgGroupMeta() *System_MsgGroupMeta {
 	return &System_MsgGroupMeta{
 	}
 }
 
-func (this *System_MsgGroupMeta) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgGroupMeta) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -681,14 +681,14 @@ type System_MsgSensorAidEvent struct {
 	Flags uint32
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgSensorAidEvent() *System_MsgSensorAidEvent {
 	return &System_MsgSensorAidEvent{
 	}
 }
 
-func (this *System_MsgSensorAidEvent) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgSensorAidEvent) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
@@ -838,14 +838,14 @@ type System_MsgStatusReport struct {
 	Status []*System_SubSystemReport
 	_io *kaitai.Stream
 	_root *System
-	_parent *Sbp_Message
+	_parent *Sbp_SbpMessage
 }
 func NewSystem_MsgStatusReport() *System_MsgStatusReport {
 	return &System_MsgStatusReport{
 	}
 }
 
-func (this *System_MsgStatusReport) Read(io *kaitai.Stream, parent *Sbp_Message, root *System) (err error) {
+func (this *System_MsgStatusReport) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *System) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root

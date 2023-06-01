@@ -24,7 +24,7 @@ signing_t::~signing_t() {
 void signing_t::_clean_up() {
 }
 
-signing_t::msg_certificate_chain_dep_t::msg_certificate_chain_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
+signing_t::msg_certificate_chain_dep_t::msg_certificate_chain_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_root_certificate = 0;
@@ -87,7 +87,7 @@ void signing_t::msg_certificate_chain_dep_t::_clean_up() {
     }
 }
 
-signing_t::msg_ed25519_signature_dep_b_t::msg_ed25519_signature_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
+signing_t::msg_ed25519_signature_dep_b_t::msg_ed25519_signature_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_signature = 0;
@@ -141,7 +141,7 @@ void signing_t::msg_ed25519_signature_dep_b_t::_clean_up() {
     }
 }
 
-signing_t::msg_ed25519_certificate_dep_t::msg_ed25519_certificate_dep_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
+signing_t::msg_ed25519_certificate_dep_t::msg_ed25519_certificate_dep_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_fingerprint = 0;
@@ -246,7 +246,7 @@ void signing_t::ecdsa_signature_t::_clean_up() {
     }
 }
 
-signing_t::msg_ed25519_signature_dep_a_t::msg_ed25519_signature_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
+signing_t::msg_ed25519_signature_dep_a_t::msg_ed25519_signature_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_signature = 0;
@@ -298,7 +298,7 @@ void signing_t::msg_ed25519_signature_dep_a_t::_clean_up() {
     }
 }
 
-signing_t::msg_certificate_chain_t::msg_certificate_chain_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
+signing_t::msg_certificate_chain_t::msg_certificate_chain_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_root_certificate = 0;
@@ -357,7 +357,7 @@ void signing_t::msg_certificate_chain_t::_clean_up() {
     }
 }
 
-signing_t::msg_ecdsa_certificate_t::msg_ecdsa_certificate_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
+signing_t::msg_ecdsa_certificate_t::msg_ecdsa_certificate_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_certificate_id = 0;
@@ -402,7 +402,7 @@ void signing_t::msg_ecdsa_certificate_t::_clean_up() {
     }
 }
 
-signing_t::msg_ecdsa_signature_dep_b_t::msg_ecdsa_signature_dep_b_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
+signing_t::msg_ecdsa_signature_dep_b_t::msg_ecdsa_signature_dep_b_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_certificate_id = 0;
@@ -458,7 +458,7 @@ void signing_t::msg_ecdsa_signature_dep_b_t::_clean_up() {
     }
 }
 
-signing_t::msg_ecdsa_signature_t::msg_ecdsa_signature_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
+signing_t::msg_ecdsa_signature_t::msg_ecdsa_signature_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_certificate_id = 0;
@@ -509,7 +509,7 @@ void signing_t::msg_ecdsa_signature_t::_clean_up() {
     }
 }
 
-signing_t::msg_ecdsa_signature_dep_a_t::msg_ecdsa_signature_dep_a_t(kaitai::kstream* p__io, sbp_t::message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
+signing_t::msg_ecdsa_signature_dep_a_t::msg_ecdsa_signature_dep_a_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent, signing_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_certificate_id = 0;
