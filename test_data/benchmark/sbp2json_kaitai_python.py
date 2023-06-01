@@ -15,7 +15,7 @@ LONG_SBP = os.path.join(TESTDATA_ROOT, "benchmark.sbp")
 CMD = ['python3', '-c', "import kaitai.python.tests.utils as utils; utils.sbp2json_kaitai()"]
 
 subprocess.run(
-    maybe_via_docker(PWD, "python-kaitai-sbp2json", CMD),
+    maybe_via_docker(PWD, "python-sbp2json", CMD),
     stdin=open(LONG_SBP, 'rb'),
     stdout=subprocess.DEVNULL,
     check=True)
