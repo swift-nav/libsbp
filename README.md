@@ -278,10 +278,8 @@ the following targets, which can be found in their respective subdirectories:
 * perl
 * go
 * cpp_stl
-* php
 * lua
 * python
-* nim
 * ruby
 
 The format specification files can also be used to generate bindings
@@ -290,6 +288,8 @@ for additional targets, including:
 * graphviz
 * rust
 * java
+* php
+* nim
 * html
 * construct
 * javascript
