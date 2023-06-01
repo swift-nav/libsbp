@@ -5,6 +5,8 @@ import sys
 import io
 
 import json
+import struct
+import binascii
 
 from construct.core import StreamError
 
@@ -12,7 +14,6 @@ import sbp.msg
 import sbp.table
 
 from sbp.msg import SBP_PREAMBLE
-from sbp.msg import UnpackError
 
 
 DEFAULT_JSON='rapidjson'
@@ -96,19 +97,42 @@ def sbp_main(args):
         while True:
             bytes_available = read_offset - unconsumed_offset
             b = buf[unconsumed_offset:(unconsumed_offset + bytes_available)]
-            if len(b) == 0:
-                break
-            if b[0] != SBP_PREAMBLE:
+
+            m = None
+            if len(b) > 0 and b[0] != SBP_PREAMBLE:
                 consumed = 1
             else:
+                if len(b) < header_len:
+                    # insufficient data, keep retrying until enough data becomes
+                    # available
+                    consumed = 0
+                else:
+                    preamble, msg_type, sender, payload_len = struct.unpack("<BHHB", b[:header_len])
+                    if len(b) < header_len + payload_len + 2:
+                        # insufficient data, keep retrying until enough data becomes
+                        # available
+                        consumed = 0
+                    else:
+                        # check CRC
+                        crc_read, = struct.unpack("<H", b[header_len + payload_len:header_len + payload_len + 2])
+                        crc_expected = binascii.crc_hqx(b[1:header_len + payload_len], 0)
+                        if crc_read == crc_expected:
+                            m = sbp.msg.SBP(msg_type, sender, payload_len, b[header_len:header_len + payload_len], crc_read)
+                            consumed = header_len + payload_len + 2
+                        else:
+                            sys.stderr.write("CRC error: {} vs {} for msg type {}\n".format(crc_read, crc_expected, msg_type))
+                            consumed = 1
+
+            if consumed == 0:
+                break
+
+            if m is not None and (not include or m.msg_type in include):
                 try:
-                    m = sbp.msg.SBP.unpack(b)
-                    if not include or m.msg_type in include:
-                        m = sbp.table.dispatch(m)
-                        dump(args, m)
-                    consumed = header_len + m.length + 2
-                except (UnpackError, StreamError, ValueError):
-                    consumed = 1
+                    m = sbp.table.dispatch(m)
+                    dump(args, m)
+                except (StreamError, ValueError):
+                    pass
+
             unconsumed_offset += consumed
 
 
