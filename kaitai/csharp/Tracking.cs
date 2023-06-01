@@ -902,8 +902,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// When enabled, a tracking channel can output the correlations at each
-        /// update interval.
+        /// Deprecated.
         /// </summary>
         public partial class MsgTrackingIqDepB : KaitaiStruct
         {

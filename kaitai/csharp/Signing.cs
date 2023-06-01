@@ -20,6 +20,92 @@ namespace Kaitai
         private void _read()
         {
         }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
+        public partial class MsgCertificateChainDep : KaitaiStruct
+        {
+            public static MsgCertificateChainDep FromFile(string fileName)
+            {
+                return new MsgCertificateChainDep(new KaitaiStream(fileName));
+            }
+
+            public MsgCertificateChainDep(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            {
+                m_parent = p__parent;
+                m_root = p__root;
+                _read();
+            }
+            private void _read()
+            {
+                _rootCertificate = new List<byte>();
+                for (var i = 0; i < 20; i++)
+                {
+                    _rootCertificate.Add(m_io.ReadU1());
+                }
+                _intermediateCertificate = new List<byte>();
+                for (var i = 0; i < 20; i++)
+                {
+                    _intermediateCertificate.Add(m_io.ReadU1());
+                }
+                _correctionsCertificate = new List<byte>();
+                for (var i = 0; i < 20; i++)
+                {
+                    _correctionsCertificate.Add(m_io.ReadU1());
+                }
+                _expiration = new UtcTime(m_io, this, m_root);
+                _signature = new List<byte>();
+                for (var i = 0; i < 64; i++)
+                {
+                    _signature.Add(m_io.ReadU1());
+                }
+            }
+            private List<byte> _rootCertificate;
+            private List<byte> _intermediateCertificate;
+            private List<byte> _correctionsCertificate;
+            private UtcTime _expiration;
+            private List<byte> _signature;
+            private Signing m_root;
+            private Sbp.Message m_parent;
+
+            /// <summary>
+            /// SHA-1 fingerprint of the root certificate
+            /// </summary>
+            public List<byte> RootCertificate { get { return _rootCertificate; } }
+
+            /// <summary>
+            /// SHA-1 fingerprint of the intermediate certificate
+            /// </summary>
+            public List<byte> IntermediateCertificate { get { return _intermediateCertificate; } }
+
+            /// <summary>
+            /// SHA-1 fingerprint of the corrections certificate
+            /// </summary>
+            public List<byte> CorrectionsCertificate { get { return _correctionsCertificate; } }
+
+            /// <summary>
+            /// The certificate chain comprised of three fingerprints: root
+            /// certificate, intermediate certificate and corrections certificate.
+            /// </summary>
+            public UtcTime Expiration { get { return _expiration; } }
+
+            /// <summary>
+            /// An ECDSA signature (created by the root certificate) over the
+            /// concatenation of the SBP payload bytes preceding this field. That
+            /// is, the concatenation of `root_certificate`,
+            /// `intermediate_certificate`, `corrections_certificate` and
+            /// `expiration`.  This certificate chain (allow list) can also be
+            /// validated by fetching it from `http(s)://certs.swiftnav.com/chain`.
+            /// </summary>
+            public List<byte> Signature { get { return _signature; } }
+            public Signing M_Root { get { return m_root; } }
+            public Sbp.Message M_Parent { get { return m_parent; } }
+        }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
         public partial class MsgEd25519SignatureDepB : KaitaiStruct
         {
             public static MsgEd25519SignatureDepB FromFile(string fileName)
@@ -98,6 +184,10 @@ namespace Kaitai
             public Signing M_Root { get { return m_root; } }
             public Sbp.Message M_Parent { get { return m_parent; } }
         }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
         public partial class MsgEd25519CertificateDep : KaitaiStruct
         {
             public static MsgEd25519CertificateDep FromFile(string fileName)
@@ -160,7 +250,7 @@ namespace Kaitai
                 return new UtcTime(new KaitaiStream(fileName));
             }
 
-            public UtcTime(KaitaiStream p__io, Signing.MsgCertificateChain p__parent = null, Signing p__root = null) : base(p__io)
+            public UtcTime(KaitaiStream p__io, KaitaiStruct p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;
@@ -184,7 +274,7 @@ namespace Kaitai
             private byte _seconds;
             private uint _ns;
             private Signing m_root;
-            private Signing.MsgCertificateChain m_parent;
+            private KaitaiStruct m_parent;
 
             /// <summary>
             /// Year
@@ -221,8 +311,54 @@ namespace Kaitai
             /// </summary>
             public uint Ns { get { return _ns; } }
             public Signing M_Root { get { return m_root; } }
-            public Signing.MsgCertificateChain M_Parent { get { return m_parent; } }
+            public KaitaiStruct M_Parent { get { return m_parent; } }
         }
+        public partial class EcdsaSignature : KaitaiStruct
+        {
+            public static EcdsaSignature FromFile(string fileName)
+            {
+                return new EcdsaSignature(new KaitaiStream(fileName));
+            }
+
+            public EcdsaSignature(KaitaiStream p__io, KaitaiStruct p__parent = null, Signing p__root = null) : base(p__io)
+            {
+                m_parent = p__parent;
+                m_root = p__root;
+                _read();
+            }
+            private void _read()
+            {
+                _len = m_io.ReadU1();
+                _data = new List<byte>();
+                for (var i = 0; i < 72; i++)
+                {
+                    _data.Add(m_io.ReadU1());
+                }
+            }
+            private byte _len;
+            private List<byte> _data;
+            private Signing m_root;
+            private KaitaiStruct m_parent;
+
+            /// <summary>
+            /// Number of bytes to use of the signature field.  The DER encoded
+            /// signature has a maximum size of 72 bytes but can vary between 70 and
+            /// 72 bytes in length.
+            /// </summary>
+            public byte Len { get { return _len; } }
+
+            /// <summary>
+            /// DER encoded ECDSA signature for the messages using SHA-256 as the
+            /// digest algorithm.
+            /// </summary>
+            public List<byte> Data { get { return _data; } }
+            public Signing M_Root { get { return m_root; } }
+            public KaitaiStruct M_Parent { get { return m_parent; } }
+        }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
         public partial class MsgEd25519SignatureDepA : KaitaiStruct
         {
             public static MsgEd25519SignatureDepA FromFile(string fileName)
@@ -311,17 +447,13 @@ namespace Kaitai
                     _correctionsCertificate.Add(m_io.ReadU1());
                 }
                 _expiration = new UtcTime(m_io, this, m_root);
-                _signature = new List<byte>();
-                for (var i = 0; i < 64; i++)
-                {
-                    _signature.Add(m_io.ReadU1());
-                }
+                _signature = new EcdsaSignature(m_io, this, m_root);
             }
             private List<byte> _rootCertificate;
             private List<byte> _intermediateCertificate;
             private List<byte> _correctionsCertificate;
             private UtcTime _expiration;
-            private List<byte> _signature;
+            private EcdsaSignature _signature;
             private Signing m_root;
             private Sbp.Message m_parent;
 
@@ -341,20 +473,22 @@ namespace Kaitai
             public List<byte> CorrectionsCertificate { get { return _correctionsCertificate; } }
 
             /// <summary>
-            /// The certificate chain comprised of three fingerprints: root
-            /// certificate, intermediate certificate and corrections certificate.
+            /// The time after which the signature given is no longer valid.
+            /// Implementors should consult a time source (such as GNSS) to check if
+            /// the current time is later than the expiration time, if the condition
+            /// is true, signatures in the stream should not be considered valid.
             /// </summary>
             public UtcTime Expiration { get { return _expiration; } }
 
             /// <summary>
-            /// An ECDSA signature (created by the root certificate) over the
-            /// concatenation of the SBP payload bytes preceding this field. That
-            /// is, the concatenation of `root_certificate`,
-            /// `intermediate_certificate`, `corrections_certificate` and
-            /// `expiration`.  This certificate chain (allow list) can also be
-            /// validated by fetching it from `http(s)://certs.swiftnav.com/chain`.
+            /// Signature (created by the root certificate) over the concatenation
+            /// of the SBP payload bytes preceding this field. That is, the
+            /// concatenation of `root_certificate`, `intermediate_certificate`,
+            /// `corrections_certificate` and `expiration`.  This certificate chain
+            /// (allow list) can also be validated by fetching it from
+            /// `http(s)://certs.swiftnav.com/chain`.
             /// </summary>
-            public List<byte> Signature { get { return _signature; } }
+            public EcdsaSignature Signature { get { return _signature; } }
             public Signing M_Root { get { return m_root; } }
             public Sbp.Message M_Parent { get { return m_parent; } }
         }
@@ -423,6 +557,109 @@ namespace Kaitai
         }
 
         /// <summary>
+        /// Deprecated.
+        /// </summary>
+        public partial class MsgEcdsaSignatureDepB : KaitaiStruct
+        {
+            public static MsgEcdsaSignatureDepB FromFile(string fileName)
+            {
+                return new MsgEcdsaSignatureDepB(new KaitaiStream(fileName));
+            }
+
+            public MsgEcdsaSignatureDepB(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            {
+                m_parent = p__parent;
+                m_root = p__root;
+                _read();
+            }
+            private void _read()
+            {
+                _flags = m_io.ReadU1();
+                _streamCounter = m_io.ReadU1();
+                _onDemandCounter = m_io.ReadU1();
+                _certificateId = new List<byte>();
+                for (var i = 0; i < 4; i++)
+                {
+                    _certificateId.Add(m_io.ReadU1());
+                }
+                _nSignatureBytes = m_io.ReadU1();
+                _signature = new List<byte>();
+                for (var i = 0; i < 72; i++)
+                {
+                    _signature.Add(m_io.ReadU1());
+                }
+                _signedMessages = new List<byte>();
+                {
+                    var i = 0;
+                    while (!m_io.IsEof) {
+                        _signedMessages.Add(m_io.ReadU1());
+                        i++;
+                    }
+                }
+            }
+            private byte _flags;
+            private byte _streamCounter;
+            private byte _onDemandCounter;
+            private List<byte> _certificateId;
+            private byte _nSignatureBytes;
+            private List<byte> _signature;
+            private List<byte> _signedMessages;
+            private Signing m_root;
+            private Sbp.Message m_parent;
+
+            /// <summary>
+            /// Describes the format of the `signed\_messages` field below.
+            /// </summary>
+            public byte Flags { get { return _flags; } }
+
+            /// <summary>
+            /// Signature message counter. Zero indexed and incremented with each
+            /// signature message.  The counter will not increment if this message
+            /// was in response to an on demand request.  The counter will roll over
+            /// after 256 messages. Upon connection, the value of the counter may
+            /// not initially be zero.
+            /// </summary>
+            public byte StreamCounter { get { return _streamCounter; } }
+
+            /// <summary>
+            /// On demand message counter. Zero indexed and incremented with each
+            /// signature message sent in response to an on demand message. The
+            /// counter will roll over after 256 messages.  Upon connection, the
+            /// value of the counter may not initially be zero.
+            /// </summary>
+            public byte OnDemandCounter { get { return _onDemandCounter; } }
+
+            /// <summary>
+            /// The last 4 bytes of the certificate's SHA-1 fingerprint
+            /// </summary>
+            public List<byte> CertificateId { get { return _certificateId; } }
+
+            /// <summary>
+            /// Number of bytes to use of the signature field.  The DER encoded
+            /// signature has a maximum size of 72 bytes but can vary between 70 and
+            /// 72 bytes in length.
+            /// </summary>
+            public byte NSignatureBytes { get { return _nSignatureBytes; } }
+
+            /// <summary>
+            /// DER encoded ECDSA signature for the messages using SHA-256 as the
+            /// digest algorithm.
+            /// </summary>
+            public List<byte> Signature { get { return _signature; } }
+
+            /// <summary>
+            /// CRCs of the messages covered by this signature.  For Skylark, which
+            /// delivers SBP messages wrapped in Swift's proprietary RTCM message,
+            /// these are the 24-bit CRCs from the RTCM message framing. For SBP
+            /// only streams, this will be 16-bit CRCs from the SBP framing.  See
+            /// the `flags` field to determine the type of CRCs covered.
+            /// </summary>
+            public List<byte> SignedMessages { get { return _signedMessages; } }
+            public Signing M_Root { get { return m_root; } }
+            public Sbp.Message M_Parent { get { return m_parent; } }
+        }
+
+        /// <summary>
         /// An ECDSA-256 signature using SHA-256 as the message digest algorithm.
         /// </summary>
         public partial class MsgEcdsaSignature : KaitaiStruct
@@ -433,6 +670,95 @@ namespace Kaitai
             }
 
             public MsgEcdsaSignature(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
+            {
+                m_parent = p__parent;
+                m_root = p__root;
+                _read();
+            }
+            private void _read()
+            {
+                _flags = m_io.ReadU1();
+                _streamCounter = m_io.ReadU1();
+                _onDemandCounter = m_io.ReadU1();
+                _certificateId = new List<byte>();
+                for (var i = 0; i < 4; i++)
+                {
+                    _certificateId.Add(m_io.ReadU1());
+                }
+                _signature = new EcdsaSignature(m_io, this, m_root);
+                _signedMessages = new List<byte>();
+                {
+                    var i = 0;
+                    while (!m_io.IsEof) {
+                        _signedMessages.Add(m_io.ReadU1());
+                        i++;
+                    }
+                }
+            }
+            private byte _flags;
+            private byte _streamCounter;
+            private byte _onDemandCounter;
+            private List<byte> _certificateId;
+            private EcdsaSignature _signature;
+            private List<byte> _signedMessages;
+            private Signing m_root;
+            private Sbp.Message m_parent;
+
+            /// <summary>
+            /// Describes the format of the `signed\_messages` field below.
+            /// </summary>
+            public byte Flags { get { return _flags; } }
+
+            /// <summary>
+            /// Signature message counter. Zero indexed and incremented with each
+            /// signature message.  The counter will not increment if this message
+            /// was in response to an on demand request.  The counter will roll over
+            /// after 256 messages. Upon connection, the value of the counter may
+            /// not initially be zero.
+            /// </summary>
+            public byte StreamCounter { get { return _streamCounter; } }
+
+            /// <summary>
+            /// On demand message counter. Zero indexed and incremented with each
+            /// signature message sent in response to an on demand message. The
+            /// counter will roll over after 256 messages.  Upon connection, the
+            /// value of the counter may not initially be zero.
+            /// </summary>
+            public byte OnDemandCounter { get { return _onDemandCounter; } }
+
+            /// <summary>
+            /// The last 4 bytes of the certificate's SHA-1 fingerprint
+            /// </summary>
+            public List<byte> CertificateId { get { return _certificateId; } }
+
+            /// <summary>
+            /// Signature over the frames of this message group.
+            /// </summary>
+            public EcdsaSignature Signature { get { return _signature; } }
+
+            /// <summary>
+            /// CRCs of the messages covered by this signature.  For Skylark, which
+            /// delivers SBP messages wrapped in Swift's proprietary RTCM message,
+            /// these are the 24-bit CRCs from the RTCM message framing. For SBP
+            /// only streams, this will be 16-bit CRCs from the SBP framing.  See
+            /// the `flags` field to determine the type of CRCs covered.
+            /// </summary>
+            public List<byte> SignedMessages { get { return _signedMessages; } }
+            public Signing M_Root { get { return m_root; } }
+            public Sbp.Message M_Parent { get { return m_parent; } }
+        }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
+        public partial class MsgEcdsaSignatureDepA : KaitaiStruct
+        {
+            public static MsgEcdsaSignatureDepA FromFile(string fileName)
+            {
+                return new MsgEcdsaSignatureDepA(new KaitaiStream(fileName));
+            }
+
+            public MsgEcdsaSignatureDepA(KaitaiStream p__io, Sbp.Message p__parent = null, Signing p__root = null) : base(p__io)
             {
                 m_parent = p__parent;
                 m_root = p__root;

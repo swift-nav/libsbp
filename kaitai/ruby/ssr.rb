@@ -110,12 +110,7 @@ class Ssr < Kaitai::Struct::Struct
   end
 
   ##
-  # The Slant Total Electron Content per space vehicle, given as polynomial
-  # approximation for a given tile. This should be combined with the
-  # MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
-  # of the atmospheric delay.
-  # 
-  # It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+  # Deprecated.
   class MsgSsrStecCorrectionDep < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -179,6 +174,9 @@ class Ssr < Kaitai::Struct::Struct
     # Error Bound StDev First derivative.
     attr_reader :stec_bound_sig_dot
   end
+
+  ##
+  # Deprecated.
   class MsgSsrOrbitClockDepA < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -536,7 +534,7 @@ class Ssr < Kaitai::Struct::Struct
     attr_reader :code_bias_bound_mu
 
     ##
-    # Code Bias Standard Deviation.  Range: 0-1.275 m
+    # Code Bias Standard Deviation. Range: 0-1.275 m
     attr_reader :code_bias_bound_sig
 
     ##
@@ -544,7 +542,7 @@ class Ssr < Kaitai::Struct::Struct
     attr_reader :phase_bias_bound_mu
 
     ##
-    # Phase Bias Standard Deviation.  Range: 0-1.275 m
+    # Phase Bias Standard Deviation. Range: 0-1.275 m
     attr_reader :phase_bias_bound_sig
   end
 
@@ -777,6 +775,9 @@ class Ssr < Kaitai::Struct::Struct
     # IOD of the SSR atmospheric correction
     attr_reader :iod_atmo
   end
+
+  ##
+  # Deprecated.
   class MsgSsrStecCorrectionDepA < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -980,6 +981,9 @@ class Ssr < Kaitai::Struct::Struct
     # vehicle.
     attr_reader :stec_sat_list
   end
+
+  ##
+  # Deprecated.
   class MsgSsrGridDefinitionDepA < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -1117,13 +1121,7 @@ class Ssr < Kaitai::Struct::Struct
   end
 
   ##
-  # Provides the correction point coordinates for the atmospheric correction
-  # values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
-  # messages.
-  # 
-  # Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-  # element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-  # correction points, not lists of points.
+  # Deprecated.
   class MsgSsrTileDefinitionDepA < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -1276,6 +1274,9 @@ class Ssr < Kaitai::Struct::Struct
     # Clock Bound Standard Deviation. See Note 2.
     attr_reader :clock_bound_sig
   end
+
+  ##
+  # Deprecated.
   class MsgSsrGriddedCorrectionDepA < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -1348,6 +1349,9 @@ class Ssr < Kaitai::Struct::Struct
     # Orbit and Clock Bounds Degradation Parameters
     attr_reader :orbit_clock_bounds_degradation
   end
+
+  ##
+  # Deprecated.
   class MsgSsrGriddedCorrectionNoStdDepA < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -1644,6 +1648,9 @@ class Ssr < Kaitai::Struct::Struct
     # Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
     attr_reader :clock_bound_sig_dot
   end
+
+  ##
+  # Deprecated.
   class MsgSsrSatelliteApcDep < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -1696,13 +1703,7 @@ class Ssr < Kaitai::Struct::Struct
   end
 
   ##
-  # Provides the correction point coordinates for the atmospheric correction
-  # values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-  # messages.
-  # 
-  # Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-  # element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-  # correction points, not lists of points.
+  # Deprecated.
   class MsgSsrTileDefinitionDepB < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)

@@ -189,12 +189,7 @@ func (this *Ssr_TroposphericDelayCorrectionNoStd) Read(io *kaitai.Stream, parent
  */
 
 /**
- * The Slant Total Electron Content per space vehicle, given as polynomial
- * approximation for a given tile. This should be combined with the
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
- * of the atmospheric delay.
- * 
- * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+ * Deprecated.
  */
 type Ssr_MsgSsrStecCorrectionDep struct {
 	Header *Ssr_StecHeader
@@ -315,6 +310,10 @@ func (this *Ssr_StecSatElementIntegrity) Read(io *kaitai.Stream, parent *Ssr_Msg
 
 /**
  * Error Bound StDev First derivative.
+ */
+
+/**
+ * Deprecated.
  */
 type Ssr_MsgSsrOrbitClockDepA struct {
 	Time *Gnss_GpsTimeSec
@@ -1005,7 +1004,7 @@ func (this *Ssr_CodePhaseBiasesSatSig) Read(io *kaitai.Stream, parent *Ssr_MsgSs
  */
 
 /**
- * Code Bias Standard Deviation.  Range: 0-1.275 m
+ * Code Bias Standard Deviation. Range: 0-1.275 m
  */
 
 /**
@@ -1013,7 +1012,7 @@ func (this *Ssr_CodePhaseBiasesSatSig) Read(io *kaitai.Stream, parent *Ssr_MsgSs
  */
 
 /**
- * Phase Bias Standard Deviation.  Range: 0-1.275 m
+ * Phase Bias Standard Deviation. Range: 0-1.275 m
  */
 
 /**
@@ -1430,6 +1429,10 @@ func (this *Ssr_StecHeader) Read(io *kaitai.Stream, parent *Ssr_MsgSsrStecCorrec
 /**
  * IOD of the SSR atmospheric correction
  */
+
+/**
+ * Deprecated.
+ */
 type Ssr_MsgSsrStecCorrectionDepA struct {
 	Header *Ssr_StecHeaderDepA
 	StecSatList []*Ssr_StecSatElement
@@ -1814,6 +1817,10 @@ func (this *Ssr_MsgSsrGriddedCorrectionBounds) Read(io *kaitai.Stream, parent *S
  * Array of STEC polynomial coefficients and its bounds for each space
  * vehicle.
  */
+
+/**
+ * Deprecated.
+ */
 type Ssr_MsgSsrGridDefinitionDepA struct {
 	Header *Ssr_GridDefinitionHeaderDepA
 	RleList []uint8
@@ -2062,13 +2069,7 @@ func (this *Ssr_PhaseBiasesContent) Read(io *kaitai.Stream, parent *Ssr_MsgSsrPh
  */
 
 /**
- * Provides the correction point coordinates for the atmospheric correction
- * values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
- * messages.
- * 
- * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
- * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
- * correction points, not lists of points.
+ * Deprecated.
  */
 type Ssr_MsgSsrTileDefinitionDepA struct {
 	TileSetId uint16
@@ -2327,6 +2328,10 @@ func (this *Ssr_OrbitClockBound) Read(io *kaitai.Stream, parent *Ssr_MsgSsrOrbit
 /**
  * Clock Bound Standard Deviation. See Note 2.
  */
+
+/**
+ * Deprecated.
+ */
 type Ssr_MsgSsrGriddedCorrectionDepA struct {
 	Header *Ssr_GriddedCorrectionHeaderDepA
 	Index uint16
@@ -2466,6 +2471,10 @@ func (this *Ssr_MsgSsrOrbitClockBoundsDegradation) Read(io *kaitai.Stream, paren
 
 /**
  * Orbit and Clock Bounds Degradation Parameters
+ */
+
+/**
+ * Deprecated.
  */
 type Ssr_MsgSsrGriddedCorrectionNoStdDepA struct {
 	Header *Ssr_GriddedCorrectionHeaderDepA
@@ -2997,6 +3006,10 @@ func (this *Ssr_OrbitClockBoundDegradation) Read(io *kaitai.Stream, parent *Ssr_
 /**
  * Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
  */
+
+/**
+ * Deprecated.
+ */
 type Ssr_MsgSsrSatelliteApcDep struct {
 	Apc []*Ssr_SatelliteApc
 	_io *kaitai.Stream
@@ -3089,13 +3102,7 @@ func (this *Ssr_TroposphericDelayCorrection) Read(io *kaitai.Stream, parent inte
  */
 
 /**
- * Provides the correction point coordinates for the atmospheric correction
- * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
- * messages.
- * 
- * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
- * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
- * correction points, not lists of points.
+ * Deprecated.
  */
 type Ssr_MsgSsrTileDefinitionDepB struct {
 	SsrSolId uint8

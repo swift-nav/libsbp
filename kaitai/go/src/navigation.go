@@ -21,13 +21,7 @@ func (this *Navigation) Read(io *kaitai.Stream, parent interface{}, root *Naviga
 }
 
 /**
- * This position solution message reports the absolute geodetic coordinates
- * and the status (single point vs pseudo-absolute RTK) of the position
- * solution. If the rover receiver knows the surveyed position of the base
- * station and has an RTK solution, this reports a pseudo-absolute position
- * solution using the base station position and the rover's RTK baseline
- * vector. The full GPS time is given by the preceding MSG_GPS_TIME with
- * the matching time-of-week (tow).
+ * Deprecated.
  */
 type Navigation_MsgPosLlhDepA struct {
 	Tow uint32
@@ -130,10 +124,7 @@ func (this *Navigation_MsgPosLlhDepA) Read(io *kaitai.Stream, parent *Sbp_Messag
  */
 
 /**
- * This message reports the local vertical and horizontal protection levels
- * associated with a given LLH position solution. The full GPS time is
- * given by the preceding MSG_GPS_TIME with the matching time-of-week
- * (tow).
+ * Deprecated.
  */
 type Navigation_MsgProtectionLevelDepA struct {
 	Tow uint32
@@ -232,6 +223,10 @@ func (this *Navigation_MsgProtectionLevelDepA) Read(io *kaitai.Stream, parent *S
  * North, East, Down frame, the covariance terms follow that convention.
  * Thus, covariances are reported against the "downward" measurement and
  * care should be taken with the sign convention.
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements. To get values from GNSS measurements only use
+ * MSG_POS_LLH_COV_GNSS.
  */
 type Navigation_MsgPosLlhCov struct {
 	Tow uint32
@@ -372,11 +367,7 @@ func (this *Navigation_MsgPosLlhCov) Read(io *kaitai.Stream, parent *Sbp_Message
  */
 
 /**
- * This message reports the velocity in local North East Down (NED)
- * coordinates. The NED coordinate system is defined as the local WGS84
- * tangent plane centered at the current position. The full GPS time is
- * given by the preceding MSG_GPS_TIME with the matching time-of-week
- * (tow).
+ * Deprecated.
  */
 type Navigation_MsgVelNedDepA struct {
 	Tow uint32
@@ -485,6 +476,10 @@ func (this *Navigation_MsgVelNedDepA) Read(io *kaitai.Stream, parent *Sbp_Messag
  * given by the preceding MSG_GPS_TIME with the matching time-of-week
  * (tow). This message is similar to the MSG_VEL_NED, but it includes the
  * upper triangular portion of the 3x3 covariance matrix.
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements. To get values from GNSS measurements only use
+ * MSG_VEL_NED_COV_GNSS.
  */
 type Navigation_MsgVelNedCov struct {
 	Tow uint32
@@ -628,6 +623,10 @@ func (this *Navigation_MsgVelNedCov) Read(io *kaitai.Stream, parent *Sbp_Message
  * This message reports the Universal Coordinated Time (UTC).  Note the
  * flags which indicate the source of the UTC offset value and source of
  * the time fix.
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements. To get values from GNSS measurements only use
+ * MSG_UTC_TIME_GNSS.
  */
 type Navigation_MsgUtcTime struct {
 	Flags uint8
@@ -745,7 +744,10 @@ func (this *Navigation_MsgUtcTime) Read(io *kaitai.Stream, parent *Sbp_Message, 
  * the surveyed position of the base station and has an RTK solution, this
  * reports a pseudo-absolute position solution using the base station
  * position and the rover's RTK baseline vector. The full GPS time is given
- * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_POS_ECEF_COV.
  */
 type Navigation_MsgPosEcefCovGnss struct {
 	Tow uint32
@@ -889,8 +891,11 @@ func (this *Navigation_MsgPosEcefCovGnss) Read(io *kaitai.Stream, parent *Sbp_Me
  * This message reports the velocity in local North East Down (NED)
  * coordinates. The NED coordinate system is defined as the local WGS84
  * tangent plane centered at the current position. The full GPS time is
- * given by the preceding MSG_GPS_TIME with the matching time-of-week
+ * given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week
  * (tow).
+ * 
+ * The values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_VEL_NED.
  */
 type Navigation_MsgVelNedGnss struct {
 	Tow uint32
@@ -994,9 +999,12 @@ func (this *Navigation_MsgVelNedGnss) Read(io *kaitai.Stream, parent *Sbp_Messag
  * This message reports the velocity in local North East Down (NED)
  * coordinates. The NED coordinate system is defined as the local WGS84
  * tangent plane centered at the current position. The full GPS time is
- * given by the preceding MSG_GPS_TIME with the matching time-of-week
- * (tow). This message is similar to the MSG_VEL_NED, but it includes the
- * upper triangular portion of the 3x3 covariance matrix.
+ * given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week
+ * (tow). This message is similar to the MSG_VEL_NED_GNSS, but it includes
+ * the upper triangular portion of the 3x3 covariance matrix.
+ * 
+ * The values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_VEL_NED_COV.
  */
 type Navigation_MsgVelNedCovGnss struct {
 	Tow uint32
@@ -1137,12 +1145,7 @@ func (this *Navigation_MsgVelNedCovGnss) Read(io *kaitai.Stream, parent *Sbp_Mes
  */
 
 /**
- * This message reports the baseline solution in North East Down (NED)
- * coordinates. This baseline is the relative vector distance from the base
- * station to the rover receiver, and NED coordinate system is defined at
- * the local WGS84 tangent plane centered at the base station position.
- * The full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow).
+ * Deprecated.
  */
 type Navigation_MsgBaselineNedDepA struct {
 	Tow uint32
@@ -1245,9 +1248,7 @@ func (this *Navigation_MsgBaselineNedDepA) Read(io *kaitai.Stream, parent *Sbp_M
  */
 
 /**
- * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
- * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME
- * with the matching time-of-week (tow).
+ * Deprecated.
  */
 type Navigation_MsgVelEcefDepA struct {
 	Tow uint32
@@ -1563,7 +1564,7 @@ func (this *Navigation_MsgReferenceFrameParam) Read(io *kaitai.Stream, parent *S
  * translation which relates the sensor (e.g. camera) frame at a given time
  * (first keyframe) to the sensor frame at another time (second keyframe).
  * The relative translations is a 3x1 vector described in the first
- * keyframe.  Relative rotation is described by a quaternion from second
+ * keyframe. Relative rotation is described by a quaternion from second
  * keyframe to the first keyframe.
  */
 type Navigation_MsgPoseRelative struct {
@@ -1815,6 +1816,10 @@ func (this *Navigation_MsgPoseRelative) Read(io *kaitai.Stream, parent *Sbp_Mess
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME
  * with the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements. To get values from GNSS measurements only use
+ * MSG_VEL_ECEF_COV_GNSS.
  */
 type Navigation_MsgVelEcefCov struct {
 	Tow uint32
@@ -1964,6 +1969,9 @@ func (this *Navigation_MsgVelEcefCov) Read(io *kaitai.Stream, parent *Sbp_Messag
  * full GPS time is given by the preceding MSG_GPS_TIME with the matching
  * time-of-week (tow). This message is only produced by inertial versions
  * of Swift products and is not available from Piksi Multi or Duro.
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements.
  */
 type Navigation_MsgVelBody struct {
 	Tow uint32
@@ -2105,8 +2113,11 @@ func (this *Navigation_MsgVelBody) Read(io *kaitai.Stream, parent *Sbp_Message, 
 
 /**
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
- * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME
- * with the matching time-of-week (tow).
+ * coordinates. The full GPS time is given by the preceding
+ * MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_VEL_ECEF.
  */
 type Navigation_MsgVelEcefGnss struct {
 	Tow uint32
@@ -2200,6 +2211,10 @@ func (this *Navigation_MsgVelEcefGnss) Read(io *kaitai.Stream, parent *Sbp_Messa
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME
  * with the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements. To get values from GNSS measurements only use
+ * MSG_VEL_ECEF_GNSS.
  */
 type Navigation_MsgVelEcef struct {
 	Tow uint32
@@ -2294,10 +2309,14 @@ func (this *Navigation_MsgVelEcef) Read(io *kaitai.Stream, parent *Sbp_Message, 
  * and the status (single point vs pseudo-absolute RTK) of the position
  * solution as well as the upper triangle of the 3x3 covariance matrix.
  * The position information and Fix Mode flags should follow the
- * MSG_POS_LLH message.  Since the covariance matrix is computed in the
- * local-level North, East, Down frame, the covariance terms follow with
- * that convention. Thus, covariances are reported against the "downward"
- * measurement and care should be taken with the sign convention.
+ * MSG_POS_LLH_GNSS message.  Since the covariance matrix is computed in
+ * the local-level North, East, Down frame, the covariance terms follow
+ * with that convention. Thus, covariances are reported against the
+ * "downward" measurement and care should be taken with the sign
+ * convention.
+ * 
+ * The values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_POS_LLH_COV.
  */
 type Navigation_MsgPosLlhCovGnss struct {
 	Tow uint32
@@ -2442,6 +2461,8 @@ func (this *Navigation_MsgPosLlhCovGnss) Read(io *kaitai.Stream, parent *Sbp_Mes
  * (ECEF) coordinates. This baseline is the relative vector distance from
  * the base station to the rover receiver. The full GPS time is given by
  * the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements only.
  */
 type Navigation_MsgBaselineEcef struct {
 	Tow uint32
@@ -2532,8 +2553,7 @@ func (this *Navigation_MsgBaselineEcef) Read(io *kaitai.Stream, parent *Sbp_Mess
  */
 
 /**
- * This dilution of precision (DOP) message describes the effect of
- * navigation satellite geometry on positional measurement precision.
+ * Deprecated.
  */
 type Navigation_MsgDopsDepA struct {
 	Tow uint32
@@ -2621,6 +2641,10 @@ func (this *Navigation_MsgDopsDepA) Read(io *kaitai.Stream, parent *Sbp_Message,
  * pseudo-absolute position solution using the base station position and
  * the rover's RTK baseline vector. The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements. To get values from GNSS measurements only use
+ * MSG_POS_ECEF_GNSS.
  */
 type Navigation_MsgPosEcef struct {
 	Tow uint32
@@ -2754,8 +2778,11 @@ func (this *Navigation_MsgAgeCorrections) Read(io *kaitai.Stream, parent *Sbp_Me
 
 /**
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
- * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME
- * with the matching time-of-week (tow).
+ * coordinates. The full GPS time is given by the preceding
+ * MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_VEL_ECEF_COV.
  */
 type Navigation_MsgVelEcefCovGnss struct {
 	Tow uint32
@@ -3139,6 +3166,10 @@ func (this *Navigation_MsgProtectionLevel) Read(io *kaitai.Stream, parent *Sbp_M
  * reports a pseudo-absolute position solution using the base station
  * position and the rover's RTK baseline vector. The full GPS time is given
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements. To get values from GNSS measurements only use
+ * MSG_POS_ECEF_COV_GNSS.
  */
 type Navigation_MsgPosEcefCov struct {
 	Tow uint32
@@ -3285,7 +3316,10 @@ func (this *Navigation_MsgPosEcefCov) Read(io *kaitai.Stream, parent *Sbp_Messag
  * position of the base station and has an RTK solution, this reports a
  * pseudo-absolute position solution using the base station position and
  * the rover's RTK baseline vector. The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_POS_ECEF.
  */
 type Navigation_MsgPosEcefGnss struct {
 	Tow uint32
@@ -3381,6 +3415,10 @@ func (this *Navigation_MsgPosEcefGnss) Read(io *kaitai.Stream, parent *Sbp_Messa
  * tangent plane centered at the current position. The full GPS time is
  * given by the preceding MSG_GPS_TIME with the matching time-of-week
  * (tow).
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements. To get values from GNSS measurements only use
+ * MSG_VEL_NED_GNSS.
  */
 type Navigation_MsgVelNed struct {
 	Tow uint32
@@ -3593,17 +3631,7 @@ func (this *Navigation_MsgUtcLeapSecond) Read(io *kaitai.Stream, parent *Sbp_Mes
  */
 
 /**
- * This message reports the GPS time, representing the time since the GPS
- * epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks
- * and seconds of the week. The weeks begin at the Saturday/Sunday
- * transition. GPS week 0 began at the beginning of the GPS time scale.
- * 
- * Within each week number, the GPS time of the week is between between 0
- * and 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate
- * leap seconds, and as of now, has a small offset from UTC. In a message
- * stream, this message precedes a set of other navigation messages
- * referenced to the same time (but lacking the ns field) and indicates a
- * more precise time of these messages.
+ * Deprecated.
  */
 type Navigation_MsgGpsTimeDepA struct {
 	Wn uint16
@@ -3670,8 +3698,11 @@ func (this *Navigation_MsgGpsTimeDepA) Read(io *kaitai.Stream, parent *Sbp_Messa
  * solution. If the rover receiver knows the surveyed position of the base
  * station and has an RTK solution, this reports a pseudo-absolute position
  * solution using the base station position and the rover's RTK baseline
- * vector. The full GPS time is given by the preceding MSG_GPS_TIME with
- * the matching time-of-week (tow).
+ * vector. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
+ * with the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_POS_LLH.
  */
 type Navigation_MsgPosLlhGnss struct {
 	Tow uint32
@@ -3775,6 +3806,9 @@ func (this *Navigation_MsgPosLlhGnss) Read(io *kaitai.Stream, parent *Sbp_Messag
  * This message reports the Universal Coordinated Time (UTC).  Note the
  * flags which indicate the source of the UTC offset value and source of
  * the time fix.
+ * 
+ * The values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_UTC_TIME.
  */
 type Navigation_MsgUtcTimeGnss struct {
 	Flags uint8
@@ -3886,16 +3920,19 @@ func (this *Navigation_MsgUtcTimeGnss) Read(io *kaitai.Stream, parent *Sbp_Messa
 
 /**
  * This message reports the receiver course over ground (COG) and speed
- * over  ground (SOG) based on the horizontal (N-E) components of the NED
- * velocity  vector. It also includes the vertical velocity coordinate. A
+ * over ground (SOG) based on the horizontal (N-E) components of the NED
+ * velocity vector. It also includes the vertical velocity coordinate. A
  * flag is provided to indicate whether the COG value has been frozen. When
  * the flag is set to true, the COG field is set to its last valid value
- * until  the system exceeds a minimum velocity threshold. No other fields
- * are  affected by this flag.  The NED coordinate system is defined as the
- * local WGS84 tangent  plane centered at the current position. The full
- * GPS time is given by the  preceding MSG_GPS_TIME with the matching time-
- * of-week (tow). Note: course over ground represents the receiver's
- * direction of travel,  but not necessarily the device heading.
+ * until the system exceeds a minimum velocity threshold. No other fields
+ * are affected by this flag. The NED coordinate system is defined as the
+ * local WGS84 tangent plane centered at the current position. The full GPS
+ * time is given by the preceding MSG_GPS_TIME with the matching time-of-
+ * week (tow). Note: course over ground represents the receiver's direction
+ * of travel, but not necessarily the device heading.
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements.
  */
 type Navigation_MsgVelCog struct {
 	Tow uint32
@@ -4002,6 +4039,8 @@ func (this *Navigation_MsgVelCog) Read(io *kaitai.Stream, parent *Sbp_Message, r
  * the local WGS84 tangent plane centered at the base station position.
  * The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements only.
  */
 type Navigation_MsgBaselineNed struct {
 	Tow uint32
@@ -4109,6 +4148,10 @@ func (this *Navigation_MsgBaselineNed) Read(io *kaitai.Stream, parent *Sbp_Messa
  * solution using the base station position and the rover's RTK baseline
  * vector. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements. To get values from GNSS measurements only use
+ * MSG_POS_LLH_GNSS.
  */
 type Navigation_MsgPosLlh struct {
 	Tow uint32
@@ -4209,9 +4252,7 @@ func (this *Navigation_MsgPosLlh) Read(io *kaitai.Stream, parent *Sbp_Message, r
  */
 
 /**
- * This message reports the baseline heading pointing from the base station
- * to the rover relative to True North. The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * Deprecated.
  */
 type Navigation_MsgBaselineHeadingDepA struct {
 	Tow uint32
@@ -4283,6 +4324,9 @@ func (this *Navigation_MsgBaselineHeadingDepA) Read(io *kaitai.Stream, parent *S
  * stream, this message precedes a set of other navigation messages
  * referenced to the same time (but lacking the ns field) and indicates a
  * more precise time of these messages.
+ * 
+ * The values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_GPS_TIME.
  */
 type Navigation_MsgGpsTimeGnss struct {
 	Wn uint16
@@ -4344,10 +4388,7 @@ func (this *Navigation_MsgGpsTimeGnss) Read(io *kaitai.Stream, parent *Sbp_Messa
  */
 
 /**
- * This message reports the baseline solution in Earth Centered Earth Fixed
- * (ECEF) coordinates. This baseline is the relative vector distance from
- * the base station to the rover receiver. The full GPS time is given by
- * the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * Deprecated.
  */
 type Navigation_MsgBaselineEcefDepA struct {
 	Tow uint32
@@ -4449,6 +4490,10 @@ func (this *Navigation_MsgBaselineEcefDepA) Read(io *kaitai.Stream, parent *Sbp_
  * stream, this message precedes a set of other navigation messages
  * referenced to the same time (but lacking the ns field) and indicates a
  * more precise time of these messages.
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements. To get values from GNSS measurements only use
+ * MSG_GPS_TIME_GNSS.
  */
 type Navigation_MsgGpsTime struct {
 	Wn uint16
@@ -4514,6 +4559,8 @@ func (this *Navigation_MsgGpsTime) Read(io *kaitai.Stream, parent *Sbp_Message, 
  * navigation satellite geometry on positional measurement precision.  The
  * flags field indicated whether the DOP reported corresponds to
  * differential or SPP solution.
+ * 
+ * The values in this message are from GNSS measurements only.
  */
 type Navigation_MsgDops struct {
 	Tow uint32
@@ -4605,13 +4652,7 @@ func (this *Navigation_MsgDops) Read(io *kaitai.Stream, parent *Sbp_Message, roo
  */
 
 /**
- * The position solution message reports absolute Earth Centered Earth
- * Fixed (ECEF) coordinates and the status (single point vs pseudo-absolute
- * RTK) of the position solution. If the rover receiver knows the surveyed
- * position of the base station and has an RTK solution, this reports a
- * pseudo-absolute position solution using the base station position and
- * the rover's RTK baseline vector. The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * Deprecated.
  */
 type Navigation_MsgPosEcefDepA struct {
 	Tow uint32
@@ -4763,6 +4804,9 @@ func (this *Navigation_EstimatedHorizontalErrorEllipse) Read(io *kaitai.Stream, 
  * The estimated errors are reported at a user-configurable confidence
  * level. The user-configured percentile is encoded in the percentile
  * field.
+ * 
+ * The values in this message are from GNSS measurements fused with
+ * inertial measurements.
  */
 type Navigation_MsgPosLlhAcc struct {
 	Tow uint32

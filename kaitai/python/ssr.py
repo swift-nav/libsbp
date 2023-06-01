@@ -66,12 +66,7 @@ class Ssr(KaitaiStruct):
 
 
     class MsgSsrStecCorrectionDep(KaitaiStruct):
-        """The Slant Total Electron Content per space vehicle, given as polynomial
-        approximation for a given tile. This should be combined with the
-        MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
-        of the atmospheric delay.
-        
-        It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -107,6 +102,8 @@ class Ssr(KaitaiStruct):
 
 
     class MsgSsrOrbitClockDepA(KaitaiStruct):
+        """Deprecated.
+        """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent
@@ -353,6 +350,8 @@ class Ssr(KaitaiStruct):
 
 
     class MsgSsrStecCorrectionDepA(KaitaiStruct):
+        """Deprecated.
+        """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent
@@ -446,6 +445,8 @@ class Ssr(KaitaiStruct):
 
 
     class MsgSsrGridDefinitionDepA(KaitaiStruct):
+        """Deprecated.
+        """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent
@@ -515,13 +516,7 @@ class Ssr(KaitaiStruct):
 
 
     class MsgSsrTileDefinitionDepA(KaitaiStruct):
-        """Provides the correction point coordinates for the atmospheric correction
-        values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
-        messages.
-        
-        Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-        element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-        correction points, not lists of points.
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -563,6 +558,8 @@ class Ssr(KaitaiStruct):
 
 
     class MsgSsrGriddedCorrectionDepA(KaitaiStruct):
+        """Deprecated.
+        """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent
@@ -597,6 +594,8 @@ class Ssr(KaitaiStruct):
 
 
     class MsgSsrGriddedCorrectionNoStdDepA(KaitaiStruct):
+        """Deprecated.
+        """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent
@@ -711,6 +710,8 @@ class Ssr(KaitaiStruct):
 
 
     class MsgSsrSatelliteApcDep(KaitaiStruct):
+        """Deprecated.
+        """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent
@@ -743,13 +744,7 @@ class Ssr(KaitaiStruct):
 
 
     class MsgSsrTileDefinitionDepB(KaitaiStruct):
-        """Provides the correction point coordinates for the atmospheric correction
-        values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-        messages.
-        
-        Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-        element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-        correction points, not lists of points.
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io

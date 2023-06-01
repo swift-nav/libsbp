@@ -79,6 +79,13 @@ void sbp_t::message_t::_read() {
         m_payload = new observation_t::msg_ephemeris_glo_dep_d_t(m__io__raw_payload, this, m__root);
         break;
     }
+    case sbp_t::MSG_IDS_MSG_ECDSA_SIGNATURE_DEP_B: {
+        n_payload = false;
+        m__raw_payload = m__io->read_bytes(header()->length());
+        m__io__raw_payload = new kaitai::kstream(m__raw_payload);
+        m_payload = new signing_t::msg_ecdsa_signature_dep_b_t(m__io__raw_payload, this, m__root);
+        break;
+    }
     case sbp_t::MSG_IDS_MSG_SETTINGS_READ_BY_INDEX_REQ: {
         n_payload = false;
         m__raw_payload = m__io->read_bytes(header()->length());
@@ -392,6 +399,13 @@ void sbp_t::message_t::_read() {
         m__raw_payload = m__io->read_bytes(header()->length());
         m__io__raw_payload = new kaitai::kstream(m__raw_payload);
         m_payload = new settings_t::msg_settings_register_resp_t(m__io__raw_payload, this, m__root);
+        break;
+    }
+    case sbp_t::MSG_IDS_MSG_ECDSA_SIGNATURE_DEP_A: {
+        n_payload = false;
+        m__raw_payload = m__io->read_bytes(header()->length());
+        m__io__raw_payload = new kaitai::kstream(m__raw_payload);
+        m_payload = new signing_t::msg_ecdsa_signature_dep_a_t(m__io__raw_payload, this, m__root);
         break;
     }
     case sbp_t::MSG_IDS_MSG_EPHEMERIS_GAL: {
@@ -1596,6 +1610,13 @@ void sbp_t::message_t::_read() {
         m__raw_payload = m__io->read_bytes(header()->length());
         m__io__raw_payload = new kaitai::kstream(m__raw_payload);
         m_payload = new ssr_t::msg_ssr_code_biases_t(m__io__raw_payload, this, m__root);
+        break;
+    }
+    case sbp_t::MSG_IDS_MSG_CERTIFICATE_CHAIN_DEP: {
+        n_payload = false;
+        m__raw_payload = m__io->read_bytes(header()->length());
+        m__io__raw_payload = new kaitai::kstream(m__raw_payload);
+        m_payload = new signing_t::msg_certificate_chain_dep_t(m__io__raw_payload, this, m__root);
         break;
     }
     case sbp_t::MSG_IDS_MSG_SSR_GRIDDED_CORRECTION: {

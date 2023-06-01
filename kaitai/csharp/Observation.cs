@@ -190,7 +190,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+        /// Deprecated.
         /// </summary>
         public partial class MsgGroupDelayDepB : KaitaiStruct
         {
@@ -1020,10 +1020,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// The almanac message returns a set of satellite orbit parameters. Almanac
-        /// data is not very precise and is considered valid for up to several
-        /// months. Please see the GLO ICD 5.1 &quot;Chapter 4.5 Non-immediate
-        /// information and almanac&quot; for details.
+        /// Deprecated.
         /// </summary>
         public partial class MsgAlmanacGloDep : KaitaiStruct
         {
@@ -1105,11 +1102,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// The almanac message returns a set of satellite orbit parameters. Almanac
-        /// data is not very precise and is considered valid for up to several
-        /// months. Please see the Navstar GPS Space Segment/Navigation user
-        /// interfaces (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more
-        /// details.
+        /// Deprecated.
         /// </summary>
         public partial class MsgAlmanacGpsDep : KaitaiStruct
         {
@@ -1312,8 +1305,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// This observation message has been deprecated in favor of ephemeris
-        /// message using floats for size reduction.
+        /// Deprecated.
         /// </summary>
         public partial class MsgEphemerisSbasDepB : KaitaiStruct
         {
@@ -1392,10 +1384,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// The ephemeris message returns a set of satellite orbit parameters that
-        /// is used to calculate GPS satellite position, velocity, and clock offset.
-        /// Please see the Navstar GPS Space Segment/Navigation user interfaces
-        /// (ICD-GPS-200, Table 20-III) for more details.
+        /// Deprecated.
         /// </summary>
         public partial class MsgEphemerisGpsDepE : KaitaiStruct
         {
@@ -1583,6 +1572,11 @@ namespace Kaitai
             public Observation M_Root { get { return m_root; } }
             public Sbp.Message M_Parent { get { return m_parent; } }
         }
+
+        /// <summary>
+        /// Bit masks of signal capabilities for each GNSS satellite PRN.
+        /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+        /// </summary>
         public partial class MsgGnssCapb : KaitaiStruct
         {
             public static MsgGnssCapb FromFile(string fileName)
@@ -1911,7 +1905,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+        /// Deprecated.
         /// </summary>
         public partial class MsgGroupDelayDepA : KaitaiStruct
         {
@@ -1967,10 +1961,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// The ephemeris message returns a set of satellite orbit parameters that
-        /// is used to calculate GPS satellite position, velocity, and clock offset.
-        /// Please see the Navstar GPS Space Segment/Navigation user interfaces
-        /// (ICD-GPS-200, Table 20-III) for more details.
+        /// Deprecated.
         /// </summary>
         public partial class MsgEphemerisDepC : KaitaiStruct
         {
@@ -2742,8 +2733,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// This observation message has been deprecated in favor of ephemeris
-        /// message using floats for size reduction.
+        /// Deprecated.
         /// </summary>
         public partial class MsgEphemerisGpsDepF : KaitaiStruct
         {
@@ -2972,6 +2962,10 @@ namespace Kaitai
             public Observation M_Root { get { return m_root; } }
             public KaitaiStruct M_Parent { get { return m_parent; } }
         }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
         public partial class MsgEphemerisSbasDepA : KaitaiStruct
         {
             public static MsgEphemerisSbasDepA FromFile(string fileName)
@@ -3186,10 +3180,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// The ephemeris message returns a set of satellite orbit parameters that
-        /// is used to calculate GLO satellite position, velocity, and clock offset.
-        /// Please see the GLO ICD 5.1 &quot;Table 4.5 Characteristics of words of
-        /// immediate information (ephemeris parameters)&quot; for more details.
+        /// Deprecated.
         /// </summary>
         public partial class MsgEphemerisGloDepA : KaitaiStruct
         {
@@ -3409,8 +3400,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// This observation message has been deprecated in favor of an ephemeris
-        /// message with explicit source of NAV data.
+        /// Deprecated.
         /// </summary>
         public partial class MsgEphemerisGalDepA : KaitaiStruct
         {
@@ -3607,11 +3597,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// This observation message has been deprecated in favor of observations
-        /// that are more interoperable. This message should be used for
-        /// observations referenced to a nominal pseudorange which are not
-        /// interoperable with most 3rd party GNSS receivers or typical RTCMv3
-        /// observations.
+        /// Deprecated.
         /// </summary>
         public partial class MsgObsDepB : KaitaiStruct
         {
@@ -3881,10 +3867,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// The ephemeris message returns a set of satellite orbit parameters that
-        /// is used to calculate GPS satellite position, velocity, and clock offset.
-        /// Please see the Navstar GPS Space Segment/Navigation user interfaces
-        /// (ICD-GPS-200, Table 20-III) for more details.
+        /// Deprecated.
         /// </summary>
         public partial class MsgEphemerisDepD : KaitaiStruct
         {
@@ -4579,10 +4562,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// The ephemeris message returns a set of satellite orbit parameters that
-        /// is used to calculate GLO satellite position, velocity, and clock offset.
-        /// Please see the GLO ICD 5.1 &quot;Table 4.5 Characteristics of words of
-        /// immediate information (ephemeris parameters)&quot; for more details.
+        /// Deprecated.
         /// </summary>
         public partial class MsgEphemerisGloDepB : KaitaiStruct
         {
@@ -4661,7 +4641,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+        /// Deprecated.
         /// </summary>
         public partial class MsgSvConfigurationGpsDep : KaitaiStruct
         {
@@ -4839,12 +4819,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// The GPS observations message reports all the raw pseudorange and carrier
-        /// phase observations for the satellites being tracked by the device.
-        /// Carrier phase observation here is represented as a 40-bit fixed point
-        /// number with Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of
-        /// fractional cycles). The observations are interoperable with 3rd party
-        /// receivers and conform with typical RTCMv3 GNSS observations.
+        /// Deprecated.
         /// </summary>
         public partial class MsgObsDepC : KaitaiStruct
         {

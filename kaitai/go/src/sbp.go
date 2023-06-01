@@ -207,8 +207,11 @@ const (
 	Sbp_MsgIds__MsgEd25519CertificateDep Sbp_MsgIds = 3074
 	Sbp_MsgIds__MsgEd25519SignatureDepB Sbp_MsgIds = 3075
 	Sbp_MsgIds__MsgEcdsaCertificate Sbp_MsgIds = 3076
-	Sbp_MsgIds__MsgCertificateChain Sbp_MsgIds = 3077
-	Sbp_MsgIds__MsgEcdsaSignature Sbp_MsgIds = 3078
+	Sbp_MsgIds__MsgCertificateChainDep Sbp_MsgIds = 3077
+	Sbp_MsgIds__MsgEcdsaSignatureDepA Sbp_MsgIds = 3078
+	Sbp_MsgIds__MsgEcdsaSignatureDepB Sbp_MsgIds = 3079
+	Sbp_MsgIds__MsgEcdsaSignature Sbp_MsgIds = 3080
+	Sbp_MsgIds__MsgCertificateChain Sbp_MsgIds = 3081
 	Sbp_MsgIds__MsgFileioConfigReq Sbp_MsgIds = 4097
 	Sbp_MsgIds__MsgFileioConfigResp Sbp_MsgIds = 4098
 	Sbp_MsgIds__MsgSbasRaw Sbp_MsgIds = 30583
@@ -340,7 +343,7 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 			return err
 		}
 		this.Payload = tmp9
-	case Sbp_MsgIds__MsgSettingsReadByIndexReq:
+	case Sbp_MsgIds__MsgEcdsaSignatureDepB:
 		tmp10, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -348,13 +351,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp10 = tmp10
 		this._raw_Payload = tmp10
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp11 := NewSettings_MsgSettingsReadByIndexReq()
+		tmp11 := NewSigning_MsgEcdsaSignatureDepB()
 		err = tmp11.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp11
-	case Sbp_MsgIds__MsgSsrFlagHighLevel:
+	case Sbp_MsgIds__MsgSettingsReadByIndexReq:
 		tmp12, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -362,13 +365,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp12 = tmp12
 		this._raw_Payload = tmp12
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp13 := NewIntegrity_MsgSsrFlagHighLevel()
+		tmp13 := NewSettings_MsgSettingsReadByIndexReq()
 		err = tmp13.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp13
-	case Sbp_MsgIds__MsgFileioConfigReq:
+	case Sbp_MsgIds__MsgSsrFlagHighLevel:
 		tmp14, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -376,13 +379,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp14 = tmp14
 		this._raw_Payload = tmp14
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp15 := NewFileIo_MsgFileioConfigReq()
+		tmp15 := NewIntegrity_MsgSsrFlagHighLevel()
 		err = tmp15.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp15
-	case Sbp_MsgIds__MsgOdometry:
+	case Sbp_MsgIds__MsgFileioConfigReq:
 		tmp16, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -390,13 +393,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp16 = tmp16
 		this._raw_Payload = tmp16
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp17 := NewVehicle_MsgOdometry()
+		tmp17 := NewFileIo_MsgFileioConfigReq()
 		err = tmp17.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp17
-	case Sbp_MsgIds__MsgSsrStecCorrectionDep:
+	case Sbp_MsgIds__MsgOdometry:
 		tmp18, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -404,13 +407,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp18 = tmp18
 		this._raw_Payload = tmp18
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp19 := NewSsr_MsgSsrStecCorrectionDep()
+		tmp19 := NewVehicle_MsgOdometry()
 		err = tmp19.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp19
-	case Sbp_MsgIds__MsgEd25519SignatureDepB:
+	case Sbp_MsgIds__MsgSsrStecCorrectionDep:
 		tmp20, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -418,13 +421,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp20 = tmp20
 		this._raw_Payload = tmp20
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp21 := NewSigning_MsgEd25519SignatureDepB()
+		tmp21 := NewSsr_MsgSsrStecCorrectionDep()
 		err = tmp21.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp21
-	case Sbp_MsgIds__MsgStmUniqueIdReq:
+	case Sbp_MsgIds__MsgEd25519SignatureDepB:
 		tmp22, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -432,13 +435,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp22 = tmp22
 		this._raw_Payload = tmp22
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp23 := NewFlash_MsgStmUniqueIdReq()
+		tmp23 := NewSigning_MsgEd25519SignatureDepB()
 		err = tmp23.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp23
-	case Sbp_MsgIds__MsgFrontEndGain:
+	case Sbp_MsgIds__MsgStmUniqueIdReq:
 		tmp24, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -446,13 +449,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp24 = tmp24
 		this._raw_Payload = tmp24
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp25 := NewPiksi_MsgFrontEndGain()
+		tmp25 := NewFlash_MsgStmUniqueIdReq()
 		err = tmp25.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp25
-	case Sbp_MsgIds__MsgBasePosLlh:
+	case Sbp_MsgIds__MsgFrontEndGain:
 		tmp26, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -460,13 +463,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp26 = tmp26
 		this._raw_Payload = tmp26
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp27 := NewObservation_MsgBasePosLlh()
+		tmp27 := NewPiksi_MsgFrontEndGain()
 		err = tmp27.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp27
-	case Sbp_MsgIds__MsgEphemerisDepA:
+	case Sbp_MsgIds__MsgBasePosLlh:
 		tmp28, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -474,13 +477,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp28 = tmp28
 		this._raw_Payload = tmp28
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp29 := NewObservation_MsgEphemerisDepA()
+		tmp29 := NewObservation_MsgBasePosLlh()
 		err = tmp29.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp29
-	case Sbp_MsgIds__MsgSsrOrbitClock:
+	case Sbp_MsgIds__MsgEphemerisDepA:
 		tmp30, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -488,13 +491,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp30 = tmp30
 		this._raw_Payload = tmp30
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp31 := NewSsr_MsgSsrOrbitClock()
+		tmp31 := NewObservation_MsgEphemerisDepA()
 		err = tmp31.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp31
-	case Sbp_MsgIds__MsgReset:
+	case Sbp_MsgIds__MsgSsrOrbitClock:
 		tmp32, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -502,13 +505,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp32 = tmp32
 		this._raw_Payload = tmp32
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp33 := NewPiksi_MsgReset()
+		tmp33 := NewSsr_MsgSsrOrbitClock()
 		err = tmp33.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp33
-	case Sbp_MsgIds__MsgStmFlashLockSector:
+	case Sbp_MsgIds__MsgReset:
 		tmp34, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -516,13 +519,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp34 = tmp34
 		this._raw_Payload = tmp34
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp35 := NewFlash_MsgStmFlashLockSector()
+		tmp35 := NewPiksi_MsgReset()
 		err = tmp35.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp35
-	case Sbp_MsgIds__MsgLinuxProcessFdSummary:
+	case Sbp_MsgIds__MsgStmFlashLockSector:
 		tmp36, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -530,13 +533,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp36 = tmp36
 		this._raw_Payload = tmp36
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp37 := NewLinux_MsgLinuxProcessFdSummary()
+		tmp37 := NewFlash_MsgStmFlashLockSector()
 		err = tmp37.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp37
-	case Sbp_MsgIds__MsgStatusJournal:
+	case Sbp_MsgIds__MsgLinuxProcessFdSummary:
 		tmp38, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -544,13 +547,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp38 = tmp38
 		this._raw_Payload = tmp38
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp39 := NewSystem_MsgStatusJournal()
+		tmp39 := NewLinux_MsgLinuxProcessFdSummary()
 		err = tmp39.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp39
-	case Sbp_MsgIds__MsgCsacTelemetry:
+	case Sbp_MsgIds__MsgStatusJournal:
 		tmp40, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -558,13 +561,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp40 = tmp40
 		this._raw_Payload = tmp40
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp41 := NewSystem_MsgCsacTelemetry()
+		tmp41 := NewSystem_MsgStatusJournal()
 		err = tmp41.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp41
-	case Sbp_MsgIds__MsgAgeCorrections:
+	case Sbp_MsgIds__MsgCsacTelemetry:
 		tmp42, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -572,13 +575,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp42 = tmp42
 		this._raw_Payload = tmp42
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp43 := NewNavigation_MsgAgeCorrections()
+		tmp43 := NewSystem_MsgCsacTelemetry()
 		err = tmp43.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp43
-	case Sbp_MsgIds__MsgOrientEuler:
+	case Sbp_MsgIds__MsgAgeCorrections:
 		tmp44, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -586,13 +589,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp44 = tmp44
 		this._raw_Payload = tmp44
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp45 := NewOrientation_MsgOrientEuler()
+		tmp45 := NewNavigation_MsgAgeCorrections()
 		err = tmp45.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp45
-	case Sbp_MsgIds__MsgSsrSatelliteApcDep:
+	case Sbp_MsgIds__MsgOrientEuler:
 		tmp46, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -600,13 +603,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp46 = tmp46
 		this._raw_Payload = tmp46
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp47 := NewSsr_MsgSsrSatelliteApcDep()
+		tmp47 := NewOrientation_MsgOrientEuler()
 		err = tmp47.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp47
-	case Sbp_MsgIds__MsgBaselineNed:
+	case Sbp_MsgIds__MsgSsrSatelliteApcDep:
 		tmp48, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -614,13 +617,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp48 = tmp48
 		this._raw_Payload = tmp48
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp49 := NewNavigation_MsgBaselineNed()
+		tmp49 := NewSsr_MsgSsrSatelliteApcDep()
 		err = tmp49.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp49
-	case Sbp_MsgIds__MsgVelEcefGnss:
+	case Sbp_MsgIds__MsgBaselineNed:
 		tmp50, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -628,13 +631,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp50 = tmp50
 		this._raw_Payload = tmp50
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp51 := NewNavigation_MsgVelEcefGnss()
+		tmp51 := NewNavigation_MsgBaselineNed()
 		err = tmp51.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp51
-	case Sbp_MsgIds__MsgMeasurementState:
+	case Sbp_MsgIds__MsgVelEcefGnss:
 		tmp52, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -642,13 +645,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp52 = tmp52
 		this._raw_Payload = tmp52
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp53 := NewTracking_MsgMeasurementState()
+		tmp53 := NewNavigation_MsgVelEcefGnss()
 		err = tmp53.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp53
-	case Sbp_MsgIds__MsgIono:
+	case Sbp_MsgIds__MsgMeasurementState:
 		tmp54, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -656,13 +659,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp54 = tmp54
 		this._raw_Payload = tmp54
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp55 := NewObservation_MsgIono()
+		tmp55 := NewTracking_MsgMeasurementState()
 		err = tmp55.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp55
-	case Sbp_MsgIds__MsgBasePosEcef:
+	case Sbp_MsgIds__MsgIono:
 		tmp56, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -670,13 +673,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp56 = tmp56
 		this._raw_Payload = tmp56
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp57 := NewObservation_MsgBasePosEcef()
+		tmp57 := NewObservation_MsgIono()
 		err = tmp57.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp57
-	case Sbp_MsgIds__MsgFlashProgram:
+	case Sbp_MsgIds__MsgBasePosEcef:
 		tmp58, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -684,13 +687,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp58 = tmp58
 		this._raw_Payload = tmp58
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp59 := NewFlash_MsgFlashProgram()
+		tmp59 := NewObservation_MsgBasePosEcef()
 		err = tmp59.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp59
-	case Sbp_MsgIds__MsgAcqResult:
+	case Sbp_MsgIds__MsgFlashProgram:
 		tmp60, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -698,13 +701,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp60 = tmp60
 		this._raw_Payload = tmp60
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp61 := NewAcquisition_MsgAcqResult()
+		tmp61 := NewFlash_MsgFlashProgram()
 		err = tmp61.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp61
-	case Sbp_MsgIds__MsgPpsTime:
+	case Sbp_MsgIds__MsgAcqResult:
 		tmp62, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -712,13 +715,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp62 = tmp62
 		this._raw_Payload = tmp62
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp63 := NewSystem_MsgPpsTime()
+		tmp63 := NewAcquisition_MsgAcqResult()
 		err = tmp63.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp63
-	case Sbp_MsgIds__MsgObs:
+	case Sbp_MsgIds__MsgPpsTime:
 		tmp64, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -726,13 +729,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp64 = tmp64
 		this._raw_Payload = tmp64
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp65 := NewObservation_MsgObs()
+		tmp65 := NewSystem_MsgPpsTime()
 		err = tmp65.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp65
-	case Sbp_MsgIds__MsgEphemerisSbasDepB:
+	case Sbp_MsgIds__MsgObs:
 		tmp66, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -740,13 +743,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp66 = tmp66
 		this._raw_Payload = tmp66
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp67 := NewObservation_MsgEphemerisSbasDepB()
+		tmp67 := NewObservation_MsgObs()
 		err = tmp67.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp67
-	case Sbp_MsgIds__MsgTrackingIq:
+	case Sbp_MsgIds__MsgEphemerisSbasDepB:
 		tmp68, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -754,13 +757,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp68 = tmp68
 		this._raw_Payload = tmp68
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp69 := NewTracking_MsgTrackingIq()
+		tmp69 := NewObservation_MsgEphemerisSbasDepB()
 		err = tmp69.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp69
-	case Sbp_MsgIds__MsgSsrFlagIonoTileSatLos:
+	case Sbp_MsgIds__MsgTrackingIq:
 		tmp70, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -768,13 +771,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp70 = tmp70
 		this._raw_Payload = tmp70
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp71 := NewIntegrity_MsgSsrFlagIonoTileSatLos()
+		tmp71 := NewTracking_MsgTrackingIq()
 		err = tmp71.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp71
-	case Sbp_MsgIds__MsgTrackingStateDetailedDep:
+	case Sbp_MsgIds__MsgSsrFlagIonoTileSatLos:
 		tmp72, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -782,13 +785,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp72 = tmp72
 		this._raw_Payload = tmp72
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp73 := NewTracking_MsgTrackingStateDetailedDep()
+		tmp73 := NewIntegrity_MsgSsrFlagIonoTileSatLos()
 		err = tmp73.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp73
-	case Sbp_MsgIds__MsgBootloaderHandshakeDepA:
+	case Sbp_MsgIds__MsgTrackingStateDetailedDep:
 		tmp74, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -796,13 +799,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp74 = tmp74
 		this._raw_Payload = tmp74
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp75 := NewBootload_MsgBootloaderHandshakeDepA()
+		tmp75 := NewTracking_MsgTrackingStateDetailedDep()
 		err = tmp75.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp75
-	case Sbp_MsgIds__MsgUtcLeapSecond:
+	case Sbp_MsgIds__MsgBootloaderHandshakeDepA:
 		tmp76, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -810,13 +813,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp76 = tmp76
 		this._raw_Payload = tmp76
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp77 := NewNavigation_MsgUtcLeapSecond()
+		tmp77 := NewBootload_MsgBootloaderHandshakeDepA()
 		err = tmp77.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp77
-	case Sbp_MsgIds__MsgSsrGriddedCorrectionNoStdDepA:
+	case Sbp_MsgIds__MsgUtcLeapSecond:
 		tmp78, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -824,13 +827,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp78 = tmp78
 		this._raw_Payload = tmp78
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp79 := NewSsr_MsgSsrGriddedCorrectionNoStdDepA()
+		tmp79 := NewNavigation_MsgUtcLeapSecond()
 		err = tmp79.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp79
-	case Sbp_MsgIds__MsgBootloaderHandshakeResp:
+	case Sbp_MsgIds__MsgSsrGriddedCorrectionNoStdDepA:
 		tmp80, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -838,13 +841,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp80 = tmp80
 		this._raw_Payload = tmp80
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp81 := NewBootload_MsgBootloaderHandshakeResp()
+		tmp81 := NewSsr_MsgSsrGriddedCorrectionNoStdDepA()
 		err = tmp81.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp81
-	case Sbp_MsgIds__MsgBaselineHeading:
+	case Sbp_MsgIds__MsgBootloaderHandshakeResp:
 		tmp82, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -852,13 +855,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp82 = tmp82
 		this._raw_Payload = tmp82
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp83 := NewOrientation_MsgBaselineHeading()
+		tmp83 := NewBootload_MsgBootloaderHandshakeResp()
 		err = tmp83.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp83
-	case Sbp_MsgIds__MsgStatusReport:
+	case Sbp_MsgIds__MsgBaselineHeading:
 		tmp84, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -866,13 +869,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp84 = tmp84
 		this._raw_Payload = tmp84
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp85 := NewSystem_MsgStatusReport()
+		tmp85 := NewOrientation_MsgBaselineHeading()
 		err = tmp85.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp85
-	case Sbp_MsgIds__MsgVelNedCov:
+	case Sbp_MsgIds__MsgStatusReport:
 		tmp86, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -880,13 +883,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp86 = tmp86
 		this._raw_Payload = tmp86
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp87 := NewNavigation_MsgVelNedCov()
+		tmp87 := NewSystem_MsgStatusReport()
 		err = tmp87.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp87
-	case Sbp_MsgIds__MsgSetTime:
+	case Sbp_MsgIds__MsgVelNedCov:
 		tmp88, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -894,13 +897,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp88 = tmp88
 		this._raw_Payload = tmp88
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp89 := NewPiksi_MsgSetTime()
+		tmp89 := NewNavigation_MsgVelNedCov()
 		err = tmp89.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp89
-	case Sbp_MsgIds__MsgLinuxCpuState:
+	case Sbp_MsgIds__MsgSetTime:
 		tmp90, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -908,13 +911,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp90 = tmp90
 		this._raw_Payload = tmp90
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp91 := NewLinux_MsgLinuxCpuState()
+		tmp91 := NewPiksi_MsgSetTime()
 		err = tmp91.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp91
-	case Sbp_MsgIds__MsgGpsTimeDepA:
+	case Sbp_MsgIds__MsgLinuxCpuState:
 		tmp92, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -922,13 +925,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp92 = tmp92
 		this._raw_Payload = tmp92
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp93 := NewNavigation_MsgGpsTimeDepA()
+		tmp93 := NewLinux_MsgLinuxCpuState()
 		err = tmp93.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp93
-	case Sbp_MsgIds__MsgEphemerisSbasDepA:
+	case Sbp_MsgIds__MsgGpsTimeDepA:
 		tmp94, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -936,13 +939,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp94 = tmp94
 		this._raw_Payload = tmp94
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp95 := NewObservation_MsgEphemerisSbasDepA()
+		tmp95 := NewNavigation_MsgGpsTimeDepA()
 		err = tmp95.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp95
-	case Sbp_MsgIds__MsgAcqResultDepB:
+	case Sbp_MsgIds__MsgEphemerisSbasDepA:
 		tmp96, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -950,13 +953,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp96 = tmp96
 		this._raw_Payload = tmp96
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp97 := NewAcquisition_MsgAcqResultDepB()
+		tmp97 := NewObservation_MsgEphemerisSbasDepA()
 		err = tmp97.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp97
-	case Sbp_MsgIds__MsgSettingsRegisterResp:
+	case Sbp_MsgIds__MsgAcqResultDepB:
 		tmp98, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -964,13 +967,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp98 = tmp98
 		this._raw_Payload = tmp98
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp99 := NewSettings_MsgSettingsRegisterResp()
+		tmp99 := NewAcquisition_MsgAcqResultDepB()
 		err = tmp99.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp99
-	case Sbp_MsgIds__MsgEphemerisGal:
+	case Sbp_MsgIds__MsgSettingsRegisterResp:
 		tmp100, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -978,13 +981,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp100 = tmp100
 		this._raw_Payload = tmp100
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp101 := NewObservation_MsgEphemerisGal()
+		tmp101 := NewSettings_MsgSettingsRegisterResp()
 		err = tmp101.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp101
-	case Sbp_MsgIds__MsgBootloaderJumpToApp:
+	case Sbp_MsgIds__MsgEcdsaSignatureDepA:
 		tmp102, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -992,13 +995,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp102 = tmp102
 		this._raw_Payload = tmp102
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp103 := NewBootload_MsgBootloaderJumpToApp()
+		tmp103 := NewSigning_MsgEcdsaSignatureDepA()
 		err = tmp103.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp103
-	case Sbp_MsgIds__MsgSsrPhaseBiases:
+	case Sbp_MsgIds__MsgEphemerisGal:
 		tmp104, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1006,13 +1009,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp104 = tmp104
 		this._raw_Payload = tmp104
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp105 := NewSsr_MsgSsrPhaseBiases()
+		tmp105 := NewObservation_MsgEphemerisGal()
 		err = tmp105.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp105
-	case Sbp_MsgIds__MsgFileioReadDirResp:
+	case Sbp_MsgIds__MsgBootloaderJumpToApp:
 		tmp106, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1020,13 +1023,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp106 = tmp106
 		this._raw_Payload = tmp106
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp107 := NewFileIo_MsgFileioReadDirResp()
+		tmp107 := NewBootload_MsgBootloaderJumpToApp()
 		err = tmp107.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp107
-	case Sbp_MsgIds__MsgPosEcefGnss:
+	case Sbp_MsgIds__MsgSsrPhaseBiases:
 		tmp108, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1034,13 +1037,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp108 = tmp108
 		this._raw_Payload = tmp108
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp109 := NewNavigation_MsgPosEcefGnss()
+		tmp109 := NewSsr_MsgSsrPhaseBiases()
 		err = tmp109.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp109
-	case Sbp_MsgIds__MsgAlmanacGloDep:
+	case Sbp_MsgIds__MsgFileioReadDirResp:
 		tmp110, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1048,13 +1051,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp110 = tmp110
 		this._raw_Payload = tmp110
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp111 := NewObservation_MsgAlmanacGloDep()
+		tmp111 := NewFileIo_MsgFileioReadDirResp()
 		err = tmp111.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp111
-	case Sbp_MsgIds__MsgVelEcefDepA:
+	case Sbp_MsgIds__MsgPosEcefGnss:
 		tmp112, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1062,13 +1065,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp112 = tmp112
 		this._raw_Payload = tmp112
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp113 := NewNavigation_MsgVelEcefDepA()
+		tmp113 := NewNavigation_MsgPosEcefGnss()
 		err = tmp113.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp113
-	case Sbp_MsgIds__MsgThreadState:
+	case Sbp_MsgIds__MsgAlmanacGloDep:
 		tmp114, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1076,13 +1079,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp114 = tmp114
 		this._raw_Payload = tmp114
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp115 := NewPiksi_MsgThreadState()
+		tmp115 := NewObservation_MsgAlmanacGloDep()
 		err = tmp115.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp115
-	case Sbp_MsgIds__MsgGpsTime:
+	case Sbp_MsgIds__MsgVelEcefDepA:
 		tmp116, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1090,13 +1093,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp116 = tmp116
 		this._raw_Payload = tmp116
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp117 := NewNavigation_MsgGpsTime()
+		tmp117 := NewNavigation_MsgVelEcefDepA()
 		err = tmp117.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp117
-	case Sbp_MsgIds__MsgSsrCodePhaseBiasesBounds:
+	case Sbp_MsgIds__MsgThreadState:
 		tmp118, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1104,13 +1107,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp118 = tmp118
 		this._raw_Payload = tmp118
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp119 := NewSsr_MsgSsrCodePhaseBiasesBounds()
+		tmp119 := NewPiksi_MsgThreadState()
 		err = tmp119.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp119
-	case Sbp_MsgIds__MsgSettingsWriteResp:
+	case Sbp_MsgIds__MsgGpsTime:
 		tmp120, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1118,13 +1121,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp120 = tmp120
 		this._raw_Payload = tmp120
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp121 := NewSettings_MsgSettingsWriteResp()
+		tmp121 := NewNavigation_MsgGpsTime()
 		err = tmp121.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp121
-	case Sbp_MsgIds__MsgTrackingState:
+	case Sbp_MsgIds__MsgSsrCodePhaseBiasesBounds:
 		tmp122, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1132,13 +1135,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp122 = tmp122
 		this._raw_Payload = tmp122
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp123 := NewTracking_MsgTrackingState()
+		tmp123 := NewSsr_MsgSsrCodePhaseBiasesBounds()
 		err = tmp123.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp123
-	case Sbp_MsgIds__MsgVelEcef:
+	case Sbp_MsgIds__MsgSettingsWriteResp:
 		tmp124, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1146,13 +1149,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp124 = tmp124
 		this._raw_Payload = tmp124
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp125 := NewNavigation_MsgVelEcef()
+		tmp125 := NewSettings_MsgSettingsWriteResp()
 		err = tmp125.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp125
-	case Sbp_MsgIds__MsgEphemerisGloDepA:
+	case Sbp_MsgIds__MsgTrackingState:
 		tmp126, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1160,13 +1163,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp126 = tmp126
 		this._raw_Payload = tmp126
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp127 := NewObservation_MsgEphemerisGloDepA()
+		tmp127 := NewTracking_MsgTrackingState()
 		err = tmp127.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp127
-	case Sbp_MsgIds__MsgEd25519CertificateDep:
+	case Sbp_MsgIds__MsgVelEcef:
 		tmp128, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1174,13 +1177,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp128 = tmp128
 		this._raw_Payload = tmp128
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp129 := NewSigning_MsgEd25519CertificateDep()
+		tmp129 := NewNavigation_MsgVelEcef()
 		err = tmp129.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp129
-	case Sbp_MsgIds__MsgBaselineNedDepA:
+	case Sbp_MsgIds__MsgEphemerisGloDepA:
 		tmp130, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1188,13 +1191,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp130 = tmp130
 		this._raw_Payload = tmp130
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp131 := NewNavigation_MsgBaselineNedDepA()
+		tmp131 := NewObservation_MsgEphemerisGloDepA()
 		err = tmp131.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp131
-	case Sbp_MsgIds__MsgSpecanDep:
+	case Sbp_MsgIds__MsgEd25519CertificateDep:
 		tmp132, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1202,13 +1205,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp132 = tmp132
 		this._raw_Payload = tmp132
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp133 := NewPiksi_MsgSpecanDep()
+		tmp133 := NewSigning_MsgEd25519CertificateDep()
 		err = tmp133.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp133
-	case Sbp_MsgIds__MsgEphemerisSbas:
+	case Sbp_MsgIds__MsgBaselineNedDepA:
 		tmp134, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1216,13 +1219,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp134 = tmp134
 		this._raw_Payload = tmp134
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp135 := NewObservation_MsgEphemerisSbas()
+		tmp135 := NewNavigation_MsgBaselineNedDepA()
 		err = tmp135.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp135
-	case Sbp_MsgIds__MsgGroupDelay:
+	case Sbp_MsgIds__MsgSpecanDep:
 		tmp136, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1230,13 +1233,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp136 = tmp136
 		this._raw_Payload = tmp136
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp137 := NewObservation_MsgGroupDelay()
+		tmp137 := NewPiksi_MsgSpecanDep()
 		err = tmp137.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp137
-	case Sbp_MsgIds__MsgPosEcef:
+	case Sbp_MsgIds__MsgEphemerisSbas:
 		tmp138, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1244,13 +1247,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp138 = tmp138
 		this._raw_Payload = tmp138
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp139 := NewNavigation_MsgPosEcef()
+		tmp139 := NewObservation_MsgEphemerisSbas()
 		err = tmp139.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp139
-	case Sbp_MsgIds__MsgAlmanac:
+	case Sbp_MsgIds__MsgGroupDelay:
 		tmp140, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1258,13 +1261,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp140 = tmp140
 		this._raw_Payload = tmp140
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp141 := NewPiksi_MsgAlmanac()
+		tmp141 := NewObservation_MsgGroupDelay()
 		err = tmp141.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp141
-	case Sbp_MsgIds__MsgSettingsReadReq:
+	case Sbp_MsgIds__MsgPosEcef:
 		tmp142, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1272,13 +1275,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp142 = tmp142
 		this._raw_Payload = tmp142
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp143 := NewSettings_MsgSettingsReadReq()
+		tmp143 := NewNavigation_MsgPosEcef()
 		err = tmp143.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp143
-	case Sbp_MsgIds__MsgSsrFlagTropoGridPoints:
+	case Sbp_MsgIds__MsgAlmanac:
 		tmp144, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1286,13 +1289,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp144 = tmp144
 		this._raw_Payload = tmp144
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp145 := NewIntegrity_MsgSsrFlagTropoGridPoints()
+		tmp145 := NewPiksi_MsgAlmanac()
 		err = tmp145.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp145
-	case Sbp_MsgIds__MsgSsrGriddedCorrectionBounds:
+	case Sbp_MsgIds__MsgSettingsReadReq:
 		tmp146, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1300,13 +1303,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp146 = tmp146
 		this._raw_Payload = tmp146
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp147 := NewSsr_MsgSsrGriddedCorrectionBounds()
+		tmp147 := NewSettings_MsgSettingsReadReq()
 		err = tmp147.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp147
-	case Sbp_MsgIds__MsgStmUniqueIdResp:
+	case Sbp_MsgIds__MsgSsrFlagTropoGridPoints:
 		tmp148, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1314,13 +1317,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp148 = tmp148
 		this._raw_Payload = tmp148
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp149 := NewFlash_MsgStmUniqueIdResp()
+		tmp149 := NewIntegrity_MsgSsrFlagTropoGridPoints()
 		err = tmp149.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp149
-	case Sbp_MsgIds__MsgTelSv:
+	case Sbp_MsgIds__MsgSsrGriddedCorrectionBounds:
 		tmp150, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1328,13 +1331,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp150 = tmp150
 		this._raw_Payload = tmp150
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp151 := NewTelemetry_MsgTelSv()
+		tmp151 := NewSsr_MsgSsrGriddedCorrectionBounds()
 		err = tmp151.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp151
-	case Sbp_MsgIds__MsgSsrFlagSatellites:
+	case Sbp_MsgIds__MsgStmUniqueIdResp:
 		tmp152, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1342,13 +1345,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp152 = tmp152
 		this._raw_Payload = tmp152
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp153 := NewIntegrity_MsgSsrFlagSatellites()
+		tmp153 := NewFlash_MsgStmUniqueIdResp()
 		err = tmp153.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp153
-	case Sbp_MsgIds__MsgImuAux:
+	case Sbp_MsgIds__MsgTelSv:
 		tmp154, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1356,13 +1359,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp154 = tmp154
 		this._raw_Payload = tmp154
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp155 := NewImu_MsgImuAux()
+		tmp155 := NewTelemetry_MsgTelSv()
 		err = tmp155.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp155
-	case Sbp_MsgIds__MsgSsrGridDefinitionDepA:
+	case Sbp_MsgIds__MsgSsrFlagSatellites:
 		tmp156, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1370,13 +1373,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp156 = tmp156
 		this._raw_Payload = tmp156
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp157 := NewSsr_MsgSsrGridDefinitionDepA()
+		tmp157 := NewIntegrity_MsgSsrFlagSatellites()
 		err = tmp157.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp157
-	case Sbp_MsgIds__MsgPosLlhAcc:
+	case Sbp_MsgIds__MsgImuAux:
 		tmp158, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1384,13 +1387,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp158 = tmp158
 		this._raw_Payload = tmp158
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp159 := NewNavigation_MsgPosLlhAcc()
+		tmp159 := NewImu_MsgImuAux()
 		err = tmp159.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp159
-	case Sbp_MsgIds__MsgSvConfigurationGpsDep:
+	case Sbp_MsgIds__MsgSsrGridDefinitionDepA:
 		tmp160, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1398,13 +1401,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp160 = tmp160
 		this._raw_Payload = tmp160
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp161 := NewObservation_MsgSvConfigurationGpsDep()
+		tmp161 := NewSsr_MsgSsrGridDefinitionDepA()
 		err = tmp161.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp161
-	case Sbp_MsgIds__MsgLinuxMemState:
+	case Sbp_MsgIds__MsgPosLlhAcc:
 		tmp162, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1412,13 +1415,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp162 = tmp162
 		this._raw_Payload = tmp162
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp163 := NewLinux_MsgLinuxMemState()
+		tmp163 := NewNavigation_MsgPosLlhAcc()
 		err = tmp163.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp163
-	case Sbp_MsgIds__MsgLinuxSysState:
+	case Sbp_MsgIds__MsgSvConfigurationGpsDep:
 		tmp164, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1426,13 +1429,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp164 = tmp164
 		this._raw_Payload = tmp164
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp165 := NewLinux_MsgLinuxSysState()
+		tmp165 := NewObservation_MsgSvConfigurationGpsDep()
 		err = tmp165.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp165
-	case Sbp_MsgIds__MsgSettingsReadByIndexDone:
+	case Sbp_MsgIds__MsgLinuxMemState:
 		tmp166, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1440,13 +1443,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp166 = tmp166
 		this._raw_Payload = tmp166
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp167 := NewSettings_MsgSettingsReadByIndexDone()
+		tmp167 := NewLinux_MsgLinuxMemState()
 		err = tmp167.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp167
-	case Sbp_MsgIds__MsgResetFilters:
+	case Sbp_MsgIds__MsgLinuxSysState:
 		tmp168, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1454,13 +1457,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp168 = tmp168
 		this._raw_Payload = tmp168
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp169 := NewPiksi_MsgResetFilters()
+		tmp169 := NewLinux_MsgLinuxSysState()
 		err = tmp169.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp169
-	case Sbp_MsgIds__MsgEcdsaSignature:
+	case Sbp_MsgIds__MsgSettingsReadByIndexDone:
 		tmp170, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1468,13 +1471,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp170 = tmp170
 		this._raw_Payload = tmp170
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp171 := NewSigning_MsgEcdsaSignature()
+		tmp171 := NewSettings_MsgSettingsReadByIndexDone()
 		err = tmp171.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp171
-	case Sbp_MsgIds__MsgEphemerisGpsDepE:
+	case Sbp_MsgIds__MsgResetFilters:
 		tmp172, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1482,13 +1485,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp172 = tmp172
 		this._raw_Payload = tmp172
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp173 := NewObservation_MsgEphemerisGpsDepE()
+		tmp173 := NewPiksi_MsgResetFilters()
 		err = tmp173.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp173
-	case Sbp_MsgIds__MsgM25FlashWriteStatus:
+	case Sbp_MsgIds__MsgEcdsaSignature:
 		tmp174, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1496,13 +1499,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp174 = tmp174
 		this._raw_Payload = tmp174
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp175 := NewFlash_MsgM25FlashWriteStatus()
+		tmp175 := NewSigning_MsgEcdsaSignature()
 		err = tmp175.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp175
-	case Sbp_MsgIds__MsgEphemerisGps:
+	case Sbp_MsgIds__MsgEphemerisGpsDepE:
 		tmp176, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1510,13 +1513,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp176 = tmp176
 		this._raw_Payload = tmp176
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp177 := NewObservation_MsgEphemerisGps()
+		tmp177 := NewObservation_MsgEphemerisGpsDepE()
 		err = tmp177.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp177
-	case Sbp_MsgIds__MsgCommandOutput:
+	case Sbp_MsgIds__MsgM25FlashWriteStatus:
 		tmp178, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1524,13 +1527,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp178 = tmp178
 		this._raw_Payload = tmp178
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp179 := NewPiksi_MsgCommandOutput()
+		tmp179 := NewFlash_MsgM25FlashWriteStatus()
 		err = tmp179.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp179
-	case Sbp_MsgIds__MsgSsrFlagIonoGridPoints:
+	case Sbp_MsgIds__MsgEphemerisGps:
 		tmp180, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1538,13 +1541,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp180 = tmp180
 		this._raw_Payload = tmp180
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp181 := NewIntegrity_MsgSsrFlagIonoGridPoints()
+		tmp181 := NewObservation_MsgEphemerisGps()
 		err = tmp181.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp181
-	case Sbp_MsgIds__MsgVelNedCovGnss:
+	case Sbp_MsgIds__MsgCommandOutput:
 		tmp182, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1552,13 +1555,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp182 = tmp182
 		this._raw_Payload = tmp182
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp183 := NewNavigation_MsgVelNedCovGnss()
+		tmp183 := NewPiksi_MsgCommandOutput()
 		err = tmp183.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp183
-	case Sbp_MsgIds__MsgNetworkStateResp:
+	case Sbp_MsgIds__MsgSsrFlagIonoGridPoints:
 		tmp184, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1566,13 +1569,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp184 = tmp184
 		this._raw_Payload = tmp184
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp185 := NewPiksi_MsgNetworkStateResp()
+		tmp185 := NewIntegrity_MsgSsrFlagIonoGridPoints()
 		err = tmp185.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp185
-	case Sbp_MsgIds__MsgSsrStecCorrectionDepA:
+	case Sbp_MsgIds__MsgVelNedCovGnss:
 		tmp186, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1580,13 +1583,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp186 = tmp186
 		this._raw_Payload = tmp186
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp187 := NewSsr_MsgSsrStecCorrectionDepA()
+		tmp187 := NewNavigation_MsgVelNedCovGnss()
 		err = tmp187.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp187
-	case Sbp_MsgIds__MsgCommandReq:
+	case Sbp_MsgIds__MsgNetworkStateResp:
 		tmp188, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1594,13 +1597,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp188 = tmp188
 		this._raw_Payload = tmp188
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp189 := NewPiksi_MsgCommandReq()
+		tmp189 := NewPiksi_MsgNetworkStateResp()
 		err = tmp189.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp189
-	case Sbp_MsgIds__MsgAcknowledge:
+	case Sbp_MsgIds__MsgSsrStecCorrectionDepA:
 		tmp190, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1608,13 +1611,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp190 = tmp190
 		this._raw_Payload = tmp190
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp191 := NewIntegrity_MsgAcknowledge()
+		tmp191 := NewSsr_MsgSsrStecCorrectionDepA()
 		err = tmp191.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp191
-	case Sbp_MsgIds__MsgTrackingIqDepA:
+	case Sbp_MsgIds__MsgCommandReq:
 		tmp192, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1622,13 +1625,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp192 = tmp192
 		this._raw_Payload = tmp192
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp193 := NewTracking_MsgTrackingIqDepA()
+		tmp193 := NewPiksi_MsgCommandReq()
 		err = tmp193.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp193
-	case Sbp_MsgIds__MsgEphemerisGalDepA:
+	case Sbp_MsgIds__MsgAcknowledge:
 		tmp194, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1636,13 +1639,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp194 = tmp194
 		this._raw_Payload = tmp194
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp195 := NewObservation_MsgEphemerisGalDepA()
+		tmp195 := NewIntegrity_MsgAcknowledge()
 		err = tmp195.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp195
-	case Sbp_MsgIds__MsgSpecan:
+	case Sbp_MsgIds__MsgTrackingIqDepA:
 		tmp196, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1650,13 +1653,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp196 = tmp196
 		this._raw_Payload = tmp196
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp197 := NewPiksi_MsgSpecan()
+		tmp197 := NewTracking_MsgTrackingIqDepA()
 		err = tmp197.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp197
-	case Sbp_MsgIds__MsgAcqSvProfileDep:
+	case Sbp_MsgIds__MsgEphemerisGalDepA:
 		tmp198, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1664,13 +1667,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp198 = tmp198
 		this._raw_Payload = tmp198
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp199 := NewAcquisition_MsgAcqSvProfileDep()
+		tmp199 := NewObservation_MsgEphemerisGalDepA()
 		err = tmp199.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp199
-	case Sbp_MsgIds__MsgUtcTime:
+	case Sbp_MsgIds__MsgSpecan:
 		tmp200, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1678,13 +1681,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp200 = tmp200
 		this._raw_Payload = tmp200
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp201 := NewNavigation_MsgUtcTime()
+		tmp201 := NewPiksi_MsgSpecan()
 		err = tmp201.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp201
-	case Sbp_MsgIds__MsgEphemerisDepD:
+	case Sbp_MsgIds__MsgAcqSvProfileDep:
 		tmp202, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1692,13 +1695,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp202 = tmp202
 		this._raw_Payload = tmp202
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp203 := NewObservation_MsgEphemerisDepD()
+		tmp203 := NewAcquisition_MsgAcqSvProfileDep()
 		err = tmp203.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp203
-	case Sbp_MsgIds__MsgLinuxProcessSocketQueues:
+	case Sbp_MsgIds__MsgUtcTime:
 		tmp204, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1706,13 +1709,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp204 = tmp204
 		this._raw_Payload = tmp204
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp205 := NewLinux_MsgLinuxProcessSocketQueues()
+		tmp205 := NewNavigation_MsgUtcTime()
 		err = tmp205.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp205
-	case Sbp_MsgIds__MsgUtcTimeGnss:
+	case Sbp_MsgIds__MsgEphemerisDepD:
 		tmp206, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1720,13 +1723,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp206 = tmp206
 		this._raw_Payload = tmp206
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp207 := NewNavigation_MsgUtcTimeGnss()
+		tmp207 := NewObservation_MsgEphemerisDepD()
 		err = tmp207.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp207
-	case Sbp_MsgIds__MsgNdbEvent:
+	case Sbp_MsgIds__MsgLinuxProcessSocketQueues:
 		tmp208, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1734,13 +1737,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp208 = tmp208
 		this._raw_Payload = tmp208
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp209 := NewNdb_MsgNdbEvent()
+		tmp209 := NewLinux_MsgLinuxProcessSocketQueues()
 		err = tmp209.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp209
-	case Sbp_MsgIds__MsgBootloaderHandshakeReq:
+	case Sbp_MsgIds__MsgUtcTimeGnss:
 		tmp210, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1748,13 +1751,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp210 = tmp210
 		this._raw_Payload = tmp210
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp211 := NewBootload_MsgBootloaderHandshakeReq()
+		tmp211 := NewNavigation_MsgUtcTimeGnss()
 		err = tmp211.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp211
-	case Sbp_MsgIds__MsgUserData:
+	case Sbp_MsgIds__MsgNdbEvent:
 		tmp212, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1762,13 +1765,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp212 = tmp212
 		this._raw_Payload = tmp212
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp213 := NewUser_MsgUserData()
+		tmp213 := NewNdb_MsgNdbEvent()
 		err = tmp213.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp213
-	case Sbp_MsgIds__MsgSensorAidEvent:
+	case Sbp_MsgIds__MsgBootloaderHandshakeReq:
 		tmp214, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1776,13 +1779,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp214 = tmp214
 		this._raw_Payload = tmp214
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp215 := NewSystem_MsgSensorAidEvent()
+		tmp215 := NewBootload_MsgBootloaderHandshakeReq()
 		err = tmp215.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp215
-	case Sbp_MsgIds__MsgSsrOrbitClockBounds:
+	case Sbp_MsgIds__MsgUserData:
 		tmp216, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1790,13 +1793,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp216 = tmp216
 		this._raw_Payload = tmp216
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp217 := NewSsr_MsgSsrOrbitClockBounds()
+		tmp217 := NewUser_MsgUserData()
 		err = tmp217.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp217
-	case Sbp_MsgIds__MsgPosLlhGnss:
+	case Sbp_MsgIds__MsgSensorAidEvent:
 		tmp218, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1804,13 +1807,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp218 = tmp218
 		this._raw_Payload = tmp218
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp219 := NewNavigation_MsgPosLlhGnss()
+		tmp219 := NewSystem_MsgSensorAidEvent()
 		err = tmp219.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp219
-	case Sbp_MsgIds__MsgInitBaseDep:
+	case Sbp_MsgIds__MsgSsrOrbitClockBounds:
 		tmp220, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1818,13 +1821,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp220 = tmp220
 		this._raw_Payload = tmp220
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp221 := NewPiksi_MsgInitBaseDep()
+		tmp221 := NewSsr_MsgSsrOrbitClockBounds()
 		err = tmp221.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp221
-	case Sbp_MsgIds__MsgFileioReadReq:
+	case Sbp_MsgIds__MsgPosLlhGnss:
 		tmp222, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1832,13 +1835,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp222 = tmp222
 		this._raw_Payload = tmp222
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp223 := NewFileIo_MsgFileioReadReq()
+		tmp223 := NewNavigation_MsgPosLlhGnss()
 		err = tmp223.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp223
-	case Sbp_MsgIds__MsgTrackingIqDepB:
+	case Sbp_MsgIds__MsgInitBaseDep:
 		tmp224, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1846,13 +1849,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp224 = tmp224
 		this._raw_Payload = tmp224
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp225 := NewTracking_MsgTrackingIqDepB()
+		tmp225 := NewPiksi_MsgInitBaseDep()
 		err = tmp225.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp225
-	case Sbp_MsgIds__MsgAcqResultDepC:
+	case Sbp_MsgIds__MsgFileioReadReq:
 		tmp226, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1860,13 +1863,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp226 = tmp226
 		this._raw_Payload = tmp226
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp227 := NewAcquisition_MsgAcqResultDepC()
+		tmp227 := NewFileIo_MsgFileioReadReq()
 		err = tmp227.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp227
-	case Sbp_MsgIds__MsgCommandResp:
+	case Sbp_MsgIds__MsgTrackingIqDepB:
 		tmp228, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1874,13 +1877,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp228 = tmp228
 		this._raw_Payload = tmp228
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp229 := NewPiksi_MsgCommandResp()
+		tmp229 := NewTracking_MsgTrackingIqDepB()
 		err = tmp229.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp229
-	case Sbp_MsgIds__MsgFileioRemove:
+	case Sbp_MsgIds__MsgAcqResultDepC:
 		tmp230, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1888,13 +1891,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp230 = tmp230
 		this._raw_Payload = tmp230
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp231 := NewFileIo_MsgFileioRemove()
+		tmp231 := NewAcquisition_MsgAcqResultDepC()
 		err = tmp231.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp231
-	case Sbp_MsgIds__MsgObsDepC:
+	case Sbp_MsgIds__MsgCommandResp:
 		tmp232, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1902,13 +1905,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp232 = tmp232
 		this._raw_Payload = tmp232
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp233 := NewObservation_MsgObsDepC()
+		tmp233 := NewPiksi_MsgCommandResp()
 		err = tmp233.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp233
-	case Sbp_MsgIds__MsgSsrTileDefinitionDepB:
+	case Sbp_MsgIds__MsgFileioRemove:
 		tmp234, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1916,13 +1919,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp234 = tmp234
 		this._raw_Payload = tmp234
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp235 := NewSsr_MsgSsrTileDefinitionDepB()
+		tmp235 := NewFileIo_MsgFileioRemove()
 		err = tmp235.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp235
-	case Sbp_MsgIds__MsgCsacTelemetryLabels:
+	case Sbp_MsgIds__MsgObsDepC:
 		tmp236, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1930,13 +1933,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp236 = tmp236
 		this._raw_Payload = tmp236
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp237 := NewSystem_MsgCsacTelemetryLabels()
+		tmp237 := NewObservation_MsgObsDepC()
 		err = tmp237.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp237
-	case Sbp_MsgIds__MsgVelNed:
+	case Sbp_MsgIds__MsgSsrTileDefinitionDepB:
 		tmp238, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1944,13 +1947,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp238 = tmp238
 		this._raw_Payload = tmp238
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp239 := NewNavigation_MsgVelNed()
+		tmp239 := NewSsr_MsgSsrTileDefinitionDepB()
 		err = tmp239.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp239
-	case Sbp_MsgIds__MsgSettingsReadByIndexResp:
+	case Sbp_MsgIds__MsgCsacTelemetryLabels:
 		tmp240, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1958,13 +1961,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp240 = tmp240
 		this._raw_Payload = tmp240
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp241 := NewSettings_MsgSettingsReadByIndexResp()
+		tmp241 := NewSystem_MsgCsacTelemetryLabels()
 		err = tmp241.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp241
-	case Sbp_MsgIds__MsgEphemerisQzss:
+	case Sbp_MsgIds__MsgVelNed:
 		tmp242, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1972,13 +1975,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp242 = tmp242
 		this._raw_Payload = tmp242
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp243 := NewObservation_MsgEphemerisQzss()
+		tmp243 := NewNavigation_MsgVelNed()
 		err = tmp243.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp243
-	case Sbp_MsgIds__MsgSsrStecCorrection:
+	case Sbp_MsgIds__MsgSettingsReadByIndexResp:
 		tmp244, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -1986,13 +1989,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp244 = tmp244
 		this._raw_Payload = tmp244
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp245 := NewSsr_MsgSsrStecCorrection()
+		tmp245 := NewSettings_MsgSettingsReadByIndexResp()
 		err = tmp245.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp245
-	case Sbp_MsgIds__MsgBaselineEcefDepA:
+	case Sbp_MsgIds__MsgEphemerisQzss:
 		tmp246, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2000,13 +2003,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp246 = tmp246
 		this._raw_Payload = tmp246
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp247 := NewNavigation_MsgBaselineEcefDepA()
+		tmp247 := NewObservation_MsgEphemerisQzss()
 		err = tmp247.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp247
-	case Sbp_MsgIds__MsgInsUpdates:
+	case Sbp_MsgIds__MsgSsrStecCorrection:
 		tmp248, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2014,13 +2017,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp248 = tmp248
 		this._raw_Payload = tmp248
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp249 := NewSystem_MsgInsUpdates()
+		tmp249 := NewSsr_MsgSsrStecCorrection()
 		err = tmp249.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp249
-	case Sbp_MsgIds__MsgPosEcefCov:
+	case Sbp_MsgIds__MsgBaselineEcefDepA:
 		tmp250, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2028,13 +2031,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp250 = tmp250
 		this._raw_Payload = tmp250
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp251 := NewNavigation_MsgPosEcefCov()
+		tmp251 := NewNavigation_MsgBaselineEcefDepA()
 		err = tmp251.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp251
-	case Sbp_MsgIds__MsgVelNedGnss:
+	case Sbp_MsgIds__MsgInsUpdates:
 		tmp252, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2042,13 +2045,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp252 = tmp252
 		this._raw_Payload = tmp252
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp253 := NewNavigation_MsgVelNedGnss()
+		tmp253 := NewSystem_MsgInsUpdates()
 		err = tmp253.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp253
-	case Sbp_MsgIds__MsgMaskSatellite:
+	case Sbp_MsgIds__MsgPosEcefCov:
 		tmp254, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2056,13 +2059,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp254 = tmp254
 		this._raw_Payload = tmp254
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp255 := NewPiksi_MsgMaskSatellite()
+		tmp255 := NewNavigation_MsgPosEcefCov()
 		err = tmp255.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp255
-	case Sbp_MsgIds__MsgGroupDelayDepB:
+	case Sbp_MsgIds__MsgVelNedGnss:
 		tmp256, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2070,13 +2073,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp256 = tmp256
 		this._raw_Payload = tmp256
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp257 := NewObservation_MsgGroupDelayDepB()
+		tmp257 := NewNavigation_MsgVelNedGnss()
 		err = tmp257.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp257
-	case Sbp_MsgIds__MsgSsrOrbitClockBoundsDegradation:
+	case Sbp_MsgIds__MsgMaskSatellite:
 		tmp258, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2084,13 +2087,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp258 = tmp258
 		this._raw_Payload = tmp258
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp259 := NewSsr_MsgSsrOrbitClockBoundsDegradation()
+		tmp259 := NewPiksi_MsgMaskSatellite()
 		err = tmp259.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp259
-	case Sbp_MsgIds__MsgFlashErase:
+	case Sbp_MsgIds__MsgGroupDelayDepB:
 		tmp260, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2098,13 +2101,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp260 = tmp260
 		this._raw_Payload = tmp260
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp261 := NewFlash_MsgFlashErase()
+		tmp261 := NewObservation_MsgGroupDelayDepB()
 		err = tmp261.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp261
-	case Sbp_MsgIds__MsgCwStart:
+	case Sbp_MsgIds__MsgSsrOrbitClockBoundsDegradation:
 		tmp262, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2112,13 +2115,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp262 = tmp262
 		this._raw_Payload = tmp262
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp263 := NewPiksi_MsgCwStart()
+		tmp263 := NewSsr_MsgSsrOrbitClockBoundsDegradation()
 		err = tmp263.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp263
-	case Sbp_MsgIds__MsgSsrOrbitClockDepA:
+	case Sbp_MsgIds__MsgFlashErase:
 		tmp264, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2126,13 +2129,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp264 = tmp264
 		this._raw_Payload = tmp264
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp265 := NewSsr_MsgSsrOrbitClockDepA()
+		tmp265 := NewFlash_MsgFlashErase()
 		err = tmp265.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp265
-	case Sbp_MsgIds__MsgDops:
+	case Sbp_MsgIds__MsgCwStart:
 		tmp266, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2140,13 +2143,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp266 = tmp266
 		this._raw_Payload = tmp266
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp267 := NewNavigation_MsgDops()
+		tmp267 := NewPiksi_MsgCwStart()
 		err = tmp267.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp267
-	case Sbp_MsgIds__MsgNetworkBandwidthUsage:
+	case Sbp_MsgIds__MsgSsrOrbitClockDepA:
 		tmp268, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2154,13 +2157,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp268 = tmp268
 		this._raw_Payload = tmp268
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp269 := NewPiksi_MsgNetworkBandwidthUsage()
+		tmp269 := NewSsr_MsgSsrOrbitClockDepA()
 		err = tmp269.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp269
-	case Sbp_MsgIds__MsgEcdsaCertificate:
+	case Sbp_MsgIds__MsgDops:
 		tmp270, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2168,13 +2171,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp270 = tmp270
 		this._raw_Payload = tmp270
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp271 := NewSigning_MsgEcdsaCertificate()
+		tmp271 := NewNavigation_MsgDops()
 		err = tmp271.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp271
-	case Sbp_MsgIds__MsgPosLlhDepA:
+	case Sbp_MsgIds__MsgNetworkBandwidthUsage:
 		tmp272, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2182,13 +2185,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp272 = tmp272
 		this._raw_Payload = tmp272
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp273 := NewNavigation_MsgPosLlhDepA()
+		tmp273 := NewPiksi_MsgNetworkBandwidthUsage()
 		err = tmp273.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp273
-	case Sbp_MsgIds__MsgSvAzEl:
+	case Sbp_MsgIds__MsgEcdsaCertificate:
 		tmp274, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2196,13 +2199,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp274 = tmp274
 		this._raw_Payload = tmp274
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp275 := NewObservation_MsgSvAzEl()
+		tmp275 := NewSigning_MsgEcdsaCertificate()
 		err = tmp275.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp275
-	case Sbp_MsgIds__MsgFileioReadDirReq:
+	case Sbp_MsgIds__MsgPosLlhDepA:
 		tmp276, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2210,13 +2213,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp276 = tmp276
 		this._raw_Payload = tmp276
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp277 := NewFileIo_MsgFileioReadDirReq()
+		tmp277 := NewNavigation_MsgPosLlhDepA()
 		err = tmp277.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp277
-	case Sbp_MsgIds__MsgEphemerisDepB:
+	case Sbp_MsgIds__MsgSvAzEl:
 		tmp278, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2224,13 +2227,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp278 = tmp278
 		this._raw_Payload = tmp278
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp279 := NewObservation_MsgEphemerisDepB()
+		tmp279 := NewObservation_MsgSvAzEl()
 		err = tmp279.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp279
-	case Sbp_MsgIds__MsgVelEcefCov:
+	case Sbp_MsgIds__MsgFileioReadDirReq:
 		tmp280, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2238,13 +2241,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp280 = tmp280
 		this._raw_Payload = tmp280
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp281 := NewNavigation_MsgVelEcefCov()
+		tmp281 := NewFileIo_MsgFileioReadDirReq()
 		err = tmp281.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp281
-	case Sbp_MsgIds__MsgDgnssStatus:
+	case Sbp_MsgIds__MsgEphemerisDepB:
 		tmp282, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2252,13 +2255,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp282 = tmp282
 		this._raw_Payload = tmp282
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp283 := NewSystem_MsgDgnssStatus()
+		tmp283 := NewObservation_MsgEphemerisDepB()
 		err = tmp283.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp283
-	case Sbp_MsgIds__MsgSsrTileDefinitionDepA:
+	case Sbp_MsgIds__MsgVelEcefCov:
 		tmp284, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2266,13 +2269,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp284 = tmp284
 		this._raw_Payload = tmp284
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp285 := NewSsr_MsgSsrTileDefinitionDepA()
+		tmp285 := NewNavigation_MsgVelEcefCov()
 		err = tmp285.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp285
-	case Sbp_MsgIds__MsgLog:
+	case Sbp_MsgIds__MsgDgnssStatus:
 		tmp286, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2280,13 +2283,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp286 = tmp286
 		this._raw_Payload = tmp286
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp287 := NewLogging_MsgLog()
+		tmp287 := NewSystem_MsgDgnssStatus()
 		err = tmp287.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp287
-	case Sbp_MsgIds__MsgMaskSatelliteDep:
+	case Sbp_MsgIds__MsgSsrTileDefinitionDepA:
 		tmp288, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2294,13 +2297,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp288 = tmp288
 		this._raw_Payload = tmp288
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp289 := NewPiksi_MsgMaskSatelliteDep()
+		tmp289 := NewSsr_MsgSsrTileDefinitionDepA()
 		err = tmp289.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp289
-	case Sbp_MsgIds__MsgExtEvent:
+	case Sbp_MsgIds__MsgLog:
 		tmp290, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2308,13 +2311,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp290 = tmp290
 		this._raw_Payload = tmp290
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp291 := NewExtEvents_MsgExtEvent()
+		tmp291 := NewLogging_MsgLog()
 		err = tmp291.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp291
-	case Sbp_MsgIds__MsgCellModemStatus:
+	case Sbp_MsgIds__MsgMaskSatelliteDep:
 		tmp292, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2322,13 +2325,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp292 = tmp292
 		this._raw_Payload = tmp292
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp293 := NewPiksi_MsgCellModemStatus()
+		tmp293 := NewPiksi_MsgMaskSatelliteDep()
 		err = tmp293.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp293
-	case Sbp_MsgIds__MsgOrientQuat:
+	case Sbp_MsgIds__MsgExtEvent:
 		tmp294, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2336,13 +2339,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp294 = tmp294
 		this._raw_Payload = tmp294
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp295 := NewOrientation_MsgOrientQuat()
+		tmp295 := NewExtEvents_MsgExtEvent()
 		err = tmp295.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp295
-	case Sbp_MsgIds__MsgHeartbeat:
+	case Sbp_MsgIds__MsgCellModemStatus:
 		tmp296, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2350,13 +2353,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp296 = tmp296
 		this._raw_Payload = tmp296
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp297 := NewSystem_MsgHeartbeat()
+		tmp297 := NewPiksi_MsgCellModemStatus()
 		err = tmp297.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp297
-	case Sbp_MsgIds__MsgAlmanacGpsDep:
+	case Sbp_MsgIds__MsgOrientQuat:
 		tmp298, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2364,13 +2367,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp298 = tmp298
 		this._raw_Payload = tmp298
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp299 := NewObservation_MsgAlmanacGpsDep()
+		tmp299 := NewOrientation_MsgOrientQuat()
 		err = tmp299.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp299
-	case Sbp_MsgIds__MsgNapDeviceDnaReq:
+	case Sbp_MsgIds__MsgHeartbeat:
 		tmp300, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2378,13 +2381,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp300 = tmp300
 		this._raw_Payload = tmp300
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp301 := NewBootload_MsgNapDeviceDnaReq()
+		tmp301 := NewSystem_MsgHeartbeat()
 		err = tmp301.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp301
-	case Sbp_MsgIds__MsgAlmanacGps:
+	case Sbp_MsgIds__MsgAlmanacGpsDep:
 		tmp302, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2392,13 +2395,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp302 = tmp302
 		this._raw_Payload = tmp302
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp303 := NewObservation_MsgAlmanacGps()
+		tmp303 := NewObservation_MsgAlmanacGpsDep()
 		err = tmp303.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp303
-	case Sbp_MsgIds__MsgVelEcefCovGnss:
+	case Sbp_MsgIds__MsgNapDeviceDnaReq:
 		tmp304, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2406,13 +2409,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp304 = tmp304
 		this._raw_Payload = tmp304
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp305 := NewNavigation_MsgVelEcefCovGnss()
+		tmp305 := NewBootload_MsgNapDeviceDnaReq()
 		err = tmp305.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp305
-	case Sbp_MsgIds__MsgEd25519SignatureDepA:
+	case Sbp_MsgIds__MsgAlmanacGps:
 		tmp306, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2420,13 +2423,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp306 = tmp306
 		this._raw_Payload = tmp306
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp307 := NewSigning_MsgEd25519SignatureDepA()
+		tmp307 := NewObservation_MsgAlmanacGps()
 		err = tmp307.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp307
-	case Sbp_MsgIds__MsgAngularRate:
+	case Sbp_MsgIds__MsgVelEcefCovGnss:
 		tmp308, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2434,13 +2437,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp308 = tmp308
 		this._raw_Payload = tmp308
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp309 := NewOrientation_MsgAngularRate()
+		tmp309 := NewNavigation_MsgVelEcefCovGnss()
 		err = tmp309.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp309
-	case Sbp_MsgIds__MsgVelBody:
+	case Sbp_MsgIds__MsgEd25519SignatureDepA:
 		tmp310, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2448,13 +2451,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp310 = tmp310
 		this._raw_Payload = tmp310
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp311 := NewNavigation_MsgVelBody()
+		tmp311 := NewSigning_MsgEd25519SignatureDepA()
 		err = tmp311.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp311
-	case Sbp_MsgIds__MsgCertificateChain:
+	case Sbp_MsgIds__MsgAngularRate:
 		tmp312, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2462,13 +2465,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp312 = tmp312
 		this._raw_Payload = tmp312
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp313 := NewSigning_MsgCertificateChain()
+		tmp313 := NewOrientation_MsgAngularRate()
 		err = tmp313.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp313
-	case Sbp_MsgIds__MsgSolnMetaDepA:
+	case Sbp_MsgIds__MsgVelBody:
 		tmp314, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2476,13 +2479,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp314 = tmp314
 		this._raw_Payload = tmp314
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp315 := NewSolutionMeta_MsgSolnMetaDepA()
+		tmp315 := NewNavigation_MsgVelBody()
 		err = tmp315.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp315
-	case Sbp_MsgIds__MsgSsrGriddedCorrectionDepA:
+	case Sbp_MsgIds__MsgCertificateChain:
 		tmp316, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2490,13 +2493,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp316 = tmp316
 		this._raw_Payload = tmp316
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp317 := NewSsr_MsgSsrGriddedCorrectionDepA()
+		tmp317 := NewSigning_MsgCertificateChain()
 		err = tmp317.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp317
-	case Sbp_MsgIds__MsgEphemerisGloDepC:
+	case Sbp_MsgIds__MsgSolnMetaDepA:
 		tmp318, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2504,13 +2507,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp318 = tmp318
 		this._raw_Payload = tmp318
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp319 := NewObservation_MsgEphemerisGloDepC()
+		tmp319 := NewSolutionMeta_MsgSolnMetaDepA()
 		err = tmp319.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp319
-	case Sbp_MsgIds__MsgLinuxProcessFdCount:
+	case Sbp_MsgIds__MsgSsrGriddedCorrectionDepA:
 		tmp320, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2518,13 +2521,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp320 = tmp320
 		this._raw_Payload = tmp320
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp321 := NewLinux_MsgLinuxProcessFdCount()
+		tmp321 := NewSsr_MsgSsrGriddedCorrectionDepA()
 		err = tmp321.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp321
-	case Sbp_MsgIds__MsgFileioReadResp:
+	case Sbp_MsgIds__MsgEphemerisGloDepC:
 		tmp322, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2532,13 +2535,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp322 = tmp322
 		this._raw_Payload = tmp322
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp323 := NewFileIo_MsgFileioReadResp()
+		tmp323 := NewObservation_MsgEphemerisGloDepC()
 		err = tmp323.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp323
-	case Sbp_MsgIds__MsgLinuxSysStateDepA:
+	case Sbp_MsgIds__MsgLinuxProcessFdCount:
 		tmp324, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2546,13 +2549,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp324 = tmp324
 		this._raw_Payload = tmp324
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp325 := NewLinux_MsgLinuxSysStateDepA()
+		tmp325 := NewLinux_MsgLinuxProcessFdCount()
 		err = tmp325.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp325
-	case Sbp_MsgIds__MsgSbasRaw:
+	case Sbp_MsgIds__MsgFileioReadResp:
 		tmp326, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2560,13 +2563,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp326 = tmp326
 		this._raw_Payload = tmp326
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp327 := NewSbas_MsgSbasRaw()
+		tmp327 := NewFileIo_MsgFileioReadResp()
 		err = tmp327.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp327
-	case Sbp_MsgIds__MsgPosEcefCovGnss:
+	case Sbp_MsgIds__MsgLinuxSysStateDepA:
 		tmp328, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2574,13 +2577,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp328 = tmp328
 		this._raw_Payload = tmp328
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp329 := NewNavigation_MsgPosEcefCovGnss()
+		tmp329 := NewLinux_MsgLinuxSysStateDepA()
 		err = tmp329.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp329
-	case Sbp_MsgIds__MsgSsrFlagIonoGridPointSatLos:
+	case Sbp_MsgIds__MsgSbasRaw:
 		tmp330, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2588,13 +2591,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp330 = tmp330
 		this._raw_Payload = tmp330
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp331 := NewIntegrity_MsgSsrFlagIonoGridPointSatLos()
+		tmp331 := NewSbas_MsgSbasRaw()
 		err = tmp331.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp331
-	case Sbp_MsgIds__MsgFileioWriteReq:
+	case Sbp_MsgIds__MsgPosEcefCovGnss:
 		tmp332, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2602,13 +2605,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp332 = tmp332
 		this._raw_Payload = tmp332
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp333 := NewFileIo_MsgFileioWriteReq()
+		tmp333 := NewNavigation_MsgPosEcefCovGnss()
 		err = tmp333.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp333
-	case Sbp_MsgIds__MsgAcqSvProfile:
+	case Sbp_MsgIds__MsgSsrFlagIonoGridPointSatLos:
 		tmp334, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2616,13 +2619,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp334 = tmp334
 		this._raw_Payload = tmp334
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp335 := NewAcquisition_MsgAcqSvProfile()
+		tmp335 := NewIntegrity_MsgSsrFlagIonoGridPointSatLos()
 		err = tmp335.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp335
-	case Sbp_MsgIds__MsgEphemerisGloDepB:
+	case Sbp_MsgIds__MsgFileioWriteReq:
 		tmp336, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2630,13 +2633,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp336 = tmp336
 		this._raw_Payload = tmp336
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp337 := NewObservation_MsgEphemerisGloDepB()
+		tmp337 := NewFileIo_MsgFileioWriteReq()
 		err = tmp337.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp337
-	case Sbp_MsgIds__MsgLinuxSocketUsage:
+	case Sbp_MsgIds__MsgAcqSvProfile:
 		tmp338, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2644,13 +2647,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp338 = tmp338
 		this._raw_Payload = tmp338
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp339 := NewLinux_MsgLinuxSocketUsage()
+		tmp339 := NewAcquisition_MsgAcqSvProfile()
 		err = tmp339.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp339
-	case Sbp_MsgIds__MsgNetworkStateReq:
+	case Sbp_MsgIds__MsgEphemerisGloDepB:
 		tmp340, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2658,13 +2661,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp340 = tmp340
 		this._raw_Payload = tmp340
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp341 := NewPiksi_MsgNetworkStateReq()
+		tmp341 := NewObservation_MsgEphemerisGloDepB()
 		err = tmp341.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp341
-	case Sbp_MsgIds__MsgProtectionLevelDepA:
+	case Sbp_MsgIds__MsgLinuxSocketUsage:
 		tmp342, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2672,13 +2675,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp342 = tmp342
 		this._raw_Payload = tmp342
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp343 := NewNavigation_MsgProtectionLevelDepA()
+		tmp343 := NewLinux_MsgLinuxSocketUsage()
 		err = tmp343.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp343
-	case Sbp_MsgIds__MsgImuRaw:
+	case Sbp_MsgIds__MsgNetworkStateReq:
 		tmp344, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2686,13 +2689,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp344 = tmp344
 		this._raw_Payload = tmp344
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp345 := NewImu_MsgImuRaw()
+		tmp345 := NewPiksi_MsgNetworkStateReq()
 		err = tmp345.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp345
-	case Sbp_MsgIds__MsgResetDep:
+	case Sbp_MsgIds__MsgProtectionLevelDepA:
 		tmp346, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2700,13 +2703,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp346 = tmp346
 		this._raw_Payload = tmp346
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp347 := NewPiksi_MsgResetDep()
+		tmp347 := NewNavigation_MsgProtectionLevelDepA()
 		err = tmp347.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp347
-	case Sbp_MsgIds__MsgMagRaw:
+	case Sbp_MsgIds__MsgImuRaw:
 		tmp348, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2714,13 +2717,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp348 = tmp348
 		this._raw_Payload = tmp348
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp349 := NewMag_MsgMagRaw()
+		tmp349 := NewImu_MsgImuRaw()
 		err = tmp349.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp349
-	case Sbp_MsgIds__MsgStartup:
+	case Sbp_MsgIds__MsgResetDep:
 		tmp350, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2728,13 +2731,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp350 = tmp350
 		this._raw_Payload = tmp350
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp351 := NewSystem_MsgStartup()
+		tmp351 := NewPiksi_MsgResetDep()
 		err = tmp351.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp351
-	case Sbp_MsgIds__MsgGloBiases:
+	case Sbp_MsgIds__MsgMagRaw:
 		tmp352, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2742,13 +2745,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp352 = tmp352
 		this._raw_Payload = tmp352
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp353 := NewObservation_MsgGloBiases()
+		tmp353 := NewMag_MsgMagRaw()
 		err = tmp353.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp353
-	case Sbp_MsgIds__MsgTrackingStateDetailedDepA:
+	case Sbp_MsgIds__MsgStartup:
 		tmp354, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2756,13 +2759,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp354 = tmp354
 		this._raw_Payload = tmp354
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp355 := NewTracking_MsgTrackingStateDetailedDepA()
+		tmp355 := NewSystem_MsgStartup()
 		err = tmp355.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp355
-	case Sbp_MsgIds__MsgPosLlhCovGnss:
+	case Sbp_MsgIds__MsgGloBiases:
 		tmp356, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2770,13 +2773,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp356 = tmp356
 		this._raw_Payload = tmp356
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp357 := NewNavigation_MsgPosLlhCovGnss()
+		tmp357 := NewObservation_MsgGloBiases()
 		err = tmp357.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp357
-	case Sbp_MsgIds__MsgSettingsWrite:
+	case Sbp_MsgIds__MsgTrackingStateDetailedDepA:
 		tmp358, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2784,13 +2787,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp358 = tmp358
 		this._raw_Payload = tmp358
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp359 := NewSettings_MsgSettingsWrite()
+		tmp359 := NewTracking_MsgTrackingStateDetailedDepA()
 		err = tmp359.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp359
-	case Sbp_MsgIds__MsgSettingsSave:
+	case Sbp_MsgIds__MsgPosLlhCovGnss:
 		tmp360, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2798,13 +2801,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp360 = tmp360
 		this._raw_Payload = tmp360
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp361 := NewSettings_MsgSettingsSave()
+		tmp361 := NewNavigation_MsgPosLlhCovGnss()
 		err = tmp361.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp361
-	case Sbp_MsgIds__MsgAlmanacGlo:
+	case Sbp_MsgIds__MsgSettingsWrite:
 		tmp362, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2812,13 +2815,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp362 = tmp362
 		this._raw_Payload = tmp362
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp363 := NewObservation_MsgAlmanacGlo()
+		tmp363 := NewSettings_MsgSettingsWrite()
 		err = tmp363.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp363
-	case Sbp_MsgIds__MsgStmFlashUnlockSector:
+	case Sbp_MsgIds__MsgSettingsSave:
 		tmp364, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2826,13 +2829,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp364 = tmp364
 		this._raw_Payload = tmp364
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp365 := NewFlash_MsgStmFlashUnlockSector()
+		tmp365 := NewSettings_MsgSettingsSave()
 		err = tmp365.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp365
-	case Sbp_MsgIds__MsgGpsTimeGnss:
+	case Sbp_MsgIds__MsgAlmanacGlo:
 		tmp366, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2840,13 +2843,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp366 = tmp366
 		this._raw_Payload = tmp366
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp367 := NewNavigation_MsgGpsTimeGnss()
+		tmp367 := NewObservation_MsgAlmanacGlo()
 		err = tmp367.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp367
-	case Sbp_MsgIds__MsgFlashReadReq:
+	case Sbp_MsgIds__MsgStmFlashUnlockSector:
 		tmp368, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2854,13 +2857,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp368 = tmp368
 		this._raw_Payload = tmp368
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp369 := NewFlash_MsgFlashReadReq()
+		tmp369 := NewFlash_MsgStmFlashUnlockSector()
 		err = tmp369.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp369
-	case Sbp_MsgIds__MsgEphemerisGlo:
+	case Sbp_MsgIds__MsgGpsTimeGnss:
 		tmp370, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2868,13 +2871,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp370 = tmp370
 		this._raw_Payload = tmp370
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp371 := NewObservation_MsgEphemerisGlo()
+		tmp371 := NewNavigation_MsgGpsTimeGnss()
 		err = tmp371.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp371
-	case Sbp_MsgIds__MsgBaselineHeadingDepA:
+	case Sbp_MsgIds__MsgFlashReadReq:
 		tmp372, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2882,13 +2885,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp372 = tmp372
 		this._raw_Payload = tmp372
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp373 := NewNavigation_MsgBaselineHeadingDepA()
+		tmp373 := NewFlash_MsgFlashReadReq()
 		err = tmp373.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp373
-	case Sbp_MsgIds__MsgSettingsRegister:
+	case Sbp_MsgIds__MsgEphemerisGlo:
 		tmp374, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2896,13 +2899,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp374 = tmp374
 		this._raw_Payload = tmp374
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp375 := NewSettings_MsgSettingsRegister()
+		tmp375 := NewObservation_MsgEphemerisGlo()
 		err = tmp375.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp375
-	case Sbp_MsgIds__MsgGnssCapb:
+	case Sbp_MsgIds__MsgBaselineHeadingDepA:
 		tmp376, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2910,13 +2913,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp376 = tmp376
 		this._raw_Payload = tmp376
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp377 := NewObservation_MsgGnssCapb()
+		tmp377 := NewNavigation_MsgBaselineHeadingDepA()
 		err = tmp377.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp377
-	case Sbp_MsgIds__MsgTrackingStateDepB:
+	case Sbp_MsgIds__MsgSettingsRegister:
 		tmp378, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2924,13 +2927,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp378 = tmp378
 		this._raw_Payload = tmp378
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp379 := NewTracking_MsgTrackingStateDepB()
+		tmp379 := NewSettings_MsgSettingsRegister()
 		err = tmp379.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp379
-	case Sbp_MsgIds__MsgFwd:
+	case Sbp_MsgIds__MsgGnssCapb:
 		tmp380, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2938,13 +2941,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp380 = tmp380
 		this._raw_Payload = tmp380
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp381 := NewLogging_MsgFwd()
+		tmp381 := NewObservation_MsgGnssCapb()
 		err = tmp381.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp381
-	case Sbp_MsgIds__MsgSolnMeta:
+	case Sbp_MsgIds__MsgTrackingStateDepB:
 		tmp382, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2952,13 +2955,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp382 = tmp382
 		this._raw_Payload = tmp382
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp383 := NewSolutionMeta_MsgSolnMeta()
+		tmp383 := NewTracking_MsgTrackingStateDepB()
 		err = tmp383.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp383
-	case Sbp_MsgIds__MsgObsDepA:
+	case Sbp_MsgIds__MsgFwd:
 		tmp384, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2966,13 +2969,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp384 = tmp384
 		this._raw_Payload = tmp384
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp385 := NewObservation_MsgObsDepA()
+		tmp385 := NewLogging_MsgFwd()
 		err = tmp385.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp385
-	case Sbp_MsgIds__MsgDeviceMonitor:
+	case Sbp_MsgIds__MsgSolnMeta:
 		tmp386, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2980,13 +2983,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp386 = tmp386
 		this._raw_Payload = tmp386
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp387 := NewPiksi_MsgDeviceMonitor()
+		tmp387 := NewSolutionMeta_MsgSolnMeta()
 		err = tmp387.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp387
-	case Sbp_MsgIds__MsgLinuxProcessSocketCounts:
+	case Sbp_MsgIds__MsgObsDepA:
 		tmp388, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -2994,13 +2997,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp388 = tmp388
 		this._raw_Payload = tmp388
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp389 := NewLinux_MsgLinuxProcessSocketCounts()
+		tmp389 := NewObservation_MsgObsDepA()
 		err = tmp389.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp389
-	case Sbp_MsgIds__MsgVelCog:
+	case Sbp_MsgIds__MsgDeviceMonitor:
 		tmp390, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3008,13 +3011,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp390 = tmp390
 		this._raw_Payload = tmp390
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp391 := NewNavigation_MsgVelCog()
+		tmp391 := NewPiksi_MsgDeviceMonitor()
 		err = tmp391.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp391
-	case Sbp_MsgIds__MsgPrintDep:
+	case Sbp_MsgIds__MsgLinuxProcessSocketCounts:
 		tmp392, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3022,13 +3025,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp392 = tmp392
 		this._raw_Payload = tmp392
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp393 := NewLogging_MsgPrintDep()
+		tmp393 := NewLinux_MsgLinuxProcessSocketCounts()
 		err = tmp393.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp393
-	case Sbp_MsgIds__MsgCwResults:
+	case Sbp_MsgIds__MsgVelCog:
 		tmp394, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3036,13 +3039,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp394 = tmp394
 		this._raw_Payload = tmp394
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp395 := NewPiksi_MsgCwResults()
+		tmp395 := NewNavigation_MsgVelCog()
 		err = tmp395.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp395
-	case Sbp_MsgIds__MsgNapDeviceDnaResp:
+	case Sbp_MsgIds__MsgPrintDep:
 		tmp396, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3050,13 +3053,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp396 = tmp396
 		this._raw_Payload = tmp396
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp397 := NewBootload_MsgNapDeviceDnaResp()
+		tmp397 := NewLogging_MsgPrintDep()
 		err = tmp397.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp397
-	case Sbp_MsgIds__MsgDopsDepA:
+	case Sbp_MsgIds__MsgCwResults:
 		tmp398, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3064,13 +3067,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp398 = tmp398
 		this._raw_Payload = tmp398
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp399 := NewNavigation_MsgDopsDepA()
+		tmp399 := NewPiksi_MsgCwResults()
 		err = tmp399.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp399
-	case Sbp_MsgIds__MsgPosEcefDepA:
+	case Sbp_MsgIds__MsgNapDeviceDnaResp:
 		tmp400, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3078,13 +3081,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp400 = tmp400
 		this._raw_Payload = tmp400
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp401 := NewNavigation_MsgPosEcefDepA()
+		tmp401 := NewBootload_MsgNapDeviceDnaResp()
 		err = tmp401.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp401
-	case Sbp_MsgIds__MsgSettingsReadResp:
+	case Sbp_MsgIds__MsgDopsDepA:
 		tmp402, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3092,13 +3095,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp402 = tmp402
 		this._raw_Payload = tmp402
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp403 := NewSettings_MsgSettingsReadResp()
+		tmp403 := NewNavigation_MsgDopsDepA()
 		err = tmp403.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp403
-	case Sbp_MsgIds__MsgLinuxMemStateDepA:
+	case Sbp_MsgIds__MsgPosEcefDepA:
 		tmp404, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3106,13 +3109,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp404 = tmp404
 		this._raw_Payload = tmp404
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp405 := NewLinux_MsgLinuxMemStateDepA()
+		tmp405 := NewNavigation_MsgPosEcefDepA()
 		err = tmp405.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp405
-	case Sbp_MsgIds__MsgEphemerisDepC:
+	case Sbp_MsgIds__MsgSettingsReadResp:
 		tmp406, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3120,13 +3123,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp406 = tmp406
 		this._raw_Payload = tmp406
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp407 := NewObservation_MsgEphemerisDepC()
+		tmp407 := NewSettings_MsgSettingsReadResp()
 		err = tmp407.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp407
-	case Sbp_MsgIds__MsgFileioWriteResp:
+	case Sbp_MsgIds__MsgLinuxMemStateDepA:
 		tmp408, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3134,13 +3137,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp408 = tmp408
 		this._raw_Payload = tmp408
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp409 := NewFileIo_MsgFileioWriteResp()
+		tmp409 := NewLinux_MsgLinuxMemStateDepA()
 		err = tmp409.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp409
-	case Sbp_MsgIds__MsgWheeltick:
+	case Sbp_MsgIds__MsgEphemerisDepC:
 		tmp410, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3148,13 +3151,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp410 = tmp410
 		this._raw_Payload = tmp410
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp411 := NewVehicle_MsgWheeltick()
+		tmp411 := NewObservation_MsgEphemerisDepC()
 		err = tmp411.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp411
-	case Sbp_MsgIds__MsgUartStateDepa:
+	case Sbp_MsgIds__MsgFileioWriteResp:
 		tmp412, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3162,13 +3165,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp412 = tmp412
 		this._raw_Payload = tmp412
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp413 := NewPiksi_MsgUartStateDepa()
+		tmp413 := NewFileIo_MsgFileioWriteResp()
 		err = tmp413.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp413
-	case Sbp_MsgIds__MsgReferenceFrameParam:
+	case Sbp_MsgIds__MsgWheeltick:
 		tmp414, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3176,13 +3179,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp414 = tmp414
 		this._raw_Payload = tmp414
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp415 := NewNavigation_MsgReferenceFrameParam()
+		tmp415 := NewVehicle_MsgWheeltick()
 		err = tmp415.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp415
-	case Sbp_MsgIds__MsgPoseRelative:
+	case Sbp_MsgIds__MsgUartStateDepa:
 		tmp416, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3190,13 +3193,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp416 = tmp416
 		this._raw_Payload = tmp416
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp417 := NewNavigation_MsgPoseRelative()
+		tmp417 := NewPiksi_MsgUartStateDepa()
 		err = tmp417.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp417
-	case Sbp_MsgIds__MsgIarState:
+	case Sbp_MsgIds__MsgReferenceFrameParam:
 		tmp418, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3204,13 +3207,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp418 = tmp418
 		this._raw_Payload = tmp418
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp419 := NewPiksi_MsgIarState()
+		tmp419 := NewNavigation_MsgReferenceFrameParam()
 		err = tmp419.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp419
-	case Sbp_MsgIds__MsgUartState:
+	case Sbp_MsgIds__MsgPoseRelative:
 		tmp420, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3218,13 +3221,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp420 = tmp420
 		this._raw_Payload = tmp420
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp421 := NewPiksi_MsgUartState()
+		tmp421 := NewNavigation_MsgPoseRelative()
 		err = tmp421.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp421
-	case Sbp_MsgIds__MsgSsrTileDefinition:
+	case Sbp_MsgIds__MsgIarState:
 		tmp422, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3232,13 +3235,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp422 = tmp422
 		this._raw_Payload = tmp422
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp423 := NewSsr_MsgSsrTileDefinition()
+		tmp423 := NewPiksi_MsgIarState()
 		err = tmp423.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp423
-	case Sbp_MsgIds__MsgSsrSatelliteApc:
+	case Sbp_MsgIds__MsgUartState:
 		tmp424, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3246,13 +3249,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp424 = tmp424
 		this._raw_Payload = tmp424
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp425 := NewSsr_MsgSsrSatelliteApc()
+		tmp425 := NewPiksi_MsgUartState()
 		err = tmp425.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp425
-	case Sbp_MsgIds__MsgOsr:
+	case Sbp_MsgIds__MsgSsrTileDefinition:
 		tmp426, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3260,13 +3263,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp426 = tmp426
 		this._raw_Payload = tmp426
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp427 := NewObservation_MsgOsr()
+		tmp427 := NewSsr_MsgSsrTileDefinition()
 		err = tmp427.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp427
-	case Sbp_MsgIds__MsgPosLlhCov:
+	case Sbp_MsgIds__MsgSsrSatelliteApc:
 		tmp428, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3274,13 +3277,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp428 = tmp428
 		this._raw_Payload = tmp428
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp429 := NewNavigation_MsgPosLlhCov()
+		tmp429 := NewSsr_MsgSsrSatelliteApc()
 		err = tmp429.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp429
-	case Sbp_MsgIds__MsgGroupDelayDepA:
+	case Sbp_MsgIds__MsgOsr:
 		tmp430, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3288,13 +3291,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp430 = tmp430
 		this._raw_Payload = tmp430
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp431 := NewObservation_MsgGroupDelayDepA()
+		tmp431 := NewObservation_MsgOsr()
 		err = tmp431.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp431
-	case Sbp_MsgIds__MsgProtectionLevel:
+	case Sbp_MsgIds__MsgPosLlhCov:
 		tmp432, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3302,13 +3305,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp432 = tmp432
 		this._raw_Payload = tmp432
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp433 := NewNavigation_MsgProtectionLevel()
+		tmp433 := NewNavigation_MsgPosLlhCov()
 		err = tmp433.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp433
-	case Sbp_MsgIds__MsgObsDepB:
+	case Sbp_MsgIds__MsgGroupDelayDepA:
 		tmp434, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3316,13 +3319,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp434 = tmp434
 		this._raw_Payload = tmp434
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp435 := NewObservation_MsgObsDepB()
+		tmp435 := NewObservation_MsgGroupDelayDepA()
 		err = tmp435.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp435
-	case Sbp_MsgIds__MsgPosLlh:
+	case Sbp_MsgIds__MsgProtectionLevel:
 		tmp436, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3330,13 +3333,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp436 = tmp436
 		this._raw_Payload = tmp436
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp437 := NewNavigation_MsgPosLlh()
+		tmp437 := NewNavigation_MsgProtectionLevel()
 		err = tmp437.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp437
-	case Sbp_MsgIds__MsgFlashDone:
+	case Sbp_MsgIds__MsgObsDepB:
 		tmp438, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3344,13 +3347,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp438 = tmp438
 		this._raw_Payload = tmp438
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp439 := NewFlash_MsgFlashDone()
+		tmp439 := NewObservation_MsgObsDepB()
 		err = tmp439.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp439
-	case Sbp_MsgIds__MsgAcqResultDepA:
+	case Sbp_MsgIds__MsgPosLlh:
 		tmp440, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3358,13 +3361,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp440 = tmp440
 		this._raw_Payload = tmp440
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp441 := NewAcquisition_MsgAcqResultDepA()
+		tmp441 := NewNavigation_MsgPosLlh()
 		err = tmp441.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp441
-	case Sbp_MsgIds__MsgSsrCodeBiases:
+	case Sbp_MsgIds__MsgFlashDone:
 		tmp442, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3372,13 +3375,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp442 = tmp442
 		this._raw_Payload = tmp442
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp443 := NewSsr_MsgSsrCodeBiases()
+		tmp443 := NewFlash_MsgFlashDone()
 		err = tmp443.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp443
-	case Sbp_MsgIds__MsgSsrGriddedCorrection:
+	case Sbp_MsgIds__MsgAcqResultDepA:
 		tmp444, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3386,13 +3389,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp444 = tmp444
 		this._raw_Payload = tmp444
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp445 := NewSsr_MsgSsrGriddedCorrection()
+		tmp445 := NewAcquisition_MsgAcqResultDepA()
 		err = tmp445.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp445
-	case Sbp_MsgIds__MsgGroupMeta:
+	case Sbp_MsgIds__MsgSsrCodeBiases:
 		tmp446, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3400,13 +3403,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp446 = tmp446
 		this._raw_Payload = tmp446
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp447 := NewSystem_MsgGroupMeta()
+		tmp447 := NewSsr_MsgSsrCodeBiases()
 		err = tmp447.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp447
-	case Sbp_MsgIds__MsgFileioConfigResp:
+	case Sbp_MsgIds__MsgCertificateChainDep:
 		tmp448, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3414,13 +3417,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp448 = tmp448
 		this._raw_Payload = tmp448
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp449 := NewFileIo_MsgFileioConfigResp()
+		tmp449 := NewSigning_MsgCertificateChainDep()
 		err = tmp449.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp449
-	case Sbp_MsgIds__MsgVelNedDepA:
+	case Sbp_MsgIds__MsgSsrGriddedCorrection:
 		tmp450, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3428,13 +3431,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp450 = tmp450
 		this._raw_Payload = tmp450
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp451 := NewNavigation_MsgVelNedDepA()
+		tmp451 := NewSsr_MsgSsrGriddedCorrection()
 		err = tmp451.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp451
-	case Sbp_MsgIds__MsgGnssTimeOffset:
+	case Sbp_MsgIds__MsgGroupMeta:
 		tmp452, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3442,13 +3445,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp452 = tmp452
 		this._raw_Payload = tmp452
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp453 := NewSystem_MsgGnssTimeOffset()
+		tmp453 := NewSystem_MsgGroupMeta()
 		err = tmp453.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp453
-	case Sbp_MsgIds__MsgTrackingStateDepA:
+	case Sbp_MsgIds__MsgFileioConfigResp:
 		tmp454, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3456,13 +3459,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp454 = tmp454
 		this._raw_Payload = tmp454
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp455 := NewTracking_MsgTrackingStateDepA()
+		tmp455 := NewFileIo_MsgFileioConfigResp()
 		err = tmp455.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp455
-	case Sbp_MsgIds__MsgInsStatus:
+	case Sbp_MsgIds__MsgVelNedDepA:
 		tmp456, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3470,13 +3473,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp456 = tmp456
 		this._raw_Payload = tmp456
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp457 := NewSystem_MsgInsStatus()
+		tmp457 := NewNavigation_MsgVelNedDepA()
 		err = tmp457.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp457
-	case Sbp_MsgIds__MsgEphemerisGpsDepF:
+	case Sbp_MsgIds__MsgGnssTimeOffset:
 		tmp458, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3484,13 +3487,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp458 = tmp458
 		this._raw_Payload = tmp458
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp459 := NewObservation_MsgEphemerisGpsDepF()
+		tmp459 := NewSystem_MsgGnssTimeOffset()
 		err = tmp459.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp459
-	case Sbp_MsgIds__MsgLinuxCpuStateDepA:
+	case Sbp_MsgIds__MsgTrackingStateDepA:
 		tmp460, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3498,13 +3501,13 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp460 = tmp460
 		this._raw_Payload = tmp460
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp461 := NewLinux_MsgLinuxCpuStateDepA()
+		tmp461 := NewTracking_MsgTrackingStateDepA()
 		err = tmp461.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp461
-	case Sbp_MsgIds__MsgFlashReadResp:
+	case Sbp_MsgIds__MsgInsStatus:
 		tmp462, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
@@ -3512,25 +3515,67 @@ func (this *Sbp_Message) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err er
 		tmp462 = tmp462
 		this._raw_Payload = tmp462
 		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp463 := NewFlash_MsgFlashReadResp()
+		tmp463 := NewSystem_MsgInsStatus()
 		err = tmp463.Read(_io__raw_Payload, this, this._root)
 		if err != nil {
 			return err
 		}
 		this.Payload = tmp463
-	default:
+	case Sbp_MsgIds__MsgEphemerisGpsDepF:
 		tmp464, err := this._io.ReadBytes(int(this.Header.Length))
 		if err != nil {
 			return err
 		}
 		tmp464 = tmp464
 		this._raw_Payload = tmp464
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp465 := NewObservation_MsgEphemerisGpsDepF()
+		err = tmp465.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp465
+	case Sbp_MsgIds__MsgLinuxCpuStateDepA:
+		tmp466, err := this._io.ReadBytes(int(this.Header.Length))
+		if err != nil {
+			return err
+		}
+		tmp466 = tmp466
+		this._raw_Payload = tmp466
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp467 := NewLinux_MsgLinuxCpuStateDepA()
+		err = tmp467.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp467
+	case Sbp_MsgIds__MsgFlashReadResp:
+		tmp468, err := this._io.ReadBytes(int(this.Header.Length))
+		if err != nil {
+			return err
+		}
+		tmp468 = tmp468
+		this._raw_Payload = tmp468
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp469 := NewFlash_MsgFlashReadResp()
+		err = tmp469.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp469
+	default:
+		tmp470, err := this._io.ReadBytes(int(this.Header.Length))
+		if err != nil {
+			return err
+		}
+		tmp470 = tmp470
+		this._raw_Payload = tmp470
 	}
-	tmp465, err := this._io.ReadU2le()
+	tmp471, err := this._io.ReadU2le()
 	if err != nil {
 		return err
 	}
-	this.Crc = uint16(tmp465)
+	this.Crc = uint16(tmp471)
 	return err
 }
 type Sbp_SbpHeader struct {
@@ -3552,29 +3597,29 @@ func (this *Sbp_SbpHeader) Read(io *kaitai.Stream, parent *Sbp_Message, root *Sb
 	this._parent = parent
 	this._root = root
 
-	tmp466, err := this._io.ReadBytes(int(1))
+	tmp472, err := this._io.ReadBytes(int(1))
 	if err != nil {
 		return err
 	}
-	tmp466 = tmp466
-	this.Preamble = tmp466
+	tmp472 = tmp472
+	this.Preamble = tmp472
 	if !(bytes.Equal(this.Preamble, []uint8{85})) {
 		return kaitai.NewValidationNotEqualError([]uint8{85}, this.Preamble, this._io, "/types/sbp_header/seq/0")
 	}
-	tmp467, err := this._io.ReadU2le()
+	tmp473, err := this._io.ReadU2le()
 	if err != nil {
 		return err
 	}
-	this.MsgType = Sbp_MsgIds(tmp467)
-	tmp468, err := this._io.ReadU2le()
+	this.MsgType = Sbp_MsgIds(tmp473)
+	tmp474, err := this._io.ReadU2le()
 	if err != nil {
 		return err
 	}
-	this.Sender = uint16(tmp468)
-	tmp469, err := this._io.ReadU1()
+	this.Sender = uint16(tmp474)
+	tmp475, err := this._io.ReadU1()
 	if err != nil {
 		return err
 	}
-	this.Length = tmp469
+	this.Length = tmp475
 	return err
 }

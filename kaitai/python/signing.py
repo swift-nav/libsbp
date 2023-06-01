@@ -17,7 +17,38 @@ class Signing(KaitaiStruct):
     def _read(self):
         pass
 
+    class MsgCertificateChainDep(KaitaiStruct):
+        """Deprecated.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.root_certificate = []
+            for i in range(20):
+                self.root_certificate.append(self._io.read_u1())
+
+            self.intermediate_certificate = []
+            for i in range(20):
+                self.intermediate_certificate.append(self._io.read_u1())
+
+            self.corrections_certificate = []
+            for i in range(20):
+                self.corrections_certificate.append(self._io.read_u1())
+
+            self.expiration = Signing.UtcTime(self._io, self, self._root)
+            self.signature = []
+            for i in range(64):
+                self.signature.append(self._io.read_u1())
+
+
+
     class MsgEd25519SignatureDepB(KaitaiStruct):
+        """Deprecated.
+        """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent
@@ -44,6 +75,8 @@ class Signing(KaitaiStruct):
 
 
     class MsgEd25519CertificateDep(KaitaiStruct):
+        """Deprecated.
+        """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent
@@ -81,7 +114,24 @@ class Signing(KaitaiStruct):
             self.ns = self._io.read_u4le()
 
 
+    class EcdsaSignature(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.len = self._io.read_u1()
+            self.data = []
+            for i in range(72):
+                self.data.append(self._io.read_u1())
+
+
+
     class MsgEd25519SignatureDepA(KaitaiStruct):
+        """Deprecated.
+        """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
             self._parent = _parent
@@ -126,10 +176,7 @@ class Signing(KaitaiStruct):
                 self.corrections_certificate.append(self._io.read_u1())
 
             self.expiration = Signing.UtcTime(self._io, self, self._root)
-            self.signature = []
-            for i in range(64):
-                self.signature.append(self._io.read_u1())
-
+            self.signature = Signing.EcdsaSignature(self._io, self, self._root)
 
 
     class MsgEcdsaCertificate(KaitaiStruct):
@@ -156,8 +203,64 @@ class Signing(KaitaiStruct):
 
 
 
+    class MsgEcdsaSignatureDepB(KaitaiStruct):
+        """Deprecated.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.flags = self._io.read_u1()
+            self.stream_counter = self._io.read_u1()
+            self.on_demand_counter = self._io.read_u1()
+            self.certificate_id = []
+            for i in range(4):
+                self.certificate_id.append(self._io.read_u1())
+
+            self.n_signature_bytes = self._io.read_u1()
+            self.signature = []
+            for i in range(72):
+                self.signature.append(self._io.read_u1())
+
+            self.signed_messages = []
+            i = 0
+            while not self._io.is_eof():
+                self.signed_messages.append(self._io.read_u1())
+                i += 1
+
+
+
     class MsgEcdsaSignature(KaitaiStruct):
         """An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.flags = self._io.read_u1()
+            self.stream_counter = self._io.read_u1()
+            self.on_demand_counter = self._io.read_u1()
+            self.certificate_id = []
+            for i in range(4):
+                self.certificate_id.append(self._io.read_u1())
+
+            self.signature = Signing.EcdsaSignature(self._io, self, self._root)
+            self.signed_messages = []
+            i = 0
+            while not self._io.is_eof():
+                self.signed_messages.append(self._io.read_u1())
+                i += 1
+
+
+
+    class MsgEcdsaSignatureDepA(KaitaiStruct):
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io

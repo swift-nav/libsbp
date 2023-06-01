@@ -32,10 +32,6 @@ types:
   msg_soln_meta_dep_a:
     doc: |
       Deprecated.
-
-      This message contains all metadata about the sensors received and/or
-      used in computing the Fuzed Solution. It focuses primarily, but not
-      only, on GNSS metadata.
     seq:
       - id: pdop
         doc: |

@@ -208,8 +208,11 @@ class Sbp < Kaitai::Struct::Struct
     3074 => :msg_ids_msg_ed25519_certificate_dep,
     3075 => :msg_ids_msg_ed25519_signature_dep_b,
     3076 => :msg_ids_msg_ecdsa_certificate,
-    3077 => :msg_ids_msg_certificate_chain,
-    3078 => :msg_ids_msg_ecdsa_signature,
+    3077 => :msg_ids_msg_certificate_chain_dep,
+    3078 => :msg_ids_msg_ecdsa_signature_dep_a,
+    3079 => :msg_ids_msg_ecdsa_signature_dep_b,
+    3080 => :msg_ids_msg_ecdsa_signature,
+    3081 => :msg_ids_msg_certificate_chain,
     4097 => :msg_ids_msg_fileio_config_req,
     4098 => :msg_ids_msg_fileio_config_resp,
     30583 => :msg_ids_msg_sbas_raw,
@@ -276,6 +279,10 @@ class Sbp < Kaitai::Struct::Struct
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Observation::MsgEphemerisGloDepD.new(_io__raw_payload, self, @_root)
+      when :msg_ids_msg_ecdsa_signature_dep_b
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgEcdsaSignatureDepB.new(_io__raw_payload, self, @_root)
       when :msg_ids_msg_settings_read_by_index_req
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
@@ -456,6 +463,10 @@ class Sbp < Kaitai::Struct::Struct
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Settings::MsgSettingsRegisterResp.new(_io__raw_payload, self, @_root)
+      when :msg_ids_msg_ecdsa_signature_dep_a
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgEcdsaSignatureDepA.new(_io__raw_payload, self, @_root)
       when :msg_ids_msg_ephemeris_gal
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
@@ -1144,6 +1155,10 @@ class Sbp < Kaitai::Struct::Struct
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
         @payload = Ssr::MsgSsrCodeBiases.new(_io__raw_payload, self, @_root)
+      when :msg_ids_msg_certificate_chain_dep
+        @_raw_payload = @_io.read_bytes(header.length)
+        _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)
+        @payload = Signing::MsgCertificateChainDep.new(_io__raw_payload, self, @_root)
       when :msg_ids_msg_ssr_gridded_correction
         @_raw_payload = @_io.read_bytes(header.length)
         _io__raw_payload = Kaitai::Struct::Stream.new(@_raw_payload)

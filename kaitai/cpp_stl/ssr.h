@@ -205,12 +205,7 @@ public:
     };
 
     /**
-     * The Slant Total Electron Content per space vehicle, given as polynomial
-     * approximation for a given tile. This should be combined with the
-     * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
-     * of the atmospheric delay.
-     * 
-     * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+     * Deprecated.
      */
 
     class msg_ssr_stec_correction_dep_t : public kaitai::kstruct {
@@ -302,6 +297,10 @@ public:
         ssr_t* _root() const { return m__root; }
         ssr_t::msg_ssr_gridded_correction_bounds_t* _parent() const { return m__parent; }
     };
+
+    /**
+     * Deprecated.
+     */
 
     class msg_ssr_orbit_clock_dep_a_t : public kaitai::kstruct {
 
@@ -783,7 +782,7 @@ public:
         uint8_t code_bias_bound_mu() const { return m_code_bias_bound_mu; }
 
         /**
-         * Code Bias Standard Deviation.  Range: 0-1.275 m
+         * Code Bias Standard Deviation. Range: 0-1.275 m
          */
         uint8_t code_bias_bound_sig() const { return m_code_bias_bound_sig; }
 
@@ -793,7 +792,7 @@ public:
         uint8_t phase_bias_bound_mu() const { return m_phase_bias_bound_mu; }
 
         /**
-         * Phase Bias Standard Deviation.  Range: 0-1.275 m
+         * Phase Bias Standard Deviation. Range: 0-1.275 m
          */
         uint8_t phase_bias_bound_sig() const { return m_phase_bias_bound_sig; }
         ssr_t* _root() const { return m__root; }
@@ -1114,6 +1113,10 @@ public:
         ssr_t::msg_ssr_stec_correction_dep_t* _parent() const { return m__parent; }
     };
 
+    /**
+     * Deprecated.
+     */
+
     class msg_ssr_stec_correction_dep_a_t : public kaitai::kstruct {
 
     public:
@@ -1379,6 +1382,10 @@ public:
         sbp_t::message_t* _parent() const { return m__parent; }
     };
 
+    /**
+     * Deprecated.
+     */
+
     class msg_ssr_grid_definition_dep_a_t : public kaitai::kstruct {
 
     public:
@@ -1569,13 +1576,7 @@ public:
     };
 
     /**
-     * Provides the correction point coordinates for the atmospheric correction
-     * values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
-     * messages.
-     * 
-     * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-     * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-     * correction points, not lists of points.
+     * Deprecated.
      */
 
     class msg_ssr_tile_definition_dep_a_t : public kaitai::kstruct {
@@ -1773,6 +1774,10 @@ public:
         ssr_t::msg_ssr_orbit_clock_bounds_t* _parent() const { return m__parent; }
     };
 
+    /**
+     * Deprecated.
+     */
+
     class msg_ssr_gridded_correction_dep_a_t : public kaitai::kstruct {
 
     public:
@@ -1872,6 +1877,10 @@ public:
         ssr_t* _root() const { return m__root; }
         sbp_t::message_t* _parent() const { return m__parent; }
     };
+
+    /**
+     * Deprecated.
+     */
 
     class msg_ssr_gridded_correction_no_std_dep_a_t : public kaitai::kstruct {
 
@@ -2252,6 +2261,10 @@ public:
         ssr_t::msg_ssr_orbit_clock_bounds_degradation_t* _parent() const { return m__parent; }
     };
 
+    /**
+     * Deprecated.
+     */
+
     class msg_ssr_satellite_apc_dep_t : public kaitai::kstruct {
 
     public:
@@ -2327,13 +2340,7 @@ public:
     };
 
     /**
-     * Provides the correction point coordinates for the atmospheric correction
-     * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-     * messages.
-     * 
-     * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-     * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-     * correction points, not lists of points.
+     * Deprecated.
      */
 
     class msg_ssr_tile_definition_dep_b_t : public kaitai::kstruct {

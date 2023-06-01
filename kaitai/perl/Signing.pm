@@ -37,6 +37,84 @@ sub _read {
 }
 
 ########################################################################
+package Signing::MsgCertificateChainDep;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{root_certificate} = ();
+    my $n_root_certificate = 20;
+    for (my $i = 0; $i < $n_root_certificate; $i++) {
+        push @{$self->{root_certificate}}, $self->{_io}->read_u1();
+    }
+    $self->{intermediate_certificate} = ();
+    my $n_intermediate_certificate = 20;
+    for (my $i = 0; $i < $n_intermediate_certificate; $i++) {
+        push @{$self->{intermediate_certificate}}, $self->{_io}->read_u1();
+    }
+    $self->{corrections_certificate} = ();
+    my $n_corrections_certificate = 20;
+    for (my $i = 0; $i < $n_corrections_certificate; $i++) {
+        push @{$self->{corrections_certificate}}, $self->{_io}->read_u1();
+    }
+    $self->{expiration} = Signing::UtcTime->new($self->{_io}, $self, $self->{_root});
+    $self->{signature} = ();
+    my $n_signature = 64;
+    for (my $i = 0; $i < $n_signature; $i++) {
+        push @{$self->{signature}}, $self->{_io}->read_u1();
+    }
+}
+
+sub root_certificate {
+    my ($self) = @_;
+    return $self->{root_certificate};
+}
+
+sub intermediate_certificate {
+    my ($self) = @_;
+    return $self->{intermediate_certificate};
+}
+
+sub corrections_certificate {
+    my ($self) = @_;
+    return $self->{corrections_certificate};
+}
+
+sub expiration {
+    my ($self) = @_;
+    return $self->{expiration};
+}
+
+sub signature {
+    my ($self) = @_;
+    return $self->{signature};
+}
+
+########################################################################
 package Signing::MsgEd25519SignatureDepB;
 
 our @ISA = 'IO::KaitaiStruct::Struct';
@@ -241,6 +319,54 @@ sub ns {
 }
 
 ########################################################################
+package Signing::EcdsaSignature;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{len} = $self->{_io}->read_u1();
+    $self->{data} = ();
+    my $n_data = 72;
+    for (my $i = 0; $i < $n_data; $i++) {
+        push @{$self->{data}}, $self->{_io}->read_u1();
+    }
+}
+
+sub len {
+    my ($self) = @_;
+    return $self->{len};
+}
+
+sub data {
+    my ($self) = @_;
+    return $self->{data};
+}
+
+########################################################################
 package Signing::MsgEd25519SignatureDepA;
 
 our @ISA = 'IO::KaitaiStruct::Struct';
@@ -347,11 +473,7 @@ sub _read {
         push @{$self->{corrections_certificate}}, $self->{_io}->read_u1();
     }
     $self->{expiration} = Signing::UtcTime->new($self->{_io}, $self, $self->{_root});
-    $self->{signature} = ();
-    my $n_signature = 64;
-    for (my $i = 0; $i < $n_signature; $i++) {
-        push @{$self->{signature}}, $self->{_io}->read_u1();
-    }
+    $self->{signature} = Signing::EcdsaSignature->new($self->{_io}, $self, $self->{_root});
 }
 
 sub root_certificate {
@@ -443,7 +565,167 @@ sub certificate_bytes {
 }
 
 ########################################################################
+package Signing::MsgEcdsaSignatureDepB;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{flags} = $self->{_io}->read_u1();
+    $self->{stream_counter} = $self->{_io}->read_u1();
+    $self->{on_demand_counter} = $self->{_io}->read_u1();
+    $self->{certificate_id} = ();
+    my $n_certificate_id = 4;
+    for (my $i = 0; $i < $n_certificate_id; $i++) {
+        push @{$self->{certificate_id}}, $self->{_io}->read_u1();
+    }
+    $self->{n_signature_bytes} = $self->{_io}->read_u1();
+    $self->{signature} = ();
+    my $n_signature = 72;
+    for (my $i = 0; $i < $n_signature; $i++) {
+        push @{$self->{signature}}, $self->{_io}->read_u1();
+    }
+    $self->{signed_messages} = ();
+    while (!$self->{_io}->is_eof()) {
+        push @{$self->{signed_messages}}, $self->{_io}->read_u1();
+    }
+}
+
+sub flags {
+    my ($self) = @_;
+    return $self->{flags};
+}
+
+sub stream_counter {
+    my ($self) = @_;
+    return $self->{stream_counter};
+}
+
+sub on_demand_counter {
+    my ($self) = @_;
+    return $self->{on_demand_counter};
+}
+
+sub certificate_id {
+    my ($self) = @_;
+    return $self->{certificate_id};
+}
+
+sub n_signature_bytes {
+    my ($self) = @_;
+    return $self->{n_signature_bytes};
+}
+
+sub signature {
+    my ($self) = @_;
+    return $self->{signature};
+}
+
+sub signed_messages {
+    my ($self) = @_;
+    return $self->{signed_messages};
+}
+
+########################################################################
 package Signing::MsgEcdsaSignature;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{flags} = $self->{_io}->read_u1();
+    $self->{stream_counter} = $self->{_io}->read_u1();
+    $self->{on_demand_counter} = $self->{_io}->read_u1();
+    $self->{certificate_id} = ();
+    my $n_certificate_id = 4;
+    for (my $i = 0; $i < $n_certificate_id; $i++) {
+        push @{$self->{certificate_id}}, $self->{_io}->read_u1();
+    }
+    $self->{signature} = Signing::EcdsaSignature->new($self->{_io}, $self, $self->{_root});
+    $self->{signed_messages} = ();
+    while (!$self->{_io}->is_eof()) {
+        push @{$self->{signed_messages}}, $self->{_io}->read_u1();
+    }
+}
+
+sub flags {
+    my ($self) = @_;
+    return $self->{flags};
+}
+
+sub stream_counter {
+    my ($self) = @_;
+    return $self->{stream_counter};
+}
+
+sub on_demand_counter {
+    my ($self) = @_;
+    return $self->{on_demand_counter};
+}
+
+sub certificate_id {
+    my ($self) = @_;
+    return $self->{certificate_id};
+}
+
+sub signature {
+    my ($self) = @_;
+    return $self->{signature};
+}
+
+sub signed_messages {
+    my ($self) = @_;
+    return $self->{signed_messages};
+}
+
+########################################################################
+package Signing::MsgEcdsaSignatureDepA;
 
 our @ISA = 'IO::KaitaiStruct::Struct';
 

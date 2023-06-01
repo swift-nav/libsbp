@@ -106,10 +106,6 @@ class SolutionMeta < Kaitai::Struct::Struct
 
   ##
   # Deprecated.
-  # 
-  # This message contains all metadata about the sensors received and/or
-  # used in computing the Fuzed Solution. It focuses primarily, but not
-  # only, on GNSS metadata.
   class MsgSolnMetaDepA < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)

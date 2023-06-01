@@ -165,8 +165,7 @@ public:
     };
 
     /**
-     * This message indicates the process state of the top 10 heaviest
-     * consumers of CPU on the system.
+     * Deprecated.
      */
 
     class msg_linux_cpu_state_dep_a_t : public kaitai::kstruct {
@@ -341,8 +340,7 @@ public:
     };
 
     /**
-     * This message indicates the process state of the top 10 heaviest
-     * consumers of memory on the system.
+     * Deprecated.
      */
 
     class msg_linux_mem_state_dep_a_t : public kaitai::kstruct {
@@ -479,7 +477,7 @@ public:
     };
 
     /**
-     * This presents a summary of CPU and memory utilization.
+     * Deprecated.
      */
 
     class msg_linux_sys_state_dep_a_t : public kaitai::kstruct {

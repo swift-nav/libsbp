@@ -98,12 +98,7 @@ end
 -- Wet vertical delay
 
 -- 
--- The Slant Total Electron Content per space vehicle, given as polynomial
--- approximation for a given tile. This should be combined with the
--- MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
--- of the atmospheric delay.
--- 
--- It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+-- Deprecated.
 Ssr.MsgSsrStecCorrectionDep = class.class(KaitaiStruct)
 
 function Ssr.MsgSsrStecCorrectionDep:_init(io, parent, root)
@@ -158,6 +153,8 @@ end
 -- 
 -- Error Bound StDev First derivative.
 
+-- 
+-- Deprecated.
 Ssr.MsgSsrOrbitClockDepA = class.class(KaitaiStruct)
 
 function Ssr.MsgSsrOrbitClockDepA:_init(io, parent, root)
@@ -434,11 +431,11 @@ end
 -- 
 -- Code Bias Mean. Range: 0-1.275 m
 -- 
--- Code Bias Standard Deviation.  Range: 0-1.275 m
+-- Code Bias Standard Deviation. Range: 0-1.275 m
 -- 
 -- Phase Bias Mean. Range: 0-1.275 m
 -- 
--- Phase Bias Standard Deviation.  Range: 0-1.275 m
+-- Phase Bias Standard Deviation. Range: 0-1.275 m
 
 -- 
 -- Contains phase center offset and elevation variation corrections for one
@@ -624,6 +621,8 @@ end
 -- 
 -- IOD of the SSR atmospheric correction
 
+-- 
+-- Deprecated.
 Ssr.MsgSsrStecCorrectionDepA = class.class(KaitaiStruct)
 
 function Ssr.MsgSsrStecCorrectionDepA:_init(io, parent, root)
@@ -784,6 +783,8 @@ end
 -- Array of STEC polynomial coefficients and its bounds for each space
 -- vehicle.
 
+-- 
+-- Deprecated.
 Ssr.MsgSsrGridDefinitionDepA = class.class(KaitaiStruct)
 
 function Ssr.MsgSsrGridDefinitionDepA:_init(io, parent, root)
@@ -902,13 +903,7 @@ end
 -- Phase bias for specified signal
 
 -- 
--- Provides the correction point coordinates for the atmospheric correction
--- values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
--- messages.
--- 
--- Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
--- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
--- correction points, not lists of points.
+-- Deprecated.
 Ssr.MsgSsrTileDefinitionDepA = class.class(KaitaiStruct)
 
 function Ssr.MsgSsrTileDefinitionDepA:_init(io, parent, root)
@@ -1030,6 +1025,8 @@ end
 -- 
 -- Clock Bound Standard Deviation. See Note 2.
 
+-- 
+-- Deprecated.
 Ssr.MsgSsrGriddedCorrectionDepA = class.class(KaitaiStruct)
 
 function Ssr.MsgSsrGriddedCorrectionDepA:_init(io, parent, root)
@@ -1090,6 +1087,8 @@ end
 -- 
 -- Orbit and Clock Bounds Degradation Parameters
 
+-- 
+-- Deprecated.
 Ssr.MsgSsrGriddedCorrectionNoStdDepA = class.class(KaitaiStruct)
 
 function Ssr.MsgSsrGriddedCorrectionNoStdDepA:_init(io, parent, root)
@@ -1328,6 +1327,8 @@ end
 -- 
 -- Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
 
+-- 
+-- Deprecated.
 Ssr.MsgSsrSatelliteApcDep = class.class(KaitaiStruct)
 
 function Ssr.MsgSsrSatelliteApcDep:_init(io, parent, root)
@@ -1376,13 +1377,7 @@ end
 -- value/16) - 1)
 
 -- 
--- Provides the correction point coordinates for the atmospheric correction
--- values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
--- messages.
--- 
--- Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
--- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
--- correction points, not lists of points.
+-- Deprecated.
 Ssr.MsgSsrTileDefinitionDepB = class.class(KaitaiStruct)
 
 function Ssr.MsgSsrTileDefinitionDepB:_init(io, parent, root)

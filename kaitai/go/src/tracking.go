@@ -1067,8 +1067,7 @@ func (this *Tracking_MeasurementState) Read(io *kaitai.Stream, parent *Tracking_
  */
 
 /**
- * When enabled, a tracking channel can output the correlations at each
- * update interval.
+ * Deprecated.
  */
 type Tracking_MsgTrackingIqDepB struct {
 	Channel uint8

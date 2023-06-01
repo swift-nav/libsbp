@@ -481,8 +481,7 @@ end
 -- Carrier-to-Noise density.  Zero implies invalid cn0.
 
 -- 
--- When enabled, a tracking channel can output the correlations at each
--- update interval.
+-- Deprecated.
 Tracking.MsgTrackingIqDepB = class.class(KaitaiStruct)
 
 function Tracking.MsgTrackingIqDepB:_init(io, parent, root)

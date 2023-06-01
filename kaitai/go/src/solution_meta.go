@@ -171,10 +171,6 @@ func (this *SolutionMeta_MsgSolnMeta) Read(io *kaitai.Stream, parent *Sbp_Messag
 
 /**
  * Deprecated.
- * 
- * This message contains all metadata about the sensors received and/or
- * used in computing the Fuzed Solution. It focuses primarily, but not
- * only, on GNSS metadata.
  */
 type SolutionMeta_MsgSolnMetaDepA struct {
 	Pdop uint16

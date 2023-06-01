@@ -290,8 +290,7 @@ class Tracking(KaitaiStruct):
 
 
     class MsgTrackingIqDepB(KaitaiStruct):
-        """When enabled, a tracking channel can output the correlations at each
-        update interval.
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io

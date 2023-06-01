@@ -26,12 +26,13 @@ namespace Kaitai
         /// and gyroscope readings. The sense of the measurements are to be aligned
         /// with the indications on the device itself. Measurement units, which are
         /// specific to the device hardware and settings, are communicated via the
-        /// MSG_IMU_AUX message. If using &quot;time since startup&quot; time tags, the
-        /// receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix
-        /// becomes available to synchronise IMU measurements with GNSS. The
-        /// timestamp must wrap around to zero when reaching one week (604800
-        /// seconds).
-        /// 
+        /// MSG_IMU_AUX message. If using &quot;time since startup&quot; local time tags, the
+        /// receiving end will expect a `MSG_PPS_TIME` regardless of GNSS fix state.
+        /// This also requires that the MSG_PPS_TIME message be sent prior to any
+        /// IMU RAW messages that are based on the current (as measured at the PPS
+        /// edge) local time timestamps. The local time (as defined in the
+        /// MSG_PPS_TIME message) must wrap around to zero when reaching the extent
+        /// of the u64 &quot;Local time in microseconds&quot; parameter.
         /// The time-tagging mode should not change throughout a run.
         /// </summary>
         public partial class MsgImuRaw : KaitaiStruct

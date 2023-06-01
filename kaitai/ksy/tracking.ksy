@@ -310,8 +310,7 @@ types:
   
   msg_tracking_iq_dep_b:
     doc: |
-      When enabled, a tracking channel can output the correlations at each
-      update interval.
+      Deprecated.
     seq:
       - id: channel
         doc: |

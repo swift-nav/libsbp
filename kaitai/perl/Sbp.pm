@@ -217,8 +217,11 @@ our $MSG_IDS_MSG_ED25519_SIGNATURE_DEP_A = 3073;
 our $MSG_IDS_MSG_ED25519_CERTIFICATE_DEP = 3074;
 our $MSG_IDS_MSG_ED25519_SIGNATURE_DEP_B = 3075;
 our $MSG_IDS_MSG_ECDSA_CERTIFICATE = 3076;
-our $MSG_IDS_MSG_CERTIFICATE_CHAIN = 3077;
-our $MSG_IDS_MSG_ECDSA_SIGNATURE = 3078;
+our $MSG_IDS_MSG_CERTIFICATE_CHAIN_DEP = 3077;
+our $MSG_IDS_MSG_ECDSA_SIGNATURE_DEP_A = 3078;
+our $MSG_IDS_MSG_ECDSA_SIGNATURE_DEP_B = 3079;
+our $MSG_IDS_MSG_ECDSA_SIGNATURE = 3080;
+our $MSG_IDS_MSG_CERTIFICATE_CHAIN = 3081;
 our $MSG_IDS_MSG_FILEIO_CONFIG_REQ = 4097;
 our $MSG_IDS_MSG_FILEIO_CONFIG_RESP = 4098;
 our $MSG_IDS_MSG_SBAS_RAW = 30583;
@@ -322,6 +325,11 @@ sub _read {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Observation::MsgEphemerisGloDepD->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == $Sbp::MSG_IDS_MSG_ECDSA_SIGNATURE_DEP_B) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgEcdsaSignatureDepB->new($io__raw_payload, $self, $self->{_root});
     }
     elsif ($_on == $Sbp::MSG_IDS_MSG_SETTINGS_READ_BY_INDEX_REQ) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
@@ -547,6 +555,11 @@ sub _read {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Settings::MsgSettingsRegisterResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == $Sbp::MSG_IDS_MSG_ECDSA_SIGNATURE_DEP_A) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgEcdsaSignatureDepA->new($io__raw_payload, $self, $self->{_root});
     }
     elsif ($_on == $Sbp::MSG_IDS_MSG_EPHEMERIS_GAL) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
@@ -1407,6 +1420,11 @@ sub _read {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Ssr::MsgSsrCodeBiases->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == $Sbp::MSG_IDS_MSG_CERTIFICATE_CHAIN_DEP) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgCertificateChainDep->new($io__raw_payload, $self, $self->{_root});
     }
     elsif ($_on == $Sbp::MSG_IDS_MSG_SSR_GRIDDED_CORRECTION) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());

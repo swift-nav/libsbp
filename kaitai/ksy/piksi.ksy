@@ -34,7 +34,7 @@ types:
   
   msg_reset_dep:
     doc: |
-      This message from the host resets the Piksi back into the bootloader.
+      Deprecated.
     seq: []
   
   msg_cw_results:
@@ -63,7 +63,7 @@ types:
   
   msg_init_base_dep:
     doc: |
-      Deprecated
+      Deprecated.
     seq: []
   
   msg_thread_state:
@@ -203,7 +203,7 @@ types:
   
   msg_uart_state_depa:
     doc: |
-      Deprecated
+      Deprecated.
     seq:
       - id: uart_a
         doc: |

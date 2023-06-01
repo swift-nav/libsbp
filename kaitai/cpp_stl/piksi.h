@@ -369,7 +369,7 @@ public:
     };
 
     /**
-     * Deprecated
+     * Deprecated.
      */
 
     class msg_uart_state_depa_t : public kaitai::kstruct {
@@ -1064,7 +1064,7 @@ public:
     };
 
     /**
-     * This message from the host resets the Piksi back into the bootloader.
+     * Deprecated.
      */
 
     class msg_reset_dep_t : public kaitai::kstruct {
@@ -1213,7 +1213,7 @@ public:
     };
 
     /**
-     * Deprecated
+     * Deprecated.
      */
 
     class msg_init_base_dep_t : public kaitai::kstruct {

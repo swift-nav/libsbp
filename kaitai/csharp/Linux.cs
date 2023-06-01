@@ -169,8 +169,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// This message indicates the process state of the top 10 heaviest
-        /// consumers of CPU on the system.
+        /// Deprecated.
         /// </summary>
         public partial class MsgLinuxCpuStateDepA : KaitaiStruct
         {
@@ -358,8 +357,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// This message indicates the process state of the top 10 heaviest
-        /// consumers of memory on the system.
+        /// Deprecated.
         /// </summary>
         public partial class MsgLinuxMemStateDepA : KaitaiStruct
         {
@@ -507,7 +505,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// This presents a summary of CPU and memory utilization.
+        /// Deprecated.
         /// </summary>
         public partial class MsgLinuxSysStateDepA : KaitaiStruct
         {

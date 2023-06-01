@@ -61,8 +61,7 @@ class Linux(KaitaiStruct):
 
 
     class MsgLinuxCpuStateDepA(KaitaiStruct):
-        """This message indicates the process state of the top 10 heaviest
-        consumers of CPU on the system.
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -115,8 +114,7 @@ class Linux(KaitaiStruct):
 
 
     class MsgLinuxMemStateDepA(KaitaiStruct):
-        """This message indicates the process state of the top 10 heaviest
-        consumers of memory on the system.
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -153,7 +151,7 @@ class Linux(KaitaiStruct):
 
 
     class MsgLinuxSysStateDepA(KaitaiStruct):
-        """This presents a summary of CPU and memory utilization.
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io

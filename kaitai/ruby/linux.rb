@@ -114,8 +114,7 @@ class Linux < Kaitai::Struct::Struct
   end
 
   ##
-  # This message indicates the process state of the top 10 heaviest
-  # consumers of CPU on the system.
+  # Deprecated.
   class MsgLinuxCpuStateDepA < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -235,8 +234,7 @@ class Linux < Kaitai::Struct::Struct
   end
 
   ##
-  # This message indicates the process state of the top 10 heaviest
-  # consumers of memory on the system.
+  # Deprecated.
   class MsgLinuxMemStateDepA < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -334,7 +332,7 @@ class Linux < Kaitai::Struct::Struct
   end
 
   ##
-  # This presents a summary of CPU and memory utilization.
+  # Deprecated.
   class MsgLinuxSysStateDepA < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)

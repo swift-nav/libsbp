@@ -232,7 +232,7 @@ func (this *Observation_GnssCapb) Read(io *kaitai.Stream, parent *Observation_Ms
  */
 
 /**
- * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ * Deprecated.
  */
 type Observation_MsgGroupDelayDepB struct {
 	TOp *Gnss_GpsTimeSec
@@ -1254,10 +1254,7 @@ func (this *Observation_Doppler) Read(io *kaitai.Stream, parent *Observation_Pac
  */
 
 /**
- * The almanac message returns a set of satellite orbit parameters. Almanac
- * data is not very precise and is considered valid for up to several
- * months. Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate
- * information and almanac" for details.
+ * Deprecated.
  */
 type Observation_MsgAlmanacGloDep struct {
 	Common *Observation_AlmanacCommonContentDep
@@ -1360,11 +1357,7 @@ func (this *Observation_MsgAlmanacGloDep) Read(io *kaitai.Stream, parent *Sbp_Me
  */
 
 /**
- * The almanac message returns a set of satellite orbit parameters. Almanac
- * data is not very precise and is considered valid for up to several
- * months. Please see the Navstar GPS Space Segment/Navigation user
- * interfaces (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more
- * details.
+ * Deprecated.
  */
 type Observation_MsgAlmanacGpsDep struct {
 	Common *Observation_AlmanacCommonContentDep
@@ -1611,8 +1604,7 @@ func (this *Observation_MsgGloBiases) Read(io *kaitai.Stream, parent *Sbp_Messag
  */
 
 /**
- * This observation message has been deprecated in favor of ephemeris
- * message using floats for size reduction.
+ * Deprecated.
  */
 type Observation_MsgEphemerisSbasDepB struct {
 	Common *Observation_EphemerisCommonContentDepB
@@ -1703,10 +1695,7 @@ func (this *Observation_MsgEphemerisSbasDepB) Read(io *kaitai.Stream, parent *Sb
  */
 
 /**
- * The ephemeris message returns a set of satellite orbit parameters that
- * is used to calculate GPS satellite position, velocity, and clock offset.
- * Please see the Navstar GPS Space Segment/Navigation user interfaces
- * (ICD-GPS-200, Table 20-III) for more details.
+ * Deprecated.
  */
 type Observation_MsgEphemerisGpsDepE struct {
 	Common *Observation_EphemerisCommonContentDepA
@@ -1960,6 +1949,11 @@ func (this *Observation_MsgEphemerisGpsDepE) Read(io *kaitai.Stream, parent *Sbp
 
 /**
  * Issue of clock data
+ */
+
+/**
+ * Bit masks of signal capabilities for each GNSS satellite PRN.
+ * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
  */
 type Observation_MsgGnssCapb struct {
 	TNmct *Gnss_GpsTimeSec
@@ -2387,7 +2381,7 @@ func (this *Observation_MsgEphemerisQzss) Read(io *kaitai.Stream, parent *Sbp_Me
  */
 
 /**
- * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ * Deprecated.
  */
 type Observation_MsgGroupDelayDepA struct {
 	TOp *Gnss_GpsTimeDep
@@ -2458,10 +2452,7 @@ func (this *Observation_MsgGroupDelayDepA) Read(io *kaitai.Stream, parent *Sbp_M
  */
 
 /**
- * The ephemeris message returns a set of satellite orbit parameters that
- * is used to calculate GPS satellite position, velocity, and clock offset.
- * Please see the Navstar GPS Space Segment/Navigation user interfaces
- * (ICD-GPS-200, Table 20-III) for more details.
+ * Deprecated.
  */
 type Observation_MsgEphemerisDepC struct {
 	Tgd float64
@@ -3484,8 +3475,7 @@ func (this *Observation_MsgEphemerisBds) Read(io *kaitai.Stream, parent *Sbp_Mes
  */
 
 /**
- * This observation message has been deprecated in favor of ephemeris
- * message using floats for size reduction.
+ * Deprecated.
  */
 type Observation_MsgEphemerisGpsDepF struct {
 	Common *Observation_EphemerisCommonContentDepB
@@ -3784,6 +3774,10 @@ func (this *Observation_ObservationHeader) Read(io *kaitai.Stream, parent interf
  * sequence (n), second nibble is the zero-indexed counter (ith packet
  * of n)
  */
+
+/**
+ * Deprecated.
+ */
 type Observation_MsgEphemerisSbasDepA struct {
 	Common *Observation_EphemerisCommonContentDepA
 	Pos []float64
@@ -4035,10 +4029,7 @@ func (this *Observation_MsgBasePosEcef) Read(io *kaitai.Stream, parent *Sbp_Mess
  */
 
 /**
- * The ephemeris message returns a set of satellite orbit parameters that
- * is used to calculate GLO satellite position, velocity, and clock offset.
- * Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
- * immediate information (ephemeris parameters)" for more details.
+ * Deprecated.
  */
 type Observation_MsgEphemerisGloDepA struct {
 	Common *Observation_EphemerisCommonContentDepA
@@ -4307,8 +4298,7 @@ func (this *Observation_MsgAlmanacGlo) Read(io *kaitai.Stream, parent *Sbp_Messa
  */
 
 /**
- * This observation message has been deprecated in favor of an ephemeris
- * message with explicit source of NAV data.
+ * Deprecated.
  */
 type Observation_MsgEphemerisGalDepA struct {
 	Common *Observation_EphemerisCommonContent
@@ -4575,11 +4565,7 @@ func (this *Observation_MsgEphemerisGalDepA) Read(io *kaitai.Stream, parent *Sbp
  */
 
 /**
- * This observation message has been deprecated in favor of observations
- * that are more interoperable. This message should be used for
- * observations referenced to a nominal pseudorange which are not
- * interoperable with most 3rd party GNSS receivers or typical RTCMv3
- * observations.
+ * Deprecated.
  */
 type Observation_MsgObsDepB struct {
 	Header *Observation_ObservationHeaderDep
@@ -4912,10 +4898,7 @@ func (this *Observation_MsgIono) Read(io *kaitai.Stream, parent *Sbp_Message, ro
  */
 
 /**
- * The ephemeris message returns a set of satellite orbit parameters that
- * is used to calculate GPS satellite position, velocity, and clock offset.
- * Please see the Navstar GPS Space Segment/Navigation user interfaces
- * (ICD-GPS-200, Table 20-III) for more details.
+ * Deprecated.
  */
 type Observation_MsgEphemerisDepD struct {
 	Tgd float64
@@ -5806,10 +5789,7 @@ func (this *Observation_MsgEphemerisGloDepC) Read(io *kaitai.Stream, parent *Sbp
  */
 
 /**
- * The ephemeris message returns a set of satellite orbit parameters that
- * is used to calculate GLO satellite position, velocity, and clock offset.
- * Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
- * immediate information (ephemeris parameters)" for more details.
+ * Deprecated.
  */
 type Observation_MsgEphemerisGloDepB struct {
 	Common *Observation_EphemerisCommonContentDepB
@@ -5900,7 +5880,7 @@ func (this *Observation_MsgEphemerisGloDepB) Read(io *kaitai.Stream, parent *Sbp
  */
 
 /**
- * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ * Deprecated.
  */
 type Observation_MsgSvConfigurationGpsDep struct {
 	TNmct *Gnss_GpsTimeSec
@@ -6106,12 +6086,7 @@ func (this *Observation_PackedObsContentDepB) Read(io *kaitai.Stream, parent *Ob
  */
 
 /**
- * The GPS observations message reports all the raw pseudorange and carrier
- * phase observations for the satellites being tracked by the device.
- * Carrier phase observation here is represented as a 40-bit fixed point
- * number with Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of
- * fractional cycles). The observations are interoperable with 3rd party
- * receivers and conform with typical RTCMv3 GNSS observations.
+ * Deprecated.
  */
 type Observation_MsgObsDepC struct {
 	Header *Observation_ObservationHeaderDep

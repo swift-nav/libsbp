@@ -203,7 +203,7 @@ end
 -- Free stack space for this thread
 
 -- 
--- Deprecated
+-- Deprecated.
 Piksi.MsgUartStateDepa = class.class(KaitaiStruct)
 
 function Piksi.MsgUartStateDepa:_init(io, parent, root)
@@ -617,7 +617,7 @@ end
 -- Intermediate frequency gain for each frontend channel
 
 -- 
--- This message from the host resets the Piksi back into the bootloader.
+-- Deprecated.
 Piksi.MsgResetDep = class.class(KaitaiStruct)
 
 function Piksi.MsgResetDep:_init(io, parent, root)
@@ -706,7 +706,7 @@ end
 -- Amplitude values (in the above units) of points in this packet
 
 -- 
--- Deprecated
+-- Deprecated.
 Piksi.MsgInitBaseDep = class.class(KaitaiStruct)
 
 function Piksi.MsgInitBaseDep:_init(io, parent, root)

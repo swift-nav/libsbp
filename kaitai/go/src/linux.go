@@ -194,8 +194,7 @@ func (this *Linux_MsgLinuxSysState) Read(io *kaitai.Stream, parent *Sbp_Message,
  */
 
 /**
- * This message indicates the process state of the top 10 heaviest
- * consumers of CPU on the system.
+ * Deprecated.
  */
 type Linux_MsgLinuxCpuStateDepA struct {
 	Index uint8
@@ -424,8 +423,7 @@ func (this *Linux_MsgLinuxProcessFdCount) Read(io *kaitai.Stream, parent *Sbp_Me
  */
 
 /**
- * This message indicates the process state of the top 10 heaviest
- * consumers of memory on the system.
+ * Deprecated.
  */
 type Linux_MsgLinuxMemStateDepA struct {
 	Index uint8
@@ -608,7 +606,7 @@ func (this *Linux_MsgLinuxProcessSocketQueues) Read(io *kaitai.Stream, parent *S
  */
 
 /**
- * This presents a summary of CPU and memory utilization.
+ * Deprecated.
  */
 type Linux_MsgLinuxSysStateDepA struct {
 	MemTotal uint16

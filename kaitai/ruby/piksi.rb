@@ -236,7 +236,7 @@ class Piksi < Kaitai::Struct::Struct
   end
 
   ##
-  # Deprecated
+  # Deprecated.
   class MsgUartStateDepa < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -702,7 +702,7 @@ class Piksi < Kaitai::Struct::Struct
   end
 
   ##
-  # This message from the host resets the Piksi back into the bootloader.
+  # Deprecated.
   class MsgResetDep < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)
@@ -797,7 +797,7 @@ class Piksi < Kaitai::Struct::Struct
   end
 
   ##
-  # Deprecated
+  # Deprecated.
   class MsgInitBaseDep < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)

@@ -236,8 +236,11 @@ class Sbp(KaitaiStruct):
         msg_ed25519_certificate_dep = 3074
         msg_ed25519_signature_dep_b = 3075
         msg_ecdsa_certificate = 3076
-        msg_certificate_chain = 3077
-        msg_ecdsa_signature = 3078
+        msg_certificate_chain_dep = 3077
+        msg_ecdsa_signature_dep_a = 3078
+        msg_ecdsa_signature_dep_b = 3079
+        msg_ecdsa_signature = 3080
+        msg_certificate_chain = 3081
         msg_fileio_config_req = 4097
         msg_fileio_config_resp = 4098
         msg_sbas_raw = 30583
@@ -303,6 +306,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.header.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Observation.MsgEphemerisGloDepD(_io__raw_payload, self, self._root)
+            elif _on == Sbp.MsgIds.msg_ecdsa_signature_dep_b:
+                self._raw_payload = self._io.read_bytes(self.header.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Signing.MsgEcdsaSignatureDepB(_io__raw_payload, self, self._root)
             elif _on == Sbp.MsgIds.msg_settings_read_by_index_req:
                 self._raw_payload = self._io.read_bytes(self.header.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
@@ -483,6 +490,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.header.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Settings.MsgSettingsRegisterResp(_io__raw_payload, self, self._root)
+            elif _on == Sbp.MsgIds.msg_ecdsa_signature_dep_a:
+                self._raw_payload = self._io.read_bytes(self.header.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Signing.MsgEcdsaSignatureDepA(_io__raw_payload, self, self._root)
             elif _on == Sbp.MsgIds.msg_ephemeris_gal:
                 self._raw_payload = self._io.read_bytes(self.header.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
@@ -1171,6 +1182,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.header.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Ssr.MsgSsrCodeBiases(_io__raw_payload, self, self._root)
+            elif _on == Sbp.MsgIds.msg_certificate_chain_dep:
+                self._raw_payload = self._io.read_bytes(self.header.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Signing.MsgCertificateChainDep(_io__raw_payload, self, self._root)
             elif _on == Sbp.MsgIds.msg_ssr_gridded_correction:
                 self._raw_payload = self._io.read_bytes(self.header.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))

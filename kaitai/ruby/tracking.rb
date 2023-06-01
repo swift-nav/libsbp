@@ -585,8 +585,7 @@ class Tracking < Kaitai::Struct::Struct
   end
 
   ##
-  # When enabled, a tracking channel can output the correlations at each
-  # update interval.
+  # Deprecated.
   class MsgTrackingIqDepB < Kaitai::Struct::Struct
     def initialize(_io, _parent = nil, _root = self)
       super(_io, _parent, _root)

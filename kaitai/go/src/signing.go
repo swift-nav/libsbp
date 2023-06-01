@@ -19,306 +19,11 @@ func (this *Signing) Read(io *kaitai.Stream, parent interface{}, root *Signing) 
 
 	return err
 }
-type Signing_MsgEd25519SignatureDepB struct {
-	StreamCounter uint8
-	OnDemandCounter uint8
-	Signature []uint8
-	Fingerprint []uint8
-	SignedMessages []uint32
-	_io *kaitai.Stream
-	_root *Signing
-	_parent *Sbp_Message
-}
-func NewSigning_MsgEd25519SignatureDepB() *Signing_MsgEd25519SignatureDepB {
-	return &Signing_MsgEd25519SignatureDepB{
-	}
-}
-
-func (this *Signing_MsgEd25519SignatureDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
-	this._io = io
-	this._parent = parent
-	this._root = root
-
-	tmp1, err := this._io.ReadU1()
-	if err != nil {
-		return err
-	}
-	this.StreamCounter = tmp1
-	tmp2, err := this._io.ReadU1()
-	if err != nil {
-		return err
-	}
-	this.OnDemandCounter = tmp2
-	for i := 0; i < int(64); i++ {
-		_ = i
-		tmp3, err := this._io.ReadU1()
-		if err != nil {
-			return err
-		}
-		this.Signature = append(this.Signature, tmp3)
-	}
-	for i := 0; i < int(20); i++ {
-		_ = i
-		tmp4, err := this._io.ReadU1()
-		if err != nil {
-			return err
-		}
-		this.Fingerprint = append(this.Fingerprint, tmp4)
-	}
-	for i := 1;; i++ {
-		tmp5, err := this._io.EOF()
-		if err != nil {
-			return err
-		}
-		if tmp5 {
-			break
-		}
-		tmp6, err := this._io.ReadU4le()
-		if err != nil {
-			return err
-		}
-		this.SignedMessages = append(this.SignedMessages, tmp6)
-	}
-	return err
-}
 
 /**
- * Signature message counter. Zero indexed and incremented with each
- * signature message.  The counter will not increment if this message
- * was in response to an on demand request.  The counter will roll over
- * after 256 messages. Upon connection, the value of the counter may
- * not initially be zero.
+ * Deprecated.
  */
-
-/**
- * On demand message counter. Zero indexed and incremented with each
- * signature message sent in response to an on demand message. The
- * counter will roll over after 256 messages.  Upon connection, the
- * value of the counter may not initially be zero.
- */
-
-/**
- * ED25519 signature for messages.
- */
-
-/**
- * SHA-1 fingerprint of the associated certificate.
- */
-
-/**
- * CRCs of signed messages.
- */
-type Signing_MsgEd25519CertificateDep struct {
-	NMsg uint8
-	Fingerprint []uint8
-	CertificateBytes []uint8
-	_io *kaitai.Stream
-	_root *Signing
-	_parent *Sbp_Message
-}
-func NewSigning_MsgEd25519CertificateDep() *Signing_MsgEd25519CertificateDep {
-	return &Signing_MsgEd25519CertificateDep{
-	}
-}
-
-func (this *Signing_MsgEd25519CertificateDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
-	this._io = io
-	this._parent = parent
-	this._root = root
-
-	tmp7, err := this._io.ReadU1()
-	if err != nil {
-		return err
-	}
-	this.NMsg = tmp7
-	for i := 0; i < int(20); i++ {
-		_ = i
-		tmp8, err := this._io.ReadU1()
-		if err != nil {
-			return err
-		}
-		this.Fingerprint = append(this.Fingerprint, tmp8)
-	}
-	for i := 1;; i++ {
-		tmp9, err := this._io.EOF()
-		if err != nil {
-			return err
-		}
-		if tmp9 {
-			break
-		}
-		tmp10, err := this._io.ReadU1()
-		if err != nil {
-			return err
-		}
-		this.CertificateBytes = append(this.CertificateBytes, tmp10)
-	}
-	return err
-}
-
-/**
- * Total number messages that make up the certificate. First nibble is
- * the size of the sequence (n), second nibble is the zero-indexed
- * counter (ith packet of n)
- */
-
-/**
- * SHA-1 fingerprint of the associated certificate.
- */
-
-/**
- * ED25519 certificate bytes.
- */
-type Signing_UtcTime struct {
-	Year uint16
-	Month uint8
-	Day uint8
-	Hours uint8
-	Minutes uint8
-	Seconds uint8
-	Ns uint32
-	_io *kaitai.Stream
-	_root *Signing
-	_parent *Signing_MsgCertificateChain
-}
-func NewSigning_UtcTime() *Signing_UtcTime {
-	return &Signing_UtcTime{
-	}
-}
-
-func (this *Signing_UtcTime) Read(io *kaitai.Stream, parent *Signing_MsgCertificateChain, root *Signing) (err error) {
-	this._io = io
-	this._parent = parent
-	this._root = root
-
-	tmp11, err := this._io.ReadU2le()
-	if err != nil {
-		return err
-	}
-	this.Year = uint16(tmp11)
-	tmp12, err := this._io.ReadU1()
-	if err != nil {
-		return err
-	}
-	this.Month = tmp12
-	tmp13, err := this._io.ReadU1()
-	if err != nil {
-		return err
-	}
-	this.Day = tmp13
-	tmp14, err := this._io.ReadU1()
-	if err != nil {
-		return err
-	}
-	this.Hours = tmp14
-	tmp15, err := this._io.ReadU1()
-	if err != nil {
-		return err
-	}
-	this.Minutes = tmp15
-	tmp16, err := this._io.ReadU1()
-	if err != nil {
-		return err
-	}
-	this.Seconds = tmp16
-	tmp17, err := this._io.ReadU4le()
-	if err != nil {
-		return err
-	}
-	this.Ns = uint32(tmp17)
-	return err
-}
-
-/**
- * Year
- */
-
-/**
- * Month (range 1 .. 12)
- */
-
-/**
- * days in the month (range 1-31)
- */
-
-/**
- * hours of day (range 0-23)
- */
-
-/**
- * minutes of hour (range 0-59)
- */
-
-/**
- * seconds of minute (range 0-60) rounded down
- */
-
-/**
- * nanoseconds of second (range 0-999999999)
- */
-type Signing_MsgEd25519SignatureDepA struct {
-	Signature []uint8
-	Fingerprint []uint8
-	SignedMessages []uint32
-	_io *kaitai.Stream
-	_root *Signing
-	_parent *Sbp_Message
-}
-func NewSigning_MsgEd25519SignatureDepA() *Signing_MsgEd25519SignatureDepA {
-	return &Signing_MsgEd25519SignatureDepA{
-	}
-}
-
-func (this *Signing_MsgEd25519SignatureDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
-	this._io = io
-	this._parent = parent
-	this._root = root
-
-	for i := 0; i < int(64); i++ {
-		_ = i
-		tmp18, err := this._io.ReadU1()
-		if err != nil {
-			return err
-		}
-		this.Signature = append(this.Signature, tmp18)
-	}
-	for i := 0; i < int(20); i++ {
-		_ = i
-		tmp19, err := this._io.ReadU1()
-		if err != nil {
-			return err
-		}
-		this.Fingerprint = append(this.Fingerprint, tmp19)
-	}
-	for i := 1;; i++ {
-		tmp20, err := this._io.EOF()
-		if err != nil {
-			return err
-		}
-		if tmp20 {
-			break
-		}
-		tmp21, err := this._io.ReadU4le()
-		if err != nil {
-			return err
-		}
-		this.SignedMessages = append(this.SignedMessages, tmp21)
-	}
-	return err
-}
-
-/**
- * ED25519 signature for messages.
- */
-
-/**
- * SHA-1 fingerprint of the associated certificate.
- */
-
-/**
- * CRCs of signed messages.
- */
-type Signing_MsgCertificateChain struct {
+type Signing_MsgCertificateChainDep struct {
 	RootCertificate []uint8
 	IntermediateCertificate []uint8
 	CorrectionsCertificate []uint8
@@ -328,53 +33,53 @@ type Signing_MsgCertificateChain struct {
 	_root *Signing
 	_parent *Sbp_Message
 }
-func NewSigning_MsgCertificateChain() *Signing_MsgCertificateChain {
-	return &Signing_MsgCertificateChain{
+func NewSigning_MsgCertificateChainDep() *Signing_MsgCertificateChainDep {
+	return &Signing_MsgCertificateChainDep{
 	}
 }
 
-func (this *Signing_MsgCertificateChain) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+func (this *Signing_MsgCertificateChainDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
 	this._io = io
 	this._parent = parent
 	this._root = root
 
 	for i := 0; i < int(20); i++ {
 		_ = i
-		tmp22, err := this._io.ReadU1()
+		tmp1, err := this._io.ReadU1()
 		if err != nil {
 			return err
 		}
-		this.RootCertificate = append(this.RootCertificate, tmp22)
+		this.RootCertificate = append(this.RootCertificate, tmp1)
 	}
 	for i := 0; i < int(20); i++ {
 		_ = i
-		tmp23, err := this._io.ReadU1()
+		tmp2, err := this._io.ReadU1()
 		if err != nil {
 			return err
 		}
-		this.IntermediateCertificate = append(this.IntermediateCertificate, tmp23)
+		this.IntermediateCertificate = append(this.IntermediateCertificate, tmp2)
 	}
 	for i := 0; i < int(20); i++ {
 		_ = i
-		tmp24, err := this._io.ReadU1()
+		tmp3, err := this._io.ReadU1()
 		if err != nil {
 			return err
 		}
-		this.CorrectionsCertificate = append(this.CorrectionsCertificate, tmp24)
+		this.CorrectionsCertificate = append(this.CorrectionsCertificate, tmp3)
 	}
-	tmp25 := NewSigning_UtcTime()
-	err = tmp25.Read(this._io, this, this._root)
+	tmp4 := NewSigning_UtcTime()
+	err = tmp4.Read(this._io, this, this._root)
 	if err != nil {
 		return err
 	}
-	this.Expiration = tmp25
+	this.Expiration = tmp4
 	for i := 0; i < int(64); i++ {
 		_ = i
-		tmp26, err := this._io.ReadU1()
+		tmp5, err := this._io.ReadU1()
 		if err != nil {
 			return err
 		}
-		this.Signature = append(this.Signature, tmp26)
+		this.Signature = append(this.Signature, tmp5)
 	}
 	return err
 }
@@ -406,6 +111,446 @@ func (this *Signing_MsgCertificateChain) Read(io *kaitai.Stream, parent *Sbp_Mes
  */
 
 /**
+ * Deprecated.
+ */
+type Signing_MsgEd25519SignatureDepB struct {
+	StreamCounter uint8
+	OnDemandCounter uint8
+	Signature []uint8
+	Fingerprint []uint8
+	SignedMessages []uint32
+	_io *kaitai.Stream
+	_root *Signing
+	_parent *Sbp_Message
+}
+func NewSigning_MsgEd25519SignatureDepB() *Signing_MsgEd25519SignatureDepB {
+	return &Signing_MsgEd25519SignatureDepB{
+	}
+}
+
+func (this *Signing_MsgEd25519SignatureDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+	this._io = io
+	this._parent = parent
+	this._root = root
+
+	tmp6, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.StreamCounter = tmp6
+	tmp7, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.OnDemandCounter = tmp7
+	for i := 0; i < int(64); i++ {
+		_ = i
+		tmp8, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.Signature = append(this.Signature, tmp8)
+	}
+	for i := 0; i < int(20); i++ {
+		_ = i
+		tmp9, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.Fingerprint = append(this.Fingerprint, tmp9)
+	}
+	for i := 1;; i++ {
+		tmp10, err := this._io.EOF()
+		if err != nil {
+			return err
+		}
+		if tmp10 {
+			break
+		}
+		tmp11, err := this._io.ReadU4le()
+		if err != nil {
+			return err
+		}
+		this.SignedMessages = append(this.SignedMessages, tmp11)
+	}
+	return err
+}
+
+/**
+ * Signature message counter. Zero indexed and incremented with each
+ * signature message.  The counter will not increment if this message
+ * was in response to an on demand request.  The counter will roll over
+ * after 256 messages. Upon connection, the value of the counter may
+ * not initially be zero.
+ */
+
+/**
+ * On demand message counter. Zero indexed and incremented with each
+ * signature message sent in response to an on demand message. The
+ * counter will roll over after 256 messages.  Upon connection, the
+ * value of the counter may not initially be zero.
+ */
+
+/**
+ * ED25519 signature for messages.
+ */
+
+/**
+ * SHA-1 fingerprint of the associated certificate.
+ */
+
+/**
+ * CRCs of signed messages.
+ */
+
+/**
+ * Deprecated.
+ */
+type Signing_MsgEd25519CertificateDep struct {
+	NMsg uint8
+	Fingerprint []uint8
+	CertificateBytes []uint8
+	_io *kaitai.Stream
+	_root *Signing
+	_parent *Sbp_Message
+}
+func NewSigning_MsgEd25519CertificateDep() *Signing_MsgEd25519CertificateDep {
+	return &Signing_MsgEd25519CertificateDep{
+	}
+}
+
+func (this *Signing_MsgEd25519CertificateDep) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+	this._io = io
+	this._parent = parent
+	this._root = root
+
+	tmp12, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.NMsg = tmp12
+	for i := 0; i < int(20); i++ {
+		_ = i
+		tmp13, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.Fingerprint = append(this.Fingerprint, tmp13)
+	}
+	for i := 1;; i++ {
+		tmp14, err := this._io.EOF()
+		if err != nil {
+			return err
+		}
+		if tmp14 {
+			break
+		}
+		tmp15, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.CertificateBytes = append(this.CertificateBytes, tmp15)
+	}
+	return err
+}
+
+/**
+ * Total number messages that make up the certificate. First nibble is
+ * the size of the sequence (n), second nibble is the zero-indexed
+ * counter (ith packet of n)
+ */
+
+/**
+ * SHA-1 fingerprint of the associated certificate.
+ */
+
+/**
+ * ED25519 certificate bytes.
+ */
+type Signing_UtcTime struct {
+	Year uint16
+	Month uint8
+	Day uint8
+	Hours uint8
+	Minutes uint8
+	Seconds uint8
+	Ns uint32
+	_io *kaitai.Stream
+	_root *Signing
+	_parent interface{}
+}
+func NewSigning_UtcTime() *Signing_UtcTime {
+	return &Signing_UtcTime{
+	}
+}
+
+func (this *Signing_UtcTime) Read(io *kaitai.Stream, parent interface{}, root *Signing) (err error) {
+	this._io = io
+	this._parent = parent
+	this._root = root
+
+	tmp16, err := this._io.ReadU2le()
+	if err != nil {
+		return err
+	}
+	this.Year = uint16(tmp16)
+	tmp17, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.Month = tmp17
+	tmp18, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.Day = tmp18
+	tmp19, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.Hours = tmp19
+	tmp20, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.Minutes = tmp20
+	tmp21, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.Seconds = tmp21
+	tmp22, err := this._io.ReadU4le()
+	if err != nil {
+		return err
+	}
+	this.Ns = uint32(tmp22)
+	return err
+}
+
+/**
+ * Year
+ */
+
+/**
+ * Month (range 1 .. 12)
+ */
+
+/**
+ * days in the month (range 1-31)
+ */
+
+/**
+ * hours of day (range 0-23)
+ */
+
+/**
+ * minutes of hour (range 0-59)
+ */
+
+/**
+ * seconds of minute (range 0-60) rounded down
+ */
+
+/**
+ * nanoseconds of second (range 0-999999999)
+ */
+type Signing_EcdsaSignature struct {
+	Len uint8
+	Data []uint8
+	_io *kaitai.Stream
+	_root *Signing
+	_parent interface{}
+}
+func NewSigning_EcdsaSignature() *Signing_EcdsaSignature {
+	return &Signing_EcdsaSignature{
+	}
+}
+
+func (this *Signing_EcdsaSignature) Read(io *kaitai.Stream, parent interface{}, root *Signing) (err error) {
+	this._io = io
+	this._parent = parent
+	this._root = root
+
+	tmp23, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.Len = tmp23
+	for i := 0; i < int(72); i++ {
+		_ = i
+		tmp24, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.Data = append(this.Data, tmp24)
+	}
+	return err
+}
+
+/**
+ * Number of bytes to use of the signature field.  The DER encoded
+ * signature has a maximum size of 72 bytes but can vary between 70 and
+ * 72 bytes in length.
+ */
+
+/**
+ * DER encoded ECDSA signature for the messages using SHA-256 as the
+ * digest algorithm.
+ */
+
+/**
+ * Deprecated.
+ */
+type Signing_MsgEd25519SignatureDepA struct {
+	Signature []uint8
+	Fingerprint []uint8
+	SignedMessages []uint32
+	_io *kaitai.Stream
+	_root *Signing
+	_parent *Sbp_Message
+}
+func NewSigning_MsgEd25519SignatureDepA() *Signing_MsgEd25519SignatureDepA {
+	return &Signing_MsgEd25519SignatureDepA{
+	}
+}
+
+func (this *Signing_MsgEd25519SignatureDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+	this._io = io
+	this._parent = parent
+	this._root = root
+
+	for i := 0; i < int(64); i++ {
+		_ = i
+		tmp25, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.Signature = append(this.Signature, tmp25)
+	}
+	for i := 0; i < int(20); i++ {
+		_ = i
+		tmp26, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.Fingerprint = append(this.Fingerprint, tmp26)
+	}
+	for i := 1;; i++ {
+		tmp27, err := this._io.EOF()
+		if err != nil {
+			return err
+		}
+		if tmp27 {
+			break
+		}
+		tmp28, err := this._io.ReadU4le()
+		if err != nil {
+			return err
+		}
+		this.SignedMessages = append(this.SignedMessages, tmp28)
+	}
+	return err
+}
+
+/**
+ * ED25519 signature for messages.
+ */
+
+/**
+ * SHA-1 fingerprint of the associated certificate.
+ */
+
+/**
+ * CRCs of signed messages.
+ */
+type Signing_MsgCertificateChain struct {
+	RootCertificate []uint8
+	IntermediateCertificate []uint8
+	CorrectionsCertificate []uint8
+	Expiration *Signing_UtcTime
+	Signature *Signing_EcdsaSignature
+	_io *kaitai.Stream
+	_root *Signing
+	_parent *Sbp_Message
+}
+func NewSigning_MsgCertificateChain() *Signing_MsgCertificateChain {
+	return &Signing_MsgCertificateChain{
+	}
+}
+
+func (this *Signing_MsgCertificateChain) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+	this._io = io
+	this._parent = parent
+	this._root = root
+
+	for i := 0; i < int(20); i++ {
+		_ = i
+		tmp29, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.RootCertificate = append(this.RootCertificate, tmp29)
+	}
+	for i := 0; i < int(20); i++ {
+		_ = i
+		tmp30, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.IntermediateCertificate = append(this.IntermediateCertificate, tmp30)
+	}
+	for i := 0; i < int(20); i++ {
+		_ = i
+		tmp31, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.CorrectionsCertificate = append(this.CorrectionsCertificate, tmp31)
+	}
+	tmp32 := NewSigning_UtcTime()
+	err = tmp32.Read(this._io, this, this._root)
+	if err != nil {
+		return err
+	}
+	this.Expiration = tmp32
+	tmp33 := NewSigning_EcdsaSignature()
+	err = tmp33.Read(this._io, this, this._root)
+	if err != nil {
+		return err
+	}
+	this.Signature = tmp33
+	return err
+}
+
+/**
+ * SHA-1 fingerprint of the root certificate
+ */
+
+/**
+ * SHA-1 fingerprint of the intermediate certificate
+ */
+
+/**
+ * SHA-1 fingerprint of the corrections certificate
+ */
+
+/**
+ * The time after which the signature given is no longer valid.
+ * Implementors should consult a time source (such as GNSS) to check if
+ * the current time is later than the expiration time, if the condition
+ * is true, signatures in the stream should not be considered valid.
+ */
+
+/**
+ * Signature (created by the root certificate) over the concatenation
+ * of the SBP payload bytes preceding this field. That is, the
+ * concatenation of `root_certificate`, `intermediate_certificate`,
+ * `corrections_certificate` and `expiration`.  This certificate chain
+ * (allow list) can also be validated by fetching it from
+ * `http(s)://certs.swiftnav.com/chain`.
+ */
+
+/**
  * A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1).
  */
 type Signing_MsgEcdsaCertificate struct {
@@ -427,37 +572,37 @@ func (this *Signing_MsgEcdsaCertificate) Read(io *kaitai.Stream, parent *Sbp_Mes
 	this._parent = parent
 	this._root = root
 
-	tmp27, err := this._io.ReadU1()
+	tmp34, err := this._io.ReadU1()
 	if err != nil {
 		return err
 	}
-	this.NMsg = tmp27
+	this.NMsg = tmp34
 	for i := 0; i < int(4); i++ {
 		_ = i
-		tmp28, err := this._io.ReadU1()
+		tmp35, err := this._io.ReadU1()
 		if err != nil {
 			return err
 		}
-		this.CertificateId = append(this.CertificateId, tmp28)
+		this.CertificateId = append(this.CertificateId, tmp35)
 	}
-	tmp29, err := this._io.ReadU1()
+	tmp36, err := this._io.ReadU1()
 	if err != nil {
 		return err
 	}
-	this.Flags = tmp29
+	this.Flags = tmp36
 	for i := 1;; i++ {
-		tmp30, err := this._io.EOF()
+		tmp37, err := this._io.EOF()
 		if err != nil {
 			return err
 		}
-		if tmp30 {
+		if tmp37 {
 			break
 		}
-		tmp31, err := this._io.ReadU1()
+		tmp38, err := this._io.ReadU1()
 		if err != nil {
 			return err
 		}
-		this.CertificateBytes = append(this.CertificateBytes, tmp31)
+		this.CertificateBytes = append(this.CertificateBytes, tmp38)
 	}
 	return err
 }
@@ -478,6 +623,126 @@ func (this *Signing_MsgEcdsaCertificate) Read(io *kaitai.Stream, parent *Sbp_Mes
  */
 
 /**
+ * Deprecated.
+ */
+type Signing_MsgEcdsaSignatureDepB struct {
+	Flags uint8
+	StreamCounter uint8
+	OnDemandCounter uint8
+	CertificateId []uint8
+	NSignatureBytes uint8
+	Signature []uint8
+	SignedMessages []uint8
+	_io *kaitai.Stream
+	_root *Signing
+	_parent *Sbp_Message
+}
+func NewSigning_MsgEcdsaSignatureDepB() *Signing_MsgEcdsaSignatureDepB {
+	return &Signing_MsgEcdsaSignatureDepB{
+	}
+}
+
+func (this *Signing_MsgEcdsaSignatureDepB) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+	this._io = io
+	this._parent = parent
+	this._root = root
+
+	tmp39, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.Flags = tmp39
+	tmp40, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.StreamCounter = tmp40
+	tmp41, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.OnDemandCounter = tmp41
+	for i := 0; i < int(4); i++ {
+		_ = i
+		tmp42, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.CertificateId = append(this.CertificateId, tmp42)
+	}
+	tmp43, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.NSignatureBytes = tmp43
+	for i := 0; i < int(72); i++ {
+		_ = i
+		tmp44, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.Signature = append(this.Signature, tmp44)
+	}
+	for i := 1;; i++ {
+		tmp45, err := this._io.EOF()
+		if err != nil {
+			return err
+		}
+		if tmp45 {
+			break
+		}
+		tmp46, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.SignedMessages = append(this.SignedMessages, tmp46)
+	}
+	return err
+}
+
+/**
+ * Describes the format of the `signed\_messages` field below.
+ */
+
+/**
+ * Signature message counter. Zero indexed and incremented with each
+ * signature message.  The counter will not increment if this message
+ * was in response to an on demand request.  The counter will roll over
+ * after 256 messages. Upon connection, the value of the counter may
+ * not initially be zero.
+ */
+
+/**
+ * On demand message counter. Zero indexed and incremented with each
+ * signature message sent in response to an on demand message. The
+ * counter will roll over after 256 messages.  Upon connection, the
+ * value of the counter may not initially be zero.
+ */
+
+/**
+ * The last 4 bytes of the certificate's SHA-1 fingerprint
+ */
+
+/**
+ * Number of bytes to use of the signature field.  The DER encoded
+ * signature has a maximum size of 72 bytes but can vary between 70 and
+ * 72 bytes in length.
+ */
+
+/**
+ * DER encoded ECDSA signature for the messages using SHA-256 as the
+ * digest algorithm.
+ */
+
+/**
+ * CRCs of the messages covered by this signature.  For Skylark, which
+ * delivers SBP messages wrapped in Swift's proprietary RTCM message,
+ * these are the 24-bit CRCs from the RTCM message framing. For SBP
+ * only streams, this will be 16-bit CRCs from the SBP framing.  See
+ * the `flags` field to determine the type of CRCs covered.
+ */
+
+/**
  * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
  */
 type Signing_MsgEcdsaSignature struct {
@@ -485,7 +750,7 @@ type Signing_MsgEcdsaSignature struct {
 	StreamCounter uint8
 	OnDemandCounter uint8
 	CertificateId []uint8
-	Signature []uint8
+	Signature *Signing_EcdsaSignature
 	SignedMessages []uint8
 	_io *kaitai.Stream
 	_root *Signing
@@ -501,50 +766,155 @@ func (this *Signing_MsgEcdsaSignature) Read(io *kaitai.Stream, parent *Sbp_Messa
 	this._parent = parent
 	this._root = root
 
-	tmp32, err := this._io.ReadU1()
+	tmp47, err := this._io.ReadU1()
 	if err != nil {
 		return err
 	}
-	this.Flags = tmp32
-	tmp33, err := this._io.ReadU1()
+	this.Flags = tmp47
+	tmp48, err := this._io.ReadU1()
 	if err != nil {
 		return err
 	}
-	this.StreamCounter = tmp33
-	tmp34, err := this._io.ReadU1()
+	this.StreamCounter = tmp48
+	tmp49, err := this._io.ReadU1()
 	if err != nil {
 		return err
 	}
-	this.OnDemandCounter = tmp34
+	this.OnDemandCounter = tmp49
 	for i := 0; i < int(4); i++ {
 		_ = i
-		tmp35, err := this._io.ReadU1()
+		tmp50, err := this._io.ReadU1()
 		if err != nil {
 			return err
 		}
-		this.CertificateId = append(this.CertificateId, tmp35)
+		this.CertificateId = append(this.CertificateId, tmp50)
+	}
+	tmp51 := NewSigning_EcdsaSignature()
+	err = tmp51.Read(this._io, this, this._root)
+	if err != nil {
+		return err
+	}
+	this.Signature = tmp51
+	for i := 1;; i++ {
+		tmp52, err := this._io.EOF()
+		if err != nil {
+			return err
+		}
+		if tmp52 {
+			break
+		}
+		tmp53, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.SignedMessages = append(this.SignedMessages, tmp53)
+	}
+	return err
+}
+
+/**
+ * Describes the format of the `signed\_messages` field below.
+ */
+
+/**
+ * Signature message counter. Zero indexed and incremented with each
+ * signature message.  The counter will not increment if this message
+ * was in response to an on demand request.  The counter will roll over
+ * after 256 messages. Upon connection, the value of the counter may
+ * not initially be zero.
+ */
+
+/**
+ * On demand message counter. Zero indexed and incremented with each
+ * signature message sent in response to an on demand message. The
+ * counter will roll over after 256 messages.  Upon connection, the
+ * value of the counter may not initially be zero.
+ */
+
+/**
+ * The last 4 bytes of the certificate's SHA-1 fingerprint
+ */
+
+/**
+ * Signature over the frames of this message group.
+ */
+
+/**
+ * CRCs of the messages covered by this signature.  For Skylark, which
+ * delivers SBP messages wrapped in Swift's proprietary RTCM message,
+ * these are the 24-bit CRCs from the RTCM message framing. For SBP
+ * only streams, this will be 16-bit CRCs from the SBP framing.  See
+ * the `flags` field to determine the type of CRCs covered.
+ */
+
+/**
+ * Deprecated.
+ */
+type Signing_MsgEcdsaSignatureDepA struct {
+	Flags uint8
+	StreamCounter uint8
+	OnDemandCounter uint8
+	CertificateId []uint8
+	Signature []uint8
+	SignedMessages []uint8
+	_io *kaitai.Stream
+	_root *Signing
+	_parent *Sbp_Message
+}
+func NewSigning_MsgEcdsaSignatureDepA() *Signing_MsgEcdsaSignatureDepA {
+	return &Signing_MsgEcdsaSignatureDepA{
+	}
+}
+
+func (this *Signing_MsgEcdsaSignatureDepA) Read(io *kaitai.Stream, parent *Sbp_Message, root *Signing) (err error) {
+	this._io = io
+	this._parent = parent
+	this._root = root
+
+	tmp54, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.Flags = tmp54
+	tmp55, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.StreamCounter = tmp55
+	tmp56, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.OnDemandCounter = tmp56
+	for i := 0; i < int(4); i++ {
+		_ = i
+		tmp57, err := this._io.ReadU1()
+		if err != nil {
+			return err
+		}
+		this.CertificateId = append(this.CertificateId, tmp57)
 	}
 	for i := 0; i < int(64); i++ {
 		_ = i
-		tmp36, err := this._io.ReadU1()
+		tmp58, err := this._io.ReadU1()
 		if err != nil {
 			return err
 		}
-		this.Signature = append(this.Signature, tmp36)
+		this.Signature = append(this.Signature, tmp58)
 	}
 	for i := 1;; i++ {
-		tmp37, err := this._io.EOF()
+		tmp59, err := this._io.EOF()
 		if err != nil {
 			return err
 		}
-		if tmp37 {
+		if tmp59 {
 			break
 		}
-		tmp38, err := this._io.ReadU1()
+		tmp60, err := this._io.ReadU1()
 		if err != nil {
 			return err
 		}
-		this.SignedMessages = append(this.SignedMessages, tmp38)
+		this.SignedMessages = append(this.SignedMessages, tmp60)
 	}
 	return err
 }

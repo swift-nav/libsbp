@@ -831,8 +831,7 @@ public:
     };
 
     /**
-     * When enabled, a tracking channel can output the correlations at each
-     * update interval.
+     * Deprecated.
      */
 
     class msg_tracking_iq_dep_b_t : public kaitai::kstruct {

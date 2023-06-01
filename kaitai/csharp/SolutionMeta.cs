@@ -153,10 +153,6 @@ namespace Kaitai
 
         /// <summary>
         /// Deprecated.
-        /// 
-        /// This message contains all metadata about the sensors received and/or
-        /// used in computing the Fuzed Solution. It focuses primarily, but not
-        /// only, on GNSS metadata.
         /// </summary>
         public partial class MsgSolnMetaDepA : KaitaiStruct
         {

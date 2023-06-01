@@ -149,10 +149,6 @@ public:
 
     /**
      * Deprecated.
-     * 
-     * This message contains all metadata about the sensors received and/or
-     * used in computing the Fuzed Solution. It focuses primarily, but not
-     * only, on GNSS metadata.
      */
 
     class msg_soln_meta_dep_a_t : public kaitai::kstruct {

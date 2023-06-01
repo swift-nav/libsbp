@@ -1,4 +1,4 @@
-# Kaitai Struct definition file for Swift Binary Protocol 4.12.1-alpha
+# Kaitai Struct definition file for Swift Binary Protocol 4.15.1-alpha
 
 # Automatically generated with generate.py.
 # Please do not hand edit!
@@ -240,8 +240,11 @@ enums:
     431: msg_settings_register_resp
   
     3076: msg_ecdsa_certificate
-    3077: msg_certificate_chain
-    3078: msg_ecdsa_signature
+    3081: msg_certificate_chain
+    3077: msg_certificate_chain_dep
+    3080: msg_ecdsa_signature
+    3079: msg_ecdsa_signature_dep_b
+    3078: msg_ecdsa_signature_dep_a
     3074: msg_ed25519_certificate_dep
     3073: msg_ed25519_signature_dep_a
     3075: msg_ed25519_signature_dep_b
@@ -509,7 +512,10 @@ types:
   
             'msg_ids::msg_ecdsa_certificate': signing::msg_ecdsa_certificate
             'msg_ids::msg_certificate_chain': signing::msg_certificate_chain
+            'msg_ids::msg_certificate_chain_dep': signing::msg_certificate_chain_dep
             'msg_ids::msg_ecdsa_signature': signing::msg_ecdsa_signature
+            'msg_ids::msg_ecdsa_signature_dep_b': signing::msg_ecdsa_signature_dep_b
+            'msg_ids::msg_ecdsa_signature_dep_a': signing::msg_ecdsa_signature_dep_a
             'msg_ids::msg_ed25519_certificate_dep': signing::msg_ed25519_certificate_dep
             'msg_ids::msg_ed25519_signature_dep_a': signing::msg_ed25519_signature_dep_a
             'msg_ids::msg_ed25519_signature_dep_b': signing::msg_ed25519_signature_dep_b

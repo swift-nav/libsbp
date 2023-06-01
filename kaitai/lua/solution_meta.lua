@@ -96,10 +96,6 @@ end
 
 -- 
 -- Deprecated.
--- 
--- This message contains all metadata about the sensors received and/or
--- used in computing the Fuzed Solution. It focuses primarily, but not
--- only, on GNSS metadata.
 SolutionMeta.MsgSolnMetaDepA = class.class(KaitaiStruct)
 
 function SolutionMeta.MsgSolnMetaDepA:_init(io, parent, root)

@@ -103,7 +103,7 @@ end
 -- GAL E5 active mask
 
 -- 
--- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+-- Deprecated.
 Observation.MsgGroupDelayDepB = class.class(KaitaiStruct)
 
 function Observation.MsgGroupDelayDepB:_init(io, parent, root)
@@ -536,10 +536,7 @@ end
 -- Doppler fractional part
 
 -- 
--- The almanac message returns a set of satellite orbit parameters. Almanac
--- data is not very precise and is considered valid for up to several
--- months. Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate
--- information and almanac" for details.
+-- Deprecated.
 Observation.MsgAlmanacGloDep = class.class(KaitaiStruct)
 
 function Observation.MsgAlmanacGloDep:_init(io, parent, root)
@@ -579,11 +576,7 @@ end
 -- Argument of perigee at instant of t_lambda
 
 -- 
--- The almanac message returns a set of satellite orbit parameters. Almanac
--- data is not very precise and is considered valid for up to several
--- months. Please see the Navstar GPS Space Segment/Navigation user
--- interfaces (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more
--- details.
+-- Deprecated.
 Observation.MsgAlmanacGpsDep = class.class(KaitaiStruct)
 
 function Observation.MsgAlmanacGpsDep:_init(io, parent, root)
@@ -684,8 +677,7 @@ end
 -- GLONASS L2 P Code-Phase Bias
 
 -- 
--- This observation message has been deprecated in favor of ephemeris
--- message using floats for size reduction.
+-- Deprecated.
 Observation.MsgEphemerisSbasDepB = class.class(KaitaiStruct)
 
 function Observation.MsgEphemerisSbasDepB:_init(io, parent, root)
@@ -727,10 +719,7 @@ end
 -- Drift of the GEO clock w.r.t. SBAS Network Time
 
 -- 
--- The ephemeris message returns a set of satellite orbit parameters that
--- is used to calculate GPS satellite position, velocity, and clock offset.
--- Please see the Navstar GPS Space Segment/Navigation user interfaces
--- (ICD-GPS-200, Table 20-III) for more details.
+-- Deprecated.
 Observation.MsgEphemerisGpsDepE = class.class(KaitaiStruct)
 
 function Observation.MsgEphemerisGpsDepE:_init(io, parent, root)
@@ -817,6 +806,9 @@ end
 -- 
 -- Issue of clock data
 
+-- 
+-- Bit masks of signal capabilities for each GNSS satellite PRN.
+-- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 Observation.MsgGnssCapb = class.class(KaitaiStruct)
 
 function Observation.MsgGnssCapb:_init(io, parent, root)
@@ -976,7 +968,7 @@ end
 -- Issue of clock data
 
 -- 
--- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+-- Deprecated.
 Observation.MsgGroupDelayDepA = class.class(KaitaiStruct)
 
 function Observation.MsgGroupDelayDepA:_init(io, parent, root)
@@ -1004,10 +996,7 @@ end
 -- validity etc. 1 = value is valid, 0 = value is not valid.
 
 -- 
--- The ephemeris message returns a set of satellite orbit parameters that
--- is used to calculate GPS satellite position, velocity, and clock offset.
--- Please see the Navstar GPS Space Segment/Navigation user interfaces
--- (ICD-GPS-200, Table 20-III) for more details.
+-- Deprecated.
 Observation.MsgEphemerisDepC = class.class(KaitaiStruct)
 
 function Observation.MsgEphemerisDepC:_init(io, parent, root)
@@ -1377,8 +1366,7 @@ end
 -- recommendation: IODE = mod (t_oc / 720, 240)
 
 -- 
--- This observation message has been deprecated in favor of ephemeris
--- message using floats for size reduction.
+-- Deprecated.
 Observation.MsgEphemerisGpsDepF = class.class(KaitaiStruct)
 
 function Observation.MsgEphemerisGpsDepF:_init(io, parent, root)
@@ -1488,6 +1476,8 @@ end
 -- sequence (n), second nibble is the zero-indexed counter (ith packet
 -- of n)
 
+-- 
+-- Deprecated.
 Observation.MsgEphemerisSbasDepA = class.class(KaitaiStruct)
 
 function Observation.MsgEphemerisSbasDepA:_init(io, parent, root)
@@ -1606,10 +1596,7 @@ end
 -- ECEF Z coordinate
 
 -- 
--- The ephemeris message returns a set of satellite orbit parameters that
--- is used to calculate GLO satellite position, velocity, and clock offset.
--- Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
--- immediate information (ephemeris parameters)" for more details.
+-- Deprecated.
 Observation.MsgEphemerisGloDepA = class.class(KaitaiStruct)
 
 function Observation.MsgEphemerisGloDepA:_init(io, parent, root)
@@ -1722,8 +1709,7 @@ end
 -- Argument of perigee at instant of t_lambda
 
 -- 
--- This observation message has been deprecated in favor of an ephemeris
--- message with explicit source of NAV data.
+-- Deprecated.
 Observation.MsgEphemerisGalDepA = class.class(KaitaiStruct)
 
 function Observation.MsgEphemerisGalDepA:_init(io, parent, root)
@@ -1814,11 +1800,7 @@ end
 -- Issue of data (IODnav). Always equal to iode
 
 -- 
--- This observation message has been deprecated in favor of observations
--- that are more interoperable. This message should be used for
--- observations referenced to a nominal pseudorange which are not
--- interoperable with most 3rd party GNSS receivers or typical RTCMv3
--- observations.
+-- Deprecated.
 Observation.MsgObsDepB = class.class(KaitaiStruct)
 
 function Observation.MsgObsDepB:_init(io, parent, root)
@@ -1959,10 +1941,7 @@ end
 -- Navigation Message Correction Table Validity Time
 
 -- 
--- The ephemeris message returns a set of satellite orbit parameters that
--- is used to calculate GPS satellite position, velocity, and clock offset.
--- Please see the Navstar GPS Space Segment/Navigation user interfaces
--- (ICD-GPS-200, Table 20-III) for more details.
+-- Deprecated.
 Observation.MsgEphemerisDepD = class.class(KaitaiStruct)
 
 function Observation.MsgEphemerisDepD:_init(io, parent, root)
@@ -2310,10 +2289,7 @@ end
 -- Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
 
 -- 
--- The ephemeris message returns a set of satellite orbit parameters that
--- is used to calculate GLO satellite position, velocity, and clock offset.
--- Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
--- immediate information (ephemeris parameters)" for more details.
+-- Deprecated.
 Observation.MsgEphemerisGloDepB = class.class(KaitaiStruct)
 
 function Observation.MsgEphemerisGloDepB:_init(io, parent, root)
@@ -2355,7 +2331,7 @@ end
 -- Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
 
 -- 
--- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+-- Deprecated.
 Observation.MsgSvConfigurationGpsDep = class.class(KaitaiStruct)
 
 function Observation.MsgSvConfigurationGpsDep:_init(io, parent, root)
@@ -2450,12 +2426,7 @@ end
 -- GNSS signal identifier
 
 -- 
--- The GPS observations message reports all the raw pseudorange and carrier
--- phase observations for the satellites being tracked by the device.
--- Carrier phase observation here is represented as a 40-bit fixed point
--- number with Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of
--- fractional cycles). The observations are interoperable with 3rd party
--- receivers and conform with typical RTCMv3 GNSS observations.
+-- Deprecated.
 Observation.MsgObsDepC = class.class(KaitaiStruct)
 
 function Observation.MsgObsDepC:_init(io, parent, root)

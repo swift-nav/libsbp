@@ -97,8 +97,7 @@ end
 -- flags
 
 -- 
--- This message indicates the process state of the top 10 heaviest
--- consumers of CPU on the system.
+-- Deprecated.
 Linux.MsgLinuxCpuStateDepA = class.class(KaitaiStruct)
 
 function Linux.MsgLinuxCpuStateDepA:_init(io, parent, root)
@@ -192,8 +191,7 @@ end
 -- the command line of the process in question
 
 -- 
--- This message indicates the process state of the top 10 heaviest
--- consumers of memory on the system.
+-- Deprecated.
 Linux.MsgLinuxMemStateDepA = class.class(KaitaiStruct)
 
 function Linux.MsgLinuxMemStateDepA:_init(io, parent, root)
@@ -269,7 +267,7 @@ end
 -- the command line of the process in question
 
 -- 
--- This presents a summary of CPU and memory utilization.
+-- Deprecated.
 Linux.MsgLinuxSysStateDepA = class.class(KaitaiStruct)
 
 function Linux.MsgLinuxSysStateDepA:_init(io, parent, root)

@@ -361,12 +361,7 @@ types:
   
   msg_ssr_stec_correction_dep:
     doc: |
-      The Slant Total Electron Content per space vehicle, given as polynomial
-      approximation for a given tile. This should be combined with the
-      MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
-      of the atmospheric delay.
-
-      It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+      Deprecated.
     seq:
       - id: header
         doc: |
@@ -540,13 +535,7 @@ types:
   
   msg_ssr_tile_definition_dep_a:
     doc: |
-      Provides the correction point coordinates for the atmospheric correction
-      values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
-      messages.
-
-      Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-      element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-      correction points, not lists of points.
+      Deprecated.
     seq:
       - id: tile_set_id
         doc: |
@@ -625,13 +614,7 @@ types:
   
   msg_ssr_tile_definition_dep_b:
     doc: |
-      Provides the correction point coordinates for the atmospheric correction
-      values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-      messages.
-
-      Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-      element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-      correction points, not lists of points.
+      Deprecated.
     seq:
       - id: ssr_sol_id
         doc: |
@@ -844,6 +827,8 @@ types:
         repeat-expr: 21
   
   msg_ssr_satellite_apc_dep:
+    doc: |
+      Deprecated.
     seq:
       - id: apc
         doc: |
@@ -878,6 +863,8 @@ types:
         repeat: eos
   
   msg_ssr_orbit_clock_dep_a:
+    doc: |
+      Deprecated.
     seq:
       - id: time
         doc: |
@@ -1035,6 +1022,8 @@ types:
         type: u1
   
   msg_ssr_stec_correction_dep_a:
+    doc: |
+      Deprecated.
     seq:
       - id: header
         doc: |
@@ -1047,6 +1036,8 @@ types:
         repeat: eos
   
   msg_ssr_gridded_correction_no_std_dep_a:
+    doc: |
+      Deprecated.
     seq:
       - id: header
         doc: |
@@ -1067,6 +1058,8 @@ types:
         repeat: eos
   
   msg_ssr_gridded_correction_dep_a:
+    doc: |
+      Deprecated.
     seq:
       - id: header
         doc: |
@@ -1087,6 +1080,8 @@ types:
         repeat: eos
   
   msg_ssr_grid_definition_dep_a:
+    doc: |
+      Deprecated.
     seq:
       - id: header
         doc: |
@@ -1192,7 +1187,7 @@ types:
         type: u1
       - id: code_bias_bound_sig
         doc: |
-          Code Bias Standard Deviation.  Range: 0-1.275 m
+          Code Bias Standard Deviation. Range: 0-1.275 m
         type: u1
       - id: phase_bias_bound_mu
         doc: |
@@ -1200,7 +1195,7 @@ types:
         type: u1
       - id: phase_bias_bound_sig
         doc: |
-          Phase Bias Standard Deviation.  Range: 0-1.275 m
+          Phase Bias Standard Deviation. Range: 0-1.275 m
         type: u1
   
   msg_ssr_code_phase_biases_bounds:

@@ -213,8 +213,11 @@ namespace Kaitai
             MsgEd25519CertificateDep = 3074,
             MsgEd25519SignatureDepB = 3075,
             MsgEcdsaCertificate = 3076,
-            MsgCertificateChain = 3077,
-            MsgEcdsaSignature = 3078,
+            MsgCertificateChainDep = 3077,
+            MsgEcdsaSignatureDepA = 3078,
+            MsgEcdsaSignatureDepB = 3079,
+            MsgEcdsaSignature = 3080,
+            MsgCertificateChain = 3081,
             MsgFileioConfigReq = 4097,
             MsgFileioConfigResp = 4098,
             MsgSbasRaw = 30583,
@@ -295,6 +298,12 @@ namespace Kaitai
                     __raw_payload = m_io.ReadBytes(Header.Length);
                     var io___raw_payload = new KaitaiStream(__raw_payload);
                     _payload = new Observation.MsgEphemerisGloDepD(io___raw_payload, this, m_root);
+                    break;
+                }
+                case Sbp.MsgIds.MsgEcdsaSignatureDepB: {
+                    __raw_payload = m_io.ReadBytes(Header.Length);
+                    var io___raw_payload = new KaitaiStream(__raw_payload);
+                    _payload = new Signing.MsgEcdsaSignatureDepB(io___raw_payload, this, m_root);
                     break;
                 }
                 case Sbp.MsgIds.MsgSettingsReadByIndexReq: {
@@ -565,6 +574,12 @@ namespace Kaitai
                     __raw_payload = m_io.ReadBytes(Header.Length);
                     var io___raw_payload = new KaitaiStream(__raw_payload);
                     _payload = new Settings.MsgSettingsRegisterResp(io___raw_payload, this, m_root);
+                    break;
+                }
+                case Sbp.MsgIds.MsgEcdsaSignatureDepA: {
+                    __raw_payload = m_io.ReadBytes(Header.Length);
+                    var io___raw_payload = new KaitaiStream(__raw_payload);
+                    _payload = new Signing.MsgEcdsaSignatureDepA(io___raw_payload, this, m_root);
                     break;
                 }
                 case Sbp.MsgIds.MsgEphemerisGal: {
@@ -1597,6 +1612,12 @@ namespace Kaitai
                     __raw_payload = m_io.ReadBytes(Header.Length);
                     var io___raw_payload = new KaitaiStream(__raw_payload);
                     _payload = new Ssr.MsgSsrCodeBiases(io___raw_payload, this, m_root);
+                    break;
+                }
+                case Sbp.MsgIds.MsgCertificateChainDep: {
+                    __raw_payload = m_io.ReadBytes(Header.Length);
+                    var io___raw_payload = new KaitaiStream(__raw_payload);
+                    _payload = new Signing.MsgCertificateChainDep(io___raw_payload, this, m_root);
                     break;
                 }
                 case Sbp.MsgIds.MsgSsrGriddedCorrection: {

@@ -363,7 +363,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// Deprecated
+        /// Deprecated.
         /// </summary>
         public partial class MsgUartStateDepa : KaitaiStruct
         {
@@ -1113,7 +1113,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// This message from the host resets the Piksi back into the bootloader.
+        /// Deprecated.
         /// </summary>
         public partial class MsgResetDep : KaitaiStruct
         {
@@ -1272,7 +1272,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// Deprecated
+        /// Deprecated.
         /// </summary>
         public partial class MsgInitBaseDep : KaitaiStruct
         {

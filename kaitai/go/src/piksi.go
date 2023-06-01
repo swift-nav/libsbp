@@ -412,7 +412,7 @@ func (this *Piksi_MsgThreadState) Read(io *kaitai.Stream, parent *Sbp_Message, r
  */
 
 /**
- * Deprecated
+ * Deprecated.
  */
 type Piksi_MsgUartStateDepa struct {
 	UartA *Piksi_UartChannel
@@ -1242,7 +1242,7 @@ func (this *Piksi_MsgFrontEndGain) Read(io *kaitai.Stream, parent *Sbp_Message, 
  */
 
 /**
- * This message from the host resets the Piksi back into the bootloader.
+ * Deprecated.
  */
 type Piksi_MsgResetDep struct {
 	_io *kaitai.Stream
@@ -1409,7 +1409,7 @@ func (this *Piksi_MsgSpecanDep) Read(io *kaitai.Stream, parent *Sbp_Message, roo
  */
 
 /**
- * Deprecated
+ * Deprecated.
  */
 type Piksi_MsgInitBaseDep struct {
 	_io *kaitai.Stream

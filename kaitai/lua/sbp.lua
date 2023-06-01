@@ -209,8 +209,11 @@ Sbp.MsgIds = enum.Enum {
   msg_ed25519_certificate_dep = 3074,
   msg_ed25519_signature_dep_b = 3075,
   msg_ecdsa_certificate = 3076,
-  msg_certificate_chain = 3077,
-  msg_ecdsa_signature = 3078,
+  msg_certificate_chain_dep = 3077,
+  msg_ecdsa_signature_dep_a = 3078,
+  msg_ecdsa_signature_dep_b = 3079,
+  msg_ecdsa_signature = 3080,
+  msg_certificate_chain = 3081,
   msg_fileio_config_req = 4097,
   msg_fileio_config_resp = 4098,
   msg_sbas_raw = 30583,
@@ -283,6 +286,10 @@ function Sbp.Message:_read()
     self._raw_payload = self._io:read_bytes(self.header.length)
     local _io = KaitaiStream(stringstream(self._raw_payload))
     self.payload = Observation.MsgEphemerisGloDepD(_io, self, self._root)
+  elseif _on == Sbp.MsgIds.msg_ecdsa_signature_dep_b then
+    self._raw_payload = self._io:read_bytes(self.header.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgEcdsaSignatureDepB(_io, self, self._root)
   elseif _on == Sbp.MsgIds.msg_settings_read_by_index_req then
     self._raw_payload = self._io:read_bytes(self.header.length)
     local _io = KaitaiStream(stringstream(self._raw_payload))
@@ -463,6 +470,10 @@ function Sbp.Message:_read()
     self._raw_payload = self._io:read_bytes(self.header.length)
     local _io = KaitaiStream(stringstream(self._raw_payload))
     self.payload = Settings.MsgSettingsRegisterResp(_io, self, self._root)
+  elseif _on == Sbp.MsgIds.msg_ecdsa_signature_dep_a then
+    self._raw_payload = self._io:read_bytes(self.header.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgEcdsaSignatureDepA(_io, self, self._root)
   elseif _on == Sbp.MsgIds.msg_ephemeris_gal then
     self._raw_payload = self._io:read_bytes(self.header.length)
     local _io = KaitaiStream(stringstream(self._raw_payload))
@@ -1151,6 +1162,10 @@ function Sbp.Message:_read()
     self._raw_payload = self._io:read_bytes(self.header.length)
     local _io = KaitaiStream(stringstream(self._raw_payload))
     self.payload = Ssr.MsgSsrCodeBiases(_io, self, self._root)
+  elseif _on == Sbp.MsgIds.msg_certificate_chain_dep then
+    self._raw_payload = self._io:read_bytes(self.header.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgCertificateChainDep(_io, self, self._root)
   elseif _on == Sbp.MsgIds.msg_ssr_gridded_correction then
     self._raw_payload = self._io:read_bytes(self.header.length)
     local _io = KaitaiStream(stringstream(self._raw_payload))

@@ -171,12 +171,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// The Slant Total Electron Content per space vehicle, given as polynomial
-        /// approximation for a given tile. This should be combined with the
-        /// MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
-        /// of the atmospheric delay.
-        /// 
-        /// It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+        /// Deprecated.
         /// </summary>
         public partial class MsgSsrStecCorrectionDep : KaitaiStruct
         {
@@ -280,6 +275,10 @@ namespace Kaitai
             public Ssr M_Root { get { return m_root; } }
             public Ssr.MsgSsrGriddedCorrectionBounds M_Parent { get { return m_parent; } }
         }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
         public partial class MsgSsrOrbitClockDepA : KaitaiStruct
         {
             public static MsgSsrOrbitClockDepA FromFile(string fileName)
@@ -820,7 +819,7 @@ namespace Kaitai
             public byte CodeBiasBoundMu { get { return _codeBiasBoundMu; } }
 
             /// <summary>
-            /// Code Bias Standard Deviation.  Range: 0-1.275 m
+            /// Code Bias Standard Deviation. Range: 0-1.275 m
             /// </summary>
             public byte CodeBiasBoundSig { get { return _codeBiasBoundSig; } }
 
@@ -830,7 +829,7 @@ namespace Kaitai
             public byte PhaseBiasBoundMu { get { return _phaseBiasBoundMu; } }
 
             /// <summary>
-            /// Phase Bias Standard Deviation.  Range: 0-1.275 m
+            /// Phase Bias Standard Deviation. Range: 0-1.275 m
             /// </summary>
             public byte PhaseBiasBoundSig { get { return _phaseBiasBoundSig; } }
             public Ssr M_Root { get { return m_root; } }
@@ -1185,6 +1184,10 @@ namespace Kaitai
             public Ssr M_Root { get { return m_root; } }
             public Ssr.MsgSsrStecCorrectionDep M_Parent { get { return m_parent; } }
         }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
         public partial class MsgSsrStecCorrectionDepA : KaitaiStruct
         {
             public static MsgSsrStecCorrectionDepA FromFile(string fileName)
@@ -1493,6 +1496,10 @@ namespace Kaitai
             public Ssr M_Root { get { return m_root; } }
             public Sbp.Message M_Parent { get { return m_parent; } }
         }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
         public partial class MsgSsrGridDefinitionDepA : KaitaiStruct
         {
             public static MsgSsrGridDefinitionDepA FromFile(string fileName)
@@ -1708,13 +1715,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// Provides the correction point coordinates for the atmospheric correction
-        /// values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
-        /// messages.
-        /// 
-        /// Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-        /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-        /// correction points, not lists of points.
+        /// Deprecated.
         /// </summary>
         public partial class MsgSsrTileDefinitionDepA : KaitaiStruct
         {
@@ -1927,6 +1928,10 @@ namespace Kaitai
             public Ssr M_Root { get { return m_root; } }
             public Ssr.MsgSsrOrbitClockBounds M_Parent { get { return m_parent; } }
         }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
         public partial class MsgSsrGriddedCorrectionDepA : KaitaiStruct
         {
             public static MsgSsrGriddedCorrectionDepA FromFile(string fileName)
@@ -2041,6 +2046,10 @@ namespace Kaitai
             public Ssr M_Root { get { return m_root; } }
             public Sbp.Message M_Parent { get { return m_parent; } }
         }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
         public partial class MsgSsrGriddedCorrectionNoStdDepA : KaitaiStruct
         {
             public static MsgSsrGriddedCorrectionNoStdDepA FromFile(string fileName)
@@ -2471,6 +2480,10 @@ namespace Kaitai
             public Ssr M_Root { get { return m_root; } }
             public Ssr.MsgSsrOrbitClockBoundsDegradation M_Parent { get { return m_parent; } }
         }
+
+        /// <summary>
+        /// Deprecated.
+        /// </summary>
         public partial class MsgSsrSatelliteApcDep : KaitaiStruct
         {
             public static MsgSsrSatelliteApcDep FromFile(string fileName)
@@ -2556,13 +2569,7 @@ namespace Kaitai
         }
 
         /// <summary>
-        /// Provides the correction point coordinates for the atmospheric correction
-        /// values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-        /// messages.
-        /// 
-        /// Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-        /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-        /// correction points, not lists of points.
+        /// Deprecated.
         /// </summary>
         public partial class MsgSsrTileDefinitionDepB : KaitaiStruct
         {

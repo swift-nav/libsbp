@@ -135,7 +135,7 @@ class Piksi(KaitaiStruct):
 
 
     class MsgUartStateDepa(KaitaiStruct):
-        """Deprecated
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -419,7 +419,7 @@ class Piksi(KaitaiStruct):
 
 
     class MsgResetDep(KaitaiStruct):
-        """This message from the host resets the Piksi back into the bootloader.
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -485,7 +485,7 @@ class Piksi(KaitaiStruct):
 
 
     class MsgInitBaseDep(KaitaiStruct):
-        """Deprecated
+        """Deprecated.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
