@@ -22,9 +22,9 @@ def test_auto_check_sbp_navigation_msg_dops_1():
     buf = base64.standard_b64decode("VQgCQgAPZAAAAAIABgAFAAUABQAA9AQ=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"gdop": 2, "tdop": 5, "vdop": 5, "sender": 66, "msg_type": 520, "pdop": 6, "tow": 100, "crc": 1268, "length": 15, "flags": 0, "preamble": 85, "payload": "ZAAAAAIABgAFAAUABQAA", "hdop": 5}
     assert parsed_dict['crc'] == 0x4f4
     assert parsed_dict['length'] == 15

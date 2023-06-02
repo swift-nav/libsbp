@@ -22,9 +22,9 @@ def test_auto_check_sbp_observation_msg_obs_dep_c_1():
     buf = base64.standard_b64decode("VUkARphXCF+3GGoHIH76SVBxXvf/56Pl5QQAAAA83GBGUZP6/8TQFBwGAAAA+D0+TRw88v9uq7SyBwAAAO1Uvk2sJQ0AKarppAoAAAAkVQlL8LwVABO2xNEMAAAAvq8=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 38982, "msg_type": 73, "header": {"n_obs": 32, "t": {"wn": 1898, "tow": 414670600}}, "obs": [{"lock": 58853, "sid": {"code": 0, "reserved": 0, "sat": 4}, "L": {"i": -565647, "f": 231}, "cn0": 163, "P": 1347025534}, {"lock": 7188, "sid": {"code": 0, "reserved": 0, "sat": 6}, "L": {"i": -355503, "f": 196}, "cn0": 208, "P": 1180752956}, {"lock": 45748, "sid": {"code": 0, "reserved": 0, "sat": 7}, "L": {"i": -902116, "f": 110}, "cn0": 171, "P": 1295924728}, {"lock": 42217, "sid": {"code": 0, "reserved": 0, "sat": 10}, "L": {"i": 861612, "f": 41}, "cn0": 170, "P": 1304319213}, {"lock": 53700, "sid": {"code": 0, "reserved": 0, "sat": 12}, "L": {"i": 1424624, "f": 19}, "cn0": 182, "P": 1258902820}], "crc": 44990, "length": 87, "preamble": 85, "payload": "CF+3GGoHIH76SVBxXvf/56Pl5QQAAAA83GBGUZP6/8TQFBwGAAAA+D0+TRw88v9uq7SyBwAAAO1Uvk2sJQ0AKarppAoAAAAkVQlL8LwVABO2xNEMAAAA"}
     assert parsed_dict['crc'] == 0xafbe
     assert parsed_dict['length'] == 87
@@ -41,9 +41,9 @@ def test_auto_check_sbp_observation_msg_obs_dep_c_2():
     buf = base64.standard_b64decode("VUkARpg3CF+3GGoHIUSmS0265hgAZbqiZhAAAABX/5tFSp4FABq+zh4bAAAAQFl8RBoWAwBy2eFJHQAAACWz")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 38982, "msg_type": 73, "header": {"n_obs": 33, "t": {"wn": 1898, "tow": 414670600}}, "obs": [{"lock": 26274, "sid": {"code": 0, "reserved": 0, "sat": 16}, "L": {"i": 1631930, "f": 101}, "cn0": 186, "P": 1296803396}, {"lock": 7886, "sid": {"code": 0, "reserved": 0, "sat": 27}, "L": {"i": 368202, "f": 26}, "cn0": 190, "P": 1167851351}, {"lock": 18913, "sid": {"code": 0, "reserved": 0, "sat": 29}, "L": {"i": 202266, "f": 114}, "cn0": 217, "P": 1149000000}], "crc": 45861, "length": 55, "preamble": 85, "payload": "CF+3GGoHIUSmS0265hgAZbqiZhAAAABX/5tFSp4FABq+zh4bAAAAQFl8RBoWAwBy2eFJHQAAAA=="}
     assert parsed_dict['crc'] == 0xb325
     assert parsed_dict['length'] == 55
@@ -60,9 +60,9 @@ def test_auto_check_sbp_observation_msg_obs_dep_c_3():
     buf = base64.standard_b64decode("VUkAAABXCF+3GGoHINn7SVAJSPj/HqhxUQQAAADT3GBGxmv7/3PDNZAGAAAATT0+TSih8/+CsF2OBwAAAAFWvk1YTQwAdMfl1QoAAABdVQlLQIsUAHixxMIMAAAAjaE=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 0, "msg_type": 73, "header": {"n_obs": 32, "t": {"wn": 1898, "tow": 414670600}}, "obs": [{"lock": 20849, "sid": {"code": 0, "reserved": 0, "sat": 4}, "L": {"i": -505847, "f": 30}, "cn0": 168, "P": 1347025881}, {"lock": 36917, "sid": {"code": 0, "reserved": 0, "sat": 6}, "L": {"i": -300090, "f": 115}, "cn0": 195, "P": 1180753107}, {"lock": 36445, "sid": {"code": 0, "reserved": 0, "sat": 7}, "L": {"i": -810712, "f": 130}, "cn0": 176, "P": 1295924557}, {"lock": 54757, "sid": {"code": 0, "reserved": 0, "sat": 10}, "L": {"i": 806232, "f": 116}, "cn0": 199, "P": 1304319489}, {"lock": 49860, "sid": {"code": 0, "reserved": 0, "sat": 12}, "L": {"i": 1346368, "f": 120}, "cn0": 177, "P": 1258902877}], "crc": 41357, "length": 87, "preamble": 85, "payload": "CF+3GGoHINn7SVAJSPj/HqhxUQQAAADT3GBGxmv7/3PDNZAGAAAATT0+TSih8/+CsF2OBwAAAAFWvk1YTQwAdMfl1QoAAABdVQlLQIsUAHixxMIMAAAA"}
     assert parsed_dict['crc'] == 0xa18d
     assert parsed_dict['length'] == 87
@@ -79,9 +79,9 @@ def test_auto_check_sbp_observation_msg_obs_dep_c_4():
     buf = base64.standard_b64decode("VUkAAAA3CF+3GGoHIUanS02MiBcAWruegRAAAADo/5tFLa8FABHQrzgbAAAAQFl8RC1gAwBLuUnOHQAAANye")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 0, "msg_type": 73, "header": {"n_obs": 33, "t": {"wn": 1898, "tow": 414670600}}, "obs": [{"lock": 33182, "sid": {"code": 0, "reserved": 0, "sat": 16}, "L": {"i": 1542284, "f": 90}, "cn0": 187, "P": 1296803654}, {"lock": 14511, "sid": {"code": 0, "reserved": 0, "sat": 27}, "L": {"i": 372525, "f": 17}, "cn0": 208, "P": 1167851496}, {"lock": 52809, "sid": {"code": 0, "reserved": 0, "sat": 29}, "L": {"i": 221229, "f": 75}, "cn0": 185, "P": 1149000000}], "crc": 40668, "length": 55, "preamble": 85, "payload": "CF+3GGoHIUanS02MiBcAWruegRAAAADo/5tFLa8FABHQrzgbAAAAQFl8RC1gAwBLuUnOHQAAAA=="}
     assert parsed_dict['crc'] == 0x9edc
     assert parsed_dict['length'] == 55
@@ -98,9 +98,9 @@ def test_auto_check_sbp_observation_msg_obs_dep_c_5():
     buf = base64.standard_b64decode("VUkARphX0F+3GGoHICwISlBWXff/OZ7l5QQAAADg5WBGnJL6/93IFBwGAAAAPFI+TV068v8npLSyBwAAAN5Jvk0uJw0AyrXppAoAAACVQAlLcr8VAPm2xNEMAAAAcAg=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 38982, "msg_type": 73, "header": {"n_obs": 32, "t": {"wn": 1898, "tow": 414670800}}, "obs": [{"lock": 58853, "sid": {"code": 0, "reserved": 0, "sat": 4}, "L": {"i": -565930, "f": 57}, "cn0": 158, "P": 1347029036}, {"lock": 7188, "sid": {"code": 0, "reserved": 0, "sat": 6}, "L": {"i": -355684, "f": 221}, "cn0": 200, "P": 1180755424}, {"lock": 45748, "sid": {"code": 0, "reserved": 0, "sat": 7}, "L": {"i": -902563, "f": 39}, "cn0": 164, "P": 1295929916}, {"lock": 42217, "sid": {"code": 0, "reserved": 0, "sat": 10}, "L": {"i": 861998, "f": 202}, "cn0": 181, "P": 1304316382}, {"lock": 53700, "sid": {"code": 0, "reserved": 0, "sat": 12}, "L": {"i": 1425266, "f": 249}, "cn0": 182, "P": 1258897557}], "crc": 2160, "length": 87, "preamble": 85, "payload": "0F+3GGoHICwISlBWXff/OZ7l5QQAAADg5WBGnJL6/93IFBwGAAAAPFI+TV068v8npLSyBwAAAN5Jvk0uJw0AyrXppAoAAACVQAlLcr8VAPm2xNEMAAAA"}
     assert parsed_dict['crc'] == 0x870
     assert parsed_dict['length'] == 87

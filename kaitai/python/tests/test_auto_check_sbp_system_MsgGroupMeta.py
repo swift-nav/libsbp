@@ -22,9 +22,9 @@ def test_auto_check_sbp_system_msg_group_meta_1():
     buf = base64.standard_b64decode("VQr/7u4JAQIDCv8KAgL/Ag4=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"crc": 3586, "flags": 2, "group_id": 1, "sender": 61166, "msg_type": 65290, "length": 9, "n_group_msgs": 3 ,"group_msgs": [65290, 522, 65282], "preamble": 85, "payload": "AQIDCv8KAgL/"}
     assert parsed_dict['crc'] == 0xe02
     assert parsed_dict['length'] == 9
@@ -43,9 +43,9 @@ def test_auto_check_sbp_system_msg_group_meta_2():
     buf = base64.standard_b64decode("VQr/FQMfAQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8O/1Ka")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"group_id":1,"flags":1,"n_group_msgs":14,"group_msgs":[258,259,522,529,521,532,526,530,525,533,545,65283,65286,65294],"preamble":85,"msg_type":65290,"sender":789,"payload":"AQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8O/w==","crc":39506,"length":31}
     assert parsed_dict['crc'] == 0x9a52
     assert parsed_dict['length'] == 31

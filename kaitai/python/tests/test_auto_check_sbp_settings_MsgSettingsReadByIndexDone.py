@@ -22,9 +22,9 @@ def test_auto_check_sbp_settings_msg_settings_read_by_index_done_1():
     buf = base64.standard_b64decode("VaYA9tcAozo=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 55286, "msg_type": 166, "crc": 15011, "length": 0, "preamble": 85, "payload": ""}
     assert parsed_dict['crc'] == 0x3aa3
     assert parsed_dict['length'] == 0

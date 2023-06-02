@@ -22,9 +22,9 @@ def test_auto_check_sbp_observation_msg_base_pos_ecef_1():
     buf = base64.standard_b64decode("VUgAAAAY5IOe9VfNRMFCPujRIHZQwdXnavs/FE1Bwn0=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"x":-2726575.9189,"y":-4315267.2798,"z":3811455.9642,"preamble":85,"msg_type":72,"sender":0,"payload":"5IOe9VfNRMFCPujRIHZQwdXnavs/FE1B","crc":32194,"length":24}
     assert parsed_dict['crc'] == 0x7dc2
     assert parsed_dict['length'] == 24

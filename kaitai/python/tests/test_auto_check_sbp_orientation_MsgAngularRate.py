@@ -22,9 +22,9 @@ def test_auto_check_sbp_orientation_msg_angular_rate_1():
     buf = base64.standard_b64decode("VSICQgARAgAAAAIAAAAFAAAAAgAAAABYRg==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 66, "msg_type": 546, "tow": 2, "crc": 18008, "length": 17, "flags": 0, "y": 5, "x": 2, "z": 2, "preamble": 85, "payload": "AgAAAAIAAAAFAAAAAgAAAAA="}
     assert parsed_dict['crc'] == 0x4658
     assert parsed_dict['length'] == 17

@@ -22,9 +22,9 @@ def test_auto_check_sbp_navigation_msg_protection_level_1():
     buf = base64.standard_b64decode("VRYCABAhiOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUsM=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"tow":501867400,"vpl":0,"hpl":0,"lat":0.0,"lon":0.0,"height":0.0,"flags":0,"preamble":85,"msg_type":534,"sender":4096,"payload":"iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","crc":50002,"length":33}
     assert parsed_dict['crc'] == 0xc352
     assert parsed_dict['length'] == 33

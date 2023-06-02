@@ -22,9 +22,9 @@ def test_auto_check_sbp_bootload_msg_bootloader_handshake_resp_1():
     buf = base64.standard_b64decode("VbQAAAAJAAAAAHYxLjIKyQE=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 0, "msg_type": 180, "crc": 457, "length": 9, "version": "v1.2\n", "flags": 0, "preamble": 85, "payload": "AAAAAHYxLjIK"}
     assert parsed_dict['crc'] == 0x1c9
     assert parsed_dict['length'] == 9
@@ -41,9 +41,9 @@ def test_auto_check_sbp_bootload_msg_bootloader_handshake_resp_2():
     buf = base64.standard_b64decode("VbAAwwQEdjEuMgHO")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = { "handshake": [118, 49, 46, 50], "crc": 52737, "length": 4, "msg_type": 176, "payload": "djEuMg==", "preamble": 85, "sender": 1219 }
     assert parsed_dict['crc'] == 0xce01
     assert parsed_dict['length'] == 4

@@ -22,9 +22,9 @@ def test_auto_check_sbp_ext_events_msg_ext_event_1():
     buf = base64.standard_b64decode("VQEB9QYMMAfH2DEPykEPAAMAPsw=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 1781, "msg_type": 257, "wn": 1840, "tow": 254924999, "crc": 52286, "length": 12, "flags": 3, "pin": 0, "ns_residual": 999882, "preamble": 85, "payload": "MAfH2DEPykEPAAMA"}
     assert parsed_dict['crc'] == 0xcc3e
     assert parsed_dict['length'] == 12

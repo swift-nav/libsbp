@@ -22,9 +22,9 @@ def test_auto_check_sbp_system_msg_ins_status_1():
     buf = base64.standard_b64decode("VQP/FQMECQAAICRn")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"flags":536870921,"preamble":85,"msg_type":65283,"sender":789,"payload":"CQAAIA==","crc":26404,"length":4}
     assert parsed_dict['crc'] == 0x6724
     assert parsed_dict['length'] == 4

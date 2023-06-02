@@ -22,9 +22,9 @@ def test_auto_check_sbp_navigation_msg_pos_ecefgnss_1():
     buf = base64.standard_b64decode("VSkCABAgGOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgSHAg==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"tow":501867800,"x":-2694229.7079770807,"y":-4264073.427345817,"z":3890655.013186158,"accuracy":182,"n_sats":18,"flags":4,"preamble":85,"msg_type":553,"sender":4096,"payload":"GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgQ=","crc":647,"length":32}
     assert parsed_dict['crc'] == 0x287
     assert parsed_dict['length'] == 32

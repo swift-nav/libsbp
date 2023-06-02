@@ -22,9 +22,9 @@ def test_auto_check_sbp_orientation_msg_orient_quat_1():
     buf = base64.standard_b64decode("VSACQgAlAAAAAAMAAAAHAAAACAAAAAQAAAAAAEBAAACAQAAAAEEAAEBAAboG")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 66, "msg_type": 544, "tow": 0, "z_accuracy": 3, "w_accuracy": 3, "crc": 1722, "length": 37, "flags": 1, "w": 3, "y": 8, "x": 7, "z": 4, "preamble": 85, "payload": "AAAAAAMAAAAHAAAACAAAAAQAAAAAAEBAAACAQAAAAEEAAEBAAQ==", "y_accuracy": 8, "x_accuracy": 4}
     assert parsed_dict['crc'] == 0x6ba
     assert parsed_dict['length'] == 37

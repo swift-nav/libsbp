@@ -22,9 +22,9 @@ def test_auto_check_sbp_ssr_msg_ssr_stec_correction_1():
     buf = base64.standard_b64decode("Vf0FQgAmtAAAAAMAAQEKAA8BAAoAAgEBAT8APgA9ADwAHw8FPwBAAEEAQgB3Mg==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 1, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "n_sats": 2, "stec_sat_list": [{"sv_id": {"satId": 1, "constellation": 1}, "stec_quality_indicator": 1, "stec_coeff": [63, 62, 61, 60]}, {"sv_id": {"satId": 31, "constellation": 15}, "stec_quality_indicator": 5, "stec_coeff": [63, 64, 65, 66]}], "preamble": 85, "msg_type": 1533, "sender": 66, "length": 38, "payload": "tAAAAAMAAQEKAA8BAAoAAgEBAT8APgA9ADwAHw8FPwBAAEEAQgA=", "crc": 12919}
     assert parsed_dict['preamble'] == 0x55
     assert parsed_dict['msg_type'] == 0x05FD

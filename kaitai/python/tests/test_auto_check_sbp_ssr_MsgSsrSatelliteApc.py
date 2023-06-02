@@ -22,9 +22,9 @@ def test_auto_check_sbp_ssr_msg_ssr_satellite_apc_1():
     buf = base64.standard_b64decode("VQUGAAApfzoJAK4IAQIDAgAEPQABAP//2QILCggFAfz49vb2+fwABgwWHikpKSmQoQ==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"preamble": 85, "msg_type": 1541, "sender": 0, "length": 41, "payload": "fzoJAK4IAQIDAgAEPQABAP//2QILCggFAfz49vb2+fwABgwWHikpKSk=", "crc": 41360, "time": {"tow": 604799, "wn": 2222}, "update_interval": 1, "sol_id": 2, "iod_ssr": 3, "apc": [{"sid": {"sat": 2, "code": 0}, "sat_info": 4, "svn": 61, "pco": [1, -1, 729], "pcv": [11, 10, 8, 5, 1, -4, -8, -10, -10, -10, -7, -4, 0, 6, 12, 22, 30, 41, 41, 41, 41]}]}
     assert parsed_dict['crc'] == 0xA190
     assert parsed_dict['length'] == 41

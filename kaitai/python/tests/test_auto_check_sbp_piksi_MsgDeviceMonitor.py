@@ -22,9 +22,9 @@ def test_auto_check_sbp_piksi_msg_device_monitor_1():
     buf = base64.standard_b64decode("VbUAX0IK8djbA/0GFRioEs/p")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789, "fe_temperature": 4776, "dev_vin": -9999, "crc": 59855, "length": 10, "cpu_temperature": 6165, "preamble": 85, "payload": "8djbA/0GFRioEg=="}
     assert parsed_dict['crc'] == 0xe9cf
     assert parsed_dict['length'] == 10
@@ -44,9 +44,9 @@ def test_auto_check_sbp_piksi_msg_device_monitor_2():
     buf = base64.standard_b64decode("VbUAX0IK8djbA/4GGBioEqke")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1790, "fe_temperature": 4776, "dev_vin": -9999, "crc": 7849, "length": 10, "cpu_temperature": 6168, "preamble": 85, "payload": "8djbA/4GGBioEg=="}
     assert parsed_dict['crc'] == 0x1ea9
     assert parsed_dict['length'] == 10
@@ -66,9 +66,9 @@ def test_auto_check_sbp_piksi_msg_device_monitor_3():
     buf = base64.standard_b64decode("VbUAX0IK8djbA/0GFhioEhNy")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789, "fe_temperature": 4776, "dev_vin": -9999, "crc": 29203, "length": 10, "cpu_temperature": 6166, "preamble": 85, "payload": "8djbA/0GFhioEg=="}
     assert parsed_dict['crc'] == 0x7213
     assert parsed_dict['length'] == 10
@@ -88,9 +88,9 @@ def test_auto_check_sbp_piksi_msg_device_monitor_4():
     buf = base64.standard_b64decode("VbUAX0IK8djaA/wGBhioEsdr")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"cpu_vint": 986, "sender": 16991, "msg_type": 181, "cpu_vaux": 1788, "fe_temperature": 4776, "dev_vin": -9999, "crc": 27591, "length": 10, "cpu_temperature": 6150, "preamble": 85, "payload": "8djaA/wGBhioEg=="}
     assert parsed_dict['crc'] == 0x6bc7
     assert parsed_dict['length'] == 10
@@ -110,9 +110,9 @@ def test_auto_check_sbp_piksi_msg_device_monitor_5():
     buf = base64.standard_b64decode("VbUAX0IK8djcA/0G6xeoEvE/")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"cpu_vint": 988, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789, "fe_temperature": 4776, "dev_vin": -9999, "crc": 16369, "length": 10, "cpu_temperature": 6123, "preamble": 85, "payload": "8djcA/0G6xeoEg=="}
     assert parsed_dict['crc'] == 0x3ff1
     assert parsed_dict['length'] == 10

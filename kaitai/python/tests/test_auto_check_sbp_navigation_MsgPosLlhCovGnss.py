@@ -22,9 +22,9 @@ def test_auto_check_sbp_navigation_msg_pos_llh_cov_gnss_1():
     buf = base64.standard_b64decode("VTECABA2GOXpHUl7HM9l6kJAZKgTFFaSXsDWxiN40WQxwAxm9TsGtcC5qE/zOmA8lDv9Ol26n64GPRIECsQ=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"tow":501867800,"lat":37.83123196497633,"lon":-122.28650381011681,"height":-17.39382124780135,"cov_n_n":0.007488971576094627,"cov_n_e":-0.00036755966721102595,"cov_n_d":0.0018563168123364449,"cov_e_e":0.004523798823356628,"cov_e_d":-0.0008439270895905793,"cov_d_d":0.03288137540221214,"n_sats":18,"flags":4,"preamble":85,"msg_type":561,"sender":4096,"payload":"GOXpHUl7HM9l6kJAZKgTFFaSXsDWxiN40WQxwAxm9TsGtcC5qE/zOmA8lDv9Ol26n64GPRIE","crc":50186,"length":54}
     assert parsed_dict['crc'] == 0xc40a
     assert parsed_dict['length'] == 54

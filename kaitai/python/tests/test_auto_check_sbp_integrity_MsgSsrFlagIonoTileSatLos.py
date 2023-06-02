@@ -22,9 +22,9 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_iono_tile_sat_los_1():
     buf = base64.standard_b64decode("Vc0LQgATtAAAAAMAAQIDBAAFAAYCCgsPDu/r")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"header": {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4, "tile_id": 5, "chain_id": 6}, "n_faulty_los": 2, "faulty_los": [{"satId": 10, "constellation": 11}, {"satId": 15, "constellation": 14}], "preamble": 85, "msg_type": 3021, "sender": 66, "length": 19, "payload": "tAAAAAMAAQIDBAAFAAYCCgsPDg==", "crc": 60399}
     assert parsed_dict['preamble'] == 0x55
     assert parsed_dict['msg_type'] == 0x0BCD

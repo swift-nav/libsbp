@@ -22,9 +22,9 @@ def test_auto_check_sbp_system_msg_status_journal_1():
     buf = base64.standard_b64decode("Vf3/04ghAQABBGQAAAAQkhAAAAYAAQ26EwAABgABDrgiAAAGAAEPcXc=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"preamble": 85, "msg_type": 65533, "sender": 35027, "length": 33, "payload": "AQABBGQAAAAQkhAAAAYAAQ26EwAABgABDrgiAAAGAAEP", "crc": 30577, "reporting_system": 1, "sbp_version": 1025, "total_status_reports": 100, "sequence_descriptor": 16, "journal": [{"uptime": 4242, "report": {"component": 6, "generic": 1, "specific": 13}}, {"uptime": 5050, "report": {"component": 6, "generic": 1, "specific": 14}}, {"uptime": 8888, "report": {"component": 6, "generic": 1, "specific": 15}}]}
     assert parsed_dict['crc'] == 0x7771
     assert parsed_dict['length'] == 33
@@ -44,9 +44,9 @@ def test_auto_check_sbp_system_msg_status_journal_2():
     buf = base64.standard_b64decode("Vf3/04gRAQABBGQAAAAQkhAAAAYAAQ2QeQ==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"preamble": 85, "msg_type": 65533, "sender": 35027, "length": 17, "payload": "AQABBGQAAAAQkhAAAAYAAQ0=", "crc": 31120, "reporting_system": 1, "sbp_version": 1025, "total_status_reports": 100, "sequence_descriptor": 16, "journal": [{"uptime": 4242, "report": {"component": 6, "generic": 1, "specific": 13}}]}
     assert parsed_dict['crc'] == 0x7990
     assert parsed_dict['length'] == 17

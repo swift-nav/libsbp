@@ -22,9 +22,9 @@ def test_auto_check_sbp_system_msg_sensor_aid_event_1():
     buf = base64.standard_b64decode("VQn/04gPMPZ6EwAAAAAAAAAAAAAAIew=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"preamble": 85, "msg_type": 65289, "sender": 35027, "length": 15, "payload": "MPZ6EwAAAAAAAAAAAAAA", "crc": 60449, "time": 326825520, "sensor_type": 0, "sensor_id": 0, "sensor_state": 0, "n_available_meas": 0, "n_attempted_meas": 0, "n_accepted_meas": 0, "flags": 0}
     assert parsed_dict['crc'] == 0xEC21
     assert parsed_dict['length'] == 15

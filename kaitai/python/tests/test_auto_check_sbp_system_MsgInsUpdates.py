@@ -22,9 +22,9 @@ def test_auto_check_sbp_system_msg_ins_updates_1():
     buf = base64.standard_b64decode("VQb/FQMKVOURHgAAAAAAAFE/")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"tow":504489300,"gnsspos":0,"gnssvel":0,"wheelticks":0,"speed":0,"nhc":0,"zerovel":0,"preamble":85,"msg_type":65286,"sender":789,"payload":"VOURHgAAAAAAAA==","crc":16209,"length":10}
     assert parsed_dict['crc'] == 0x3f51
     assert parsed_dict['length'] == 10

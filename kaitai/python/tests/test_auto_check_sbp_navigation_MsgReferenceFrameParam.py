@@ -22,9 +22,9 @@ def test_auto_check_sbp_navigation_msg_reference_frame_param_1():
     buf = base64.standard_b64decode("VUQCQgB8AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAAah")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"ssr_iod": 1, "sn": "foo\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "tn": "bar\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "sin": 4, "utn": 5, "re_t0": 6, "delta_X0": 7, "delta_Y0": 8, "delta_Z0": 9, "theta_01": 10, "theta_02": 11, "theta_03": 12, "scale": 13, "dot_delta_X0": 14, "dot_delta_Y0": 15, "dot_delta_Z0": 16, "dot_theta_01": 17, "dot_theta_02": 18, "dot_theta_03": 19, "dot_scale": 20, "preamble": 85, "msg_type": 580, "sender": 66, "length": 124, "payload": "AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA==", "crc": 41222}
     assert parsed_dict['preamble'] == 0x55
     assert parsed_dict['msg_type'] == 0x0244

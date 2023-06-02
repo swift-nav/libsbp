@@ -22,9 +22,9 @@ def test_auto_check_sbp_logging_msg_log_1():
     buf = base64.standard_b64decode("VQEECgksBkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTmxow==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"level":6,"text":"Filtered all obs from 2314 at tow 83.539019","preamble":85,"msg_type":1025,"sender":2314,"payload":"BkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTk=","crc":41905,"length":44}
     assert parsed_dict['crc'] == 0xa3b1
     assert parsed_dict['length'] == 44

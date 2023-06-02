@@ -22,9 +22,9 @@ def test_auto_check_sbp_vehicle_msg_odometry_1():
     buf = base64.standard_b64decode("VQMJQgAJCAAAAAcAAAABNGM=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 66, "msg_type": 2307, "tow": 8, "crc": 25396, "length": 9, "flags": 1, "velocity": 7, "preamble": 85, "payload": "CAAAAAcAAAAB"}
     assert parsed_dict['crc'] == 0x6334
     assert parsed_dict['length'] == 9

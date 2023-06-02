@@ -22,9 +22,9 @@ def test_auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b_1():
     buf = base64.standard_b64decode("VfcFQgAZHwABAAIABAAIABAAIABAAIDSApZJAAAAANZH")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"ssr_sol_id": 31, "tile_set_id": 256, "tile_id": 512, "corner_nw_lat": 1024, "corner_nw_lon": 2048, "spacing_lat": 4096, "spacing_lon": 8192, "rows": 16384, "cols": 32768, "bitmask": 1234567890, "preamble": 85, "msg_type": 1527, "sender": 66, "length": 25, "payload": "HwABAAIABAAIABAAIABAAIDSApZJAAAAAA==", "crc": 18390}
     assert parsed_dict['preamble'] == 0x55
     assert parsed_dict['msg_type'] == 0x05F7

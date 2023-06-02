@@ -22,9 +22,9 @@ def test_auto_check_sbp_navigation_msg_age_corrections_1():
     buf = base64.standard_b64decode("VRACQgAGZAAAAB4A6co=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 66, "msg_type": 528, "age": 30, "tow": 100, "crc": 51945, "length": 6, "preamble": 85, "payload": "ZAAAAB4A"}
     assert parsed_dict['crc'] == 0xcae9
     assert parsed_dict['length'] == 6

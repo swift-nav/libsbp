@@ -22,9 +22,9 @@ def test_auto_check_sbp_system_msg_dgnss_status_1():
     buf = base64.standard_b64decode("VQL/QgALADIADFNreWxhcmvKAQ==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"latency": 50, "sender": 66, "msg_type": 65282, "source": "Skylark", "num_signals": 12, "crc": 458, "length": 11, "flags": 0, "preamble": 85, "payload": "ADIADFNreWxhcms="}
     assert parsed_dict['crc'] == 0x1ca
     assert parsed_dict['length'] == 11

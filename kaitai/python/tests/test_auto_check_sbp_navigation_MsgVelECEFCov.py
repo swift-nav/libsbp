@@ -22,9 +22,9 @@ def test_auto_check_sbp_navigation_msg_vel_ecef_cov_1():
     buf = base64.standard_b64decode("VRUCQgAqAgAAAAAAAAAAAAAABgAAAAAAAEAAAABAAAAAQAAAAEAAAIA/AABAQAMEW/4=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"cov_y_z": 1, "cov_y_y": 2, "n_sats": 3, "sender": 66, "msg_type": 533, "cov_x_z": 2, "cov_x_y": 2, "cov_x_x": 2, "tow": 2, "crc": 65115, "length": 42, "flags": 4, "y": 0, "x": 0, "z": 6, "preamble": 85, "payload": "AgAAAAAAAAAAAAAABgAAAAAAAEAAAABAAAAAQAAAAEAAAIA/AABAQAME", "cov_z_z": 3}
     assert parsed_dict['crc'] == 0xfe5b
     assert parsed_dict['length'] == 42

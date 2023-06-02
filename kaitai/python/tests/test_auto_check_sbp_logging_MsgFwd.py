@@ -22,9 +22,9 @@ def test_auto_check_sbp_logging_msg_fwd_1():
     buf = base64.standard_b64decode("VQIEQgASAABWUUQvUWdBRUFBQUFBRWFnfV8=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"protocol": 0, "sender": 66, "msg_type": 1026, "source": 0, "fwd_payload": [ 86, 81, 68, 47, 81, 103, 65, 69, 65, 65, 65, 65, 65, 69, 97, 103 ], "crc": 24445, "length": 18, "preamble": 85, "payload": "AABWUUQvUWdBRUFBQUFBRWFn"}
     assert parsed_dict['crc'] == 0x5f7d
     assert parsed_dict['length'] == 18

@@ -22,9 +22,9 @@ def test_auto_check_sbp_file_io_msg_fileio_write_resp_1():
     buf = base64.standard_b64decode("VasAQgAEygAAAPPz")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 66, "msg_type": 171, "sequence": 202, "crc": 62451, "length": 4, "preamble": 85, "payload": "ygAAAA=="}
     assert parsed_dict['crc'] == 0xf3f3
     assert parsed_dict['length'] == 4

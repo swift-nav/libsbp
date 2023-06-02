@@ -22,9 +22,9 @@ def test_auto_check_sbp_imu_msg_imu_raw_1():
     buf = base64.standard_b64decode("VQAJNBIRGgEAwM5gAN//LBA8AND+7v9Ghw==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"tow":3221225754,"tow_f":206,"acc_x":96,"acc_y":-33,"acc_z":4140,"gyr_x":60,"gyr_y":-304,"gyr_z":-18,"preamble":85,"msg_type":2304,"sender":4660,"payload":"GgEAwM5gAN//LBA8AND+7v8=","crc":34630,"length":17}
     assert parsed_dict['crc'] == 0x8746
     assert parsed_dict['length'] == 17

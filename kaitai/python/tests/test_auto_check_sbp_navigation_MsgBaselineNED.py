@@ -22,9 +22,9 @@ def test_auto_check_sbp_navigation_msg_baseline_ned_1():
     buf = base64.standard_b64decode("VQwC04gWKPR6E8lzDACzWOb/mX0AAAAAAAAOAOJG")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"v_accuracy": 0, "e": -1681229, "sender": 35027, "msg_type": 524, "tow": 326825000, "n": 816073, "crc": 18146, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 14, "preamble": 85, "payload": "KPR6E8lzDACzWOb/mX0AAAAAAAAOAA==", "d": 32153}
     assert parsed_dict['crc'] == 0x46e2
     assert parsed_dict['length'] == 22
@@ -47,9 +47,9 @@ def test_auto_check_sbp_navigation_msg_baseline_ned_2():
     buf = base64.standard_b64decode("VQwC04gWEPh6E2JzDADCWOb/bn8AAAAAAAAPAEVd")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"v_accuracy": 0, "e": -1681214, "sender": 35027, "msg_type": 524, "tow": 326826000, "n": 815970, "crc": 23877, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 15, "preamble": 85, "payload": "EPh6E2JzDADCWOb/bn8AAAAAAAAPAA==", "d": 32622}
     assert parsed_dict['crc'] == 0x5d45
     assert parsed_dict['length'] == 22
@@ -72,9 +72,9 @@ def test_auto_check_sbp_navigation_msg_baseline_ned_3():
     buf = base64.standard_b64decode("VQwC04gW+Pt6E49yDACtWOb/7n8AAAAAAAAPANKp")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"v_accuracy": 0, "e": -1681235, "sender": 35027, "msg_type": 524, "tow": 326827000, "n": 815759, "crc": 43474, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 15, "preamble": 85, "payload": "+Pt6E49yDACtWOb/7n8AAAAAAAAPAA==", "d": 32750}
     assert parsed_dict['crc'] == 0xa9d2
     assert parsed_dict['length'] == 22
@@ -97,9 +97,9 @@ def test_auto_check_sbp_navigation_msg_baseline_ned_4():
     buf = base64.standard_b64decode("VQwC04gW4P96E1ZwDAAzWOb/L38AAAAAAAAPAIdr")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"v_accuracy": 0, "e": -1681357, "sender": 35027, "msg_type": 524, "tow": 326828000, "n": 815190, "crc": 27527, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 15, "preamble": 85, "payload": "4P96E1ZwDAAzWOb/L38AAAAAAAAPAA==", "d": 32559}
     assert parsed_dict['crc'] == 0x6b87
     assert parsed_dict['length'] == 22
@@ -122,9 +122,9 @@ def test_auto_check_sbp_navigation_msg_baseline_ned_5():
     buf = base64.standard_b64decode("VQwC04gWyAN7E9ZuDADcV+b/pX4AAAAAAAAPAL5Q")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"v_accuracy": 0, "e": -1681444, "sender": 35027, "msg_type": 524, "tow": 326829000, "n": 814806, "crc": 20670, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 15, "preamble": 85, "payload": "yAN7E9ZuDADcV+b/pX4AAAAAAAAPAA==", "d": 32421}
     assert parsed_dict['crc'] == 0x50be
     assert parsed_dict['length'] == 22

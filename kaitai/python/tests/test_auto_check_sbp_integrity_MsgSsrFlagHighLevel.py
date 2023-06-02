@@ -22,9 +22,9 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1():
     buf = base64.standard_b64decode("VbkLQgAftAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGB2ZD")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"obs_time": {"tow": 180, "wn": 3}, "corr_time": {"tow": 360, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20, "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "reserved": [0,0,0,0,0,0], "use_tropo_grid_points": 4, "use_iono_grid_points": 5, "use_iono_tile_sat_los": 6, "use_iono_grid_point_sat_los": 7, "preamble": 85, "msg_type": 3001, "sender": 66, "length": 31, "payload": "tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw==", "crc": 17254}
     assert parsed_dict['preamble'] == 0x55
     assert parsed_dict['msg_type'] == 0x0BB9

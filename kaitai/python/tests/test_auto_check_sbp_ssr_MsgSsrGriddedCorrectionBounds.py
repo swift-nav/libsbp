@@ -22,9 +22,9 @@ def test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds_1():
     buf = base64.standard_b64decode("Vf4FQgAttAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob7LY=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 0, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction": {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100, "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 2, "stec_sat_list": [{"stec_residual": {"sv_id": {"satId": 5, "constellation": 10}, "residual": 16, "stddev": 17}, "stec_bound_mu": 18, "stec_bound_sig": 19, "stec_bound_mu_dot": 20, "stec_bound_sig_dot": 21}, {"stec_residual": {"sv_id": {"satId": 6, "constellation": 10}, "residual": 22, "stddev": 23}, "stec_bound_mu": 24, "stec_bound_sig": 25, "stec_bound_mu_dot": 26, "stec_bound_sig_dot": 27}], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 45, "payload": "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob", "crc": 46828}
     assert parsed_dict['preamble'] == 0x55
     assert parsed_dict['msg_type'] == 0x05FE
@@ -52,9 +52,9 @@ def test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds_2():
     buf = base64.standard_b64decode("Vf4FQgAbtAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQAmyQ=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 0, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction": {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100, "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 0, "stec_sat_list": [], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 27, "payload": "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQA", "crc": 9371}
     assert parsed_dict['preamble'] == 0x55
     assert parsed_dict['msg_type'] == 0x05FE

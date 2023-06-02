@@ -22,9 +22,9 @@ def test_auto_check_sbp_orientation_msg_orient_euler_1():
     buf = base64.standard_b64decode("VSECQgAdAQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAMs4g==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"pitch": 2, "sender": 66, "msg_type": 545, "roll": 1, "yaw": 8, "tow": 1, "roll_accuracy": 7, "crc": 57900, "length": 29, "flags": 3, "pitch_accuracy": 3, "yaw_accuracy": 7, "preamble": 85, "payload": "AQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAM="}
     assert parsed_dict['crc'] == 0xe22c
     assert parsed_dict['length'] == 29

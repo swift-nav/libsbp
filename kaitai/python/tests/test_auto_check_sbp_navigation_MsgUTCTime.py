@@ -22,9 +22,9 @@ def test_auto_check_sbp_navigation_msg_utc_time_1():
     buf = base64.standard_b64decode("VQMBFQMQARjl6R3lBwQJExgJAAivL8f9")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"flags":1,"tow":501867800,"year":2021,"month":4,"day":9,"hours":19,"minutes":24,"seconds":9,"ns":800000000,"preamble":85,"msg_type":259,"sender":789,"payload":"ARjl6R3lBwQJExgJAAivLw==","crc":64967,"length":16}
     assert parsed_dict['crc'] == 0xfdc7
     assert parsed_dict['length'] == 16

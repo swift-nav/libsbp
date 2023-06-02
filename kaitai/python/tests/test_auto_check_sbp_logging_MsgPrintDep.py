@@ -22,9 +22,9 @@ def test_auto_check_sbp_logging_msg_print_dep_1():
     buf = base64.standard_b64decode("VRAAIiIrSU5GTzogYWNxOiBQUk4gMTUgZm91bmQgQCAtMjQ5NyBIeiwgMjAgU05SCnRn")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n", "crc": 26484, "length": 43, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gMTUgZm91bmQgQCAtMjQ5NyBIeiwgMjAgU05SCg=="}
     assert parsed_dict['crc'] == 0x6774
     assert parsed_dict['length'] == 43
@@ -40,9 +40,9 @@ def test_auto_check_sbp_logging_msg_print_dep_2():
     buf = base64.standard_b64decode("VRAAIiIqSU5GTzogYWNxOiBQUk4gMzEgZm91bmQgQCA0MjQ1IEh6LCAyMSBTTlIKjCs=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n", "crc": 11148, "length": 42, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gMzEgZm91bmQgQCA0MjQ1IEh6LCAyMSBTTlIK"}
     assert parsed_dict['crc'] == 0x2b8c
     assert parsed_dict['length'] == 42
@@ -58,9 +58,9 @@ def test_auto_check_sbp_logging_msg_print_dep_3():
     buf = base64.standard_b64decode("VRAAIiIjSU5GTzogRGlzYWJsaW5nIGNoYW5uZWwgMCAoUFJOIDExKQoXjw==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 8738, "msg_type": 16, "text": "INFO: Disabling channel 0 (PRN 11)\n", "crc": 36631, "length": 35, "preamble": 85, "payload": "SU5GTzogRGlzYWJsaW5nIGNoYW5uZWwgMCAoUFJOIDExKQo="}
     assert parsed_dict['crc'] == 0x8f17
     assert parsed_dict['length'] == 35
@@ -76,9 +76,9 @@ def test_auto_check_sbp_logging_msg_print_dep_4():
     buf = base64.standard_b64decode("VRAAIiIpSU5GTzogYWNxOiBQUk4gMiBmb3VuZCBAIDM5OTYgSHosIDIwIFNOUgrvMA==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n", "crc": 12527, "length": 41, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gMiBmb3VuZCBAIDM5OTYgSHosIDIwIFNOUgo="}
     assert parsed_dict['crc'] == 0x30ef
     assert parsed_dict['length'] == 41
@@ -94,9 +94,9 @@ def test_auto_check_sbp_logging_msg_print_dep_5():
     buf = base64.standard_b64decode("VRAAIiIqSU5GTzogYWNxOiBQUk4gNCBmb3VuZCBAIC03NDkyIEh6LCAyMCBTTlIKL/g=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n", "crc": 63535, "length": 42, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gNCBmb3VuZCBAIC03NDkyIEh6LCAyMCBTTlIK"}
     assert parsed_dict['crc'] == 0xf82f
     assert parsed_dict['length'] == 42
@@ -112,9 +112,9 @@ def test_auto_check_sbp_logging_msg_print_dep_6():
     buf = base64.standard_b64decode("VRAAIiIjSU5GTzogRGlzYWJsaW5nIGNoYW5uZWwgMSAoUFJOIDE1KQqeiw==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"sender": 8738, "msg_type": 16, "text": "INFO: Disabling channel 1 (PRN 15)\n", "crc": 35742, "length": 35, "preamble": 85, "payload": "SU5GTzogRGlzYWJsaW5nIGNoYW5uZWwgMSAoUFJOIDE1KQo="}
     assert parsed_dict['crc'] == 0x8b9e
     assert parsed_dict['length'] == 35

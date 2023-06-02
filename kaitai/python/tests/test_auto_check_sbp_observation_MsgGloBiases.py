@@ -22,9 +22,9 @@ def test_auto_check_sbp_observation_msg_glo_biases_1():
     buf = base64.standard_b64decode("VXUAAAAJAAAAAAAAAAAATdM=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"mask":0,"l1ca_bias":0,"l1p_bias":0,"l2ca_bias":0,"l2p_bias":0,"preamble":85,"msg_type":117,"sender":0,"payload":"AAAAAAAAAAAA","crc":54093,"length":9}
     assert parsed_dict['crc'] == 0xd34d
     assert parsed_dict['length'] == 9

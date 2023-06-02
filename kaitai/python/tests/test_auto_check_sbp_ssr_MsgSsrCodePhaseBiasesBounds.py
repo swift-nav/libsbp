@@ -22,9 +22,9 @@ def test_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds_1():
     buf = base64.standard_b64decode("VewFQgAftAAAAAMAAQIBDg8BAwADJwEnAQEDJwEnAQEBJwEnARdx")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
+    obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(payload)
+    parsed_dict = dictify(get_payload(obj))
     orig_dict = {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "update_interval": 1, "sol_id": 14}, "ssr_iod": 15, "const_id": 1, "n_sats_signals": 3, "satellites_signals": [{ "sat_id": 0, "signal_id": 3, "code_bias_bound_mu": 39, "code_bias_bound_sig": 1, "phase_bias_bound_mu": 39, "phase_bias_bound_sig": 1}, {"sat_id": 1, "signal_id": 3, "code_bias_bound_mu": 39, "code_bias_bound_sig": 1, "phase_bias_bound_mu": 39, "phase_bias_bound_sig": 1}, {"sat_id": 1, "signal_id": 1, "code_bias_bound_mu": 39, "code_bias_bound_sig": 1, "phase_bias_bound_mu": 39, "phase_bias_bound_sig": 1}], "preamble": 85, "msg_type": 1516, "sender": 66, "length": 31, "payload": "tAAAAAMAAQIBDg8BAwADJwEnAQEDJwEnAQEBJwEnAQ==", "crc": 28951}
     assert parsed_dict['preamble'] == 0x55
     assert parsed_dict['msg_type'] == 0x05EC
