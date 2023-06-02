@@ -1,12 +1,22 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
 # Messages for using device's onboard flash filesystem functionality. This allows
 # data to be stored persistently in the device's program flash with wear-levelling
 # using a simple filesystem interface. The file system interface (CFS) defines an
 # abstract API for reading directories and for reading and writing files.  Note
 # that some of these messages share the same message type ID for both the host
 # request and the device response.
-
+#
 # Automatically generated from spec/yaml/swiftnav/sbp/file_io.yaml with generate.py.
-# Please do not hand edit!
+# Do not modify by hand!
 
 meta:
   id: file_io

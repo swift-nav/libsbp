@@ -1,3 +1,13 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
 # Messages for reading, writing, and discovering device settings. Settings with a
 # "string" field have multiple values in this field delimited with a null
 # character (the c style null terminator).  For instance, when querying the
@@ -19,9 +29,9 @@
 # the open source python command line utility for reading, writing, and saving
 # settings in the piksi_tools repository on github as a helpful reference and
 # example.
-
+#
 # Automatically generated from spec/yaml/swiftnav/sbp/settings.yaml with generate.py.
-# Please do not hand edit!
+# Do not modify by hand!
 
 meta:
   id: settings

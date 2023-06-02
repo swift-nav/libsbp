@@ -12,9 +12,8 @@
 """
 Generator for Kaitai Struct target.
 
-This module consumes the YAML spec and generates message class files plus
+This module consumes the SBP YAML spec and generates message class files plus
 a top-level main file.
-
 """
 
 import copy

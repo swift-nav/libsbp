@@ -1,3 +1,13 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
 # Geodetic navigation messages reporting GPS time, position, velocity, and
 # baseline position solutions. For position solutions, these messages define
 # several different position solutions: single-point (SPP), RTK, and pseudo-
@@ -16,9 +26,9 @@
 # default value of 0. When this is not the case, the tow may be a time of arrival
 # or a local system timestamp, irrespective of the time reference (GPS Week or
 # else), but not a Time of Measurement.
-
+#
 # Automatically generated from spec/yaml/swiftnav/sbp/navigation.yaml with generate.py.
-# Please do not hand edit!
+# Do not modify by hand!
 
 meta:
   id: navigation

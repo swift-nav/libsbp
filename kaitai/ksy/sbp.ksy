@@ -1,7 +1,16 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
 # Kaitai Struct definition file for Swift Binary Protocol 4.15.1-alpha
-
-# Automatically generated with generate.py.
-# Please do not hand edit!
+#
+# Automatically generated with generate.py.  Do not hand edit!
 
 meta:
   id: sbp
@@ -307,12 +316,18 @@ enums:
 types:
   sbp_message:
     seq:
-      - id: header
-        type: sbp_header
+      - id: preamble
+        contents: [0x55]
+      - id: msg_type
+        type: u2
+      - id: sender
+        type: u2
+      - id: length
+        type: u1
       - id: payload
-        size: header.length
+        size: length
         type:
-          switch-on: header.msg_type
+          switch-on: msg_type
           cases:
 
   
@@ -576,13 +591,3 @@ types:
             2308: vehicle::msg_wheeltick
       - id: crc
         type: u2
-  sbp_header:
-    seq:
-      - id: preamble
-        contents: [0x55]
-      - id: msg_type
-        type: u2
-      - id: sender
-        type: u2
-      - id: length
-        type: u1

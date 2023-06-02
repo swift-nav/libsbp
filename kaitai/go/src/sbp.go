@@ -276,7 +276,10 @@ func (this *Sbp) Read(io *kaitai.Stream, parent interface{}, root *Sbp) (err err
 	return err
 }
 type Sbp_SbpMessage struct {
-	Header *Sbp_SbpHeader
+	Preamble []byte
+	MsgType uint16
+	Sender uint16
+	Length uint8
 	Payload interface{}
 	Crc uint16
 	_io *kaitai.Stream
@@ -294,3332 +297,3305 @@ func (this *Sbp_SbpMessage) Read(io *kaitai.Stream, parent *Sbp, root *Sbp) (err
 	this._parent = parent
 	this._root = root
 
-	tmp3 := NewSbp_SbpHeader()
-	err = tmp3.Read(this._io, this, this._root)
+	tmp3, err := this._io.ReadBytes(int(1))
 	if err != nil {
 		return err
 	}
-	this.Header = tmp3
-	switch (this.Header.MsgType) {
-	case 525:
-		tmp4, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp4 = tmp4
-		this._raw_Payload = tmp4
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp5 := NewNavigation_MsgVelEcef()
-		err = tmp5.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp5
-	case 141:
-		tmp6, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp6 = tmp6
-		this._raw_Payload = tmp6
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp7 := NewObservation_MsgEphemerisGal()
-		err = tmp7.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp7
-	case 243:
-		tmp8, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp8 = tmp8
-		this._raw_Payload = tmp8
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp9 := NewFlash_MsgM25FlashWriteStatus()
-		err = tmp9.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp9
-	case 2048:
-		tmp10, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp10 = tmp10
-		this._raw_Payload = tmp10
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp11 := NewUser_MsgUserData()
-		err = tmp11.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp11
-	case 3079:
-		tmp12, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp12 = tmp12
-		this._raw_Payload = tmp12
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp13 := NewSigning_MsgEcdsaSignatureDepB()
-		err = tmp13.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp13
-	case 184:
-		tmp14, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp14 = tmp14
-		this._raw_Payload = tmp14
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp15 := NewPiksi_MsgCommandReq()
-		err = tmp15.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp15
-	case 105:
-		tmp16, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp16 = tmp16
-		this._raw_Payload = tmp16
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp17 := NewPiksi_MsgAlmanac()
-		err = tmp17.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp17
-	case 142:
-		tmp18, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp18 = tmp18
-		this._raw_Payload = tmp18
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp19 := NewObservation_MsgEphemerisQzss()
-		err = tmp19.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp19
-	case 112:
-		tmp20, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp20 = tmp20
-		this._raw_Payload = tmp20
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp21 := NewObservation_MsgAlmanacGpsDep()
-		err = tmp21.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp21
-	case 177:
-		tmp22, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp22 = tmp22
-		this._raw_Payload = tmp22
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp23 := NewBootload_MsgBootloaderJumpToApp()
-		err = tmp23.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp23
-	case 163:
-		tmp24, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp24 = tmp24
-		this._raw_Payload = tmp24
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp25 := NewFileIo_MsgFileioReadResp()
-		err = tmp25.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp25
-	case 257:
-		tmp26, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp26 = tmp26
-		this._raw_Payload = tmp26
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp27 := NewExtEvents_MsgExtEvent()
-		err = tmp27.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp27
-	case 4097:
-		tmp28, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp28 = tmp28
-		this._raw_Payload = tmp28
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp29 := NewFileIo_MsgFileioConfigReq()
-		err = tmp29.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp29
-	case 17:
-		tmp30, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp30 = tmp30
-		this._raw_Payload = tmp30
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp31 := NewTracking_MsgTrackingStateDetailedDep()
-		err = tmp31.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp31
-	case 260:
-		tmp32, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp32 = tmp32
-		this._raw_Payload = tmp32
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp33 := NewNavigation_MsgGpsTimeGnss()
-		err = tmp33.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp33
-	case 1525:
-		tmp34, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp34 = tmp34
-		this._raw_Payload = tmp34
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp35 := NewSsr_MsgSsrGridDefinitionDepA()
-		err = tmp35.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp35
-	case 131:
-		tmp36, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp36 = tmp36
-		this._raw_Payload = tmp36
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp37 := NewObservation_MsgEphemerisGloDepA()
-		err = tmp37.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp37
-	case 167:
-		tmp38, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp38 = tmp38
-		this._raw_Payload = tmp38
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp39 := NewSettings_MsgSettingsReadByIndexResp()
-		err = tmp39.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp39
-	case 146:
-		tmp40, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp40 = tmp40
-		this._raw_Payload = tmp40
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp41 := NewObservation_MsgGroupDelayDepA()
-		err = tmp41.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp41
-	case 47:
-		tmp42, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp42 = tmp42
-		this._raw_Payload = tmp42
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp43 := NewAcquisition_MsgAcqResult()
-		err = tmp43.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp43
-	case 136:
-		tmp44, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp44 = tmp44
-		this._raw_Payload = tmp44
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp45 := NewObservation_MsgEphemerisGloDepD()
-		err = tmp45.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp45
-	case 73:
-		tmp46, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp46 = tmp46
-		this._raw_Payload = tmp46
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp47 := NewObservation_MsgObsDepC()
-		err = tmp47.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp47
-	case 65283:
-		tmp48, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp48 = tmp48
-		this._raw_Payload = tmp48
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp49 := NewSystem_MsgInsStatus()
-		err = tmp49.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp49
-	case 32513:
-		tmp50, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp50 = tmp50
-		this._raw_Payload = tmp50
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp51 := NewLinux_MsgLinuxMemStateDepA()
-		err = tmp51.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp51
-	case 545:
-		tmp52, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp52 = tmp52
-		this._raw_Payload = tmp52
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp53 := NewOrientation_MsgOrientEuler()
-		err = tmp53.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp53
-	case 65534:
-		tmp54, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp54 = tmp54
-		this._raw_Payload = tmp54
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp55 := NewSystem_MsgStatusReport()
-		err = tmp55.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp55
-	case 533:
-		tmp56, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp56 = tmp56
-		this._raw_Payload = tmp56
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp57 := NewNavigation_MsgVelEcefCov()
-		err = tmp57.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp57
-	case 513:
-		tmp58, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp58 = tmp58
-		this._raw_Payload = tmp58
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp59 := NewNavigation_MsgPosLlhDepA()
-		err = tmp59.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp59
-	case 46:
-		tmp60, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp60 = tmp60
-		this._raw_Payload = tmp60
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp61 := NewAcquisition_MsgAcqSvProfile()
-		err = tmp61.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp61
-	case 81:
-		tmp62, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp62 = tmp62
-		this._raw_Payload = tmp62
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp63 := NewPiksi_MsgSpecan()
-		err = tmp63.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp63
-	case 169:
-		tmp64, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp64 = tmp64
-		this._raw_Payload = tmp64
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp65 := NewFileIo_MsgFileioReadDirReq()
-		err = tmp65.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp65
-	case 162:
-		tmp66, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp66 = tmp66
-		this._raw_Payload = tmp66
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp67 := NewSettings_MsgSettingsReadByIndexReq()
-		err = tmp67.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp67
-	case 546:
-		tmp68, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp68 = tmp68
-		this._raw_Payload = tmp68
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp69 := NewOrientation_MsgAngularRate()
-		err = tmp69.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp69
-	case 531:
-		tmp70, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp70 = tmp70
-		this._raw_Payload = tmp70
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp71 := NewNavigation_MsgVelBody()
-		err = tmp71.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp71
-	case 224:
-		tmp72, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp72 = tmp72
-		this._raw_Payload = tmp72
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp73 := NewFlash_MsgFlashDone()
-		err = tmp73.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp73
-	case 24:
-		tmp74, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp74 = tmp74
-		this._raw_Payload = tmp74
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp75 := NewPiksi_MsgUartStateDepa()
-		err = tmp75.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp75
-	case 230:
-		tmp76, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp76 = tmp76
-		this._raw_Payload = tmp76
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp77 := NewFlash_MsgFlashProgram()
-		err = tmp77.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp77
-	case 65285:
-		tmp78, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp78 = tmp78
-		this._raw_Payload = tmp78
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp79 := NewSystem_MsgCsacTelemetryLabels()
-		err = tmp79.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp79
-	case 35:
-		tmp80, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp80 = tmp80
-		this._raw_Payload = tmp80
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp81 := NewPiksi_MsgInitBaseDep()
-		err = tmp81.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp81
-	case 1528:
-		tmp82, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp82 = tmp82
-		this._raw_Payload = tmp82
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp83 := NewSsr_MsgSsrTileDefinition()
-		err = tmp83.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp83
-	case 519:
-		tmp84, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp84 = tmp84
-		this._raw_Payload = tmp84
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp85 := NewNavigation_MsgBaselineHeadingDepA()
-		err = tmp85.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp85
-	case 20:
-		tmp86, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp86 = tmp86
-		this._raw_Payload = tmp86
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp87 := NewAcquisition_MsgAcqResultDepB()
-		err = tmp87.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp87
-	case 570:
-		tmp88, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp88 = tmp88
-		this._raw_Payload = tmp88
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp89 := NewNavigation_MsgUtcLeapSecond()
-		err = tmp89.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp89
-	case 32520:
-		tmp90, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp90 = tmp90
-		this._raw_Payload = tmp90
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp91 := NewLinux_MsgLinuxCpuState()
-		err = tmp91.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp91
-	case 1505:
-		tmp92, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp92 = tmp92
-		this._raw_Payload = tmp92
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp93 := NewSsr_MsgSsrCodeBiases()
-		err = tmp93.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp93
-	case 113:
-		tmp94, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp94 = tmp94
-		this._raw_Payload = tmp94
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp95 := NewObservation_MsgAlmanacGloDep()
-		err = tmp95.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp95
-	case 1515:
-		tmp96, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp96 = tmp96
-		this._raw_Payload = tmp96
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp97 := NewSsr_MsgSsrStecCorrectionDepA()
-		err = tmp97.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp97
-	case 558:
-		tmp98, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp98 = tmp98
-		this._raw_Payload = tmp98
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp99 := NewNavigation_MsgVelNedGnss()
-		err = tmp99.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp99
-	case 530:
-		tmp100, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp100 = tmp100
-		this._raw_Payload = tmp100
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp101 := NewNavigation_MsgVelNedCov()
-		err = tmp101.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp101
-	case 288:
-		tmp102, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp102 = tmp102
-		this._raw_Payload = tmp102
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp103 := NewTelemetry_MsgTelSv()
-		err = tmp103.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp103
-	case 1026:
-		tmp104, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp104 = tmp104
-		this._raw_Payload = tmp104
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp105 := NewLogging_MsgFwd()
-		err = tmp105.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp105
-	case 65286:
-		tmp106, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp106 = tmp106
-		this._raw_Payload = tmp106
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp107 := NewSystem_MsgInsUpdates()
-		err = tmp107.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp107
-	case 65284:
-		tmp108, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp108 = tmp108
-		this._raw_Payload = tmp108
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp109 := NewSystem_MsgCsacTelemetry()
-		err = tmp109.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp109
-	case 191:
-		tmp110, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp110 = tmp110
-		this._raw_Payload = tmp110
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp111 := NewPiksi_MsgFrontEndGain()
-		err = tmp111.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp111
-	case 520:
-		tmp112, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp112 = tmp112
-		this._raw_Payload = tmp112
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp113 := NewNavigation_MsgDops()
-		err = tmp113.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp113
-	case 27:
-		tmp114, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp114 = tmp114
-		this._raw_Payload = tmp114
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp115 := NewPiksi_MsgMaskSatelliteDep()
-		err = tmp115.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp115
-	case 1516:
-		tmp116, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp116 = tmp116
-		this._raw_Payload = tmp116
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp117 := NewSsr_MsgSsrCodePhaseBiasesBounds()
-		err = tmp117.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp117
-	case 150:
-		tmp118, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp118 = tmp118
-		this._raw_Payload = tmp118
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp119 := NewObservation_MsgGnssCapb()
-		err = tmp119.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp119
-	case 97:
-		tmp120, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp120 = tmp120
-		this._raw_Payload = tmp120
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp121 := NewTracking_MsgMeasurementState()
-		err = tmp121.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp121
-	case 529:
-		tmp122, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp122 = tmp122
-		this._raw_Payload = tmp122
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp123 := NewNavigation_MsgPosLlhCov()
-		err = tmp123.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp123
-	case 431:
-		tmp124, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp124 = tmp124
-		this._raw_Payload = tmp124
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp125 := NewSettings_MsgSettingsRegisterResp()
-		err = tmp125.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp125
-	case 65533:
-		tmp126, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp126 = tmp126
-		this._raw_Payload = tmp126
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp127 := NewSystem_MsgStatusJournal()
-		err = tmp127.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp127
-	case 145:
-		tmp128, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp128 = tmp128
-		this._raw_Payload = tmp128
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp129 := NewObservation_MsgSvConfigurationGpsDep()
-		err = tmp129.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp129
-	case 32522:
-		tmp130, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp130 = tmp130
-		this._raw_Payload = tmp130
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp131 := NewLinux_MsgLinuxSysState()
-		err = tmp131.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp131
-	case 3076:
-		tmp132, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp132 = tmp132
-		this._raw_Payload = tmp132
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp133 := NewSigning_MsgEcdsaCertificate()
-		err = tmp133.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp133
-	case 144:
-		tmp134, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp134 = tmp134
-		this._raw_Payload = tmp134
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp135 := NewObservation_MsgIono()
-		err = tmp135.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp135
-	case 65294:
-		tmp136, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp136 = tmp136
-		this._raw_Payload = tmp136
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp137 := NewSolutionMeta_MsgSolnMeta()
-		err = tmp137.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp137
-	case 532:
-		tmp138, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp138 = tmp138
-		this._raw_Payload = tmp138
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp139 := NewNavigation_MsgPosEcefCov()
-		err = tmp139.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp139
-	case 45:
-		tmp140, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp140 = tmp140
-		this._raw_Payload = tmp140
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp141 := NewTracking_MsgTrackingIq()
-		err = tmp141.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp141
-	case 561:
-		tmp142, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp142 = tmp142
-		this._raw_Payload = tmp142
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp143 := NewNavigation_MsgPosLlhCovGnss()
-		err = tmp143.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp143
-	case 1502:
-		tmp144, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp144 = tmp144
-		this._raw_Payload = tmp144
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp145 := NewSsr_MsgSsrOrbitClockBounds()
-		err = tmp145.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp145
-	case 149:
-		tmp146, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp146 = tmp146
-		this._raw_Payload = tmp146
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp147 := NewObservation_MsgEphemerisGalDepA()
-		err = tmp147.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp147
-	case 115:
-		tmp148, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp148 = tmp148
-		this._raw_Payload = tmp148
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp149 := NewObservation_MsgAlmanacGlo()
-		err = tmp149.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp149
-	case 32512:
-		tmp150, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp150 = tmp150
-		this._raw_Payload = tmp150
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp151 := NewLinux_MsgLinuxCpuStateDepA()
-		err = tmp151.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp151
-	case 32521:
-		tmp152, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp152 = tmp152
-		this._raw_Payload = tmp152
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp153 := NewLinux_MsgLinuxMemState()
-		err = tmp153.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp153
-	case 522:
-		tmp154, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp154 = tmp154
-		this._raw_Payload = tmp154
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp155 := NewNavigation_MsgPosLlh()
-		err = tmp155.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp155
-	case 104:
-		tmp156, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp156 = tmp156
-		this._raw_Payload = tmp156
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp157 := NewPiksi_MsgSetTime()
-		err = tmp157.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp157
-	case 32519:
-		tmp158, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp158 = tmp158
-		this._raw_Payload = tmp158
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp159 := NewLinux_MsgLinuxProcessFdSummary()
-		err = tmp159.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp159
-	case 4098:
-		tmp160, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp160 = tmp160
-		this._raw_Payload = tmp160
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp161 := NewFileIo_MsgFileioConfigResp()
-		err = tmp161.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp161
-	case 32517:
-		tmp162, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp162 = tmp162
-		this._raw_Payload = tmp162
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp163 := NewLinux_MsgLinuxSocketUsage()
-		err = tmp163.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp163
-	case 2306:
-		tmp164, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp164 = tmp164
-		this._raw_Payload = tmp164
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp165 := NewMag_MsgMagRaw()
-		err = tmp165.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp165
-	case 67:
-		tmp166, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp166 = tmp166
-		this._raw_Payload = tmp166
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp167 := NewObservation_MsgObsDepB()
-		err = tmp167.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp167
-	case 69:
-		tmp168, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp168 = tmp168
-		this._raw_Payload = tmp168
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp169 := NewObservation_MsgObsDepA()
-		err = tmp169.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp169
-	case 512:
-		tmp170, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp170 = tmp170
-		this._raw_Payload = tmp170
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp171 := NewNavigation_MsgPosEcefDepA()
-		err = tmp171.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp171
-	case 137:
-		tmp172, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp172 = tmp172
-		this._raw_Payload = tmp172
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp173 := NewObservation_MsgEphemerisBds()
-		err = tmp173.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp173
-	case 65288:
-		tmp174, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp174 = tmp174
-		this._raw_Payload = tmp174
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp175 := NewSystem_MsgPpsTime()
-		err = tmp175.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp175
-	case 3074:
-		tmp176, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp176 = tmp176
-		this._raw_Payload = tmp176
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp177 := NewSigning_MsgEd25519CertificateDep()
-		err = tmp177.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp177
-	case 562:
-		tmp178, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp178 = tmp178
-		this._raw_Payload = tmp178
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp179 := NewNavigation_MsgVelNedCovGnss()
-		err = tmp179.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp179
-	case 580:
-		tmp180, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp180 = tmp180
-		this._raw_Payload = tmp180
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp181 := NewNavigation_MsgReferenceFrameParam()
-		err = tmp181.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp181
-	case 524:
-		tmp182, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp182 = tmp182
-		this._raw_Payload = tmp182
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp183 := NewNavigation_MsgBaselineNed()
-		err = tmp183.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp183
-	case 161:
-		tmp184, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp184 = tmp184
-		this._raw_Payload = tmp184
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp185 := NewSettings_MsgSettingsSave()
-		err = tmp185.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp185
-	case 138:
-		tmp186, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp186 = tmp186
-		this._raw_Payload = tmp186
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp187 := NewObservation_MsgEphemerisGps()
-		err = tmp187.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp187
-	case 544:
-		tmp188, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp188 = tmp188
-		this._raw_Payload = tmp188
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp189 := NewOrientation_MsgOrientQuat()
-		err = tmp189.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp189
-	case 192:
-		tmp190, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp190 = tmp190
-		this._raw_Payload = tmp190
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp191 := NewPiksi_MsgCwResults()
-		err = tmp191.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp191
-	case 165:
-		tmp192, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp192 = tmp192
-		this._raw_Payload = tmp192
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp193 := NewSettings_MsgSettingsReadResp()
-		err = tmp193.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp193
-	case 33:
-		tmp194, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp194 = tmp194
-		this._raw_Payload = tmp194
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp195 := NewTracking_MsgTrackingStateDetailedDepA()
-		err = tmp195.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp195
-	case 1527:
-		tmp196, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp196 = tmp196
-		this._raw_Payload = tmp196
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp197 := NewSsr_MsgSsrTileDefinitionDepB()
-		err = tmp197.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp197
-	case 65535:
-		tmp198, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp198 = tmp198
-		this._raw_Payload = tmp198
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp199 := NewSystem_MsgHeartbeat()
-		err = tmp199.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp199
-	case 3081:
-		tmp200, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp200 = tmp200
-		this._raw_Payload = tmp200
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp201 := NewSigning_MsgCertificateChain()
-		err = tmp201.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp201
-	case 514:
-		tmp202, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp202 = tmp202
-		this._raw_Payload = tmp202
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp203 := NewNavigation_MsgBaselineEcefDepA()
-		err = tmp203.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp203
-	case 185:
-		tmp204, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp204 = tmp204
-		this._raw_Payload = tmp204
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp205 := NewPiksi_MsgCommandResp()
-		err = tmp205.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp205
-	case 180:
-		tmp206, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp206 = tmp206
-		this._raw_Payload = tmp206
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp207 := NewBootload_MsgBootloaderHandshakeResp()
-		err = tmp207.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp207
-	case 19:
-		tmp208, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp208 = tmp208
-		this._raw_Payload = tmp208
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp209 := NewTracking_MsgTrackingStateDepB()
-		err = tmp209.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp209
-	case 3015:
-		tmp210, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp210 = tmp210
-		this._raw_Payload = tmp210
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp211 := NewIntegrity_MsgSsrFlagIonoGridPoints()
-		err = tmp211.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp211
-	case 186:
-		tmp212, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp212 = tmp212
-		this._raw_Payload = tmp212
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp213 := NewPiksi_MsgNetworkStateReq()
-		err = tmp213.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp213
-	case 32518:
-		tmp214, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp214 = tmp214
-		this._raw_Payload = tmp214
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp215 := NewLinux_MsgLinuxProcessFdCount()
-		err = tmp215.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp215
-	case 1530:
-		tmp216, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp216 = tmp216
-		this._raw_Payload = tmp216
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp217 := NewSsr_MsgSsrGriddedCorrectionDepA()
-		err = tmp217.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp217
-	case 1541:
-		tmp218, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp218 = tmp218
-		this._raw_Payload = tmp218
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp219 := NewSsr_MsgSsrSatelliteApc()
-		err = tmp219.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp219
-	case 30583:
-		tmp220, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp220 = tmp220
-		this._raw_Payload = tmp220
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp221 := NewSbas_MsgSbasRaw()
-		err = tmp221.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp221
-	case 23:
-		tmp222, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp222 = tmp222
-		this._raw_Payload = tmp222
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp223 := NewPiksi_MsgThreadState()
-		err = tmp223.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp223
-	case 221:
-		tmp224, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp224 = tmp224
-		this._raw_Payload = tmp224
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp225 := NewBootload_MsgNapDeviceDnaResp()
-		err = tmp225.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp225
-	case 227:
-		tmp226, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp226 = tmp226
-		this._raw_Payload = tmp226
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp227 := NewFlash_MsgStmFlashLockSector()
-		err = tmp227.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp227
-	case 188:
-		tmp228, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp228 = tmp228
-		this._raw_Payload = tmp228
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp229 := NewPiksi_MsgCommandOutput()
-		err = tmp229.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp229
-	case 65282:
-		tmp230, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp230 = tmp230
-		this._raw_Payload = tmp230
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp231 := NewSystem_MsgDgnssStatus()
-		err = tmp231.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp231
-	case 178:
-		tmp232, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp232 = tmp232
-		this._raw_Payload = tmp232
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp233 := NewPiksi_MsgResetDep()
-		err = tmp233.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp233
-	case 1533:
-		tmp234, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp234 = tmp234
-		this._raw_Payload = tmp234
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp235 := NewSsr_MsgSsrStecCorrection()
-		err = tmp235.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp235
-	case 3011:
-		tmp236, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp236 = tmp236
-		this._raw_Payload = tmp236
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp237 := NewIntegrity_MsgSsrFlagTropoGridPoints()
-		err = tmp237.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp237
-	case 3005:
-		tmp238, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp238 = tmp238
-		this._raw_Payload = tmp238
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp239 := NewIntegrity_MsgSsrFlagSatellites()
-		err = tmp239.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp239
-	case 160:
-		tmp240, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp240 = tmp240
-		this._raw_Payload = tmp240
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp241 := NewSettings_MsgSettingsWrite()
-		err = tmp241.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp241
-	case 540:
-		tmp242, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp242 = tmp242
-		this._raw_Payload = tmp242
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp243 := NewNavigation_MsgVelCog()
-		err = tmp243.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp243
-	case 174:
-		tmp244, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp244 = tmp244
-		this._raw_Payload = tmp244
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp245 := NewSettings_MsgSettingsRegister()
-		err = tmp245.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp245
-	case 176:
-		tmp246, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp246 = tmp246
-		this._raw_Payload = tmp246
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp247 := NewBootload_MsgBootloaderHandshakeDepA()
-		err = tmp247.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp247
-	case 1024:
-		tmp248, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp248 = tmp248
-		this._raw_Payload = tmp248
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp249 := NewNdb_MsgNdbEvent()
-		err = tmp249.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp249
-	case 166:
-		tmp250, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp250 = tmp250
-		this._raw_Payload = tmp250
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp251 := NewSettings_MsgSettingsReadByIndexDone()
-		err = tmp251.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp251
-	case 114:
-		tmp252, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp252 = tmp252
-		this._raw_Payload = tmp252
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp253 := NewObservation_MsgAlmanacGps()
-		err = tmp253.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp253
-	case 564:
-		tmp254, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp254 = tmp254
-		this._raw_Payload = tmp254
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp255 := NewNavigation_MsgPosEcefCovGnss()
-		err = tmp255.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp255
-	case 259:
-		tmp256, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp256 = tmp256
-		this._raw_Payload = tmp256
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp257 := NewNavigation_MsgUtcTime()
-		err = tmp257.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp257
-	case 181:
-		tmp258, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp258 = tmp258
-		this._raw_Payload = tmp258
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp259 := NewPiksi_MsgDeviceMonitor()
-		err = tmp259.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp259
-	case 521:
-		tmp260, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp260 = tmp260
-		this._raw_Payload = tmp260
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp261 := NewNavigation_MsgPosEcef()
-		err = tmp261.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp261
-	case 2307:
-		tmp262, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp262 = tmp262
-		this._raw_Payload = tmp262
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp263 := NewVehicle_MsgOdometry()
-		err = tmp263.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp263
-	case 148:
-		tmp264, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp264 = tmp264
-		this._raw_Payload = tmp264
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp265 := NewObservation_MsgGroupDelay()
-		err = tmp265.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp265
-	case 117:
-		tmp266, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp266 = tmp266
-		this._raw_Payload = tmp266
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp267 := NewObservation_MsgGloBiases()
-		err = tmp267.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp267
-	case 3025:
-		tmp268, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp268 = tmp268
-		this._raw_Payload = tmp268
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp269 := NewIntegrity_MsgSsrFlagIonoGridPointSatLos()
-		err = tmp269.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp269
-	case 65:
-		tmp270, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp270 = tmp270
-		this._raw_Payload = tmp270
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp271 := NewTracking_MsgTrackingState()
-		err = tmp271.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp271
-	case 1534:
-		tmp272, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp272 = tmp272
-		this._raw_Payload = tmp272
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp273 := NewSsr_MsgSsrGriddedCorrectionBounds()
-		err = tmp273.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp273
-	case 44:
-		tmp274, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp274 = tmp274
-		this._raw_Payload = tmp274
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp275 := NewTracking_MsgTrackingIqDepB()
-		err = tmp275.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp275
-	case 3073:
-		tmp276, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp276 = tmp276
-		this._raw_Payload = tmp276
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp277 := NewSigning_MsgEd25519SignatureDepA()
-		err = tmp277.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp277
-	case 231:
-		tmp278, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp278 = tmp278
-		this._raw_Payload = tmp278
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp279 := NewFlash_MsgFlashReadReq()
-		err = tmp279.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp279
-	case 140:
-		tmp280, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp280 = tmp280
-		this._raw_Payload = tmp280
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp281 := NewObservation_MsgEphemerisSbas()
-		err = tmp281.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp281
-	case 226:
-		tmp282, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp282 = tmp282
-		this._raw_Payload = tmp282
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp283 := NewFlash_MsgFlashErase()
-		err = tmp283.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp283
-	case 515:
-		tmp284, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp284 = tmp284
-		this._raw_Payload = tmp284
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp285 := NewNavigation_MsgBaselineNedDepA()
-		err = tmp285.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp285
-	case 2308:
-		tmp286, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp286 = tmp286
-		this._raw_Payload = tmp286
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp287 := NewVehicle_MsgWheeltick()
-		err = tmp287.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp287
-	case 535:
-		tmp288, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp288 = tmp288
-		this._raw_Payload = tmp288
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp289 := NewNavigation_MsgProtectionLevel()
-		err = tmp289.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp289
-	case 179:
-		tmp290, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp290 = tmp290
-		this._raw_Payload = tmp290
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp291 := NewBootload_MsgBootloaderHandshakeReq()
-		err = tmp291.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp291
-	case 172:
-		tmp292, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp292 = tmp292
-		this._raw_Payload = tmp292
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp293 := NewFileIo_MsgFileioRemove()
-		err = tmp293.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp293
-	case 130:
-		tmp294, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp294 = tmp294
-		this._raw_Payload = tmp294
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp295 := NewObservation_MsgEphemerisSbasDepA()
-		err = tmp295.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp295
-	case 187:
-		tmp296, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp296 = tmp296
-		this._raw_Payload = tmp296
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp297 := NewPiksi_MsgNetworkStateResp()
-		err = tmp297.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp297
-	case 1501:
-		tmp298, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp298 = tmp298
-		this._raw_Payload = tmp298
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp299 := NewSsr_MsgSsrOrbitClock()
-		err = tmp299.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp299
-	case 21:
-		tmp300, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp300 = tmp300
-		this._raw_Payload = tmp300
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp301 := NewAcquisition_MsgAcqResultDepA()
-		err = tmp301.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp301
-	case 1500:
-		tmp302, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp302 = tmp302
-		this._raw_Payload = tmp302
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp303 := NewSsr_MsgSsrOrbitClockDepA()
-		err = tmp303.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp303
-	case 225:
-		tmp304, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp304 = tmp304
-		this._raw_Payload = tmp304
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp305 := NewFlash_MsgFlashReadResp()
-		err = tmp305.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp305
-	case 534:
-		tmp306, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp306 = tmp306
-		this._raw_Payload = tmp306
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp307 := NewNavigation_MsgProtectionLevelDepA()
-		err = tmp307.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp307
-	case 232:
-		tmp308, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp308 = tmp308
-		this._raw_Payload = tmp308
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp309 := NewFlash_MsgStmUniqueIdReq()
-		err = tmp309.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp309
-	case 2304:
-		tmp310, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp310 = tmp310
-		this._raw_Payload = tmp310
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp311 := NewImu_MsgImuRaw()
-		err = tmp311.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp311
-	case 229:
-		tmp312, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp312 = tmp312
-		this._raw_Payload = tmp312
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp313 := NewFlash_MsgStmUniqueIdResp()
-		err = tmp313.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp313
-	case 32515:
-		tmp314, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp314 = tmp314
-		this._raw_Payload = tmp314
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp315 := NewLinux_MsgLinuxProcessSocketCounts()
-		err = tmp315.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp315
-	case 65295:
-		tmp316, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp316 = tmp316
-		this._raw_Payload = tmp316
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp317 := NewSolutionMeta_MsgSolnMetaDepA()
-		err = tmp317.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp317
-	case 3075:
-		tmp318, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp318 = tmp318
-		this._raw_Payload = tmp318
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp319 := NewSigning_MsgEd25519SignatureDepB()
-		err = tmp319.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp319
-	case 258:
-		tmp320, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp320 = tmp320
-		this._raw_Payload = tmp320
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp321 := NewNavigation_MsgGpsTime()
-		err = tmp321.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp321
-	case 32516:
-		tmp322, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp322 = tmp322
-		this._raw_Payload = tmp322
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp323 := NewLinux_MsgLinuxProcessSocketQueues()
-		err = tmp323.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp323
-	case 170:
-		tmp324, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp324 = tmp324
-		this._raw_Payload = tmp324
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp325 := NewFileIo_MsgFileioReadDirResp()
-		err = tmp325.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp325
-	case 256:
-		tmp326, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp326 = tmp326
-		this._raw_Payload = tmp326
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp327 := NewNavigation_MsgGpsTimeDepA()
-		err = tmp327.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp327
-	case 32514:
-		tmp328, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp328 = tmp328
-		this._raw_Payload = tmp328
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp329 := NewLinux_MsgLinuxSysStateDepA()
-		err = tmp329.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp329
-	case 518:
-		tmp330, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp330 = tmp330
-		this._raw_Payload = tmp330
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp331 := NewNavigation_MsgDopsDepA()
-		err = tmp331.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp331
-	case 553:
-		tmp332, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp332 = tmp332
-		this._raw_Payload = tmp332
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp333 := NewNavigation_MsgPosEcefGnss()
-		err = tmp333.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp333
-	case 517:
-		tmp334, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp334 = tmp334
-		this._raw_Payload = tmp334
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp335 := NewNavigation_MsgVelNedDepA()
-		err = tmp335.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp335
-	case 164:
-		tmp336, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp336 = tmp336
-		this._raw_Payload = tmp336
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp337 := NewSettings_MsgSettingsReadReq()
-		err = tmp337.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp337
-	case 182:
-		tmp338, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp338 = tmp338
-		this._raw_Payload = tmp338
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp339 := NewPiksi_MsgReset()
-		err = tmp339.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp339
-	case 189:
-		tmp340, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp340 = tmp340
-		this._raw_Payload = tmp340
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp341 := NewPiksi_MsgNetworkBandwidthUsage()
-		err = tmp341.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp341
-	case 72:
-		tmp342, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp342 = tmp342
-		this._raw_Payload = tmp342
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp343 := NewObservation_MsgBasePosEcef()
-		err = tmp343.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp343
-	case 71:
-		tmp344, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp344 = tmp344
-		this._raw_Payload = tmp344
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp345 := NewObservation_MsgEphemerisDepC()
-		err = tmp345.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp345
-	case 1025:
-		tmp346, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp346 = tmp346
-		this._raw_Payload = tmp346
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp347 := NewLogging_MsgLog()
-		err = tmp347.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp347
-	case 168:
-		tmp348, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp348 = tmp348
-		this._raw_Payload = tmp348
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp349 := NewFileIo_MsgFileioReadReq()
-		err = tmp349.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp349
-	case 581:
-		tmp350, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp350 = tmp350
-		this._raw_Payload = tmp350
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp351 := NewNavigation_MsgPoseRelative()
-		err = tmp351.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp351
-	case 171:
-		tmp352, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp352 = tmp352
-		this._raw_Payload = tmp352
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp353 := NewFileIo_MsgFileioWriteResp()
-		err = tmp353.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp353
-	case 70:
-		tmp354, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp354 = tmp354
-		this._raw_Payload = tmp354
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp355 := NewObservation_MsgEphemerisDepB()
-		err = tmp355.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp355
-	case 28:
-		tmp356, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp356 = tmp356
-		this._raw_Payload = tmp356
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp357 := NewTracking_MsgTrackingIqDepA()
-		err = tmp357.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp357
-	case 193:
-		tmp358, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp358 = tmp358
-		this._raw_Payload = tmp358
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp359 := NewPiksi_MsgCwStart()
-		err = tmp359.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp359
-	case 133:
-		tmp360, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp360 = tmp360
-		this._raw_Payload = tmp360
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp361 := NewObservation_MsgEphemerisGloDepB()
-		err = tmp361.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp361
-	case 129:
-		tmp362, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp362 = tmp362
-		this._raw_Payload = tmp362
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp363 := NewObservation_MsgEphemerisGpsDepE()
-		err = tmp363.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp363
-	case 74:
-		tmp364, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp364 = tmp364
-		this._raw_Payload = tmp364
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp365 := NewObservation_MsgObs()
-		err = tmp365.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp365
-	case 3080:
-		tmp366, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp366 = tmp366
-		this._raw_Payload = tmp366
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp367 := NewSigning_MsgEcdsaSignature()
-		err = tmp367.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp367
-	case 151:
-		tmp368, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp368 = tmp368
-		this._raw_Payload = tmp368
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp369 := NewObservation_MsgSvAzEl()
-		err = tmp369.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp369
-	case 16:
-		tmp370, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp370 = tmp370
-		this._raw_Payload = tmp370
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp371 := NewLogging_MsgPrintDep()
-		err = tmp371.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp371
-	case 147:
-		tmp372, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp372 = tmp372
-		this._raw_Payload = tmp372
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp373 := NewObservation_MsgGroupDelayDepB()
-		err = tmp373.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp373
-	case 527:
-		tmp374, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp374 = tmp374
-		this._raw_Payload = tmp374
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp375 := NewOrientation_MsgBaselineHeading()
-		err = tmp375.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp375
-	case 134:
-		tmp376, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp376 = tmp376
-		this._raw_Payload = tmp376
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp377 := NewObservation_MsgEphemerisGpsDepF()
-		err = tmp377.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp377
-	case 3078:
-		tmp378, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp378 = tmp378
-		this._raw_Payload = tmp378
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp379 := NewSigning_MsgEcdsaSignatureDepA()
-		err = tmp379.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp379
-	case 80:
-		tmp380, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp380 = tmp380
-		this._raw_Payload = tmp380
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp381 := NewPiksi_MsgSpecanDep()
-		err = tmp381.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp381
-	case 68:
-		tmp382, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp382 = tmp382
-		this._raw_Payload = tmp382
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp383 := NewObservation_MsgBasePosLlh()
-		err = tmp383.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp383
-	case 1532:
-		tmp384, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp384 = tmp384
-		this._raw_Payload = tmp384
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp385 := NewSsr_MsgSsrGriddedCorrection()
-		err = tmp385.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp385
-	case 1503:
-		tmp386, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp386 = tmp386
-		this._raw_Payload = tmp386
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp387 := NewSsr_MsgSsrOrbitClockBoundsDegradation()
-		err = tmp387.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp387
-	case 516:
-		tmp388, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp388 = tmp388
-		this._raw_Payload = tmp388
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp389 := NewNavigation_MsgVelEcefDepA()
-		err = tmp389.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp389
-	case 26:
-		tmp390, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp390 = tmp390
-		this._raw_Payload = tmp390
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp391 := NewObservation_MsgEphemerisDepA()
-		err = tmp391.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp391
-	case 139:
-		tmp392, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp392 = tmp392
-		this._raw_Payload = tmp392
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp393 := NewObservation_MsgEphemerisGlo()
-		err = tmp393.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp393
-	case 65280:
-		tmp394, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp394 = tmp394
-		this._raw_Payload = tmp394
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp395 := NewSystem_MsgStartup()
-		err = tmp395.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp395
-	case 31:
-		tmp396, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp396 = tmp396
-		this._raw_Payload = tmp396
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp397 := NewAcquisition_MsgAcqResultDepC()
-		err = tmp397.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp397
-	case 565:
-		tmp398, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp398 = tmp398
-		this._raw_Payload = tmp398
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp399 := NewNavigation_MsgVelEcefCovGnss()
-		err = tmp399.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp399
-	case 135:
-		tmp400, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp400 = tmp400
-		this._raw_Payload = tmp400
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp401 := NewObservation_MsgEphemerisGloDepC()
-		err = tmp401.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp401
-	case 3026:
-		tmp402, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp402 = tmp402
-		this._raw_Payload = tmp402
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp403 := NewIntegrity_MsgAcknowledge()
-		err = tmp403.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp403
-	case 34:
-		tmp404, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp404 = tmp404
-		this._raw_Payload = tmp404
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp405 := NewPiksi_MsgResetFilters()
-		err = tmp405.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp405
-	case 1600:
-		tmp406, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp406 = tmp406
-		this._raw_Payload = tmp406
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp407 := NewObservation_MsgOsr()
-		err = tmp407.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp407
-	case 536:
-		tmp408, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp408 = tmp408
-		this._raw_Payload = tmp408
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp409 := NewNavigation_MsgPosLlhAcc()
-		err = tmp409.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp409
-	case 65287:
-		tmp410, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp410 = tmp410
-		this._raw_Payload = tmp410
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp411 := NewSystem_MsgGnssTimeOffset()
-		err = tmp411.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp411
-	case 1526:
-		tmp412, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp412 = tmp412
-		this._raw_Payload = tmp412
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp413 := NewSsr_MsgSsrTileDefinitionDepA()
-		err = tmp413.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp413
-	case 1540:
-		tmp414, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp414 = tmp414
-		this._raw_Payload = tmp414
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp415 := NewSsr_MsgSsrSatelliteApcDep()
-		err = tmp415.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp415
-	case 29:
-		tmp416, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp416 = tmp416
-		this._raw_Payload = tmp416
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp417 := NewPiksi_MsgUartState()
-		err = tmp417.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp417
-	case 132:
-		tmp418, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp418 = tmp418
-		this._raw_Payload = tmp418
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp419 := NewObservation_MsgEphemerisSbasDepB()
-		err = tmp419.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp419
-	case 1510:
-		tmp420, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp420 = tmp420
-		this._raw_Payload = tmp420
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp421 := NewSsr_MsgSsrPhaseBiases()
-		err = tmp421.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp421
-	case 65290:
-		tmp422, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp422 = tmp422
-		this._raw_Payload = tmp422
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp423 := NewSystem_MsgGroupMeta()
-		err = tmp423.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp423
-	case 175:
-		tmp424, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp424 = tmp424
-		this._raw_Payload = tmp424
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp425 := NewSettings_MsgSettingsWriteResp()
-		err = tmp425.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp425
-	case 557:
-		tmp426, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp426 = tmp426
-		this._raw_Payload = tmp426
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp427 := NewNavigation_MsgVelEcefGnss()
-		err = tmp427.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp427
-	case 526:
-		tmp428, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp428 = tmp428
-		this._raw_Payload = tmp428
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp429 := NewNavigation_MsgVelNed()
-		err = tmp429.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp429
-	case 1520:
-		tmp430, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp430 = tmp430
-		this._raw_Payload = tmp430
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp431 := NewSsr_MsgSsrGriddedCorrectionNoStdDepA()
-		err = tmp431.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp431
-	case 2305:
-		tmp432, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp432 = tmp432
-		this._raw_Payload = tmp432
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp433 := NewImu_MsgImuAux()
-		err = tmp433.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp433
-	case 190:
-		tmp434, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp434 = tmp434
-		this._raw_Payload = tmp434
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp435 := NewPiksi_MsgCellModemStatus()
-		err = tmp435.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp435
-	case 1531:
-		tmp436, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp436 = tmp436
-		this._raw_Payload = tmp436
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp437 := NewSsr_MsgSsrStecCorrectionDep()
-		err = tmp437.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp437
-	case 528:
-		tmp438, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp438 = tmp438
-		this._raw_Payload = tmp438
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp439 := NewNavigation_MsgAgeCorrections()
-		err = tmp439.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp439
-	case 3077:
-		tmp440, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp440 = tmp440
-		this._raw_Payload = tmp440
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp441 := NewSigning_MsgCertificateChainDep()
-		err = tmp441.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp441
-	case 25:
-		tmp442, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp442 = tmp442
-		this._raw_Payload = tmp442
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp443 := NewPiksi_MsgIarState()
-		err = tmp443.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp443
-	case 43:
-		tmp444, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp444 = tmp444
-		this._raw_Payload = tmp444
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp445 := NewPiksi_MsgMaskSatellite()
-		err = tmp445.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp445
-	case 228:
-		tmp446, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp446 = tmp446
-		this._raw_Payload = tmp446
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp447 := NewFlash_MsgStmFlashUnlockSector()
-		err = tmp447.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp447
-	case 523:
-		tmp448, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp448 = tmp448
-		this._raw_Payload = tmp448
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp449 := NewNavigation_MsgBaselineEcef()
-		err = tmp449.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp449
-	case 554:
-		tmp450, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp450 = tmp450
-		this._raw_Payload = tmp450
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp451 := NewNavigation_MsgPosLlhGnss()
-		err = tmp451.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp451
-	case 65289:
-		tmp452, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp452 = tmp452
-		this._raw_Payload = tmp452
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp453 := NewSystem_MsgSensorAidEvent()
-		err = tmp453.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp453
-	case 22:
-		tmp454, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp454 = tmp454
-		this._raw_Payload = tmp454
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp455 := NewTracking_MsgTrackingStateDepA()
-		err = tmp455.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp455
-	case 3001:
-		tmp456, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp456 = tmp456
-		this._raw_Payload = tmp456
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp457 := NewIntegrity_MsgSsrFlagHighLevel()
-		err = tmp457.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp457
-	case 30:
-		tmp458, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp458 = tmp458
-		this._raw_Payload = tmp458
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp459 := NewAcquisition_MsgAcqSvProfileDep()
-		err = tmp459.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp459
-	case 261:
-		tmp460, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp460 = tmp460
-		this._raw_Payload = tmp460
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp461 := NewNavigation_MsgUtcTimeGnss()
-		err = tmp461.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp461
-	case 3021:
-		tmp462, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp462 = tmp462
-		this._raw_Payload = tmp462
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp463 := NewIntegrity_MsgSsrFlagIonoTileSatLos()
-		err = tmp463.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp463
-	case 173:
-		tmp464, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp464 = tmp464
-		this._raw_Payload = tmp464
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp465 := NewFileIo_MsgFileioWriteReq()
-		err = tmp465.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp465
-	case 128:
-		tmp466, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp466 = tmp466
-		this._raw_Payload = tmp466
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp467 := NewObservation_MsgEphemerisDepD()
-		err = tmp467.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp467
-	case 222:
-		tmp468, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp468 = tmp468
-		this._raw_Payload = tmp468
-		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
-		tmp469 := NewBootload_MsgNapDeviceDnaReq()
-		err = tmp469.Read(_io__raw_Payload, this, this._root)
-		if err != nil {
-			return err
-		}
-		this.Payload = tmp469
-	default:
-		tmp470, err := this._io.ReadBytes(int(this.Header.Length))
-		if err != nil {
-			return err
-		}
-		tmp470 = tmp470
-		this._raw_Payload = tmp470
-	}
-	tmp471, err := this._io.ReadU2le()
-	if err != nil {
-		return err
-	}
-	this.Crc = uint16(tmp471)
-	return err
-}
-type Sbp_SbpHeader struct {
-	Preamble []byte
-	MsgType uint16
-	Sender uint16
-	Length uint8
-	_io *kaitai.Stream
-	_root *Sbp
-	_parent *Sbp_SbpMessage
-}
-func NewSbp_SbpHeader() *Sbp_SbpHeader {
-	return &Sbp_SbpHeader{
-	}
-}
-
-func (this *Sbp_SbpHeader) Read(io *kaitai.Stream, parent *Sbp_SbpMessage, root *Sbp) (err error) {
-	this._io = io
-	this._parent = parent
-	this._root = root
-
-	tmp472, err := this._io.ReadBytes(int(1))
-	if err != nil {
-		return err
-	}
-	tmp472 = tmp472
-	this.Preamble = tmp472
+	tmp3 = tmp3
+	this.Preamble = tmp3
 	if !(bytes.Equal(this.Preamble, []uint8{85})) {
-		return kaitai.NewValidationNotEqualError([]uint8{85}, this.Preamble, this._io, "/types/sbp_header/seq/0")
+		return kaitai.NewValidationNotEqualError([]uint8{85}, this.Preamble, this._io, "/types/sbp_message/seq/0")
 	}
-	tmp473, err := this._io.ReadU2le()
+	tmp4, err := this._io.ReadU2le()
 	if err != nil {
 		return err
 	}
-	this.MsgType = uint16(tmp473)
+	this.MsgType = uint16(tmp4)
+	tmp5, err := this._io.ReadU2le()
+	if err != nil {
+		return err
+	}
+	this.Sender = uint16(tmp5)
+	tmp6, err := this._io.ReadU1()
+	if err != nil {
+		return err
+	}
+	this.Length = tmp6
+	switch (this.MsgType) {
+	case 525:
+		tmp7, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp7 = tmp7
+		this._raw_Payload = tmp7
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp8 := NewNavigation_MsgVelEcef()
+		err = tmp8.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp8
+	case 141:
+		tmp9, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp9 = tmp9
+		this._raw_Payload = tmp9
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp10 := NewObservation_MsgEphemerisGal()
+		err = tmp10.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp10
+	case 243:
+		tmp11, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp11 = tmp11
+		this._raw_Payload = tmp11
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp12 := NewFlash_MsgM25FlashWriteStatus()
+		err = tmp12.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp12
+	case 2048:
+		tmp13, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp13 = tmp13
+		this._raw_Payload = tmp13
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp14 := NewUser_MsgUserData()
+		err = tmp14.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp14
+	case 3079:
+		tmp15, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp15 = tmp15
+		this._raw_Payload = tmp15
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp16 := NewSigning_MsgEcdsaSignatureDepB()
+		err = tmp16.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp16
+	case 184:
+		tmp17, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp17 = tmp17
+		this._raw_Payload = tmp17
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp18 := NewPiksi_MsgCommandReq()
+		err = tmp18.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp18
+	case 105:
+		tmp19, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp19 = tmp19
+		this._raw_Payload = tmp19
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp20 := NewPiksi_MsgAlmanac()
+		err = tmp20.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp20
+	case 142:
+		tmp21, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp21 = tmp21
+		this._raw_Payload = tmp21
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp22 := NewObservation_MsgEphemerisQzss()
+		err = tmp22.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp22
+	case 112:
+		tmp23, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp23 = tmp23
+		this._raw_Payload = tmp23
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp24 := NewObservation_MsgAlmanacGpsDep()
+		err = tmp24.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp24
+	case 177:
+		tmp25, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp25 = tmp25
+		this._raw_Payload = tmp25
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp26 := NewBootload_MsgBootloaderJumpToApp()
+		err = tmp26.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp26
+	case 163:
+		tmp27, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp27 = tmp27
+		this._raw_Payload = tmp27
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp28 := NewFileIo_MsgFileioReadResp()
+		err = tmp28.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp28
+	case 257:
+		tmp29, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp29 = tmp29
+		this._raw_Payload = tmp29
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp30 := NewExtEvents_MsgExtEvent()
+		err = tmp30.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp30
+	case 4097:
+		tmp31, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp31 = tmp31
+		this._raw_Payload = tmp31
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp32 := NewFileIo_MsgFileioConfigReq()
+		err = tmp32.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp32
+	case 17:
+		tmp33, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp33 = tmp33
+		this._raw_Payload = tmp33
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp34 := NewTracking_MsgTrackingStateDetailedDep()
+		err = tmp34.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp34
+	case 260:
+		tmp35, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp35 = tmp35
+		this._raw_Payload = tmp35
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp36 := NewNavigation_MsgGpsTimeGnss()
+		err = tmp36.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp36
+	case 1525:
+		tmp37, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp37 = tmp37
+		this._raw_Payload = tmp37
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp38 := NewSsr_MsgSsrGridDefinitionDepA()
+		err = tmp38.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp38
+	case 131:
+		tmp39, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp39 = tmp39
+		this._raw_Payload = tmp39
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp40 := NewObservation_MsgEphemerisGloDepA()
+		err = tmp40.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp40
+	case 167:
+		tmp41, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp41 = tmp41
+		this._raw_Payload = tmp41
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp42 := NewSettings_MsgSettingsReadByIndexResp()
+		err = tmp42.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp42
+	case 146:
+		tmp43, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp43 = tmp43
+		this._raw_Payload = tmp43
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp44 := NewObservation_MsgGroupDelayDepA()
+		err = tmp44.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp44
+	case 47:
+		tmp45, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp45 = tmp45
+		this._raw_Payload = tmp45
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp46 := NewAcquisition_MsgAcqResult()
+		err = tmp46.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp46
+	case 136:
+		tmp47, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp47 = tmp47
+		this._raw_Payload = tmp47
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp48 := NewObservation_MsgEphemerisGloDepD()
+		err = tmp48.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp48
+	case 73:
+		tmp49, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp49 = tmp49
+		this._raw_Payload = tmp49
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp50 := NewObservation_MsgObsDepC()
+		err = tmp50.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp50
+	case 65283:
+		tmp51, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp51 = tmp51
+		this._raw_Payload = tmp51
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp52 := NewSystem_MsgInsStatus()
+		err = tmp52.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp52
+	case 32513:
+		tmp53, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp53 = tmp53
+		this._raw_Payload = tmp53
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp54 := NewLinux_MsgLinuxMemStateDepA()
+		err = tmp54.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp54
+	case 545:
+		tmp55, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp55 = tmp55
+		this._raw_Payload = tmp55
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp56 := NewOrientation_MsgOrientEuler()
+		err = tmp56.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp56
+	case 65534:
+		tmp57, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp57 = tmp57
+		this._raw_Payload = tmp57
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp58 := NewSystem_MsgStatusReport()
+		err = tmp58.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp58
+	case 533:
+		tmp59, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp59 = tmp59
+		this._raw_Payload = tmp59
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp60 := NewNavigation_MsgVelEcefCov()
+		err = tmp60.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp60
+	case 513:
+		tmp61, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp61 = tmp61
+		this._raw_Payload = tmp61
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp62 := NewNavigation_MsgPosLlhDepA()
+		err = tmp62.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp62
+	case 46:
+		tmp63, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp63 = tmp63
+		this._raw_Payload = tmp63
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp64 := NewAcquisition_MsgAcqSvProfile()
+		err = tmp64.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp64
+	case 81:
+		tmp65, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp65 = tmp65
+		this._raw_Payload = tmp65
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp66 := NewPiksi_MsgSpecan()
+		err = tmp66.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp66
+	case 169:
+		tmp67, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp67 = tmp67
+		this._raw_Payload = tmp67
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp68 := NewFileIo_MsgFileioReadDirReq()
+		err = tmp68.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp68
+	case 162:
+		tmp69, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp69 = tmp69
+		this._raw_Payload = tmp69
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp70 := NewSettings_MsgSettingsReadByIndexReq()
+		err = tmp70.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp70
+	case 546:
+		tmp71, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp71 = tmp71
+		this._raw_Payload = tmp71
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp72 := NewOrientation_MsgAngularRate()
+		err = tmp72.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp72
+	case 531:
+		tmp73, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp73 = tmp73
+		this._raw_Payload = tmp73
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp74 := NewNavigation_MsgVelBody()
+		err = tmp74.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp74
+	case 224:
+		tmp75, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp75 = tmp75
+		this._raw_Payload = tmp75
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp76 := NewFlash_MsgFlashDone()
+		err = tmp76.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp76
+	case 24:
+		tmp77, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp77 = tmp77
+		this._raw_Payload = tmp77
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp78 := NewPiksi_MsgUartStateDepa()
+		err = tmp78.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp78
+	case 230:
+		tmp79, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp79 = tmp79
+		this._raw_Payload = tmp79
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp80 := NewFlash_MsgFlashProgram()
+		err = tmp80.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp80
+	case 65285:
+		tmp81, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp81 = tmp81
+		this._raw_Payload = tmp81
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp82 := NewSystem_MsgCsacTelemetryLabels()
+		err = tmp82.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp82
+	case 35:
+		tmp83, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp83 = tmp83
+		this._raw_Payload = tmp83
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp84 := NewPiksi_MsgInitBaseDep()
+		err = tmp84.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp84
+	case 1528:
+		tmp85, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp85 = tmp85
+		this._raw_Payload = tmp85
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp86 := NewSsr_MsgSsrTileDefinition()
+		err = tmp86.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp86
+	case 519:
+		tmp87, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp87 = tmp87
+		this._raw_Payload = tmp87
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp88 := NewNavigation_MsgBaselineHeadingDepA()
+		err = tmp88.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp88
+	case 20:
+		tmp89, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp89 = tmp89
+		this._raw_Payload = tmp89
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp90 := NewAcquisition_MsgAcqResultDepB()
+		err = tmp90.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp90
+	case 570:
+		tmp91, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp91 = tmp91
+		this._raw_Payload = tmp91
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp92 := NewNavigation_MsgUtcLeapSecond()
+		err = tmp92.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp92
+	case 32520:
+		tmp93, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp93 = tmp93
+		this._raw_Payload = tmp93
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp94 := NewLinux_MsgLinuxCpuState()
+		err = tmp94.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp94
+	case 1505:
+		tmp95, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp95 = tmp95
+		this._raw_Payload = tmp95
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp96 := NewSsr_MsgSsrCodeBiases()
+		err = tmp96.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp96
+	case 113:
+		tmp97, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp97 = tmp97
+		this._raw_Payload = tmp97
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp98 := NewObservation_MsgAlmanacGloDep()
+		err = tmp98.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp98
+	case 1515:
+		tmp99, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp99 = tmp99
+		this._raw_Payload = tmp99
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp100 := NewSsr_MsgSsrStecCorrectionDepA()
+		err = tmp100.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp100
+	case 558:
+		tmp101, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp101 = tmp101
+		this._raw_Payload = tmp101
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp102 := NewNavigation_MsgVelNedGnss()
+		err = tmp102.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp102
+	case 530:
+		tmp103, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp103 = tmp103
+		this._raw_Payload = tmp103
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp104 := NewNavigation_MsgVelNedCov()
+		err = tmp104.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp104
+	case 288:
+		tmp105, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp105 = tmp105
+		this._raw_Payload = tmp105
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp106 := NewTelemetry_MsgTelSv()
+		err = tmp106.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp106
+	case 1026:
+		tmp107, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp107 = tmp107
+		this._raw_Payload = tmp107
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp108 := NewLogging_MsgFwd()
+		err = tmp108.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp108
+	case 65286:
+		tmp109, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp109 = tmp109
+		this._raw_Payload = tmp109
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp110 := NewSystem_MsgInsUpdates()
+		err = tmp110.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp110
+	case 65284:
+		tmp111, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp111 = tmp111
+		this._raw_Payload = tmp111
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp112 := NewSystem_MsgCsacTelemetry()
+		err = tmp112.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp112
+	case 191:
+		tmp113, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp113 = tmp113
+		this._raw_Payload = tmp113
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp114 := NewPiksi_MsgFrontEndGain()
+		err = tmp114.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp114
+	case 520:
+		tmp115, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp115 = tmp115
+		this._raw_Payload = tmp115
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp116 := NewNavigation_MsgDops()
+		err = tmp116.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp116
+	case 27:
+		tmp117, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp117 = tmp117
+		this._raw_Payload = tmp117
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp118 := NewPiksi_MsgMaskSatelliteDep()
+		err = tmp118.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp118
+	case 1516:
+		tmp119, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp119 = tmp119
+		this._raw_Payload = tmp119
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp120 := NewSsr_MsgSsrCodePhaseBiasesBounds()
+		err = tmp120.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp120
+	case 150:
+		tmp121, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp121 = tmp121
+		this._raw_Payload = tmp121
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp122 := NewObservation_MsgGnssCapb()
+		err = tmp122.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp122
+	case 97:
+		tmp123, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp123 = tmp123
+		this._raw_Payload = tmp123
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp124 := NewTracking_MsgMeasurementState()
+		err = tmp124.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp124
+	case 529:
+		tmp125, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp125 = tmp125
+		this._raw_Payload = tmp125
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp126 := NewNavigation_MsgPosLlhCov()
+		err = tmp126.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp126
+	case 431:
+		tmp127, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp127 = tmp127
+		this._raw_Payload = tmp127
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp128 := NewSettings_MsgSettingsRegisterResp()
+		err = tmp128.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp128
+	case 65533:
+		tmp129, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp129 = tmp129
+		this._raw_Payload = tmp129
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp130 := NewSystem_MsgStatusJournal()
+		err = tmp130.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp130
+	case 145:
+		tmp131, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp131 = tmp131
+		this._raw_Payload = tmp131
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp132 := NewObservation_MsgSvConfigurationGpsDep()
+		err = tmp132.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp132
+	case 32522:
+		tmp133, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp133 = tmp133
+		this._raw_Payload = tmp133
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp134 := NewLinux_MsgLinuxSysState()
+		err = tmp134.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp134
+	case 3076:
+		tmp135, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp135 = tmp135
+		this._raw_Payload = tmp135
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp136 := NewSigning_MsgEcdsaCertificate()
+		err = tmp136.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp136
+	case 144:
+		tmp137, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp137 = tmp137
+		this._raw_Payload = tmp137
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp138 := NewObservation_MsgIono()
+		err = tmp138.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp138
+	case 65294:
+		tmp139, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp139 = tmp139
+		this._raw_Payload = tmp139
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp140 := NewSolutionMeta_MsgSolnMeta()
+		err = tmp140.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp140
+	case 532:
+		tmp141, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp141 = tmp141
+		this._raw_Payload = tmp141
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp142 := NewNavigation_MsgPosEcefCov()
+		err = tmp142.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp142
+	case 45:
+		tmp143, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp143 = tmp143
+		this._raw_Payload = tmp143
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp144 := NewTracking_MsgTrackingIq()
+		err = tmp144.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp144
+	case 561:
+		tmp145, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp145 = tmp145
+		this._raw_Payload = tmp145
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp146 := NewNavigation_MsgPosLlhCovGnss()
+		err = tmp146.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp146
+	case 1502:
+		tmp147, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp147 = tmp147
+		this._raw_Payload = tmp147
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp148 := NewSsr_MsgSsrOrbitClockBounds()
+		err = tmp148.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp148
+	case 149:
+		tmp149, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp149 = tmp149
+		this._raw_Payload = tmp149
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp150 := NewObservation_MsgEphemerisGalDepA()
+		err = tmp150.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp150
+	case 115:
+		tmp151, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp151 = tmp151
+		this._raw_Payload = tmp151
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp152 := NewObservation_MsgAlmanacGlo()
+		err = tmp152.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp152
+	case 32512:
+		tmp153, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp153 = tmp153
+		this._raw_Payload = tmp153
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp154 := NewLinux_MsgLinuxCpuStateDepA()
+		err = tmp154.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp154
+	case 32521:
+		tmp155, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp155 = tmp155
+		this._raw_Payload = tmp155
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp156 := NewLinux_MsgLinuxMemState()
+		err = tmp156.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp156
+	case 522:
+		tmp157, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp157 = tmp157
+		this._raw_Payload = tmp157
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp158 := NewNavigation_MsgPosLlh()
+		err = tmp158.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp158
+	case 104:
+		tmp159, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp159 = tmp159
+		this._raw_Payload = tmp159
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp160 := NewPiksi_MsgSetTime()
+		err = tmp160.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp160
+	case 32519:
+		tmp161, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp161 = tmp161
+		this._raw_Payload = tmp161
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp162 := NewLinux_MsgLinuxProcessFdSummary()
+		err = tmp162.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp162
+	case 4098:
+		tmp163, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp163 = tmp163
+		this._raw_Payload = tmp163
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp164 := NewFileIo_MsgFileioConfigResp()
+		err = tmp164.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp164
+	case 32517:
+		tmp165, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp165 = tmp165
+		this._raw_Payload = tmp165
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp166 := NewLinux_MsgLinuxSocketUsage()
+		err = tmp166.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp166
+	case 2306:
+		tmp167, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp167 = tmp167
+		this._raw_Payload = tmp167
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp168 := NewMag_MsgMagRaw()
+		err = tmp168.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp168
+	case 67:
+		tmp169, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp169 = tmp169
+		this._raw_Payload = tmp169
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp170 := NewObservation_MsgObsDepB()
+		err = tmp170.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp170
+	case 69:
+		tmp171, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp171 = tmp171
+		this._raw_Payload = tmp171
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp172 := NewObservation_MsgObsDepA()
+		err = tmp172.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp172
+	case 512:
+		tmp173, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp173 = tmp173
+		this._raw_Payload = tmp173
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp174 := NewNavigation_MsgPosEcefDepA()
+		err = tmp174.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp174
+	case 137:
+		tmp175, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp175 = tmp175
+		this._raw_Payload = tmp175
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp176 := NewObservation_MsgEphemerisBds()
+		err = tmp176.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp176
+	case 65288:
+		tmp177, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp177 = tmp177
+		this._raw_Payload = tmp177
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp178 := NewSystem_MsgPpsTime()
+		err = tmp178.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp178
+	case 3074:
+		tmp179, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp179 = tmp179
+		this._raw_Payload = tmp179
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp180 := NewSigning_MsgEd25519CertificateDep()
+		err = tmp180.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp180
+	case 562:
+		tmp181, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp181 = tmp181
+		this._raw_Payload = tmp181
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp182 := NewNavigation_MsgVelNedCovGnss()
+		err = tmp182.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp182
+	case 580:
+		tmp183, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp183 = tmp183
+		this._raw_Payload = tmp183
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp184 := NewNavigation_MsgReferenceFrameParam()
+		err = tmp184.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp184
+	case 524:
+		tmp185, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp185 = tmp185
+		this._raw_Payload = tmp185
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp186 := NewNavigation_MsgBaselineNed()
+		err = tmp186.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp186
+	case 161:
+		tmp187, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp187 = tmp187
+		this._raw_Payload = tmp187
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp188 := NewSettings_MsgSettingsSave()
+		err = tmp188.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp188
+	case 138:
+		tmp189, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp189 = tmp189
+		this._raw_Payload = tmp189
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp190 := NewObservation_MsgEphemerisGps()
+		err = tmp190.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp190
+	case 544:
+		tmp191, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp191 = tmp191
+		this._raw_Payload = tmp191
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp192 := NewOrientation_MsgOrientQuat()
+		err = tmp192.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp192
+	case 192:
+		tmp193, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp193 = tmp193
+		this._raw_Payload = tmp193
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp194 := NewPiksi_MsgCwResults()
+		err = tmp194.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp194
+	case 165:
+		tmp195, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp195 = tmp195
+		this._raw_Payload = tmp195
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp196 := NewSettings_MsgSettingsReadResp()
+		err = tmp196.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp196
+	case 33:
+		tmp197, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp197 = tmp197
+		this._raw_Payload = tmp197
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp198 := NewTracking_MsgTrackingStateDetailedDepA()
+		err = tmp198.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp198
+	case 1527:
+		tmp199, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp199 = tmp199
+		this._raw_Payload = tmp199
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp200 := NewSsr_MsgSsrTileDefinitionDepB()
+		err = tmp200.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp200
+	case 65535:
+		tmp201, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp201 = tmp201
+		this._raw_Payload = tmp201
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp202 := NewSystem_MsgHeartbeat()
+		err = tmp202.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp202
+	case 3081:
+		tmp203, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp203 = tmp203
+		this._raw_Payload = tmp203
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp204 := NewSigning_MsgCertificateChain()
+		err = tmp204.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp204
+	case 514:
+		tmp205, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp205 = tmp205
+		this._raw_Payload = tmp205
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp206 := NewNavigation_MsgBaselineEcefDepA()
+		err = tmp206.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp206
+	case 185:
+		tmp207, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp207 = tmp207
+		this._raw_Payload = tmp207
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp208 := NewPiksi_MsgCommandResp()
+		err = tmp208.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp208
+	case 180:
+		tmp209, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp209 = tmp209
+		this._raw_Payload = tmp209
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp210 := NewBootload_MsgBootloaderHandshakeResp()
+		err = tmp210.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp210
+	case 19:
+		tmp211, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp211 = tmp211
+		this._raw_Payload = tmp211
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp212 := NewTracking_MsgTrackingStateDepB()
+		err = tmp212.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp212
+	case 3015:
+		tmp213, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp213 = tmp213
+		this._raw_Payload = tmp213
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp214 := NewIntegrity_MsgSsrFlagIonoGridPoints()
+		err = tmp214.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp214
+	case 186:
+		tmp215, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp215 = tmp215
+		this._raw_Payload = tmp215
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp216 := NewPiksi_MsgNetworkStateReq()
+		err = tmp216.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp216
+	case 32518:
+		tmp217, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp217 = tmp217
+		this._raw_Payload = tmp217
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp218 := NewLinux_MsgLinuxProcessFdCount()
+		err = tmp218.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp218
+	case 1530:
+		tmp219, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp219 = tmp219
+		this._raw_Payload = tmp219
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp220 := NewSsr_MsgSsrGriddedCorrectionDepA()
+		err = tmp220.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp220
+	case 1541:
+		tmp221, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp221 = tmp221
+		this._raw_Payload = tmp221
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp222 := NewSsr_MsgSsrSatelliteApc()
+		err = tmp222.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp222
+	case 30583:
+		tmp223, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp223 = tmp223
+		this._raw_Payload = tmp223
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp224 := NewSbas_MsgSbasRaw()
+		err = tmp224.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp224
+	case 23:
+		tmp225, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp225 = tmp225
+		this._raw_Payload = tmp225
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp226 := NewPiksi_MsgThreadState()
+		err = tmp226.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp226
+	case 221:
+		tmp227, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp227 = tmp227
+		this._raw_Payload = tmp227
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp228 := NewBootload_MsgNapDeviceDnaResp()
+		err = tmp228.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp228
+	case 227:
+		tmp229, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp229 = tmp229
+		this._raw_Payload = tmp229
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp230 := NewFlash_MsgStmFlashLockSector()
+		err = tmp230.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp230
+	case 188:
+		tmp231, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp231 = tmp231
+		this._raw_Payload = tmp231
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp232 := NewPiksi_MsgCommandOutput()
+		err = tmp232.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp232
+	case 65282:
+		tmp233, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp233 = tmp233
+		this._raw_Payload = tmp233
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp234 := NewSystem_MsgDgnssStatus()
+		err = tmp234.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp234
+	case 178:
+		tmp235, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp235 = tmp235
+		this._raw_Payload = tmp235
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp236 := NewPiksi_MsgResetDep()
+		err = tmp236.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp236
+	case 1533:
+		tmp237, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp237 = tmp237
+		this._raw_Payload = tmp237
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp238 := NewSsr_MsgSsrStecCorrection()
+		err = tmp238.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp238
+	case 3011:
+		tmp239, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp239 = tmp239
+		this._raw_Payload = tmp239
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp240 := NewIntegrity_MsgSsrFlagTropoGridPoints()
+		err = tmp240.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp240
+	case 3005:
+		tmp241, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp241 = tmp241
+		this._raw_Payload = tmp241
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp242 := NewIntegrity_MsgSsrFlagSatellites()
+		err = tmp242.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp242
+	case 160:
+		tmp243, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp243 = tmp243
+		this._raw_Payload = tmp243
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp244 := NewSettings_MsgSettingsWrite()
+		err = tmp244.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp244
+	case 540:
+		tmp245, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp245 = tmp245
+		this._raw_Payload = tmp245
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp246 := NewNavigation_MsgVelCog()
+		err = tmp246.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp246
+	case 174:
+		tmp247, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp247 = tmp247
+		this._raw_Payload = tmp247
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp248 := NewSettings_MsgSettingsRegister()
+		err = tmp248.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp248
+	case 176:
+		tmp249, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp249 = tmp249
+		this._raw_Payload = tmp249
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp250 := NewBootload_MsgBootloaderHandshakeDepA()
+		err = tmp250.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp250
+	case 1024:
+		tmp251, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp251 = tmp251
+		this._raw_Payload = tmp251
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp252 := NewNdb_MsgNdbEvent()
+		err = tmp252.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp252
+	case 166:
+		tmp253, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp253 = tmp253
+		this._raw_Payload = tmp253
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp254 := NewSettings_MsgSettingsReadByIndexDone()
+		err = tmp254.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp254
+	case 114:
+		tmp255, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp255 = tmp255
+		this._raw_Payload = tmp255
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp256 := NewObservation_MsgAlmanacGps()
+		err = tmp256.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp256
+	case 564:
+		tmp257, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp257 = tmp257
+		this._raw_Payload = tmp257
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp258 := NewNavigation_MsgPosEcefCovGnss()
+		err = tmp258.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp258
+	case 259:
+		tmp259, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp259 = tmp259
+		this._raw_Payload = tmp259
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp260 := NewNavigation_MsgUtcTime()
+		err = tmp260.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp260
+	case 181:
+		tmp261, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp261 = tmp261
+		this._raw_Payload = tmp261
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp262 := NewPiksi_MsgDeviceMonitor()
+		err = tmp262.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp262
+	case 521:
+		tmp263, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp263 = tmp263
+		this._raw_Payload = tmp263
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp264 := NewNavigation_MsgPosEcef()
+		err = tmp264.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp264
+	case 2307:
+		tmp265, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp265 = tmp265
+		this._raw_Payload = tmp265
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp266 := NewVehicle_MsgOdometry()
+		err = tmp266.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp266
+	case 148:
+		tmp267, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp267 = tmp267
+		this._raw_Payload = tmp267
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp268 := NewObservation_MsgGroupDelay()
+		err = tmp268.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp268
+	case 117:
+		tmp269, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp269 = tmp269
+		this._raw_Payload = tmp269
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp270 := NewObservation_MsgGloBiases()
+		err = tmp270.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp270
+	case 3025:
+		tmp271, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp271 = tmp271
+		this._raw_Payload = tmp271
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp272 := NewIntegrity_MsgSsrFlagIonoGridPointSatLos()
+		err = tmp272.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp272
+	case 65:
+		tmp273, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp273 = tmp273
+		this._raw_Payload = tmp273
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp274 := NewTracking_MsgTrackingState()
+		err = tmp274.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp274
+	case 1534:
+		tmp275, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp275 = tmp275
+		this._raw_Payload = tmp275
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp276 := NewSsr_MsgSsrGriddedCorrectionBounds()
+		err = tmp276.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp276
+	case 44:
+		tmp277, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp277 = tmp277
+		this._raw_Payload = tmp277
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp278 := NewTracking_MsgTrackingIqDepB()
+		err = tmp278.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp278
+	case 3073:
+		tmp279, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp279 = tmp279
+		this._raw_Payload = tmp279
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp280 := NewSigning_MsgEd25519SignatureDepA()
+		err = tmp280.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp280
+	case 231:
+		tmp281, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp281 = tmp281
+		this._raw_Payload = tmp281
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp282 := NewFlash_MsgFlashReadReq()
+		err = tmp282.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp282
+	case 140:
+		tmp283, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp283 = tmp283
+		this._raw_Payload = tmp283
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp284 := NewObservation_MsgEphemerisSbas()
+		err = tmp284.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp284
+	case 226:
+		tmp285, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp285 = tmp285
+		this._raw_Payload = tmp285
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp286 := NewFlash_MsgFlashErase()
+		err = tmp286.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp286
+	case 515:
+		tmp287, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp287 = tmp287
+		this._raw_Payload = tmp287
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp288 := NewNavigation_MsgBaselineNedDepA()
+		err = tmp288.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp288
+	case 2308:
+		tmp289, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp289 = tmp289
+		this._raw_Payload = tmp289
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp290 := NewVehicle_MsgWheeltick()
+		err = tmp290.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp290
+	case 535:
+		tmp291, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp291 = tmp291
+		this._raw_Payload = tmp291
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp292 := NewNavigation_MsgProtectionLevel()
+		err = tmp292.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp292
+	case 179:
+		tmp293, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp293 = tmp293
+		this._raw_Payload = tmp293
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp294 := NewBootload_MsgBootloaderHandshakeReq()
+		err = tmp294.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp294
+	case 172:
+		tmp295, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp295 = tmp295
+		this._raw_Payload = tmp295
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp296 := NewFileIo_MsgFileioRemove()
+		err = tmp296.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp296
+	case 130:
+		tmp297, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp297 = tmp297
+		this._raw_Payload = tmp297
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp298 := NewObservation_MsgEphemerisSbasDepA()
+		err = tmp298.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp298
+	case 187:
+		tmp299, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp299 = tmp299
+		this._raw_Payload = tmp299
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp300 := NewPiksi_MsgNetworkStateResp()
+		err = tmp300.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp300
+	case 1501:
+		tmp301, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp301 = tmp301
+		this._raw_Payload = tmp301
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp302 := NewSsr_MsgSsrOrbitClock()
+		err = tmp302.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp302
+	case 21:
+		tmp303, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp303 = tmp303
+		this._raw_Payload = tmp303
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp304 := NewAcquisition_MsgAcqResultDepA()
+		err = tmp304.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp304
+	case 1500:
+		tmp305, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp305 = tmp305
+		this._raw_Payload = tmp305
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp306 := NewSsr_MsgSsrOrbitClockDepA()
+		err = tmp306.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp306
+	case 225:
+		tmp307, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp307 = tmp307
+		this._raw_Payload = tmp307
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp308 := NewFlash_MsgFlashReadResp()
+		err = tmp308.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp308
+	case 534:
+		tmp309, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp309 = tmp309
+		this._raw_Payload = tmp309
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp310 := NewNavigation_MsgProtectionLevelDepA()
+		err = tmp310.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp310
+	case 232:
+		tmp311, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp311 = tmp311
+		this._raw_Payload = tmp311
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp312 := NewFlash_MsgStmUniqueIdReq()
+		err = tmp312.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp312
+	case 2304:
+		tmp313, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp313 = tmp313
+		this._raw_Payload = tmp313
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp314 := NewImu_MsgImuRaw()
+		err = tmp314.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp314
+	case 229:
+		tmp315, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp315 = tmp315
+		this._raw_Payload = tmp315
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp316 := NewFlash_MsgStmUniqueIdResp()
+		err = tmp316.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp316
+	case 32515:
+		tmp317, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp317 = tmp317
+		this._raw_Payload = tmp317
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp318 := NewLinux_MsgLinuxProcessSocketCounts()
+		err = tmp318.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp318
+	case 65295:
+		tmp319, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp319 = tmp319
+		this._raw_Payload = tmp319
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp320 := NewSolutionMeta_MsgSolnMetaDepA()
+		err = tmp320.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp320
+	case 3075:
+		tmp321, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp321 = tmp321
+		this._raw_Payload = tmp321
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp322 := NewSigning_MsgEd25519SignatureDepB()
+		err = tmp322.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp322
+	case 258:
+		tmp323, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp323 = tmp323
+		this._raw_Payload = tmp323
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp324 := NewNavigation_MsgGpsTime()
+		err = tmp324.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp324
+	case 32516:
+		tmp325, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp325 = tmp325
+		this._raw_Payload = tmp325
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp326 := NewLinux_MsgLinuxProcessSocketQueues()
+		err = tmp326.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp326
+	case 170:
+		tmp327, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp327 = tmp327
+		this._raw_Payload = tmp327
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp328 := NewFileIo_MsgFileioReadDirResp()
+		err = tmp328.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp328
+	case 256:
+		tmp329, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp329 = tmp329
+		this._raw_Payload = tmp329
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp330 := NewNavigation_MsgGpsTimeDepA()
+		err = tmp330.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp330
+	case 32514:
+		tmp331, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp331 = tmp331
+		this._raw_Payload = tmp331
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp332 := NewLinux_MsgLinuxSysStateDepA()
+		err = tmp332.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp332
+	case 518:
+		tmp333, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp333 = tmp333
+		this._raw_Payload = tmp333
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp334 := NewNavigation_MsgDopsDepA()
+		err = tmp334.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp334
+	case 553:
+		tmp335, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp335 = tmp335
+		this._raw_Payload = tmp335
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp336 := NewNavigation_MsgPosEcefGnss()
+		err = tmp336.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp336
+	case 517:
+		tmp337, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp337 = tmp337
+		this._raw_Payload = tmp337
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp338 := NewNavigation_MsgVelNedDepA()
+		err = tmp338.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp338
+	case 164:
+		tmp339, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp339 = tmp339
+		this._raw_Payload = tmp339
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp340 := NewSettings_MsgSettingsReadReq()
+		err = tmp340.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp340
+	case 182:
+		tmp341, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp341 = tmp341
+		this._raw_Payload = tmp341
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp342 := NewPiksi_MsgReset()
+		err = tmp342.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp342
+	case 189:
+		tmp343, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp343 = tmp343
+		this._raw_Payload = tmp343
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp344 := NewPiksi_MsgNetworkBandwidthUsage()
+		err = tmp344.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp344
+	case 72:
+		tmp345, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp345 = tmp345
+		this._raw_Payload = tmp345
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp346 := NewObservation_MsgBasePosEcef()
+		err = tmp346.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp346
+	case 71:
+		tmp347, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp347 = tmp347
+		this._raw_Payload = tmp347
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp348 := NewObservation_MsgEphemerisDepC()
+		err = tmp348.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp348
+	case 1025:
+		tmp349, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp349 = tmp349
+		this._raw_Payload = tmp349
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp350 := NewLogging_MsgLog()
+		err = tmp350.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp350
+	case 168:
+		tmp351, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp351 = tmp351
+		this._raw_Payload = tmp351
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp352 := NewFileIo_MsgFileioReadReq()
+		err = tmp352.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp352
+	case 581:
+		tmp353, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp353 = tmp353
+		this._raw_Payload = tmp353
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp354 := NewNavigation_MsgPoseRelative()
+		err = tmp354.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp354
+	case 171:
+		tmp355, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp355 = tmp355
+		this._raw_Payload = tmp355
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp356 := NewFileIo_MsgFileioWriteResp()
+		err = tmp356.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp356
+	case 70:
+		tmp357, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp357 = tmp357
+		this._raw_Payload = tmp357
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp358 := NewObservation_MsgEphemerisDepB()
+		err = tmp358.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp358
+	case 28:
+		tmp359, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp359 = tmp359
+		this._raw_Payload = tmp359
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp360 := NewTracking_MsgTrackingIqDepA()
+		err = tmp360.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp360
+	case 193:
+		tmp361, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp361 = tmp361
+		this._raw_Payload = tmp361
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp362 := NewPiksi_MsgCwStart()
+		err = tmp362.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp362
+	case 133:
+		tmp363, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp363 = tmp363
+		this._raw_Payload = tmp363
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp364 := NewObservation_MsgEphemerisGloDepB()
+		err = tmp364.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp364
+	case 129:
+		tmp365, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp365 = tmp365
+		this._raw_Payload = tmp365
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp366 := NewObservation_MsgEphemerisGpsDepE()
+		err = tmp366.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp366
+	case 74:
+		tmp367, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp367 = tmp367
+		this._raw_Payload = tmp367
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp368 := NewObservation_MsgObs()
+		err = tmp368.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp368
+	case 3080:
+		tmp369, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp369 = tmp369
+		this._raw_Payload = tmp369
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp370 := NewSigning_MsgEcdsaSignature()
+		err = tmp370.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp370
+	case 151:
+		tmp371, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp371 = tmp371
+		this._raw_Payload = tmp371
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp372 := NewObservation_MsgSvAzEl()
+		err = tmp372.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp372
+	case 16:
+		tmp373, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp373 = tmp373
+		this._raw_Payload = tmp373
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp374 := NewLogging_MsgPrintDep()
+		err = tmp374.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp374
+	case 147:
+		tmp375, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp375 = tmp375
+		this._raw_Payload = tmp375
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp376 := NewObservation_MsgGroupDelayDepB()
+		err = tmp376.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp376
+	case 527:
+		tmp377, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp377 = tmp377
+		this._raw_Payload = tmp377
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp378 := NewOrientation_MsgBaselineHeading()
+		err = tmp378.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp378
+	case 134:
+		tmp379, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp379 = tmp379
+		this._raw_Payload = tmp379
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp380 := NewObservation_MsgEphemerisGpsDepF()
+		err = tmp380.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp380
+	case 3078:
+		tmp381, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp381 = tmp381
+		this._raw_Payload = tmp381
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp382 := NewSigning_MsgEcdsaSignatureDepA()
+		err = tmp382.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp382
+	case 80:
+		tmp383, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp383 = tmp383
+		this._raw_Payload = tmp383
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp384 := NewPiksi_MsgSpecanDep()
+		err = tmp384.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp384
+	case 68:
+		tmp385, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp385 = tmp385
+		this._raw_Payload = tmp385
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp386 := NewObservation_MsgBasePosLlh()
+		err = tmp386.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp386
+	case 1532:
+		tmp387, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp387 = tmp387
+		this._raw_Payload = tmp387
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp388 := NewSsr_MsgSsrGriddedCorrection()
+		err = tmp388.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp388
+	case 1503:
+		tmp389, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp389 = tmp389
+		this._raw_Payload = tmp389
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp390 := NewSsr_MsgSsrOrbitClockBoundsDegradation()
+		err = tmp390.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp390
+	case 516:
+		tmp391, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp391 = tmp391
+		this._raw_Payload = tmp391
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp392 := NewNavigation_MsgVelEcefDepA()
+		err = tmp392.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp392
+	case 26:
+		tmp393, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp393 = tmp393
+		this._raw_Payload = tmp393
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp394 := NewObservation_MsgEphemerisDepA()
+		err = tmp394.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp394
+	case 139:
+		tmp395, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp395 = tmp395
+		this._raw_Payload = tmp395
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp396 := NewObservation_MsgEphemerisGlo()
+		err = tmp396.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp396
+	case 65280:
+		tmp397, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp397 = tmp397
+		this._raw_Payload = tmp397
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp398 := NewSystem_MsgStartup()
+		err = tmp398.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp398
+	case 31:
+		tmp399, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp399 = tmp399
+		this._raw_Payload = tmp399
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp400 := NewAcquisition_MsgAcqResultDepC()
+		err = tmp400.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp400
+	case 565:
+		tmp401, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp401 = tmp401
+		this._raw_Payload = tmp401
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp402 := NewNavigation_MsgVelEcefCovGnss()
+		err = tmp402.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp402
+	case 135:
+		tmp403, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp403 = tmp403
+		this._raw_Payload = tmp403
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp404 := NewObservation_MsgEphemerisGloDepC()
+		err = tmp404.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp404
+	case 3026:
+		tmp405, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp405 = tmp405
+		this._raw_Payload = tmp405
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp406 := NewIntegrity_MsgAcknowledge()
+		err = tmp406.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp406
+	case 34:
+		tmp407, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp407 = tmp407
+		this._raw_Payload = tmp407
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp408 := NewPiksi_MsgResetFilters()
+		err = tmp408.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp408
+	case 1600:
+		tmp409, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp409 = tmp409
+		this._raw_Payload = tmp409
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp410 := NewObservation_MsgOsr()
+		err = tmp410.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp410
+	case 536:
+		tmp411, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp411 = tmp411
+		this._raw_Payload = tmp411
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp412 := NewNavigation_MsgPosLlhAcc()
+		err = tmp412.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp412
+	case 65287:
+		tmp413, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp413 = tmp413
+		this._raw_Payload = tmp413
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp414 := NewSystem_MsgGnssTimeOffset()
+		err = tmp414.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp414
+	case 1526:
+		tmp415, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp415 = tmp415
+		this._raw_Payload = tmp415
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp416 := NewSsr_MsgSsrTileDefinitionDepA()
+		err = tmp416.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp416
+	case 1540:
+		tmp417, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp417 = tmp417
+		this._raw_Payload = tmp417
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp418 := NewSsr_MsgSsrSatelliteApcDep()
+		err = tmp418.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp418
+	case 29:
+		tmp419, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp419 = tmp419
+		this._raw_Payload = tmp419
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp420 := NewPiksi_MsgUartState()
+		err = tmp420.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp420
+	case 132:
+		tmp421, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp421 = tmp421
+		this._raw_Payload = tmp421
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp422 := NewObservation_MsgEphemerisSbasDepB()
+		err = tmp422.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp422
+	case 1510:
+		tmp423, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp423 = tmp423
+		this._raw_Payload = tmp423
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp424 := NewSsr_MsgSsrPhaseBiases()
+		err = tmp424.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp424
+	case 65290:
+		tmp425, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp425 = tmp425
+		this._raw_Payload = tmp425
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp426 := NewSystem_MsgGroupMeta()
+		err = tmp426.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp426
+	case 175:
+		tmp427, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp427 = tmp427
+		this._raw_Payload = tmp427
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp428 := NewSettings_MsgSettingsWriteResp()
+		err = tmp428.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp428
+	case 557:
+		tmp429, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp429 = tmp429
+		this._raw_Payload = tmp429
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp430 := NewNavigation_MsgVelEcefGnss()
+		err = tmp430.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp430
+	case 526:
+		tmp431, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp431 = tmp431
+		this._raw_Payload = tmp431
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp432 := NewNavigation_MsgVelNed()
+		err = tmp432.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp432
+	case 1520:
+		tmp433, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp433 = tmp433
+		this._raw_Payload = tmp433
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp434 := NewSsr_MsgSsrGriddedCorrectionNoStdDepA()
+		err = tmp434.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp434
+	case 2305:
+		tmp435, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp435 = tmp435
+		this._raw_Payload = tmp435
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp436 := NewImu_MsgImuAux()
+		err = tmp436.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp436
+	case 190:
+		tmp437, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp437 = tmp437
+		this._raw_Payload = tmp437
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp438 := NewPiksi_MsgCellModemStatus()
+		err = tmp438.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp438
+	case 1531:
+		tmp439, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp439 = tmp439
+		this._raw_Payload = tmp439
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp440 := NewSsr_MsgSsrStecCorrectionDep()
+		err = tmp440.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp440
+	case 528:
+		tmp441, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp441 = tmp441
+		this._raw_Payload = tmp441
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp442 := NewNavigation_MsgAgeCorrections()
+		err = tmp442.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp442
+	case 3077:
+		tmp443, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp443 = tmp443
+		this._raw_Payload = tmp443
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp444 := NewSigning_MsgCertificateChainDep()
+		err = tmp444.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp444
+	case 25:
+		tmp445, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp445 = tmp445
+		this._raw_Payload = tmp445
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp446 := NewPiksi_MsgIarState()
+		err = tmp446.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp446
+	case 43:
+		tmp447, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp447 = tmp447
+		this._raw_Payload = tmp447
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp448 := NewPiksi_MsgMaskSatellite()
+		err = tmp448.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp448
+	case 228:
+		tmp449, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp449 = tmp449
+		this._raw_Payload = tmp449
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp450 := NewFlash_MsgStmFlashUnlockSector()
+		err = tmp450.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp450
+	case 523:
+		tmp451, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp451 = tmp451
+		this._raw_Payload = tmp451
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp452 := NewNavigation_MsgBaselineEcef()
+		err = tmp452.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp452
+	case 554:
+		tmp453, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp453 = tmp453
+		this._raw_Payload = tmp453
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp454 := NewNavigation_MsgPosLlhGnss()
+		err = tmp454.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp454
+	case 65289:
+		tmp455, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp455 = tmp455
+		this._raw_Payload = tmp455
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp456 := NewSystem_MsgSensorAidEvent()
+		err = tmp456.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp456
+	case 22:
+		tmp457, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp457 = tmp457
+		this._raw_Payload = tmp457
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp458 := NewTracking_MsgTrackingStateDepA()
+		err = tmp458.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp458
+	case 3001:
+		tmp459, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp459 = tmp459
+		this._raw_Payload = tmp459
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp460 := NewIntegrity_MsgSsrFlagHighLevel()
+		err = tmp460.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp460
+	case 30:
+		tmp461, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp461 = tmp461
+		this._raw_Payload = tmp461
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp462 := NewAcquisition_MsgAcqSvProfileDep()
+		err = tmp462.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp462
+	case 261:
+		tmp463, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp463 = tmp463
+		this._raw_Payload = tmp463
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp464 := NewNavigation_MsgUtcTimeGnss()
+		err = tmp464.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp464
+	case 3021:
+		tmp465, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp465 = tmp465
+		this._raw_Payload = tmp465
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp466 := NewIntegrity_MsgSsrFlagIonoTileSatLos()
+		err = tmp466.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp466
+	case 173:
+		tmp467, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp467 = tmp467
+		this._raw_Payload = tmp467
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp468 := NewFileIo_MsgFileioWriteReq()
+		err = tmp468.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp468
+	case 128:
+		tmp469, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp469 = tmp469
+		this._raw_Payload = tmp469
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp470 := NewObservation_MsgEphemerisDepD()
+		err = tmp470.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp470
+	case 222:
+		tmp471, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp471 = tmp471
+		this._raw_Payload = tmp471
+		_io__raw_Payload := kaitai.NewStream(bytes.NewReader(this._raw_Payload))
+		tmp472 := NewBootload_MsgNapDeviceDnaReq()
+		err = tmp472.Read(_io__raw_Payload, this, this._root)
+		if err != nil {
+			return err
+		}
+		this.Payload = tmp472
+	default:
+		tmp473, err := this._io.ReadBytes(int(this.Length))
+		if err != nil {
+			return err
+		}
+		tmp473 = tmp473
+		this._raw_Payload = tmp473
+	}
 	tmp474, err := this._io.ReadU2le()
 	if err != nil {
 		return err
 	}
-	this.Sender = uint16(tmp474)
-	tmp475, err := this._io.ReadU1()
-	if err != nil {
-		return err
-	}
-	this.Length = tmp475
+	this.Crc = uint16(tmp474)
 	return err
 }

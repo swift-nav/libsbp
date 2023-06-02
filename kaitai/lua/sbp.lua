@@ -272,957 +272,6 @@ function Sbp.SbpMessage:_init(io, parent, root)
 end
 
 function Sbp.SbpMessage:_read()
-  self.header = Sbp.SbpHeader(self._io, self, self._root)
-  local _on = self.header.msg_type
-  if _on == 525 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelEcef(_io, self, self._root)
-  elseif _on == 141 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisGal(_io, self, self._root)
-  elseif _on == 243 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Flash.MsgM25FlashWriteStatus(_io, self, self._root)
-  elseif _on == 2048 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = User.MsgUserData(_io, self, self._root)
-  elseif _on == 3079 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Signing.MsgEcdsaSignatureDepB(_io, self, self._root)
-  elseif _on == 184 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgCommandReq(_io, self, self._root)
-  elseif _on == 105 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgAlmanac(_io, self, self._root)
-  elseif _on == 142 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisQzss(_io, self, self._root)
-  elseif _on == 112 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgAlmanacGpsDep(_io, self, self._root)
-  elseif _on == 177 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Bootload.MsgBootloaderJumpToApp(_io, self, self._root)
-  elseif _on == 163 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = FileIo.MsgFileioReadResp(_io, self, self._root)
-  elseif _on == 257 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = ExtEvents.MsgExtEvent(_io, self, self._root)
-  elseif _on == 4097 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = FileIo.MsgFileioConfigReq(_io, self, self._root)
-  elseif _on == 17 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Tracking.MsgTrackingStateDetailedDep(_io, self, self._root)
-  elseif _on == 260 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgGpsTimeGnss(_io, self, self._root)
-  elseif _on == 1525 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrGridDefinitionDepA(_io, self, self._root)
-  elseif _on == 131 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisGloDepA(_io, self, self._root)
-  elseif _on == 167 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Settings.MsgSettingsReadByIndexResp(_io, self, self._root)
-  elseif _on == 146 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgGroupDelayDepA(_io, self, self._root)
-  elseif _on == 47 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Acquisition.MsgAcqResult(_io, self, self._root)
-  elseif _on == 136 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisGloDepD(_io, self, self._root)
-  elseif _on == 73 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgObsDepC(_io, self, self._root)
-  elseif _on == 65283 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgInsStatus(_io, self, self._root)
-  elseif _on == 32513 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxMemStateDepA(_io, self, self._root)
-  elseif _on == 545 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Orientation.MsgOrientEuler(_io, self, self._root)
-  elseif _on == 65534 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgStatusReport(_io, self, self._root)
-  elseif _on == 533 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelEcefCov(_io, self, self._root)
-  elseif _on == 513 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosLlhDepA(_io, self, self._root)
-  elseif _on == 46 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Acquisition.MsgAcqSvProfile(_io, self, self._root)
-  elseif _on == 81 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgSpecan(_io, self, self._root)
-  elseif _on == 169 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = FileIo.MsgFileioReadDirReq(_io, self, self._root)
-  elseif _on == 162 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Settings.MsgSettingsReadByIndexReq(_io, self, self._root)
-  elseif _on == 546 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Orientation.MsgAngularRate(_io, self, self._root)
-  elseif _on == 531 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelBody(_io, self, self._root)
-  elseif _on == 224 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Flash.MsgFlashDone(_io, self, self._root)
-  elseif _on == 24 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgUartStateDepa(_io, self, self._root)
-  elseif _on == 230 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Flash.MsgFlashProgram(_io, self, self._root)
-  elseif _on == 65285 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgCsacTelemetryLabels(_io, self, self._root)
-  elseif _on == 35 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgInitBaseDep(_io, self, self._root)
-  elseif _on == 1528 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrTileDefinition(_io, self, self._root)
-  elseif _on == 519 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgBaselineHeadingDepA(_io, self, self._root)
-  elseif _on == 20 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Acquisition.MsgAcqResultDepB(_io, self, self._root)
-  elseif _on == 570 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgUtcLeapSecond(_io, self, self._root)
-  elseif _on == 32520 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxCpuState(_io, self, self._root)
-  elseif _on == 1505 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrCodeBiases(_io, self, self._root)
-  elseif _on == 113 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgAlmanacGloDep(_io, self, self._root)
-  elseif _on == 1515 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrStecCorrectionDepA(_io, self, self._root)
-  elseif _on == 558 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelNedGnss(_io, self, self._root)
-  elseif _on == 530 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelNedCov(_io, self, self._root)
-  elseif _on == 288 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Telemetry.MsgTelSv(_io, self, self._root)
-  elseif _on == 1026 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Logging.MsgFwd(_io, self, self._root)
-  elseif _on == 65286 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgInsUpdates(_io, self, self._root)
-  elseif _on == 65284 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgCsacTelemetry(_io, self, self._root)
-  elseif _on == 191 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgFrontEndGain(_io, self, self._root)
-  elseif _on == 520 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgDops(_io, self, self._root)
-  elseif _on == 27 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgMaskSatelliteDep(_io, self, self._root)
-  elseif _on == 1516 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrCodePhaseBiasesBounds(_io, self, self._root)
-  elseif _on == 150 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgGnssCapb(_io, self, self._root)
-  elseif _on == 97 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Tracking.MsgMeasurementState(_io, self, self._root)
-  elseif _on == 529 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosLlhCov(_io, self, self._root)
-  elseif _on == 431 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Settings.MsgSettingsRegisterResp(_io, self, self._root)
-  elseif _on == 65533 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgStatusJournal(_io, self, self._root)
-  elseif _on == 145 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgSvConfigurationGpsDep(_io, self, self._root)
-  elseif _on == 32522 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxSysState(_io, self, self._root)
-  elseif _on == 3076 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Signing.MsgEcdsaCertificate(_io, self, self._root)
-  elseif _on == 144 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgIono(_io, self, self._root)
-  elseif _on == 65294 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = SolutionMeta.MsgSolnMeta(_io, self, self._root)
-  elseif _on == 532 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosEcefCov(_io, self, self._root)
-  elseif _on == 45 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Tracking.MsgTrackingIq(_io, self, self._root)
-  elseif _on == 561 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosLlhCovGnss(_io, self, self._root)
-  elseif _on == 1502 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrOrbitClockBounds(_io, self, self._root)
-  elseif _on == 149 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisGalDepA(_io, self, self._root)
-  elseif _on == 115 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgAlmanacGlo(_io, self, self._root)
-  elseif _on == 32512 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxCpuStateDepA(_io, self, self._root)
-  elseif _on == 32521 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxMemState(_io, self, self._root)
-  elseif _on == 522 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosLlh(_io, self, self._root)
-  elseif _on == 104 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgSetTime(_io, self, self._root)
-  elseif _on == 32519 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxProcessFdSummary(_io, self, self._root)
-  elseif _on == 4098 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = FileIo.MsgFileioConfigResp(_io, self, self._root)
-  elseif _on == 32517 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxSocketUsage(_io, self, self._root)
-  elseif _on == 2306 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Mag.MsgMagRaw(_io, self, self._root)
-  elseif _on == 67 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgObsDepB(_io, self, self._root)
-  elseif _on == 69 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgObsDepA(_io, self, self._root)
-  elseif _on == 512 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosEcefDepA(_io, self, self._root)
-  elseif _on == 137 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisBds(_io, self, self._root)
-  elseif _on == 65288 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgPpsTime(_io, self, self._root)
-  elseif _on == 3074 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Signing.MsgEd25519CertificateDep(_io, self, self._root)
-  elseif _on == 562 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelNedCovGnss(_io, self, self._root)
-  elseif _on == 580 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgReferenceFrameParam(_io, self, self._root)
-  elseif _on == 524 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgBaselineNed(_io, self, self._root)
-  elseif _on == 161 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Settings.MsgSettingsSave(_io, self, self._root)
-  elseif _on == 138 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisGps(_io, self, self._root)
-  elseif _on == 544 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Orientation.MsgOrientQuat(_io, self, self._root)
-  elseif _on == 192 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgCwResults(_io, self, self._root)
-  elseif _on == 165 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Settings.MsgSettingsReadResp(_io, self, self._root)
-  elseif _on == 33 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Tracking.MsgTrackingStateDetailedDepA(_io, self, self._root)
-  elseif _on == 1527 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrTileDefinitionDepB(_io, self, self._root)
-  elseif _on == 65535 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgHeartbeat(_io, self, self._root)
-  elseif _on == 3081 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Signing.MsgCertificateChain(_io, self, self._root)
-  elseif _on == 514 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgBaselineEcefDepA(_io, self, self._root)
-  elseif _on == 185 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgCommandResp(_io, self, self._root)
-  elseif _on == 180 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Bootload.MsgBootloaderHandshakeResp(_io, self, self._root)
-  elseif _on == 19 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Tracking.MsgTrackingStateDepB(_io, self, self._root)
-  elseif _on == 3015 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Integrity.MsgSsrFlagIonoGridPoints(_io, self, self._root)
-  elseif _on == 186 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgNetworkStateReq(_io, self, self._root)
-  elseif _on == 32518 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxProcessFdCount(_io, self, self._root)
-  elseif _on == 1530 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrGriddedCorrectionDepA(_io, self, self._root)
-  elseif _on == 1541 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrSatelliteApc(_io, self, self._root)
-  elseif _on == 30583 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Sbas.MsgSbasRaw(_io, self, self._root)
-  elseif _on == 23 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgThreadState(_io, self, self._root)
-  elseif _on == 221 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Bootload.MsgNapDeviceDnaResp(_io, self, self._root)
-  elseif _on == 227 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Flash.MsgStmFlashLockSector(_io, self, self._root)
-  elseif _on == 188 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgCommandOutput(_io, self, self._root)
-  elseif _on == 65282 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgDgnssStatus(_io, self, self._root)
-  elseif _on == 178 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgResetDep(_io, self, self._root)
-  elseif _on == 1533 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrStecCorrection(_io, self, self._root)
-  elseif _on == 3011 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Integrity.MsgSsrFlagTropoGridPoints(_io, self, self._root)
-  elseif _on == 3005 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Integrity.MsgSsrFlagSatellites(_io, self, self._root)
-  elseif _on == 160 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Settings.MsgSettingsWrite(_io, self, self._root)
-  elseif _on == 540 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelCog(_io, self, self._root)
-  elseif _on == 174 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Settings.MsgSettingsRegister(_io, self, self._root)
-  elseif _on == 176 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Bootload.MsgBootloaderHandshakeDepA(_io, self, self._root)
-  elseif _on == 1024 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ndb.MsgNdbEvent(_io, self, self._root)
-  elseif _on == 166 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Settings.MsgSettingsReadByIndexDone(_io, self, self._root)
-  elseif _on == 114 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgAlmanacGps(_io, self, self._root)
-  elseif _on == 564 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosEcefCovGnss(_io, self, self._root)
-  elseif _on == 259 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgUtcTime(_io, self, self._root)
-  elseif _on == 181 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgDeviceMonitor(_io, self, self._root)
-  elseif _on == 521 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosEcef(_io, self, self._root)
-  elseif _on == 2307 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Vehicle.MsgOdometry(_io, self, self._root)
-  elseif _on == 148 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgGroupDelay(_io, self, self._root)
-  elseif _on == 117 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgGloBiases(_io, self, self._root)
-  elseif _on == 3025 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Integrity.MsgSsrFlagIonoGridPointSatLos(_io, self, self._root)
-  elseif _on == 65 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Tracking.MsgTrackingState(_io, self, self._root)
-  elseif _on == 1534 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrGriddedCorrectionBounds(_io, self, self._root)
-  elseif _on == 44 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Tracking.MsgTrackingIqDepB(_io, self, self._root)
-  elseif _on == 3073 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Signing.MsgEd25519SignatureDepA(_io, self, self._root)
-  elseif _on == 231 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Flash.MsgFlashReadReq(_io, self, self._root)
-  elseif _on == 140 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisSbas(_io, self, self._root)
-  elseif _on == 226 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Flash.MsgFlashErase(_io, self, self._root)
-  elseif _on == 515 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgBaselineNedDepA(_io, self, self._root)
-  elseif _on == 2308 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Vehicle.MsgWheeltick(_io, self, self._root)
-  elseif _on == 535 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgProtectionLevel(_io, self, self._root)
-  elseif _on == 179 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Bootload.MsgBootloaderHandshakeReq(_io, self, self._root)
-  elseif _on == 172 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = FileIo.MsgFileioRemove(_io, self, self._root)
-  elseif _on == 130 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisSbasDepA(_io, self, self._root)
-  elseif _on == 187 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgNetworkStateResp(_io, self, self._root)
-  elseif _on == 1501 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrOrbitClock(_io, self, self._root)
-  elseif _on == 21 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Acquisition.MsgAcqResultDepA(_io, self, self._root)
-  elseif _on == 1500 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrOrbitClockDepA(_io, self, self._root)
-  elseif _on == 225 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Flash.MsgFlashReadResp(_io, self, self._root)
-  elseif _on == 534 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgProtectionLevelDepA(_io, self, self._root)
-  elseif _on == 232 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Flash.MsgStmUniqueIdReq(_io, self, self._root)
-  elseif _on == 2304 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Imu.MsgImuRaw(_io, self, self._root)
-  elseif _on == 229 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Flash.MsgStmUniqueIdResp(_io, self, self._root)
-  elseif _on == 32515 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxProcessSocketCounts(_io, self, self._root)
-  elseif _on == 65295 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = SolutionMeta.MsgSolnMetaDepA(_io, self, self._root)
-  elseif _on == 3075 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Signing.MsgEd25519SignatureDepB(_io, self, self._root)
-  elseif _on == 258 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgGpsTime(_io, self, self._root)
-  elseif _on == 32516 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxProcessSocketQueues(_io, self, self._root)
-  elseif _on == 170 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = FileIo.MsgFileioReadDirResp(_io, self, self._root)
-  elseif _on == 256 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgGpsTimeDepA(_io, self, self._root)
-  elseif _on == 32514 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Linux.MsgLinuxSysStateDepA(_io, self, self._root)
-  elseif _on == 518 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgDopsDepA(_io, self, self._root)
-  elseif _on == 553 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosEcefGnss(_io, self, self._root)
-  elseif _on == 517 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelNedDepA(_io, self, self._root)
-  elseif _on == 164 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Settings.MsgSettingsReadReq(_io, self, self._root)
-  elseif _on == 182 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgReset(_io, self, self._root)
-  elseif _on == 189 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgNetworkBandwidthUsage(_io, self, self._root)
-  elseif _on == 72 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgBasePosEcef(_io, self, self._root)
-  elseif _on == 71 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisDepC(_io, self, self._root)
-  elseif _on == 1025 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Logging.MsgLog(_io, self, self._root)
-  elseif _on == 168 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = FileIo.MsgFileioReadReq(_io, self, self._root)
-  elseif _on == 581 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPoseRelative(_io, self, self._root)
-  elseif _on == 171 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = FileIo.MsgFileioWriteResp(_io, self, self._root)
-  elseif _on == 70 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisDepB(_io, self, self._root)
-  elseif _on == 28 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Tracking.MsgTrackingIqDepA(_io, self, self._root)
-  elseif _on == 193 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgCwStart(_io, self, self._root)
-  elseif _on == 133 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisGloDepB(_io, self, self._root)
-  elseif _on == 129 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisGpsDepE(_io, self, self._root)
-  elseif _on == 74 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgObs(_io, self, self._root)
-  elseif _on == 3080 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Signing.MsgEcdsaSignature(_io, self, self._root)
-  elseif _on == 151 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgSvAzEl(_io, self, self._root)
-  elseif _on == 16 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Logging.MsgPrintDep(_io, self, self._root)
-  elseif _on == 147 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgGroupDelayDepB(_io, self, self._root)
-  elseif _on == 527 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Orientation.MsgBaselineHeading(_io, self, self._root)
-  elseif _on == 134 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisGpsDepF(_io, self, self._root)
-  elseif _on == 3078 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Signing.MsgEcdsaSignatureDepA(_io, self, self._root)
-  elseif _on == 80 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgSpecanDep(_io, self, self._root)
-  elseif _on == 68 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgBasePosLlh(_io, self, self._root)
-  elseif _on == 1532 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrGriddedCorrection(_io, self, self._root)
-  elseif _on == 1503 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrOrbitClockBoundsDegradation(_io, self, self._root)
-  elseif _on == 516 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelEcefDepA(_io, self, self._root)
-  elseif _on == 26 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisDepA(_io, self, self._root)
-  elseif _on == 139 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisGlo(_io, self, self._root)
-  elseif _on == 65280 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgStartup(_io, self, self._root)
-  elseif _on == 31 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Acquisition.MsgAcqResultDepC(_io, self, self._root)
-  elseif _on == 565 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelEcefCovGnss(_io, self, self._root)
-  elseif _on == 135 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisGloDepC(_io, self, self._root)
-  elseif _on == 3026 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Integrity.MsgAcknowledge(_io, self, self._root)
-  elseif _on == 34 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgResetFilters(_io, self, self._root)
-  elseif _on == 1600 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgOsr(_io, self, self._root)
-  elseif _on == 536 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosLlhAcc(_io, self, self._root)
-  elseif _on == 65287 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgGnssTimeOffset(_io, self, self._root)
-  elseif _on == 1526 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrTileDefinitionDepA(_io, self, self._root)
-  elseif _on == 1540 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrSatelliteApcDep(_io, self, self._root)
-  elseif _on == 29 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgUartState(_io, self, self._root)
-  elseif _on == 132 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisSbasDepB(_io, self, self._root)
-  elseif _on == 1510 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrPhaseBiases(_io, self, self._root)
-  elseif _on == 65290 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgGroupMeta(_io, self, self._root)
-  elseif _on == 175 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Settings.MsgSettingsWriteResp(_io, self, self._root)
-  elseif _on == 557 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelEcefGnss(_io, self, self._root)
-  elseif _on == 526 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgVelNed(_io, self, self._root)
-  elseif _on == 1520 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrGriddedCorrectionNoStdDepA(_io, self, self._root)
-  elseif _on == 2305 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Imu.MsgImuAux(_io, self, self._root)
-  elseif _on == 190 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgCellModemStatus(_io, self, self._root)
-  elseif _on == 1531 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Ssr.MsgSsrStecCorrectionDep(_io, self, self._root)
-  elseif _on == 528 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgAgeCorrections(_io, self, self._root)
-  elseif _on == 3077 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Signing.MsgCertificateChainDep(_io, self, self._root)
-  elseif _on == 25 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgIarState(_io, self, self._root)
-  elseif _on == 43 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Piksi.MsgMaskSatellite(_io, self, self._root)
-  elseif _on == 228 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Flash.MsgStmFlashUnlockSector(_io, self, self._root)
-  elseif _on == 523 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgBaselineEcef(_io, self, self._root)
-  elseif _on == 554 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgPosLlhGnss(_io, self, self._root)
-  elseif _on == 65289 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = System.MsgSensorAidEvent(_io, self, self._root)
-  elseif _on == 22 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Tracking.MsgTrackingStateDepA(_io, self, self._root)
-  elseif _on == 3001 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Integrity.MsgSsrFlagHighLevel(_io, self, self._root)
-  elseif _on == 30 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Acquisition.MsgAcqSvProfileDep(_io, self, self._root)
-  elseif _on == 261 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Navigation.MsgUtcTimeGnss(_io, self, self._root)
-  elseif _on == 3021 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Integrity.MsgSsrFlagIonoTileSatLos(_io, self, self._root)
-  elseif _on == 173 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = FileIo.MsgFileioWriteReq(_io, self, self._root)
-  elseif _on == 128 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Observation.MsgEphemerisDepD(_io, self, self._root)
-  elseif _on == 222 then
-    self._raw_payload = self._io:read_bytes(self.header.length)
-    local _io = KaitaiStream(stringstream(self._raw_payload))
-    self.payload = Bootload.MsgNapDeviceDnaReq(_io, self, self._root)
-  else
-    self.payload = self._io:read_bytes(self.header.length)
-  end
-  self.crc = self._io:read_u2le()
-end
-
-
-Sbp.SbpHeader = class.class(KaitaiStruct)
-
-function Sbp.SbpHeader:_init(io, parent, root)
-  KaitaiStruct._init(self, io)
-  self._parent = parent
-  self._root = root or self
-  self:_read()
-end
-
-function Sbp.SbpHeader:_read()
   self.preamble = self._io:read_bytes(1)
   if not(self.preamble == "\085") then
     error("not equal, expected " ..  "\085" .. ", but got " .. self.preamble)
@@ -1230,6 +279,943 @@ function Sbp.SbpHeader:_read()
   self.msg_type = self._io:read_u2le()
   self.sender = self._io:read_u2le()
   self.length = self._io:read_u1()
+  local _on = self.msg_type
+  if _on == 525 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelEcef(_io, self, self._root)
+  elseif _on == 141 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisGal(_io, self, self._root)
+  elseif _on == 243 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Flash.MsgM25FlashWriteStatus(_io, self, self._root)
+  elseif _on == 2048 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = User.MsgUserData(_io, self, self._root)
+  elseif _on == 3079 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgEcdsaSignatureDepB(_io, self, self._root)
+  elseif _on == 184 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgCommandReq(_io, self, self._root)
+  elseif _on == 105 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgAlmanac(_io, self, self._root)
+  elseif _on == 142 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisQzss(_io, self, self._root)
+  elseif _on == 112 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgAlmanacGpsDep(_io, self, self._root)
+  elseif _on == 177 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Bootload.MsgBootloaderJumpToApp(_io, self, self._root)
+  elseif _on == 163 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = FileIo.MsgFileioReadResp(_io, self, self._root)
+  elseif _on == 257 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = ExtEvents.MsgExtEvent(_io, self, self._root)
+  elseif _on == 4097 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = FileIo.MsgFileioConfigReq(_io, self, self._root)
+  elseif _on == 17 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Tracking.MsgTrackingStateDetailedDep(_io, self, self._root)
+  elseif _on == 260 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgGpsTimeGnss(_io, self, self._root)
+  elseif _on == 1525 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrGridDefinitionDepA(_io, self, self._root)
+  elseif _on == 131 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisGloDepA(_io, self, self._root)
+  elseif _on == 167 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Settings.MsgSettingsReadByIndexResp(_io, self, self._root)
+  elseif _on == 146 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgGroupDelayDepA(_io, self, self._root)
+  elseif _on == 47 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Acquisition.MsgAcqResult(_io, self, self._root)
+  elseif _on == 136 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisGloDepD(_io, self, self._root)
+  elseif _on == 73 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgObsDepC(_io, self, self._root)
+  elseif _on == 65283 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgInsStatus(_io, self, self._root)
+  elseif _on == 32513 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxMemStateDepA(_io, self, self._root)
+  elseif _on == 545 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Orientation.MsgOrientEuler(_io, self, self._root)
+  elseif _on == 65534 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgStatusReport(_io, self, self._root)
+  elseif _on == 533 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelEcefCov(_io, self, self._root)
+  elseif _on == 513 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosLlhDepA(_io, self, self._root)
+  elseif _on == 46 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Acquisition.MsgAcqSvProfile(_io, self, self._root)
+  elseif _on == 81 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgSpecan(_io, self, self._root)
+  elseif _on == 169 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = FileIo.MsgFileioReadDirReq(_io, self, self._root)
+  elseif _on == 162 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Settings.MsgSettingsReadByIndexReq(_io, self, self._root)
+  elseif _on == 546 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Orientation.MsgAngularRate(_io, self, self._root)
+  elseif _on == 531 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelBody(_io, self, self._root)
+  elseif _on == 224 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Flash.MsgFlashDone(_io, self, self._root)
+  elseif _on == 24 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgUartStateDepa(_io, self, self._root)
+  elseif _on == 230 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Flash.MsgFlashProgram(_io, self, self._root)
+  elseif _on == 65285 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgCsacTelemetryLabels(_io, self, self._root)
+  elseif _on == 35 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgInitBaseDep(_io, self, self._root)
+  elseif _on == 1528 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrTileDefinition(_io, self, self._root)
+  elseif _on == 519 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgBaselineHeadingDepA(_io, self, self._root)
+  elseif _on == 20 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Acquisition.MsgAcqResultDepB(_io, self, self._root)
+  elseif _on == 570 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgUtcLeapSecond(_io, self, self._root)
+  elseif _on == 32520 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxCpuState(_io, self, self._root)
+  elseif _on == 1505 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrCodeBiases(_io, self, self._root)
+  elseif _on == 113 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgAlmanacGloDep(_io, self, self._root)
+  elseif _on == 1515 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrStecCorrectionDepA(_io, self, self._root)
+  elseif _on == 558 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelNedGnss(_io, self, self._root)
+  elseif _on == 530 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelNedCov(_io, self, self._root)
+  elseif _on == 288 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Telemetry.MsgTelSv(_io, self, self._root)
+  elseif _on == 1026 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Logging.MsgFwd(_io, self, self._root)
+  elseif _on == 65286 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgInsUpdates(_io, self, self._root)
+  elseif _on == 65284 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgCsacTelemetry(_io, self, self._root)
+  elseif _on == 191 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgFrontEndGain(_io, self, self._root)
+  elseif _on == 520 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgDops(_io, self, self._root)
+  elseif _on == 27 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgMaskSatelliteDep(_io, self, self._root)
+  elseif _on == 1516 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrCodePhaseBiasesBounds(_io, self, self._root)
+  elseif _on == 150 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgGnssCapb(_io, self, self._root)
+  elseif _on == 97 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Tracking.MsgMeasurementState(_io, self, self._root)
+  elseif _on == 529 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosLlhCov(_io, self, self._root)
+  elseif _on == 431 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Settings.MsgSettingsRegisterResp(_io, self, self._root)
+  elseif _on == 65533 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgStatusJournal(_io, self, self._root)
+  elseif _on == 145 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgSvConfigurationGpsDep(_io, self, self._root)
+  elseif _on == 32522 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxSysState(_io, self, self._root)
+  elseif _on == 3076 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgEcdsaCertificate(_io, self, self._root)
+  elseif _on == 144 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgIono(_io, self, self._root)
+  elseif _on == 65294 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = SolutionMeta.MsgSolnMeta(_io, self, self._root)
+  elseif _on == 532 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosEcefCov(_io, self, self._root)
+  elseif _on == 45 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Tracking.MsgTrackingIq(_io, self, self._root)
+  elseif _on == 561 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosLlhCovGnss(_io, self, self._root)
+  elseif _on == 1502 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrOrbitClockBounds(_io, self, self._root)
+  elseif _on == 149 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisGalDepA(_io, self, self._root)
+  elseif _on == 115 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgAlmanacGlo(_io, self, self._root)
+  elseif _on == 32512 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxCpuStateDepA(_io, self, self._root)
+  elseif _on == 32521 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxMemState(_io, self, self._root)
+  elseif _on == 522 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosLlh(_io, self, self._root)
+  elseif _on == 104 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgSetTime(_io, self, self._root)
+  elseif _on == 32519 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxProcessFdSummary(_io, self, self._root)
+  elseif _on == 4098 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = FileIo.MsgFileioConfigResp(_io, self, self._root)
+  elseif _on == 32517 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxSocketUsage(_io, self, self._root)
+  elseif _on == 2306 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Mag.MsgMagRaw(_io, self, self._root)
+  elseif _on == 67 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgObsDepB(_io, self, self._root)
+  elseif _on == 69 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgObsDepA(_io, self, self._root)
+  elseif _on == 512 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosEcefDepA(_io, self, self._root)
+  elseif _on == 137 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisBds(_io, self, self._root)
+  elseif _on == 65288 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgPpsTime(_io, self, self._root)
+  elseif _on == 3074 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgEd25519CertificateDep(_io, self, self._root)
+  elseif _on == 562 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelNedCovGnss(_io, self, self._root)
+  elseif _on == 580 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgReferenceFrameParam(_io, self, self._root)
+  elseif _on == 524 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgBaselineNed(_io, self, self._root)
+  elseif _on == 161 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Settings.MsgSettingsSave(_io, self, self._root)
+  elseif _on == 138 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisGps(_io, self, self._root)
+  elseif _on == 544 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Orientation.MsgOrientQuat(_io, self, self._root)
+  elseif _on == 192 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgCwResults(_io, self, self._root)
+  elseif _on == 165 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Settings.MsgSettingsReadResp(_io, self, self._root)
+  elseif _on == 33 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Tracking.MsgTrackingStateDetailedDepA(_io, self, self._root)
+  elseif _on == 1527 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrTileDefinitionDepB(_io, self, self._root)
+  elseif _on == 65535 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgHeartbeat(_io, self, self._root)
+  elseif _on == 3081 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgCertificateChain(_io, self, self._root)
+  elseif _on == 514 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgBaselineEcefDepA(_io, self, self._root)
+  elseif _on == 185 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgCommandResp(_io, self, self._root)
+  elseif _on == 180 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Bootload.MsgBootloaderHandshakeResp(_io, self, self._root)
+  elseif _on == 19 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Tracking.MsgTrackingStateDepB(_io, self, self._root)
+  elseif _on == 3015 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Integrity.MsgSsrFlagIonoGridPoints(_io, self, self._root)
+  elseif _on == 186 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgNetworkStateReq(_io, self, self._root)
+  elseif _on == 32518 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxProcessFdCount(_io, self, self._root)
+  elseif _on == 1530 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrGriddedCorrectionDepA(_io, self, self._root)
+  elseif _on == 1541 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrSatelliteApc(_io, self, self._root)
+  elseif _on == 30583 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Sbas.MsgSbasRaw(_io, self, self._root)
+  elseif _on == 23 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgThreadState(_io, self, self._root)
+  elseif _on == 221 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Bootload.MsgNapDeviceDnaResp(_io, self, self._root)
+  elseif _on == 227 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Flash.MsgStmFlashLockSector(_io, self, self._root)
+  elseif _on == 188 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgCommandOutput(_io, self, self._root)
+  elseif _on == 65282 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgDgnssStatus(_io, self, self._root)
+  elseif _on == 178 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgResetDep(_io, self, self._root)
+  elseif _on == 1533 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrStecCorrection(_io, self, self._root)
+  elseif _on == 3011 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Integrity.MsgSsrFlagTropoGridPoints(_io, self, self._root)
+  elseif _on == 3005 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Integrity.MsgSsrFlagSatellites(_io, self, self._root)
+  elseif _on == 160 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Settings.MsgSettingsWrite(_io, self, self._root)
+  elseif _on == 540 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelCog(_io, self, self._root)
+  elseif _on == 174 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Settings.MsgSettingsRegister(_io, self, self._root)
+  elseif _on == 176 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Bootload.MsgBootloaderHandshakeDepA(_io, self, self._root)
+  elseif _on == 1024 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ndb.MsgNdbEvent(_io, self, self._root)
+  elseif _on == 166 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Settings.MsgSettingsReadByIndexDone(_io, self, self._root)
+  elseif _on == 114 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgAlmanacGps(_io, self, self._root)
+  elseif _on == 564 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosEcefCovGnss(_io, self, self._root)
+  elseif _on == 259 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgUtcTime(_io, self, self._root)
+  elseif _on == 181 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgDeviceMonitor(_io, self, self._root)
+  elseif _on == 521 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosEcef(_io, self, self._root)
+  elseif _on == 2307 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Vehicle.MsgOdometry(_io, self, self._root)
+  elseif _on == 148 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgGroupDelay(_io, self, self._root)
+  elseif _on == 117 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgGloBiases(_io, self, self._root)
+  elseif _on == 3025 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Integrity.MsgSsrFlagIonoGridPointSatLos(_io, self, self._root)
+  elseif _on == 65 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Tracking.MsgTrackingState(_io, self, self._root)
+  elseif _on == 1534 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrGriddedCorrectionBounds(_io, self, self._root)
+  elseif _on == 44 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Tracking.MsgTrackingIqDepB(_io, self, self._root)
+  elseif _on == 3073 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgEd25519SignatureDepA(_io, self, self._root)
+  elseif _on == 231 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Flash.MsgFlashReadReq(_io, self, self._root)
+  elseif _on == 140 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisSbas(_io, self, self._root)
+  elseif _on == 226 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Flash.MsgFlashErase(_io, self, self._root)
+  elseif _on == 515 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgBaselineNedDepA(_io, self, self._root)
+  elseif _on == 2308 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Vehicle.MsgWheeltick(_io, self, self._root)
+  elseif _on == 535 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgProtectionLevel(_io, self, self._root)
+  elseif _on == 179 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Bootload.MsgBootloaderHandshakeReq(_io, self, self._root)
+  elseif _on == 172 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = FileIo.MsgFileioRemove(_io, self, self._root)
+  elseif _on == 130 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisSbasDepA(_io, self, self._root)
+  elseif _on == 187 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgNetworkStateResp(_io, self, self._root)
+  elseif _on == 1501 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrOrbitClock(_io, self, self._root)
+  elseif _on == 21 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Acquisition.MsgAcqResultDepA(_io, self, self._root)
+  elseif _on == 1500 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrOrbitClockDepA(_io, self, self._root)
+  elseif _on == 225 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Flash.MsgFlashReadResp(_io, self, self._root)
+  elseif _on == 534 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgProtectionLevelDepA(_io, self, self._root)
+  elseif _on == 232 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Flash.MsgStmUniqueIdReq(_io, self, self._root)
+  elseif _on == 2304 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Imu.MsgImuRaw(_io, self, self._root)
+  elseif _on == 229 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Flash.MsgStmUniqueIdResp(_io, self, self._root)
+  elseif _on == 32515 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxProcessSocketCounts(_io, self, self._root)
+  elseif _on == 65295 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = SolutionMeta.MsgSolnMetaDepA(_io, self, self._root)
+  elseif _on == 3075 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgEd25519SignatureDepB(_io, self, self._root)
+  elseif _on == 258 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgGpsTime(_io, self, self._root)
+  elseif _on == 32516 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxProcessSocketQueues(_io, self, self._root)
+  elseif _on == 170 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = FileIo.MsgFileioReadDirResp(_io, self, self._root)
+  elseif _on == 256 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgGpsTimeDepA(_io, self, self._root)
+  elseif _on == 32514 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Linux.MsgLinuxSysStateDepA(_io, self, self._root)
+  elseif _on == 518 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgDopsDepA(_io, self, self._root)
+  elseif _on == 553 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosEcefGnss(_io, self, self._root)
+  elseif _on == 517 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelNedDepA(_io, self, self._root)
+  elseif _on == 164 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Settings.MsgSettingsReadReq(_io, self, self._root)
+  elseif _on == 182 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgReset(_io, self, self._root)
+  elseif _on == 189 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgNetworkBandwidthUsage(_io, self, self._root)
+  elseif _on == 72 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgBasePosEcef(_io, self, self._root)
+  elseif _on == 71 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisDepC(_io, self, self._root)
+  elseif _on == 1025 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Logging.MsgLog(_io, self, self._root)
+  elseif _on == 168 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = FileIo.MsgFileioReadReq(_io, self, self._root)
+  elseif _on == 581 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPoseRelative(_io, self, self._root)
+  elseif _on == 171 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = FileIo.MsgFileioWriteResp(_io, self, self._root)
+  elseif _on == 70 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisDepB(_io, self, self._root)
+  elseif _on == 28 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Tracking.MsgTrackingIqDepA(_io, self, self._root)
+  elseif _on == 193 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgCwStart(_io, self, self._root)
+  elseif _on == 133 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisGloDepB(_io, self, self._root)
+  elseif _on == 129 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisGpsDepE(_io, self, self._root)
+  elseif _on == 74 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgObs(_io, self, self._root)
+  elseif _on == 3080 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgEcdsaSignature(_io, self, self._root)
+  elseif _on == 151 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgSvAzEl(_io, self, self._root)
+  elseif _on == 16 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Logging.MsgPrintDep(_io, self, self._root)
+  elseif _on == 147 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgGroupDelayDepB(_io, self, self._root)
+  elseif _on == 527 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Orientation.MsgBaselineHeading(_io, self, self._root)
+  elseif _on == 134 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisGpsDepF(_io, self, self._root)
+  elseif _on == 3078 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgEcdsaSignatureDepA(_io, self, self._root)
+  elseif _on == 80 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgSpecanDep(_io, self, self._root)
+  elseif _on == 68 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgBasePosLlh(_io, self, self._root)
+  elseif _on == 1532 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrGriddedCorrection(_io, self, self._root)
+  elseif _on == 1503 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrOrbitClockBoundsDegradation(_io, self, self._root)
+  elseif _on == 516 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelEcefDepA(_io, self, self._root)
+  elseif _on == 26 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisDepA(_io, self, self._root)
+  elseif _on == 139 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisGlo(_io, self, self._root)
+  elseif _on == 65280 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgStartup(_io, self, self._root)
+  elseif _on == 31 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Acquisition.MsgAcqResultDepC(_io, self, self._root)
+  elseif _on == 565 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelEcefCovGnss(_io, self, self._root)
+  elseif _on == 135 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisGloDepC(_io, self, self._root)
+  elseif _on == 3026 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Integrity.MsgAcknowledge(_io, self, self._root)
+  elseif _on == 34 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgResetFilters(_io, self, self._root)
+  elseif _on == 1600 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgOsr(_io, self, self._root)
+  elseif _on == 536 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosLlhAcc(_io, self, self._root)
+  elseif _on == 65287 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgGnssTimeOffset(_io, self, self._root)
+  elseif _on == 1526 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrTileDefinitionDepA(_io, self, self._root)
+  elseif _on == 1540 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrSatelliteApcDep(_io, self, self._root)
+  elseif _on == 29 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgUartState(_io, self, self._root)
+  elseif _on == 132 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisSbasDepB(_io, self, self._root)
+  elseif _on == 1510 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrPhaseBiases(_io, self, self._root)
+  elseif _on == 65290 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgGroupMeta(_io, self, self._root)
+  elseif _on == 175 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Settings.MsgSettingsWriteResp(_io, self, self._root)
+  elseif _on == 557 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelEcefGnss(_io, self, self._root)
+  elseif _on == 526 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgVelNed(_io, self, self._root)
+  elseif _on == 1520 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrGriddedCorrectionNoStdDepA(_io, self, self._root)
+  elseif _on == 2305 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Imu.MsgImuAux(_io, self, self._root)
+  elseif _on == 190 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgCellModemStatus(_io, self, self._root)
+  elseif _on == 1531 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Ssr.MsgSsrStecCorrectionDep(_io, self, self._root)
+  elseif _on == 528 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgAgeCorrections(_io, self, self._root)
+  elseif _on == 3077 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Signing.MsgCertificateChainDep(_io, self, self._root)
+  elseif _on == 25 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgIarState(_io, self, self._root)
+  elseif _on == 43 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Piksi.MsgMaskSatellite(_io, self, self._root)
+  elseif _on == 228 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Flash.MsgStmFlashUnlockSector(_io, self, self._root)
+  elseif _on == 523 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgBaselineEcef(_io, self, self._root)
+  elseif _on == 554 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgPosLlhGnss(_io, self, self._root)
+  elseif _on == 65289 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = System.MsgSensorAidEvent(_io, self, self._root)
+  elseif _on == 22 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Tracking.MsgTrackingStateDepA(_io, self, self._root)
+  elseif _on == 3001 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Integrity.MsgSsrFlagHighLevel(_io, self, self._root)
+  elseif _on == 30 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Acquisition.MsgAcqSvProfileDep(_io, self, self._root)
+  elseif _on == 261 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Navigation.MsgUtcTimeGnss(_io, self, self._root)
+  elseif _on == 3021 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Integrity.MsgSsrFlagIonoTileSatLos(_io, self, self._root)
+  elseif _on == 173 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = FileIo.MsgFileioWriteReq(_io, self, self._root)
+  elseif _on == 128 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Observation.MsgEphemerisDepD(_io, self, self._root)
+  elseif _on == 222 then
+    self._raw_payload = self._io:read_bytes(self.length)
+    local _io = KaitaiStream(stringstream(self._raw_payload))
+    self.payload = Bootload.MsgNapDeviceDnaReq(_io, self, self._root)
+  else
+    self.payload = self._io:read_bytes(self.length)
+  end
+  self.crc = self._io:read_u2le()
 end
 
 

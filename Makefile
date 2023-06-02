@@ -305,8 +305,6 @@ gen-rust:
 
 	$(call announce-end,"Finished formatting Rust code")
 
-	$(call announce-end,"Finished generating Rust bindings")
-
 gen-protobuf:
 	$(call announce-begin,"Generating Protocol Buffers bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
@@ -320,10 +318,18 @@ gen-kaitai:
 	$(call announce-begin,"Generating Kaitai Struct Format Description")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
-					-o $(SWIFTNAV_ROOT)/kaitai/ \
-					-r $(SBP_VERSION) \
-					--kaitai
+		-o $(SWIFTNAV_ROOT)/kaitai/ \
+		-r $(SBP_VERSION) \
+		--kaitai
 	$(call announce-begin,"Finished generating Kaitai Struct Format Description")
+
+	$(call announce-begin,"Generating Kaitai Struct Python tests")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
+		-o $(SWIFTNAV_ROOT)/kaitai/python/tests/ \
+		-r $(SBP_VERSION) \
+		--test-kaitai-python
+	$(call announce-end,"Finished generating Kaitai Struct Python tests")
 
 gen-jsonschema:
 	$(call announce-begin,"Generating JSON Schema definitions")

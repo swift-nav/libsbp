@@ -1,8 +1,18 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
 # System health, configuration, and diagnostic messages specific to the Piksi L1
 # receiver, including a variety of legacy messages that may no longer be used.
-
+#
 # Automatically generated from spec/yaml/swiftnav/sbp/piksi.yaml with generate.py.
-# Please do not hand edit!
+# Do not modify by hand!
 
 meta:
   id: piksi

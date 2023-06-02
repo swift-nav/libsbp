@@ -33,10 +33,10 @@ def kaitai2dict(obj):
     payload_b64 = base64.standard_b64encode(obj.payload._io.read_bytes_full()).decode('ascii')
 
     message = dictify(obj.payload)
-    message["preamble"] = ord(obj.header.preamble)
-    message["msg_type"] = obj.header.msg_type
-    message["sender"] = obj.header.sender
-    message["length"] = obj.header.length
+    message["preamble"] = ord(obj.preamble)
+    message["msg_type"] = obj.msg_type
+    message["sender"] = obj.sender
+    message["length"] = obj.length
     message["crc"] = obj.crc
     message["payload"] = payload_b64
     return message
@@ -107,14 +107,14 @@ def get_next_msg_kaitai(fp):
 
         # check CRC
         crc_read = obj.crc
-        crc_expected = binascii.crc_hqx(stream.get_crc_bytes(obj.header.length), 0)
+        crc_expected = binascii.crc_hqx(stream.get_crc_bytes(obj.length), 0)
         if crc_read != crc_expected:
             sys.stderr.write("Bad CRC: {} vs {}\n".format(crc_read, crc_expected))
             stream.seek(1)
             continue
 
-        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.header.msg_type) == obj.header.msg_type:
-            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.header.msg_type))
+        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.msg_type) == obj.msg_type:
+            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.msg_type))
             stream.seek(1)
             continue
 

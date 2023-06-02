@@ -309,1233 +309,1180 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{header} = Sbp::SbpHeader->new($self->{_io}, $self, $self->{_root});
-    my $_on = $self->header()->msg_type();
-    if ($_on == 525) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelEcef->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 141) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisGal->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 243) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Flash::MsgM25FlashWriteStatus->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 2048) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = User::MsgUserData->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3079) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Signing::MsgEcdsaSignatureDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 184) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgCommandReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 105) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgAlmanac->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 142) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisQzss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 112) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgAlmanacGpsDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 177) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Bootload::MsgBootloaderJumpToApp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 163) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = FileIo::MsgFileioReadResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 257) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = ExtEvents::MsgExtEvent->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 4097) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = FileIo::MsgFileioConfigReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 17) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Tracking::MsgTrackingStateDetailedDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 260) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgGpsTimeGnss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1525) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrGridDefinitionDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 131) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisGloDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 167) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Settings::MsgSettingsReadByIndexResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 146) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgGroupDelayDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 47) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Acquisition::MsgAcqResult->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 136) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisGloDepD->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 73) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgObsDepC->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65283) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgInsStatus->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32513) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxMemStateDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 545) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Orientation::MsgOrientEuler->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65534) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgStatusReport->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 533) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelEcefCov->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 513) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosLlhDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 46) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Acquisition::MsgAcqSvProfile->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 81) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgSpecan->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 169) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = FileIo::MsgFileioReadDirReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 162) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Settings::MsgSettingsReadByIndexReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 546) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Orientation::MsgAngularRate->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 531) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelBody->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 224) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Flash::MsgFlashDone->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 24) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgUartStateDepa->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 230) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Flash::MsgFlashProgram->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65285) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgCsacTelemetryLabels->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 35) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgInitBaseDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1528) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrTileDefinition->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 519) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgBaselineHeadingDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 20) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Acquisition::MsgAcqResultDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 570) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgUtcLeapSecond->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32520) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxCpuState->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1505) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrCodeBiases->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 113) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgAlmanacGloDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1515) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrStecCorrectionDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 558) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelNedGnss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 530) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelNedCov->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 288) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Telemetry::MsgTelSv->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1026) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Logging::MsgFwd->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65286) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgInsUpdates->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65284) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgCsacTelemetry->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 191) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgFrontEndGain->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 520) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgDops->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 27) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgMaskSatelliteDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1516) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrCodePhaseBiasesBounds->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 150) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgGnssCapb->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 97) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Tracking::MsgMeasurementState->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 529) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosLlhCov->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 431) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Settings::MsgSettingsRegisterResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65533) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgStatusJournal->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 145) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgSvConfigurationGpsDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32522) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxSysState->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3076) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Signing::MsgEcdsaCertificate->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 144) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgIono->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65294) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = SolutionMeta::MsgSolnMeta->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 532) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosEcefCov->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 45) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Tracking::MsgTrackingIq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 561) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosLlhCovGnss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1502) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrOrbitClockBounds->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 149) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisGalDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 115) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgAlmanacGlo->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32512) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxCpuStateDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32521) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxMemState->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 522) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosLlh->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 104) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgSetTime->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32519) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxProcessFdSummary->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 4098) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = FileIo::MsgFileioConfigResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32517) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxSocketUsage->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 2306) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Mag::MsgMagRaw->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 67) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgObsDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 69) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgObsDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 512) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosEcefDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 137) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisBds->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65288) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgPpsTime->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3074) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Signing::MsgEd25519CertificateDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 562) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelNedCovGnss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 580) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgReferenceFrameParam->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 524) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgBaselineNed->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 161) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Settings::MsgSettingsSave->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 138) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisGps->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 544) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Orientation::MsgOrientQuat->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 192) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgCwResults->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 165) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Settings::MsgSettingsReadResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 33) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Tracking::MsgTrackingStateDetailedDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1527) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrTileDefinitionDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65535) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgHeartbeat->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3081) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Signing::MsgCertificateChain->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 514) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgBaselineEcefDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 185) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgCommandResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 180) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Bootload::MsgBootloaderHandshakeResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 19) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Tracking::MsgTrackingStateDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3015) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Integrity::MsgSsrFlagIonoGridPoints->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 186) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgNetworkStateReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32518) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxProcessFdCount->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1530) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrGriddedCorrectionDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1541) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrSatelliteApc->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 30583) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Sbas::MsgSbasRaw->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 23) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgThreadState->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 221) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Bootload::MsgNapDeviceDnaResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 227) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Flash::MsgStmFlashLockSector->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 188) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgCommandOutput->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65282) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgDgnssStatus->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 178) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgResetDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1533) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrStecCorrection->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3011) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Integrity::MsgSsrFlagTropoGridPoints->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3005) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Integrity::MsgSsrFlagSatellites->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 160) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Settings::MsgSettingsWrite->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 540) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelCog->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 174) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Settings::MsgSettingsRegister->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 176) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Bootload::MsgBootloaderHandshakeDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1024) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ndb::MsgNdbEvent->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 166) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Settings::MsgSettingsReadByIndexDone->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 114) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgAlmanacGps->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 564) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosEcefCovGnss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 259) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgUtcTime->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 181) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgDeviceMonitor->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 521) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosEcef->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 2307) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Vehicle::MsgOdometry->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 148) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgGroupDelay->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 117) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgGloBiases->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3025) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Integrity::MsgSsrFlagIonoGridPointSatLos->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Tracking::MsgTrackingState->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1534) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrGriddedCorrectionBounds->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 44) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Tracking::MsgTrackingIqDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3073) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Signing::MsgEd25519SignatureDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 231) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Flash::MsgFlashReadReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 140) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisSbas->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 226) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Flash::MsgFlashErase->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 515) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgBaselineNedDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 2308) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Vehicle::MsgWheeltick->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 535) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgProtectionLevel->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 179) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Bootload::MsgBootloaderHandshakeReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 172) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = FileIo::MsgFileioRemove->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 130) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisSbasDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 187) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgNetworkStateResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1501) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrOrbitClock->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 21) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Acquisition::MsgAcqResultDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1500) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrOrbitClockDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 225) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Flash::MsgFlashReadResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 534) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgProtectionLevelDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 232) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Flash::MsgStmUniqueIdReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 2304) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Imu::MsgImuRaw->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 229) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Flash::MsgStmUniqueIdResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32515) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxProcessSocketCounts->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65295) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = SolutionMeta::MsgSolnMetaDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3075) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Signing::MsgEd25519SignatureDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 258) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgGpsTime->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32516) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxProcessSocketQueues->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 170) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = FileIo::MsgFileioReadDirResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 256) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgGpsTimeDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 32514) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Linux::MsgLinuxSysStateDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 518) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgDopsDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 553) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosEcefGnss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 517) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelNedDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 164) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Settings::MsgSettingsReadReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 182) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgReset->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 189) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgNetworkBandwidthUsage->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 72) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgBasePosEcef->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 71) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisDepC->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1025) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Logging::MsgLog->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 168) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = FileIo::MsgFileioReadReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 581) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPoseRelative->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 171) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = FileIo::MsgFileioWriteResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 70) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 28) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Tracking::MsgTrackingIqDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 193) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgCwStart->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 133) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisGloDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 129) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisGpsDepE->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 74) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgObs->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3080) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Signing::MsgEcdsaSignature->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 151) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgSvAzEl->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 16) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Logging::MsgPrintDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 147) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgGroupDelayDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 527) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Orientation::MsgBaselineHeading->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 134) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisGpsDepF->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3078) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Signing::MsgEcdsaSignatureDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 80) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgSpecanDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 68) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgBasePosLlh->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1532) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrGriddedCorrection->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1503) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrOrbitClockBoundsDegradation->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 516) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelEcefDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 26) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 139) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisGlo->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65280) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgStartup->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 31) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Acquisition::MsgAcqResultDepC->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 565) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelEcefCovGnss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 135) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisGloDepC->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3026) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Integrity::MsgAcknowledge->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 34) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgResetFilters->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1600) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgOsr->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 536) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosLlhAcc->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65287) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgGnssTimeOffset->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1526) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrTileDefinitionDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1540) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrSatelliteApcDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 29) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgUartState->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 132) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisSbasDepB->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1510) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrPhaseBiases->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65290) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgGroupMeta->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 175) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Settings::MsgSettingsWriteResp->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 557) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelEcefGnss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 526) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgVelNed->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1520) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrGriddedCorrectionNoStdDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 2305) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Imu::MsgImuAux->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 190) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgCellModemStatus->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 1531) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Ssr::MsgSsrStecCorrectionDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 528) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgAgeCorrections->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3077) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Signing::MsgCertificateChainDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 25) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgIarState->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 43) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Piksi::MsgMaskSatellite->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 228) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Flash::MsgStmFlashUnlockSector->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 523) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgBaselineEcef->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 554) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgPosLlhGnss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 65289) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = System::MsgSensorAidEvent->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 22) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Tracking::MsgTrackingStateDepA->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3001) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Integrity::MsgSsrFlagHighLevel->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 30) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Acquisition::MsgAcqSvProfileDep->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 261) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Navigation::MsgUtcTimeGnss->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 3021) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Integrity::MsgSsrFlagIonoTileSatLos->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 173) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = FileIo::MsgFileioWriteReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 128) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Observation::MsgEphemerisDepD->new($io__raw_payload, $self, $self->{_root});
-    }
-    elsif ($_on == 222) {
-        $self->{_raw_payload} = $self->{_io}->read_bytes($self->header()->length());
-        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Bootload::MsgNapDeviceDnaReq->new($io__raw_payload, $self, $self->{_root});
-    }
-    else {
-        $self->{payload} = $self->{_io}->read_bytes($self->header()->length());
-    }
-    $self->{crc} = $self->{_io}->read_u2le();
-}
-
-sub header {
-    my ($self) = @_;
-    return $self->{header};
-}
-
-sub payload {
-    my ($self) = @_;
-    return $self->{payload};
-}
-
-sub crc {
-    my ($self) = @_;
-    return $self->{crc};
-}
-
-sub _raw_payload {
-    my ($self) = @_;
-    return $self->{_raw_payload};
-}
-
-########################################################################
-package Sbp::SbpHeader;
-
-our @ISA = 'IO::KaitaiStruct::Struct';
-
-sub from_file {
-    my ($class, $filename) = @_;
-    my $fd;
-
-    open($fd, '<', $filename) or return undef;
-    binmode($fd);
-    return new($class, IO::KaitaiStruct::Stream->new($fd));
-}
-
-sub new {
-    my ($class, $_io, $_parent, $_root) = @_;
-    my $self = IO::KaitaiStruct::Struct->new($_io);
-
-    bless $self, $class;
-    $self->{_parent} = $_parent;
-    $self->{_root} = $_root || $self;;
-
-    $self->_read();
-
-    return $self;
-}
-
-sub _read {
-    my ($self) = @_;
-
     $self->{preamble} = $self->{_io}->read_bytes(1);
     $self->{msg_type} = $self->{_io}->read_u2le();
     $self->{sender} = $self->{_io}->read_u2le();
     $self->{length} = $self->{_io}->read_u1();
+    my $_on = $self->msg_type();
+    if ($_on == 525) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelEcef->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 141) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisGal->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 243) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Flash::MsgM25FlashWriteStatus->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 2048) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = User::MsgUserData->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3079) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgEcdsaSignatureDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 184) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgCommandReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 105) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgAlmanac->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 142) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisQzss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 112) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgAlmanacGpsDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 177) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Bootload::MsgBootloaderJumpToApp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 163) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = FileIo::MsgFileioReadResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 257) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = ExtEvents::MsgExtEvent->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 4097) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = FileIo::MsgFileioConfigReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 17) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Tracking::MsgTrackingStateDetailedDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 260) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgGpsTimeGnss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1525) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrGridDefinitionDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 131) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisGloDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 167) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Settings::MsgSettingsReadByIndexResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 146) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgGroupDelayDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 47) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Acquisition::MsgAcqResult->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 136) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisGloDepD->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 73) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgObsDepC->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65283) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgInsStatus->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32513) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxMemStateDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 545) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Orientation::MsgOrientEuler->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65534) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgStatusReport->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 533) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelEcefCov->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 513) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosLlhDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 46) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Acquisition::MsgAcqSvProfile->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 81) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgSpecan->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 169) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = FileIo::MsgFileioReadDirReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 162) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Settings::MsgSettingsReadByIndexReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 546) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Orientation::MsgAngularRate->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 531) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelBody->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 224) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Flash::MsgFlashDone->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 24) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgUartStateDepa->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 230) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Flash::MsgFlashProgram->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65285) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgCsacTelemetryLabels->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 35) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgInitBaseDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1528) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrTileDefinition->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 519) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgBaselineHeadingDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 20) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Acquisition::MsgAcqResultDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 570) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgUtcLeapSecond->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32520) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxCpuState->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1505) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrCodeBiases->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 113) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgAlmanacGloDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1515) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrStecCorrectionDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 558) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelNedGnss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 530) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelNedCov->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 288) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Telemetry::MsgTelSv->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1026) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Logging::MsgFwd->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65286) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgInsUpdates->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65284) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgCsacTelemetry->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 191) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgFrontEndGain->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 520) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgDops->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 27) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgMaskSatelliteDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1516) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrCodePhaseBiasesBounds->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 150) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgGnssCapb->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 97) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Tracking::MsgMeasurementState->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 529) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosLlhCov->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 431) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Settings::MsgSettingsRegisterResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65533) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgStatusJournal->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 145) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgSvConfigurationGpsDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32522) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxSysState->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3076) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgEcdsaCertificate->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 144) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgIono->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65294) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = SolutionMeta::MsgSolnMeta->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 532) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosEcefCov->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 45) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Tracking::MsgTrackingIq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 561) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosLlhCovGnss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1502) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrOrbitClockBounds->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 149) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisGalDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 115) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgAlmanacGlo->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32512) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxCpuStateDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32521) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxMemState->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 522) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosLlh->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 104) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgSetTime->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32519) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxProcessFdSummary->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 4098) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = FileIo::MsgFileioConfigResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32517) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxSocketUsage->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 2306) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Mag::MsgMagRaw->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 67) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgObsDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 69) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgObsDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 512) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosEcefDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 137) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisBds->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65288) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgPpsTime->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3074) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgEd25519CertificateDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 562) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelNedCovGnss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 580) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgReferenceFrameParam->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 524) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgBaselineNed->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 161) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Settings::MsgSettingsSave->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 138) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisGps->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 544) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Orientation::MsgOrientQuat->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 192) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgCwResults->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 165) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Settings::MsgSettingsReadResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 33) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Tracking::MsgTrackingStateDetailedDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1527) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrTileDefinitionDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65535) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgHeartbeat->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3081) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgCertificateChain->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 514) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgBaselineEcefDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 185) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgCommandResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 180) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Bootload::MsgBootloaderHandshakeResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 19) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Tracking::MsgTrackingStateDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3015) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Integrity::MsgSsrFlagIonoGridPoints->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 186) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgNetworkStateReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32518) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxProcessFdCount->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1530) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrGriddedCorrectionDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1541) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrSatelliteApc->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 30583) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Sbas::MsgSbasRaw->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 23) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgThreadState->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 221) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Bootload::MsgNapDeviceDnaResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 227) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Flash::MsgStmFlashLockSector->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 188) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgCommandOutput->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65282) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgDgnssStatus->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 178) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgResetDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1533) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrStecCorrection->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3011) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Integrity::MsgSsrFlagTropoGridPoints->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3005) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Integrity::MsgSsrFlagSatellites->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 160) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Settings::MsgSettingsWrite->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 540) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelCog->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 174) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Settings::MsgSettingsRegister->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 176) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Bootload::MsgBootloaderHandshakeDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1024) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ndb::MsgNdbEvent->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 166) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Settings::MsgSettingsReadByIndexDone->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 114) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgAlmanacGps->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 564) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosEcefCovGnss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 259) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgUtcTime->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 181) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgDeviceMonitor->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 521) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosEcef->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 2307) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Vehicle::MsgOdometry->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 148) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgGroupDelay->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 117) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgGloBiases->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3025) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Integrity::MsgSsrFlagIonoGridPointSatLos->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Tracking::MsgTrackingState->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1534) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrGriddedCorrectionBounds->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 44) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Tracking::MsgTrackingIqDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3073) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgEd25519SignatureDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 231) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Flash::MsgFlashReadReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 140) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisSbas->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 226) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Flash::MsgFlashErase->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 515) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgBaselineNedDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 2308) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Vehicle::MsgWheeltick->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 535) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgProtectionLevel->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 179) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Bootload::MsgBootloaderHandshakeReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 172) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = FileIo::MsgFileioRemove->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 130) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisSbasDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 187) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgNetworkStateResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1501) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrOrbitClock->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 21) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Acquisition::MsgAcqResultDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1500) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrOrbitClockDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 225) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Flash::MsgFlashReadResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 534) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgProtectionLevelDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 232) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Flash::MsgStmUniqueIdReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 2304) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Imu::MsgImuRaw->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 229) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Flash::MsgStmUniqueIdResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32515) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxProcessSocketCounts->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65295) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = SolutionMeta::MsgSolnMetaDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3075) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgEd25519SignatureDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 258) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgGpsTime->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32516) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxProcessSocketQueues->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 170) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = FileIo::MsgFileioReadDirResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 256) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgGpsTimeDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 32514) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Linux::MsgLinuxSysStateDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 518) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgDopsDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 553) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosEcefGnss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 517) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelNedDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 164) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Settings::MsgSettingsReadReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 182) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgReset->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 189) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgNetworkBandwidthUsage->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 72) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgBasePosEcef->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 71) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisDepC->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1025) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Logging::MsgLog->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 168) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = FileIo::MsgFileioReadReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 581) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPoseRelative->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 171) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = FileIo::MsgFileioWriteResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 70) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 28) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Tracking::MsgTrackingIqDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 193) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgCwStart->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 133) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisGloDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 129) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisGpsDepE->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 74) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgObs->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3080) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgEcdsaSignature->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 151) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgSvAzEl->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 16) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Logging::MsgPrintDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 147) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgGroupDelayDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 527) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Orientation::MsgBaselineHeading->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 134) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisGpsDepF->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3078) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgEcdsaSignatureDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 80) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgSpecanDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 68) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgBasePosLlh->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1532) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrGriddedCorrection->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1503) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrOrbitClockBoundsDegradation->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 516) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelEcefDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 26) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 139) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisGlo->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65280) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgStartup->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 31) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Acquisition::MsgAcqResultDepC->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 565) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelEcefCovGnss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 135) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisGloDepC->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3026) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Integrity::MsgAcknowledge->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 34) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgResetFilters->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1600) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgOsr->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 536) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosLlhAcc->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65287) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgGnssTimeOffset->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1526) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrTileDefinitionDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1540) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrSatelliteApcDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 29) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgUartState->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 132) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisSbasDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1510) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrPhaseBiases->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65290) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgGroupMeta->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 175) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Settings::MsgSettingsWriteResp->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 557) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelEcefGnss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 526) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgVelNed->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1520) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrGriddedCorrectionNoStdDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 2305) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Imu::MsgImuAux->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 190) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgCellModemStatus->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 1531) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Ssr::MsgSsrStecCorrectionDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 528) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgAgeCorrections->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3077) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgCertificateChainDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 25) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgIarState->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 43) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Piksi::MsgMaskSatellite->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 228) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Flash::MsgStmFlashUnlockSector->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 523) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgBaselineEcef->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 554) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgPosLlhGnss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 65289) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = System::MsgSensorAidEvent->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 22) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Tracking::MsgTrackingStateDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3001) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Integrity::MsgSsrFlagHighLevel->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 30) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Acquisition::MsgAcqSvProfileDep->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 261) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Navigation::MsgUtcTimeGnss->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3021) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Integrity::MsgSsrFlagIonoTileSatLos->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 173) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = FileIo::MsgFileioWriteReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 128) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Observation::MsgEphemerisDepD->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 222) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Bootload::MsgNapDeviceDnaReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    else {
+        $self->{payload} = $self->{_io}->read_bytes($self->length());
+    }
+    $self->{crc} = $self->{_io}->read_u2le();
 }
 
 sub preamble {
@@ -1556,6 +1503,21 @@ sub sender {
 sub length {
     my ($self) = @_;
     return $self->{length};
+}
+
+sub payload {
+    my ($self) = @_;
+    return $self->{payload};
+}
+
+sub crc {
+    my ($self) = @_;
+    return $self->{crc};
+}
+
+sub _raw_payload {
+    my ($self) = @_;
+    return $self->{_raw_payload};
 }
 
 1;

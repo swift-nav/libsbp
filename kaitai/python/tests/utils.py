@@ -12,16 +12,27 @@ import io
 import sbp.msg
 import sbp.table
 from sbp.msg import SBP_PREAMBLE
+import re
 
 SBP_HEADER_LEN = 6
 
 
-# convert all keys in a dict to lower case
-def lc_keys(x):
+# convert CamelCase to snake_case
+def snake_case(s):
+  if "_" in s:
+    return "_".join(snake_case(p) for p in s.split("_"))
+  if len(s) == 1:
+    return s.lower()
+  s = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", s)
+  return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s).lower()
+
+
+# convert all keys in a dict to snake_case
+def snake_case_keys(x):
    if isinstance(x, list):
-     return [lc_keys(v) for v in x]
+     return [snake_case_keys(v) for v in x]
    elif isinstance(x, dict):
-     return dict((k.lower(), lc_keys(v)) for k, v in x.items())
+     return dict((snake_case(k), snake_case_keys(v)) for k, v in x.items())
    else:
      return x
 
@@ -109,8 +120,8 @@ def get_next_msg_hybrid1(fileobj):
         stream = KaitaiStream(io.BytesIO(buf))
         obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.header.msg_type) == obj.header.msg_type:
-            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.header.msg_type))
+        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.msg_type) == obj.msg_type:
+            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.msg_type))
             continue
 
         yield kaitai2dict(obj)
@@ -127,8 +138,8 @@ def get_next_msg_hybrid2(fileobj):
         stream = KaitaiStream(io.BytesIO(msg.to_binary()))
         obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.header.msg_type) == obj.header.msg_type:
-            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.header.msg_type))
+        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.msg_type) == obj.msg_type:
+            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.msg_type))
             continue
 
         yield kaitai2dict(obj)
@@ -155,7 +166,7 @@ def compare_parser_outputs(filename):
     file4 = open(filename, 'rb')
 
     for msg_construct, msg_kaitai, msg_hybrid1, msg_hybrid2 in zip(get_next_msg_construct(file1), get_next_msg_kaitai(file2), get_next_msg_hybrid1(file3), get_next_msg_hybrid2(file4)):
-        json_construct = json.dumps(lc_keys(msg_construct), allow_nan=False, sort_keys=True, separators=(',', ':'))
+        json_construct = json.dumps(snake_case_keys(msg_construct), allow_nan=False, sort_keys=True, separators=(',', ':'))
         json_kaitai = json.dumps(msg_kaitai, allow_nan=False, sort_keys=True, separators=(',', ':'))
         json_hybrid1 = json.dumps(msg_hybrid1, allow_nan=False, sort_keys=True, separators=(',', ':'))
         json_hybrid2 = json.dumps(msg_hybrid2, allow_nan=False, sort_keys=True, separators=(',', ':'))

@@ -1,9 +1,19 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
 # Telemetry messages reported by Starling engine. The messages include various
 # byproducts of state estimation and other logic across Starling and are aimed at
 # efficient issue diagnostics.
-
+#
 # Automatically generated from spec/yaml/swiftnav/sbp/telemetry.yaml with generate.py.
-# Please do not hand edit!
+# Do not modify by hand!
 
 meta:
   id: telemetry

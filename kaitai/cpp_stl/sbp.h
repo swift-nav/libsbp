@@ -15,7 +15,6 @@ class sbp_t : public kaitai::kstruct {
 
 public:
     class sbp_message_t;
-    class sbp_header_t;
 
     enum msg_ids_t {
         MSG_IDS_MSG_PRINT_DEP = 16,
@@ -276,7 +275,10 @@ public:
         ~sbp_message_t();
 
     private:
-        sbp_header_t* m_header;
+        std::string m_preamble;
+        uint16_t m_msg_type;
+        uint16_t m_sender;
+        uint8_t m_length;
         kaitai::kstruct* m_payload;
         bool n_payload;
 
@@ -291,43 +293,16 @@ public:
         kaitai::kstream* m__io__raw_payload;
 
     public:
-        sbp_header_t* header() const { return m_header; }
+        std::string preamble() const { return m_preamble; }
+        uint16_t msg_type() const { return m_msg_type; }
+        uint16_t sender() const { return m_sender; }
+        uint8_t length() const { return m_length; }
         kaitai::kstruct* payload() const { return m_payload; }
         uint16_t crc() const { return m_crc; }
         sbp_t* _root() const { return m__root; }
         sbp_t* _parent() const { return m__parent; }
         std::string _raw_payload() const { return m__raw_payload; }
         kaitai::kstream* _io__raw_payload() const { return m__io__raw_payload; }
-    };
-
-    class sbp_header_t : public kaitai::kstruct {
-
-    public:
-
-        sbp_header_t(kaitai::kstream* p__io, sbp_t::sbp_message_t* p__parent = 0, sbp_t* p__root = 0);
-
-    private:
-        void _read();
-        void _clean_up();
-
-    public:
-        ~sbp_header_t();
-
-    private:
-        std::string m_preamble;
-        uint16_t m_msg_type;
-        uint16_t m_sender;
-        uint8_t m_length;
-        sbp_t* m__root;
-        sbp_t::sbp_message_t* m__parent;
-
-    public:
-        std::string preamble() const { return m_preamble; }
-        uint16_t msg_type() const { return m_msg_type; }
-        uint16_t sender() const { return m_sender; }
-        uint8_t length() const { return m_length; }
-        sbp_t* _root() const { return m__root; }
-        sbp_t::sbp_message_t* _parent() const { return m__parent; }
     };
 
 private:
