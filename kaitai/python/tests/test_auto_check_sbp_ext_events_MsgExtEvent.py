@@ -24,18 +24,17 @@ def test_auto_check_sbp_ext_events_msg_ext_event_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 1781, "msg_type": 257, "wn": 1840, "tow": 254924999, "crc": 52286, "length": 12, "flags": 3, "pin": 0, "ns_residual": 999882, "preamble": 85, "payload": "MAfH2DEPykEPAAMA"}
-    assert parsed_dict['crc'] == 0xcc3e
-    assert parsed_dict['length'] == 12
-    assert parsed_dict['msg_type'] == 0x101
-    assert parsed_dict['payload'] == "MAfH2DEPykEPAAMA"
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x6f5
+    payload = get_payload(obj)
+    assert payload.crc == 0xcc3e
+    assert payload.length == 12
+    assert payload.msg_type == 0x101
+    assert payload.payload == "MAfH2DEPykEPAAMA"
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x6f5
     assert dictify(obj.payload.flags) == snake_case_keys( 3 )
     assert dictify(obj.payload.ns_residual) == snake_case_keys( 999882 )
     assert dictify(obj.payload.pin) == snake_case_keys( 0 )
     assert dictify(obj.payload.tow) == snake_case_keys( 254924999 )
     assert dictify(obj.payload.wn) == snake_case_keys( 1840 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 1781, "msg_type": 257, "wn": 1840, "tow": 254924999, "crc": 52286, "length": 12, "flags": 3, "pin": 0, "ns_residual": 999882, "preamble": 85, "payload": "MAfH2DEPykEPAAMA"} )

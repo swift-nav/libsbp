@@ -24,15 +24,14 @@ def test_auto_check_sbp_navigation_msg_age_corrections_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 66, "msg_type": 528, "age": 30, "tow": 100, "crc": 51945, "length": 6, "preamble": 85, "payload": "ZAAAAB4A"}
-    assert parsed_dict['crc'] == 0xcae9
-    assert parsed_dict['length'] == 6
-    assert parsed_dict['msg_type'] == 0x210
-    assert parsed_dict['payload'] == "ZAAAAB4A"
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x42
+    payload = get_payload(obj)
+    assert payload.crc == 0xcae9
+    assert payload.length == 6
+    assert payload.msg_type == 0x210
+    assert payload.payload == "ZAAAAB4A"
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x42
     assert dictify(obj.payload.age) == snake_case_keys( 30 )
     assert dictify(obj.payload.tow) == snake_case_keys( 100 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 66, "msg_type": 528, "age": 30, "tow": 100, "crc": 51945, "length": 6, "preamble": 85, "payload": "ZAAAAB4A"} )

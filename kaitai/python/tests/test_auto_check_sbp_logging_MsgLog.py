@@ -24,15 +24,14 @@ def test_auto_check_sbp_logging_msg_log_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"level":6,"text":"Filtered all obs from 2314 at tow 83.539019","preamble":85,"msg_type":1025,"sender":2314,"payload":"BkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTk=","crc":41905,"length":44}
-    assert parsed_dict['crc'] == 0xa3b1
-    assert parsed_dict['length'] == 44
-    assert parsed_dict['msg_type'] == 0x0401
-    assert parsed_dict['payload'] == "BkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTk="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x90a
+    payload = get_payload(obj)
+    assert payload.crc == 0xa3b1
+    assert payload.length == 44
+    assert payload.msg_type == 0x0401
+    assert payload.payload == "BkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTk="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x90a
     assert dictify(obj.payload.level) == snake_case_keys( 6 )
     assert dictify(obj.payload.text) == snake_case_keys( 'Filtered all obs from 2314 at tow 83.539019' )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"level":6,"text":"Filtered all obs from 2314 at tow 83.539019","preamble":85,"msg_type":1025,"sender":2314,"payload":"BkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTk=","crc":41905,"length":44} )

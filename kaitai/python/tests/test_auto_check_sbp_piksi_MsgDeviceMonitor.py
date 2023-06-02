@@ -24,21 +24,20 @@ def test_auto_check_sbp_piksi_msg_device_monitor_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789, "fe_temperature": 4776, "dev_vin": -9999, "crc": 59855, "length": 10, "cpu_temperature": 6165, "preamble": 85, "payload": "8djbA/0GFRioEg=="}
-    assert parsed_dict['crc'] == 0xe9cf
-    assert parsed_dict['length'] == 10
-    assert parsed_dict['msg_type'] == 0xb5
-    assert parsed_dict['payload'] == "8djbA/0GFRioEg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x425f
+    payload = get_payload(obj)
+    assert payload.crc == 0xe9cf
+    assert payload.length == 10
+    assert payload.msg_type == 0xb5
+    assert payload.payload == "8djbA/0GFRioEg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x425f
     assert dictify(obj.payload.cpu_temperature) == snake_case_keys( 6165 )
     assert dictify(obj.payload.cpu_vaux) == snake_case_keys( 1789 )
     assert dictify(obj.payload.cpu_vint) == snake_case_keys( 987 )
     assert dictify(obj.payload.dev_vin) == snake_case_keys( -9999 )
     assert dictify(obj.payload.fe_temperature) == snake_case_keys( 4776 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789, "fe_temperature": 4776, "dev_vin": -9999, "crc": 59855, "length": 10, "cpu_temperature": 6165, "preamble": 85, "payload": "8djbA/0GFRioEg=="} )
 
 def test_auto_check_sbp_piksi_msg_device_monitor_2():
     buf = base64.standard_b64decode("VbUAX0IK8djbA/4GGBioEqke")
@@ -46,21 +45,20 @@ def test_auto_check_sbp_piksi_msg_device_monitor_2():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1790, "fe_temperature": 4776, "dev_vin": -9999, "crc": 7849, "length": 10, "cpu_temperature": 6168, "preamble": 85, "payload": "8djbA/4GGBioEg=="}
-    assert parsed_dict['crc'] == 0x1ea9
-    assert parsed_dict['length'] == 10
-    assert parsed_dict['msg_type'] == 0xb5
-    assert parsed_dict['payload'] == "8djbA/4GGBioEg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x425f
+    payload = get_payload(obj)
+    assert payload.crc == 0x1ea9
+    assert payload.length == 10
+    assert payload.msg_type == 0xb5
+    assert payload.payload == "8djbA/4GGBioEg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x425f
     assert dictify(obj.payload.cpu_temperature) == snake_case_keys( 6168 )
     assert dictify(obj.payload.cpu_vaux) == snake_case_keys( 1790 )
     assert dictify(obj.payload.cpu_vint) == snake_case_keys( 987 )
     assert dictify(obj.payload.dev_vin) == snake_case_keys( -9999 )
     assert dictify(obj.payload.fe_temperature) == snake_case_keys( 4776 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1790, "fe_temperature": 4776, "dev_vin": -9999, "crc": 7849, "length": 10, "cpu_temperature": 6168, "preamble": 85, "payload": "8djbA/4GGBioEg=="} )
 
 def test_auto_check_sbp_piksi_msg_device_monitor_3():
     buf = base64.standard_b64decode("VbUAX0IK8djbA/0GFhioEhNy")
@@ -68,21 +66,20 @@ def test_auto_check_sbp_piksi_msg_device_monitor_3():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789, "fe_temperature": 4776, "dev_vin": -9999, "crc": 29203, "length": 10, "cpu_temperature": 6166, "preamble": 85, "payload": "8djbA/0GFhioEg=="}
-    assert parsed_dict['crc'] == 0x7213
-    assert parsed_dict['length'] == 10
-    assert parsed_dict['msg_type'] == 0xb5
-    assert parsed_dict['payload'] == "8djbA/0GFhioEg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x425f
+    payload = get_payload(obj)
+    assert payload.crc == 0x7213
+    assert payload.length == 10
+    assert payload.msg_type == 0xb5
+    assert payload.payload == "8djbA/0GFhioEg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x425f
     assert dictify(obj.payload.cpu_temperature) == snake_case_keys( 6166 )
     assert dictify(obj.payload.cpu_vaux) == snake_case_keys( 1789 )
     assert dictify(obj.payload.cpu_vint) == snake_case_keys( 987 )
     assert dictify(obj.payload.dev_vin) == snake_case_keys( -9999 )
     assert dictify(obj.payload.fe_temperature) == snake_case_keys( 4776 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"cpu_vint": 987, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789, "fe_temperature": 4776, "dev_vin": -9999, "crc": 29203, "length": 10, "cpu_temperature": 6166, "preamble": 85, "payload": "8djbA/0GFhioEg=="} )
 
 def test_auto_check_sbp_piksi_msg_device_monitor_4():
     buf = base64.standard_b64decode("VbUAX0IK8djaA/wGBhioEsdr")
@@ -90,21 +87,20 @@ def test_auto_check_sbp_piksi_msg_device_monitor_4():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"cpu_vint": 986, "sender": 16991, "msg_type": 181, "cpu_vaux": 1788, "fe_temperature": 4776, "dev_vin": -9999, "crc": 27591, "length": 10, "cpu_temperature": 6150, "preamble": 85, "payload": "8djaA/wGBhioEg=="}
-    assert parsed_dict['crc'] == 0x6bc7
-    assert parsed_dict['length'] == 10
-    assert parsed_dict['msg_type'] == 0xb5
-    assert parsed_dict['payload'] == "8djaA/wGBhioEg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x425f
+    payload = get_payload(obj)
+    assert payload.crc == 0x6bc7
+    assert payload.length == 10
+    assert payload.msg_type == 0xb5
+    assert payload.payload == "8djaA/wGBhioEg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x425f
     assert dictify(obj.payload.cpu_temperature) == snake_case_keys( 6150 )
     assert dictify(obj.payload.cpu_vaux) == snake_case_keys( 1788 )
     assert dictify(obj.payload.cpu_vint) == snake_case_keys( 986 )
     assert dictify(obj.payload.dev_vin) == snake_case_keys( -9999 )
     assert dictify(obj.payload.fe_temperature) == snake_case_keys( 4776 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"cpu_vint": 986, "sender": 16991, "msg_type": 181, "cpu_vaux": 1788, "fe_temperature": 4776, "dev_vin": -9999, "crc": 27591, "length": 10, "cpu_temperature": 6150, "preamble": 85, "payload": "8djaA/wGBhioEg=="} )
 
 def test_auto_check_sbp_piksi_msg_device_monitor_5():
     buf = base64.standard_b64decode("VbUAX0IK8djcA/0G6xeoEvE/")
@@ -112,18 +108,17 @@ def test_auto_check_sbp_piksi_msg_device_monitor_5():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"cpu_vint": 988, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789, "fe_temperature": 4776, "dev_vin": -9999, "crc": 16369, "length": 10, "cpu_temperature": 6123, "preamble": 85, "payload": "8djcA/0G6xeoEg=="}
-    assert parsed_dict['crc'] == 0x3ff1
-    assert parsed_dict['length'] == 10
-    assert parsed_dict['msg_type'] == 0xb5
-    assert parsed_dict['payload'] == "8djcA/0G6xeoEg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x425f
+    payload = get_payload(obj)
+    assert payload.crc == 0x3ff1
+    assert payload.length == 10
+    assert payload.msg_type == 0xb5
+    assert payload.payload == "8djcA/0G6xeoEg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x425f
     assert dictify(obj.payload.cpu_temperature) == snake_case_keys( 6123 )
     assert dictify(obj.payload.cpu_vaux) == snake_case_keys( 1789 )
     assert dictify(obj.payload.cpu_vint) == snake_case_keys( 988 )
     assert dictify(obj.payload.dev_vin) == snake_case_keys( -9999 )
     assert dictify(obj.payload.fe_temperature) == snake_case_keys( 4776 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"cpu_vint": 988, "sender": 16991, "msg_type": 181, "cpu_vaux": 1789, "fe_temperature": 4776, "dev_vin": -9999, "crc": 16369, "length": 10, "cpu_temperature": 6123, "preamble": 85, "payload": "8djcA/0G6xeoEg=="} )

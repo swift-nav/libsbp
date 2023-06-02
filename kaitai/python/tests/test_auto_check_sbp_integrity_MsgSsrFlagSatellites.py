@@ -24,14 +24,13 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_satellites_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "chain_id": 4, "const_id": 5, "n_faulty_sats": 3, "faulty_sats": [10, 11, 12], "preamble": 85, "msg_type": 3005, "sender": 66, "length": 15, "payload": "tAAAAAMAAQIDBAUDCgsM", "crc": 42350}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x0BBD
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 15
-    assert parsed_dict['payload'] == "tAAAAAMAAQIDBAUDCgsM"
-    assert parsed_dict['crc'] == 0xA56E
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x0BBD
+    assert payload.sender == 0x0042
+    assert payload.length == 15
+    assert payload.payload == "tAAAAAMAAQIDBAUDCgsM"
+    assert payload.crc == 0xA56E
     assert dictify(obj.payload.chain_id) == snake_case_keys( 4 )
     assert dictify(obj.payload.const_id) == snake_case_keys( 5 )
     assert dictify(obj.payload.faulty_sats) == snake_case_keys( [10, 11, 12] )
@@ -41,4 +40,4 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_satellites_1():
     assert dictify(obj.payload.seq_num) == snake_case_keys( 2 )
     assert dictify(obj.payload.ssr_sol_id) == snake_case_keys( 3 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "chain_id": 4, "const_id": 5, "n_faulty_sats": 3, "faulty_sats": [10, 11, 12], "preamble": 85, "msg_type": 3005, "sender": 66, "length": 15, "payload": "tAAAAAMAAQIDBAUDCgsM", "crc": 42350} )

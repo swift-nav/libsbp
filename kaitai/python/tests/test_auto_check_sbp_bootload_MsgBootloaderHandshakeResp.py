@@ -24,18 +24,17 @@ def test_auto_check_sbp_bootload_msg_bootloader_handshake_resp_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 0, "msg_type": 180, "crc": 457, "length": 9, "version": "v1.2\n", "flags": 0, "preamble": 85, "payload": "AAAAAHYxLjIK"}
-    assert parsed_dict['crc'] == 0x1c9
-    assert parsed_dict['length'] == 9
-    assert parsed_dict['msg_type'] == 0xb4
-    assert parsed_dict['payload'] == "AAAAAHYxLjIK"
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x0
+    payload = get_payload(obj)
+    assert payload.crc == 0x1c9
+    assert payload.length == 9
+    assert payload.msg_type == 0xb4
+    assert payload.payload == "AAAAAHYxLjIK"
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x0
     assert dictify(obj.payload.flags) == snake_case_keys( 0 )
     assert dictify(obj.payload.version) == snake_case_keys( 'v1.2\n' )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 0, "msg_type": 180, "crc": 457, "length": 9, "version": "v1.2\n", "flags": 0, "preamble": 85, "payload": "AAAAAHYxLjIK"} )
 
 def test_auto_check_sbp_bootload_msg_bootloader_handshake_resp_2():
     buf = base64.standard_b64decode("VbAAwwQEdjEuMgHO")
@@ -43,14 +42,13 @@ def test_auto_check_sbp_bootload_msg_bootloader_handshake_resp_2():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = { "handshake": [118, 49, 46, 50], "crc": 52737, "length": 4, "msg_type": 176, "payload": "djEuMg==", "preamble": 85, "sender": 1219 }
-    assert parsed_dict['crc'] == 0xce01
-    assert parsed_dict['length'] == 4
-    assert parsed_dict['msg_type'] == 0xb0
-    assert parsed_dict['payload'] == "djEuMg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0xce01
+    assert payload.length == 4
+    assert payload.msg_type == 0xb0
+    assert payload.payload == "djEuMg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.handshake) == snake_case_keys( [118, 49, 46, 50] )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( { "handshake": [118, 49, 46, 50], "crc": 52737, "length": 4, "msg_type": 176, "payload": "djEuMg==", "preamble": 85, "sender": 1219 } )

@@ -24,14 +24,13 @@ def test_auto_check_sbp_orientation_msg_orient_euler_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"pitch": 2, "sender": 66, "msg_type": 545, "roll": 1, "yaw": 8, "tow": 1, "roll_accuracy": 7, "crc": 57900, "length": 29, "flags": 3, "pitch_accuracy": 3, "yaw_accuracy": 7, "preamble": 85, "payload": "AQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAM="}
-    assert parsed_dict['crc'] == 0xe22c
-    assert parsed_dict['length'] == 29
-    assert parsed_dict['msg_type'] == 0x221
-    assert parsed_dict['payload'] == "AQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAM="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x42
+    payload = get_payload(obj)
+    assert payload.crc == 0xe22c
+    assert payload.length == 29
+    assert payload.msg_type == 0x221
+    assert payload.payload == "AQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAM="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x42
     assert dictify(obj.payload.flags) == snake_case_keys( 3 )
     assert dictify(obj.payload.pitch) == snake_case_keys( 2 )
     assert dictify(obj.payload.pitch_accuracy) == snake_case_keys( 3.0 )
@@ -41,4 +40,4 @@ def test_auto_check_sbp_orientation_msg_orient_euler_1():
     assert dictify(obj.payload.yaw) == snake_case_keys( 8 )
     assert dictify(obj.payload.yaw_accuracy) == snake_case_keys( 7.0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"pitch": 2, "sender": 66, "msg_type": 545, "roll": 1, "yaw": 8, "tow": 1, "roll_accuracy": 7, "crc": 57900, "length": 29, "flags": 3, "pitch_accuracy": 3, "yaw_accuracy": 7, "preamble": 85, "payload": "AQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAM="} )

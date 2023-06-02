@@ -24,14 +24,13 @@ def test_auto_check_sbp_navigation_msg_vel_ecef_cov_gnss_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"tow":501868000,"x":-3,"y":1,"z":4,"cov_x_x":0.0024547684006392956,"cov_x_y":0.0021795108914375305,"cov_x_z":-0.0016828652005642653,"cov_y_y":0.004218944814056158,"cov_y_z":-0.0024961293675005436,"cov_z_z":0.0037804271560162306,"n_sats":21,"flags":2,"preamble":85,"msg_type":565,"sender":4096,"payload":"4OXpHf3///8BAAAABAAAAC7gIDsg1g47lpPcuhM/ijsaliO7C8F3OxUC","crc":58902,"length":42}
-    assert parsed_dict['crc'] == 0xe616
-    assert parsed_dict['length'] == 42
-    assert parsed_dict['msg_type'] == 0x235
-    assert parsed_dict['payload'] == "4OXpHf3///8BAAAABAAAAC7gIDsg1g47lpPcuhM/ijsaliO7C8F3OxUC"
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x1000
+    payload = get_payload(obj)
+    assert payload.crc == 0xe616
+    assert payload.length == 42
+    assert payload.msg_type == 0x235
+    assert payload.payload == "4OXpHf3///8BAAAABAAAAC7gIDsg1g47lpPcuhM/ijsaliO7C8F3OxUC"
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x1000
     assert dictify(obj.payload.cov_x_x) == snake_case_keys( 0.0024547684006392956 )
     assert dictify(obj.payload.cov_x_y) == snake_case_keys( 0.0021795108914375305 )
     assert dictify(obj.payload.cov_x_z) == snake_case_keys( -0.0016828652005642653 )
@@ -45,4 +44,4 @@ def test_auto_check_sbp_navigation_msg_vel_ecef_cov_gnss_1():
     assert dictify(obj.payload.y) == snake_case_keys( 1 )
     assert dictify(obj.payload.z) == snake_case_keys( 4 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"tow":501868000,"x":-3,"y":1,"z":4,"cov_x_x":0.0024547684006392956,"cov_x_y":0.0021795108914375305,"cov_x_z":-0.0016828652005642653,"cov_y_y":0.004218944814056158,"cov_y_z":-0.0024961293675005436,"cov_z_z":0.0037804271560162306,"n_sats":21,"flags":2,"preamble":85,"msg_type":565,"sender":4096,"payload":"4OXpHf3///8BAAAABAAAAC7gIDsg1g47lpPcuhM/ijsaliO7C8F3OxUC","crc":58902,"length":42} )

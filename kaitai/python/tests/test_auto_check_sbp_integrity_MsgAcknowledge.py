@@ -24,14 +24,13 @@ def test_auto_check_sbp_integrity_msg_acknowledge_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"preamble": 85, "msg_type": 3026, "sender": 42, "length": 11, "payload": "HkDiAQAAAQABAAI=", "crc": 45654, "request_id": 30, "area_id": 123456, "response_code": 0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id": 2}
-    assert parsed_dict['crc'] == 0xB256
-    assert parsed_dict['length'] == 11
-    assert parsed_dict['msg_type'] == 0xBD2
-    assert parsed_dict['payload'] == "HkDiAQAAAQABAAI="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x2A
+    payload = get_payload(obj)
+    assert payload.crc == 0xB256
+    assert payload.length == 11
+    assert payload.msg_type == 0xBD2
+    assert payload.payload == "HkDiAQAAAQABAAI="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x2A
     assert dictify(obj.payload.area_id) == snake_case_keys( 123456 )
     assert dictify(obj.payload.correction_mask_on_demand) == snake_case_keys( 1 )
     assert dictify(obj.payload.correction_mask_stream) == snake_case_keys( 1 )
@@ -39,4 +38,4 @@ def test_auto_check_sbp_integrity_msg_acknowledge_1():
     assert dictify(obj.payload.response_code) == snake_case_keys( 0 )
     assert dictify(obj.payload.solution_id) == snake_case_keys( 2 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"preamble": 85, "msg_type": 3026, "sender": 42, "length": 11, "payload": "HkDiAQAAAQABAAI=", "crc": 45654, "request_id": 30, "area_id": 123456, "response_code": 0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id": 2} )

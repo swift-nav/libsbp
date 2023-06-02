@@ -24,18 +24,17 @@ def test_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds_degradation_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "update_interval": 3, "sol_id": 48}, "ssr_iod": 15, "const_id": 1, "sat_bitmask": 10, "orbit_clock_bounds_degradation": {"orb_radial_bound_mu_dot": 200, "orb_along_bound_mu_dot": 199, "orb_cross_bound_mu_dot": 199, "orb_cross_bound_mu_dot": 198, "orb_radial_bound_sig_dot": 197, "orb_along_bound_sig_dot": 196, "orb_cross_bound_sig_dot": 195, "clock_bound_mu_dot": 194, "clock_bound_sig_dot": 193}, "preamble": 85, "msg_type": 1503, "sender": 66, "length": 28, "payload": "tAAAAAMAAQIDMA8BCgAAAAAAAADIx8bFxMPCwQ==", "crc": 30152}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x05DF
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 28
-    assert parsed_dict['payload'] == "tAAAAAMAAQIDMA8BCgAAAAAAAADIx8bFxMPCwQ=="
-    assert parsed_dict['crc'] == 0x75C8
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x05DF
+    assert payload.sender == 0x0042
+    assert payload.length == 28
+    assert payload.payload == "tAAAAAMAAQIDMA8BCgAAAAAAAADIx8bFxMPCwQ=="
+    assert payload.crc == 0x75C8
     assert dictify(obj.payload.const_id) == snake_case_keys( 1 )
     assert dictify(obj.payload.header) == snake_case_keys( {'time': {'tow': 180, 'wn': 3}, 'num_msgs': 1, 'seq_num': 2, 'update_interval': 3, 'sol_id': 48} )
     assert dictify(obj.payload.orbit_clock_bounds_degradation) == snake_case_keys( {'orb_radial_bound_mu_dot': 200, 'orb_along_bound_mu_dot': 199, 'orb_cross_bound_mu_dot': 198, 'orb_radial_bound_sig_dot': 197, 'orb_along_bound_sig_dot': 196, 'orb_cross_bound_sig_dot': 195, 'clock_bound_mu_dot': 194, 'clock_bound_sig_dot': 193} )
     assert dictify(obj.payload.sat_bitmask) == snake_case_keys( 10 )
     assert dictify(obj.payload.ssr_iod) == snake_case_keys( 15 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "update_interval": 3, "sol_id": 48}, "ssr_iod": 15, "const_id": 1, "sat_bitmask": 10, "orbit_clock_bounds_degradation": {"orb_radial_bound_mu_dot": 200, "orb_along_bound_mu_dot": 199, "orb_cross_bound_mu_dot": 199, "orb_cross_bound_mu_dot": 198, "orb_radial_bound_sig_dot": 197, "orb_along_bound_sig_dot": 196, "orb_cross_bound_sig_dot": 195, "clock_bound_mu_dot": 194, "clock_bound_sig_dot": 193}, "preamble": 85, "msg_type": 1503, "sender": 66, "length": 28, "payload": "tAAAAAMAAQIDMA8BCgAAAAAAAADIx8bFxMPCwQ==", "crc": 30152} )

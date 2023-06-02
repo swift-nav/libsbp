@@ -24,16 +24,15 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_iono_grid_points_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"header": {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4, "tile_id": 5, "chain_id": 6}, "n_faulty_points": 3, "faulty_points": [10, 11, 12], "preamble": 85, "msg_type": 3015, "sender": 66, "length": 21, "payload": "tAAAAAMAAQIDBAAFAAYDCgALAAwA", "crc": 1845}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x0BC7
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 21
-    assert parsed_dict['payload'] == "tAAAAAMAAQIDBAAFAAYDCgALAAwA"
-    assert parsed_dict['crc'] == 0x0735
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x0BC7
+    assert payload.sender == 0x0042
+    assert payload.length == 21
+    assert payload.payload == "tAAAAAMAAQIDBAAFAAYDCgALAAwA"
+    assert payload.crc == 0x0735
     assert dictify(obj.payload.faulty_points) == snake_case_keys( [10, 11, 12] )
     assert dictify(obj.payload.header) == snake_case_keys( {'obs_time': {'tow': 180, 'wn': 3}, 'num_msgs': 1, 'seq_num': 2, 'ssr_sol_id': 3, 'tile_set_id': 4, 'tile_id': 5, 'chain_id': 6} )
     assert dictify(obj.payload.n_faulty_points) == snake_case_keys( 3 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"header": {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4, "tile_id": 5, "chain_id": 6}, "n_faulty_points": 3, "faulty_points": [10, 11, 12], "preamble": 85, "msg_type": 3015, "sender": 66, "length": 21, "payload": "tAAAAAMAAQIDBAAFAAYDCgALAAwA", "crc": 1845} )

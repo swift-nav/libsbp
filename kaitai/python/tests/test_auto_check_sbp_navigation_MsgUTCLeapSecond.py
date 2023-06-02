@@ -24,14 +24,13 @@ def test_auto_check_sbp_navigation_msg_utc_leap_second_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"reserved_0": 1, "reserved_1": 2, "reserved_2": 3, "count_before": 4, "reserved_3": 5, "reserved_4": 6, "ref_wn": 7, "ref_dn": 8, "count_after": 9, "preamble": 85, "msg_type": 570, "sender": 66, "length": 14, "payload": "AQACAAMEBQAGAAcACAk=", "crc": 59442}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x023A
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 14
-    assert parsed_dict['payload'] == "AQACAAMEBQAGAAcACAk="
-    assert parsed_dict['crc'] == 0xE832
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x023A
+    assert payload.sender == 0x0042
+    assert payload.length == 14
+    assert payload.payload == "AQACAAMEBQAGAAcACAk="
+    assert payload.crc == 0xE832
     assert dictify(obj.payload.count_after) == snake_case_keys( 9 )
     assert dictify(obj.payload.count_before) == snake_case_keys( 4 )
     assert dictify(obj.payload.ref_dn) == snake_case_keys( 8 )
@@ -42,4 +41,4 @@ def test_auto_check_sbp_navigation_msg_utc_leap_second_1():
     assert dictify(obj.payload.reserved_3) == snake_case_keys( 5 )
     assert dictify(obj.payload.reserved_4) == snake_case_keys( 6 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"reserved_0": 1, "reserved_1": 2, "reserved_2": 3, "count_before": 4, "reserved_3": 5, "reserved_4": 6, "ref_wn": 7, "ref_dn": 8, "count_after": 9, "preamble": 85, "msg_type": 570, "sender": 66, "length": 14, "payload": "AQACAAMEBQAGAAcACAk=", "crc": 59442} )

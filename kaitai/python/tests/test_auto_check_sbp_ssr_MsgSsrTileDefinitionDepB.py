@@ -24,14 +24,13 @@ def test_auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"ssr_sol_id": 31, "tile_set_id": 256, "tile_id": 512, "corner_nw_lat": 1024, "corner_nw_lon": 2048, "spacing_lat": 4096, "spacing_lon": 8192, "rows": 16384, "cols": 32768, "bitmask": 1234567890, "preamble": 85, "msg_type": 1527, "sender": 66, "length": 25, "payload": "HwABAAIABAAIABAAIABAAIDSApZJAAAAAA==", "crc": 18390}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x05F7
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 25
-    assert parsed_dict['payload'] == "HwABAAIABAAIABAAIABAAIDSApZJAAAAAA=="
-    assert parsed_dict['crc'] == 0x47D6
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x05F7
+    assert payload.sender == 0x0042
+    assert payload.length == 25
+    assert payload.payload == "HwABAAIABAAIABAAIABAAIDSApZJAAAAAA=="
+    assert payload.crc == 0x47D6
     assert dictify(obj.payload.bitmask) == snake_case_keys( 1234567890 )
     assert dictify(obj.payload.cols) == snake_case_keys( 32768 )
     assert dictify(obj.payload.corner_nw_lat) == snake_case_keys( 1024 )
@@ -43,4 +42,4 @@ def test_auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b_1():
     assert dictify(obj.payload.tile_id) == snake_case_keys( 512 )
     assert dictify(obj.payload.tile_set_id) == snake_case_keys( 256 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"ssr_sol_id": 31, "tile_set_id": 256, "tile_id": 512, "corner_nw_lat": 1024, "corner_nw_lon": 2048, "spacing_lat": 4096, "spacing_lon": 8192, "rows": 16384, "cols": 32768, "bitmask": 1234567890, "preamble": 85, "msg_type": 1527, "sender": 66, "length": 25, "payload": "HwABAAIABAAIABAAIABAAIDSApZJAAAAAA==", "crc": 18390} )

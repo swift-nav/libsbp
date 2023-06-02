@@ -30,17 +30,15 @@ def test_(((s.suite_name|snake_case)))_(((loop.index)))():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = (((t.raw_json)))
-
+    payload = get_payload(obj)
   ((*- for k in t.sbp *))
-    assert parsed_dict['(((k)))'] == (((stringify_field( (((k))), (((t.sbp[k]))) ))))
+    assert payload.(((k))) == (((stringify_field( (((k))), (((t.sbp[k]))) ))))
   ((*- endfor *))
 
   ((*- for f in t.fieldskeys *))
     assert dictify(obj.payload.(((f | snake_case)))) == snake_case_keys( (((stringify_fieldskeys( (((t.fields[f]))) )))) )
   ((*- endfor *))
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( (((t.raw_json))) )
 
 ((*- endfor *))

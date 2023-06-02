@@ -24,14 +24,13 @@ def test_auto_check_sbp_file_io_msg_fileio_write_resp_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 66, "msg_type": 171, "sequence": 202, "crc": 62451, "length": 4, "preamble": 85, "payload": "ygAAAA=="}
-    assert parsed_dict['crc'] == 0xf3f3
-    assert parsed_dict['length'] == 4
-    assert parsed_dict['msg_type'] == 0xab
-    assert parsed_dict['payload'] == "ygAAAA=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x42
+    payload = get_payload(obj)
+    assert payload.crc == 0xf3f3
+    assert payload.length == 4
+    assert payload.msg_type == 0xab
+    assert payload.payload == "ygAAAA=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x42
     assert dictify(obj.payload.sequence) == snake_case_keys( 202 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 66, "msg_type": 171, "sequence": 202, "crc": 62451, "length": 4, "preamble": 85, "payload": "ygAAAA=="} )

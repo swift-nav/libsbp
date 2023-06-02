@@ -24,18 +24,17 @@ def test_auto_check_sbp_observation_msg_glo_biases_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"mask":0,"l1ca_bias":0,"l1p_bias":0,"l2ca_bias":0,"l2p_bias":0,"preamble":85,"msg_type":117,"sender":0,"payload":"AAAAAAAAAAAA","crc":54093,"length":9}
-    assert parsed_dict['crc'] == 0xd34d
-    assert parsed_dict['length'] == 9
-    assert parsed_dict['payload'] == "AAAAAAAAAAAA"
-    assert parsed_dict['msg_type'] == 0x75
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0
+    payload = get_payload(obj)
+    assert payload.crc == 0xd34d
+    assert payload.length == 9
+    assert payload.payload == "AAAAAAAAAAAA"
+    assert payload.msg_type == 0x75
+    assert payload.preamble == 0x55
+    assert payload.sender == 0
     assert dictify(obj.payload.l1ca_bias) == snake_case_keys( 0 )
     assert dictify(obj.payload.l1p_bias) == snake_case_keys( 0 )
     assert dictify(obj.payload.l2ca_bias) == snake_case_keys( 0 )
     assert dictify(obj.payload.l2p_bias) == snake_case_keys( 0 )
     assert dictify(obj.payload.mask) == snake_case_keys( 0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"mask":0,"l1ca_bias":0,"l1p_bias":0,"l2ca_bias":0,"l2p_bias":0,"preamble":85,"msg_type":117,"sender":0,"payload":"AAAAAAAAAAAA","crc":54093,"length":9} )

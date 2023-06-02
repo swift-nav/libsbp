@@ -24,14 +24,13 @@ def test_auto_check_sbp_navigation_msg_pos_llh_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"v_accuracy": 0, "n_sats": 14, "sender": 35027, "msg_type": 522, "lon": -121.87505366879361, "tow": 326825000, "height": 28.21160739227208, "crc": 41647, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.25130398358085, "preamble": 85, "payload": "KPR6E8lqm7oqoEJAqG0a4QB4XsCCZu3mKzY8QAAAAAAOAg=="}
-    assert parsed_dict['crc'] == 0xa2af
-    assert parsed_dict['length'] == 34
-    assert parsed_dict['msg_type'] == 0x20a
-    assert parsed_dict['payload'] == "KPR6E8lqm7oqoEJAqG0a4QB4XsCCZu3mKzY8QAAAAAAOAg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x88d3
+    payload = get_payload(obj)
+    assert payload.crc == 0xa2af
+    assert payload.length == 34
+    assert payload.msg_type == 0x20a
+    assert payload.payload == "KPR6E8lqm7oqoEJAqG0a4QB4XsCCZu3mKzY8QAAAAAAOAg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x88d3
     assert dictify(obj.payload.flags) == snake_case_keys( 2 )
     assert dictify(obj.payload.h_accuracy) == snake_case_keys( 0 )
     assert dictify(obj.payload.height) == snake_case_keys( 28.21160739227208 )
@@ -41,7 +40,7 @@ def test_auto_check_sbp_navigation_msg_pos_llh_1():
     assert dictify(obj.payload.tow) == snake_case_keys( 326825000 )
     assert dictify(obj.payload.v_accuracy) == snake_case_keys( 0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"v_accuracy": 0, "n_sats": 14, "sender": 35027, "msg_type": 522, "lon": -121.87505366879361, "tow": 326825000, "height": 28.21160739227208, "crc": 41647, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.25130398358085, "preamble": 85, "payload": "KPR6E8lqm7oqoEJAqG0a4QB4XsCCZu3mKzY8QAAAAAAOAg=="} )
 
 def test_auto_check_sbp_navigation_msg_pos_llh_2():
     buf = base64.standard_b64decode("VQoC04giEPh6EzSx+7IqoEJA7RZh4AB4XsBrvG1a9707QAAAAAAPAiax")
@@ -49,14 +48,13 @@ def test_auto_check_sbp_navigation_msg_pos_llh_2():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505349618341, "tow": 326826000, "height": 27.742055560866373, "crc": 45350, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251303074738104, "preamble": 85, "payload": "EPh6EzSx+7IqoEJA7RZh4AB4XsBrvG1a9707QAAAAAAPAg=="}
-    assert parsed_dict['crc'] == 0xb126
-    assert parsed_dict['length'] == 34
-    assert parsed_dict['msg_type'] == 0x20a
-    assert parsed_dict['payload'] == "EPh6EzSx+7IqoEJA7RZh4AB4XsBrvG1a9707QAAAAAAPAg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x88d3
+    payload = get_payload(obj)
+    assert payload.crc == 0xb126
+    assert payload.length == 34
+    assert payload.msg_type == 0x20a
+    assert payload.payload == "EPh6EzSx+7IqoEJA7RZh4AB4XsBrvG1a9707QAAAAAAPAg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x88d3
     assert dictify(obj.payload.flags) == snake_case_keys( 2 )
     assert dictify(obj.payload.h_accuracy) == snake_case_keys( 0 )
     assert dictify(obj.payload.height) == snake_case_keys( 27.742055560866373 )
@@ -66,7 +64,7 @@ def test_auto_check_sbp_navigation_msg_pos_llh_2():
     assert dictify(obj.payload.tow) == snake_case_keys( 326826000 )
     assert dictify(obj.payload.v_accuracy) == snake_case_keys( 0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505349618341, "tow": 326826000, "height": 27.742055560866373, "crc": 45350, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251303074738104, "preamble": 85, "payload": "EPh6EzSx+7IqoEJA7RZh4AB4XsBrvG1a9707QAAAAAAPAg=="} )
 
 def test_auto_check_sbp_navigation_msg_pos_llh_3():
     buf = base64.standard_b64decode("VQoC04gi+Pt6E4dCCaMqoEJAkghj4QB4XsAttY/bHJ07QAAAAAAPAjMo")
@@ -74,14 +72,13 @@ def test_auto_check_sbp_navigation_msg_pos_llh_3():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505373641241, "tow": 326827000, "height": 27.613721582970516, "crc": 10291, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.25130117370741, "preamble": 85, "payload": "+Pt6E4dCCaMqoEJAkghj4QB4XsAttY/bHJ07QAAAAAAPAg=="}
-    assert parsed_dict['crc'] == 0x2833
-    assert parsed_dict['length'] == 34
-    assert parsed_dict['msg_type'] == 0x20a
-    assert parsed_dict['payload'] == "+Pt6E4dCCaMqoEJAkghj4QB4XsAttY/bHJ07QAAAAAAPAg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x88d3
+    payload = get_payload(obj)
+    assert payload.crc == 0x2833
+    assert payload.length == 34
+    assert payload.msg_type == 0x20a
+    assert payload.payload == "+Pt6E4dCCaMqoEJAkghj4QB4XsAttY/bHJ07QAAAAAAPAg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x88d3
     assert dictify(obj.payload.flags) == snake_case_keys( 2 )
     assert dictify(obj.payload.h_accuracy) == snake_case_keys( 0 )
     assert dictify(obj.payload.height) == snake_case_keys( 27.613721582970516 )
@@ -91,7 +88,7 @@ def test_auto_check_sbp_navigation_msg_pos_llh_3():
     assert dictify(obj.payload.tow) == snake_case_keys( 326827000 )
     assert dictify(obj.payload.v_accuracy) == snake_case_keys( 0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505373641241, "tow": 326827000, "height": 27.613721582970516, "crc": 10291, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.25130117370741, "preamble": 85, "payload": "+Pt6E4dCCaMqoEJAkghj4QB4XsAttY/bHJ07QAAAAAAPAg=="} )
 
 def test_auto_check_sbp_navigation_msg_pos_llh_4():
     buf = base64.standard_b64decode("VQoC04gi4P96ExIs/XcqoEJAMG0n5wB4XsC5TDARd807QAAAAAAPAgzC")
@@ -99,14 +96,13 @@ def test_auto_check_sbp_navigation_msg_pos_llh_4():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505511141057, "tow": 326828000, "height": 27.80259807042305, "crc": 49676, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251296042079176, "preamble": 85, "payload": "4P96ExIs/XcqoEJAMG0n5wB4XsC5TDARd807QAAAAAAPAg=="}
-    assert parsed_dict['crc'] == 0xc20c
-    assert parsed_dict['length'] == 34
-    assert parsed_dict['msg_type'] == 0x20a
-    assert parsed_dict['payload'] == "4P96ExIs/XcqoEJAMG0n5wB4XsC5TDARd807QAAAAAAPAg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x88d3
+    payload = get_payload(obj)
+    assert payload.crc == 0xc20c
+    assert payload.length == 34
+    assert payload.msg_type == 0x20a
+    assert payload.payload == "4P96ExIs/XcqoEJAMG0n5wB4XsC5TDARd807QAAAAAAPAg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x88d3
     assert dictify(obj.payload.flags) == snake_case_keys( 2 )
     assert dictify(obj.payload.h_accuracy) == snake_case_keys( 0 )
     assert dictify(obj.payload.height) == snake_case_keys( 27.80259807042305 )
@@ -116,7 +112,7 @@ def test_auto_check_sbp_navigation_msg_pos_llh_4():
     assert dictify(obj.payload.tow) == snake_case_keys( 326828000 )
     assert dictify(obj.payload.v_accuracy) == snake_case_keys( 0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505511141057, "tow": 326828000, "height": 27.80259807042305, "crc": 49676, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251296042079176, "preamble": 85, "payload": "4P96ExIs/XcqoEJAMG0n5wB4XsC5TDARd807QAAAAAAPAg=="} )
 
 def test_auto_check_sbp_navigation_msg_pos_llh_5():
     buf = base64.standard_b64decode("VQoC04giyAN7E+Ht7loqoEJAO49G6wB4XsBlavngg/A7QAAAAAAPAiJn")
@@ -124,14 +120,13 @@ def test_auto_check_sbp_navigation_msg_pos_llh_5():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505609407974, "tow": 326829000, "height": 27.939512310879213, "crc": 26402, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251292578377395, "preamble": 85, "payload": "yAN7E+Ht7loqoEJAO49G6wB4XsBlavngg/A7QAAAAAAPAg=="}
-    assert parsed_dict['crc'] == 0x6722
-    assert parsed_dict['length'] == 34
-    assert parsed_dict['msg_type'] == 0x20a
-    assert parsed_dict['payload'] == "yAN7E+Ht7loqoEJAO49G6wB4XsBlavngg/A7QAAAAAAPAg=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x88d3
+    payload = get_payload(obj)
+    assert payload.crc == 0x6722
+    assert payload.length == 34
+    assert payload.msg_type == 0x20a
+    assert payload.payload == "yAN7E+Ht7loqoEJAO49G6wB4XsBlavngg/A7QAAAAAAPAg=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x88d3
     assert dictify(obj.payload.flags) == snake_case_keys( 2 )
     assert dictify(obj.payload.h_accuracy) == snake_case_keys( 0 )
     assert dictify(obj.payload.height) == snake_case_keys( 27.939512310879213 )
@@ -141,4 +136,4 @@ def test_auto_check_sbp_navigation_msg_pos_llh_5():
     assert dictify(obj.payload.tow) == snake_case_keys( 326829000 )
     assert dictify(obj.payload.v_accuracy) == snake_case_keys( 0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505609407974, "tow": 326829000, "height": 27.939512310879213, "crc": 26402, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251292578377395, "preamble": 85, "payload": "yAN7E+Ht7loqoEJAO49G6wB4XsBlavngg/A7QAAAAAAPAg=="} )

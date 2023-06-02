@@ -24,14 +24,13 @@ def test_auto_check_sbp_navigation_msg_utc_time_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"flags":1,"tow":501867800,"year":2021,"month":4,"day":9,"hours":19,"minutes":24,"seconds":9,"ns":800000000,"preamble":85,"msg_type":259,"sender":789,"payload":"ARjl6R3lBwQJExgJAAivLw==","crc":64967,"length":16}
-    assert parsed_dict['crc'] == 0xfdc7
-    assert parsed_dict['length'] == 16
-    assert parsed_dict['msg_type'] == 0x103
-    assert parsed_dict['payload'] == "ARjl6R3lBwQJExgJAAivLw=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x315
+    payload = get_payload(obj)
+    assert payload.crc == 0xfdc7
+    assert payload.length == 16
+    assert payload.msg_type == 0x103
+    assert payload.payload == "ARjl6R3lBwQJExgJAAivLw=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x315
     assert dictify(obj.payload.day) == snake_case_keys( 9 )
     assert dictify(obj.payload.flags) == snake_case_keys( 1 )
     assert dictify(obj.payload.hours) == snake_case_keys( 19 )
@@ -42,4 +41,4 @@ def test_auto_check_sbp_navigation_msg_utc_time_1():
     assert dictify(obj.payload.tow) == snake_case_keys( 501867800 )
     assert dictify(obj.payload.year) == snake_case_keys( 2021 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"flags":1,"tow":501867800,"year":2021,"month":4,"day":9,"hours":19,"minutes":24,"seconds":9,"ns":800000000,"preamble":85,"msg_type":259,"sender":789,"payload":"ARjl6R3lBwQJExgJAAivLw==","crc":64967,"length":16} )

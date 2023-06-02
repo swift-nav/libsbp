@@ -24,14 +24,13 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"obs_time": {"tow": 180, "wn": 3}, "corr_time": {"tow": 360, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20, "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "reserved": [0,0,0,0,0,0], "use_tropo_grid_points": 4, "use_iono_grid_points": 5, "use_iono_tile_sat_los": 6, "use_iono_grid_point_sat_los": 7, "preamble": 85, "msg_type": 3001, "sender": 66, "length": 31, "payload": "tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw==", "crc": 17254}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x0BB9
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 31
-    assert parsed_dict['payload'] == "tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw=="
-    assert parsed_dict['crc'] == 0x4366
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x0BB9
+    assert payload.sender == 0x0042
+    assert payload.length == 31
+    assert payload.payload == "tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw=="
+    assert payload.crc == 0x4366
     assert dictify(obj.payload.chain_id) == snake_case_keys( 40 )
     assert dictify(obj.payload.corr_time) == snake_case_keys( {'tow': 360, 'wn': 6} )
     assert dictify(obj.payload.obs_time) == snake_case_keys( {'tow': 180, 'wn': 3} )
@@ -47,4 +46,4 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1():
     assert dictify(obj.payload.use_iono_tile_sat_los) == snake_case_keys( 6 )
     assert dictify(obj.payload.use_tropo_grid_points) == snake_case_keys( 4 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"obs_time": {"tow": 180, "wn": 3}, "corr_time": {"tow": 360, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20, "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "reserved": [0,0,0,0,0,0], "use_tropo_grid_points": 4, "use_iono_grid_points": 5, "use_iono_tile_sat_los": 6, "use_iono_grid_point_sat_los": 7, "preamble": 85, "msg_type": 3001, "sender": 66, "length": 31, "payload": "tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw==", "crc": 17254} )

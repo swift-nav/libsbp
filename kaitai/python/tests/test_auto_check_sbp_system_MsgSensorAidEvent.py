@@ -24,14 +24,13 @@ def test_auto_check_sbp_system_msg_sensor_aid_event_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"preamble": 85, "msg_type": 65289, "sender": 35027, "length": 15, "payload": "MPZ6EwAAAAAAAAAAAAAA", "crc": 60449, "time": 326825520, "sensor_type": 0, "sensor_id": 0, "sensor_state": 0, "n_available_meas": 0, "n_attempted_meas": 0, "n_accepted_meas": 0, "flags": 0}
-    assert parsed_dict['crc'] == 0xEC21
-    assert parsed_dict['length'] == 15
-    assert parsed_dict['msg_type'] == 0xFF09
-    assert parsed_dict['payload'] == "MPZ6EwAAAAAAAAAAAAAA"
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x88D3
+    payload = get_payload(obj)
+    assert payload.crc == 0xEC21
+    assert payload.length == 15
+    assert payload.msg_type == 0xFF09
+    assert payload.payload == "MPZ6EwAAAAAAAAAAAAAA"
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x88D3
     assert dictify(obj.payload.flags) == snake_case_keys( 0 )
     assert dictify(obj.payload.n_accepted_meas) == snake_case_keys( 0 )
     assert dictify(obj.payload.n_attempted_meas) == snake_case_keys( 0 )
@@ -41,4 +40,4 @@ def test_auto_check_sbp_system_msg_sensor_aid_event_1():
     assert dictify(obj.payload.sensor_type) == snake_case_keys( 0 )
     assert dictify(obj.payload.time) == snake_case_keys( 326825520 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"preamble": 85, "msg_type": 65289, "sender": 35027, "length": 15, "payload": "MPZ6EwAAAAAAAAAAAAAA", "crc": 60449, "time": 326825520, "sensor_type": 0, "sensor_id": 0, "sensor_state": 0, "n_available_meas": 0, "n_attempted_meas": 0, "n_accepted_meas": 0, "flags": 0} )

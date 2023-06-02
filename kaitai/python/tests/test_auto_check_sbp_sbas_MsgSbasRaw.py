@@ -24,17 +24,16 @@ def test_auto_check_sbp_sbas_msg_sbas_raw_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sid":{"sat":131,"code":2},"tow":501867721,"message_type":4,"data":[23,255,0,23,255,0,23,255,127,240,2,255,192,3,127,247,255,127,247,255,229,229,238,170,175,255,240],"preamble":85,"msg_type":30583,"sender":51228,"payload":"gwLJ5OkdBBf/ABf/ABf/f/AC/8ADf/f/f/f/5eXuqq//8A==","crc":3751,"length":34}
-    assert parsed_dict['crc'] == 0xea7
-    assert parsed_dict['length'] == 34
-    assert parsed_dict['payload'] == "gwLJ5OkdBBf/ABf/ABf/f/AC/8ADf/f/f/f/5eXuqq//8A=="
-    assert parsed_dict['msg_type'] == 0x7777
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0xc81c
+    payload = get_payload(obj)
+    assert payload.crc == 0xea7
+    assert payload.length == 34
+    assert payload.payload == "gwLJ5OkdBBf/ABf/ABf/f/AC/8ADf/f/f/f/5eXuqq//8A=="
+    assert payload.msg_type == 0x7777
+    assert payload.preamble == 0x55
+    assert payload.sender == 0xc81c
     assert dictify(obj.payload.data) == snake_case_keys( [23, 255, 0, 23, 255, 0, 23, 255, 127, 240, 2, 255, 192, 3, 127, 247, 255, 127, 247, 255, 229, 229, 238, 170, 175, 255, 240] )
     assert dictify(obj.payload.message_type) == snake_case_keys( 4 )
     assert dictify(obj.payload.sid) == snake_case_keys( {'sat': 131, 'code': 2} )
     assert dictify(obj.payload.tow) == snake_case_keys( 501867721 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sid":{"sat":131,"code":2},"tow":501867721,"message_type":4,"data":[23,255,0,23,255,0,23,255,127,240,2,255,192,3,127,247,255,127,247,255,229,229,238,170,175,255,240],"preamble":85,"msg_type":30583,"sender":51228,"payload":"gwLJ5OkdBBf/ABf/ABf/f/AC/8ADf/f/f/f/5eXuqq//8A==","crc":3751,"length":34} )

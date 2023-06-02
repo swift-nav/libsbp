@@ -24,14 +24,13 @@ def test_auto_check_sbp_system_msg_ins_updates_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"tow":504489300,"gnsspos":0,"gnssvel":0,"wheelticks":0,"speed":0,"nhc":0,"zerovel":0,"preamble":85,"msg_type":65286,"sender":789,"payload":"VOURHgAAAAAAAA==","crc":16209,"length":10}
-    assert parsed_dict['crc'] == 0x3f51
-    assert parsed_dict['length'] == 10
-    assert parsed_dict['payload'] == "VOURHgAAAAAAAA=="
-    assert parsed_dict['msg_type'] == 0xff06
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x315
+    payload = get_payload(obj)
+    assert payload.crc == 0x3f51
+    assert payload.length == 10
+    assert payload.payload == "VOURHgAAAAAAAA=="
+    assert payload.msg_type == 0xff06
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x315
     assert dictify(obj.payload.gnsspos) == snake_case_keys( 0 )
     assert dictify(obj.payload.gnssvel) == snake_case_keys( 0 )
     assert dictify(obj.payload.nhc) == snake_case_keys( 0 )
@@ -40,4 +39,4 @@ def test_auto_check_sbp_system_msg_ins_updates_1():
     assert dictify(obj.payload.wheelticks) == snake_case_keys( 0 )
     assert dictify(obj.payload.zerovel) == snake_case_keys( 0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"tow":504489300,"gnsspos":0,"gnssvel":0,"wheelticks":0,"speed":0,"nhc":0,"zerovel":0,"preamble":85,"msg_type":65286,"sender":789,"payload":"VOURHgAAAAAAAA==","crc":16209,"length":10} )

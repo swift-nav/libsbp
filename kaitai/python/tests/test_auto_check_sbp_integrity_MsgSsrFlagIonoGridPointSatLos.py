@@ -24,17 +24,16 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_iono_grid_point_sat_los_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"header": {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4, "tile_id": 5, "chain_id": 6}, "grid_point_id": 30, "n_faulty_los": 2, "faulty_los": [{"satId": 10, "constellation": 11}, {"satId": 15, "constellation": 14}], "preamble": 85, "msg_type": 3025, "sender": 66, "length": 21, "payload": "tAAAAAMAAQIDBAAFAAYeAAIKCw8O", "crc": 37986}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x0BD1
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 21
-    assert parsed_dict['payload'] == "tAAAAAMAAQIDBAAFAAYeAAIKCw8O"
-    assert parsed_dict['crc'] == 0x9462
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x0BD1
+    assert payload.sender == 0x0042
+    assert payload.length == 21
+    assert payload.payload == "tAAAAAMAAQIDBAAFAAYeAAIKCw8O"
+    assert payload.crc == 0x9462
     assert dictify(obj.payload.faulty_los) == snake_case_keys( [{'satId': 10, 'constellation': 11}, {'satId': 15, 'constellation': 14}] )
     assert dictify(obj.payload.grid_point_id) == snake_case_keys( 30 )
     assert dictify(obj.payload.header) == snake_case_keys( {'obs_time': {'tow': 180, 'wn': 3}, 'num_msgs': 1, 'seq_num': 2, 'ssr_sol_id': 3, 'tile_set_id': 4, 'tile_id': 5, 'chain_id': 6} )
     assert dictify(obj.payload.n_faulty_los) == snake_case_keys( 2 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"header": {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4, "tile_id": 5, "chain_id": 6}, "grid_point_id": 30, "n_faulty_los": 2, "faulty_los": [{"satId": 10, "constellation": 11}, {"satId": 15, "constellation": 14}], "preamble": 85, "msg_type": 3025, "sender": 66, "length": 21, "payload": "tAAAAAMAAQIDBAAFAAYeAAIKCw8O", "crc": 37986} )

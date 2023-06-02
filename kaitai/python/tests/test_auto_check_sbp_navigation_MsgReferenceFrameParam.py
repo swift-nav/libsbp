@@ -24,14 +24,13 @@ def test_auto_check_sbp_navigation_msg_reference_frame_param_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"ssr_iod": 1, "sn": "foo\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "tn": "bar\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "sin": 4, "utn": 5, "re_t0": 6, "delta_X0": 7, "delta_Y0": 8, "delta_Z0": 9, "theta_01": 10, "theta_02": 11, "theta_03": 12, "scale": 13, "dot_delta_X0": 14, "dot_delta_Y0": 15, "dot_delta_Z0": 16, "dot_theta_01": 17, "dot_theta_02": 18, "dot_theta_03": 19, "dot_scale": 20, "preamble": 85, "msg_type": 580, "sender": 66, "length": 124, "payload": "AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA==", "crc": 41222}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x0244
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 124
-    assert parsed_dict['payload'] == "AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA=="
-    assert parsed_dict['crc'] == 0xA106
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x0244
+    assert payload.sender == 0x0042
+    assert payload.length == 124
+    assert payload.payload == "AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA=="
+    assert payload.crc == 0xA106
     assert dictify(obj.payload.delta_x0) == snake_case_keys( 7 )
     assert dictify(obj.payload.delta_y0) == snake_case_keys( 8 )
     assert dictify(obj.payload.delta_z0) == snake_case_keys( 9 )
@@ -53,4 +52,4 @@ def test_auto_check_sbp_navigation_msg_reference_frame_param_1():
     assert dictify(obj.payload.tn) == snake_case_keys( 'bar\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' )
     assert dictify(obj.payload.utn) == snake_case_keys( 5 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"ssr_iod": 1, "sn": "foo\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "tn": "bar\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "sin": 4, "utn": 5, "re_t0": 6, "delta_X0": 7, "delta_Y0": 8, "delta_Z0": 9, "theta_01": 10, "theta_02": 11, "theta_03": 12, "scale": 13, "dot_delta_X0": 14, "dot_delta_Y0": 15, "dot_delta_Z0": 16, "dot_theta_01": 17, "dot_theta_02": 18, "dot_theta_03": 19, "dot_scale": 20, "preamble": 85, "msg_type": 580, "sender": 66, "length": 124, "payload": "AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA==", "crc": 41222} )

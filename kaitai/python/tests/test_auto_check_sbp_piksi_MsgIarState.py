@@ -24,17 +24,16 @@ def test_auto_check_sbp_piksi_msg_iar_state_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 55286, "msg_type": 25, "num_hyps": 1, "crc": 36056, "length": 4, "preamble": 85, "payload": "AQAAAA=="}
-    assert parsed_dict['crc'] == 0x8cd8
-    assert parsed_dict['length'] == 4
-    assert parsed_dict['msg_type'] == 0x19
-    assert parsed_dict['payload'] == "AQAAAA=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0xd7f6
+    payload = get_payload(obj)
+    assert payload.crc == 0x8cd8
+    assert payload.length == 4
+    assert payload.msg_type == 0x19
+    assert payload.payload == "AQAAAA=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0xd7f6
     assert dictify(obj.payload.num_hyps) == snake_case_keys( 1 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 55286, "msg_type": 25, "num_hyps": 1, "crc": 36056, "length": 4, "preamble": 85, "payload": "AQAAAA=="} )
 
 def test_auto_check_sbp_piksi_msg_iar_state_2():
     buf = base64.standard_b64decode("VRkAwwQEAAAAABKw")
@@ -42,17 +41,16 @@ def test_auto_check_sbp_piksi_msg_iar_state_2():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 1219, "msg_type": 25, "num_hyps": 0, "crc": 45074, "length": 4, "preamble": 85, "payload": "AAAAAA=="}
-    assert parsed_dict['crc'] == 0xb012
-    assert parsed_dict['length'] == 4
-    assert parsed_dict['msg_type'] == 0x19
-    assert parsed_dict['payload'] == "AAAAAA=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0xb012
+    assert payload.length == 4
+    assert payload.msg_type == 0x19
+    assert payload.payload == "AAAAAA=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.num_hyps) == snake_case_keys( 0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 1219, "msg_type": 25, "num_hyps": 0, "crc": 45074, "length": 4, "preamble": 85, "payload": "AAAAAA=="} )
 
 def test_auto_check_sbp_piksi_msg_iar_state_3():
     buf = base64.standard_b64decode("VRkAwwQEAQAAAKbG")
@@ -60,17 +58,16 @@ def test_auto_check_sbp_piksi_msg_iar_state_3():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 1219, "msg_type": 25, "num_hyps": 1, "crc": 50854, "length": 4, "preamble": 85, "payload": "AQAAAA=="}
-    assert parsed_dict['crc'] == 0xc6a6
-    assert parsed_dict['length'] == 4
-    assert parsed_dict['msg_type'] == 0x19
-    assert parsed_dict['payload'] == "AQAAAA=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0xc6a6
+    assert payload.length == 4
+    assert payload.msg_type == 0x19
+    assert payload.payload == "AQAAAA=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.num_hyps) == snake_case_keys( 1 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 1219, "msg_type": 25, "num_hyps": 1, "crc": 50854, "length": 4, "preamble": 85, "payload": "AQAAAA=="} )
 
 def test_auto_check_sbp_piksi_msg_iar_state_4():
     buf = base64.standard_b64decode("VRkAwwQE2QIAAAaF")
@@ -78,17 +75,16 @@ def test_auto_check_sbp_piksi_msg_iar_state_4():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 1219, "msg_type": 25, "num_hyps": 729, "crc": 34054, "length": 4, "preamble": 85, "payload": "2QIAAA=="}
-    assert parsed_dict['crc'] == 0x8506
-    assert parsed_dict['length'] == 4
-    assert parsed_dict['msg_type'] == 0x19
-    assert parsed_dict['payload'] == "2QIAAA=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0x8506
+    assert payload.length == 4
+    assert payload.msg_type == 0x19
+    assert payload.payload == "2QIAAA=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.num_hyps) == snake_case_keys( 729 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 1219, "msg_type": 25, "num_hyps": 729, "crc": 34054, "length": 4, "preamble": 85, "payload": "2QIAAA=="} )
 
 def test_auto_check_sbp_piksi_msg_iar_state_5():
     buf = base64.standard_b64decode("VRkAwwQE2AIAALLz")
@@ -96,17 +92,16 @@ def test_auto_check_sbp_piksi_msg_iar_state_5():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 1219, "msg_type": 25, "num_hyps": 728, "crc": 62386, "length": 4, "preamble": 85, "payload": "2AIAAA=="}
-    assert parsed_dict['crc'] == 0xf3b2
-    assert parsed_dict['length'] == 4
-    assert parsed_dict['msg_type'] == 0x19
-    assert parsed_dict['payload'] == "2AIAAA=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0xf3b2
+    assert payload.length == 4
+    assert payload.msg_type == 0x19
+    assert payload.payload == "2AIAAA=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.num_hyps) == snake_case_keys( 728 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 1219, "msg_type": 25, "num_hyps": 728, "crc": 62386, "length": 4, "preamble": 85, "payload": "2AIAAA=="} )
 
 def test_auto_check_sbp_piksi_msg_iar_state_6():
     buf = base64.standard_b64decode("VRkAwwQE1wIAAFwn")
@@ -114,17 +109,16 @@ def test_auto_check_sbp_piksi_msg_iar_state_6():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 1219, "msg_type": 25, "num_hyps": 727, "crc": 10076, "length": 4, "preamble": 85, "payload": "1wIAAA=="}
-    assert parsed_dict['crc'] == 0x275c
-    assert parsed_dict['length'] == 4
-    assert parsed_dict['msg_type'] == 0x19
-    assert parsed_dict['payload'] == "1wIAAA=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0x275c
+    assert payload.length == 4
+    assert payload.msg_type == 0x19
+    assert payload.payload == "1wIAAA=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.num_hyps) == snake_case_keys( 727 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 1219, "msg_type": 25, "num_hyps": 727, "crc": 10076, "length": 4, "preamble": 85, "payload": "1wIAAA=="} )
 
 def test_auto_check_sbp_piksi_msg_iar_state_7():
     buf = base64.standard_b64decode("VRkAwwQE0wIAAK3t")
@@ -132,14 +126,13 @@ def test_auto_check_sbp_piksi_msg_iar_state_7():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 1219, "msg_type": 25, "num_hyps": 723, "crc": 60845, "length": 4, "preamble": 85, "payload": "0wIAAA=="}
-    assert parsed_dict['crc'] == 0xedad
-    assert parsed_dict['length'] == 4
-    assert parsed_dict['msg_type'] == 0x19
-    assert parsed_dict['payload'] == "0wIAAA=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0xedad
+    assert payload.length == 4
+    assert payload.msg_type == 0x19
+    assert payload.payload == "0wIAAA=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.num_hyps) == snake_case_keys( 723 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 1219, "msg_type": 25, "num_hyps": 723, "crc": 60845, "length": 4, "preamble": 85, "payload": "0wIAAA=="} )

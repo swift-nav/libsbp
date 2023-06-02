@@ -24,16 +24,15 @@ def test_auto_check_sbp_logging_msg_fwd_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"protocol": 0, "sender": 66, "msg_type": 1026, "source": 0, "fwd_payload": [ 86, 81, 68, 47, 81, 103, 65, 69, 65, 65, 65, 65, 65, 69, 97, 103 ], "crc": 24445, "length": 18, "preamble": 85, "payload": "AABWUUQvUWdBRUFBQUFBRWFn"}
-    assert parsed_dict['crc'] == 0x5f7d
-    assert parsed_dict['length'] == 18
-    assert parsed_dict['msg_type'] == 0x402
-    assert parsed_dict['payload'] == "AABWUUQvUWdBRUFBQUFBRWFn"
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x42
+    payload = get_payload(obj)
+    assert payload.crc == 0x5f7d
+    assert payload.length == 18
+    assert payload.msg_type == 0x402
+    assert payload.payload == "AABWUUQvUWdBRUFBQUFBRWFn"
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x42
     assert dictify(obj.payload.fwd_payload) == snake_case_keys( [86, 81, 68, 47, 81, 103, 65, 69, 65, 65, 65, 65, 65, 69, 97, 103] )
     assert dictify(obj.payload.protocol) == snake_case_keys( 0 )
     assert dictify(obj.payload.source) == snake_case_keys( 0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"protocol": 0, "sender": 66, "msg_type": 1026, "source": 0, "fwd_payload": [ 86, 81, 68, 47, 81, 103, 65, 69, 65, 65, 65, 65, 65, 69, 97, 103 ], "crc": 24445, "length": 18, "preamble": 85, "payload": "AABWUUQvUWdBRUFBQUFBRWFn"} )

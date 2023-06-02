@@ -24,14 +24,13 @@ def test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 0, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction": {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100, "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 2, "stec_sat_list": [{"stec_residual": {"sv_id": {"satId": 5, "constellation": 10}, "residual": 16, "stddev": 17}, "stec_bound_mu": 18, "stec_bound_sig": 19, "stec_bound_mu_dot": 20, "stec_bound_sig_dot": 21}, {"stec_residual": {"sv_id": {"satId": 6, "constellation": 10}, "residual": 22, "stddev": 23}, "stec_bound_mu": 24, "stec_bound_sig": 25, "stec_bound_mu_dot": 26, "stec_bound_sig_dot": 27}], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 45, "payload": "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob", "crc": 46828}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x05FE
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 45
-    assert parsed_dict['payload'] == "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob"
-    assert parsed_dict['crc'] == 0xB6EC
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x05FE
+    assert payload.sender == 0x0042
+    assert payload.length == 45
+    assert payload.payload == "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob"
+    assert payload.crc == 0xB6EC
     assert dictify(obj.payload.grid_point_id) == snake_case_keys( 1000 )
     assert dictify(obj.payload.header) == snake_case_keys( {'time': {'tow': 180, 'wn': 3}, 'num_msgs': 1, 'seq_num': 0, 'update_interval': 10, 'sol_id': 0} )
     assert dictify(obj.payload.n_sats) == snake_case_keys( 2 )
@@ -46,7 +45,7 @@ def test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds_1():
     assert dictify(obj.payload.tropo_v_wet_bound_mu) == snake_case_keys( 150 )
     assert dictify(obj.payload.tropo_v_wet_bound_sig) == snake_case_keys( 100 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 0, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction": {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100, "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 2, "stec_sat_list": [{"stec_residual": {"sv_id": {"satId": 5, "constellation": 10}, "residual": 16, "stddev": 17}, "stec_bound_mu": 18, "stec_bound_sig": 19, "stec_bound_mu_dot": 20, "stec_bound_sig_dot": 21}, {"stec_residual": {"sv_id": {"satId": 6, "constellation": 10}, "residual": 22, "stddev": 23}, "stec_bound_mu": 24, "stec_bound_sig": 25, "stec_bound_mu_dot": 26, "stec_bound_sig_dot": 27}], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 45, "payload": "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob", "crc": 46828} )
 
 def test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds_2():
     buf = base64.standard_b64decode("Vf4FQgAbtAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQAmyQ=")
@@ -54,14 +53,13 @@ def test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds_2():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 0, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction": {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100, "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 0, "stec_sat_list": [], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 27, "payload": "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQA", "crc": 9371}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x05FE
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 27
-    assert parsed_dict['payload'] == "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQA"
-    assert parsed_dict['crc'] == 0x249B
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x05FE
+    assert payload.sender == 0x0042
+    assert payload.length == 27
+    assert payload.payload == "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQA"
+    assert payload.crc == 0x249B
     assert dictify(obj.payload.grid_point_id) == snake_case_keys( 1000 )
     assert dictify(obj.payload.header) == snake_case_keys( {'time': {'tow': 180, 'wn': 3}, 'num_msgs': 1, 'seq_num': 0, 'update_interval': 10, 'sol_id': 0} )
     assert dictify(obj.payload.n_sats) == snake_case_keys( 0 )
@@ -76,4 +74,4 @@ def test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds_2():
     assert dictify(obj.payload.tropo_v_wet_bound_mu) == snake_case_keys( 150 )
     assert dictify(obj.payload.tropo_v_wet_bound_sig) == snake_case_keys( 100 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 0, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction": {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100, "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 0, "stec_sat_list": [], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 27, "payload": "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQA", "crc": 9371} )

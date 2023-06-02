@@ -24,17 +24,16 @@ def test_auto_check_sbp_system_msg_dgnss_status_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"latency": 50, "sender": 66, "msg_type": 65282, "source": "Skylark", "num_signals": 12, "crc": 458, "length": 11, "flags": 0, "preamble": 85, "payload": "ADIADFNreWxhcms="}
-    assert parsed_dict['crc'] == 0x1ca
-    assert parsed_dict['length'] == 11
-    assert parsed_dict['msg_type'] == 0xff02
-    assert parsed_dict['payload'] == "ADIADFNreWxhcms="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x42
+    payload = get_payload(obj)
+    assert payload.crc == 0x1ca
+    assert payload.length == 11
+    assert payload.msg_type == 0xff02
+    assert payload.payload == "ADIADFNreWxhcms="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x42
     assert dictify(obj.payload.flags) == snake_case_keys( 0 )
     assert dictify(obj.payload.latency) == snake_case_keys( 50 )
     assert dictify(obj.payload.num_signals) == snake_case_keys( 12 )
     assert dictify(obj.payload.source) == snake_case_keys( 'Skylark' )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"latency": 50, "sender": 66, "msg_type": 65282, "source": "Skylark", "num_signals": 12, "crc": 458, "length": 11, "flags": 0, "preamble": 85, "payload": "ADIADFNreWxhcms="} )

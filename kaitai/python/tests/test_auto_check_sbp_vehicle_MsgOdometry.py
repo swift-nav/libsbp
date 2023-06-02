@@ -24,16 +24,15 @@ def test_auto_check_sbp_vehicle_msg_odometry_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 66, "msg_type": 2307, "tow": 8, "crc": 25396, "length": 9, "flags": 1, "velocity": 7, "preamble": 85, "payload": "CAAAAAcAAAAB"}
-    assert parsed_dict['crc'] == 0x6334
-    assert parsed_dict['length'] == 9
-    assert parsed_dict['msg_type'] == 0x903
-    assert parsed_dict['payload'] == "CAAAAAcAAAAB"
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x42
+    payload = get_payload(obj)
+    assert payload.crc == 0x6334
+    assert payload.length == 9
+    assert payload.msg_type == 0x903
+    assert payload.payload == "CAAAAAcAAAAB"
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x42
     assert dictify(obj.payload.flags) == snake_case_keys( 1 )
     assert dictify(obj.payload.tow) == snake_case_keys( 8 )
     assert dictify(obj.payload.velocity) == snake_case_keys( 7 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 66, "msg_type": 2307, "tow": 8, "crc": 25396, "length": 9, "flags": 1, "velocity": 7, "preamble": 85, "payload": "CAAAAAcAAAAB"} )

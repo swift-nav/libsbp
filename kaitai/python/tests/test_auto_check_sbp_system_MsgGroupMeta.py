@@ -24,20 +24,19 @@ def test_auto_check_sbp_system_msg_group_meta_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"crc": 3586, "flags": 2, "group_id": 1, "sender": 61166, "msg_type": 65290, "length": 9, "n_group_msgs": 3 ,"group_msgs": [65290, 522, 65282], "preamble": 85, "payload": "AQIDCv8KAgL/"}
-    assert parsed_dict['crc'] == 0xe02
-    assert parsed_dict['length'] == 9
-    assert parsed_dict['msg_type'] == 0xFF0A
-    assert parsed_dict['payload'] == "AQIDCv8KAgL/"
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0xEEEE
+    payload = get_payload(obj)
+    assert payload.crc == 0xe02
+    assert payload.length == 9
+    assert payload.msg_type == 0xFF0A
+    assert payload.payload == "AQIDCv8KAgL/"
+    assert payload.preamble == 0x55
+    assert payload.sender == 0xEEEE
     assert dictify(obj.payload.flags) == snake_case_keys( 2 )
     assert dictify(obj.payload.group_id) == snake_case_keys( 1 )
     assert dictify(obj.payload.group_msgs) == snake_case_keys( [65290, 522, 65282] )
     assert dictify(obj.payload.n_group_msgs) == snake_case_keys( 3 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"crc": 3586, "flags": 2, "group_id": 1, "sender": 61166, "msg_type": 65290, "length": 9, "n_group_msgs": 3 ,"group_msgs": [65290, 522, 65282], "preamble": 85, "payload": "AQIDCv8KAgL/"} )
 
 def test_auto_check_sbp_system_msg_group_meta_2():
     buf = base64.standard_b64decode("VQr/FQMfAQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8O/1Ka")
@@ -45,17 +44,16 @@ def test_auto_check_sbp_system_msg_group_meta_2():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"group_id":1,"flags":1,"n_group_msgs":14,"group_msgs":[258,259,522,529,521,532,526,530,525,533,545,65283,65286,65294],"preamble":85,"msg_type":65290,"sender":789,"payload":"AQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8O/w==","crc":39506,"length":31}
-    assert parsed_dict['crc'] == 0x9a52
-    assert parsed_dict['length'] == 31
-    assert parsed_dict['payload'] == "AQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8O/w=="
-    assert parsed_dict['msg_type'] == 0xFF0A
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x315
+    payload = get_payload(obj)
+    assert payload.crc == 0x9a52
+    assert payload.length == 31
+    assert payload.payload == "AQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8O/w=="
+    assert payload.msg_type == 0xFF0A
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x315
     assert dictify(obj.payload.flags) == snake_case_keys( 1 )
     assert dictify(obj.payload.group_id) == snake_case_keys( 1 )
     assert dictify(obj.payload.group_msgs) == snake_case_keys( [258, 259, 522, 529, 521, 532, 526, 530, 525, 533, 545, 65283, 65286, 65294] )
     assert dictify(obj.payload.n_group_msgs) == snake_case_keys( 14 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"group_id":1,"flags":1,"n_group_msgs":14,"group_msgs":[258,259,522,529,521,532,526,530,525,533,545,65283,65286,65294],"preamble":85,"msg_type":65290,"sender":789,"payload":"AQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8O/w==","crc":39506,"length":31} )

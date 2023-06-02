@@ -24,18 +24,17 @@ def test_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "update_interval": 3, "sol_id": 48}, "ssr_iod": 15, "const_id": 1, "n_sats": 2, "orbit_clock_bounds": [{"sat_id": 24, "orb_radial_bound_mu": 39, "orb_along_bound_mu": 38, "orb_cross_bound_mu": 37, "orb_radial_bound_sig": 1, "orb_along_bound_sig": 2, "orb_cross_bound_sig": 3, "clock_bound_mu": 39, "clock_bound_sig": 1}, {"sat_id": 3, "orb_radial_bound_mu": 39, "orb_along_bound_mu": 38, "orb_cross_bound_mu": 37, "orb_radial_bound_sig": 1, "orb_along_bound_sig": 2, "orb_cross_bound_sig": 3, "clock_bound_mu": 39, "clock_bound_sig": 1}], "preamble": 85, "msg_type": 1502, "sender": 66, "length": 31, "payload": "tAAAAAMAAQIDMA8BAhgnJiUBAgMnAQMnJiUBAgMnAQ==", "crc": 21781}
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['msg_type'] == 0x05DE
-    assert parsed_dict['sender'] == 0x0042
-    assert parsed_dict['length'] == 31
-    assert parsed_dict['payload'] == "tAAAAAMAAQIDMA8BAhgnJiUBAgMnAQMnJiUBAgMnAQ=="
-    assert parsed_dict['crc'] == 0x5515
+    payload = get_payload(obj)
+    assert payload.preamble == 0x55
+    assert payload.msg_type == 0x05DE
+    assert payload.sender == 0x0042
+    assert payload.length == 31
+    assert payload.payload == "tAAAAAMAAQIDMA8BAhgnJiUBAgMnAQMnJiUBAgMnAQ=="
+    assert payload.crc == 0x5515
     assert dictify(obj.payload.const_id) == snake_case_keys( 1 )
     assert dictify(obj.payload.header) == snake_case_keys( {'time': {'tow': 180, 'wn': 3}, 'num_msgs': 1, 'seq_num': 2, 'update_interval': 3, 'sol_id': 48} )
     assert dictify(obj.payload.n_sats) == snake_case_keys( 2 )
     assert dictify(obj.payload.orbit_clock_bounds) == snake_case_keys( [{'sat_id': 24, 'orb_radial_bound_mu': 39, 'orb_along_bound_mu': 38, 'orb_cross_bound_mu': 37, 'orb_radial_bound_sig': 1, 'orb_along_bound_sig': 2, 'orb_cross_bound_sig': 3, 'clock_bound_mu': 39, 'clock_bound_sig': 1}, {'sat_id': 3, 'orb_radial_bound_mu': 39, 'orb_along_bound_mu': 38, 'orb_cross_bound_mu': 37, 'orb_radial_bound_sig': 1, 'orb_along_bound_sig': 2, 'orb_cross_bound_sig': 3, 'clock_bound_mu': 39, 'clock_bound_sig': 1}] )
     assert dictify(obj.payload.ssr_iod) == snake_case_keys( 15 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "update_interval": 3, "sol_id": 48}, "ssr_iod": 15, "const_id": 1, "n_sats": 2, "orbit_clock_bounds": [{"sat_id": 24, "orb_radial_bound_mu": 39, "orb_along_bound_mu": 38, "orb_cross_bound_mu": 37, "orb_radial_bound_sig": 1, "orb_along_bound_sig": 2, "orb_cross_bound_sig": 3, "clock_bound_mu": 39, "clock_bound_sig": 1}, {"sat_id": 3, "orb_radial_bound_mu": 39, "orb_along_bound_mu": 38, "orb_cross_bound_mu": 37, "orb_radial_bound_sig": 1, "orb_along_bound_sig": 2, "orb_cross_bound_sig": 3, "clock_bound_mu": 39, "clock_bound_sig": 1}], "preamble": 85, "msg_type": 1502, "sender": 66, "length": 31, "payload": "tAAAAAMAAQIDMA8BAhgnJiUBAgMnAQMnJiUBAgMnAQ==", "crc": 21781} )

@@ -24,14 +24,13 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"gdop": 180, "tdop": 170, "vdop": 150, "sender": 55286, "msg_type": 518, "pdop": 190, "tow": 2568200, "crc": 43641, "length": 14, "preamble": 85, "payload": "CDAnALQAvgCqAKAAlgA=", "hdop": 160}
-    assert parsed_dict['crc'] == 0xaa79
-    assert parsed_dict['length'] == 14
-    assert parsed_dict['msg_type'] == 0x206
-    assert parsed_dict['payload'] == "CDAnALQAvgCqAKAAlgA="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0xd7f6
+    payload = get_payload(obj)
+    assert payload.crc == 0xaa79
+    assert payload.length == 14
+    assert payload.msg_type == 0x206
+    assert payload.payload == "CDAnALQAvgCqAKAAlgA="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0xd7f6
     assert dictify(obj.payload.gdop) == snake_case_keys( 180 )
     assert dictify(obj.payload.hdop) == snake_case_keys( 160 )
     assert dictify(obj.payload.pdop) == snake_case_keys( 190 )
@@ -39,7 +38,7 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_1():
     assert dictify(obj.payload.tow) == snake_case_keys( 2568200 )
     assert dictify(obj.payload.vdop) == snake_case_keys( 150 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"gdop": 180, "tdop": 170, "vdop": 150, "sender": 55286, "msg_type": 518, "pdop": 190, "tow": 2568200, "crc": 43641, "length": 14, "preamble": 85, "payload": "CDAnALQAvgCqAKAAlgA=", "hdop": 160} )
 
 def test_auto_check_sbp_navigation_msg_dops_dep_a_2():
     buf = base64.standard_b64decode("VQYC9tcO8DMnALQAvgCqAKAAlgBOqQ==")
@@ -47,14 +46,13 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_2():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"gdop": 180, "tdop": 170, "vdop": 150, "sender": 55286, "msg_type": 518, "pdop": 190, "tow": 2569200, "crc": 43342, "length": 14, "preamble": 85, "payload": "8DMnALQAvgCqAKAAlgA=", "hdop": 160}
-    assert parsed_dict['crc'] == 0xa94e
-    assert parsed_dict['length'] == 14
-    assert parsed_dict['msg_type'] == 0x206
-    assert parsed_dict['payload'] == "8DMnALQAvgCqAKAAlgA="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0xd7f6
+    payload = get_payload(obj)
+    assert payload.crc == 0xa94e
+    assert payload.length == 14
+    assert payload.msg_type == 0x206
+    assert payload.payload == "8DMnALQAvgCqAKAAlgA="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0xd7f6
     assert dictify(obj.payload.gdop) == snake_case_keys( 180 )
     assert dictify(obj.payload.hdop) == snake_case_keys( 160 )
     assert dictify(obj.payload.pdop) == snake_case_keys( 190 )
@@ -62,7 +60,7 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_2():
     assert dictify(obj.payload.tow) == snake_case_keys( 2569200 )
     assert dictify(obj.payload.vdop) == snake_case_keys( 150 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"gdop": 180, "tdop": 170, "vdop": 150, "sender": 55286, "msg_type": 518, "pdop": 190, "tow": 2569200, "crc": 43342, "length": 14, "preamble": 85, "payload": "8DMnALQAvgCqAKAAlgA=", "hdop": 160} )
 
 def test_auto_check_sbp_navigation_msg_dops_dep_a_3():
     buf = base64.standard_b64decode("VQYC9tcO2DcnALQAvgCqAKAAlgBH2g==")
@@ -70,14 +68,13 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_3():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"gdop": 180, "tdop": 170, "vdop": 150, "sender": 55286, "msg_type": 518, "pdop": 190, "tow": 2570200, "crc": 55879, "length": 14, "preamble": 85, "payload": "2DcnALQAvgCqAKAAlgA=", "hdop": 160}
-    assert parsed_dict['crc'] == 0xda47
-    assert parsed_dict['length'] == 14
-    assert parsed_dict['msg_type'] == 0x206
-    assert parsed_dict['payload'] == "2DcnALQAvgCqAKAAlgA="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0xd7f6
+    payload = get_payload(obj)
+    assert payload.crc == 0xda47
+    assert payload.length == 14
+    assert payload.msg_type == 0x206
+    assert payload.payload == "2DcnALQAvgCqAKAAlgA="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0xd7f6
     assert dictify(obj.payload.gdop) == snake_case_keys( 180 )
     assert dictify(obj.payload.hdop) == snake_case_keys( 160 )
     assert dictify(obj.payload.pdop) == snake_case_keys( 190 )
@@ -85,7 +82,7 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_3():
     assert dictify(obj.payload.tow) == snake_case_keys( 2570200 )
     assert dictify(obj.payload.vdop) == snake_case_keys( 150 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"gdop": 180, "tdop": 170, "vdop": 150, "sender": 55286, "msg_type": 518, "pdop": 190, "tow": 2570200, "crc": 55879, "length": 14, "preamble": 85, "payload": "2DcnALQAvgCqAKAAlgA=", "hdop": 160} )
 
 def test_auto_check_sbp_navigation_msg_dops_dep_a_4():
     buf = base64.standard_b64decode("VQYCwwQO1J1DGPcA1wB7ABEBLADOFQ==")
@@ -93,14 +90,13 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_4():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"gdop": 247, "tdop": 123, "vdop": 44, "sender": 1219, "msg_type": 518, "tow": 407084500, "pdop": 215, "crc": 5582, "length": 14, "preamble": 85, "payload": "1J1DGPcA1wB7ABEBLAA=", "hdop": 273}
-    assert parsed_dict['crc'] == 0x15ce
-    assert parsed_dict['length'] == 14
-    assert parsed_dict['msg_type'] == 0x206
-    assert parsed_dict['payload'] == "1J1DGPcA1wB7ABEBLAA="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0x15ce
+    assert payload.length == 14
+    assert payload.msg_type == 0x206
+    assert payload.payload == "1J1DGPcA1wB7ABEBLAA="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.gdop) == snake_case_keys( 247 )
     assert dictify(obj.payload.hdop) == snake_case_keys( 273 )
     assert dictify(obj.payload.pdop) == snake_case_keys( 215 )
@@ -108,7 +104,7 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_4():
     assert dictify(obj.payload.tow) == snake_case_keys( 407084500 )
     assert dictify(obj.payload.vdop) == snake_case_keys( 44 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"gdop": 247, "tdop": 123, "vdop": 44, "sender": 1219, "msg_type": 518, "tow": 407084500, "pdop": 215, "crc": 5582, "length": 14, "preamble": 85, "payload": "1J1DGPcA1wB7ABEBLAA=", "hdop": 273} )
 
 def test_auto_check_sbp_navigation_msg_dops_dep_a_5():
     buf = base64.standard_b64decode("VQYCwwQOAAAAAP////8AAAAAAACSDA==")
@@ -116,14 +112,13 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_5():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"gdop": 65535, "tdop": 0, "vdop": 0, "sender": 1219, "msg_type": 518, "tow": 0, "pdop": 65535, "crc": 3218, "length": 14, "preamble": 85, "payload": "AAAAAP////8AAAAAAAA=", "hdop": 0}
-    assert parsed_dict['crc'] == 0xc92
-    assert parsed_dict['length'] == 14
-    assert parsed_dict['msg_type'] == 0x206
-    assert parsed_dict['payload'] == "AAAAAP////8AAAAAAAA="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0xc92
+    assert payload.length == 14
+    assert payload.msg_type == 0x206
+    assert payload.payload == "AAAAAP////8AAAAAAAA="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.gdop) == snake_case_keys( 65535 )
     assert dictify(obj.payload.hdop) == snake_case_keys( 0 )
     assert dictify(obj.payload.pdop) == snake_case_keys( 65535 )
@@ -131,7 +126,7 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_5():
     assert dictify(obj.payload.tow) == snake_case_keys( 0 )
     assert dictify(obj.payload.vdop) == snake_case_keys( 0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"gdop": 65535, "tdop": 0, "vdop": 0, "sender": 1219, "msg_type": 518, "tow": 0, "pdop": 65535, "crc": 3218, "length": 14, "preamble": 85, "payload": "AAAAAP////8AAAAAAAA=", "hdop": 0} )
 
 def test_auto_check_sbp_navigation_msg_dops_dep_a_6():
     buf = base64.standard_b64decode("VQYCwwQOgKVEGFwBOAGbAH0CcQCBXQ==")
@@ -139,14 +134,13 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_6():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"gdop": 348, "tdop": 155, "vdop": 113, "sender": 1219, "msg_type": 518, "tow": 407152000, "pdop": 312, "crc": 23937, "length": 14, "preamble": 85, "payload": "gKVEGFwBOAGbAH0CcQA=", "hdop": 637}
-    assert parsed_dict['crc'] == 0x5d81
-    assert parsed_dict['length'] == 14
-    assert parsed_dict['msg_type'] == 0x206
-    assert parsed_dict['payload'] == "gKVEGFwBOAGbAH0CcQA="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0x5d81
+    assert payload.length == 14
+    assert payload.msg_type == 0x206
+    assert payload.payload == "gKVEGFwBOAGbAH0CcQA="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.gdop) == snake_case_keys( 348 )
     assert dictify(obj.payload.hdop) == snake_case_keys( 637 )
     assert dictify(obj.payload.pdop) == snake_case_keys( 312 )
@@ -154,7 +148,7 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_6():
     assert dictify(obj.payload.tow) == snake_case_keys( 407152000 )
     assert dictify(obj.payload.vdop) == snake_case_keys( 113 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"gdop": 348, "tdop": 155, "vdop": 113, "sender": 1219, "msg_type": 518, "tow": 407152000, "pdop": 312, "crc": 23937, "length": 14, "preamble": 85, "payload": "gKVEGFwBOAGbAH0CcQA=", "hdop": 637} )
 
 def test_auto_check_sbp_navigation_msg_dops_dep_a_7():
     buf = base64.standard_b64decode("VQYCwwQOaKlEGFwBNwGbAH0CcQDRgA==")
@@ -162,14 +156,13 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_7():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"gdop": 348, "tdop": 155, "vdop": 113, "sender": 1219, "msg_type": 518, "tow": 407153000, "pdop": 311, "crc": 32977, "length": 14, "preamble": 85, "payload": "aKlEGFwBNwGbAH0CcQA=", "hdop": 637}
-    assert parsed_dict['crc'] == 0x80d1
-    assert parsed_dict['length'] == 14
-    assert parsed_dict['msg_type'] == 0x206
-    assert parsed_dict['payload'] == "aKlEGFwBNwGbAH0CcQA="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0x80d1
+    assert payload.length == 14
+    assert payload.msg_type == 0x206
+    assert payload.payload == "aKlEGFwBNwGbAH0CcQA="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.gdop) == snake_case_keys( 348 )
     assert dictify(obj.payload.hdop) == snake_case_keys( 637 )
     assert dictify(obj.payload.pdop) == snake_case_keys( 311 )
@@ -177,7 +170,7 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_7():
     assert dictify(obj.payload.tow) == snake_case_keys( 407153000 )
     assert dictify(obj.payload.vdop) == snake_case_keys( 113 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"gdop": 348, "tdop": 155, "vdop": 113, "sender": 1219, "msg_type": 518, "tow": 407153000, "pdop": 311, "crc": 32977, "length": 14, "preamble": 85, "payload": "aKlEGFwBNwGbAH0CcQA=", "hdop": 637} )
 
 def test_auto_check_sbp_navigation_msg_dops_dep_a_8():
     buf = base64.standard_b64decode("VQYCwwQOUK1EGFwBNwGbAH0CcAAeBg==")
@@ -185,14 +178,13 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_8():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"gdop": 348, "tdop": 155, "vdop": 112, "sender": 1219, "msg_type": 518, "tow": 407154000, "pdop": 311, "crc": 1566, "length": 14, "preamble": 85, "payload": "UK1EGFwBNwGbAH0CcAA=", "hdop": 637}
-    assert parsed_dict['crc'] == 0x61e
-    assert parsed_dict['length'] == 14
-    assert parsed_dict['msg_type'] == 0x206
-    assert parsed_dict['payload'] == "UK1EGFwBNwGbAH0CcAA="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0x61e
+    assert payload.length == 14
+    assert payload.msg_type == 0x206
+    assert payload.payload == "UK1EGFwBNwGbAH0CcAA="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.gdop) == snake_case_keys( 348 )
     assert dictify(obj.payload.hdop) == snake_case_keys( 637 )
     assert dictify(obj.payload.pdop) == snake_case_keys( 311 )
@@ -200,7 +192,7 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_8():
     assert dictify(obj.payload.tow) == snake_case_keys( 407154000 )
     assert dictify(obj.payload.vdop) == snake_case_keys( 112 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"gdop": 348, "tdop": 155, "vdop": 112, "sender": 1219, "msg_type": 518, "tow": 407154000, "pdop": 311, "crc": 1566, "length": 14, "preamble": 85, "payload": "UK1EGFwBNwGbAH0CcAA=", "hdop": 637} )
 
 def test_auto_check_sbp_navigation_msg_dops_dep_a_9():
     buf = base64.standard_b64decode("VQYCwwQOOLFEGFwBNwGbAH0CcABGQw==")
@@ -208,14 +200,13 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_9():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"gdop": 348, "tdop": 155, "vdop": 112, "sender": 1219, "msg_type": 518, "tow": 407155000, "pdop": 311, "crc": 17222, "length": 14, "preamble": 85, "payload": "OLFEGFwBNwGbAH0CcAA=", "hdop": 637}
-    assert parsed_dict['crc'] == 0x4346
-    assert parsed_dict['length'] == 14
-    assert parsed_dict['msg_type'] == 0x206
-    assert parsed_dict['payload'] == "OLFEGFwBNwGbAH0CcAA="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x4c3
+    payload = get_payload(obj)
+    assert payload.crc == 0x4346
+    assert payload.length == 14
+    assert payload.msg_type == 0x206
+    assert payload.payload == "OLFEGFwBNwGbAH0CcAA="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x4c3
     assert dictify(obj.payload.gdop) == snake_case_keys( 348 )
     assert dictify(obj.payload.hdop) == snake_case_keys( 637 )
     assert dictify(obj.payload.pdop) == snake_case_keys( 311 )
@@ -223,4 +214,4 @@ def test_auto_check_sbp_navigation_msg_dops_dep_a_9():
     assert dictify(obj.payload.tow) == snake_case_keys( 407155000 )
     assert dictify(obj.payload.vdop) == snake_case_keys( 112 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"gdop": 348, "tdop": 155, "vdop": 112, "sender": 1219, "msg_type": 518, "tow": 407155000, "pdop": 311, "crc": 17222, "length": 14, "preamble": 85, "payload": "OLFEGFwBNwGbAH0CcAA=", "hdop": 637} )

@@ -24,14 +24,13 @@ def test_auto_check_sbp_orientation_msg_orient_quat_1():
     stream = KaitaiStream(io.BytesIO(buf))
     obj = kaitai_sbp.Sbp.SbpMessage(stream)
 
-    parsed_dict = dictify(get_payload(obj))
-    orig_dict = {"sender": 66, "msg_type": 544, "tow": 0, "z_accuracy": 3, "w_accuracy": 3, "crc": 1722, "length": 37, "flags": 1, "w": 3, "y": 8, "x": 7, "z": 4, "preamble": 85, "payload": "AAAAAAMAAAAHAAAACAAAAAQAAAAAAEBAAACAQAAAAEEAAEBAAQ==", "y_accuracy": 8, "x_accuracy": 4}
-    assert parsed_dict['crc'] == 0x6ba
-    assert parsed_dict['length'] == 37
-    assert parsed_dict['msg_type'] == 0x220
-    assert parsed_dict['payload'] == "AAAAAAMAAAAHAAAACAAAAAQAAAAAAEBAAACAQAAAAEEAAEBAAQ=="
-    assert parsed_dict['preamble'] == 0x55
-    assert parsed_dict['sender'] == 0x42
+    payload = get_payload(obj)
+    assert payload.crc == 0x6ba
+    assert payload.length == 37
+    assert payload.msg_type == 0x220
+    assert payload.payload == "AAAAAAMAAAAHAAAACAAAAAQAAAAAAEBAAACAQAAAAEEAAEBAAQ=="
+    assert payload.preamble == 0x55
+    assert payload.sender == 0x42
     assert dictify(obj.payload.flags) == snake_case_keys( 1 )
     assert dictify(obj.payload.tow) == snake_case_keys( 0 )
     assert dictify(obj.payload.w) == snake_case_keys( 3 )
@@ -43,4 +42,4 @@ def test_auto_check_sbp_orientation_msg_orient_quat_1():
     assert dictify(obj.payload.z) == snake_case_keys( 4 )
     assert dictify(obj.payload.z_accuracy) == snake_case_keys( 3.0 )
 
-    assert parsed_dict == snake_case_keys(orig_dict)
+    assert dictify(payload) == snake_case_keys( {"sender": 66, "msg_type": 544, "tow": 0, "z_accuracy": 3, "w_accuracy": 3, "crc": 1722, "length": 37, "flags": 1, "w": 3, "y": 8, "x": 7, "z": 4, "preamble": 85, "payload": "AAAAAAMAAAAHAAAACAAAAAQAAAAAAEBAAACAQAAAAEEAAEBAAQ==", "y_accuracy": 8, "x_accuracy": 4} )
