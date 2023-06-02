@@ -14,32 +14,22 @@ import base64
 SBP_HEADER_LEN = 6
 
 
-# convert KaitaiStruct object into dict
-def dictify(obj):
-    if isinstance(obj, KaitaiStruct):
-        return {k: dictify(v) for k, v in obj.__dict__.items() if not k.startswith("_")}
-    elif isinstance(obj, dict):
-        return {k: dictify(v) for k, v in obj.items()}
-    elif isinstance(obj, list):
-        return [dictify(x) for x in obj]
-    else:
-        return obj
+# for JSON serialisation
+def serialise(obj):
+    return {k: v for k, v in obj.__dict__.items() if not k.startswith("_")}
 
 
-# convert KaitaiStruct object into dict with keys similar to sbp2json output
-def kaitai2dict(obj):
-    # encode payload
+# convert KaitaiStruct object to have similar structure to sbp2json output
+def get_payload(obj):
+    obj.payload.preamble = ord(obj.preamble)
+    obj.payload.msg_type = obj.msg_type
+    obj.payload.sender = obj.sender
+    obj.payload.length = obj.length
     obj.payload._io.seek(0)
-    payload_b64 = base64.standard_b64encode(obj.payload._io.read_bytes_full()).decode('ascii')
+    obj.payload.payload = base64.standard_b64encode(obj.payload._io.read_bytes_full()).decode('ascii')
+    obj.payload.crc = obj.crc
 
-    message = dictify(obj.payload)
-    message["preamble"] = ord(obj.preamble)
-    message["msg_type"] = obj.msg_type
-    message["sender"] = obj.sender
-    message["length"] = obj.length
-    message["crc"] = obj.crc
-    message["payload"] = payload_b64
-    return message
+    return obj.payload
 
 
 # wrapper object which allows KaitaiStream to be used with inputs which do
@@ -118,10 +108,10 @@ def get_next_msg_kaitai(fp):
             stream.seek(1)
             continue
 
-        yield kaitai2dict(obj)
+        yield get_payload(obj)
 
 
 # implementation of sbp2json using Kaitai Struct parser
 def sbp2json_kaitai():
     for msg in get_next_msg_kaitai(sys.stdin.buffer):
-        print(rapidjson.dumps(msg))
+        print(rapidjson.dumps(msg, default=serialise))

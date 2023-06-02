@@ -13,7 +13,7 @@ SLUSH_PERCENTAGE = 0.25
 RATIOS_SBP2JSON = {
     "haskell": 2.12,
     "python": 18,
-    "kaitai_python": 4.5,
+    "kaitai_python": 4,
 }
 
 RATIOS_JSON2SBP = {

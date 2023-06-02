@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys
-from kaitai.python.tests.utils_kaitai import kaitai2dict, dictify
+from kaitai.python.tests.utils import snake_case_keys, dictify
+from kaitai.python.tests.utils_kaitai import get_payload
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,9 +22,9 @@ def test_auto_check_sbp_logging_msg_log_1():
     buf = base64.standard_b64decode("VQEECgksBkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTmxow==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
 
-    parsed_dict = kaitai2dict(obj)
+    parsed_dict = dictify(payload)
     orig_dict = {"level":6,"text":"Filtered all obs from 2314 at tow 83.539019","preamble":85,"msg_type":1025,"sender":2314,"payload":"BkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTk=","crc":41905,"length":44}
     assert parsed_dict['crc'] == 0xa3b1
     assert parsed_dict['length'] == 44

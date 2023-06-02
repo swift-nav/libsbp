@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys
-from kaitai.python.tests.utils_kaitai import kaitai2dict, dictify
+from kaitai.python.tests.utils import snake_case_keys, dictify
+from kaitai.python.tests.utils_kaitai import get_payload
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,9 +22,9 @@ def test_auto_check_sbp_imu_msg_imu_raw_1():
     buf = base64.standard_b64decode("VQAJNBIRGgEAwM5gAN//LBA8AND+7v9Ghw==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
 
-    parsed_dict = kaitai2dict(obj)
+    parsed_dict = dictify(payload)
     orig_dict = {"tow":3221225754,"tow_f":206,"acc_x":96,"acc_y":-33,"acc_z":4140,"gyr_x":60,"gyr_y":-304,"gyr_z":-18,"preamble":85,"msg_type":2304,"sender":4660,"payload":"GgEAwM5gAN//LBA8AND+7v8=","crc":34630,"length":17}
     assert parsed_dict['crc'] == 0x8746
     assert parsed_dict['length'] == 17

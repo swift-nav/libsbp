@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys
-from kaitai.python.tests.utils_kaitai import kaitai2dict, dictify
+from kaitai.python.tests.utils import snake_case_keys, dictify
+from kaitai.python.tests.utils_kaitai import get_payload
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,9 +22,9 @@ def test_auto_check_sbp_system_msg_sensor_aid_event_1():
     buf = base64.standard_b64decode("VQn/04gPMPZ6EwAAAAAAAAAAAAAAIew=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
 
-    parsed_dict = kaitai2dict(obj)
+    parsed_dict = dictify(payload)
     orig_dict = {"preamble": 85, "msg_type": 65289, "sender": 35027, "length": 15, "payload": "MPZ6EwAAAAAAAAAAAAAA", "crc": 60449, "time": 326825520, "sensor_type": 0, "sensor_id": 0, "sensor_state": 0, "n_available_meas": 0, "n_attempted_meas": 0, "n_accepted_meas": 0, "flags": 0}
     assert parsed_dict['crc'] == 0xEC21
     assert parsed_dict['length'] == 15

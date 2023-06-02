@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys
-from kaitai.python.tests.utils_kaitai import kaitai2dict, dictify
+from kaitai.python.tests.utils import snake_case_keys, dictify
+from kaitai.python.tests.utils_kaitai import get_payload
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,9 +22,9 @@ def test_auto_check_sbp_system_msg_dgnss_status_1():
     buf = base64.standard_b64decode("VQL/QgALADIADFNreWxhcmvKAQ==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
 
-    parsed_dict = kaitai2dict(obj)
+    parsed_dict = dictify(payload)
     orig_dict = {"latency": 50, "sender": 66, "msg_type": 65282, "source": "Skylark", "num_signals": 12, "crc": 458, "length": 11, "flags": 0, "preamble": 85, "payload": "ADIADFNreWxhcms="}
     assert parsed_dict['crc'] == 0x1ca
     assert parsed_dict['length'] == 11

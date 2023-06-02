@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys
-from kaitai.python.tests.utils_kaitai import kaitai2dict, dictify
+from kaitai.python.tests.utils import snake_case_keys, dictify
+from kaitai.python.tests.utils_kaitai import get_payload
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,9 +22,9 @@ def test_auto_check_sbp_navigation_msg_utc_leap_second_1():
     buf = base64.standard_b64decode("VToCQgAOAQACAAMEBQAGAAcACAky6A==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
 
-    parsed_dict = kaitai2dict(obj)
+    parsed_dict = dictify(payload)
     orig_dict = {"reserved_0": 1, "reserved_1": 2, "reserved_2": 3, "count_before": 4, "reserved_3": 5, "reserved_4": 6, "ref_wn": 7, "ref_dn": 8, "count_after": 9, "preamble": 85, "msg_type": 570, "sender": 66, "length": 14, "payload": "AQACAAMEBQAGAAcACAk=", "crc": 59442}
     assert parsed_dict['preamble'] == 0x55
     assert parsed_dict['msg_type'] == 0x023A

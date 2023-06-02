@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys
-from kaitai.python.tests.utils_kaitai import kaitai2dict, dictify
+from kaitai.python.tests.utils import snake_case_keys, dictify
+from kaitai.python.tests.utils_kaitai import get_payload
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,9 +22,9 @@ def test_auto_check_sbp_system_msg_heartbeat_1():
     buf = base64.standard_b64decode("Vf//9tcEADIAAPnY")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
 
-    parsed_dict = kaitai2dict(obj)
+    parsed_dict = dictify(payload)
     orig_dict = {"sender": 55286, "msg_type": 65535, "crc": 55545, "length": 4, "flags": 12800, "preamble": 85, "payload": "ADIAAA=="}
     assert parsed_dict['crc'] == 0xd8f9
     assert parsed_dict['length'] == 4
@@ -40,9 +40,9 @@ def test_auto_check_sbp_system_msg_heartbeat_2():
     buf = base64.standard_b64decode("Vf//wwQEAAAAAEI5")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
 
-    parsed_dict = kaitai2dict(obj)
+    parsed_dict = dictify(payload)
     orig_dict = {"sender": 1219, "msg_type": 65535, "crc": 14658, "length": 4, "flags": 0, "preamble": 85, "payload": "AAAAAA=="}
     assert parsed_dict['crc'] == 0x3942
     assert parsed_dict['length'] == 4

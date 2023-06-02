@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys
-from kaitai.python.tests.utils_kaitai import kaitai2dict, dictify
+from kaitai.python.tests.utils import snake_case_keys, dictify
+from kaitai.python.tests.utils_kaitai import get_payload
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,9 +22,9 @@ def test_auto_check_sbp_telemetry_msg_tel_sv_1():
     buf = base64.standard_b64decode("VSABlCYUrwjQ3T4YEAEoMgXi/wEAAQEBIQwnaQ==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
 
-    parsed_dict = kaitai2dict(obj)
+    parsed_dict = dictify(payload)
     orig_dict = {"preamble": 85, "msg_type": 288, "sender": 9876, "length": 20, "payload": "rwjQ3T4YEAEoMgXi/wEAAQEBIQw=", "crc": 26919, "wn": 2223, "tow": 406773200, "n_obs": 16, "origin_flags": 1, "sv_tel": [{"az": 40, "el": 50, "availability_flags": 5, "pseudorange_residual": -30, "phase_residual": 1, "outlier_flags": 1, "ephemeris_flags": 1, "correction_flags": 1, "sid": {"sat": 33, "code": 12}}]}
     assert parsed_dict['crc'] == 0x6927
     assert parsed_dict['length'] == 20

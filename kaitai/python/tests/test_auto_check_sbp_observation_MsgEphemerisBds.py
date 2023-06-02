@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys
-from kaitai.python.tests.utils_kaitai import kaitai2dict, dictify
+from kaitai.python.tests.utils import snake_case_keys, dictify
+from kaitai.python.tests.utils_kaitai import get_payload
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,9 +22,9 @@ def test_auto_check_sbp_observation_msg_ephemeris_bds_1():
     buf = base64.standard_b64decode("VYkAgPCTCAyuswYAaggAAABAMCoAAAEAfWM0Ms8ul7AAcGBDAKRqQwA8/zYA4C81AACPswDAvjSSZaLEbWgTPv1XVso+HPs/AAAAYJc8dT8AAICaf125QJfBQAAKpgTAoEuuYgjJI77NHQxHvZYFwLBI+b3BrPA/SPm8tKDLCT4AAAAAXDNNvwCArisAAFihrrMGAGoIBgUAnfk=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
 
-    parsed_dict = kaitai2dict(obj)
+    parsed_dict = dictify(payload)
     orig_dict = {"common":{"sid":{"sat":8,"code":12},"toe":{"tow":439214,"wn":2154},"ura":2.0,"fit_interval":10800,"valid":1,"health_bits":0},"tgd1":1.0499999980595476e-08,"tgd2":-1.0999999799921056e-09,"c_rs":224.4375,"c_rc":234.640625,"c_uc":7.606577128171921e-06,"c_us":6.551854312419891e-07,"c_ic":-6.658956408500671e-08,"c_is":3.5529956221580505e-07,"dn":1.1296899132622133e-09,"m0":1.6943958190727237,"ecc":0.005184737499803305,"sqrta":6493.49845123291,"omega0":-2.581073762870982,"omegadot":-2.303310227830545e-09,"w":-2.698603205735458,"inc":1.0421769543504915,"inc_dot":7.507455572801683e-10,"af0":-0.0008911322802305222,"af1":1.2398970739013748e-12,"af2":-7.318364664277155e-19,"toc":{"tow":439214,"wn":2154},"iode":6,"iodc":5,"preamble":85,"msg_type":137,"sender":61568,"payload":"CAyuswYAaggAAABAMCoAAAEAfWM0Ms8ul7AAcGBDAKRqQwA8/zYA4C81AACPswDAvjSSZaLEbWgTPv1XVso+HPs/AAAAYJc8dT8AAICaf125QJfBQAAKpgTAoEuuYgjJI77NHQxHvZYFwLBI+b3BrPA/SPm8tKDLCT4AAAAAXDNNvwCArisAAFihrrMGAGoIBgUA","crc":63901,"length":147}
     assert parsed_dict['crc'] == 0xf99d
     assert parsed_dict['length'] == 147

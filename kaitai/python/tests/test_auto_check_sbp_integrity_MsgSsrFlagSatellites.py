@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys
-from kaitai.python.tests.utils_kaitai import kaitai2dict, dictify
+from kaitai.python.tests.utils import snake_case_keys, dictify
+from kaitai.python.tests.utils_kaitai import get_payload
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,9 +22,9 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_satellites_1():
     buf = base64.standard_b64decode("Vb0LQgAPtAAAAAMAAQIDBAUDCgsMbqU=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    payload = kaitai_sbp.Sbp.SbpMessage(stream).get_payload()
 
-    parsed_dict = kaitai2dict(obj)
+    parsed_dict = dictify(payload)
     orig_dict = {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "chain_id": 4, "const_id": 5, "n_faulty_sats": 3, "faulty_sats": [10, 11, 12], "preamble": 85, "msg_type": 3005, "sender": 66, "length": 15, "payload": "tAAAAAMAAQIDBAUDCgsM", "crc": 42350}
     assert parsed_dict['preamble'] == 0x55
     assert parsed_dict['msg_type'] == 0x0BBD
