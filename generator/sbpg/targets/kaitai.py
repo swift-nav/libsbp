@@ -52,7 +52,7 @@ OUTPUT_LANGUAGES = [
   'perl',
   #'java',
   'go',
-  'cpp_stl',
+  #'cpp_stl',
   #'php',
   'lua',
   'python',
