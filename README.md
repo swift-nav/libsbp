@@ -276,7 +276,6 @@ the following targets, which can be found in their respective subdirectories:
 
 * csharp
 * perl
-* go
 * lua
 * python
 * ruby
@@ -287,6 +286,7 @@ for additional targets, including:
 * graphviz
 * rust
 * java
+* go
 * cpp_stl
 * php
 * nim

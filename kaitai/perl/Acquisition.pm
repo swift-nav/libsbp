@@ -282,7 +282,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{acq_sv_profile} = ();
+    $self->{acq_sv_profile} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{acq_sv_profile}}, Acquisition::AcqSvProfile->new($self->{_io}, $self, $self->{_root});
     }
@@ -539,7 +539,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{acq_sv_profile} = ();
+    $self->{acq_sv_profile} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{acq_sv_profile}}, Acquisition::AcqSvProfileDep->new($self->{_io}, $self, $self->{_root});
     }

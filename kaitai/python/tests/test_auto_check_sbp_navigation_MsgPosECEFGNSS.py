@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,21 +22,32 @@ def test_auto_check_sbp_navigation_msg_pos_ecefgnss_1():
     buf = base64.standard_b64decode("VSkCABAgGOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgSHAg==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x287
+    
+    assert msg.length == 32
+    
+    assert msg.msg_type == 0x229
+    
+    assert msg.payload == "GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgQ="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x1000
+    
+    assert dictify(msg.accuracy) == 182
+    
+    assert dictify(msg.flags) == 4
+    
+    assert dictify(msg.n_sats) == 18
+    
+    assert dictify(msg.tow) == 501867800
+    
+    assert dictify(msg.x) == -2694229.7079770807
+    
+    assert dictify(msg.y) == -4264073.427345817
+    
+    assert dictify(msg.z) == 3890655.013186158
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x287
-    assert payload.length == 32
-    assert payload.msg_type == 0x229
-    assert payload.payload == "GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgQ="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x1000
-    assert dictify(obj.payload.accuracy) == snake_case_keys( 182 )
-    assert dictify(obj.payload.flags) == snake_case_keys( 4 )
-    assert dictify(obj.payload.n_sats) == snake_case_keys( 18 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 501867800 )
-    assert dictify(obj.payload.x) == snake_case_keys( -2694229.7079770807 )
-    assert dictify(obj.payload.y) == snake_case_keys( -4264073.427345817 )
-    assert dictify(obj.payload.z) == snake_case_keys( 3890655.013186158 )
-
-    assert dictify(payload) == snake_case_keys( {"tow":501867800,"x":-2694229.7079770807,"y":-4264073.427345817,"z":3890655.013186158,"accuracy":182,"n_sats":18,"flags":4,"preamble":85,"msg_type":553,"sender":4096,"payload":"GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgQ=","crc":647,"length":32} )
+    assert dictify(msg) == {'tow': 501867800, 'x': -2694229.7079770807, 'y': -4264073.427345817, 'z': 3890655.013186158, 'accuracy': 182, 'n_sats': 18, 'flags': 4, 'preamble': 85, 'msg_type': 553, 'sender': 4096, 'payload': 'GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgQ=', 'crc': 647, 'length': 32}

@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,23 +22,36 @@ def test_auto_check_sbp_navigation_msg_utc_time_gnss_1():
     buf = base64.standard_b64decode("VQUBFQMQARjl6R3lBwQJExgJAAivL7Eh")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x21b1
+    
+    assert msg.length == 16
+    
+    assert msg.msg_type == 0x105
+    
+    assert msg.payload == "ARjl6R3lBwQJExgJAAivLw=="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x315
+    
+    assert dictify(msg.day) == 9
+    
+    assert dictify(msg.flags) == 1
+    
+    assert dictify(msg.hours) == 19
+    
+    assert dictify(msg.minutes) == 24
+    
+    assert dictify(msg.month) == 4
+    
+    assert dictify(msg.ns) == 800000000
+    
+    assert dictify(msg.seconds) == 9
+    
+    assert dictify(msg.tow) == 501867800
+    
+    assert dictify(msg.year) == 2021
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x21b1
-    assert payload.length == 16
-    assert payload.msg_type == 0x105
-    assert payload.payload == "ARjl6R3lBwQJExgJAAivLw=="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x315
-    assert dictify(obj.payload.day) == snake_case_keys( 9 )
-    assert dictify(obj.payload.flags) == snake_case_keys( 1 )
-    assert dictify(obj.payload.hours) == snake_case_keys( 19 )
-    assert dictify(obj.payload.minutes) == snake_case_keys( 24 )
-    assert dictify(obj.payload.month) == snake_case_keys( 4 )
-    assert dictify(obj.payload.ns) == snake_case_keys( 800000000 )
-    assert dictify(obj.payload.seconds) == snake_case_keys( 9 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 501867800 )
-    assert dictify(obj.payload.year) == snake_case_keys( 2021 )
-
-    assert dictify(payload) == snake_case_keys( {"flags":1,"tow":501867800,"year":2021,"month":4,"day":9,"hours":19,"minutes":24,"seconds":9,"ns":800000000,"preamble":85,"msg_type":261,"sender":789,"payload":"ARjl6R3lBwQJExgJAAivLw==","crc":8625,"length":16} )
+    assert dictify(msg) == {'flags': 1, 'tow': 501867800, 'year': 2021, 'month': 4, 'day': 9, 'hours': 19, 'minutes': 24, 'seconds': 9, 'ns': 800000000, 'preamble': 85, 'msg_type': 261, 'sender': 789, 'payload': 'ARjl6R3lBwQJExgJAAivLw==', 'crc': 8625, 'length': 16}

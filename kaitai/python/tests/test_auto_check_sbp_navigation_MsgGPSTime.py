@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,98 +22,138 @@ def test_auto_check_sbp_navigation_msg_gps_time_1():
     buf = base64.standard_b64decode("VQIB04gLgAco9HoT9IsCAAAimA==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x9822
+    
+    assert msg.length == 11
+    
+    assert msg.msg_type == 0x102
+    
+    assert msg.payload == "gAco9HoT9IsCAAA="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x88d3
+    
+    assert dictify(msg.flags) == 0
+    
+    assert dictify(msg.ns_residual) == 166900
+    
+    assert dictify(msg.tow) == 326825000
+    
+    assert dictify(msg.wn) == 1920
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x9822
-    assert payload.length == 11
-    assert payload.msg_type == 0x102
-    assert payload.payload == "gAco9HoT9IsCAAA="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x88d3
-    assert dictify(obj.payload.flags) == snake_case_keys( 0 )
-    assert dictify(obj.payload.ns_residual) == snake_case_keys( 166900 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 326825000 )
-    assert dictify(obj.payload.wn) == snake_case_keys( 1920 )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 35027, "msg_type": 258, "wn": 1920, "tow": 326825000, "crc": 38946, "length": 11, "flags": 0, "ns_residual": 166900, "preamble": 85, "payload": "gAco9HoT9IsCAAA="} )
+    assert dictify(msg) == {'sender': 35027, 'msg_type': 258, 'wn': 1920, 'tow': 326825000, 'crc': 38946, 'length': 11, 'flags': 0, 'ns_residual': 166900, 'preamble': 85, 'payload': 'gAco9HoT9IsCAAA='}
 
 def test_auto_check_sbp_navigation_msg_gps_time_2():
     buf = base64.standard_b64decode("VQIB04gLgAcc9noTfuoDAABBAw==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x341
+    
+    assert msg.length == 11
+    
+    assert msg.msg_type == 0x102
+    
+    assert msg.payload == "gAcc9noTfuoDAAA="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x88d3
+    
+    assert dictify(msg.flags) == 0
+    
+    assert dictify(msg.ns_residual) == 256638
+    
+    assert dictify(msg.tow) == 326825500
+    
+    assert dictify(msg.wn) == 1920
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x341
-    assert payload.length == 11
-    assert payload.msg_type == 0x102
-    assert payload.payload == "gAcc9noTfuoDAAA="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x88d3
-    assert dictify(obj.payload.flags) == snake_case_keys( 0 )
-    assert dictify(obj.payload.ns_residual) == snake_case_keys( 256638 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 326825500 )
-    assert dictify(obj.payload.wn) == snake_case_keys( 1920 )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 35027, "msg_type": 258, "wn": 1920, "tow": 326825500, "crc": 833, "length": 11, "flags": 0, "ns_residual": 256638, "preamble": 85, "payload": "gAcc9noTfuoDAAA="} )
+    assert dictify(msg) == {'sender': 35027, 'msg_type': 258, 'wn': 1920, 'tow': 326825500, 'crc': 833, 'length': 11, 'flags': 0, 'ns_residual': 256638, 'preamble': 85, 'payload': 'gAcc9noTfuoDAAA='}
 
 def test_auto_check_sbp_navigation_msg_gps_time_3():
     buf = base64.standard_b64decode("VQIB04gLgAcQ+HoTgQwEAAAMVA==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x540c
+    
+    assert msg.length == 11
+    
+    assert msg.msg_type == 0x102
+    
+    assert msg.payload == "gAcQ+HoTgQwEAAA="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x88d3
+    
+    assert dictify(msg.flags) == 0
+    
+    assert dictify(msg.ns_residual) == 265345
+    
+    assert dictify(msg.tow) == 326826000
+    
+    assert dictify(msg.wn) == 1920
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x540c
-    assert payload.length == 11
-    assert payload.msg_type == 0x102
-    assert payload.payload == "gAcQ+HoTgQwEAAA="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x88d3
-    assert dictify(obj.payload.flags) == snake_case_keys( 0 )
-    assert dictify(obj.payload.ns_residual) == snake_case_keys( 265345 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 326826000 )
-    assert dictify(obj.payload.wn) == snake_case_keys( 1920 )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 35027, "msg_type": 258, "wn": 1920, "tow": 326826000, "crc": 21516, "length": 11, "flags": 0, "ns_residual": 265345, "preamble": 85, "payload": "gAcQ+HoTgQwEAAA="} )
+    assert dictify(msg) == {'sender': 35027, 'msg_type': 258, 'wn': 1920, 'tow': 326826000, 'crc': 21516, 'length': 11, 'flags': 0, 'ns_residual': 265345, 'preamble': 85, 'payload': 'gAcQ+HoTgQwEAAA='}
 
 def test_auto_check_sbp_navigation_msg_gps_time_4():
     buf = base64.standard_b64decode("VQIB04gLgAcE+noTicwEAAAypQ==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0xa532
+    
+    assert msg.length == 11
+    
+    assert msg.msg_type == 0x102
+    
+    assert msg.payload == "gAcE+noTicwEAAA="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x88d3
+    
+    assert dictify(msg.flags) == 0
+    
+    assert dictify(msg.ns_residual) == 314505
+    
+    assert dictify(msg.tow) == 326826500
+    
+    assert dictify(msg.wn) == 1920
 
-    payload = get_payload(obj)
-    assert payload.crc == 0xa532
-    assert payload.length == 11
-    assert payload.msg_type == 0x102
-    assert payload.payload == "gAcE+noTicwEAAA="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x88d3
-    assert dictify(obj.payload.flags) == snake_case_keys( 0 )
-    assert dictify(obj.payload.ns_residual) == snake_case_keys( 314505 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 326826500 )
-    assert dictify(obj.payload.wn) == snake_case_keys( 1920 )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 35027, "msg_type": 258, "wn": 1920, "tow": 326826500, "crc": 42290, "length": 11, "flags": 0, "ns_residual": 314505, "preamble": 85, "payload": "gAcE+noTicwEAAA="} )
+    assert dictify(msg) == {'sender': 35027, 'msg_type': 258, 'wn': 1920, 'tow': 326826500, 'crc': 42290, 'length': 11, 'flags': 0, 'ns_residual': 314505, 'preamble': 85, 'payload': 'gAcE+noTicwEAAA='}
 
 def test_auto_check_sbp_navigation_msg_gps_time_5():
     buf = base64.standard_b64decode("VQIB04gLgAf4+3oTtYkFAAC0IQ==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x21b4
+    
+    assert msg.length == 11
+    
+    assert msg.msg_type == 0x102
+    
+    assert msg.payload == "gAf4+3oTtYkFAAA="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x88d3
+    
+    assert dictify(msg.flags) == 0
+    
+    assert dictify(msg.ns_residual) == 362933
+    
+    assert dictify(msg.tow) == 326827000
+    
+    assert dictify(msg.wn) == 1920
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x21b4
-    assert payload.length == 11
-    assert payload.msg_type == 0x102
-    assert payload.payload == "gAf4+3oTtYkFAAA="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x88d3
-    assert dictify(obj.payload.flags) == snake_case_keys( 0 )
-    assert dictify(obj.payload.ns_residual) == snake_case_keys( 362933 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 326827000 )
-    assert dictify(obj.payload.wn) == snake_case_keys( 1920 )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 35027, "msg_type": 258, "wn": 1920, "tow": 326827000, "crc": 8628, "length": 11, "flags": 0, "ns_residual": 362933, "preamble": 85, "payload": "gAf4+3oTtYkFAAA="} )
+    assert dictify(msg) == {'sender': 35027, 'msg_type': 258, 'wn': 1920, 'tow': 326827000, 'crc': 8628, 'length': 11, 'flags': 0, 'ns_residual': 362933, 'preamble': 85, 'payload': 'gAf4+3oTtYkFAAA='}

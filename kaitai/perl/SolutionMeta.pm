@@ -110,7 +110,7 @@ sub _read {
     $self->{vdop} = $self->{_io}->read_u2le();
     $self->{age_corrections} = $self->{_io}->read_u2le();
     $self->{age_gnss} = $self->{_io}->read_u4le();
-    $self->{sol_in} = ();
+    $self->{sol_in} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{sol_in}}, SolutionMeta::SolutionInputType->new($self->{_io}, $self, $self->{_root});
     }
@@ -189,7 +189,7 @@ sub _read {
     $self->{alignment_status} = $self->{_io}->read_u1();
     $self->{last_used_gnss_pos_tow} = $self->{_io}->read_u4le();
     $self->{last_used_gnss_vel_tow} = $self->{_io}->read_u4le();
-    $self->{sol_in} = ();
+    $self->{sol_in} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{sol_in}}, SolutionMeta::SolutionInputType->new($self->{_io}, $self, $self->{_root});
     }

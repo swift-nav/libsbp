@@ -181,7 +181,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{dna} = ();
+    $self->{dna} = [];
     my $n_dna = 8;
     for (my $i = 0; $i < $n_dna; $i++) {
         push @{$self->{dna}}, $self->{_io}->read_u1();
@@ -255,7 +255,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{handshake} = ();
+    $self->{handshake} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{handshake}}, $self->{_io}->read_u1();
     }

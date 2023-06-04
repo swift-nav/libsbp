@@ -223,7 +223,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{header} = Ssr::StecHeader->new($self->{_io}, $self, $self->{_root});
-    $self->{stec_sat_list} = ();
+    $self->{stec_sat_list} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{stec_sat_list}}, Ssr::StecSatElement->new($self->{_io}, $self, $self->{_root});
     }
@@ -452,7 +452,7 @@ sub _read {
     $self->{tile_set_id} = $self->{_io}->read_u2le();
     $self->{tile_id} = $self->{_io}->read_u2le();
     $self->{n_sats} = $self->{_io}->read_u1();
-    $self->{stec_sat_list} = ();
+    $self->{stec_sat_list} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{stec_sat_list}}, Ssr::StecSatElement->new($self->{_io}, $self, $self->{_root});
     }
@@ -699,7 +699,7 @@ sub _read {
     $self->{header} = Ssr::GriddedCorrectionHeader->new($self->{_io}, $self, $self->{_root});
     $self->{index} = $self->{_io}->read_u2le();
     $self->{tropo_delay_correction} = Ssr::TroposphericDelayCorrection->new($self->{_io}, $self, $self->{_root});
-    $self->{stec_residuals} = ();
+    $self->{stec_residuals} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{stec_residuals}}, Ssr::StecResidual->new($self->{_io}, $self, $self->{_root});
     }
@@ -876,12 +876,12 @@ sub _read {
     $self->{sid} = Gnss::GnssSignal->new($self->{_io}, $self, $self->{_root});
     $self->{sat_info} = $self->{_io}->read_u1();
     $self->{svn} = $self->{_io}->read_u2le();
-    $self->{pco} = ();
+    $self->{pco} = [];
     my $n_pco = 3;
     for (my $i = 0; $i < $n_pco; $i++) {
         push @{$self->{pco}}, $self->{_io}->read_s2le();
     }
-    $self->{pcv} = ();
+    $self->{pcv} = [];
     my $n_pcv = 21;
     for (my $i = 0; $i < $n_pcv; $i++) {
         push @{$self->{pcv}}, $self->{_io}->read_s1();
@@ -1025,7 +1025,7 @@ sub _read {
 
     $self->{sv_id} = Gnss::SvId->new($self->{_io}, $self, $self->{_root});
     $self->{stec_quality_indicator} = $self->{_io}->read_u1();
-    $self->{stec_coeff} = ();
+    $self->{stec_coeff} = [];
     my $n_stec_coeff = 4;
     for (my $i = 0; $i < $n_stec_coeff; $i++) {
         push @{$self->{stec_coeff}}, $self->{_io}->read_s2le();
@@ -1214,7 +1214,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{header} = Ssr::StecHeaderDepA->new($self->{_io}, $self, $self->{_root});
-    $self->{stec_sat_list} = ();
+    $self->{stec_sat_list} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{stec_sat_list}}, Ssr::StecSatElement->new($self->{_io}, $self, $self->{_root});
     }
@@ -1332,7 +1332,7 @@ sub _read {
     $self->{ssr_iod} = $self->{_io}->read_u1();
     $self->{const_id} = $self->{_io}->read_u1();
     $self->{n_sats} = $self->{_io}->read_u1();
-    $self->{orbit_clock_bounds} = ();
+    $self->{orbit_clock_bounds} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{orbit_clock_bounds}}, Ssr::OrbitClockBound->new($self->{_io}, $self, $self->{_root});
     }
@@ -1405,7 +1405,7 @@ sub _read {
     $self->{tropo_v_wet_bound_mu} = $self->{_io}->read_u1();
     $self->{tropo_v_wet_bound_sig} = $self->{_io}->read_u1();
     $self->{n_sats} = $self->{_io}->read_u1();
-    $self->{stec_sat_list} = ();
+    $self->{stec_sat_list} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{stec_sat_list}}, Ssr::StecSatElementIntegrity->new($self->{_io}, $self, $self->{_root});
     }
@@ -1507,7 +1507,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{header} = Ssr::GridDefinitionHeaderDepA->new($self->{_io}, $self, $self->{_root});
-    $self->{rle_list} = ();
+    $self->{rle_list} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{rle_list}}, $self->{_io}->read_u1();
     }
@@ -1601,7 +1601,7 @@ sub _read {
     $self->{update_interval} = $self->{_io}->read_u1();
     $self->{sol_id} = $self->{_io}->read_u1();
     $self->{iod_ssr} = $self->{_io}->read_u1();
-    $self->{apc} = ();
+    $self->{apc} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{apc}}, Ssr::SatelliteApc->new($self->{_io}, $self, $self->{_root});
     }
@@ -1899,7 +1899,7 @@ sub _read {
     $self->{header} = Ssr::GriddedCorrectionHeaderDepA->new($self->{_io}, $self, $self->{_root});
     $self->{index} = $self->{_io}->read_u2le();
     $self->{tropo_delay_correction} = Ssr::TroposphericDelayCorrection->new($self->{_io}, $self, $self->{_root});
-    $self->{stec_residuals} = ();
+    $self->{stec_residuals} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{stec_residuals}}, Ssr::StecResidual->new($self->{_io}, $self, $self->{_root});
     }
@@ -2020,7 +2020,7 @@ sub _read {
     $self->{header} = Ssr::GriddedCorrectionHeaderDepA->new($self->{_io}, $self, $self->{_root});
     $self->{index} = $self->{_io}->read_u2le();
     $self->{tropo_delay_correction} = Ssr::TroposphericDelayCorrectionNoStd->new($self->{_io}, $self, $self->{_root});
-    $self->{stec_residuals} = ();
+    $self->{stec_residuals} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{stec_residuals}}, Ssr::StecResidualNoStd->new($self->{_io}, $self, $self->{_root});
     }
@@ -2080,7 +2080,7 @@ sub _read {
     $self->{ssr_iod} = $self->{_io}->read_u1();
     $self->{const_id} = $self->{_io}->read_u1();
     $self->{n_sats_signals} = $self->{_io}->read_u1();
-    $self->{satellites_signals} = ();
+    $self->{satellites_signals} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{satellites_signals}}, Ssr::CodePhaseBiasesSatSig->new($self->{_io}, $self, $self->{_root});
     }
@@ -2145,7 +2145,7 @@ sub _read {
     $self->{sid} = Gnss::GnssSignal->new($self->{_io}, $self, $self->{_root});
     $self->{update_interval} = $self->{_io}->read_u1();
     $self->{iod_ssr} = $self->{_io}->read_u1();
-    $self->{biases} = ();
+    $self->{biases} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{biases}}, Ssr::CodeBiasesContent->new($self->{_io}, $self, $self->{_root});
     }
@@ -2396,7 +2396,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{apc} = ();
+    $self->{apc} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{apc}}, Ssr::SatelliteApc->new($self->{_io}, $self, $self->{_root});
     }
@@ -2587,7 +2587,7 @@ sub _read {
     $self->{mw_consistency} = $self->{_io}->read_u1();
     $self->{yaw} = $self->{_io}->read_u2le();
     $self->{yaw_rate} = $self->{_io}->read_s1();
-    $self->{biases} = ();
+    $self->{biases} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{biases}}, Ssr::PhaseBiasesContent->new($self->{_io}, $self, $self->{_root});
     }

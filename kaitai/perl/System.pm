@@ -109,7 +109,7 @@ sub _read {
     $self->{sbp_version} = $self->{_io}->read_u2le();
     $self->{total_status_reports} = $self->{_io}->read_u4le();
     $self->{sequence_descriptor} = $self->{_io}->read_u1();
-    $self->{journal} = ();
+    $self->{journal} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{journal}}, System::StatusJournalItem->new($self->{_io}, $self, $self->{_root});
     }
@@ -579,7 +579,7 @@ sub _read {
     $self->{group_id} = $self->{_io}->read_u1();
     $self->{flags} = $self->{_io}->read_u1();
     $self->{n_group_msgs} = $self->{_io}->read_u1();
-    $self->{group_msgs} = ();
+    $self->{group_msgs} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{group_msgs}}, $self->{_io}->read_u2le();
     }
@@ -769,7 +769,7 @@ sub _read {
     $self->{sbp_version} = $self->{_io}->read_u2le();
     $self->{sequence} = $self->{_io}->read_u4le();
     $self->{uptime} = $self->{_io}->read_u4le();
-    $self->{status} = ();
+    $self->{status} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{status}}, System::SubSystemReport->new($self->{_io}, $self, $self->{_root});
     }

@@ -85,6 +85,7 @@ RUN \
       python3.10 python3.10-dev python3.10-distutils \
       dpkg-dev \
       cmake \
+      libjson-perl \
   && curl -sSL https://get.haskellstack.org/ | sh \
   && rm -rf /var/lib/apt/lists/* /tmp/* \
   && curl -s "https://get.sdkman.io" | bash \
@@ -123,6 +124,16 @@ RUN \
   && mv kaitai-struct-compiler-0.10 /opt \
   && ln -sf /opt/kaitai-struct-compiler-0.10/bin/kaitai-struct-compiler /usr/local/bin \
   && kaitai-struct-compiler --version \
+  && rm -rf /tmp/*
+
+# install perl runtime for kaitai struct
+RUN \
+     cd /tmp \
+  && curl -LO https://github.com/kaitai-io/kaitai_struct_perl_runtime/archive/refs/tags/0.10.zip \
+  && unzip 0.10.zip \
+  && cd kaitai_struct_perl_runtime-0.10 \
+  && perl Makefile.PL \
+  && make install \
   && rm -rf /tmp/*
 
 ARG UID=1000

@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,21 +22,32 @@ def test_auto_check_sbp_navigation_msg_dops_1():
     buf = base64.standard_b64decode("VQgCQgAPZAAAAAIABgAFAAUABQAA9AQ=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x4f4
+    
+    assert msg.length == 15
+    
+    assert msg.msg_type == 0x208
+    
+    assert msg.payload == "ZAAAAAIABgAFAAUABQAA"
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x42
+    
+    assert dictify(msg.flags) == 0
+    
+    assert dictify(msg.gdop) == 2
+    
+    assert dictify(msg.hdop) == 5
+    
+    assert dictify(msg.pdop) == 6
+    
+    assert dictify(msg.tdop) == 5
+    
+    assert dictify(msg.tow) == 100
+    
+    assert dictify(msg.vdop) == 5
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x4f4
-    assert payload.length == 15
-    assert payload.msg_type == 0x208
-    assert payload.payload == "ZAAAAAIABgAFAAUABQAA"
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x42
-    assert dictify(obj.payload.flags) == snake_case_keys( 0 )
-    assert dictify(obj.payload.gdop) == snake_case_keys( 2 )
-    assert dictify(obj.payload.hdop) == snake_case_keys( 5 )
-    assert dictify(obj.payload.pdop) == snake_case_keys( 6 )
-    assert dictify(obj.payload.tdop) == snake_case_keys( 5 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 100 )
-    assert dictify(obj.payload.vdop) == snake_case_keys( 5 )
-
-    assert dictify(payload) == snake_case_keys( {"gdop": 2, "tdop": 5, "vdop": 5, "sender": 66, "msg_type": 520, "pdop": 6, "tow": 100, "crc": 1268, "length": 15, "flags": 0, "preamble": 85, "payload": "ZAAAAAIABgAFAAUABQAA", "hdop": 5} )
+    assert dictify(msg) == {'gdop': 2, 'tdop': 5, 'vdop': 5, 'sender': 66, 'msg_type': 520, 'pdop': 6, 'tow': 100, 'crc': 1268, 'length': 15, 'flags': 0, 'preamble': 85, 'payload': 'ZAAAAAIABgAFAAUABQAA', 'hdop': 5}

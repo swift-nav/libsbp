@@ -67,13 +67,13 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{ipv4_address} = ();
+    $self->{ipv4_address} = [];
     my $n_ipv4_address = 4;
     for (my $i = 0; $i < $n_ipv4_address; $i++) {
         push @{$self->{ipv4_address}}, $self->{_io}->read_u1();
     }
     $self->{ipv4_mask_size} = $self->{_io}->read_u1();
-    $self->{ipv6_address} = ();
+    $self->{ipv6_address} = [];
     my $n_ipv6_address = 16;
     for (my $i = 0; $i < $n_ipv6_address; $i++) {
         push @{$self->{ipv6_address}}, $self->{_io}->read_u1();
@@ -673,7 +673,7 @@ sub _read {
     $self->{freq_step} = $self->{_io}->read_f4le();
     $self->{amplitude_ref} = $self->{_io}->read_f4le();
     $self->{amplitude_unit} = $self->{_io}->read_f4le();
-    $self->{amplitude_value} = ();
+    $self->{amplitude_value} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{amplitude_value}}, $self->{_io}->read_u1();
     }
@@ -1008,7 +1008,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{interfaces} = ();
+    $self->{interfaces} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{interfaces}}, Piksi::NetworkUsage->new($self->{_io}, $self, $self->{_root});
     }
@@ -1089,7 +1089,7 @@ sub _read {
 
     $self->{signal_strength} = $self->{_io}->read_s1();
     $self->{signal_error_rate} = $self->{_io}->read_f4le();
-    $self->{reserved} = ();
+    $self->{reserved} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{reserved}}, $self->{_io}->read_u1();
     }
@@ -1140,12 +1140,12 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{rf_gain} = ();
+    $self->{rf_gain} = [];
     my $n_rf_gain = 8;
     for (my $i = 0; $i < $n_rf_gain; $i++) {
         push @{$self->{rf_gain}}, $self->{_io}->read_s1();
     }
-    $self->{if_gain} = ();
+    $self->{if_gain} = [];
     my $n_if_gain = 8;
     for (my $i = 0; $i < $n_if_gain; $i++) {
         push @{$self->{if_gain}}, $self->{_io}->read_s1();
@@ -1294,7 +1294,7 @@ sub _read {
     $self->{freq_step} = $self->{_io}->read_f4le();
     $self->{amplitude_ref} = $self->{_io}->read_f4le();
     $self->{amplitude_unit} = $self->{_io}->read_f4le();
-    $self->{amplitude_value} = ();
+    $self->{amplitude_value} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{amplitude_value}}, $self->{_io}->read_u1();
     }

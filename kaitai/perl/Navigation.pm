@@ -1193,7 +1193,7 @@ sub _read {
     $self->{sensor_id} = $self->{_io}->read_u1();
     $self->{timestamp_1} = $self->{_io}->read_u4le();
     $self->{timestamp_2} = $self->{_io}->read_u4le();
-    $self->{trans} = ();
+    $self->{trans} = [];
     my $n_trans = 3;
     for (my $i = 0; $i < $n_trans; $i++) {
         push @{$self->{trans}}, $self->{_io}->read_s4le();

@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,16 +22,22 @@ def test_auto_check_sbp_navigation_msg_age_corrections_1():
     buf = base64.standard_b64decode("VRACQgAGZAAAAB4A6co=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0xcae9
+    
+    assert msg.length == 6
+    
+    assert msg.msg_type == 0x210
+    
+    assert msg.payload == "ZAAAAB4A"
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x42
+    
+    assert dictify(msg.age) == 30
+    
+    assert dictify(msg.tow) == 100
 
-    payload = get_payload(obj)
-    assert payload.crc == 0xcae9
-    assert payload.length == 6
-    assert payload.msg_type == 0x210
-    assert payload.payload == "ZAAAAB4A"
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x42
-    assert dictify(obj.payload.age) == snake_case_keys( 30 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 100 )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 66, "msg_type": 528, "age": 30, "tow": 100, "crc": 51945, "length": 6, "preamble": 85, "payload": "ZAAAAB4A"} )
+    assert dictify(msg) == {'sender': 66, 'msg_type': 528, 'age': 30, 'tow': 100, 'crc': 51945, 'length': 6, 'preamble': 85, 'payload': 'ZAAAAB4A'}

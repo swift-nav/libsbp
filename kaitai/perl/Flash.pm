@@ -104,7 +104,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{status} = ();
+    $self->{status} = [];
     my $n_status = 1;
     for (my $i = 0; $i < $n_status; $i++) {
         push @{$self->{status}}, $self->{_io}->read_u1();
@@ -147,7 +147,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{target} = $self->{_io}->read_u1();
-    $self->{addr_start} = ();
+    $self->{addr_start} = [];
     my $n_addr_start = 3;
     for (my $i = 0; $i < $n_addr_start; $i++) {
         push @{$self->{addr_start}}, $self->{_io}->read_u1();
@@ -244,7 +244,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{stm_id} = ();
+    $self->{stm_id} = [];
     my $n_stm_id = 12;
     for (my $i = 0; $i < $n_stm_id; $i++) {
         push @{$self->{stm_id}}, $self->{_io}->read_u1();
@@ -319,13 +319,13 @@ sub _read {
     my ($self) = @_;
 
     $self->{target} = $self->{_io}->read_u1();
-    $self->{addr_start} = ();
+    $self->{addr_start} = [];
     my $n_addr_start = 3;
     for (my $i = 0; $i < $n_addr_start; $i++) {
         push @{$self->{addr_start}}, $self->{_io}->read_u1();
     }
     $self->{addr_len} = $self->{_io}->read_u1();
-    $self->{data} = ();
+    $self->{data} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{data}}, $self->{_io}->read_u1();
     }
@@ -382,7 +382,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{target} = $self->{_io}->read_u1();
-    $self->{addr_start} = ();
+    $self->{addr_start} = [];
     my $n_addr_start = 3;
     for (my $i = 0; $i < $n_addr_start; $i++) {
         push @{$self->{addr_start}}, $self->{_io}->read_u1();

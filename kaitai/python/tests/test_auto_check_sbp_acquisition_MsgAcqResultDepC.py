@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,98 +22,138 @@ def test_auto_check_sbp_acquisition_msg_acq_result_dep_c_1():
     buf = base64.standard_b64decode("VR8AKAwQSAkiQpuY5EMcIt1ECgAAAAm9")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0xbd09
+    
+    assert msg.length == 16
+    
+    assert msg.msg_type == 0x1f
+    
+    assert msg.payload == "SAkiQpuY5EMcIt1ECgAAAA=="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0xc28
+    
+    assert dictify(msg.cf) == 1769.06591796875
+    
+    assert dictify(msg.cn0) == 40.509063720703125
+    
+    assert dictify(msg.cp) == 457.1922302246094
+    
+    assert dictify(msg.sid) == {'code': 0, 'reserved': 0, 'sat': 10}
 
-    payload = get_payload(obj)
-    assert payload.crc == 0xbd09
-    assert payload.length == 16
-    assert payload.msg_type == 0x1f
-    assert payload.payload == "SAkiQpuY5EMcIt1ECgAAAA=="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0xc28
-    assert dictify(obj.payload.cf) == snake_case_keys( 1769.06591796875 )
-    assert dictify(obj.payload.cn0) == snake_case_keys( 40.509063720703125 )
-    assert dictify(obj.payload.cp) == snake_case_keys( 457.1922302246094 )
-    assert dictify(obj.payload.sid) == snake_case_keys( {'code': 0, 'reserved': 0, 'sat': 10} )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 3112, "msg_type": 31, "cf": 1769.06591796875, "cn0": 40.509063720703125, "crc": 48393, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 10}, "cp": 457.1922302246094, "preamble": 85, "payload": "SAkiQpuY5EMcIt1ECgAAAA=="} )
+    assert dictify(msg) == {'sender': 3112, 'msg_type': 31, 'cf': 1769.06591796875, 'cn0': 40.509063720703125, 'crc': 48393, 'length': 16, 'sid': {'code': 0, 'reserved': 0, 'sat': 10}, 'cp': 457.1922302246094, 'preamble': 85, 'payload': 'SAkiQpuY5EMcIt1ECgAAAA=='}
 
 def test_auto_check_sbp_acquisition_msg_acq_result_dep_c_2():
     buf = base64.standard_b64decode("VR8AKAwQhPotQs9dWEREufzDBgAAAIi5")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0xb988
+    
+    assert msg.length == 16
+    
+    assert msg.msg_type == 0x1f
+    
+    assert msg.payload == "hPotQs9dWEREufzDBgAAAA=="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0xc28
+    
+    assert dictify(msg.cf) == -505.4473876953125
+    
+    assert dictify(msg.cn0) == 43.49464416503906
+    
+    assert dictify(msg.cp) == 865.4657592773438
+    
+    assert dictify(msg.sid) == {'code': 0, 'reserved': 0, 'sat': 6}
 
-    payload = get_payload(obj)
-    assert payload.crc == 0xb988
-    assert payload.length == 16
-    assert payload.msg_type == 0x1f
-    assert payload.payload == "hPotQs9dWEREufzDBgAAAA=="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0xc28
-    assert dictify(obj.payload.cf) == snake_case_keys( -505.4473876953125 )
-    assert dictify(obj.payload.cn0) == snake_case_keys( 43.49464416503906 )
-    assert dictify(obj.payload.cp) == snake_case_keys( 865.4657592773438 )
-    assert dictify(obj.payload.sid) == snake_case_keys( {'code': 0, 'reserved': 0, 'sat': 6} )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 3112, "msg_type": 31, "cf": -505.4473876953125, "cn0": 43.49464416503906, "crc": 47496, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 6}, "cp": 865.4657592773438, "preamble": 85, "payload": "hPotQs9dWEREufzDBgAAAA=="} )
+    assert dictify(msg) == {'sender': 3112, 'msg_type': 31, 'cf': -505.4473876953125, 'cn0': 43.49464416503906, 'crc': 47496, 'length': 16, 'sid': {'code': 0, 'reserved': 0, 'sat': 6}, 'cp': 865.4657592773438, 'preamble': 85, 'payload': 'hPotQs9dWEREufzDBgAAAA=='}
 
 def test_auto_check_sbp_acquisition_msg_acq_result_dep_c_3():
     buf = base64.standard_b64decode("VR8AKAwQo98YQkBbZkPK853EDQAAAJah")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0xa196
+    
+    assert msg.length == 16
+    
+    assert msg.msg_type == 0x1f
+    
+    assert msg.payload == "o98YQkBbZkPK853EDQAAAA=="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0xc28
+    
+    assert dictify(msg.cf) == -1263.618408203125
+    
+    assert dictify(msg.cn0) == 38.2183952331543
+    
+    assert dictify(msg.cp) == 230.3564453125
+    
+    assert dictify(msg.sid) == {'code': 0, 'reserved': 0, 'sat': 13}
 
-    payload = get_payload(obj)
-    assert payload.crc == 0xa196
-    assert payload.length == 16
-    assert payload.msg_type == 0x1f
-    assert payload.payload == "o98YQkBbZkPK853EDQAAAA=="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0xc28
-    assert dictify(obj.payload.cf) == snake_case_keys( -1263.618408203125 )
-    assert dictify(obj.payload.cn0) == snake_case_keys( 38.2183952331543 )
-    assert dictify(obj.payload.cp) == snake_case_keys( 230.3564453125 )
-    assert dictify(obj.payload.sid) == snake_case_keys( {'code': 0, 'reserved': 0, 'sat': 13} )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 3112, "msg_type": 31, "cf": -1263.618408203125, "cn0": 38.2183952331543, "crc": 41366, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 13}, "cp": 230.3564453125, "preamble": 85, "payload": "o98YQkBbZkPK853EDQAAAA=="} )
+    assert dictify(msg) == {'sender': 3112, 'msg_type': 31, 'cf': -1263.618408203125, 'cn0': 38.2183952331543, 'crc': 41366, 'length': 16, 'sid': {'code': 0, 'reserved': 0, 'sat': 13}, 'cp': 230.3564453125, 'preamble': 85, 'payload': 'o98YQkBbZkPK853EDQAAAA=='}
 
 def test_auto_check_sbp_acquisition_msg_acq_result_dep_c_4():
     buf = base64.standard_b64decode("VR8AKAwQgUEVQuDWfEPzij1FAQAAAG3R")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0xd16d
+    
+    assert msg.length == 16
+    
+    assert msg.msg_type == 0x1f
+    
+    assert msg.payload == "gUEVQuDWfEPzij1FAQAAAA=="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0xc28
+    
+    assert dictify(msg.cf) == 3032.684326171875
+    
+    assert dictify(msg.cn0) == 37.313968658447266
+    
+    assert dictify(msg.cp) == 252.83935546875
+    
+    assert dictify(msg.sid) == {'code': 0, 'reserved': 0, 'sat': 1}
 
-    payload = get_payload(obj)
-    assert payload.crc == 0xd16d
-    assert payload.length == 16
-    assert payload.msg_type == 0x1f
-    assert payload.payload == "gUEVQuDWfEPzij1FAQAAAA=="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0xc28
-    assert dictify(obj.payload.cf) == snake_case_keys( 3032.684326171875 )
-    assert dictify(obj.payload.cn0) == snake_case_keys( 37.313968658447266 )
-    assert dictify(obj.payload.cp) == snake_case_keys( 252.83935546875 )
-    assert dictify(obj.payload.sid) == snake_case_keys( {'code': 0, 'reserved': 0, 'sat': 1} )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 3112, "msg_type": 31, "cf": 3032.684326171875, "cn0": 37.313968658447266, "crc": 53613, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 1}, "cp": 252.83935546875, "preamble": 85, "payload": "gUEVQuDWfEPzij1FAQAAAA=="} )
+    assert dictify(msg) == {'sender': 3112, 'msg_type': 31, 'cf': 3032.684326171875, 'cn0': 37.313968658447266, 'crc': 53613, 'length': 16, 'sid': {'code': 0, 'reserved': 0, 'sat': 1}, 'cp': 252.83935546875, 'preamble': 85, 'payload': 'gUEVQuDWfEPzij1FAQAAAA=='}
 
 def test_auto_check_sbp_acquisition_msg_acq_result_dep_c_5():
     buf = base64.standard_b64decode("VR8AKAwQfiM+QuIlZkTK8x1FGwAAAFtD")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x435b
+    
+    assert msg.length == 16
+    
+    assert msg.msg_type == 0x1f
+    
+    assert msg.payload == "fiM+QuIlZkTK8x1FGwAAAA=="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0xc28
+    
+    assert dictify(msg.cf) == 2527.23681640625
+    
+    assert dictify(msg.cn0) == 47.53466033935547
+    
+    assert dictify(msg.cp) == 920.5919189453125
+    
+    assert dictify(msg.sid) == {'code': 0, 'reserved': 0, 'sat': 27}
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x435b
-    assert payload.length == 16
-    assert payload.msg_type == 0x1f
-    assert payload.payload == "fiM+QuIlZkTK8x1FGwAAAA=="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0xc28
-    assert dictify(obj.payload.cf) == snake_case_keys( 2527.23681640625 )
-    assert dictify(obj.payload.cn0) == snake_case_keys( 47.53466033935547 )
-    assert dictify(obj.payload.cp) == snake_case_keys( 920.5919189453125 )
-    assert dictify(obj.payload.sid) == snake_case_keys( {'code': 0, 'reserved': 0, 'sat': 27} )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 3112, "msg_type": 31, "cf": 2527.23681640625, "cn0": 47.53466033935547, "crc": 17243, "length": 16, "sid": {"code": 0, "reserved": 0, "sat": 27}, "cp": 920.5919189453125, "preamble": 85, "payload": "fiM+QuIlZkTK8x1FGwAAAA=="} )
+    assert dictify(msg) == {'sender': 3112, 'msg_type': 31, 'cf': 2527.23681640625, 'cn0': 47.53466033935547, 'crc': 17243, 'length': 16, 'sid': {'code': 0, 'reserved': 0, 'sat': 27}, 'cp': 920.5919189453125, 'preamble': 85, 'payload': 'fiM+QuIlZkTK8x1FGwAAAA=='}

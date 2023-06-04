@@ -324,7 +324,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{states} = ();
+    $self->{states} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{states}}, Tracking::TrackingChannelState->new($self->{_io}, $self, $self->{_root});
     }
@@ -417,7 +417,7 @@ sub _read {
 
     $self->{channel} = $self->{_io}->read_u1();
     $self->{sid} = Gnss::GnssSignalDep->new($self->{_io}, $self, $self->{_root});
-    $self->{corrs} = ();
+    $self->{corrs} = [];
     my $n_corrs = 3;
     for (my $i = 0; $i < $n_corrs; $i++) {
         push @{$self->{corrs}}, $self->{_io}->read_u8le();
@@ -513,7 +513,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{states} = ();
+    $self->{states} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{states}}, Tracking::TrackingChannelStateDepA->new($self->{_io}, $self, $self->{_root});
     }
@@ -554,7 +554,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{states} = ();
+    $self->{states} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{states}}, Tracking::MeasurementState->new($self->{_io}, $self, $self->{_root});
     }
@@ -641,7 +641,7 @@ sub _read {
 
     $self->{channel} = $self->{_io}->read_u1();
     $self->{sid} = Gnss::GnssSignal->new($self->{_io}, $self, $self->{_root});
-    $self->{corrs} = ();
+    $self->{corrs} = [];
     my $n_corrs = 3;
     for (my $i = 0; $i < $n_corrs; $i++) {
         push @{$self->{corrs}}, $self->{_io}->read_u8le();
@@ -851,7 +851,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{states} = ();
+    $self->{states} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{states}}, Tracking::TrackingChannelStateDepB->new($self->{_io}, $self, $self->{_root});
     }
@@ -938,7 +938,7 @@ sub _read {
 
     $self->{channel} = $self->{_io}->read_u1();
     $self->{sid} = Gnss::GnssSignal->new($self->{_io}, $self, $self->{_root});
-    $self->{corrs} = ();
+    $self->{corrs} = [];
     my $n_corrs = 3;
     for (my $i = 0; $i < $n_corrs; $i++) {
         push @{$self->{corrs}}, $self->{_io}->read_u8le();

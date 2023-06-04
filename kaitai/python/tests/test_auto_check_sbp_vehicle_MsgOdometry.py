@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,17 +22,24 @@ def test_auto_check_sbp_vehicle_msg_odometry_1():
     buf = base64.standard_b64decode("VQMJQgAJCAAAAAcAAAABNGM=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x6334
+    
+    assert msg.length == 9
+    
+    assert msg.msg_type == 0x903
+    
+    assert msg.payload == "CAAAAAcAAAAB"
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x42
+    
+    assert dictify(msg.flags) == 1
+    
+    assert dictify(msg.tow) == 8
+    
+    assert dictify(msg.velocity) == 7
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x6334
-    assert payload.length == 9
-    assert payload.msg_type == 0x903
-    assert payload.payload == "CAAAAAcAAAAB"
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x42
-    assert dictify(obj.payload.flags) == snake_case_keys( 1 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 8 )
-    assert dictify(obj.payload.velocity) == snake_case_keys( 7 )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 66, "msg_type": 2307, "tow": 8, "crc": 25396, "length": 9, "flags": 1, "velocity": 7, "preamble": 85, "payload": "CAAAAAcAAAAB"} )
+    assert dictify(msg) == {'sender': 66, 'msg_type': 2307, 'tow': 8, 'crc': 25396, 'length': 9, 'flags': 1, 'velocity': 7, 'preamble': 85, 'payload': 'CAAAAAcAAAAB'}

@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,22 +22,34 @@ def test_auto_check_sbp_imu_msg_imu_raw_1():
     buf = base64.standard_b64decode("VQAJNBIRGgEAwM5gAN//LBA8AND+7v9Ghw==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x8746
+    
+    assert msg.length == 17
+    
+    assert msg.msg_type == 0x900
+    
+    assert msg.payload == "GgEAwM5gAN//LBA8AND+7v8="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x1234
+    
+    assert dictify(msg.acc_x) == 96
+    
+    assert dictify(msg.acc_y) == -33
+    
+    assert dictify(msg.acc_z) == 4140
+    
+    assert dictify(msg.gyr_x) == 60
+    
+    assert dictify(msg.gyr_y) == -304
+    
+    assert dictify(msg.gyr_z) == -18
+    
+    assert dictify(msg.tow) == 3221225754
+    
+    assert dictify(msg.tow_f) == 206
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x8746
-    assert payload.length == 17
-    assert payload.msg_type == 0x900
-    assert payload.payload == "GgEAwM5gAN//LBA8AND+7v8="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x1234
-    assert dictify(obj.payload.acc_x) == snake_case_keys( 96 )
-    assert dictify(obj.payload.acc_y) == snake_case_keys( -33 )
-    assert dictify(obj.payload.acc_z) == snake_case_keys( 4140 )
-    assert dictify(obj.payload.gyr_x) == snake_case_keys( 60 )
-    assert dictify(obj.payload.gyr_y) == snake_case_keys( -304 )
-    assert dictify(obj.payload.gyr_z) == snake_case_keys( -18 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 3221225754 )
-    assert dictify(obj.payload.tow_f) == snake_case_keys( 206 )
-
-    assert dictify(payload) == snake_case_keys( {"tow":3221225754,"tow_f":206,"acc_x":96,"acc_y":-33,"acc_z":4140,"gyr_x":60,"gyr_y":-304,"gyr_z":-18,"preamble":85,"msg_type":2304,"sender":4660,"payload":"GgEAwM5gAN//LBA8AND+7v8=","crc":34630,"length":17} )
+    assert dictify(msg) == {'tow': 3221225754, 'tow_f': 206, 'acc_x': 96, 'acc_y': -33, 'acc_z': 4140, 'gyr_x': 60, 'gyr_y': -304, 'gyr_z': -18, 'preamble': 85, 'msg_type': 2304, 'sender': 4660, 'payload': 'GgEAwM5gAN//LBA8AND+7v8=', 'crc': 34630, 'length': 17}

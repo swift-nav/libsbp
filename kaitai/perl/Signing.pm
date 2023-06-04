@@ -66,23 +66,23 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{root_certificate} = ();
+    $self->{root_certificate} = [];
     my $n_root_certificate = 20;
     for (my $i = 0; $i < $n_root_certificate; $i++) {
         push @{$self->{root_certificate}}, $self->{_io}->read_u1();
     }
-    $self->{intermediate_certificate} = ();
+    $self->{intermediate_certificate} = [];
     my $n_intermediate_certificate = 20;
     for (my $i = 0; $i < $n_intermediate_certificate; $i++) {
         push @{$self->{intermediate_certificate}}, $self->{_io}->read_u1();
     }
-    $self->{corrections_certificate} = ();
+    $self->{corrections_certificate} = [];
     my $n_corrections_certificate = 20;
     for (my $i = 0; $i < $n_corrections_certificate; $i++) {
         push @{$self->{corrections_certificate}}, $self->{_io}->read_u1();
     }
     $self->{expiration} = Signing::UtcTime->new($self->{_io}, $self, $self->{_root});
-    $self->{signature} = ();
+    $self->{signature} = [];
     my $n_signature = 64;
     for (my $i = 0; $i < $n_signature; $i++) {
         push @{$self->{signature}}, $self->{_io}->read_u1();
@@ -146,17 +146,17 @@ sub _read {
 
     $self->{stream_counter} = $self->{_io}->read_u1();
     $self->{on_demand_counter} = $self->{_io}->read_u1();
-    $self->{signature} = ();
+    $self->{signature} = [];
     my $n_signature = 64;
     for (my $i = 0; $i < $n_signature; $i++) {
         push @{$self->{signature}}, $self->{_io}->read_u1();
     }
-    $self->{fingerprint} = ();
+    $self->{fingerprint} = [];
     my $n_fingerprint = 20;
     for (my $i = 0; $i < $n_fingerprint; $i++) {
         push @{$self->{fingerprint}}, $self->{_io}->read_u1();
     }
-    $self->{signed_messages} = ();
+    $self->{signed_messages} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{signed_messages}}, $self->{_io}->read_u4le();
     }
@@ -218,12 +218,12 @@ sub _read {
     my ($self) = @_;
 
     $self->{n_msg} = $self->{_io}->read_u1();
-    $self->{fingerprint} = ();
+    $self->{fingerprint} = [];
     my $n_fingerprint = 20;
     for (my $i = 0; $i < $n_fingerprint; $i++) {
         push @{$self->{fingerprint}}, $self->{_io}->read_u1();
     }
-    $self->{certificate_bytes} = ();
+    $self->{certificate_bytes} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{certificate_bytes}}, $self->{_io}->read_u1();
     }
@@ -349,7 +349,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{len} = $self->{_io}->read_u1();
-    $self->{data} = ();
+    $self->{data} = [];
     my $n_data = 72;
     for (my $i = 0; $i < $n_data; $i++) {
         push @{$self->{data}}, $self->{_io}->read_u1();
@@ -396,17 +396,17 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{signature} = ();
+    $self->{signature} = [];
     my $n_signature = 64;
     for (my $i = 0; $i < $n_signature; $i++) {
         push @{$self->{signature}}, $self->{_io}->read_u1();
     }
-    $self->{fingerprint} = ();
+    $self->{fingerprint} = [];
     my $n_fingerprint = 20;
     for (my $i = 0; $i < $n_fingerprint; $i++) {
         push @{$self->{fingerprint}}, $self->{_io}->read_u1();
     }
-    $self->{signed_messages} = ();
+    $self->{signed_messages} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{signed_messages}}, $self->{_io}->read_u4le();
     }
@@ -457,17 +457,17 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{root_certificate} = ();
+    $self->{root_certificate} = [];
     my $n_root_certificate = 20;
     for (my $i = 0; $i < $n_root_certificate; $i++) {
         push @{$self->{root_certificate}}, $self->{_io}->read_u1();
     }
-    $self->{intermediate_certificate} = ();
+    $self->{intermediate_certificate} = [];
     my $n_intermediate_certificate = 20;
     for (my $i = 0; $i < $n_intermediate_certificate; $i++) {
         push @{$self->{intermediate_certificate}}, $self->{_io}->read_u1();
     }
-    $self->{corrections_certificate} = ();
+    $self->{corrections_certificate} = [];
     my $n_corrections_certificate = 20;
     for (my $i = 0; $i < $n_corrections_certificate; $i++) {
         push @{$self->{corrections_certificate}}, $self->{_io}->read_u1();
@@ -532,13 +532,13 @@ sub _read {
     my ($self) = @_;
 
     $self->{n_msg} = $self->{_io}->read_u1();
-    $self->{certificate_id} = ();
+    $self->{certificate_id} = [];
     my $n_certificate_id = 4;
     for (my $i = 0; $i < $n_certificate_id; $i++) {
         push @{$self->{certificate_id}}, $self->{_io}->read_u1();
     }
     $self->{flags} = $self->{_io}->read_u1();
-    $self->{certificate_bytes} = ();
+    $self->{certificate_bytes} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{certificate_bytes}}, $self->{_io}->read_u1();
     }
@@ -597,18 +597,18 @@ sub _read {
     $self->{flags} = $self->{_io}->read_u1();
     $self->{stream_counter} = $self->{_io}->read_u1();
     $self->{on_demand_counter} = $self->{_io}->read_u1();
-    $self->{certificate_id} = ();
+    $self->{certificate_id} = [];
     my $n_certificate_id = 4;
     for (my $i = 0; $i < $n_certificate_id; $i++) {
         push @{$self->{certificate_id}}, $self->{_io}->read_u1();
     }
     $self->{n_signature_bytes} = $self->{_io}->read_u1();
-    $self->{signature} = ();
+    $self->{signature} = [];
     my $n_signature = 72;
     for (my $i = 0; $i < $n_signature; $i++) {
         push @{$self->{signature}}, $self->{_io}->read_u1();
     }
-    $self->{signed_messages} = ();
+    $self->{signed_messages} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{signed_messages}}, $self->{_io}->read_u1();
     }
@@ -682,13 +682,13 @@ sub _read {
     $self->{flags} = $self->{_io}->read_u1();
     $self->{stream_counter} = $self->{_io}->read_u1();
     $self->{on_demand_counter} = $self->{_io}->read_u1();
-    $self->{certificate_id} = ();
+    $self->{certificate_id} = [];
     my $n_certificate_id = 4;
     for (my $i = 0; $i < $n_certificate_id; $i++) {
         push @{$self->{certificate_id}}, $self->{_io}->read_u1();
     }
     $self->{signature} = Signing::EcdsaSignature->new($self->{_io}, $self, $self->{_root});
-    $self->{signed_messages} = ();
+    $self->{signed_messages} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{signed_messages}}, $self->{_io}->read_u1();
     }
@@ -757,17 +757,17 @@ sub _read {
     $self->{flags} = $self->{_io}->read_u1();
     $self->{stream_counter} = $self->{_io}->read_u1();
     $self->{on_demand_counter} = $self->{_io}->read_u1();
-    $self->{certificate_id} = ();
+    $self->{certificate_id} = [];
     my $n_certificate_id = 4;
     for (my $i = 0; $i < $n_certificate_id; $i++) {
         push @{$self->{certificate_id}}, $self->{_io}->read_u1();
     }
-    $self->{signature} = ();
+    $self->{signature} = [];
     my $n_signature = 64;
     for (my $i = 0; $i < $n_signature; $i++) {
         push @{$self->{signature}}, $self->{_io}->read_u1();
     }
-    $self->{signed_messages} = ();
+    $self->{signed_messages} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{signed_messages}}, $self->{_io}->read_u1();
     }

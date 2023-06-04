@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,21 +22,32 @@ def test_auto_check_sbp_system_msg_ins_updates_1():
     buf = base64.standard_b64decode("VQb/FQMKVOURHgAAAAAAAFE/")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x3f51
+    
+    assert msg.length == 10
+    
+    assert msg.payload == "VOURHgAAAAAAAA=="
+    
+    assert msg.msg_type == 0xff06
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x315
+    
+    assert dictify(msg.gnsspos) == 0
+    
+    assert dictify(msg.gnssvel) == 0
+    
+    assert dictify(msg.nhc) == 0
+    
+    assert dictify(msg.speed) == 0
+    
+    assert dictify(msg.tow) == 504489300
+    
+    assert dictify(msg.wheelticks) == 0
+    
+    assert dictify(msg.zerovel) == 0
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x3f51
-    assert payload.length == 10
-    assert payload.payload == "VOURHgAAAAAAAA=="
-    assert payload.msg_type == 0xff06
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x315
-    assert dictify(obj.payload.gnsspos) == snake_case_keys( 0 )
-    assert dictify(obj.payload.gnssvel) == snake_case_keys( 0 )
-    assert dictify(obj.payload.nhc) == snake_case_keys( 0 )
-    assert dictify(obj.payload.speed) == snake_case_keys( 0 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 504489300 )
-    assert dictify(obj.payload.wheelticks) == snake_case_keys( 0 )
-    assert dictify(obj.payload.zerovel) == snake_case_keys( 0 )
-
-    assert dictify(payload) == snake_case_keys( {"tow":504489300,"gnsspos":0,"gnssvel":0,"wheelticks":0,"speed":0,"nhc":0,"zerovel":0,"preamble":85,"msg_type":65286,"sender":789,"payload":"VOURHgAAAAAAAA==","crc":16209,"length":10} )
+    assert dictify(msg) == {'tow': 504489300, 'gnsspos': 0, 'gnssvel': 0, 'wheelticks': 0, 'speed': 0, 'nhc': 0, 'zerovel': 0, 'preamble': 85, 'msg_type': 65286, 'sender': 789, 'payload': 'VOURHgAAAAAAAA==', 'crc': 16209, 'length': 10}

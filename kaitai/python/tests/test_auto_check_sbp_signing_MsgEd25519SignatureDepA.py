@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,17 +22,24 @@ def test_auto_check_sbp_signing_msg_ed25519_signature_dep_a_1():
     buf = base64.standard_b64decode("VQEMQgC4AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P2RlZmdoaWprbG1ub3BxcnN0dXZ3iBMAAHIUAABcFQAARhYAADAXAAAaGAAABBkAAO4ZAADYGgAAwhsAAKwcAACWHQAAgB4AAGofAABUIAAAPiEAACgiAAASIwAA/CMAAOYkAADQJQAAuiYAAKQnAACOKAAAeCkAAKlv")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x6FA9
+    
+    assert msg.length == 184
+    
+    assert msg.msg_type == 0xC01
+    
+    assert msg.payload == "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P2RlZmdoaWprbG1ub3BxcnN0dXZ3iBMAAHIUAABcFQAARhYAADAXAAAaGAAABBkAAO4ZAADYGgAAwhsAAKwcAACWHQAAgB4AAGofAABUIAAAPiEAACgiAAASIwAA/CMAAOYkAADQJQAAuiYAAKQnAACOKAAAeCkAAA=="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x42
+    
+    assert dictify(msg.fingerprint) == [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119]
+    
+    assert dictify(msg.signature) == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+    
+    assert dictify(msg.signed_messages) == [5000, 5234, 5468, 5702, 5936, 6170, 6404, 6638, 6872, 7106, 7340, 7574, 7808, 8042, 8276, 8510, 8744, 8978, 9212, 9446, 9680, 9914, 10148, 10382, 10616]
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x6FA9
-    assert payload.length == 184
-    assert payload.msg_type == 0xC01
-    assert payload.payload == "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P2RlZmdoaWprbG1ub3BxcnN0dXZ3iBMAAHIUAABcFQAARhYAADAXAAAaGAAABBkAAO4ZAADYGgAAwhsAAKwcAACWHQAAgB4AAGofAABUIAAAPiEAACgiAAASIwAA/CMAAOYkAADQJQAAuiYAAKQnAACOKAAAeCkAAA=="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x42
-    assert dictify(obj.payload.fingerprint) == snake_case_keys( [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119] )
-    assert dictify(obj.payload.signature) == snake_case_keys( [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63] )
-    assert dictify(obj.payload.signed_messages) == snake_case_keys( [5000, 5234, 5468, 5702, 5936, 6170, 6404, 6638, 6872, 7106, 7340, 7574, 7808, 8042, 8276, 8510, 8744, 8978, 9212, 9446, 9680, 9914, 10148, 10382, 10616] )
-
-    assert dictify(payload) == snake_case_keys( {"preamble": 85, "msg_type": 3073, "sender": 66, "length": 184, "payload": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P2RlZmdoaWprbG1ub3BxcnN0dXZ3iBMAAHIUAABcFQAARhYAADAXAAAaGAAABBkAAO4ZAADYGgAAwhsAAKwcAACWHQAAgB4AAGofAABUIAAAPiEAACgiAAASIwAA/CMAAOYkAADQJQAAuiYAAKQnAACOKAAAeCkAAA==", "crc": 28585, "signature": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63], "fingerprint": [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119], "signed_messages": [5000, 5234, 5468, 5702, 5936, 6170, 6404, 6638, 6872, 7106, 7340, 7574, 7808, 8042, 8276, 8510, 8744, 8978, 9212, 9446, 9680, 9914, 10148, 10382, 10616]} )
+    assert dictify(msg) == {'preamble': 85, 'msg_type': 3073, 'sender': 66, 'length': 184, 'payload': 'AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P2RlZmdoaWprbG1ub3BxcnN0dXZ3iBMAAHIUAABcFQAARhYAADAXAAAaGAAABBkAAO4ZAADYGgAAwhsAAKwcAACWHQAAgB4AAGofAABUIAAAPiEAACgiAAASIwAA/CMAAOYkAADQJQAAuiYAAKQnAACOKAAAeCkAAA==', 'crc': 28585, 'signature': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63], 'fingerprint': [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119], 'signed_messages': [5000, 5234, 5468, 5702, 5936, 6170, 6404, 6638, 6872, 7106, 7340, 7574, 7808, 8042, 8276, 8510, 8744, 8978, 9212, 9446, 9680, 9914, 10148, 10382, 10616]}

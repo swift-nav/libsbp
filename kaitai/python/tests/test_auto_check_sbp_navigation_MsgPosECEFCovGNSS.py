@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,26 +22,42 @@ def test_auto_check_sbp_navigation_msg_pos_ecef_cov_gnss_1():
     buf = base64.standard_b64decode("VTQCABA2GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQZ7oHjza3RQ8gYjGu814pjwFpiO8erFzPBIEn2Y=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x669f
+    
+    assert msg.length == 54
+    
+    assert msg.msg_type == 0x234
+    
+    assert msg.payload == "GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQZ7oHjza3RQ8gYjGu814pjwFpiO8erFzPBIE"
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x1000
+    
+    assert dictify(msg.cov_x_x) == 0.009699014946818352
+    
+    assert dictify(msg.cov_x_y) == 0.009086096659302711
+    
+    assert dictify(msg.cov_x_z) == -0.006058753002434969
+    
+    assert dictify(msg.cov_y_y) == 0.020321274176239967
+    
+    assert dictify(msg.cov_y_z) == -0.009988312609493732
+    
+    assert dictify(msg.cov_z_z) == 0.01487385667860508
+    
+    assert dictify(msg.flags) == 4
+    
+    assert dictify(msg.n_sats) == 18
+    
+    assert dictify(msg.tow) == 501867800
+    
+    assert dictify(msg.x) == -2694229.7079770807
+    
+    assert dictify(msg.y) == -4264073.427345817
+    
+    assert dictify(msg.z) == 3890655.013186158
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x669f
-    assert payload.length == 54
-    assert payload.msg_type == 0x234
-    assert payload.payload == "GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQZ7oHjza3RQ8gYjGu814pjwFpiO8erFzPBIE"
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x1000
-    assert dictify(obj.payload.cov_x_x) == snake_case_keys( 0.009699014946818352 )
-    assert dictify(obj.payload.cov_x_y) == snake_case_keys( 0.009086096659302711 )
-    assert dictify(obj.payload.cov_x_z) == snake_case_keys( -0.006058753002434969 )
-    assert dictify(obj.payload.cov_y_y) == snake_case_keys( 0.020321274176239967 )
-    assert dictify(obj.payload.cov_y_z) == snake_case_keys( -0.009988312609493732 )
-    assert dictify(obj.payload.cov_z_z) == snake_case_keys( 0.01487385667860508 )
-    assert dictify(obj.payload.flags) == snake_case_keys( 4 )
-    assert dictify(obj.payload.n_sats) == snake_case_keys( 18 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 501867800 )
-    assert dictify(obj.payload.x) == snake_case_keys( -2694229.7079770807 )
-    assert dictify(obj.payload.y) == snake_case_keys( -4264073.427345817 )
-    assert dictify(obj.payload.z) == snake_case_keys( 3890655.013186158 )
-
-    assert dictify(payload) == snake_case_keys( {"tow":501867800,"x":-2694229.7079770807,"y":-4264073.427345817,"z":3890655.013186158,"cov_x_x":0.009699014946818352,"cov_x_y":0.009086096659302711,"cov_x_z":-0.006058753002434969,"cov_y_y":0.020321274176239967,"cov_y_z":-0.009988312609493732,"cov_z_z":0.01487385667860508,"n_sats":18,"flags":4,"preamble":85,"msg_type":564,"sender":4096,"payload":"GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQZ7oHjza3RQ8gYjGu814pjwFpiO8erFzPBIE","crc":26271,"length":54} )
+    assert dictify(msg) == {'tow': 501867800, 'x': -2694229.7079770807, 'y': -4264073.427345817, 'z': 3890655.013186158, 'cov_x_x': 0.009699014946818352, 'cov_x_y': 0.009086096659302711, 'cov_x_z': -0.006058753002434969, 'cov_y_y': 0.020321274176239967, 'cov_y_z': -0.009988312609493732, 'cov_z_z': 0.01487385667860508, 'n_sats': 18, 'flags': 4, 'preamble': 85, 'msg_type': 564, 'sender': 4096, 'payload': 'GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQZ7oHjza3RQ8gYjGu814pjwFpiO8erFzPBIE', 'crc': 26271, 'length': 54}

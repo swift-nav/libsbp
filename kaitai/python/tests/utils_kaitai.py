@@ -20,7 +20,7 @@ def serialise(obj):
 
 
 # convert KaitaiStruct object to have similar structure to sbp2json output
-def get_payload(obj):
+def get_flattened_msg(obj):
     obj.payload.preamble = ord(obj.preamble)
     obj.payload.msg_type = obj.msg_type
     obj.payload.sender = obj.sender
@@ -108,7 +108,7 @@ def get_next_msg_kaitai(fp):
             stream.seek(1)
             continue
 
-        yield get_payload(obj)
+        yield get_flattened_msg(obj)
 
 
 # implementation of sbp2json using Kaitai Struct parser

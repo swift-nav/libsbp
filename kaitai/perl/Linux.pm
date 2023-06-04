@@ -69,12 +69,12 @@ sub _read {
 
     $self->{avg_queue_depth} = $self->{_io}->read_u4le();
     $self->{max_queue_depth} = $self->{_io}->read_u4le();
-    $self->{socket_state_counts} = ();
+    $self->{socket_state_counts} = [];
     my $n_socket_state_counts = 16;
     for (my $i = 0; $i < $n_socket_state_counts; $i++) {
         push @{$self->{socket_state_counts}}, $self->{_io}->read_u2le();
     }
-    $self->{socket_type_counts} = ();
+    $self->{socket_type_counts} = [];
     my $n_socket_type_counts = 16;
     for (my $i = 0; $i < $n_socket_type_counts; $i++) {
         push @{$self->{socket_type_counts}}, $self->{_io}->read_u2le();

@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,22 +22,34 @@ def test_auto_check_sbp_orientation_msg_orient_euler_1():
     buf = base64.standard_b64decode("VSECQgAdAQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAMs4g==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0xe22c
+    
+    assert msg.length == 29
+    
+    assert msg.msg_type == 0x221
+    
+    assert msg.payload == "AQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAM="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x42
+    
+    assert dictify(msg.flags) == 3
+    
+    assert dictify(msg.pitch) == 2
+    
+    assert dictify(msg.pitch_accuracy) == 3.0
+    
+    assert dictify(msg.roll) == 1
+    
+    assert dictify(msg.roll_accuracy) == 7.0
+    
+    assert dictify(msg.tow) == 1
+    
+    assert dictify(msg.yaw) == 8
+    
+    assert dictify(msg.yaw_accuracy) == 7.0
 
-    payload = get_payload(obj)
-    assert payload.crc == 0xe22c
-    assert payload.length == 29
-    assert payload.msg_type == 0x221
-    assert payload.payload == "AQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAM="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x42
-    assert dictify(obj.payload.flags) == snake_case_keys( 3 )
-    assert dictify(obj.payload.pitch) == snake_case_keys( 2 )
-    assert dictify(obj.payload.pitch_accuracy) == snake_case_keys( 3.0 )
-    assert dictify(obj.payload.roll) == snake_case_keys( 1 )
-    assert dictify(obj.payload.roll_accuracy) == snake_case_keys( 7.0 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 1 )
-    assert dictify(obj.payload.yaw) == snake_case_keys( 8 )
-    assert dictify(obj.payload.yaw_accuracy) == snake_case_keys( 7.0 )
-
-    assert dictify(payload) == snake_case_keys( {"pitch": 2, "sender": 66, "msg_type": 545, "roll": 1, "yaw": 8, "tow": 1, "roll_accuracy": 7, "crc": 57900, "length": 29, "flags": 3, "pitch_accuracy": 3, "yaw_accuracy": 7, "preamble": 85, "payload": "AQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAM="} )
+    assert dictify(msg) == {'pitch': 2, 'sender': 66, 'msg_type': 545, 'roll': 1, 'yaw': 8, 'tow': 1, 'roll_accuracy': 7, 'crc': 57900, 'length': 29, 'flags': 3, 'pitch_accuracy': 3, 'yaw_accuracy': 7, 'preamble': 85, 'payload': 'AQAAAAEAAAACAAAACAAAAAAA4EAAAEBAAADgQAM='}

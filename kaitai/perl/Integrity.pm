@@ -73,7 +73,7 @@ sub _read {
     $self->{chain_id} = $self->{_io}->read_u1();
     $self->{const_id} = $self->{_io}->read_u1();
     $self->{n_faulty_sats} = $self->{_io}->read_u1();
-    $self->{faulty_sats} = ();
+    $self->{faulty_sats} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{faulty_sats}}, $self->{_io}->read_u1();
     }
@@ -151,7 +151,7 @@ sub _read {
 
     $self->{header} = Integrity::IntegritySsrHeader->new($self->{_io}, $self, $self->{_root});
     $self->{n_faulty_los} = $self->{_io}->read_u1();
-    $self->{faulty_los} = ();
+    $self->{faulty_los} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{faulty_los}}, Gnss::SvId->new($self->{_io}, $self, $self->{_root});
     }
@@ -205,7 +205,7 @@ sub _read {
     $self->{header} = Integrity::IntegritySsrHeader->new($self->{_io}, $self, $self->{_root});
     $self->{grid_point_id} = $self->{_io}->read_u2le();
     $self->{n_faulty_los} = $self->{_io}->read_u1();
-    $self->{faulty_los} = ();
+    $self->{faulty_los} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{faulty_los}}, Gnss::SvId->new($self->{_io}, $self, $self->{_root});
     }
@@ -405,7 +405,7 @@ sub _read {
 
     $self->{header} = Integrity::IntegritySsrHeader->new($self->{_io}, $self, $self->{_root});
     $self->{n_faulty_points} = $self->{_io}->read_u1();
-    $self->{faulty_points} = ();
+    $self->{faulty_points} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{faulty_points}}, $self->{_io}->read_u2le();
     }
@@ -458,7 +458,7 @@ sub _read {
 
     $self->{header} = Integrity::IntegritySsrHeader->new($self->{_io}, $self, $self->{_root});
     $self->{n_faulty_points} = $self->{_io}->read_u1();
-    $self->{faulty_points} = ();
+    $self->{faulty_points} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{faulty_points}}, $self->{_io}->read_u2le();
     }
@@ -518,7 +518,7 @@ sub _read {
     $self->{use_gps_sat} = $self->{_io}->read_u1();
     $self->{use_gal_sat} = $self->{_io}->read_u1();
     $self->{use_bds_sat} = $self->{_io}->read_u1();
-    $self->{reserved} = ();
+    $self->{reserved} = [];
     my $n_reserved = 6;
     for (my $i = 0; $i < $n_reserved; $i++) {
         push @{$self->{reserved}}, $self->{_io}->read_u1();

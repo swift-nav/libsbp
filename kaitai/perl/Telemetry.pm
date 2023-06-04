@@ -156,7 +156,7 @@ sub _read {
     $self->{tow} = $self->{_io}->read_u4le();
     $self->{n_obs} = $self->{_io}->read_u1();
     $self->{origin_flags} = $self->{_io}->read_u1();
-    $self->{sv_tel} = ();
+    $self->{sv_tel} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{sv_tel}}, Telemetry::TelemetrySv->new($self->{_io}, $self, $self->{_root});
     }

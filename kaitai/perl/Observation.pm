@@ -66,7 +66,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{azel} = ();
+    $self->{azel} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{azel}}, Observation::SvAzEl->new($self->{_io}, $self, $self->{_root});
     }
@@ -611,17 +611,17 @@ sub _read {
     $self->{gamma} = $self->{_io}->read_f8le();
     $self->{tau} = $self->{_io}->read_f8le();
     $self->{d_tau} = $self->{_io}->read_f8le();
-    $self->{pos} = ();
+    $self->{pos} = [];
     my $n_pos = 3;
     for (my $i = 0; $i < $n_pos; $i++) {
         push @{$self->{pos}}, $self->{_io}->read_f8le();
     }
-    $self->{vel} = ();
+    $self->{vel} = [];
     my $n_vel = 3;
     for (my $i = 0; $i < $n_vel; $i++) {
         push @{$self->{vel}}, $self->{_io}->read_f8le();
     }
-    $self->{acc} = ();
+    $self->{acc} = [];
     my $n_acc = 3;
     for (my $i = 0; $i < $n_acc; $i++) {
         push @{$self->{acc}}, $self->{_io}->read_f8le();
@@ -706,7 +706,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{header} = Observation::ObservationHeaderDep->new($self->{_io}, $self, $self->{_root});
-    $self->{obs} = ();
+    $self->{obs} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{obs}}, Observation::PackedObsContentDepA->new($self->{_io}, $self, $self->{_root});
     }
@@ -947,7 +947,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{header} = Observation::ObservationHeader->new($self->{_io}, $self, $self->{_root});
-    $self->{obs} = ();
+    $self->{obs} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{obs}}, Observation::PackedObsContent->new($self->{_io}, $self, $self->{_root});
     }
@@ -1322,17 +1322,17 @@ sub _read {
     my ($self) = @_;
 
     $self->{common} = Observation::EphemerisCommonContentDepB->new($self->{_io}, $self, $self->{_root});
-    $self->{pos} = ();
+    $self->{pos} = [];
     my $n_pos = 3;
     for (my $i = 0; $i < $n_pos; $i++) {
         push @{$self->{pos}}, $self->{_io}->read_f8le();
     }
-    $self->{vel} = ();
+    $self->{vel} = [];
     my $n_vel = 3;
     for (my $i = 0; $i < $n_vel; $i++) {
         push @{$self->{vel}}, $self->{_io}->read_f8le();
     }
-    $self->{acc} = ();
+    $self->{acc} = [];
     my $n_acc = 3;
     for (my $i = 0; $i < $n_acc; $i++) {
         push @{$self->{acc}}, $self->{_io}->read_f8le();
@@ -2848,17 +2848,17 @@ sub _read {
     my ($self) = @_;
 
     $self->{common} = Observation::EphemerisCommonContentDepA->new($self->{_io}, $self, $self->{_root});
-    $self->{pos} = ();
+    $self->{pos} = [];
     my $n_pos = 3;
     for (my $i = 0; $i < $n_pos; $i++) {
         push @{$self->{pos}}, $self->{_io}->read_f8le();
     }
-    $self->{vel} = ();
+    $self->{vel} = [];
     my $n_vel = 3;
     for (my $i = 0; $i < $n_vel; $i++) {
         push @{$self->{vel}}, $self->{_io}->read_f8le();
     }
-    $self->{acc} = ();
+    $self->{acc} = [];
     my $n_acc = 3;
     for (my $i = 0; $i < $n_acc; $i++) {
         push @{$self->{acc}}, $self->{_io}->read_f8le();
@@ -3054,17 +3054,17 @@ sub _read {
     $self->{common} = Observation::EphemerisCommonContentDepA->new($self->{_io}, $self, $self->{_root});
     $self->{gamma} = $self->{_io}->read_f8le();
     $self->{tau} = $self->{_io}->read_f8le();
-    $self->{pos} = ();
+    $self->{pos} = [];
     my $n_pos = 3;
     for (my $i = 0; $i < $n_pos; $i++) {
         push @{$self->{pos}}, $self->{_io}->read_f8le();
     }
-    $self->{vel} = ();
+    $self->{vel} = [];
     my $n_vel = 3;
     for (my $i = 0; $i < $n_vel; $i++) {
         push @{$self->{vel}}, $self->{_io}->read_f8le();
     }
-    $self->{acc} = ();
+    $self->{acc} = [];
     my $n_acc = 3;
     for (my $i = 0; $i < $n_acc; $i++) {
         push @{$self->{acc}}, $self->{_io}->read_f8le();
@@ -3456,7 +3456,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{header} = Observation::ObservationHeaderDep->new($self->{_io}, $self, $self->{_root});
-    $self->{obs} = ();
+    $self->{obs} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{obs}}, Observation::PackedObsContentDepB->new($self->{_io}, $self, $self->{_root});
     }
@@ -3568,17 +3568,17 @@ sub _read {
     $self->{gamma} = $self->{_io}->read_f4le();
     $self->{tau} = $self->{_io}->read_f4le();
     $self->{d_tau} = $self->{_io}->read_f4le();
-    $self->{pos} = ();
+    $self->{pos} = [];
     my $n_pos = 3;
     for (my $i = 0; $i < $n_pos; $i++) {
         push @{$self->{pos}}, $self->{_io}->read_f8le();
     }
-    $self->{vel} = ();
+    $self->{vel} = [];
     my $n_vel = 3;
     for (my $i = 0; $i < $n_vel; $i++) {
         push @{$self->{vel}}, $self->{_io}->read_f8le();
     }
-    $self->{acc} = ();
+    $self->{acc} = [];
     my $n_acc = 3;
     for (my $i = 0; $i < $n_acc; $i++) {
         push @{$self->{acc}}, $self->{_io}->read_f4le();
@@ -4243,7 +4243,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{header} = Observation::ObservationHeader->new($self->{_io}, $self, $self->{_root});
-    $self->{obs} = ();
+    $self->{obs} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{obs}}, Observation::PackedOsrContent->new($self->{_io}, $self, $self->{_root});
     }
@@ -4293,17 +4293,17 @@ sub _read {
     $self->{gamma} = $self->{_io}->read_f8le();
     $self->{tau} = $self->{_io}->read_f8le();
     $self->{d_tau} = $self->{_io}->read_f8le();
-    $self->{pos} = ();
+    $self->{pos} = [];
     my $n_pos = 3;
     for (my $i = 0; $i < $n_pos; $i++) {
         push @{$self->{pos}}, $self->{_io}->read_f8le();
     }
-    $self->{vel} = ();
+    $self->{vel} = [];
     my $n_vel = 3;
     for (my $i = 0; $i < $n_vel; $i++) {
         push @{$self->{vel}}, $self->{_io}->read_f8le();
     }
-    $self->{acc} = ();
+    $self->{acc} = [];
     my $n_acc = 3;
     for (my $i = 0; $i < $n_acc; $i++) {
         push @{$self->{acc}}, $self->{_io}->read_f8le();
@@ -4384,17 +4384,17 @@ sub _read {
     $self->{common} = Observation::EphemerisCommonContentDepB->new($self->{_io}, $self, $self->{_root});
     $self->{gamma} = $self->{_io}->read_f8le();
     $self->{tau} = $self->{_io}->read_f8le();
-    $self->{pos} = ();
+    $self->{pos} = [];
     my $n_pos = 3;
     for (my $i = 0; $i < $n_pos; $i++) {
         push @{$self->{pos}}, $self->{_io}->read_f8le();
     }
-    $self->{vel} = ();
+    $self->{vel} = [];
     my $n_vel = 3;
     for (my $i = 0; $i < $n_vel; $i++) {
         push @{$self->{vel}}, $self->{_io}->read_f8le();
     }
-    $self->{acc} = ();
+    $self->{acc} = [];
     my $n_acc = 3;
     for (my $i = 0; $i < $n_acc; $i++) {
         push @{$self->{acc}}, $self->{_io}->read_f8le();
@@ -4506,17 +4506,17 @@ sub _read {
     my ($self) = @_;
 
     $self->{common} = Observation::EphemerisCommonContent->new($self->{_io}, $self, $self->{_root});
-    $self->{pos} = ();
+    $self->{pos} = [];
     my $n_pos = 3;
     for (my $i = 0; $i < $n_pos; $i++) {
         push @{$self->{pos}}, $self->{_io}->read_f8le();
     }
-    $self->{vel} = ();
+    $self->{vel} = [];
     my $n_vel = 3;
     for (my $i = 0; $i < $n_vel; $i++) {
         push @{$self->{vel}}, $self->{_io}->read_f4le();
     }
-    $self->{acc} = ();
+    $self->{acc} = [];
     my $n_acc = 3;
     for (my $i = 0; $i < $n_acc; $i++) {
         push @{$self->{acc}}, $self->{_io}->read_f4le();
@@ -4648,7 +4648,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{header} = Observation::ObservationHeaderDep->new($self->{_io}, $self, $self->{_root});
-    $self->{obs} = ();
+    $self->{obs} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{obs}}, Observation::PackedObsContentDepC->new($self->{_io}, $self, $self->{_root});
     }

@@ -66,7 +66,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{contents} = ();
+    $self->{contents} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{contents}}, $self->{_io}->read_u1();
     }

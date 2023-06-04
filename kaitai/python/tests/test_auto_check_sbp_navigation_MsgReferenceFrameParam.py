@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,34 +22,58 @@ def test_auto_check_sbp_navigation_msg_reference_frame_param_1():
     buf = base64.standard_b64decode("VUQCQgB8AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAAah")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.msg_type == 0x0244
+    
+    assert msg.sender == 0x0042
+    
+    assert msg.length == 124
+    
+    assert msg.payload == "AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA=="
+    
+    assert msg.crc == 0xA106
+    
+    assert dictify(msg.delta_x0) == 7
+    
+    assert dictify(msg.delta_y0) == 8
+    
+    assert dictify(msg.delta_z0) == 9
+    
+    assert dictify(msg.dot_delta_x0) == 14
+    
+    assert dictify(msg.dot_delta_y0) == 15
+    
+    assert dictify(msg.dot_delta_z0) == 16
+    
+    assert dictify(msg.dot_scale) == 20
+    
+    assert dictify(msg.dot_theta_01) == 17
+    
+    assert dictify(msg.dot_theta_02) == 18
+    
+    assert dictify(msg.dot_theta_03) == 19
+    
+    assert dictify(msg.re_t0) == 6
+    
+    assert dictify(msg.scale) == 13
+    
+    assert dictify(msg.sin) == 4
+    
+    assert dictify(msg.sn) == "foo\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+    
+    assert dictify(msg.ssr_iod) == 1
+    
+    assert dictify(msg.theta_01) == 10
+    
+    assert dictify(msg.theta_02) == 11
+    
+    assert dictify(msg.theta_03) == 12
+    
+    assert dictify(msg.tn) == "bar\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+    
+    assert dictify(msg.utn) == 5
 
-    payload = get_payload(obj)
-    assert payload.preamble == 0x55
-    assert payload.msg_type == 0x0244
-    assert payload.sender == 0x0042
-    assert payload.length == 124
-    assert payload.payload == "AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA=="
-    assert payload.crc == 0xA106
-    assert dictify(obj.payload.delta_x0) == snake_case_keys( 7 )
-    assert dictify(obj.payload.delta_y0) == snake_case_keys( 8 )
-    assert dictify(obj.payload.delta_z0) == snake_case_keys( 9 )
-    assert dictify(obj.payload.dot_delta_x0) == snake_case_keys( 14 )
-    assert dictify(obj.payload.dot_delta_y0) == snake_case_keys( 15 )
-    assert dictify(obj.payload.dot_delta_z0) == snake_case_keys( 16 )
-    assert dictify(obj.payload.dot_scale) == snake_case_keys( 20 )
-    assert dictify(obj.payload.dot_theta_01) == snake_case_keys( 17 )
-    assert dictify(obj.payload.dot_theta_02) == snake_case_keys( 18 )
-    assert dictify(obj.payload.dot_theta_03) == snake_case_keys( 19 )
-    assert dictify(obj.payload.re_t0) == snake_case_keys( 6 )
-    assert dictify(obj.payload.scale) == snake_case_keys( 13 )
-    assert dictify(obj.payload.sin) == snake_case_keys( 4 )
-    assert dictify(obj.payload.sn) == snake_case_keys( 'foo\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' )
-    assert dictify(obj.payload.ssr_iod) == snake_case_keys( 1 )
-    assert dictify(obj.payload.theta_01) == snake_case_keys( 10 )
-    assert dictify(obj.payload.theta_02) == snake_case_keys( 11 )
-    assert dictify(obj.payload.theta_03) == snake_case_keys( 12 )
-    assert dictify(obj.payload.tn) == snake_case_keys( 'bar\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' )
-    assert dictify(obj.payload.utn) == snake_case_keys( 5 )
-
-    assert dictify(payload) == snake_case_keys( {"ssr_iod": 1, "sn": "foo\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "tn": "bar\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "sin": 4, "utn": 5, "re_t0": 6, "delta_X0": 7, "delta_Y0": 8, "delta_Z0": 9, "theta_01": 10, "theta_02": 11, "theta_03": 12, "scale": 13, "dot_delta_X0": 14, "dot_delta_Y0": 15, "dot_delta_Z0": 16, "dot_theta_01": 17, "dot_theta_02": 18, "dot_theta_03": 19, "dot_scale": 20, "preamble": 85, "msg_type": 580, "sender": 66, "length": 124, "payload": "AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA==", "crc": 41222} )
+    assert dictify(msg) == {'ssr_iod': 1, 'sn': 'foo\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', 'tn': 'bar\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', 'sin': 4, 'utn': 5, 're_t0': 6, 'delta_x0': 7, 'delta_y0': 8, 'delta_z0': 9, 'theta_01': 10, 'theta_02': 11, 'theta_03': 12, 'scale': 13, 'dot_delta_x0': 14, 'dot_delta_y0': 15, 'dot_delta_z0': 16, 'dot_theta_01': 17, 'dot_theta_02': 18, 'dot_theta_03': 19, 'dot_scale': 20, 'preamble': 85, 'msg_type': 580, 'sender': 66, 'length': 124, 'payload': 'AWZvbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYmFyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA==', 'crc': 41222}

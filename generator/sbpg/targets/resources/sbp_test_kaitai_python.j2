@@ -12,15 +12,28 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
 
 
-((*- macro stringify_field(name, value) *))((*- if name == "payload" *))"(((value)))"((*- else *))(((value)))((*- endif *))((*- endmacro *))
-((*- macro stringify_fieldskeys(value) *))((*- if value is string_type *))(((value|str_escape)))((*- else *))(((value)))((*- endif *))((*- endmacro *))
+((*- macro test_field(name, value) *))
+  ((*- if name == "payload" *))
+    assert msg.(((name))) == "(((value)))"
+  ((*- else *))
+    assert msg.(((name))) == (((value)))
+  ((*- endif *))
+((*- endmacro *))
+
+((*- macro test_fieldskeys(name, value) *))
+  ((*- if value is string_type *))
+    assert dictify(msg.(((name)))) == "(((value|str_escape)))"
+  ((*- else *))
+    assert dictify(msg.(((name)))) == (((value|snake_case_keys)))
+  ((*- endif *))
+((*- endmacro *))
 
 ((*- for t in s.tests *))
 
@@ -28,17 +41,16 @@ def test_(((s.suite_name|snake_case)))_(((loop.index)))():
     buf = base64.standard_b64decode("(((t.raw_packet)))")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
 
-    payload = get_payload(obj)
   ((*- for k in t.sbp *))
-    assert payload.(((k))) == (((stringify_field( (((k))), (((t.sbp[k]))) ))))
+    (((test_field( (((k))), (((t.sbp[k]))) ))))
   ((*- endfor *))
 
   ((*- for f in t.fieldskeys *))
-    assert dictify(obj.payload.(((f | snake_case)))) == snake_case_keys( (((stringify_fieldskeys( (((t.fields[f]))) )))) )
+    (((test_fieldskeys( (((f|snake_case))), (((t.fields[f]))) ))))
   ((*- endfor *))
 
-    assert dictify(payload) == snake_case_keys( (((t.raw_json))) )
+    assert dictify(msg) == (((t.raw_json|decode_json|snake_case_keys)))
 
 ((*- endfor *))

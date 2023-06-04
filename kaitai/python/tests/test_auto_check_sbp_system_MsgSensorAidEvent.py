@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,22 +22,34 @@ def test_auto_check_sbp_system_msg_sensor_aid_event_1():
     buf = base64.standard_b64decode("VQn/04gPMPZ6EwAAAAAAAAAAAAAAIew=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0xEC21
+    
+    assert msg.length == 15
+    
+    assert msg.msg_type == 0xFF09
+    
+    assert msg.payload == "MPZ6EwAAAAAAAAAAAAAA"
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x88D3
+    
+    assert dictify(msg.flags) == 0
+    
+    assert dictify(msg.n_accepted_meas) == 0
+    
+    assert dictify(msg.n_attempted_meas) == 0
+    
+    assert dictify(msg.n_available_meas) == 0
+    
+    assert dictify(msg.sensor_id) == 0
+    
+    assert dictify(msg.sensor_state) == 0
+    
+    assert dictify(msg.sensor_type) == 0
+    
+    assert dictify(msg.time) == 326825520
 
-    payload = get_payload(obj)
-    assert payload.crc == 0xEC21
-    assert payload.length == 15
-    assert payload.msg_type == 0xFF09
-    assert payload.payload == "MPZ6EwAAAAAAAAAAAAAA"
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x88D3
-    assert dictify(obj.payload.flags) == snake_case_keys( 0 )
-    assert dictify(obj.payload.n_accepted_meas) == snake_case_keys( 0 )
-    assert dictify(obj.payload.n_attempted_meas) == snake_case_keys( 0 )
-    assert dictify(obj.payload.n_available_meas) == snake_case_keys( 0 )
-    assert dictify(obj.payload.sensor_id) == snake_case_keys( 0 )
-    assert dictify(obj.payload.sensor_state) == snake_case_keys( 0 )
-    assert dictify(obj.payload.sensor_type) == snake_case_keys( 0 )
-    assert dictify(obj.payload.time) == snake_case_keys( 326825520 )
-
-    assert dictify(payload) == snake_case_keys( {"preamble": 85, "msg_type": 65289, "sender": 35027, "length": 15, "payload": "MPZ6EwAAAAAAAAAAAAAA", "crc": 60449, "time": 326825520, "sensor_type": 0, "sensor_id": 0, "sensor_state": 0, "n_available_meas": 0, "n_attempted_meas": 0, "n_accepted_meas": 0, "flags": 0} )
+    assert dictify(msg) == {'preamble': 85, 'msg_type': 65289, 'sender': 35027, 'length': 15, 'payload': 'MPZ6EwAAAAAAAAAAAAAA', 'crc': 60449, 'time': 326825520, 'sensor_type': 0, 'sensor_id': 0, 'sensor_state': 0, 'n_available_meas': 0, 'n_attempted_meas': 0, 'n_accepted_meas': 0, 'flags': 0}

@@ -113,7 +113,7 @@ sub _read {
 
     $self->{source} = $self->{_io}->read_u1();
     $self->{protocol} = $self->{_io}->read_u1();
-    $self->{fwd_payload} = ();
+    $self->{fwd_payload} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{fwd_payload}}, $self->{_io}->read_u1();
     }

@@ -70,7 +70,7 @@ sub _read {
     $self->{sequence} = $self->{_io}->read_u4le();
     $self->{offset} = $self->{_io}->read_u4le();
     $self->{filename} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
-    $self->{data} = ();
+    $self->{data} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{data}}, $self->{_io}->read_u1();
     }
@@ -347,7 +347,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{sequence} = $self->{_io}->read_u4le();
-    $self->{contents} = ();
+    $self->{contents} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{contents}}, $self->{_io}->read_u1();
     }
@@ -450,7 +450,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{sequence} = $self->{_io}->read_u4le();
-    $self->{contents} = ();
+    $self->{contents} = [];
     while (!$self->{_io}->is_eof()) {
         push @{$self->{contents}}, $self->{_io}->read_u1();
     }

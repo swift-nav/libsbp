@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,22 +22,34 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_satellites_1():
     buf = base64.standard_b64decode("Vb0LQgAPtAAAAAMAAQIDBAUDCgsMbqU=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.msg_type == 0x0BBD
+    
+    assert msg.sender == 0x0042
+    
+    assert msg.length == 15
+    
+    assert msg.payload == "tAAAAAMAAQIDBAUDCgsM"
+    
+    assert msg.crc == 0xA56E
+    
+    assert dictify(msg.chain_id) == 4
+    
+    assert dictify(msg.const_id) == 5
+    
+    assert dictify(msg.faulty_sats) == [10, 11, 12]
+    
+    assert dictify(msg.n_faulty_sats) == 3
+    
+    assert dictify(msg.num_msgs) == 1
+    
+    assert dictify(msg.obs_time) == {'tow': 180, 'wn': 3}
+    
+    assert dictify(msg.seq_num) == 2
+    
+    assert dictify(msg.ssr_sol_id) == 3
 
-    payload = get_payload(obj)
-    assert payload.preamble == 0x55
-    assert payload.msg_type == 0x0BBD
-    assert payload.sender == 0x0042
-    assert payload.length == 15
-    assert payload.payload == "tAAAAAMAAQIDBAUDCgsM"
-    assert payload.crc == 0xA56E
-    assert dictify(obj.payload.chain_id) == snake_case_keys( 4 )
-    assert dictify(obj.payload.const_id) == snake_case_keys( 5 )
-    assert dictify(obj.payload.faulty_sats) == snake_case_keys( [10, 11, 12] )
-    assert dictify(obj.payload.n_faulty_sats) == snake_case_keys( 3 )
-    assert dictify(obj.payload.num_msgs) == snake_case_keys( 1 )
-    assert dictify(obj.payload.obs_time) == snake_case_keys( {'tow': 180, 'wn': 3} )
-    assert dictify(obj.payload.seq_num) == snake_case_keys( 2 )
-    assert dictify(obj.payload.ssr_sol_id) == snake_case_keys( 3 )
-
-    assert dictify(payload) == snake_case_keys( {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "chain_id": 4, "const_id": 5, "n_faulty_sats": 3, "faulty_sats": [10, 11, 12], "preamble": 85, "msg_type": 3005, "sender": 66, "length": 15, "payload": "tAAAAAMAAQIDBAUDCgsM", "crc": 42350} )
+    assert dictify(msg) == {'obs_time': {'tow': 180, 'wn': 3}, 'num_msgs': 1, 'seq_num': 2, 'ssr_sol_id': 3, 'chain_id': 4, 'const_id': 5, 'n_faulty_sats': 3, 'faulty_sats': [10, 11, 12], 'preamble': 85, 'msg_type': 3005, 'sender': 66, 'length': 15, 'payload': 'tAAAAAMAAQIDBAUDCgsM', 'crc': 42350}

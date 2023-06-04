@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,21 +22,32 @@ def test_auto_check_sbp_navigation_msg_protection_level_1():
     buf = base64.standard_b64decode("VRYCABAhiOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUsM=")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0xc352
+    
+    assert msg.length == 33
+    
+    assert msg.payload == "iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    
+    assert msg.msg_type == 0x216
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x1000
+    
+    assert dictify(msg.flags) == 0
+    
+    assert dictify(msg.height) == 0.0
+    
+    assert dictify(msg.hpl) == 0
+    
+    assert dictify(msg.lat) == 0.0
+    
+    assert dictify(msg.lon) == 0.0
+    
+    assert dictify(msg.tow) == 501867400
+    
+    assert dictify(msg.vpl) == 0
 
-    payload = get_payload(obj)
-    assert payload.crc == 0xc352
-    assert payload.length == 33
-    assert payload.payload == "iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-    assert payload.msg_type == 0x216
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x1000
-    assert dictify(obj.payload.flags) == snake_case_keys( 0 )
-    assert dictify(obj.payload.height) == snake_case_keys( 0.0 )
-    assert dictify(obj.payload.hpl) == snake_case_keys( 0 )
-    assert dictify(obj.payload.lat) == snake_case_keys( 0.0 )
-    assert dictify(obj.payload.lon) == snake_case_keys( 0.0 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 501867400 )
-    assert dictify(obj.payload.vpl) == snake_case_keys( 0 )
-
-    assert dictify(payload) == snake_case_keys( {"tow":501867400,"vpl":0,"hpl":0,"lat":0.0,"lon":0.0,"height":0.0,"flags":0,"preamble":85,"msg_type":534,"sender":4096,"payload":"iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","crc":50002,"length":33} )
+    assert dictify(msg) == {'tow': 501867400, 'vpl': 0, 'hpl': 0, 'lat': 0.0, 'lon': 0.0, 'height': 0.0, 'flags': 0, 'preamble': 85, 'msg_type': 534, 'sender': 4096, 'payload': 'iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'crc': 50002, 'length': 33}

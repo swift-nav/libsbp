@@ -75,6 +75,9 @@ def get_args():
   parser.add_argument('--test-kaitai-python',
                       action="store_true",
                       help='Target language: Kaitai Struct Python tests.')
+  parser.add_argument('--test-kaitai-perl',
+                      action="store_true",
+                      help='Target language: Kaitai Struct Perl tests.')
   parser.add_argument('--jsonschema',
                       action="store_true",
                       help='Target language: JSON Schema.')
@@ -118,7 +121,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.c_sources or args.haskell or args.latex or args.protobuf or args.kaitai or args.test_kaitai_python or args.java or args.test_java or args.rust or args.test_rust, \
+    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.c_sources or args.haskell or args.latex or args.protobuf or args.kaitai or args.test_kaitai_python or args.test_kaitai_perl or args.java or args.test_java or args.rust or args.test_rust, \
         "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -129,7 +132,7 @@ def main():
     assert os.path.exists(output_dir), \
         "Invalid output directory: %s. Exiting!" % output_dir
     # Ingest, parse, and validate.
-    test_mode = args.test_c or args.test_kaitai_python or args.test_java or args.test_rust
+    test_mode = args.test_c or args.test_kaitai_python or args.test_kaitai_perl or args.test_java or args.test_rust
 
     if test_mode:
       file_index = yaml.resolve_test_deps(*yaml.get_files(input_file))
@@ -196,6 +199,9 @@ def main():
         elif args.test_kaitai_python:
           import sbpg.targets.test_kaitai_python as test_kaitai_python
           test_kaitai_python.render_source(output_dir, parsed)
+        elif args.test_kaitai_perl:
+          import sbpg.targets.test_kaitai_perl as test_kaitai_perl
+          test_kaitai_perl.render_source(output_dir, parsed)
         elif args.jsonschema:
           import sbpg.targets.jsonschema as jsonschema
           jsonschema.render_source(output_dir, parsed)

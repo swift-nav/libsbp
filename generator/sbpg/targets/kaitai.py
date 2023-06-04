@@ -22,12 +22,13 @@ from jinja2.environment import Environment
 from jinja2.utils import pass_environment
 
 from sbpg.targets.templating import INCLUDE_MAP, JENV, indented_wordwrap
+from sbpg.targets.common import snake_case, camel_case
 from sbpg import ReleaseVersion
 from sbpg.utils import comment_links
 import textwrap
 import os
-import re
 import subprocess
+import fileinput
 
 TEMPLATE_TYPES_NAME = "sbp_kaitai_types.ksy.j2"
 TEMPLATE_MAIN_NAME = "sbp_kaitai_main.ksy.j2"
@@ -51,7 +52,7 @@ OUTPUT_LANGUAGES = [
   #'rust',
   'perl',
   #'java',
-  'go',
+  #'go',
   #'cpp_stl',
   #'php',
   'lua',
@@ -115,18 +116,6 @@ def get_type(f, type_map=KAITAI_CODE):
     return get_custom_type(f.type_id)
 
 
-def snake_case(s):
-  """
-  Convert CamelCase to snake_case
-  """
-  if "_" in s:
-    return "_".join(snake_case(p) for p in s.split("_"))
-  if len(s) == 1:
-    return s.lower()
-  s = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", s)
-  return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s).lower()
-
-
 @pass_environment
 def commentify(environment: Environment,
                value: str, width=76, indent=2):
@@ -157,9 +146,9 @@ JENV.filters['hashWordWrap'] = hash_wordwrap
 JENV.filters['module_name'] = get_module_name
 
 
-# apply fix-ups to generated python code to work-around missing imports
-# issue described in kaitai-struct-compiler 0.10,
-# see https://github.com/kaitai-io/kaitai_struct/issues/703 for details
+# apply fix-ups to generated python code to work around missing imports
+# issue in kaitai-struct-compiler 0.10, see
+# https://github.com/kaitai-io/kaitai_struct/issues/703 for details
 def fix_python_output(specs):
   def add_python_imports(basename, imports):
     # nothing to do
@@ -167,7 +156,7 @@ def fix_python_output(specs):
       return
 
     # check if file exists
-    py_file = "python/{}.py".format(basename)
+    py_file = os.path.join("python", basename + ".py")
     if not os.path.exists(py_file):
       return
 
@@ -193,12 +182,24 @@ def fix_python_output(specs):
   add_python_imports("sbp", [get_module_name(spec.identifier) for spec in specs])
 
 
+# apply fix-ups to generated perl code to work around incorrectly initialised
+# arrays issue in kaitai-struct-compiler 0.10, see
+# https://github.com/kaitai-io/kaitai_struct_compiler/pull/251 for details
+def fix_perl_output(specs):
+  files = [os.path.join("perl", camel_case(package_spec.filepath[1]) + ".pm") for package_spec in specs]
+  with fileinput.input(files=files, inplace=True) as f:
+    for line in f:
+      if line.endswith("= ();\n"):
+        line = line[:-4] + "[];\n";
+      print(line, end='')
+
+
 def render_source(output_dir, package_spec, jenv=JENV):
   """
   Render and output a KSY file containing types
   """
   path, name = package_spec.filepath
-  destination_filename = "{}/ksy/{}.ksy".format(output_dir, name)
+  destination_filename = os.path.join(output_dir, "ksy", name + ".ksy")
   ksy_template = jenv.get_template(TEMPLATE_TYPES_NAME)
   imports = ','.join(get_imports(package_spec))
 
@@ -216,7 +217,7 @@ def render_main(output_dir, all_package_specs, release: ReleaseVersion, jenv=JEN
   Render and output the top-level KSY file, then run kaitai-struct-compiler
   """
   directory = output_dir
-  destination_filename = "{}/ksy/sbp.ksy".format(output_dir)
+  destination_filename = os.path.join(output_dir, "ksy", "sbp.ksy")
   ksy_template = jenv.get_template(TEMPLATE_MAIN_NAME)
   specs = [spec for spec in all_package_specs if spec.render_source]
 
@@ -230,3 +231,4 @@ def render_main(output_dir, all_package_specs, release: ReleaseVersion, jenv=JEN
   subprocess.check_call(["kaitai-struct-compiler", "ksy/sbp.ksy"] + targets)
 
   fix_python_output(specs)
+  fix_perl_output(specs)

@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,15 +22,20 @@ def test_auto_check_sbp_file_io_msg_fileio_write_resp_1():
     buf = base64.standard_b64decode("VasAQgAEygAAAPPz")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0xf3f3
+    
+    assert msg.length == 4
+    
+    assert msg.msg_type == 0xab
+    
+    assert msg.payload == "ygAAAA=="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x42
+    
+    assert dictify(msg.sequence) == 202
 
-    payload = get_payload(obj)
-    assert payload.crc == 0xf3f3
-    assert payload.length == 4
-    assert payload.msg_type == 0xab
-    assert payload.payload == "ygAAAA=="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x42
-    assert dictify(obj.payload.sequence) == snake_case_keys( 202 )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 66, "msg_type": 171, "sequence": 202, "crc": 62451, "length": 4, "preamble": 85, "payload": "ygAAAA=="} )
+    assert dictify(msg) == {'sender': 66, 'msg_type': 171, 'sequence': 202, 'crc': 62451, 'length': 4, 'preamble': 85, 'payload': 'ygAAAA=='}

@@ -69,7 +69,7 @@ sub _read {
     $self->{sid} = Gnss::GnssSignal->new($self->{_io}, $self, $self->{_root});
     $self->{tow} = $self->{_io}->read_u4le();
     $self->{message_type} = $self->{_io}->read_u1();
-    $self->{data} = ();
+    $self->{data} = [];
     my $n_data = 27;
     for (my $i = 0; $i < $n_data; $i++) {
         push @{$self->{data}}, $self->{_io}->read_u1();

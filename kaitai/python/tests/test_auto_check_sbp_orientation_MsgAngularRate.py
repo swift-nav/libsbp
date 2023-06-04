@@ -12,8 +12,8 @@
 # with generate.py.  Do not modify by hand!
 
 import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import snake_case_keys, dictify
-from kaitai.python.tests.utils_kaitai import get_payload
+from kaitai.python.tests.utils import dictify
+from kaitai.python.tests.utils_kaitai import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -22,19 +22,28 @@ def test_auto_check_sbp_orientation_msg_angular_rate_1():
     buf = base64.standard_b64decode("VSICQgARAgAAAAIAAAAFAAAAAgAAAABYRg==")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    obj = kaitai_sbp.Sbp.SbpMessage(stream)
+    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x4658
+    
+    assert msg.length == 17
+    
+    assert msg.msg_type == 0x222
+    
+    assert msg.payload == "AgAAAAIAAAAFAAAAAgAAAAA="
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x42
+    
+    assert dictify(msg.flags) == 0
+    
+    assert dictify(msg.tow) == 2
+    
+    assert dictify(msg.x) == 2
+    
+    assert dictify(msg.y) == 5
+    
+    assert dictify(msg.z) == 2
 
-    payload = get_payload(obj)
-    assert payload.crc == 0x4658
-    assert payload.length == 17
-    assert payload.msg_type == 0x222
-    assert payload.payload == "AgAAAAIAAAAFAAAAAgAAAAA="
-    assert payload.preamble == 0x55
-    assert payload.sender == 0x42
-    assert dictify(obj.payload.flags) == snake_case_keys( 0 )
-    assert dictify(obj.payload.tow) == snake_case_keys( 2 )
-    assert dictify(obj.payload.x) == snake_case_keys( 2 )
-    assert dictify(obj.payload.y) == snake_case_keys( 5 )
-    assert dictify(obj.payload.z) == snake_case_keys( 2 )
-
-    assert dictify(payload) == snake_case_keys( {"sender": 66, "msg_type": 546, "tow": 2, "crc": 18008, "length": 17, "flags": 0, "y": 5, "x": 2, "z": 2, "preamble": 85, "payload": "AgAAAAIAAAAFAAAAAgAAAAA="} )
+    assert dictify(msg) == {'sender': 66, 'msg_type': 546, 'tow': 2, 'crc': 18008, 'length': 17, 'flags': 0, 'y': 5, 'x': 2, 'z': 2, 'preamble': 85, 'payload': 'AgAAAAIAAAAFAAAAAgAAAAA='}
