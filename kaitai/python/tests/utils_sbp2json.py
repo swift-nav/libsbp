@@ -35,18 +35,18 @@ def get_flattened_msg(obj):
 # wrapper object which allows KaitaiStream to be used with inputs which do
 # not support seeking
 class BufferedKaitaiStream(KaitaiStream):
-    def __init__(self, fp, buf_size=io.DEFAULT_BUFFER_SIZE):
-        super().__init__(io.BytesIO(fp.read(buf_size)))
+    def __init__(self, fp, max_buf_size=io.DEFAULT_BUFFER_SIZE):
+        super().__init__(io.BytesIO(fp.read(max_buf_size)))
 
         self.fp = fp
-        self.buf_size = buf_size
+        self.max_buf_size = max_buf_size
 
 
     def reload(self):
         pos = self._io.tell()
         view = self._io.getbuffer()
         num_bytes = len(view[pos:])
-        space = self.buf_size - num_bytes
+        space = self.max_buf_size - num_bytes
         if space > 0:
             read_data = self.fp.read(space)
             read_len = len(read_data)
@@ -112,6 +112,6 @@ def get_next_msg_kaitai(fp):
 
 
 # implementation of sbp2json using Kaitai Struct parser
-def sbp2json_kaitai():
+def sbp2json():
     for msg in get_next_msg_kaitai(sys.stdin.buffer):
         print(rapidjson.dumps(msg, default=serialise))

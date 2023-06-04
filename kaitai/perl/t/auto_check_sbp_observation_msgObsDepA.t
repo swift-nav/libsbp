@@ -18,7 +18,8 @@ use strict;
 use constant SBP_PATH => "$ENV{'PWD'}/kaitai/perl/";
 
 BEGIN {
-    # load all modules from SBP_PATH
+    # add SBP_PATH to include path and load all modules
+    unshift @INC, &SBP_PATH;
     require $_ for(glob(&SBP_PATH."*.pm"));
 }
 
@@ -26,6 +27,7 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
+use t::Utils;
 sub test_auto_check_sbp_observation_msg_obs_dep_a_1() {
     my $buf = decode_base64("VUUAwwRiOJ5DGC4HIDjr+Xn0cv//IS5D2gDuy0Z8FhkDAGIruJ0CsIXFfX5H/f+5J0Q3AzytooNi5/3/ix4hEAqAsviIKnH9/ygUKkcN9vYRh/8zAwBAG2z5FtIpcnaDMP//HzTiOh4X2Q==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);

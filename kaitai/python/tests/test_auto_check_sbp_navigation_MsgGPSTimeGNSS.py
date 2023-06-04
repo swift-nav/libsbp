@@ -13,7 +13,7 @@
 
 import kaitai.python.sbp as kaitai_sbp
 from kaitai.python.tests.utils import dictify
-from kaitai.python.tests.utils_kaitai import get_flattened_msg
+from kaitai.python.tests.utils_sbp2json import get_flattened_msg
 from kaitaistruct import KaitaiStream
 import io
 import base64

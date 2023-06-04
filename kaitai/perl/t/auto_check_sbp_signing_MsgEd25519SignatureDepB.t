@@ -18,7 +18,8 @@ use strict;
 use constant SBP_PATH => "$ENV{'PWD'}/kaitai/perl/";
 
 BEGIN {
-    # load all modules from SBP_PATH
+    # add SBP_PATH to include path and load all modules
+    unshift @INC, &SBP_PATH;
     require $_ for(glob(&SBP_PATH."*.pm"));
 }
 
@@ -26,6 +27,7 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
+use t::Utils;
 sub test_auto_check_sbp_signing_msg_ed25519_signature_dep_b_1() {
     my $buf = decode_base64("VQMMQgC6AQAAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMTIzNDU2Nzg5Ojs8PT4/ZGVmZ2hpamtsbW5vcHFyc3R1dneIEwAAchQAAFwVAABGFgAAMBcAABoYAAAEGQAA7hkAANgaAADCGwAArBwAAJYdAACAHgAAah8AAFQgAAA+IQAAKCIAABIjAAD8IwAA5iQAANAlAAC6JgAApCcAAI4oAAB4KQAA7pE=");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
