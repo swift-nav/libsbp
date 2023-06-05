@@ -72,11 +72,13 @@ pub fn to_vec<M: SbpMessage>(msg: &M) -> Result<Vec<u8>, Error> {
 
 pub fn to_buffer<M: SbpMessage>(buf: &mut BytesMut, msg: &M) -> Result<(), WriteFrameError> {
     let payload_len = msg.len();
+    /*
     if payload_len < MIN_PAYLOAD_LEN {
         // Malformed message, just dump what we have
         msg.write(buf);
         return Ok(());
     }
+    */
     if payload_len > MAX_PAYLOAD_LEN {
         return Err(WriteFrameError::TooLarge);
     }

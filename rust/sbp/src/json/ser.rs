@@ -221,9 +221,11 @@ fn get_common_fields<'a, M: SbpMessage>(
     frame_buf.clear();
     let size = msg.len();
     crate::ser::to_buffer(frame_buf, msg)?;
+    /*
     if frame_buf.len() < MIN_PAYLOAD_LEN {
         return Ok(None);
     }
+    */
     let crc = {
         let crc_b0 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][0] as u16;
         let crc_b1 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][1] as u16;

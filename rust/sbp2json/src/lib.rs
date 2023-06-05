@@ -79,6 +79,7 @@ where
     W: Write,
     F: Formatter + Clone,
 {
+    /* fails the stop test
     let source = maybe_fatal_errors(sbp::iter_frames(input), fatal_errors).map(|frame| {
         frame.to_sbp().unwrap_or_else(|_| {
             let payload = frame.payload().to_vec();
@@ -99,6 +100,9 @@ where
             })
         })
     });
+    */
+    let source = maybe_fatal_errors(sbp::iter_messages(input), fatal_errors);
+
     let mut sink = JsonEncoder::new(output, formatter);
     if buffered {
         sink.send_all(source)?;
