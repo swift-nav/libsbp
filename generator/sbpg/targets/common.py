@@ -12,7 +12,6 @@
 import base64
 import re
 import json
-import textwrap
 
 def string_type(value):
     return type(value) == str
