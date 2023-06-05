@@ -2,7 +2,17 @@ FROM python:3.7-slim-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN    apt-get update \
-    && apt-get install -y git llvm-7-dev build-essential
+    && apt-get install -y git llvm-7-dev build-essential unzip libjson-perl libdigest-crc-perl
+
+# install perl runtime for kaitai struct
+RUN \
+     cd /tmp \
+  && curl -LO https://github.com/kaitai-io/kaitai_struct_perl_runtime/archive/refs/tags/0.10.zip \
+  && unzip 0.10.zip \
+  && cd kaitai_struct_perl_runtime-0.10 \
+  && perl Makefile.PL \
+  && make install \
+  && rm -rf /tmp/*
 
 WORKDIR /work
 ADD . /work

@@ -48,7 +48,7 @@ KAITAI_CODE = {
 
 OUTPUT_LANGUAGES = [
   #'graphviz',
-  'csharp',
+  #'csharp',
   #'rust',
   'perl',
   #'java',

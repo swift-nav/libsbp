@@ -14,6 +14,7 @@ RATIOS_SBP2JSON = {
     "haskell": 2.12,
     "python": 18,
     "kaitai_python": 3.99,
+    "kaitai_perl": 18,
 }
 
 RATIOS_JSON2SBP = {
@@ -67,7 +68,7 @@ def main():
         subprocess.run(
             ['hyperfine', '--warmup', '5', '--min-runs', '20',
              '--show-output', '--export-json', 'benchmark_sbp2json.json',
-             '-L', 'lang', 'rust,python,haskell,kaitai_python',
+             '-L', 'lang', 'rust,python,haskell,kaitai_python,kaitai_perl',
              './test_data/benchmark/sbp2json_{lang}.py'],
             check=True)
         print()
@@ -78,6 +79,7 @@ def main():
         "haskell": get_bench_mean(bench_sbp2json, "haskell"),
         "python": get_bench_mean(bench_sbp2json, "python"),
         "kaitai_python": get_bench_mean(bench_sbp2json, "kaitai_python"),
+        "kaitai_perl": get_bench_mean(bench_sbp2json, "kaitai_perl"),
     }
 
     validate_thresholds("sbp2json", RATIOS_SBP2JSON, means_sbp2json, sbp2json_rust_mean)
