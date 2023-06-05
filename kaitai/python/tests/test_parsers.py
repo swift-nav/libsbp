@@ -8,7 +8,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from kaitai.python.tests.utils import compare_parser_outputs, count_messages, get_next_msg_construct, get_next_msg_kaitai, get_next_msg_hybrid1, get_next_msg_hybrid2
+from kaitai.python.tests.utils import compare_parser_outputs, count_messages, get_next_msg_construct, get_next_msg_kaitai, get_next_msg_hybrid1, get_next_msg_hybrid2, get_next_msg_external, PERL_CMD
 import os
 import random
 import tempfile
@@ -61,7 +61,9 @@ def test_corrupted_counts():
     num_messages_kaitai = count_messages(filename_corrupted, get_next_msg_kaitai)
     num_messages_hybrid1 = count_messages(filename_corrupted, get_next_msg_hybrid1)
     num_messages_hybrid2 = count_messages(filename_corrupted, get_next_msg_hybrid2)
+    num_messages_perl = count_messages(filename_corrupted, get_next_msg_external, PERL_CMD)
 
     assert(num_messages_construct == num_messages_kaitai)
     assert(num_messages_construct == num_messages_hybrid1)
     assert(num_messages_construct == num_messages_hybrid2)
+    assert(num_messages_construct == num_messages_perl)

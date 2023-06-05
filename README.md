@@ -276,9 +276,7 @@ the following targets, which can be found in their respective subdirectories:
 
 * csharp
 * perl
-* lua
 * python
-* ruby
 
 The format specification files can also be used to generate bindings
 for additional targets, including:
@@ -289,8 +287,10 @@ for additional targets, including:
 * go
 * cpp_stl
 * php
+* lua
 * nim
 * html
+* ruby
 * construct
 * javascript
 

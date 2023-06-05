@@ -86,6 +86,7 @@ RUN \
       dpkg-dev \
       cmake \
       libjson-perl \
+      libdigest-crc-perl \
   && curl -sSL https://get.haskellstack.org/ | sh \
   && rm -rf /var/lib/apt/lists/* /tmp/* \
   && curl -s "https://get.sdkman.io" | bash \

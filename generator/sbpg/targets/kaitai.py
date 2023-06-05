@@ -55,11 +55,11 @@ OUTPUT_LANGUAGES = [
   #'go',
   #'cpp_stl',
   #'php',
-  'lua',
+  #'lua',
   'python',
   #'nim',
   #'html',
-  'ruby',
+  #'ruby',
   #'construct',
   #'javascript'
 ]

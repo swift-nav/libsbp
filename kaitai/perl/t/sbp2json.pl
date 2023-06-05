@@ -12,35 +12,78 @@
 
 use strict;
 
-use constant SBP_PATH => "$ENV{'PWD'}/kaitai/perl/";
-use constant SBP_HEADER_LEN => 6;
-
 BEGIN {
-    # add SBP_PATH to include path and load all modules
-    unshift @INC, &SBP_PATH;
-    require $_ for(glob(&SBP_PATH."*.pm"));
+    use Cwd qw(realpath);
+    use File::Basename;
+    my $SBP_PATH = realpath(dirname($0))."/..";
+    # add parent directory to search path
+    unshift @INC, $SBP_PATH;
+    # load all modules from parent directory
+    require $_ for(glob("$SBP_PATH/*.pm"));
 }
 
-use JSON::PP;
+use JSON::XS;
 use t::Utils;
+use Digest::CRC qw(crc);
 
 
 sub sbp2json($) {
     my $fd = shift || die;
 
-    my $json = JSON::PP->new->convert_blessed;
+    my $json = JSON::XS->new->convert_blessed;
 
-    my $stream = BufferedKaitaiStream->new($fd, &SBP_HEADER_LEN + 256 + 2); # header + max message + CRC);
+    my $stream = BufferedKaitaiStream->new($fd, &BufferedKaitaiStream::SBP_HEADER_LEN + 256 + 2); # header + max message + CRC
 
-    while(!$stream->is_eof()) {
+    # create a hash of valid ids to message types
+    my %msg_types = map {${${Sbp::{$_}}} => $_ } grep {/^MSG_/} keys %Sbp::;
+
+    while(1) {
         $stream->reload();
 
         my $msg = eval { Sbp::SbpMessage->new($stream) };
-        last if $@;
+
+        if(!defined($msg)) {
+            if($stream->is_eof()) {
+                last;
+            } else {
+                $stream->seek(1);
+                next;
+            }
+        }
+
+        my $preamble = ord($msg->preamble());
+        if($preamble != 0x55) {
+            printf STDERR "Invalid preamble: 0x%.2x\n", $preamble;
+            $stream->seek(1);
+            next;
+        }
+
+        my $crc_read = $msg->crc();
+        my $crc_expected = crc($stream->get_crc_bytes($msg->length()), 16, 0, 0, 0, 0x1021, 0, 0);
+        if($crc_read != $crc_expected) {
+            print STDERR "Bad CRC: $crc_read vs $crc_expected\n";
+            $stream->seek(1);
+            next;
+        }
+
+        my $msg_type = $msg->msg_type();
+        if(!exists($msg_types{$msg_type})) {
+            print STDERR "Skipping unknown message type: $msg_type\n";
+            $stream->seek(1);
+            next;
+        }
 
         $msg = Utils::get_flattened_msg($msg);
         print $json->encode($msg), "\n";
     }
 }
 
-sbp2json(\*STDIN);
+if(@ARGV) {
+    foreach(@ARGV) {
+        open(my $fh, '<', $_) || die "Cannot open '$_'";
+        sbp2json($fh);
+        close $fh;
+    }
+} else {
+    sbp2json(\*STDIN);
+}

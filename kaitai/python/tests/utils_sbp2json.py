@@ -68,9 +68,7 @@ class BufferedKaitaiStream(KaitaiStream):
 
 
     def get_crc_bytes(self, payload_len):
-        payload = self._io.getbuffer()[1:SBP_HEADER_LEN + payload_len]
-        self._io.seek(SBP_HEADER_LEN + payload_len + 2)
-        return payload
+        return self._io.getbuffer()[1:SBP_HEADER_LEN + payload_len]
 
 
 # work-alike of get_next_msg_construct() based upon Kaitai Struct
@@ -113,5 +111,6 @@ def get_next_msg_kaitai(fp):
 
 # implementation of sbp2json using Kaitai Struct parser
 def sbp2json():
-    for msg in get_next_msg_kaitai(sys.stdin.buffer):
-        print(rapidjson.dumps(msg, default=serialise))
+    with open(0, 'rb') as f:
+        for msg in get_next_msg_kaitai(f):
+            print(rapidjson.dumps(msg, default=serialise))

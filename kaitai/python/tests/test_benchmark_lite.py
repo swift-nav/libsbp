@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 import timeit
-from kaitai.python.tests.utils import count_messages, get_next_msg_construct, get_next_msg_kaitai, get_next_msg_hybrid1, get_next_msg_hybrid2
+from kaitai.python.tests.utils import count_messages, get_next_msg_construct, get_next_msg_kaitai, get_next_msg_hybrid1, get_next_msg_hybrid2, get_next_msg_external, PERL_CMD
 
 
 TEST_DATA = "test_data/benchmark.sbp"
@@ -21,3 +21,4 @@ def test_benchmarks():
     print("kaitai: {}".format(timeit.timeit('count_messages(TEST_DATA, get_next_msg_kaitai)', number=COUNT, globals=globals())))
     print("hybrid1: {}".format(timeit.timeit('count_messages(TEST_DATA, get_next_msg_hybrid1)', number=COUNT, globals=globals())))
     print("hybrid2: {}".format(timeit.timeit('count_messages(TEST_DATA, get_next_msg_hybrid2)', number=COUNT, globals=globals())))
+    print("perl: {}".format(timeit.timeit('count_messages(TEST_DATA, get_next_msg_external, PERL_CMD)', number=COUNT, globals=globals())))

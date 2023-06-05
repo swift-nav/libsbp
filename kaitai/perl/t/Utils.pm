@@ -18,6 +18,8 @@ package BufferedKaitaiStream;
 
 our @ISA = qw(IO::KaitaiStruct::Stream);
 
+use constant SBP_HEADER_LEN => 6;
+
 sub new {
     my ($class, $fp, $max_buf_size) = @_;
 
@@ -39,6 +41,8 @@ sub new {
 }
 
 
+# discard processed data, then attempt to read more data such that
+# the buffer contains 'max_buf_size' bytes
 sub reload($) {
     my ($self) = @_;
 
@@ -52,6 +56,14 @@ sub reload($) {
     }
 
     $self->seek(0);
+}
+
+
+# get bytes required to compute CRC
+sub get_crc_bytes($$) {
+    my ($self, $payload_len) = @_;
+
+    return substr(${$self->{buf}}, 1, &SBP_HEADER_LEN + $payload_len - 1);
 }
 
 
