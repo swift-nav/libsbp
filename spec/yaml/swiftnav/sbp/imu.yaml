@@ -89,6 +89,7 @@ definitions:
                   values:
                       - 0: Bosch BMI160
                       - 1: ST Microelectronics ASM330LLH
+                      - 3: TDK TDK-ICM42670
                       - 4: Murata SCHA634-D03
                       - 5: TDK IAM-20680HP
         - temp:
