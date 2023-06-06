@@ -14,6 +14,65 @@ import base64
 SBP_HEADER_LEN = 6
 
 
+# wrapper object which allows KaitaiStream to be used with a simple byte array
+class BufferKaitaiStream(KaitaiStream):
+    class IOBytes:
+        def __init__(self, buf):
+            self.buf = buf
+            self.pos = 0
+
+        def read(self, num):
+            if self.pos + num > len(self.buf):
+                raise EOFError
+            buf = self.buf[self.pos:self.pos + num]
+            self.pos += num
+            return buf
+
+        def seek(self, pos):
+            self.pos = pos
+
+        def tell(self):
+            return self.pos
+
+
+    def __init__(self, buf=b''):
+        super().__init__(BufferKaitaiStream.IOBytes(buf))
+
+
+    def set_buffer(self, buf):
+        self._io.buf = buf
+        self._io.pos = 0
+
+
+    def is_eof(self):
+        return True if self._io.pos == len(self._io.buf) else False
+
+
+# wrapper object which allows KaitaiStream to be used with inputs which do
+# not support seeking
+class BufferedFileKaitaiStream(BufferKaitaiStream):
+    def __init__(self, fp, max_buf_size=io.DEFAULT_BUFFER_SIZE):
+        super().__init__(fp.read(max_buf_size))
+
+        self.fp = fp
+        self.max_buf_size = max_buf_size
+
+
+    # try to read more data so that buffer size is 'max_buf_size'
+    def fill_buffer(self):
+        pos = self._io.pos
+        space = self.max_buf_size - len(self._io.buf) + pos
+        buf = self._io.buf[pos:]
+        if space > 0:
+            buf += self.fp.read(space)
+
+        self.set_buffer(buf)
+
+
+    def get_crc_bytes(self, payload_len):
+        return self._io.buf[1:SBP_HEADER_LEN + payload_len]
+
+
 # for JSON serialisation
 def serialise(obj):
     return {k: v for k, v in obj.__dict__.items() if not k.startswith("_")}
@@ -32,52 +91,13 @@ def get_flattened_msg(obj):
     return obj.payload
 
 
-# wrapper object which allows KaitaiStream to be used with inputs which do
-# not support seeking
-class BufferedKaitaiStream(KaitaiStream):
-    def __init__(self, fp, max_buf_size=io.DEFAULT_BUFFER_SIZE):
-        super().__init__(io.BytesIO(fp.read(max_buf_size)))
-
-        self.fp = fp
-        self.max_buf_size = max_buf_size
-
-
-    def reload(self):
-        pos = self._io.tell()
-        view = self._io.getbuffer()
-        num_bytes = len(view[pos:])
-        space = self.max_buf_size - num_bytes
-        if space > 0:
-            read_data = self.fp.read(space)
-            read_len = len(read_data)
-            if read_len > 0:
-                view[0:num_bytes] = view[pos:]
-                new_size = num_bytes + read_len
-                view[num_bytes:new_size] = read_data
-            else: # nothing read, drop only
-                view[0:num_bytes] = view[pos:]
-                new_size = num_bytes
-        else: # no space, drop only
-            view[0:num_bytes] = view[pos:]
-            new_size = num_bytes
-
-        if new_size != len(view):
-            del view
-            self._io.truncate(new_size)
-        self._io.seek(0)
-
-
-    def get_crc_bytes(self, payload_len):
-        return self._io.getbuffer()[1:SBP_HEADER_LEN + payload_len]
-
-
 # work-alike of get_next_msg_construct() based upon Kaitai Struct
 def get_next_msg_kaitai(fp):
-    stream = BufferedKaitaiStream(fp, SBP_HEADER_LEN + 256 + 2) # header + max message + CRC
+    stream = BufferedFileKaitaiStream(fp, SBP_HEADER_LEN + 256 + 2) # header + max message + CRC
 
     while True:
         obj = None
-        stream.reload()
+        stream.fill_buffer()
         try:
             obj = kaitai_sbptable.SbpMessage(stream)
         except (KaitaiStructError, UnicodeDecodeError):

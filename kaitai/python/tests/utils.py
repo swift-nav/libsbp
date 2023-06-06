@@ -2,7 +2,7 @@
 # parser
 
 import kaitai.python.sbptable as kaitai_sbptable
-from kaitai.python.tests.utils_sbp2json import get_next_msg_kaitai, get_flattened_msg, serialise
+from kaitai.python.tests.utils_sbp2json import get_next_msg_kaitai, get_flattened_msg, serialise, BufferKaitaiStream
 from generator.sbpg.targets.common import snake_case, snake_case_keys, decode_json
 from kaitaistruct import KaitaiStream, KaitaiStruct
 import json
@@ -113,13 +113,14 @@ def get_next_msg_construct(fileobj):
 # hybrid version of sbp2json which uses original parser + kaitai struct to
 # avoid calling sbp.table.dispatch()
 def get_next_msg_hybrid1(fileobj):
+    stream = BufferKaitaiStream()
     for msg_type, sender, payload_len, buf, crc_read in parse_file_construct(fileobj):
 
         if msg_type not in kaitai_sbptable.TABLE:
             sys.stderr.write("Skipping unknown message type: {}\n".format(msg_type))
             continue
 
-        stream = KaitaiStream(io.BytesIO(buf))
+        stream.set_buffer(buf)
         obj = kaitai_sbptable.SbpMessage(stream)
 
         yield get_flattened_msg(obj)
@@ -130,6 +131,7 @@ def get_next_msg_hybrid1(fileobj):
 # this version can be used to speed up parsing in existing code based upon the
 # construct version
 def get_next_msg_hybrid2(fileobj):
+    stream = BufferKaitaiStream()
     for msg_type, sender, payload_len, buf, crc_read in parse_file_construct(fileobj):
 
         if msg_type not in kaitai_sbptable.TABLE:
@@ -138,7 +140,7 @@ def get_next_msg_hybrid2(fileobj):
 
         msg_buf = buf[SBP_HEADER_LEN:SBP_HEADER_LEN + payload_len]
         msg = sbp.msg.SBP(msg_type, sender, payload_len, msg_buf, crc_read)
-        stream = KaitaiStream(io.BytesIO(msg.to_binary()))
+        stream.set_buffer(msg.to_binary())
         obj = kaitai_sbptable.SbpMessage(stream)
 
         yield get_flattened_msg(obj)
