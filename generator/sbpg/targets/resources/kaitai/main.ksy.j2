@@ -43,6 +43,7 @@ types:
         contents: [0x55]
       - id: msg_type
         type: u2
+        enum: msg_ids
       - id: sender
         type: u2
       - id: length
@@ -55,7 +56,7 @@ types:
 ((* for s in specs *))
   ((* for d in s.definitions *))
     ((*- if d.sbp_id *))
-            (((d.sbp_id))): (((s.identifier | module_name)))::(((d.identifier | snake_case)))
+            'msg_ids::(((d.identifier | snake_case)))': (((s.identifier | module_name)))::(((d.identifier | snake_case)))
     ((*- endif *))
   ((*- endfor *))
 ((*- endfor *))

@@ -3,7 +3,7 @@
 # parser
 
 from kaitaistruct import KaitaiStream, KaitaiStruct, KaitaiStructError
-import kaitai.python.sbp as kaitai_sbp
+import kaitai.python.sbptable as kaitai_sbptable
 import io
 import rapidjson
 import binascii
@@ -22,7 +22,7 @@ def serialise(obj):
 # convert KaitaiStruct object to have similar structure to sbp2json output
 def get_flattened_msg(obj):
     obj.payload.preamble = ord(obj.preamble)
-    obj.payload.msg_type = obj.msg_type
+    obj.payload.msg_type = obj.msg_type.value
     obj.payload.sender = obj.sender
     obj.payload.length = obj.length
     obj.payload._io.seek(0)
@@ -74,13 +74,12 @@ class BufferedKaitaiStream(KaitaiStream):
 # work-alike of get_next_msg_construct() based upon Kaitai Struct
 def get_next_msg_kaitai(fp):
     stream = BufferedKaitaiStream(fp, SBP_HEADER_LEN + 256 + 2) # header + max message + CRC
-    msg_types = [item.value for item in kaitai_sbp.Sbp.MsgIds]
 
     while True:
         obj = None
         stream.reload()
         try:
-            obj = kaitai_sbp.Sbp.SbpMessage(stream)
+            obj = kaitai_sbptable.SbpMessage(stream)
         except (KaitaiStructError, UnicodeDecodeError):
             stream.seek(1)
             continue
@@ -94,11 +93,6 @@ def get_next_msg_kaitai(fp):
             else:
                 stream.seek(1)
                 continue
-
-        if obj.msg_type not in msg_types:
-            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.msg_type))
-            stream.seek(1)
-            continue
 
         # check CRC
         crc_read = obj.crc

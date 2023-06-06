@@ -1,7 +1,7 @@
 # Utilities for tests cases for the python version of the Kaitai Struct SBP
 # parser
 
-import kaitai.python.sbp as kaitai_sbp
+import kaitai.python.sbptable as kaitai_sbptable
 from kaitai.python.tests.utils_sbp2json import get_next_msg_kaitai, get_flattened_msg, serialise
 from generator.sbpg.targets.common import snake_case, snake_case_keys, decode_json
 from kaitaistruct import KaitaiStream, KaitaiStruct
@@ -113,10 +113,9 @@ def get_next_msg_construct(fileobj):
 # hybrid version of sbp2json which uses original parser + kaitai struct to
 # avoid calling sbp.table.dispatch()
 def get_next_msg_hybrid1(fileobj):
-    msg_types = [item.value for item in kaitai_sbp.Sbp.MsgIds]
     for msg_type, sender, payload_len, buf, crc_read in parse_file_construct(fileobj):
 
-        if msg_type not in msg_types:
+        if msg_type not in kaitai_sbptable.TABLE:
             sys.stderr.write("Skipping unknown message type: {}\n".format(msg_type))
             continue
 
@@ -131,10 +130,9 @@ def get_next_msg_hybrid1(fileobj):
 # this version can be used to speed up parsing in existing code based upon the
 # construct version
 def get_next_msg_hybrid2(fileobj):
-    msg_types = [item.value for item in kaitai_sbp.Sbp.MsgIds]
     for msg_type, sender, payload_len, buf, crc_read in parse_file_construct(fileobj):
 
-        if msg_type not in msg_types:
+        if msg_type not in kaitai_sbptable.TABLE:
             sys.stderr.write("Skipping unknown message type: {}\n".format(msg_type))
             continue
 

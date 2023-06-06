@@ -34,13 +34,10 @@ sub sbp2json($) {
 
     my $stream = BufferedKaitaiStream->new($fd, &BufferedKaitaiStream::SBP_HEADER_LEN + 256 + 2); # header + max message + CRC
 
-    # create a hash of valid ids to message types
-    my %msg_types = map {${${Sbp::{$_}}} => $_ } grep {/^MSG_/} keys %Sbp::;
-
     while(1) {
         $stream->reload();
 
-        my $msg = eval { Sbp::SbpMessage->new($stream) };
+        my $msg = eval { SbpTable::SbpMessage->new($stream) };
 
         if(!defined($msg)) {
             if($stream->is_eof()) {
@@ -51,24 +48,10 @@ sub sbp2json($) {
             }
         }
 
-        my $preamble = ord($msg->preamble());
-        if($preamble != 0x55) {
-            printf STDERR "Invalid preamble: 0x%.2x\n", $preamble;
-            $stream->seek(1);
-            next;
-        }
-
         my $crc_read = $msg->crc();
         my $crc_expected = crc($stream->get_crc_bytes($msg->length()), 16, 0, 0, 0, 0x1021, 0, 0);
         if($crc_read != $crc_expected) {
             print STDERR "Bad CRC: $crc_read vs $crc_expected\n";
-            $stream->seek(1);
-            next;
-        }
-
-        my $msg_type = $msg->msg_type();
-        if(!exists($msg_types{$msg_type})) {
-            print STDERR "Skipping unknown message type: $msg_type\n";
             $stream->seek(1);
             next;
         }

@@ -30,8 +30,10 @@ import os
 import subprocess
 import fileinput
 
-TEMPLATE_TYPES_NAME = "sbp_kaitai_types.ksy.j2"
-TEMPLATE_MAIN_NAME = "sbp_kaitai_main.ksy.j2"
+TEMPLATE_TYPES = "kaitai/types.ksy.j2"
+TEMPLATE_MAIN = "kaitai/main.ksy.j2"
+TEMPLATE_PYTHON_TABLE = "kaitai/table_python.py.j2"
+TEMPLATE_PERL_TABLE = "kaitai/table_perl.pm.j2"
 
 KAITAI_CODE = {
   'u8': 'u1',
@@ -140,6 +142,7 @@ def get_module_name(identifier):
 
 JENV.filters['get_type'] = get_type
 JENV.filters['snake_case'] = snake_case
+JENV.filters['camel_case'] = camel_case
 JENV.filters['commentify'] = commentify
 JENV.filters['comment_links'] = comment_links
 JENV.filters['hashWordWrap'] = hash_wordwrap
@@ -149,29 +152,22 @@ JENV.filters['module_name'] = get_module_name
 # apply fix-ups to generated python code to work around missing imports
 # issue in kaitai-struct-compiler 0.10, see
 # https://github.com/kaitai-io/kaitai_struct/issues/703 for details
-def fix_python_output(specs):
+def fix_python_output(output_dir, specs):
   def add_python_imports(basename, imports):
     # nothing to do
     if len(imports) == 0:
       return
 
     # check if file exists
-    py_file = os.path.join("python", basename + ".py")
-    if not os.path.exists(py_file):
-      return
-
-    # read file
-    code = None
-    with open(py_file, 'r') as f:
-      code = f.read()
-    if code is None:
-      return
-
-    # overwrite file
-    with open(py_file, 'w') as f:
+    py_file = os.path.join(output_dir, "python", basename + ".py")
+    with fileinput.input(files=(py_file), inplace=True) as f:
+      # copy comment line
+      line = f.readline()
+      print(line, end='')
       for module in imports:
-        f.write("from .{} import *\n".format(module))
-      f.write(code)
+        print("from .{} import *".format(module))
+      for line in f:
+        print(line, end='')
 
   # add imports for individual types
   for package_spec in specs:
@@ -185,13 +181,29 @@ def fix_python_output(specs):
 # apply fix-ups to generated perl code to work around incorrectly initialised
 # arrays issue in kaitai-struct-compiler 0.10, see
 # https://github.com/kaitai-io/kaitai_struct_compiler/pull/251 for details
-def fix_perl_output(specs):
-  files = [os.path.join("perl", camel_case(package_spec.filepath[1]) + ".pm") for package_spec in specs]
+def fix_perl_output(output_dir, specs):
+  files = [os.path.join(output_dir, "perl", camel_case(package_spec.filepath[1]) + ".pm") for package_spec in specs]
   with fileinput.input(files=files, inplace=True) as f:
     for line in f:
       if line.endswith("= ();\n"):
         line = line[:-4] + "[];\n";
       print(line, end='')
+
+
+# create table-based version of SBP message for faster parsing
+def render_python_table(output_dir, specs, jenv):
+  destination_filename = os.path.join(output_dir, "python", "sbptable.py")
+  ksy_template = jenv.get_template(TEMPLATE_PYTHON_TABLE)
+  with open(destination_filename, 'w') as f:
+    f.write(ksy_template.render(specs=specs))
+
+
+# create table-based version of SBP message for faster parsing
+def render_perl_table(output_dir, specs, jenv):
+  destination_filename = os.path.join(output_dir, "perl", "SbpTable.pm")
+  ksy_template = jenv.get_template(TEMPLATE_PERL_TABLE)
+  with open(destination_filename, 'w') as f:
+    f.write(ksy_template.render(specs=specs))
 
 
 def render_source(output_dir, package_spec, jenv=JENV):
@@ -200,7 +212,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
   """
   path, name = package_spec.filepath
   destination_filename = os.path.join(output_dir, "ksy", name + ".ksy")
-  ksy_template = jenv.get_template(TEMPLATE_TYPES_NAME)
+  ksy_template = jenv.get_template(TEMPLATE_TYPES)
   imports = ','.join(get_imports(package_spec))
 
   with open(destination_filename, 'w') as f:
@@ -216,19 +228,20 @@ def render_main(output_dir, all_package_specs, release: ReleaseVersion, jenv=JEN
   """
   Render and output the top-level KSY file, then run kaitai-struct-compiler
   """
-  directory = output_dir
   destination_filename = os.path.join(output_dir, "ksy", "sbp.ksy")
-  ksy_template = jenv.get_template(TEMPLATE_MAIN_NAME)
+  ksy_template = jenv.get_template(TEMPLATE_MAIN)
   specs = [spec for spec in all_package_specs if spec.render_source]
 
   with open(destination_filename, 'w') as f:
     f.write(ksy_template.render(specs=specs,
                                version=release.full_version))
 
-  # run kaitai-struct-compiler to generate parsing code for all desired targets
-  os.chdir(output_dir)
-  targets = [x for y in [[ "--target", lang ] for lang in OUTPUT_LANGUAGES] for x in y]
-  subprocess.check_call(["kaitai-struct-compiler", "ksy/sbp.ksy"] + targets)
+  render_python_table(output_dir, specs, jenv)
+  render_perl_table(output_dir, specs, jenv)
 
-  fix_python_output(specs)
-  fix_perl_output(specs)
+  # run kaitai-struct-compiler to generate parsing code for all desired targets
+  targets = [x for y in [[ "--target", lang ] for lang in OUTPUT_LANGUAGES] for x in y]
+  subprocess.check_call(["kaitai-struct-compiler", "ksy/sbp.ksy"] + targets, cwd=output_dir)
+
+  fix_python_output(output_dir, specs)
+  fix_perl_output(output_dir, specs)
