@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_ssr_msg_ssr_tile_definition_1() {
     my $buf = decode_base64("VfgFAAAhfzoJAK4IAQIDBAAFALocO6dkAGQABgAGANIClkkAAAAAzF4=");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x5ECC, "crc");
     

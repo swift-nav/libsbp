@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds_1() {
     my $buf = decode_base64("Vf4FQgAttAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob7LY=");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'preamble'}, 0x55, "preamble");
     
@@ -78,7 +77,7 @@ sub test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds_1() {
 sub test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds_2() {
     my $buf = decode_base64("Vf4FQgAbtAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQAmyQ=");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'preamble'}, 0x55, "preamble");
     

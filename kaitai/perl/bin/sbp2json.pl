@@ -23,7 +23,6 @@ BEGIN {
 }
 
 use JSON::XS;
-use t::Utils;
 use Digest::CRC qw(crc);
 
 
@@ -35,7 +34,7 @@ sub sbp2json($) {
     my $stream = BufferedKaitaiStream->new($fd, &BufferedKaitaiStream::SBP_HEADER_LEN + 256 + 2); # header + max message + CRC
 
     while(1) {
-        $stream->reload();
+        $stream->fill_buffer();
 
         my $msg = eval { SbpTable::SbpMessage->new($stream) };
 
@@ -56,7 +55,7 @@ sub sbp2json($) {
             next;
         }
 
-        $msg = Utils::get_flattened_msg($msg);
+        $msg = ParseUtils::get_flattened_msg($msg);
         print $json->encode($msg), "\n";
     }
 }

@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_1() {
     my $buf = decode_base64("VUYAwwSwAAAAAAAAPL4AAAAAALpSwAAAAAAATG1AAAAAAACE0L4AAAAAAP7cPgAAAAAAAHE+AAAAAAAAhb4cJBlR3/40Ptx02CchvQNAAAAAnLHMhj8AAKDctiG0QJjhwCz+TO6/KZYYApScQb78WncwD9fwP3x/c17QEO4/pXM0SmGn9r0AAAAAwLTlvgAAAAAAAHC9AAAAAAAAAAAAAAAAgAwZQS4HAAAAAIAMGUEuBwEBAwDhnA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x9ce1, "crc");
     
@@ -106,7 +105,7 @@ sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_1() {
 sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_2() {
     my $buf = decode_base64("VUYAwwSwAAAAAAAARL4AAAAAAEhCQAAAAACAvHNAAAAAAABQwT4AAAAAAKTMPgAAAAAAAII+AAAAAAAAgD5ItX8G0OE0Pp6ugVsbafm/AAAAYMw5gD8AAKAjkiG0QPepASSFzvM/TwttXJzQQb5nTgP935P/v6TWWvra8O4/Xu+7JSQK8j0AAAAAsFsTPwAAAAAAAIm9AAAAAAAAAAAAAAAAgAwZQS4HAAAAAIAMGUEuBwEBDQC0FQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x15b4, "crc");
     
@@ -181,7 +180,7 @@ sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_2() {
 sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_3() {
     my $buf = decode_base64("VUYAwwSwAAAAAAAAOD4AAAAAAChRwAAAAAAAgW1AAAAAAAAczb4AAAAAAEzfPgAAAAAAAGm+AAAAAAAAXL6God//8yszPpKwcY7qpAVAAAAAOK+McD8AAMBaqyG0QCQm7f/IoO2/zFw/mjFbQb59XvuEND3YPwKLHBvnx+4/fLcEtMIe970AAAAAAGjevgAAAAAAAGA9AAAAAAAAAAAAAAAAgAwZQS4HAAAAAIAMGUEuBwEBAADemA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x98de, "crc");
     
@@ -256,7 +255,7 @@ sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_3() {
 sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_4() {
     my $buf = decode_base64("VUYAwwSwAAAAAAAARL4AAAAAAEhCQAAAAACAvHNAAAAAAABQwT4AAAAAAKTMPgAAAAAAAII+AAAAAAAAgD5ItX8G0OE0Pp6ugVsbafm/AAAAYMw5gD8AAKAjkiG0QPepASSFzvM/TwttXJzQQb5nTgP935P/v6TWWvra8O4/Xu+7JSQK8j0AAAAAsFsTPwAAAAAAAIm9AAAAAAAAAAAAAAAAgAwZQS4HAAAAAIAMGUEuBwEBDQC0FQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x15b4, "crc");
     
@@ -331,7 +330,7 @@ sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_4() {
 sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_5() {
     my $buf = decode_base64("VUYAwwSwAAAAAACAVb4AAAAAAJxFQAAAAACAE3NAAAAAAACgwT4AAAAAAJjPPgAAAAAAAGG+AAAAAADAi74aGg2VEJg2PmgHLtZLVAXAAAAAgOZShD8AAKD8oiG0QEkGgjbZq/I/UeCje+4qQr7OK41D850FwHGzmbsrXO4//uwfK+Cd9D0AAAAA6AQavwAAAAAAAIa9AAAAAAAAAAAAAAAAgAwZQS4HAAAAAIAMGUEuBwEBFgBjPQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x3d63, "crc");
     
@@ -406,7 +405,7 @@ sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_5() {
 sub test_auto_check_sbp_observation_msg_ephemeris_dep_b_6() {
     my $buf = decode_base64("VUYAwwSwAAAAAAAATb4AAAAAAHpTwAAAAAAA6W5AAAAAAAA8z74AAAAAABzePgAAAAAAgHg+AAAAAAAAbD4K5reM1uYyPjZWxKT8Cv8/AAAAJPe/gD8AAKAFwSG0QLqKUYFY7wFAXtJ4qmoZQb5n1SCb48Lgv5wvaF1lN+8/xFNk/jM2BL4AAAAAMvI0PwAAAAAAAHK9AAAAAAAAAAAAAAAAgAwZQS4HAAAAAIAMGUEuBwEBHgCqIQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x21aa, "crc");
     

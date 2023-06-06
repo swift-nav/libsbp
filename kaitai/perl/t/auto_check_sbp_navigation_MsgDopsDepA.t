@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_navigation_msg_dops_dep_a_1() {
     my $buf = decode_base64("VQYC9tcOCDAnALQAvgCqAKAAlgB5qg==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xaa79, "crc");
     
@@ -64,7 +63,7 @@ sub test_auto_check_sbp_navigation_msg_dops_dep_a_1() {
 sub test_auto_check_sbp_navigation_msg_dops_dep_a_2() {
     my $buf = decode_base64("VQYC9tcO8DMnALQAvgCqAKAAlgBOqQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xa94e, "crc");
     
@@ -97,7 +96,7 @@ sub test_auto_check_sbp_navigation_msg_dops_dep_a_2() {
 sub test_auto_check_sbp_navigation_msg_dops_dep_a_3() {
     my $buf = decode_base64("VQYC9tcO2DcnALQAvgCqAKAAlgBH2g==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xda47, "crc");
     
@@ -130,7 +129,7 @@ sub test_auto_check_sbp_navigation_msg_dops_dep_a_3() {
 sub test_auto_check_sbp_navigation_msg_dops_dep_a_4() {
     my $buf = decode_base64("VQYCwwQO1J1DGPcA1wB7ABEBLADOFQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x15ce, "crc");
     
@@ -163,7 +162,7 @@ sub test_auto_check_sbp_navigation_msg_dops_dep_a_4() {
 sub test_auto_check_sbp_navigation_msg_dops_dep_a_5() {
     my $buf = decode_base64("VQYCwwQOAAAAAP////8AAAAAAACSDA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xc92, "crc");
     
@@ -196,7 +195,7 @@ sub test_auto_check_sbp_navigation_msg_dops_dep_a_5() {
 sub test_auto_check_sbp_navigation_msg_dops_dep_a_6() {
     my $buf = decode_base64("VQYCwwQOgKVEGFwBOAGbAH0CcQCBXQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x5d81, "crc");
     
@@ -229,7 +228,7 @@ sub test_auto_check_sbp_navigation_msg_dops_dep_a_6() {
 sub test_auto_check_sbp_navigation_msg_dops_dep_a_7() {
     my $buf = decode_base64("VQYCwwQOaKlEGFwBNwGbAH0CcQDRgA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x80d1, "crc");
     
@@ -262,7 +261,7 @@ sub test_auto_check_sbp_navigation_msg_dops_dep_a_7() {
 sub test_auto_check_sbp_navigation_msg_dops_dep_a_8() {
     my $buf = decode_base64("VQYCwwQOUK1EGFwBNwGbAH0CcAAeBg==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x61e, "crc");
     
@@ -295,7 +294,7 @@ sub test_auto_check_sbp_navigation_msg_dops_dep_a_8() {
 sub test_auto_check_sbp_navigation_msg_dops_dep_a_9() {
     my $buf = decode_base64("VQYCwwQOOLFEGFwBNwGbAH0CcABGQw==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x4346, "crc");
     

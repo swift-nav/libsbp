@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_piksi_msg_network_bandwidth_usage_1() {
     my $buf = decode_base64("Vb0Az3nIXmmygAAAAAAAAAAAAAAAAAAAAAAAAAAAY2FuMAAAAAAAAAAAAAAAAF5psoAAAAAAAAAAAAAAAAAAAAAAAAAAAGNhbjEAAAAAAAAAAAAAAABeabKAAAAAAKXrXssAAAAA7Q6U8LjcytpldGgwAAAAAAAAAAAAAAAAXmmygAAAAAAAAAAAAAAAAAAAAAAAAAAAbG8AAAAAAAAAAAAAAAAAAF5psoAAAAAAAAAAAAAAAAAAAAAAAAAAAHNpdDAAAAAAAAAAAAAAAAAbhQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x851B, "crc");
     

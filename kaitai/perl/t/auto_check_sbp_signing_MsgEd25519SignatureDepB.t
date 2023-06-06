@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_signing_msg_ed25519_signature_dep_b_1() {
     my $buf = decode_base64("VQMMQgC6AQAAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMTIzNDU2Nzg5Ojs8PT4/ZGVmZ2hpamtsbW5vcHFyc3R1dneIEwAAchQAAFwVAABGFgAAMBcAABoYAAAEGQAA7hkAANgaAADCGwAArBwAAJYdAACAHgAAah8AAFQgAAA+IQAAKCIAABIjAAD8IwAA5iQAANAlAAC6JgAApCcAAI4oAAB4KQAA7pE=");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x91EE, "crc");
     

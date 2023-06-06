@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_observation_msg_ephemeris_gps_1() {
     my $buf = decode_base64("VYoACgmLFgCwzwYAaggAAABAQDgAAAEAAACYsgBAUcIAUJpDACA4tgCAUjYAAAAyAAD4s3LYYLQxdTg+jikF61+Hlr8AAAAgv/d8PwAAwM6MIbRAKYOzho34/b/jhVE2zB5Dvtg7xydgqO+/RwvZk5Hk7T/dL2Tg/y/GvWCLJboAAB4tAAAAALDPBgBqCC0tAKoE");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x4aa, "crc");
     

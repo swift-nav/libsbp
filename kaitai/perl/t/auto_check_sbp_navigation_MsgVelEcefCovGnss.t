@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_navigation_msg_vel_ecef_cov_gnss_1() {
     my $buf = decode_base64("VTUCABAq4OXpHf3///8BAAAABAAAAC7gIDsg1g47lpPcuhM/ijsaliO7C8F3OxUCFuY=");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xe616, "crc");
     

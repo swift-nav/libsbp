@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep_1() {
     my $buf = decode_base64("VREAO2c3o5dw1wEAAAAAAAAAAAAAAAAAAAAnBQAAqbHQNg8AAABVPQAAJwABAAAAAAAAACgAbAEACwAACabW");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xd6a6, "crc");
     
@@ -94,7 +93,7 @@ sub test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep_1() {
 sub test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep_2() {
     my $buf = decode_base64("VREAO2c3Yfs99QEAAAAAAAAAAAAAAAAAAAASBwAADq/QNg8AAAAzPQAAHgABAAAAAAAAACgA4AEACwAACYiz");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xb388, "crc");
     
@@ -157,7 +156,7 @@ sub test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep_2() {
 sub test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep_3() {
     my $buf = decode_base64("VREAO2c3i9rsEgIAAAAAAAAAAAAAAAAAAAD6CAAACLPQNg8AAABDPQAAFgACAAAAAAAAACgAGwEACwACCdmf");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x9fd9, "crc");
     
@@ -220,7 +219,7 @@ sub test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep_3() {
 sub test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep_4() {
     my $buf = decode_base64("VREAO2c3//uqMAIAAAAAAAAAAAAAAAAAAADiCgAAfbXQNg8AAAAdPQAACgACAAAAAAAAACgA3AEACwADCUJf");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x5f42, "crc");
     
@@ -283,7 +282,7 @@ sub test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep_4() {
 sub test_auto_check_sbp_tracking_msg_tracking_state_detailed_dep_5() {
     my $buf = decode_base64("VREAO2c3vV94TgIAAAAAAAAAAAAAAAAAAADLDAAAQLjQNg8AAAAYPQAABAADAAAAAAAAACgAAgEACwADCcLO");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xcec2, "crc");
     

@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_navigation_msg_pose_relative_1() {
     my $buf = decode_base64("VUUCQgBaVgQAAABWBAAArAgAAEwEAAAmAgAAZAAAAGQDyMz8qJ3/czW6kL4wIiUAAIA/AAAAAAAAAAAAAIA/AAAAAAAAgD8AAABAAAAAAAAAAAAAAABAAAAAAAAAAEAFq7s=");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xBBAB, "crc");
     

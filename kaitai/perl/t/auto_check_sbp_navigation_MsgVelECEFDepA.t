@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_1() {
     my $buf = decode_base64("VQQC9tcUFC4nANoLAACG9f//o/z//wAACQBQ7A==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xec50, "crc");
     
@@ -66,7 +65,7 @@ sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_1() {
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_2() {
     my $buf = decode_base64("VQQC9tcUeC4nAEQLAAAY9v//3Pz//wAACQD4ig==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x8af8, "crc");
     
@@ -101,7 +100,7 @@ sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_2() {
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_3() {
     my $buf = decode_base64("VQQC9tcU3C4nABULAABN9v//9/z//wAACQAZrg==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xae19, "crc");
     
@@ -136,7 +135,7 @@ sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_3() {
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_4() {
     my $buf = decode_base64("VQQC9tcUQC8nAHkLAAAC9v//6vz//wAACQDD5A==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xe4c3, "crc");
     
@@ -171,7 +170,7 @@ sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_4() {
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_5() {
     my $buf = decode_base64("VQQC9tcUpC8nAB8LAABd9v//EP3//wAACQDbpA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xa4db, "crc");
     
@@ -206,7 +205,7 @@ sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_5() {
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_6() {
     my $buf = decode_base64("VQQCwwQU1J1DGBgAAAD1////2////wAACABE/w==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xff44, "crc");
     
@@ -241,7 +240,7 @@ sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_6() {
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_7() {
     my $buf = decode_base64("VQQCwwQUOJ5DGAQAAADq////EgAAAAAACADWiA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x88d6, "crc");
     
@@ -276,7 +275,7 @@ sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_7() {
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_8() {
     my $buf = decode_base64("VQQCwwQUnJ5DGOb///8EAAAAAQAAAAAACAB6nw==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x9f7a, "crc");
     
@@ -311,7 +310,7 @@ sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_8() {
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_9() {
     my $buf = decode_base64("VQQCwwQUAJ9DGPf////t////HAAAAAAACADokg==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x92e8, "crc");
     
@@ -346,7 +345,7 @@ sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_9() {
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_10() {
     my $buf = decode_base64("VQQCwwQUZJ9DGP////8CAAAA9f///wAACACr7g==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xeeab, "crc");
     
@@ -381,7 +380,7 @@ sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_10() {
 sub test_auto_check_sbp_navigation_msg_vel_ecef_dep_a_11() {
     my $buf = decode_base64("VQQCwwQULqJEGM////+5////QQAAAAAABQBSmg==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x9a52, "crc");
     

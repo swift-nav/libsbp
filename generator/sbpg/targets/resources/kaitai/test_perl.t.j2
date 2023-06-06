@@ -27,7 +27,6 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 
 
 ((*- macro test_field(name, value) *))
@@ -53,7 +52,7 @@ use t::Utils;
 sub test_(((s.suite_name|snake_case)))_(((loop.index)))() {
     my $buf = decode_base64("(((t.raw_packet)))");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
 
   ((*- for k in t.sbp *))
     (((test_field( (((k))), (((t.sbp[k]))) ))))

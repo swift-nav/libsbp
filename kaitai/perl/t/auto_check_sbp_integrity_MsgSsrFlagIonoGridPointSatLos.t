@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_integrity_msg_ssr_flag_iono_grid_point_sat_los_1() {
     my $buf = decode_base64("VdELQgAVtAAAAAMAAQIDBAAFAAYeAAIKCw8OYpQ=");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'preamble'}, 0x55, "preamble");
     

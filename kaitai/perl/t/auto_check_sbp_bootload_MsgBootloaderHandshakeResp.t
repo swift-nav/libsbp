@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_bootload_msg_bootloader_handshake_resp_1() {
     my $buf = decode_base64("VbQAAAAJAAAAAHYxLjIKyQE=");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x1c9, "crc");
     
@@ -56,7 +55,7 @@ sub test_auto_check_sbp_bootload_msg_bootloader_handshake_resp_1() {
 sub test_auto_check_sbp_bootload_msg_bootloader_handshake_resp_2() {
     my $buf = decode_base64("VbAAwwQEdjEuMgHO");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xce01, "crc");
     

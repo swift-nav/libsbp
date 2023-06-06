@@ -43,7 +43,7 @@ sub new {
 
 # discard processed data, then attempt to read more data such that
 # the buffer contains 'max_buf_size' bytes
-sub reload($) {
+sub fill_buffer($) {
     my ($self) = @_;
 
     my $pos = tell($self->{_io});
@@ -67,7 +67,7 @@ sub get_crc_bytes($$) {
 }
 
 
-package Utils;
+package ParseUtils;
 
 use MIME::Base64;
 

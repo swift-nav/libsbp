@@ -1,5 +1,4 @@
-# Utilities for tests cases for the python version of the Kaitai Struct SBP
-# parser
+# Utilities for tests cases for the python version of the Kaitai Struct SBP parser
 
 import kaitai.python.sbptable as kaitai_sbptable
 from kaitai.python.parse_utils import iter_messages as get_next_msg_kaitai, get_flattened_msg, serialise, BufferKaitaiStream
@@ -17,7 +16,7 @@ import re
 from subprocess import Popen, PIPE
 
 SBP_HEADER_LEN = 6
-PERL_CMD = ['perl', 'kaitai/perl/t/sbp2json.pl']
+PERL_CMD = ['perl', 'kaitai/perl/bin/sbp2json.pl']
 
 
 # convert KaitaiStruct object into dict

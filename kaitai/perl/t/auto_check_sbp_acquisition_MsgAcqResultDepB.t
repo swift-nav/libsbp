@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_acquisition_msg_acq_result_dep_b_1() {
     my $buf = decode_base64("VRQA9tcQiacSQgAAoUPwGJxFCQAAAFDD");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xc350, "crc");
     
@@ -60,7 +59,7 @@ sub test_auto_check_sbp_acquisition_msg_acq_result_dep_b_1() {
 sub test_auto_check_sbp_acquisition_msg_acq_result_dep_b_2() {
     my $buf = decode_base64("VRQA9tcQzqwQQgDAUkTGxwDGAwAAAJWP");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x8f95, "crc");
     
@@ -89,7 +88,7 @@ sub test_auto_check_sbp_acquisition_msg_acq_result_dep_b_2() {
 sub test_auto_check_sbp_acquisition_msg_acq_result_dep_b_3() {
     my $buf = decode_base64("VRQA9tcQ5BsPQgCARkTkSpRFEgAAALOb");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x9bb3, "crc");
     
@@ -118,7 +117,7 @@ sub test_auto_check_sbp_acquisition_msg_acq_result_dep_b_3() {
 sub test_auto_check_sbp_acquisition_msg_acq_result_dep_b_4() {
     my $buf = decode_base64("VRQA9tcQLscOQgBAgUPwGBxFEQAAABK1");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xb512, "crc");
     
@@ -147,7 +146,7 @@ sub test_auto_check_sbp_acquisition_msg_acq_result_dep_b_4() {
 sub test_auto_check_sbp_acquisition_msg_acq_result_dep_b_5() {
     my $buf = decode_base64("VRQA9tcQwhgOQgCAAkSBwfnDBQAAACPL");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xcb23, "crc");
     

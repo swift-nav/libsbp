@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_1() {
     my $buf = decode_base64("VQAB9tcL+wZ4LicAAAAAAACFJA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x2485, "crc");
     
@@ -60,7 +59,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_1() {
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_2() {
     my $buf = decode_base64("VQAB9tcL+wbcLicAAAAAAAAkoA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xa024, "crc");
     
@@ -89,7 +88,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_2() {
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_3() {
     my $buf = decode_base64("VQAB9tcL+wZALycAAAAAAACrvg==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xbeab, "crc");
     
@@ -118,7 +117,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_3() {
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_4() {
     my $buf = decode_base64("VQAB9tcL+wakLycAAAAAAADTZQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x65d3, "crc");
     
@@ -147,7 +146,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_4() {
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_5() {
     my $buf = decode_base64("VQAB9tcL+wYIMCcAAAAAAAD7LA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x2cfb, "crc");
     
@@ -176,7 +175,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_5() {
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_6() {
     my $buf = decode_base64("VQABwwQLLgfUnUMYb5P8/wDXvg==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xbed7, "crc");
     
@@ -205,7 +204,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_6() {
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_7() {
     my $buf = decode_base64("VQABwwQLLgc4nkMYbWcDAACGWQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x5986, "crc");
     
@@ -234,7 +233,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_7() {
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_8() {
     my $buf = decode_base64("VQABwwQLLgecnkMY6Zj8/wDO8Q==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xf1ce, "crc");
     
@@ -263,7 +262,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_8() {
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_9() {
     my $buf = decode_base64("VQABwwQLLgcAn0MY8JoDAACTYg==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x6293, "crc");
     
@@ -292,7 +291,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_9() {
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_10() {
     my $buf = decode_base64("VQABwwQLLgdkn0MYkGX8/wC6mA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x98ba, "crc");
     
@@ -321,7 +320,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_10() {
 sub test_auto_check_sbp_navigation_msg_gps_time_dep_a_11() {
     my $buf = decode_base64("VQABwwQLLgcuokQYzeb6/wAL4Q==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xe10b, "crc");
     

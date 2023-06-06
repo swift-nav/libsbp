@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_piksi_msg_thread_state_1() {
     my $buf = decode_base64("VRcA9tcabWFpbgAAAAAAAAAAAAAAAAAAAAAAAJwJAABJig==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x8a49, "crc");
     
@@ -58,7 +57,7 @@ sub test_auto_check_sbp_piksi_msg_thread_state_1() {
 sub test_auto_check_sbp_piksi_msg_thread_state_2() {
     my $buf = decode_base64("VRcA9tcaaWRsZQAAAAAAAAAAAAAAAAAAAABTAiQAAACXFA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x1497, "crc");
     
@@ -85,7 +84,7 @@ sub test_auto_check_sbp_piksi_msg_thread_state_2() {
 sub test_auto_check_sbp_piksi_msg_thread_state_3() {
     my $buf = decode_base64("VRcA9tcaTkFQIElTUgAAAAAAAAAAAAAAAAAOAHQEAADiPA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x3ce2, "crc");
     
@@ -112,7 +111,7 @@ sub test_auto_check_sbp_piksi_msg_thread_state_3() {
 sub test_auto_check_sbp_piksi_msg_thread_state_4() {
     my $buf = decode_base64("VRcA9tcaU0JQAAAAAAAAAAAAAAAAAAAAAAABAMQTAABaqQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xa95a, "crc");
     
@@ -139,7 +138,7 @@ sub test_auto_check_sbp_piksi_msg_thread_state_4() {
 sub test_auto_check_sbp_piksi_msg_thread_state_5() {
     my $buf = decode_base64("VRcA9tcabWFuYWdlIGFjcQAAAAAAAAAAAAAHABQJAAAvSw==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x4b2f, "crc");
     
@@ -166,7 +165,7 @@ sub test_auto_check_sbp_piksi_msg_thread_state_5() {
 sub test_auto_check_sbp_piksi_msg_thread_state_6() {
     my $buf = decode_base64("VRcAwwQabWFpbgAAAAAAAAAAAAAAAAAAAAAAAJQJAADD1A==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xd4c3, "crc");
     
@@ -193,7 +192,7 @@ sub test_auto_check_sbp_piksi_msg_thread_state_6() {
 sub test_auto_check_sbp_piksi_msg_thread_state_7() {
     my $buf = decode_base64("VRcAwwQaaWRsZQAAAAAAAAAAAAAAAAAAAADkASQAAADhEg==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x12e1, "crc");
     
@@ -220,7 +219,7 @@ sub test_auto_check_sbp_piksi_msg_thread_state_7() {
 sub test_auto_check_sbp_piksi_msg_thread_state_8() {
     my $buf = decode_base64("VRcAwwQaTkFQIElTUgAAAAAAAAAAAAAAAACKAVwHAACmdA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x74a6, "crc");
     
@@ -247,7 +246,7 @@ sub test_auto_check_sbp_piksi_msg_thread_state_8() {
 sub test_auto_check_sbp_piksi_msg_thread_state_9() {
     my $buf = decode_base64("VRcAwwQaU0JQAAAAAAAAAAAAAAAAAAAAAAABAAQMAADlrg==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xaee5, "crc");
     
@@ -274,7 +273,7 @@ sub test_auto_check_sbp_piksi_msg_thread_state_9() {
 sub test_auto_check_sbp_piksi_msg_thread_state_10() {
     my $buf = decode_base64("VRcAwwQabWFuYWdlIGFjcQAAAAAAAAAAAAAKAHwJAAA0Ag==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x234, "crc");
     
@@ -301,7 +300,7 @@ sub test_auto_check_sbp_piksi_msg_thread_state_10() {
 sub test_auto_check_sbp_piksi_msg_thread_state_11() {
     my $buf = decode_base64("VRcAwwQabWFuYWdlIHRyYWNrAAAAAAAAAAAAABwJAAB6Ng==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x367a, "crc");
     

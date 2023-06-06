@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_navigation_msg_gps_time_1() {
     my $buf = decode_base64("VQIB04gLgAco9HoT9IsCAAAimA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x9822, "crc");
     
@@ -60,7 +59,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_1() {
 sub test_auto_check_sbp_navigation_msg_gps_time_2() {
     my $buf = decode_base64("VQIB04gLgAcc9noTfuoDAABBAw==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x341, "crc");
     
@@ -89,7 +88,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_2() {
 sub test_auto_check_sbp_navigation_msg_gps_time_3() {
     my $buf = decode_base64("VQIB04gLgAcQ+HoTgQwEAAAMVA==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x540c, "crc");
     
@@ -118,7 +117,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_3() {
 sub test_auto_check_sbp_navigation_msg_gps_time_4() {
     my $buf = decode_base64("VQIB04gLgAcE+noTicwEAAAypQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0xa532, "crc");
     
@@ -147,7 +146,7 @@ sub test_auto_check_sbp_navigation_msg_gps_time_4() {
 sub test_auto_check_sbp_navigation_msg_gps_time_5() {
     my $buf = decode_base64("VQIB04gLgAf4+3oTtYkFAAC0IQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x21b4, "crc");
     

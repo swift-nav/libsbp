@@ -27,11 +27,10 @@ use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;
 use MIME::Base64;
-use t::Utils;
 sub test_auto_check_sbp_system_msg_status_journal_1() {
     my $buf = decode_base64("Vf3/04ghAQABBGQAAAAQkhAAAAYAAQ26EwAABgABDrgiAAAGAAEPcXc=");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x7771, "crc");
     
@@ -62,7 +61,7 @@ sub test_auto_check_sbp_system_msg_status_journal_1() {
 sub test_auto_check_sbp_system_msg_status_journal_2() {
     my $buf = decode_base64("Vf3/04gRAQABBGQAAAAQkhAAAAYAAQ2QeQ==");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
-    my $msg = Utils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
     is($msg->{'crc'}, 0x7990, "crc");
     
