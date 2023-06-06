@@ -2,7 +2,7 @@
 # parser
 
 import kaitai.python.sbptable as kaitai_sbptable
-from kaitai.python.tests.utils_sbp2json import get_next_msg_kaitai, get_flattened_msg, serialise, BufferKaitaiStream
+from kaitai.python.parse_utils import iter_messages as get_next_msg_kaitai, get_flattened_msg, serialise, BufferKaitaiStream
 from generator.sbpg.targets.common import snake_case, snake_case_keys, decode_json
 from kaitaistruct import KaitaiStream, KaitaiStruct
 import json

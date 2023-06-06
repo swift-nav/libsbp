@@ -12,7 +12,7 @@ os.environ['PYTHONPATH'] = PWD
 
 LONG_SBP = os.path.join(TESTDATA_ROOT, "benchmark.sbp")
 
-CMD = ['python3', '-c', "import kaitai.python.tests.utils_sbp2json as sbp; sbp.sbp2json()"]
+CMD = ["python3", "kaitai/python/bin/sbp2json.py"]
 
 subprocess.run(
     maybe_via_docker(PWD, "python-sbp2json", CMD),

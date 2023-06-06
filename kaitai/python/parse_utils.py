@@ -1,11 +1,9 @@
-# Utilities for tests cases for the python version of the Kaitai Struct SBP
-# parser only with focus on producing sbp2json-style output from Kaitai Struct
-# parser
+# helper methods for parsing SBP input using the Kaitai Struct python bindings
+# and producing sbp2json-style output
 
 from kaitaistruct import KaitaiStream, KaitaiStruct, KaitaiStructError
-import kaitai.python.sbptable as kaitai_sbptable
+import kaitai.python.sbptable as sbptable
 import io
-import rapidjson
 import binascii
 import sys
 import base64
@@ -48,8 +46,8 @@ class BufferKaitaiStream(KaitaiStream):
         return True if self._io.pos == len(self._io.buf) else False
 
 
-# wrapper object which allows KaitaiStream to be used with inputs which do
-# not support seeking
+# wrapper object which allows KaitaiStream to be used with file-like inputs
+# which do not support seeking
 class BufferedFileKaitaiStream(BufferKaitaiStream):
     def __init__(self, fp, max_buf_size=io.DEFAULT_BUFFER_SIZE):
         super().__init__(fp.read(max_buf_size))
@@ -91,15 +89,15 @@ def get_flattened_msg(obj):
     return obj.payload
 
 
-# work-alike of get_next_msg_construct() based upon Kaitai Struct
-def get_next_msg_kaitai(fp):
+# generator to produce SBP messages from a file object
+def iter_messages(fp):
     stream = BufferedFileKaitaiStream(fp, SBP_HEADER_LEN + 256 + 2) # header + max message + CRC
 
     while True:
         obj = None
         stream.fill_buffer()
         try:
-            obj = kaitai_sbptable.SbpMessage(stream)
+            obj = sbptable.SbpMessage(stream)
         except (KaitaiStructError, UnicodeDecodeError):
             stream.seek(1)
             continue
@@ -123,10 +121,3 @@ def get_next_msg_kaitai(fp):
             continue
 
         yield get_flattened_msg(obj)
-
-
-# implementation of sbp2json using Kaitai Struct parser
-def sbp2json():
-    with open(0, 'rb') as f:
-        for msg in get_next_msg_kaitai(f):
-            print(rapidjson.dumps(msg, default=serialise))
