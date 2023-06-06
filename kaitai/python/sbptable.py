@@ -316,7 +316,7 @@ class SbpMessage(Sbp.SbpMessage):
         msg_type = self._io.read_u2le()
         if msg_type not in TABLE:
             raise kaitaistruct.ValidationNotAnyOfError(msg_type, self._io, "Message Type")
-        self.msg_type = Sbp.MsgIds(msg_type)
+        self.msg_type = msg_type
 
         self.sender = self._io.read_u2le()
         self.length = self._io.read_u1()

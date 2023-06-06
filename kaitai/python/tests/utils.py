@@ -120,7 +120,7 @@ def get_next_msg_hybrid1(fileobj):
             continue
 
         stream = KaitaiStream(io.BytesIO(buf))
-        obj = kaitai_sbp.Sbp.SbpMessage(stream)
+        obj = kaitai_sbptable.SbpMessage(stream)
 
         yield get_flattened_msg(obj)
 
@@ -139,7 +139,7 @@ def get_next_msg_hybrid2(fileobj):
         msg_buf = buf[SBP_HEADER_LEN:SBP_HEADER_LEN + payload_len]
         msg = sbp.msg.SBP(msg_type, sender, payload_len, msg_buf, crc_read)
         stream = KaitaiStream(io.BytesIO(msg.to_binary()))
-        obj = kaitai_sbp.Sbp.SbpMessage(stream)
+        obj = kaitai_sbptable.SbpMessage(stream)
 
         yield get_flattened_msg(obj)
 

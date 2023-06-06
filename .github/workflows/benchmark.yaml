@@ -12,6 +12,8 @@ on:
       - "python/**"
       - "haskell/**"
       - "rust/**"
+      - "kaitai/python/**"
+      - "kaitai/perl/**"
       - scripts/ci_benchmark.bash
       - scripts/ci_benchmark_install.bash
       - test_data/benchmark_main.py

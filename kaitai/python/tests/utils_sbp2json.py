@@ -22,7 +22,7 @@ def serialise(obj):
 # convert KaitaiStruct object to have similar structure to sbp2json output
 def get_flattened_msg(obj):
     obj.payload.preamble = ord(obj.preamble)
-    obj.payload.msg_type = obj.msg_type.value
+    obj.payload.msg_type = obj.msg_type
     obj.payload.sender = obj.sender
     obj.payload.length = obj.length
     obj.payload._io.seek(0)
