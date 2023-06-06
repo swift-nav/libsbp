@@ -113,13 +113,15 @@ def get_next_msg_construct(fileobj):
 # hybrid version of sbp2json which uses original parser + kaitai struct to
 # avoid calling sbp.table.dispatch()
 def get_next_msg_hybrid1(fileobj):
+    msg_types = [item.value for item in kaitai_sbp.Sbp.MsgIds]
     for msg_type, sender, payload_len, buf, crc_read in parse_file_construct(fileobj):
+
+        if msg_type not in msg_types:
+            sys.stderr.write("Skipping unknown message type: {}\n".format(msg_type))
+            continue
+
         stream = KaitaiStream(io.BytesIO(buf))
         obj = kaitai_sbp.Sbp.SbpMessage(stream)
-
-        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.msg_type) == obj.msg_type:
-            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.msg_type))
-            continue
 
         yield get_flattened_msg(obj)
 
@@ -129,15 +131,17 @@ def get_next_msg_hybrid1(fileobj):
 # this version can be used to speed up parsing in existing code based upon the
 # construct version
 def get_next_msg_hybrid2(fileobj):
+    msg_types = [item.value for item in kaitai_sbp.Sbp.MsgIds]
     for msg_type, sender, payload_len, buf, crc_read in parse_file_construct(fileobj):
+
+        if msg_type not in msg_types:
+            sys.stderr.write("Skipping unknown message type: {}\n".format(msg_type))
+            continue
+
         msg_buf = buf[SBP_HEADER_LEN:SBP_HEADER_LEN + payload_len]
         msg = sbp.msg.SBP(msg_type, sender, payload_len, msg_buf, crc_read)
         stream = KaitaiStream(io.BytesIO(msg.to_binary()))
         obj = kaitai_sbp.Sbp.SbpMessage(stream)
-
-        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.msg_type) == obj.msg_type:
-            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.msg_type))
-            continue
 
         yield get_flattened_msg(obj)
 

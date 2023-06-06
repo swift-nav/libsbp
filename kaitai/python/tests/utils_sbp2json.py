@@ -74,6 +74,8 @@ class BufferedKaitaiStream(KaitaiStream):
 # work-alike of get_next_msg_construct() based upon Kaitai Struct
 def get_next_msg_kaitai(fp):
     stream = BufferedKaitaiStream(fp, SBP_HEADER_LEN + 256 + 2) # header + max message + CRC
+    msg_types = [item.value for item in kaitai_sbp.Sbp.MsgIds]
+
     while True:
         obj = None
         stream.reload()
@@ -93,16 +95,16 @@ def get_next_msg_kaitai(fp):
                 stream.seek(1)
                 continue
 
+        if obj.msg_type not in msg_types:
+            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.msg_type))
+            stream.seek(1)
+            continue
+
         # check CRC
         crc_read = obj.crc
         crc_expected = binascii.crc_hqx(stream.get_crc_bytes(obj.length), 0)
         if crc_read != crc_expected:
             sys.stderr.write("Bad CRC: {} vs {}\n".format(crc_read, crc_expected))
-            stream.seek(1)
-            continue
-
-        if KaitaiStream.resolve_enum(kaitai_sbp.Sbp.MsgIds, obj.msg_type) == obj.msg_type:
-            sys.stderr.write("Skipping unknown message type: {}\n".format(obj.msg_type))
             stream.seek(1)
             continue
 
