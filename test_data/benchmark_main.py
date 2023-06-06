@@ -28,15 +28,23 @@ RATIOS_JSON2JSON = {
 FAILED = [False]
 
 
-def maybe_via_docker(pwd, image, cmd):
+def maybe_via_docker(pwd, image, cmd, env=None):
     if not os.environ.get('VIA_DOCKER'):
+        if env is not None:
+            for var,val in env.items():
+                os.environ[var] = val
         return cmd
-    return [
+
+    docker_args = [
         'docker', 'run', '-i',
         '--cpus=2', '--memory=1g',
         '--rm', '-v', f'{pwd}:/work',
-        image
-    ] + cmd
+    ]
+    if env is not None:
+        for var,val in env.items():
+            docker_args += ['--env', f'{var}={val}']
+    docker_args += [image] + cmd
+    return docker_args
 
 
 def compare_ratio(expected, actual):
