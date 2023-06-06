@@ -10,7 +10,12 @@ use super::{JsonError, JsonOutput};
 use crate::{
     json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput},
     messages::Sbp,
-    SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, MIN_PAYLOAD_LEN, PREAMBLE,
+    SbpMessage,
+    BUFLEN,
+    CRC_LEN,
+    HEADER_LEN,
+    // MIN_PAYLOAD_LEN,
+    PREAMBLE,
 };
 
 const BASE64_BUFLEN: usize = BUFLEN * 4;

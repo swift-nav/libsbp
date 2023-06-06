@@ -1,9 +1,10 @@
 use std::io::{Read, Write};
 
-use sbp::messages::unknown::Unknown;
+// use sbp::messages::unknown::Unknown;
 use sbp::{
     json::{Json2JsonEncoder, JsonEncoder},
-    Sbp, SbpEncoder,
+    // Sbp,
+    SbpEncoder,
 };
 use serde_json::ser::Formatter;
 
