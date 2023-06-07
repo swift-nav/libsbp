@@ -11,7 +11,7 @@ import sys
 import io
 import sbp.msg
 import sbp.table
-from sbp.msg import SBP_PREAMBLE
+from sbp.sbp2json import iter_messages as parse_file_construct
 import re
 from subprocess import Popen, PIPE
 
@@ -31,68 +31,6 @@ def dictify(obj, round_floats=False):
         return float('{:.10f}'.format(obj)[:11])
     else:
         return obj
-
-
-# adapted from construct-based python version of sbp2json
-def parse_file_construct(fp):
-    buf = bytearray(4096)
-    unconsumed_offset = 0
-    read_offset = 0
-    buffer_remaining = len(buf)
-    while True:
-        if buffer_remaining == 0:
-            memoryview(buf)[0:(read_offset - unconsumed_offset)] = \
-                memoryview(buf)[unconsumed_offset:read_offset]
-            read_offset = read_offset - unconsumed_offset
-            unconsumed_offset = 0
-            buffer_remaining = len(buf) - read_offset
-        mv = memoryview(buf)[read_offset:]
-        read_length = fp.readinto(mv)
-        if read_length == 0:
-            unconsumed = read_offset - unconsumed_offset
-            if unconsumed != 0:
-                sys.stderr.write("unconsumed: {}\n".format(unconsumed))
-                sys.stderr.flush()
-            break
-        read_offset += read_length
-        buffer_remaining -= read_length
-        while True:
-            bytes_available = read_offset - unconsumed_offset
-            b = buf[unconsumed_offset:(unconsumed_offset + bytes_available)]
-
-            msg_type = None
-            if len(b) > 0 and b[0] != sbp.msg.SBP_PREAMBLE:
-                consumed = 1
-            else:
-                if len(b) < SBP_HEADER_LEN:
-                    # insufficient data, keep retrying until enough data becomes
-                    # available
-                    consumed = 0
-                else:
-                    preamble, msg_type, sender, payload_len = struct.unpack("<BHHB", b[:6])
-                    if len(b) < SBP_HEADER_LEN + payload_len + 2:
-                        # insufficient data, keep retrying until enough data becomes
-                        # available
-                        consumed = 0
-                    else:
-                        # check CRC
-                        b = b[:SBP_HEADER_LEN + payload_len + 2]
-                        crc_read, = struct.unpack("<H", b[SBP_HEADER_LEN + payload_len:SBP_HEADER_LEN + payload_len + 2])
-                        crc_expected = binascii.crc_hqx(b[1:SBP_HEADER_LEN + payload_len], 0)
-                        if crc_read != crc_expected:
-                            sys.stderr.write("CRC error: {} vs {} for msg type {}\n".format(crc_read, crc_expected, msg_type))
-                            msg_type = None
-                            consumed = 1
-                        else:
-                            consumed = SBP_HEADER_LEN + payload_len + 2
-
-            if consumed == 0:
-                break
-
-            if msg_type is not None:
-                yield msg_type, sender, payload_len, b, crc_read
-
-            unconsumed_offset += consumed
 
 
 # "original" version of sbp2json based entirely upon construct
@@ -119,7 +57,7 @@ def get_next_msg_hybrid1(fileobj):
             sys.stderr.write("Skipping unknown message type: {}\n".format(msg_type))
             continue
 
-        stream.set_buffer(buf)
+        stream.set_buffer(bytes(buf))
         obj = kaitai_sbptable.SbpMessage(stream)
 
         yield get_flattened_msg(obj)
