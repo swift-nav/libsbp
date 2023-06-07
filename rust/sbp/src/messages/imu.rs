@@ -162,6 +162,9 @@ pub mod msg_imu_aux {
         /// ST Microelectronics ASM330LLH
         StMicroelectronicsAsm330Llh = 1,
 
+        /// TDK ICM-42670
+        TdkIcm42670 = 3,
+
         /// Murata SCHA634-D03
         MurataScha634D03 = 4,
 
@@ -176,6 +179,7 @@ pub mod msg_imu_aux {
                 ImuType::StMicroelectronicsAsm330Llh => {
                     f.write_str("ST Microelectronics ASM330LLH")
                 }
+                ImuType::TdkIcm42670 => f.write_str("TDK ICM-42670"),
                 ImuType::MurataScha634D03 => f.write_str("Murata SCHA634-D03"),
                 ImuType::TdkIam20680Hp => f.write_str("TDK IAM-20680HP"),
             }
@@ -188,6 +192,7 @@ pub mod msg_imu_aux {
             match i {
                 0 => Ok(ImuType::BoschBmi160),
                 1 => Ok(ImuType::StMicroelectronicsAsm330Llh),
+                3 => Ok(ImuType::TdkIcm42670),
                 4 => Ok(ImuType::MurataScha634D03),
                 5 => Ok(ImuType::TdkIam20680Hp),
                 i => Err(i),
