@@ -11,10 +11,10 @@ SLUSH_PERCENTAGE = 0.25
 
 # How much faster Rust should be than other implementations
 RATIOS_SBP2JSON = {
-    "haskell": 2.12,
-    "python": 16.99,
-    "kaitai_python": 3.7,
-    "kaitai_perl": 18.16,
+    "haskell": 3,
+    "python": 23.5,
+    "kaitai_python": 5,
+    "kaitai_perl": 19.5,
 }
 
 RATIOS_JSON2SBP = {
@@ -28,23 +28,15 @@ RATIOS_JSON2JSON = {
 FAILED = [False]
 
 
-def maybe_via_docker(pwd, image, cmd, env=None):
+def maybe_via_docker(pwd, image, cmd):
     if not os.environ.get('VIA_DOCKER'):
-        if env is not None:
-            for var,val in env.items():
-                os.environ[var] = val
         return cmd
-
-    docker_args = [
+    return [
         'docker', 'run', '-i',
         '--cpus=2', '--memory=1g',
         '--rm', '-v', f'{pwd}:/work',
-    ]
-    if env is not None:
-        for var,val in env.items():
-            docker_args += ['--env', f'{var}={val}']
-    docker_args += [image] + cmd
-    return docker_args
+        image
+    ] + cmd
 
 
 def compare_ratio(expected, actual):

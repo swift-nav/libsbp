@@ -12,8 +12,12 @@
 
 use strict;
 use warnings;
+use Sbp::Sbp;
+((* for s in specs *))
+use Sbp::(((s.identifier|module_name|camel_case)));
+((*- endfor *))
 
-package SbpTable::SbpMessage;
+package Table::SbpMessage;
 
 our @ISA = 'Sbp::SbpMessage';
 

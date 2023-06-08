@@ -11,9 +11,9 @@
 # Test cases automatically generated from (((s.src_filename)))
 # with generate.py.  Do not modify by hand!
 
-import kaitai.python.sbp as kaitai_sbp
-from kaitai.python.tests.utils import dictify
-from kaitai.python.parse_utils import get_flattened_msg
+import kaitai.python.sbp.sbp as sbp
+from kaitai.python.sbp.parse_utils import get_flattened_msg
+from kaitai.python.sbp.tests.utils import dictify
 from kaitaistruct import KaitaiStream
 import io
 import base64
@@ -41,7 +41,7 @@ def test_(((s.suite_name|snake_case)))_(((loop.index)))():
     buf = base64.standard_b64decode("(((t.raw_packet)))")
 
     stream = KaitaiStream(io.BytesIO(buf))
-    msg = get_flattened_msg(kaitai_sbp.Sbp.SbpMessage(stream))
+    msg = get_flattened_msg(sbp.Sbp.SbpMessage(stream))
 
   ((*- for k in t.sbp *))
     (((test_field( (((k))), (((t.sbp[k]))) ))))

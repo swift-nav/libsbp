@@ -15,14 +15,15 @@
 
 use strict;
 
-use constant SBP_PATH => "$ENV{'PWD'}/kaitai/perl/";
-
 BEGIN {
-    # add SBP_PATH to include path and load all modules
-    unshift @INC, &SBP_PATH;
-    require $_ for(glob(&SBP_PATH."*.pm"));
+    # add grandparent directory to include path
+    use Cwd qw(realpath);
+    use File::Basename;
+    unshift @INC, realpath(dirname($0))."/../../";
 }
 
+use Sbp::Sbp;
+use Sbp::ParseUtils;
 use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;

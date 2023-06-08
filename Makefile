@@ -326,7 +326,7 @@ gen-kaitai:
 	$(call announce-begin,"Generating Kaitai Struct Python tests")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
-		-o $(SWIFTNAV_ROOT)/kaitai/python/tests/ \
+		-o $(SWIFTNAV_ROOT)/kaitai/python/sbp/tests/ \
 		-r $(SBP_VERSION) \
 		--test-kaitai-python
 	$(call announce-end,"Finished generating Kaitai Struct Python tests")
@@ -334,7 +334,7 @@ gen-kaitai:
 	$(call announce-begin,"Generating Kaitai Struct Perl tests")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
-		-o $(SWIFTNAV_ROOT)/kaitai/perl/t/ \
+		-o $(SWIFTNAV_ROOT)/kaitai/perl/Sbp/t/ \
 		-r $(SBP_VERSION) \
 		--test-kaitai-perl
 	$(call announce-end,"Finished generating Kaitai Struct Perl tests")
@@ -427,11 +427,11 @@ test-protobuf:
 
 test-kaitai:
 	$(call announce-begin,"Running Kaitai Struct Python tests")
-	cd $(SWIFTNAV_ROOT) && tox -c kaitai/python/tests/tox.ini kaitai/python/tests/test_*.py
+	cd $(SWIFTNAV_ROOT) && tox -c kaitai/python/sbp/tests/tox.ini kaitai/python/sbp/tests/test_*.py
 	$(call announce-end,"Finished running Kaitai Struct Python tests")
 
 	$(call announce-begin,"Running Kaitai Struct Perl tests")
-	cd $(SWIFTNAV_ROOT) && perl -MExtUtils::Command::MM -MTest::Harness -e test_harness kaitai/perl/t/*.t
+	cd $(SWIFTNAV_ROOT) && perl -MExtUtils::Command::MM -MTest::Harness -e test_harness kaitai/perl/Sbp/t/*.t
 	$(call announce-end,"Finished running Kaitai Struct Perl tests")
 
 test-jsonschema:

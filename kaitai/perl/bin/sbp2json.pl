@@ -13,17 +13,16 @@
 use strict;
 
 BEGIN {
+    # add parent directory to include path
     use Cwd qw(realpath);
     use File::Basename;
-    my $SBP_PATH = realpath(dirname($0))."/..";
-    # add parent directory to search path
-    unshift @INC, $SBP_PATH;
-    # load all modules from parent directory
-    require $_ for(glob("$SBP_PATH/*.pm"));
+    unshift @INC, realpath(dirname($0))."/../";
 }
 
 use JSON::XS;
 use Digest::CRC qw(crc);
+use Sbp::Table;
+use Sbp::ParseUtils;
 
 
 sub sbp2json($) {
@@ -36,7 +35,7 @@ sub sbp2json($) {
     while(1) {
         $stream->fill_buffer();
 
-        my $msg = eval { SbpTable::SbpMessage->new($stream) };
+        my $msg = eval { Table::SbpMessage->new($stream) };
 
         if(!defined($msg)) {
             if($stream->is_eof()) {
