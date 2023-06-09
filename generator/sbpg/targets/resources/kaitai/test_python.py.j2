@@ -1,0 +1,56 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
+# Test cases automatically generated from (((s.src_filename)))
+# with generate.py.  Do not modify by hand!
+
+import kaitai_sbp.sbp as sbp
+from kaitai_sbp.parse_utils import get_flattened_msg
+from kaitai_sbp.tests.utils import dictify
+from kaitaistruct import KaitaiStream
+import io
+import base64
+
+
+((*- macro test_field(name, value) *))
+  ((*- if name == "payload" *))
+    assert msg.(((name))) == "(((value)))"
+  ((*- else *))
+    assert msg.(((name))) == (((value)))
+  ((*- endif *))
+((*- endmacro *))
+
+((*- macro test_fieldskeys(name, value) *))
+  ((*- if value is string_type *))
+    assert dictify(msg.(((name)))) == "(((value|str_escape)))"
+  ((*- else *))
+    assert dictify(msg.(((name)))) == (((value|snake_case_keys)))
+  ((*- endif *))
+((*- endmacro *))
+
+((*- for t in s.tests *))
+
+def test_(((s.suite_name|snake_case)))_(((loop.index)))():
+    buf = base64.standard_b64decode("(((t.raw_packet)))")
+
+    stream = KaitaiStream(io.BytesIO(buf))
+    msg = get_flattened_msg(sbp.Sbp.SbpMessage(stream))
+
+  ((*- for k in t.sbp *))
+    (((test_field( (((k))), (((t.sbp[k]))) ))))
+  ((*- endfor *))
+
+  ((*- for f in t.fieldskeys *))
+    (((test_fieldskeys( (((f|snake_case))), (((t.fields[f]))) ))))
+  ((*- endfor *))
+
+    assert dictify(msg) == (((t.raw_json|decode_json|snake_case_keys)))
+
+((*- endfor *))

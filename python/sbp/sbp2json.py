@@ -29,6 +29,8 @@ try:
 except NameError:
     memoryview = lambda x: x
 
+SBP_HEADER_LEN = 6
+
 
 def base_cl_options():
     import argparse
@@ -70,14 +72,12 @@ def dump(args, res):
     sys.stdout.write("\n")
 
 
-def sbp_main(args):
-    header_len = 6
-    reader = io.open(args.file.fileno(), 'rb')
+# generator to produce SBP messages from a file object
+def iter_messages(fp):
     buf = memoryview(bytearray(4096))
     unconsumed_offset = 0
     read_offset = 0
     buffer_remaining = len(buf)
-    include = set(args.include)
     while True:
         if buffer_remaining == 0:
             buf[0:(read_offset - unconsumed_offset)] = buf[unconsumed_offset:read_offset]
@@ -85,7 +85,7 @@ def sbp_main(args):
             unconsumed_offset = 0
             buffer_remaining = len(buf) - read_offset
         mv = buf[read_offset:]
-        read_length = reader.readinto(mv)
+        read_length = fp.readinto(mv)
         if read_length == 0:
             unconsumed = read_offset - unconsumed_offset
             if unconsumed != 0:
@@ -98,27 +98,27 @@ def sbp_main(args):
             bytes_available = read_offset - unconsumed_offset
             b = buf[unconsumed_offset:(unconsumed_offset + bytes_available)]
 
-            m = None
             if len(b) > 0 and b[0] != SBP_PREAMBLE:
                 consumed = 1
             else:
-                if len(b) < header_len:
+                if len(b) < SBP_HEADER_LEN:
                     # insufficient data, keep retrying until enough data becomes
                     # available
                     consumed = 0
                 else:
-                    preamble, msg_type, sender, payload_len = struct.unpack("<BHHB", b[:header_len])
-                    if len(b) < header_len + payload_len + 2:
+                    preamble, msg_type, sender, payload_len = struct.unpack("<BHHB", b[:SBP_HEADER_LEN])
+                    if len(b) < SBP_HEADER_LEN + payload_len + 2:
                         # insufficient data, keep retrying until enough data becomes
                         # available
                         consumed = 0
                     else:
                         # check CRC
-                        crc_read, = struct.unpack("<H", b[header_len + payload_len:header_len + payload_len + 2])
-                        crc_expected = binascii.crc_hqx(b[1:header_len + payload_len], 0)
+                        b = b[:SBP_HEADER_LEN + payload_len + 2]
+                        crc_read, = struct.unpack("<H", b[SBP_HEADER_LEN + payload_len:SBP_HEADER_LEN + payload_len + 2])
+                        crc_expected = binascii.crc_hqx(b[1:SBP_HEADER_LEN + payload_len], 0)
                         if crc_read == crc_expected:
-                            m = sbp.msg.SBP(msg_type, sender, payload_len, b[header_len:header_len + payload_len], crc_read)
-                            consumed = header_len + payload_len + 2
+                            yield msg_type, sender, payload_len, b, crc_read
+                            consumed = SBP_HEADER_LEN + payload_len + 2
                         else:
                             sys.stderr.write("CRC error: {} vs {} for msg type {}\n".format(crc_read, crc_expected, msg_type))
                             consumed = 1
@@ -126,14 +126,22 @@ def sbp_main(args):
             if consumed == 0:
                 break
 
-            if m is not None and (not include or m.msg_type in include):
-                try:
-                    m = sbp.table.dispatch(m)
-                    dump(args, m)
-                except (StreamError, ValueError):
-                    pass
-
             unconsumed_offset += consumed
+
+
+def sbp_main(args):
+    reader = io.open(args.file.fileno(), 'rb')
+    include = set(args.include)
+
+    for msg_type, sender, payload_len, buf, crc_read in iter_messages(reader):
+        msg_buf = buf[SBP_HEADER_LEN:SBP_HEADER_LEN + payload_len]
+        if not include or msg_type in include:
+            try:
+                msg = sbp.msg.SBP(msg_type, sender, payload_len, msg_buf, crc_read)
+                msg = sbp.table.dispatch(msg)
+                dump(args, msg)
+            except (StreamError, ValueError):
+                pass
 
 
 def module_main():

@@ -17,6 +17,7 @@ from jinja2.environment import Environment
 from jinja2.utils import pass_environment
 
 from sbpg.targets.templating import JENV, ACRONYMS, LOWER_ACRONYMS, indented_wordwrap
+from sbpg.targets.common import snake_case, camel_case
 from sbpg import ReleaseVersion
 
 SBP_CARGO_TEMPLATE = "rust/sbp_cargo.toml"
@@ -86,7 +87,7 @@ let gps_time = match time::GpsTime::new(0, tow_s) {
 import re
 
 
-def camel_case(s):
+def camel_case_classname(s):
     """
     Makes a classname.
     """
@@ -94,23 +95,14 @@ def camel_case(s):
         if s[0].islower():
             s = s[0].upper() + s[1:]
         return lower_acronyms(s)
-    s = re.sub("([a-z])([A-Z])", r"\1_\2", s)
-    return "".join(w.title() for w in s.split("_"))
-
-
-def snake_case(s):
-    if "_" in s:
-        return "_".join(snake_case(p) for p in s.split("_"))
-    if len(s) == 1:
-        return s.lower()
-    s = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", s)
-    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s).lower()
+    return camel_case(s)
 
 
 def camel_case_split(identifier):
     # https://stackoverflow.com/a/29920015
     matches = re.finditer('.+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)', identifier)
     return [m.group(0) for m in matches]
+
 
 def lower_acronyms(s):
     if s.isupper() and s.isalpha():
@@ -254,9 +246,9 @@ def gps_time_fn(msg):
 
 def get_bitfield_basename(item, field):
     if item.get("desc", False):
-        basename = camel_case(item.get("desc", "").replace(" ", "_"))
+        basename = camel_case_classname(item.get("desc", "").replace(" ", "_"))
     else:
-        basename = camel_case(field.identifier)
+        basename = camel_case_classname(field.identifier)
     basename = re.sub("[^A-Za-z0-9_]+", "", basename)
     return basename
 
@@ -276,7 +268,7 @@ def get_bitfield_values(item):
         name = re.sub(r"\([^)]*\)", "", name)
         name = re.sub("[ \-]+", "_", name.strip())
         name = re.sub("[^A-Za-z0-9_]+", "", name)
-        name = camel_case(name)
+        name = camel_case_classname(name)
         if name.lower() == "reserved":
             continue
         if name[0].isnumeric():
@@ -354,7 +346,7 @@ class FieldItem(object):
 
 class MsgItem(object):
     def __init__(self, msg, package, package_specs):
-        self.msg_name = camel_case(msg.identifier)
+        self.msg_name = camel_case_classname(msg.identifier)
         self.parent_mod_name = package.mod_name
         self.mod_name = snake_case(msg.identifier)
         self.identifier = msg.identifier

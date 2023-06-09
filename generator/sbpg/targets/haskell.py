@@ -19,6 +19,7 @@ from jinja2.environment import Environment
 from jinja2.utils import pass_environment
 
 from sbpg.targets.templating import JENV, indented_wordwrap
+from sbpg.targets.common import camel_case
 from sbpg import ReleaseVersion
 
 MESSAGES_TEMPLATE_NAME = "SbpMessagesTemplate.hs"
@@ -67,12 +68,6 @@ PUT_CONSTRUCT_CODE = {
   'double': 'putFloat64le',
   'string': 'putByteString $ encodeUtf8',
 }
-
-def camel_case(s):
-  """
-  Convert snake_case to camel_case.
-  """
-  return "".join([i.capitalize() for i in s.split("_")])
 
 def to_global(s):
   """

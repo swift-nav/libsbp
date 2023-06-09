@@ -17,7 +17,8 @@ import re
 
 from sbpg.targets.common import array_type, dict_type, float_type, is_empty, string_type, to_str
 from sbpg.targets.templating import JENV
-from sbpg.targets.rust import lower_acronyms, snake_case
+from sbpg.targets.common import snake_case
+from sbpg.targets.rust import lower_acronyms
 
 TEST_TEMPLATE_NAME = "rust/test/sbp_tests_template.rs"
 TEST_MAIN_TEMPLATE_NAME = "rust/test/sbp_tests_main_template.rs"
