@@ -2,7 +2,7 @@
 #
 # implementation of sbp2json using Kaitai Struct parser
 
-from sbp.parse_utils import iter_messages, serialise
+from kaitai_sbp.parse_utils import iter_messages, serialise
 import rapidjson
 import sys
 

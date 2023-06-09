@@ -21,8 +21,8 @@ BEGIN {
 
 use JSON::XS;
 use Digest::CRC qw(crc);
-use Sbp::Table;
-use Sbp::ParseUtils;
+use KaitaiSbp::Table;
+use KaitaiSbp::ParseUtils;
 
 
 sub sbp2json($) {

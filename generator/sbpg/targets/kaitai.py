@@ -142,7 +142,7 @@ def fix_python_output(output_dir, specs):
       return
 
     # check if file exists
-    py_file = os.path.join(output_dir, "python", "sbp", basename + ".py")
+    py_file = os.path.join(output_dir, "python", "kaitai_sbp", basename + ".py")
     with fileinput.input(files=(py_file), inplace=True) as f:
       # copy comment line
       line = f.readline()
@@ -165,7 +165,7 @@ def fix_python_output(output_dir, specs):
 # arrays issue in kaitai-struct-compiler 0.10, see
 # https://github.com/kaitai-io/kaitai_struct_compiler/pull/251 for details
 def fix_perl_output(output_dir, specs):
-  files = [os.path.join(output_dir, "perl", "Sbp", camel_case(package_spec.filepath[1]) + ".pm") for package_spec in specs]
+  files = [os.path.join(output_dir, "perl", "KaitaiSbp", camel_case(package_spec.filepath[1]) + ".pm") for package_spec in specs]
   with fileinput.input(files=files, inplace=True) as f:
     for line in f:
       if line.endswith("= ();\n"):
@@ -178,13 +178,13 @@ def fix_perl_output(output_dir, specs):
       return
 
     # check if file exists
-    pm_file = os.path.join(output_dir, "perl", "Sbp", camel_case(basename) + ".pm")
+    pm_file = os.path.join(output_dir, "perl", "KaitaiSbp", camel_case(basename) + ".pm")
     with fileinput.input(files=(pm_file), inplace=True) as f:
       # copy comment line
       line = f.readline()
       print(line, end='')
       for module in imports:
-        print("use Sbp::{};".format(camel_case(module)))
+        print("use KaitaiSbp::{};".format(camel_case(module)))
       for line in f:
         print(line, end='')
 
@@ -199,7 +199,7 @@ def fix_perl_output(output_dir, specs):
 
 # create table-based version of SBP message for faster parsing
 def render_python_table(output_dir, specs, jenv):
-  destination_filename = os.path.join(output_dir, "python", "sbp", "table.py")
+  destination_filename = os.path.join(output_dir, "python", "kaitai_sbp", "table.py")
   ksy_template = jenv.get_template(TEMPLATE_PYTHON_TABLE)
   with open(destination_filename, 'w') as f:
     f.write(ksy_template.render(specs=specs))
@@ -207,7 +207,7 @@ def render_python_table(output_dir, specs, jenv):
 
 # create table-based version of SBP message for faster parsing
 def render_perl_table(output_dir, specs, jenv):
-  destination_filename = os.path.join(output_dir, "perl", "Sbp", "Table.pm")
+  destination_filename = os.path.join(output_dir, "perl", "KaitaiSbp", "Table.pm")
   ksy_template = jenv.get_template(TEMPLATE_PERL_TABLE)
   with open(destination_filename, 'w') as f:
     f.write(ksy_template.render(specs=specs))
@@ -247,8 +247,8 @@ def render_main(output_dir, all_package_specs, release: ReleaseVersion, jenv=JEN
   render_perl_table(output_dir, specs, jenv)
 
   # run kaitai-struct-compiler to generate bindings
-  subprocess.check_call(["kaitai-struct-compiler", "ksy/sbp.ksy", "--target", "python", "--outdir", "python/sbp"], cwd=output_dir)
-  subprocess.check_call(["kaitai-struct-compiler", "ksy/sbp.ksy", "--target", "perl", "--outdir", "perl/Sbp"], cwd=output_dir)
+  subprocess.check_call(["kaitai-struct-compiler", "ksy/sbp.ksy", "--target", "python", "--outdir", "python/kaitai_sbp"], cwd=output_dir)
+  subprocess.check_call(["kaitai-struct-compiler", "ksy/sbp.ksy", "--target", "perl", "--outdir", "perl/KaitaiSbp"], cwd=output_dir)
 
   fix_python_output(output_dir, specs)
   fix_perl_output(output_dir, specs)

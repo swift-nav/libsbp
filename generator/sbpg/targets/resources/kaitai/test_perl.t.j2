@@ -22,8 +22,8 @@ BEGIN {
     unshift @INC, realpath(dirname($0))."/../../";
 }
 
-use Sbp::Sbp;
-use Sbp::ParseUtils;
+use KaitaiSbp::Sbp;
+use KaitaiSbp::ParseUtils;
 use IO::KaitaiStruct;
 use Test::More;
 use JSON::PP;

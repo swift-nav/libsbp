@@ -12,9 +12,9 @@
 
 use strict;
 use warnings;
-use Sbp::Sbp;
+use KaitaiSbp::Sbp;
 ((* for s in specs *))
-use Sbp::(((s.identifier|module_name|camel_case)));
+use KaitaiSbp::(((s.identifier|module_name|camel_case)));
 ((*- endfor *))
 
 package Table::SbpMessage;
