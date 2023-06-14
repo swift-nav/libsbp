@@ -175,16 +175,16 @@ pub const PAYLOAD_INDEX: usize = HEADER_LEN - 1;
 pub(crate) const BUFLEN: usize = 128;
 
 /// Max length of the variable-sized payload field.
-pub const MIN_PAYLOAD_LEN: usize = 8;
-
-/// Max length of the variable-sized payload field.
 pub const MAX_PAYLOAD_LEN: usize = 255;
 
 /// Length of the crc of the payload.
 pub const CRC_LEN: usize = 2;
 
+/// Min length of the a frame (e.g. when payload is empty)
+pub const MIN_FRAME_LEN: usize = HEADER_LEN + CRC_LEN;
+
 /// Max length of a frame (header + payload + crc).
-pub const MAX_FRAME_LEN: usize = HEADER_LEN + MAX_PAYLOAD_LEN + CRC_LEN;
+pub const MAX_FRAME_LEN: usize = MIN_FRAME_LEN + MAX_PAYLOAD_LEN;
 
 #[doc(inline)]
 pub use messages::Sbp;
