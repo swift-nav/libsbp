@@ -26,8 +26,15 @@ fn test_error_writes_as_unknown_and_continues() {
     let _ = converters::sbp2json(source, &mut sink, CompactFormatter {}, false, true);
     sink.set_position(0);
     let mut msg_iter = sbp::iter_messages(&mut sink).skip(1);
-    assert!(msg_iter.next().unwrap().is_err(), "2nd message of short.sbp has CRC error");
-    assert_eq!(msg_iter.count(), 603, "there are still 603 messages left in the iter"););
+    assert!(
+        msg_iter.next().unwrap().is_err(),
+        "2nd message of short.sbp has CRC error"
+    );
+    assert_eq!(
+        msg_iter.count(),
+        603,
+        "there are still 603 messages left in the iter"
+    );
 }
 
 #[test]
