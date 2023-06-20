@@ -99,6 +99,7 @@ where
             })
         })
     });
+
     let mut sink = JsonEncoder::new(output, formatter);
     if buffered {
         sink.send_all(source)?;

@@ -10,7 +10,7 @@ use super::{JsonError, JsonOutput};
 use crate::{
     json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput},
     messages::Sbp,
-    SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, MIN_PAYLOAD_LEN, PREAMBLE,
+    SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, MIN_FRAME_LEN, PREAMBLE,
 };
 
 const BASE64_BUFLEN: usize = BUFLEN * 4;
@@ -221,7 +221,7 @@ fn get_common_fields<'a, M: SbpMessage>(
     frame_buf.clear();
     let size = msg.len();
     crate::ser::to_buffer(frame_buf, msg)?;
-    if frame_buf.len() < MIN_PAYLOAD_LEN {
+    if frame_buf.len() < MIN_FRAME_LEN {
         return Ok(None);
     }
     let crc = {
