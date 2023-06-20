@@ -1,0 +1,51 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
+# Automatically generated with generate.py.  Do not hand edit!
+
+from .sbp import Sbp
+((* for s in specs *))
+from .(((s.identifier|module_name))) import *
+((*- endfor *))
+
+TABLE = {
+((* for s in specs *))
+  ((* for d in s.definitions *))
+    ((*- if d.sbp_id *))
+    (((d.sbp_id))): (((s.identifier|module_name|camel_case))).(((d.identifier|camel_case))),
+    ((*- endif *))
+  ((*- endfor *))
+((*- endfor *))
+}
+
+# Extend Sbp.SbpMessage to use table-based lookup
+class SbpMessage(Sbp.SbpMessage):
+    def __init__(self, _io, _parent=None, _root=None):
+        super().__init__(_io, _parent, _root)
+
+
+    def _read(self):
+        self.preamble = self._io.read_bytes(1)
+        if not self.preamble == b"\x55":
+            raise kaitaistruct.ValidationNotEqualError(b"\x55", self.preamble, self._io, "Preamble")
+
+        msg_type = self._io.read_u2le()
+        if msg_type not in TABLE:
+            raise kaitaistruct.ValidationNotAnyOfError(msg_type, self._io, "Message Type")
+        self.msg_type = msg_type
+
+        self.sender = self._io.read_u2le()
+        self.length = self._io.read_u1()
+
+        self._raw_payload = self._io.read_bytes(self.length)
+        _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+        self.payload = TABLE[msg_type](_io__raw_payload, self, self._root)
+
+        self.crc = self._io.read_u2le()

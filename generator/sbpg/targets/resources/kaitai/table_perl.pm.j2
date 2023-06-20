@@ -1,0 +1,56 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
+# Automatically generated with generate.py.  Do not hand edit!
+
+use strict;
+use warnings;
+use KaitaiSbp::Sbp;
+((* for s in specs *))
+use KaitaiSbp::(((s.identifier|module_name|camel_case)));
+((*- endfor *))
+
+package Table::SbpMessage;
+
+our @ISA = 'Sbp::SbpMessage';
+
+our %TABLE = (
+((* for s in specs *))
+  ((* for d in s.definitions *))
+    ((*- if d.sbp_id *))
+    (((d.sbp_id))) => sub{(((s.identifier|module_name|camel_case)))::(((d.identifier|camel_case)))->new(@_)},
+    ((*- endif *))
+  ((*- endfor *))
+((*- endfor *))
+);
+
+sub _read {
+    my ($self) = @_;
+    my $io = $self->{_io};
+
+    $self->{preamble} = $io->read_bytes(1);
+    die "Invalid preamble $self->{preamble}" if(ord($self->{preamble}) != 0x55);
+
+    $self->{msg_type} = $io->read_u2le();
+    my $msg_type = $self->{msg_type};
+    $self->{sender} = $io->read_u2le();
+    $self->{length} = $io->read_u1();
+
+    die "Unknown message type $msg_type" if(!exists($TABLE{$msg_type}));
+
+    $self->{_raw_payload} = $io->read_bytes($self->length());
+    my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+    $self->{payload} = $TABLE{$msg_type}($io__raw_payload, $self, $self->{_root});
+
+    $self->{crc} = $io->read_u2le();
+}
+
+
+1;

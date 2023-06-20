@@ -1,0 +1,63 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
+# Kaitai Struct definition file for Swift Binary Protocol (((version)))
+#
+# Automatically generated with generate.py.  Do not hand edit!
+
+meta:
+  id: sbp
+  file-extension: sbp
+  endian: le
+  imports:
+((* for s in specs *))
+  - (((s.identifier | module_name)))
+((*- endfor *))
+
+seq:
+  - id: message
+    type: sbp_message
+    repeat: eos
+
+enums:
+  msg_ids:
+((* for s in specs *))
+  ((* for d in s.definitions *))
+    ((*- if d.sbp_id *))
+    (((d.sbp_id))): (((d.identifier | snake_case)))
+    ((*- endif *))
+  ((*- endfor *))
+((*- endfor *))
+
+types:
+  sbp_message:
+    seq:
+      - id: preamble
+        contents: [0x55]
+      - id: msg_type
+        type: u2
+      - id: sender
+        type: u2
+      - id: length
+        type: u1
+      - id: payload
+        size: length
+        type:
+          switch-on: msg_type
+          cases:
+((* for s in specs *))
+  ((* for d in s.definitions *))
+    ((*- if d.sbp_id *))
+            (((d.sbp_id))): (((s.identifier | module_name)))::(((d.identifier | snake_case)))
+    ((*- endif *))
+  ((*- endfor *))
+((*- endfor *))
+      - id: crc
+        type: u2
