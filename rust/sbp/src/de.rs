@@ -259,29 +259,34 @@ impl dencode::Decoder for FramerImpl {
 pub struct Frame(BytesMut);
 
 impl Frame {
+    /// Warning: can panic
     pub fn msg_type(&self) -> u16 {
         let mut slice = &self.0.chunk()[1..];
         slice.get_u16_le()
     }
 
+    /// Warning: can panic
     pub fn sender_id(&self) -> u16 {
         let mut slice = &self.0.chunk()[3..];
         slice.get_u16_le()
     }
-
+    /// Warning: can panic
     pub fn payload_len(&self) -> usize {
         self.as_bytes()[PAYLOAD_INDEX] as usize
     }
 
+    /// Warning: can panic
     pub fn payload(&self) -> &[u8] {
         &self.as_bytes()[HEADER_LEN..HEADER_LEN + self.payload_len()]
     }
 
+    /// Warning: can panic
     pub fn crc(&self) -> u16 {
         let mut slice = &self.as_bytes()[HEADER_LEN + self.payload_len()..];
         slice.get_u16_le()
     }
 
+    /// Warning: can panic
     pub fn check_crc(&self) -> Result<u16, CrcError> {
         let actual = self.crc();
         let data = &self.as_bytes()[1..HEADER_LEN + self.payload_len()];
