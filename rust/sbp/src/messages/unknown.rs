@@ -8,13 +8,10 @@ use crate::{wire_format::WireFormat, SbpMessage};
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub struct Unknown {
-    #[cfg_attr(feature = "serde", serde(skip))]
     /// The message id of the message.
-    pub msg_id: Option<u16>,
-    #[cfg_attr(feature = "serde", serde(skip))]
+    pub msg_id: u16,
     /// The message sender_id.
     pub sender_id: Option<u16>,
-    #[cfg_attr(feature = "serde", serde(skip))]
     /// Raw payload of the message.
     pub payload: Vec<u8>,
 }
@@ -25,7 +22,7 @@ impl SbpMessage for Unknown {
     }
 
     fn message_type(&self) -> u16 {
-        self.msg_id.unwrap_or(0xFFFF)
+        self.msg_id
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -52,7 +49,7 @@ impl WireFormat for Unknown {
 
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         Unknown {
-            msg_id: None,
+            msg_id: 0xffff,
             sender_id: None,
             payload: WireFormat::parse_unchecked(buf),
         }

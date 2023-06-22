@@ -15,7 +15,7 @@ use crate::common::run_jsonfields2sbp;
 use serde_json::ser::CompactFormatter;
 
 #[test]
-fn test_error_writes_as_unknown_and_continues() {
+fn test_stop_on_error() {
     let root = find_project_root().unwrap();
     let root = root.as_path();
     let input_path = root.join(format!("test_data/{}", "short.sbp"));
@@ -24,17 +24,9 @@ fn test_error_writes_as_unknown_and_continues() {
     let mut sink = Cursor::new(vec![]);
 
     let _ = converters::sbp2json(source, &mut sink, CompactFormatter {}, false, true);
+
     sink.set_position(0);
-    let mut msg_iter = sbp::iter_messages(&mut sink).skip(1);
-    assert!(
-        msg_iter.next().unwrap().is_err(),
-        "2nd message of short.sbp has CRC error"
-    );
-    assert_eq!(
-        msg_iter.count(),
-        603,
-        "there are still 603 messages left in the iter"
-    );
+    assert_eq!(sbp::iter_messages(&mut sink).count(), 1);
 }
 
 #[test]
