@@ -145,6 +145,7 @@ pub struct CrcError {
     pub msg_type: u16,
     pub sender_id: u16,
     pub crc: u16,
+    pub raw_frame_bytes: Vec<u8>,
 }
 
 impl std::fmt::Display for CrcError {
@@ -267,21 +268,21 @@ impl Frame {
     }
 
     pub fn payload_len(&self) -> usize {
-        self.0.chunk()[PAYLOAD_INDEX] as usize
+        self.as_bytes()[PAYLOAD_INDEX] as usize
     }
 
     pub fn payload(&self) -> &[u8] {
-        &self.0.chunk()[HEADER_LEN..HEADER_LEN + self.payload_len()]
+        &self.as_bytes()[HEADER_LEN..HEADER_LEN + self.payload_len()]
     }
 
     pub fn crc(&self) -> u16 {
-        let mut slice = &self.0.chunk()[HEADER_LEN + self.payload_len()..];
+        let mut slice = &self.as_bytes()[HEADER_LEN + self.payload_len()..];
         slice.get_u16_le()
     }
 
     pub fn check_crc(&self) -> Result<u16, CrcError> {
         let actual = self.crc();
-        let data = &self.0.chunk()[1..HEADER_LEN + self.payload_len()];
+        let data = &self.as_bytes()[1..HEADER_LEN + self.payload_len()];
         if actual == crc16::State::<crc16::XMODEM>::calculate(data) {
             Ok(actual)
         } else {
@@ -289,12 +290,13 @@ impl Frame {
                 msg_type: self.msg_type(),
                 sender_id: self.sender_id(),
                 crc: actual,
+                raw_frame_bytes: self.as_bytes().to_vec(),
             })
         }
     }
 
     pub fn len(&self) -> usize {
-        self.0.chunk().len()
+        self.as_bytes().len()
     }
 
     pub fn is_empty(&self) -> bool {
@@ -302,7 +304,10 @@ impl Frame {
     }
 
     pub fn to_sbp(&self) -> Result<Sbp, Error> {
-        self.check_crc()?;
+        if let Err(e) = self.check_crc() {
+            todo!("figure this out");
+        }
+
         Ok(Sbp::from_parts(
             self.msg_type(),
             self.sender_id(),
@@ -310,6 +315,7 @@ impl Frame {
         )?)
     }
 
+    #[inline]
     pub fn as_bytes(&self) -> &[u8] {
         self.0.chunk()
     }
