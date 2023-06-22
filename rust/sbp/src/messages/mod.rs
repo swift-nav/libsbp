@@ -1596,6 +1596,37 @@ impl<'de> serde::Deserialize<'de> for Sbp {
     }
 }
 
+#[derive(Debug, Clone)]
+pub struct SbpMsgParseError {
+    /// the message type
+    pub msg_type: u16,
+    /// the sender_id
+    pub sender_id: u16,
+    /// A vec that just contains all the bytes
+    pub raw_invalid_payload_bytes: Vec<u8>,
+}
+
+impl From<SbpMsgParseError> for PayloadParseError {
+    fn from(
+        SbpMsgParseError {
+            raw_invalid_payload_bytes,
+            ..
+        }: SbpMsgParseError,
+    ) -> Self {
+        Self {
+            raw_invalid_payload_bytes,
+        }
+    }
+}
+
+impl std::fmt::Display for SbpMsgParseError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "error parsing payload")
+    }
+}
+
+impl std::error::Error for SbpMsgParseError {}
+
 impl Sbp {
     /// Parse a message from given fields.
     ///
@@ -1624,1178 +1655,625 @@ impl Sbp {
         msg_type: u16,
         sender_id: u16,
         mut payload: B,
-    ) -> Result<Sbp, PayloadParseError> {
-        match msg_type {
-            MsgPrintDep::MESSAGE_TYPE => {
-                let mut msg = MsgPrintDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPrintDep(msg))
-            }
+    ) -> Result<Sbp, SbpMsgParseError> {
+        let sbp_msg = match msg_type {
+            MsgPrintDep::MESSAGE_TYPE => MsgPrintDep::parse(&mut payload).map(Sbp::MsgPrintDep),
             MsgTrackingStateDetailedDep::MESSAGE_TYPE => {
-                let mut msg = MsgTrackingStateDetailedDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgTrackingStateDetailedDep(msg))
+                MsgTrackingStateDetailedDep::parse(&mut payload)
+                    .map(Sbp::MsgTrackingStateDetailedDep)
             }
             MsgTrackingStateDepB::MESSAGE_TYPE => {
-                let mut msg = MsgTrackingStateDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgTrackingStateDepB(msg))
+                MsgTrackingStateDepB::parse(&mut payload).map(Sbp::MsgTrackingStateDepB)
             }
             MsgAcqResultDepB::MESSAGE_TYPE => {
-                let mut msg = MsgAcqResultDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAcqResultDepB(msg))
+                MsgAcqResultDepB::parse(&mut payload).map(Sbp::MsgAcqResultDepB)
             }
             MsgAcqResultDepA::MESSAGE_TYPE => {
-                let mut msg = MsgAcqResultDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAcqResultDepA(msg))
+                MsgAcqResultDepA::parse(&mut payload).map(Sbp::MsgAcqResultDepA)
             }
             MsgTrackingStateDepA::MESSAGE_TYPE => {
-                let mut msg = MsgTrackingStateDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgTrackingStateDepA(msg))
+                MsgTrackingStateDepA::parse(&mut payload).map(Sbp::MsgTrackingStateDepA)
             }
             MsgThreadState::MESSAGE_TYPE => {
-                let mut msg = MsgThreadState::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgThreadState(msg))
+                MsgThreadState::parse(&mut payload).map(Sbp::MsgThreadState)
             }
             MsgUartStateDepa::MESSAGE_TYPE => {
-                let mut msg = MsgUartStateDepa::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgUartStateDepa(msg))
+                MsgUartStateDepa::parse(&mut payload).map(Sbp::MsgUartStateDepa)
             }
-            MsgIarState::MESSAGE_TYPE => {
-                let mut msg = MsgIarState::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgIarState(msg))
-            }
+            MsgIarState::MESSAGE_TYPE => MsgIarState::parse(&mut payload).map(Sbp::MsgIarState),
             MsgEphemerisDepA::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisDepA(msg))
+                MsgEphemerisDepA::parse(&mut payload).map(Sbp::MsgEphemerisDepA)
             }
             MsgMaskSatelliteDep::MESSAGE_TYPE => {
-                let mut msg = MsgMaskSatelliteDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgMaskSatelliteDep(msg))
+                MsgMaskSatelliteDep::parse(&mut payload).map(Sbp::MsgMaskSatelliteDep)
             }
             MsgTrackingIqDepA::MESSAGE_TYPE => {
-                let mut msg = MsgTrackingIqDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgTrackingIqDepA(msg))
+                MsgTrackingIqDepA::parse(&mut payload).map(Sbp::MsgTrackingIqDepA)
             }
-            MsgUartState::MESSAGE_TYPE => {
-                let mut msg = MsgUartState::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgUartState(msg))
-            }
+            MsgUartState::MESSAGE_TYPE => MsgUartState::parse(&mut payload).map(Sbp::MsgUartState),
             MsgAcqSvProfileDep::MESSAGE_TYPE => {
-                let mut msg = MsgAcqSvProfileDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAcqSvProfileDep(msg))
+                MsgAcqSvProfileDep::parse(&mut payload).map(Sbp::MsgAcqSvProfileDep)
             }
             MsgAcqResultDepC::MESSAGE_TYPE => {
-                let mut msg = MsgAcqResultDepC::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAcqResultDepC(msg))
+                MsgAcqResultDepC::parse(&mut payload).map(Sbp::MsgAcqResultDepC)
             }
             MsgTrackingStateDetailedDepA::MESSAGE_TYPE => {
-                let mut msg = MsgTrackingStateDetailedDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgTrackingStateDetailedDepA(msg))
+                MsgTrackingStateDetailedDepA::parse(&mut payload)
+                    .map(Sbp::MsgTrackingStateDetailedDepA)
             }
             MsgResetFilters::MESSAGE_TYPE => {
-                let mut msg = MsgResetFilters::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgResetFilters(msg))
+                MsgResetFilters::parse(&mut payload).map(Sbp::MsgResetFilters)
             }
             MsgInitBaseDep::MESSAGE_TYPE => {
-                let mut msg = MsgInitBaseDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgInitBaseDep(msg))
+                MsgInitBaseDep::parse(&mut payload).map(Sbp::MsgInitBaseDep)
             }
             MsgMaskSatellite::MESSAGE_TYPE => {
-                let mut msg = MsgMaskSatellite::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgMaskSatellite(msg))
+                MsgMaskSatellite::parse(&mut payload).map(Sbp::MsgMaskSatellite)
             }
             MsgTrackingIqDepB::MESSAGE_TYPE => {
-                let mut msg = MsgTrackingIqDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgTrackingIqDepB(msg))
+                MsgTrackingIqDepB::parse(&mut payload).map(Sbp::MsgTrackingIqDepB)
             }
             MsgTrackingIq::MESSAGE_TYPE => {
-                let mut msg = MsgTrackingIq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgTrackingIq(msg))
+                MsgTrackingIq::parse(&mut payload).map(Sbp::MsgTrackingIq)
             }
             MsgAcqSvProfile::MESSAGE_TYPE => {
-                let mut msg = MsgAcqSvProfile::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAcqSvProfile(msg))
+                MsgAcqSvProfile::parse(&mut payload).map(Sbp::MsgAcqSvProfile)
             }
-            MsgAcqResult::MESSAGE_TYPE => {
-                let mut msg = MsgAcqResult::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAcqResult(msg))
-            }
+            MsgAcqResult::MESSAGE_TYPE => MsgAcqResult::parse(&mut payload).map(Sbp::MsgAcqResult),
             MsgTrackingState::MESSAGE_TYPE => {
-                let mut msg = MsgTrackingState::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgTrackingState(msg))
+                MsgTrackingState::parse(&mut payload).map(Sbp::MsgTrackingState)
             }
-            MsgObsDepB::MESSAGE_TYPE => {
-                let mut msg = MsgObsDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgObsDepB(msg))
-            }
+            MsgObsDepB::MESSAGE_TYPE => MsgObsDepB::parse(&mut payload).map(Sbp::MsgObsDepB),
             MsgBasePosLlh::MESSAGE_TYPE => {
-                let mut msg = MsgBasePosLlh::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBasePosLlh(msg))
+                MsgBasePosLlh::parse(&mut payload).map(Sbp::MsgBasePosLlh)
             }
-            MsgObsDepA::MESSAGE_TYPE => {
-                let mut msg = MsgObsDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgObsDepA(msg))
-            }
+            MsgObsDepA::MESSAGE_TYPE => MsgObsDepA::parse(&mut payload).map(Sbp::MsgObsDepA),
             MsgEphemerisDepB::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisDepB(msg))
+                MsgEphemerisDepB::parse(&mut payload).map(Sbp::MsgEphemerisDepB)
             }
             MsgEphemerisDepC::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisDepC::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisDepC(msg))
+                MsgEphemerisDepC::parse(&mut payload).map(Sbp::MsgEphemerisDepC)
             }
             MsgBasePosEcef::MESSAGE_TYPE => {
-                let mut msg = MsgBasePosEcef::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBasePosEcef(msg))
+                MsgBasePosEcef::parse(&mut payload).map(Sbp::MsgBasePosEcef)
             }
-            MsgObsDepC::MESSAGE_TYPE => {
-                let mut msg = MsgObsDepC::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgObsDepC(msg))
-            }
-            MsgObs::MESSAGE_TYPE => {
-                let mut msg = MsgObs::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgObs(msg))
-            }
-            MsgSpecanDep::MESSAGE_TYPE => {
-                let mut msg = MsgSpecanDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSpecanDep(msg))
-            }
-            MsgSpecan::MESSAGE_TYPE => {
-                let mut msg = MsgSpecan::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSpecan(msg))
-            }
+            MsgObsDepC::MESSAGE_TYPE => MsgObsDepC::parse(&mut payload).map(Sbp::MsgObsDepC),
+            MsgObs::MESSAGE_TYPE => MsgObs::parse(&mut payload).map(Sbp::MsgObs),
+            MsgSpecanDep::MESSAGE_TYPE => MsgSpecanDep::parse(&mut payload).map(Sbp::MsgSpecanDep),
+            MsgSpecan::MESSAGE_TYPE => MsgSpecan::parse(&mut payload).map(Sbp::MsgSpecan),
             MsgMeasurementState::MESSAGE_TYPE => {
-                let mut msg = MsgMeasurementState::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgMeasurementState(msg))
+                MsgMeasurementState::parse(&mut payload).map(Sbp::MsgMeasurementState)
             }
-            MsgSetTime::MESSAGE_TYPE => {
-                let mut msg = MsgSetTime::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSetTime(msg))
-            }
-            MsgAlmanac::MESSAGE_TYPE => {
-                let mut msg = MsgAlmanac::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAlmanac(msg))
-            }
+            MsgSetTime::MESSAGE_TYPE => MsgSetTime::parse(&mut payload).map(Sbp::MsgSetTime),
+            MsgAlmanac::MESSAGE_TYPE => MsgAlmanac::parse(&mut payload).map(Sbp::MsgAlmanac),
             MsgAlmanacGpsDep::MESSAGE_TYPE => {
-                let mut msg = MsgAlmanacGpsDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAlmanacGpsDep(msg))
+                MsgAlmanacGpsDep::parse(&mut payload).map(Sbp::MsgAlmanacGpsDep)
             }
             MsgAlmanacGloDep::MESSAGE_TYPE => {
-                let mut msg = MsgAlmanacGloDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAlmanacGloDep(msg))
+                MsgAlmanacGloDep::parse(&mut payload).map(Sbp::MsgAlmanacGloDep)
             }
             MsgAlmanacGps::MESSAGE_TYPE => {
-                let mut msg = MsgAlmanacGps::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAlmanacGps(msg))
+                MsgAlmanacGps::parse(&mut payload).map(Sbp::MsgAlmanacGps)
             }
             MsgAlmanacGlo::MESSAGE_TYPE => {
-                let mut msg = MsgAlmanacGlo::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAlmanacGlo(msg))
+                MsgAlmanacGlo::parse(&mut payload).map(Sbp::MsgAlmanacGlo)
             }
-            MsgGloBiases::MESSAGE_TYPE => {
-                let mut msg = MsgGloBiases::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgGloBiases(msg))
-            }
+            MsgGloBiases::MESSAGE_TYPE => MsgGloBiases::parse(&mut payload).map(Sbp::MsgGloBiases),
             MsgEphemerisDepD::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisDepD::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisDepD(msg))
+                MsgEphemerisDepD::parse(&mut payload).map(Sbp::MsgEphemerisDepD)
             }
             MsgEphemerisGpsDepE::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisGpsDepE::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisGpsDepE(msg))
+                MsgEphemerisGpsDepE::parse(&mut payload).map(Sbp::MsgEphemerisGpsDepE)
             }
             MsgEphemerisSbasDepA::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisSbasDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisSbasDepA(msg))
+                MsgEphemerisSbasDepA::parse(&mut payload).map(Sbp::MsgEphemerisSbasDepA)
             }
             MsgEphemerisGloDepA::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisGloDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisGloDepA(msg))
+                MsgEphemerisGloDepA::parse(&mut payload).map(Sbp::MsgEphemerisGloDepA)
             }
             MsgEphemerisSbasDepB::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisSbasDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisSbasDepB(msg))
+                MsgEphemerisSbasDepB::parse(&mut payload).map(Sbp::MsgEphemerisSbasDepB)
             }
             MsgEphemerisGloDepB::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisGloDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisGloDepB(msg))
+                MsgEphemerisGloDepB::parse(&mut payload).map(Sbp::MsgEphemerisGloDepB)
             }
             MsgEphemerisGpsDepF::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisGpsDepF::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisGpsDepF(msg))
+                MsgEphemerisGpsDepF::parse(&mut payload).map(Sbp::MsgEphemerisGpsDepF)
             }
             MsgEphemerisGloDepC::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisGloDepC::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisGloDepC(msg))
+                MsgEphemerisGloDepC::parse(&mut payload).map(Sbp::MsgEphemerisGloDepC)
             }
             MsgEphemerisGloDepD::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisGloDepD::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisGloDepD(msg))
+                MsgEphemerisGloDepD::parse(&mut payload).map(Sbp::MsgEphemerisGloDepD)
             }
             MsgEphemerisBds::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisBds::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisBds(msg))
+                MsgEphemerisBds::parse(&mut payload).map(Sbp::MsgEphemerisBds)
             }
             MsgEphemerisGps::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisGps::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisGps(msg))
+                MsgEphemerisGps::parse(&mut payload).map(Sbp::MsgEphemerisGps)
             }
             MsgEphemerisGlo::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisGlo::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisGlo(msg))
+                MsgEphemerisGlo::parse(&mut payload).map(Sbp::MsgEphemerisGlo)
             }
             MsgEphemerisSbas::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisSbas::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisSbas(msg))
+                MsgEphemerisSbas::parse(&mut payload).map(Sbp::MsgEphemerisSbas)
             }
             MsgEphemerisGal::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisGal::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisGal(msg))
+                MsgEphemerisGal::parse(&mut payload).map(Sbp::MsgEphemerisGal)
             }
             MsgEphemerisQzss::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisQzss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisQzss(msg))
+                MsgEphemerisQzss::parse(&mut payload).map(Sbp::MsgEphemerisQzss)
             }
-            MsgIono::MESSAGE_TYPE => {
-                let mut msg = MsgIono::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgIono(msg))
-            }
+            MsgIono::MESSAGE_TYPE => MsgIono::parse(&mut payload).map(Sbp::MsgIono),
             MsgSvConfigurationGpsDep::MESSAGE_TYPE => {
-                let mut msg = MsgSvConfigurationGpsDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSvConfigurationGpsDep(msg))
+                MsgSvConfigurationGpsDep::parse(&mut payload).map(Sbp::MsgSvConfigurationGpsDep)
             }
             MsgGroupDelayDepA::MESSAGE_TYPE => {
-                let mut msg = MsgGroupDelayDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgGroupDelayDepA(msg))
+                MsgGroupDelayDepA::parse(&mut payload).map(Sbp::MsgGroupDelayDepA)
             }
             MsgGroupDelayDepB::MESSAGE_TYPE => {
-                let mut msg = MsgGroupDelayDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgGroupDelayDepB(msg))
+                MsgGroupDelayDepB::parse(&mut payload).map(Sbp::MsgGroupDelayDepB)
             }
             MsgGroupDelay::MESSAGE_TYPE => {
-                let mut msg = MsgGroupDelay::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgGroupDelay(msg))
+                MsgGroupDelay::parse(&mut payload).map(Sbp::MsgGroupDelay)
             }
             MsgEphemerisGalDepA::MESSAGE_TYPE => {
-                let mut msg = MsgEphemerisGalDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEphemerisGalDepA(msg))
+                MsgEphemerisGalDepA::parse(&mut payload).map(Sbp::MsgEphemerisGalDepA)
             }
-            MsgGnssCapb::MESSAGE_TYPE => {
-                let mut msg = MsgGnssCapb::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgGnssCapb(msg))
-            }
-            MsgSvAzEl::MESSAGE_TYPE => {
-                let mut msg = MsgSvAzEl::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSvAzEl(msg))
-            }
+            MsgGnssCapb::MESSAGE_TYPE => MsgGnssCapb::parse(&mut payload).map(Sbp::MsgGnssCapb),
+            MsgSvAzEl::MESSAGE_TYPE => MsgSvAzEl::parse(&mut payload).map(Sbp::MsgSvAzEl),
             MsgSettingsWrite::MESSAGE_TYPE => {
-                let mut msg = MsgSettingsWrite::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSettingsWrite(msg))
+                MsgSettingsWrite::parse(&mut payload).map(Sbp::MsgSettingsWrite)
             }
             MsgSettingsSave::MESSAGE_TYPE => {
-                let mut msg = MsgSettingsSave::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSettingsSave(msg))
+                MsgSettingsSave::parse(&mut payload).map(Sbp::MsgSettingsSave)
             }
             MsgSettingsReadByIndexReq::MESSAGE_TYPE => {
-                let mut msg = MsgSettingsReadByIndexReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSettingsReadByIndexReq(msg))
+                MsgSettingsReadByIndexReq::parse(&mut payload).map(Sbp::MsgSettingsReadByIndexReq)
             }
             MsgFileioReadResp::MESSAGE_TYPE => {
-                let mut msg = MsgFileioReadResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFileioReadResp(msg))
+                MsgFileioReadResp::parse(&mut payload).map(Sbp::MsgFileioReadResp)
             }
             MsgSettingsReadReq::MESSAGE_TYPE => {
-                let mut msg = MsgSettingsReadReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSettingsReadReq(msg))
+                MsgSettingsReadReq::parse(&mut payload).map(Sbp::MsgSettingsReadReq)
             }
             MsgSettingsReadResp::MESSAGE_TYPE => {
-                let mut msg = MsgSettingsReadResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSettingsReadResp(msg))
+                MsgSettingsReadResp::parse(&mut payload).map(Sbp::MsgSettingsReadResp)
             }
             MsgSettingsReadByIndexDone::MESSAGE_TYPE => {
-                let mut msg = MsgSettingsReadByIndexDone::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSettingsReadByIndexDone(msg))
+                MsgSettingsReadByIndexDone::parse(&mut payload).map(Sbp::MsgSettingsReadByIndexDone)
             }
             MsgSettingsReadByIndexResp::MESSAGE_TYPE => {
-                let mut msg = MsgSettingsReadByIndexResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSettingsReadByIndexResp(msg))
+                MsgSettingsReadByIndexResp::parse(&mut payload).map(Sbp::MsgSettingsReadByIndexResp)
             }
             MsgFileioReadReq::MESSAGE_TYPE => {
-                let mut msg = MsgFileioReadReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFileioReadReq(msg))
+                MsgFileioReadReq::parse(&mut payload).map(Sbp::MsgFileioReadReq)
             }
             MsgFileioReadDirReq::MESSAGE_TYPE => {
-                let mut msg = MsgFileioReadDirReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFileioReadDirReq(msg))
+                MsgFileioReadDirReq::parse(&mut payload).map(Sbp::MsgFileioReadDirReq)
             }
             MsgFileioReadDirResp::MESSAGE_TYPE => {
-                let mut msg = MsgFileioReadDirResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFileioReadDirResp(msg))
+                MsgFileioReadDirResp::parse(&mut payload).map(Sbp::MsgFileioReadDirResp)
             }
             MsgFileioWriteResp::MESSAGE_TYPE => {
-                let mut msg = MsgFileioWriteResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFileioWriteResp(msg))
+                MsgFileioWriteResp::parse(&mut payload).map(Sbp::MsgFileioWriteResp)
             }
             MsgFileioRemove::MESSAGE_TYPE => {
-                let mut msg = MsgFileioRemove::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFileioRemove(msg))
+                MsgFileioRemove::parse(&mut payload).map(Sbp::MsgFileioRemove)
             }
             MsgFileioWriteReq::MESSAGE_TYPE => {
-                let mut msg = MsgFileioWriteReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFileioWriteReq(msg))
+                MsgFileioWriteReq::parse(&mut payload).map(Sbp::MsgFileioWriteReq)
             }
             MsgSettingsRegister::MESSAGE_TYPE => {
-                let mut msg = MsgSettingsRegister::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSettingsRegister(msg))
+                MsgSettingsRegister::parse(&mut payload).map(Sbp::MsgSettingsRegister)
             }
             MsgSettingsWriteResp::MESSAGE_TYPE => {
-                let mut msg = MsgSettingsWriteResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSettingsWriteResp(msg))
+                MsgSettingsWriteResp::parse(&mut payload).map(Sbp::MsgSettingsWriteResp)
             }
             MsgBootloaderHandshakeDepA::MESSAGE_TYPE => {
-                let mut msg = MsgBootloaderHandshakeDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBootloaderHandshakeDepA(msg))
+                MsgBootloaderHandshakeDepA::parse(&mut payload).map(Sbp::MsgBootloaderHandshakeDepA)
             }
             MsgBootloaderJumpToApp::MESSAGE_TYPE => {
-                let mut msg = MsgBootloaderJumpToApp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBootloaderJumpToApp(msg))
+                MsgBootloaderJumpToApp::parse(&mut payload).map(Sbp::MsgBootloaderJumpToApp)
             }
-            MsgResetDep::MESSAGE_TYPE => {
-                let mut msg = MsgResetDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgResetDep(msg))
-            }
+            MsgResetDep::MESSAGE_TYPE => MsgResetDep::parse(&mut payload).map(Sbp::MsgResetDep),
             MsgBootloaderHandshakeReq::MESSAGE_TYPE => {
-                let mut msg = MsgBootloaderHandshakeReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBootloaderHandshakeReq(msg))
+                MsgBootloaderHandshakeReq::parse(&mut payload).map(Sbp::MsgBootloaderHandshakeReq)
             }
             MsgBootloaderHandshakeResp::MESSAGE_TYPE => {
-                let mut msg = MsgBootloaderHandshakeResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBootloaderHandshakeResp(msg))
+                MsgBootloaderHandshakeResp::parse(&mut payload).map(Sbp::MsgBootloaderHandshakeResp)
             }
             MsgDeviceMonitor::MESSAGE_TYPE => {
-                let mut msg = MsgDeviceMonitor::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgDeviceMonitor(msg))
+                MsgDeviceMonitor::parse(&mut payload).map(Sbp::MsgDeviceMonitor)
             }
-            MsgReset::MESSAGE_TYPE => {
-                let mut msg = MsgReset::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgReset(msg))
-            }
+            MsgReset::MESSAGE_TYPE => MsgReset::parse(&mut payload).map(Sbp::MsgReset),
             MsgCommandReq::MESSAGE_TYPE => {
-                let mut msg = MsgCommandReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCommandReq(msg))
+                MsgCommandReq::parse(&mut payload).map(Sbp::MsgCommandReq)
             }
             MsgCommandResp::MESSAGE_TYPE => {
-                let mut msg = MsgCommandResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCommandResp(msg))
+                MsgCommandResp::parse(&mut payload).map(Sbp::MsgCommandResp)
             }
             MsgNetworkStateReq::MESSAGE_TYPE => {
-                let mut msg = MsgNetworkStateReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgNetworkStateReq(msg))
+                MsgNetworkStateReq::parse(&mut payload).map(Sbp::MsgNetworkStateReq)
             }
             MsgNetworkStateResp::MESSAGE_TYPE => {
-                let mut msg = MsgNetworkStateResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgNetworkStateResp(msg))
+                MsgNetworkStateResp::parse(&mut payload).map(Sbp::MsgNetworkStateResp)
             }
             MsgCommandOutput::MESSAGE_TYPE => {
-                let mut msg = MsgCommandOutput::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCommandOutput(msg))
+                MsgCommandOutput::parse(&mut payload).map(Sbp::MsgCommandOutput)
             }
             MsgNetworkBandwidthUsage::MESSAGE_TYPE => {
-                let mut msg = MsgNetworkBandwidthUsage::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgNetworkBandwidthUsage(msg))
+                MsgNetworkBandwidthUsage::parse(&mut payload).map(Sbp::MsgNetworkBandwidthUsage)
             }
             MsgCellModemStatus::MESSAGE_TYPE => {
-                let mut msg = MsgCellModemStatus::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCellModemStatus(msg))
+                MsgCellModemStatus::parse(&mut payload).map(Sbp::MsgCellModemStatus)
             }
             MsgFrontEndGain::MESSAGE_TYPE => {
-                let mut msg = MsgFrontEndGain::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFrontEndGain(msg))
+                MsgFrontEndGain::parse(&mut payload).map(Sbp::MsgFrontEndGain)
             }
-            MsgCwResults::MESSAGE_TYPE => {
-                let mut msg = MsgCwResults::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCwResults(msg))
-            }
-            MsgCwStart::MESSAGE_TYPE => {
-                let mut msg = MsgCwStart::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCwStart(msg))
-            }
+            MsgCwResults::MESSAGE_TYPE => MsgCwResults::parse(&mut payload).map(Sbp::MsgCwResults),
+            MsgCwStart::MESSAGE_TYPE => MsgCwStart::parse(&mut payload).map(Sbp::MsgCwStart),
             MsgNapDeviceDnaResp::MESSAGE_TYPE => {
-                let mut msg = MsgNapDeviceDnaResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgNapDeviceDnaResp(msg))
+                MsgNapDeviceDnaResp::parse(&mut payload).map(Sbp::MsgNapDeviceDnaResp)
             }
             MsgNapDeviceDnaReq::MESSAGE_TYPE => {
-                let mut msg = MsgNapDeviceDnaReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgNapDeviceDnaReq(msg))
+                MsgNapDeviceDnaReq::parse(&mut payload).map(Sbp::MsgNapDeviceDnaReq)
             }
-            MsgFlashDone::MESSAGE_TYPE => {
-                let mut msg = MsgFlashDone::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFlashDone(msg))
-            }
+            MsgFlashDone::MESSAGE_TYPE => MsgFlashDone::parse(&mut payload).map(Sbp::MsgFlashDone),
             MsgFlashReadResp::MESSAGE_TYPE => {
-                let mut msg = MsgFlashReadResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFlashReadResp(msg))
+                MsgFlashReadResp::parse(&mut payload).map(Sbp::MsgFlashReadResp)
             }
             MsgFlashErase::MESSAGE_TYPE => {
-                let mut msg = MsgFlashErase::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFlashErase(msg))
+                MsgFlashErase::parse(&mut payload).map(Sbp::MsgFlashErase)
             }
             MsgStmFlashLockSector::MESSAGE_TYPE => {
-                let mut msg = MsgStmFlashLockSector::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgStmFlashLockSector(msg))
+                MsgStmFlashLockSector::parse(&mut payload).map(Sbp::MsgStmFlashLockSector)
             }
             MsgStmFlashUnlockSector::MESSAGE_TYPE => {
-                let mut msg = MsgStmFlashUnlockSector::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgStmFlashUnlockSector(msg))
+                MsgStmFlashUnlockSector::parse(&mut payload).map(Sbp::MsgStmFlashUnlockSector)
             }
             MsgStmUniqueIdResp::MESSAGE_TYPE => {
-                let mut msg = MsgStmUniqueIdResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgStmUniqueIdResp(msg))
+                MsgStmUniqueIdResp::parse(&mut payload).map(Sbp::MsgStmUniqueIdResp)
             }
             MsgFlashProgram::MESSAGE_TYPE => {
-                let mut msg = MsgFlashProgram::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFlashProgram(msg))
+                MsgFlashProgram::parse(&mut payload).map(Sbp::MsgFlashProgram)
             }
             MsgFlashReadReq::MESSAGE_TYPE => {
-                let mut msg = MsgFlashReadReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFlashReadReq(msg))
+                MsgFlashReadReq::parse(&mut payload).map(Sbp::MsgFlashReadReq)
             }
             MsgStmUniqueIdReq::MESSAGE_TYPE => {
-                let mut msg = MsgStmUniqueIdReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgStmUniqueIdReq(msg))
+                MsgStmUniqueIdReq::parse(&mut payload).map(Sbp::MsgStmUniqueIdReq)
             }
             MsgM25FlashWriteStatus::MESSAGE_TYPE => {
-                let mut msg = MsgM25FlashWriteStatus::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgM25FlashWriteStatus(msg))
+                MsgM25FlashWriteStatus::parse(&mut payload).map(Sbp::MsgM25FlashWriteStatus)
             }
             MsgGpsTimeDepA::MESSAGE_TYPE => {
-                let mut msg = MsgGpsTimeDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgGpsTimeDepA(msg))
+                MsgGpsTimeDepA::parse(&mut payload).map(Sbp::MsgGpsTimeDepA)
             }
-            MsgExtEvent::MESSAGE_TYPE => {
-                let mut msg = MsgExtEvent::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgExtEvent(msg))
-            }
-            MsgGpsTime::MESSAGE_TYPE => {
-                let mut msg = MsgGpsTime::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgGpsTime(msg))
-            }
-            MsgUtcTime::MESSAGE_TYPE => {
-                let mut msg = MsgUtcTime::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgUtcTime(msg))
-            }
+            MsgExtEvent::MESSAGE_TYPE => MsgExtEvent::parse(&mut payload).map(Sbp::MsgExtEvent),
+            MsgGpsTime::MESSAGE_TYPE => MsgGpsTime::parse(&mut payload).map(Sbp::MsgGpsTime),
+            MsgUtcTime::MESSAGE_TYPE => MsgUtcTime::parse(&mut payload).map(Sbp::MsgUtcTime),
             MsgGpsTimeGnss::MESSAGE_TYPE => {
-                let mut msg = MsgGpsTimeGnss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgGpsTimeGnss(msg))
+                MsgGpsTimeGnss::parse(&mut payload).map(Sbp::MsgGpsTimeGnss)
             }
             MsgUtcTimeGnss::MESSAGE_TYPE => {
-                let mut msg = MsgUtcTimeGnss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgUtcTimeGnss(msg))
+                MsgUtcTimeGnss::parse(&mut payload).map(Sbp::MsgUtcTimeGnss)
             }
-            MsgTelSv::MESSAGE_TYPE => {
-                let mut msg = MsgTelSv::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgTelSv(msg))
-            }
+            MsgTelSv::MESSAGE_TYPE => MsgTelSv::parse(&mut payload).map(Sbp::MsgTelSv),
             MsgSettingsRegisterResp::MESSAGE_TYPE => {
-                let mut msg = MsgSettingsRegisterResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSettingsRegisterResp(msg))
+                MsgSettingsRegisterResp::parse(&mut payload).map(Sbp::MsgSettingsRegisterResp)
             }
             MsgPosEcefDepA::MESSAGE_TYPE => {
-                let mut msg = MsgPosEcefDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosEcefDepA(msg))
+                MsgPosEcefDepA::parse(&mut payload).map(Sbp::MsgPosEcefDepA)
             }
             MsgPosLlhDepA::MESSAGE_TYPE => {
-                let mut msg = MsgPosLlhDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosLlhDepA(msg))
+                MsgPosLlhDepA::parse(&mut payload).map(Sbp::MsgPosLlhDepA)
             }
             MsgBaselineEcefDepA::MESSAGE_TYPE => {
-                let mut msg = MsgBaselineEcefDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBaselineEcefDepA(msg))
+                MsgBaselineEcefDepA::parse(&mut payload).map(Sbp::MsgBaselineEcefDepA)
             }
             MsgBaselineNedDepA::MESSAGE_TYPE => {
-                let mut msg = MsgBaselineNedDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBaselineNedDepA(msg))
+                MsgBaselineNedDepA::parse(&mut payload).map(Sbp::MsgBaselineNedDepA)
             }
             MsgVelEcefDepA::MESSAGE_TYPE => {
-                let mut msg = MsgVelEcefDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelEcefDepA(msg))
+                MsgVelEcefDepA::parse(&mut payload).map(Sbp::MsgVelEcefDepA)
             }
             MsgVelNedDepA::MESSAGE_TYPE => {
-                let mut msg = MsgVelNedDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelNedDepA(msg))
+                MsgVelNedDepA::parse(&mut payload).map(Sbp::MsgVelNedDepA)
             }
-            MsgDopsDepA::MESSAGE_TYPE => {
-                let mut msg = MsgDopsDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgDopsDepA(msg))
-            }
+            MsgDopsDepA::MESSAGE_TYPE => MsgDopsDepA::parse(&mut payload).map(Sbp::MsgDopsDepA),
             MsgBaselineHeadingDepA::MESSAGE_TYPE => {
-                let mut msg = MsgBaselineHeadingDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBaselineHeadingDepA(msg))
+                MsgBaselineHeadingDepA::parse(&mut payload).map(Sbp::MsgBaselineHeadingDepA)
             }
-            MsgDops::MESSAGE_TYPE => {
-                let mut msg = MsgDops::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgDops(msg))
-            }
-            MsgPosEcef::MESSAGE_TYPE => {
-                let mut msg = MsgPosEcef::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosEcef(msg))
-            }
-            MsgPosLlh::MESSAGE_TYPE => {
-                let mut msg = MsgPosLlh::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosLlh(msg))
-            }
+            MsgDops::MESSAGE_TYPE => MsgDops::parse(&mut payload).map(Sbp::MsgDops),
+            MsgPosEcef::MESSAGE_TYPE => MsgPosEcef::parse(&mut payload).map(Sbp::MsgPosEcef),
+            MsgPosLlh::MESSAGE_TYPE => MsgPosLlh::parse(&mut payload).map(Sbp::MsgPosLlh),
             MsgBaselineEcef::MESSAGE_TYPE => {
-                let mut msg = MsgBaselineEcef::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBaselineEcef(msg))
+                MsgBaselineEcef::parse(&mut payload).map(Sbp::MsgBaselineEcef)
             }
             MsgBaselineNed::MESSAGE_TYPE => {
-                let mut msg = MsgBaselineNed::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBaselineNed(msg))
+                MsgBaselineNed::parse(&mut payload).map(Sbp::MsgBaselineNed)
             }
-            MsgVelEcef::MESSAGE_TYPE => {
-                let mut msg = MsgVelEcef::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelEcef(msg))
-            }
-            MsgVelNed::MESSAGE_TYPE => {
-                let mut msg = MsgVelNed::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelNed(msg))
-            }
+            MsgVelEcef::MESSAGE_TYPE => MsgVelEcef::parse(&mut payload).map(Sbp::MsgVelEcef),
+            MsgVelNed::MESSAGE_TYPE => MsgVelNed::parse(&mut payload).map(Sbp::MsgVelNed),
             MsgBaselineHeading::MESSAGE_TYPE => {
-                let mut msg = MsgBaselineHeading::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgBaselineHeading(msg))
+                MsgBaselineHeading::parse(&mut payload).map(Sbp::MsgBaselineHeading)
             }
             MsgAgeCorrections::MESSAGE_TYPE => {
-                let mut msg = MsgAgeCorrections::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAgeCorrections(msg))
+                MsgAgeCorrections::parse(&mut payload).map(Sbp::MsgAgeCorrections)
             }
-            MsgPosLlhCov::MESSAGE_TYPE => {
-                let mut msg = MsgPosLlhCov::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosLlhCov(msg))
-            }
-            MsgVelNedCov::MESSAGE_TYPE => {
-                let mut msg = MsgVelNedCov::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelNedCov(msg))
-            }
-            MsgVelBody::MESSAGE_TYPE => {
-                let mut msg = MsgVelBody::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelBody(msg))
-            }
+            MsgPosLlhCov::MESSAGE_TYPE => MsgPosLlhCov::parse(&mut payload).map(Sbp::MsgPosLlhCov),
+            MsgVelNedCov::MESSAGE_TYPE => MsgVelNedCov::parse(&mut payload).map(Sbp::MsgVelNedCov),
+            MsgVelBody::MESSAGE_TYPE => MsgVelBody::parse(&mut payload).map(Sbp::MsgVelBody),
             MsgPosEcefCov::MESSAGE_TYPE => {
-                let mut msg = MsgPosEcefCov::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosEcefCov(msg))
+                MsgPosEcefCov::parse(&mut payload).map(Sbp::MsgPosEcefCov)
             }
             MsgVelEcefCov::MESSAGE_TYPE => {
-                let mut msg = MsgVelEcefCov::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelEcefCov(msg))
+                MsgVelEcefCov::parse(&mut payload).map(Sbp::MsgVelEcefCov)
             }
             MsgProtectionLevelDepA::MESSAGE_TYPE => {
-                let mut msg = MsgProtectionLevelDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgProtectionLevelDepA(msg))
+                MsgProtectionLevelDepA::parse(&mut payload).map(Sbp::MsgProtectionLevelDepA)
             }
             MsgProtectionLevel::MESSAGE_TYPE => {
-                let mut msg = MsgProtectionLevel::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgProtectionLevel(msg))
+                MsgProtectionLevel::parse(&mut payload).map(Sbp::MsgProtectionLevel)
             }
-            MsgPosLlhAcc::MESSAGE_TYPE => {
-                let mut msg = MsgPosLlhAcc::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosLlhAcc(msg))
-            }
-            MsgVelCog::MESSAGE_TYPE => {
-                let mut msg = MsgVelCog::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelCog(msg))
-            }
+            MsgPosLlhAcc::MESSAGE_TYPE => MsgPosLlhAcc::parse(&mut payload).map(Sbp::MsgPosLlhAcc),
+            MsgVelCog::MESSAGE_TYPE => MsgVelCog::parse(&mut payload).map(Sbp::MsgVelCog),
             MsgOrientQuat::MESSAGE_TYPE => {
-                let mut msg = MsgOrientQuat::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgOrientQuat(msg))
+                MsgOrientQuat::parse(&mut payload).map(Sbp::MsgOrientQuat)
             }
             MsgOrientEuler::MESSAGE_TYPE => {
-                let mut msg = MsgOrientEuler::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgOrientEuler(msg))
+                MsgOrientEuler::parse(&mut payload).map(Sbp::MsgOrientEuler)
             }
             MsgAngularRate::MESSAGE_TYPE => {
-                let mut msg = MsgAngularRate::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAngularRate(msg))
+                MsgAngularRate::parse(&mut payload).map(Sbp::MsgAngularRate)
             }
             MsgPosEcefGnss::MESSAGE_TYPE => {
-                let mut msg = MsgPosEcefGnss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosEcefGnss(msg))
+                MsgPosEcefGnss::parse(&mut payload).map(Sbp::MsgPosEcefGnss)
             }
             MsgPosLlhGnss::MESSAGE_TYPE => {
-                let mut msg = MsgPosLlhGnss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosLlhGnss(msg))
+                MsgPosLlhGnss::parse(&mut payload).map(Sbp::MsgPosLlhGnss)
             }
             MsgVelEcefGnss::MESSAGE_TYPE => {
-                let mut msg = MsgVelEcefGnss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelEcefGnss(msg))
+                MsgVelEcefGnss::parse(&mut payload).map(Sbp::MsgVelEcefGnss)
             }
             MsgVelNedGnss::MESSAGE_TYPE => {
-                let mut msg = MsgVelNedGnss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelNedGnss(msg))
+                MsgVelNedGnss::parse(&mut payload).map(Sbp::MsgVelNedGnss)
             }
             MsgPosLlhCovGnss::MESSAGE_TYPE => {
-                let mut msg = MsgPosLlhCovGnss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosLlhCovGnss(msg))
+                MsgPosLlhCovGnss::parse(&mut payload).map(Sbp::MsgPosLlhCovGnss)
             }
             MsgVelNedCovGnss::MESSAGE_TYPE => {
-                let mut msg = MsgVelNedCovGnss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelNedCovGnss(msg))
+                MsgVelNedCovGnss::parse(&mut payload).map(Sbp::MsgVelNedCovGnss)
             }
             MsgPosEcefCovGnss::MESSAGE_TYPE => {
-                let mut msg = MsgPosEcefCovGnss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPosEcefCovGnss(msg))
+                MsgPosEcefCovGnss::parse(&mut payload).map(Sbp::MsgPosEcefCovGnss)
             }
             MsgVelEcefCovGnss::MESSAGE_TYPE => {
-                let mut msg = MsgVelEcefCovGnss::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgVelEcefCovGnss(msg))
+                MsgVelEcefCovGnss::parse(&mut payload).map(Sbp::MsgVelEcefCovGnss)
             }
             MsgUtcLeapSecond::MESSAGE_TYPE => {
-                let mut msg = MsgUtcLeapSecond::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgUtcLeapSecond(msg))
+                MsgUtcLeapSecond::parse(&mut payload).map(Sbp::MsgUtcLeapSecond)
             }
             MsgReferenceFrameParam::MESSAGE_TYPE => {
-                let mut msg = MsgReferenceFrameParam::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgReferenceFrameParam(msg))
+                MsgReferenceFrameParam::parse(&mut payload).map(Sbp::MsgReferenceFrameParam)
             }
             MsgPoseRelative::MESSAGE_TYPE => {
-                let mut msg = MsgPoseRelative::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPoseRelative(msg))
+                MsgPoseRelative::parse(&mut payload).map(Sbp::MsgPoseRelative)
             }
-            MsgNdbEvent::MESSAGE_TYPE => {
-                let mut msg = MsgNdbEvent::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgNdbEvent(msg))
-            }
-            MsgLog::MESSAGE_TYPE => {
-                let mut msg = MsgLog::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLog(msg))
-            }
-            MsgFwd::MESSAGE_TYPE => {
-                let mut msg = MsgFwd::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFwd(msg))
-            }
+            MsgNdbEvent::MESSAGE_TYPE => MsgNdbEvent::parse(&mut payload).map(Sbp::MsgNdbEvent),
+            MsgLog::MESSAGE_TYPE => MsgLog::parse(&mut payload).map(Sbp::MsgLog),
+            MsgFwd::MESSAGE_TYPE => MsgFwd::parse(&mut payload).map(Sbp::MsgFwd),
             MsgSsrOrbitClockDepA::MESSAGE_TYPE => {
-                let mut msg = MsgSsrOrbitClockDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrOrbitClockDepA(msg))
+                MsgSsrOrbitClockDepA::parse(&mut payload).map(Sbp::MsgSsrOrbitClockDepA)
             }
             MsgSsrOrbitClock::MESSAGE_TYPE => {
-                let mut msg = MsgSsrOrbitClock::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrOrbitClock(msg))
+                MsgSsrOrbitClock::parse(&mut payload).map(Sbp::MsgSsrOrbitClock)
             }
             MsgSsrOrbitClockBounds::MESSAGE_TYPE => {
-                let mut msg = MsgSsrOrbitClockBounds::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrOrbitClockBounds(msg))
+                MsgSsrOrbitClockBounds::parse(&mut payload).map(Sbp::MsgSsrOrbitClockBounds)
             }
             MsgSsrOrbitClockBoundsDegradation::MESSAGE_TYPE => {
-                let mut msg = MsgSsrOrbitClockBoundsDegradation::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrOrbitClockBoundsDegradation(msg))
+                MsgSsrOrbitClockBoundsDegradation::parse(&mut payload)
+                    .map(Sbp::MsgSsrOrbitClockBoundsDegradation)
             }
             MsgSsrCodeBiases::MESSAGE_TYPE => {
-                let mut msg = MsgSsrCodeBiases::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrCodeBiases(msg))
+                MsgSsrCodeBiases::parse(&mut payload).map(Sbp::MsgSsrCodeBiases)
             }
             MsgSsrPhaseBiases::MESSAGE_TYPE => {
-                let mut msg = MsgSsrPhaseBiases::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrPhaseBiases(msg))
+                MsgSsrPhaseBiases::parse(&mut payload).map(Sbp::MsgSsrPhaseBiases)
             }
             MsgSsrStecCorrectionDepA::MESSAGE_TYPE => {
-                let mut msg = MsgSsrStecCorrectionDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrStecCorrectionDepA(msg))
+                MsgSsrStecCorrectionDepA::parse(&mut payload).map(Sbp::MsgSsrStecCorrectionDepA)
             }
             MsgSsrCodePhaseBiasesBounds::MESSAGE_TYPE => {
-                let mut msg = MsgSsrCodePhaseBiasesBounds::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrCodePhaseBiasesBounds(msg))
+                MsgSsrCodePhaseBiasesBounds::parse(&mut payload)
+                    .map(Sbp::MsgSsrCodePhaseBiasesBounds)
             }
             MsgSsrGriddedCorrectionNoStdDepA::MESSAGE_TYPE => {
-                let mut msg = MsgSsrGriddedCorrectionNoStdDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg))
+                MsgSsrGriddedCorrectionNoStdDepA::parse(&mut payload)
+                    .map(Sbp::MsgSsrGriddedCorrectionNoStdDepA)
             }
             MsgSsrGridDefinitionDepA::MESSAGE_TYPE => {
-                let mut msg = MsgSsrGridDefinitionDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrGridDefinitionDepA(msg))
+                MsgSsrGridDefinitionDepA::parse(&mut payload).map(Sbp::MsgSsrGridDefinitionDepA)
             }
             MsgSsrTileDefinitionDepA::MESSAGE_TYPE => {
-                let mut msg = MsgSsrTileDefinitionDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrTileDefinitionDepA(msg))
+                MsgSsrTileDefinitionDepA::parse(&mut payload).map(Sbp::MsgSsrTileDefinitionDepA)
             }
             MsgSsrTileDefinitionDepB::MESSAGE_TYPE => {
-                let mut msg = MsgSsrTileDefinitionDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrTileDefinitionDepB(msg))
+                MsgSsrTileDefinitionDepB::parse(&mut payload).map(Sbp::MsgSsrTileDefinitionDepB)
             }
             MsgSsrTileDefinition::MESSAGE_TYPE => {
-                let mut msg = MsgSsrTileDefinition::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrTileDefinition(msg))
+                MsgSsrTileDefinition::parse(&mut payload).map(Sbp::MsgSsrTileDefinition)
             }
             MsgSsrGriddedCorrectionDepA::MESSAGE_TYPE => {
-                let mut msg = MsgSsrGriddedCorrectionDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrGriddedCorrectionDepA(msg))
+                MsgSsrGriddedCorrectionDepA::parse(&mut payload)
+                    .map(Sbp::MsgSsrGriddedCorrectionDepA)
             }
             MsgSsrStecCorrectionDep::MESSAGE_TYPE => {
-                let mut msg = MsgSsrStecCorrectionDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrStecCorrectionDep(msg))
+                MsgSsrStecCorrectionDep::parse(&mut payload).map(Sbp::MsgSsrStecCorrectionDep)
             }
             MsgSsrGriddedCorrection::MESSAGE_TYPE => {
-                let mut msg = MsgSsrGriddedCorrection::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrGriddedCorrection(msg))
+                MsgSsrGriddedCorrection::parse(&mut payload).map(Sbp::MsgSsrGriddedCorrection)
             }
             MsgSsrStecCorrection::MESSAGE_TYPE => {
-                let mut msg = MsgSsrStecCorrection::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrStecCorrection(msg))
+                MsgSsrStecCorrection::parse(&mut payload).map(Sbp::MsgSsrStecCorrection)
             }
             MsgSsrGriddedCorrectionBounds::MESSAGE_TYPE => {
-                let mut msg = MsgSsrGriddedCorrectionBounds::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrGriddedCorrectionBounds(msg))
+                MsgSsrGriddedCorrectionBounds::parse(&mut payload)
+                    .map(Sbp::MsgSsrGriddedCorrectionBounds)
             }
             MsgSsrSatelliteApcDep::MESSAGE_TYPE => {
-                let mut msg = MsgSsrSatelliteApcDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrSatelliteApcDep(msg))
+                MsgSsrSatelliteApcDep::parse(&mut payload).map(Sbp::MsgSsrSatelliteApcDep)
             }
             MsgSsrSatelliteApc::MESSAGE_TYPE => {
-                let mut msg = MsgSsrSatelliteApc::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrSatelliteApc(msg))
+                MsgSsrSatelliteApc::parse(&mut payload).map(Sbp::MsgSsrSatelliteApc)
             }
-            MsgOsr::MESSAGE_TYPE => {
-                let mut msg = MsgOsr::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgOsr(msg))
-            }
-            MsgUserData::MESSAGE_TYPE => {
-                let mut msg = MsgUserData::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgUserData(msg))
-            }
-            MsgImuRaw::MESSAGE_TYPE => {
-                let mut msg = MsgImuRaw::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgImuRaw(msg))
-            }
-            MsgImuAux::MESSAGE_TYPE => {
-                let mut msg = MsgImuAux::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgImuAux(msg))
-            }
-            MsgMagRaw::MESSAGE_TYPE => {
-                let mut msg = MsgMagRaw::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgMagRaw(msg))
-            }
-            MsgOdometry::MESSAGE_TYPE => {
-                let mut msg = MsgOdometry::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgOdometry(msg))
-            }
-            MsgWheeltick::MESSAGE_TYPE => {
-                let mut msg = MsgWheeltick::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgWheeltick(msg))
-            }
+            MsgOsr::MESSAGE_TYPE => MsgOsr::parse(&mut payload).map(Sbp::MsgOsr),
+            MsgUserData::MESSAGE_TYPE => MsgUserData::parse(&mut payload).map(Sbp::MsgUserData),
+            MsgImuRaw::MESSAGE_TYPE => MsgImuRaw::parse(&mut payload).map(Sbp::MsgImuRaw),
+            MsgImuAux::MESSAGE_TYPE => MsgImuAux::parse(&mut payload).map(Sbp::MsgImuAux),
+            MsgMagRaw::MESSAGE_TYPE => MsgMagRaw::parse(&mut payload).map(Sbp::MsgMagRaw),
+            MsgOdometry::MESSAGE_TYPE => MsgOdometry::parse(&mut payload).map(Sbp::MsgOdometry),
+            MsgWheeltick::MESSAGE_TYPE => MsgWheeltick::parse(&mut payload).map(Sbp::MsgWheeltick),
             MsgSsrFlagHighLevel::MESSAGE_TYPE => {
-                let mut msg = MsgSsrFlagHighLevel::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrFlagHighLevel(msg))
+                MsgSsrFlagHighLevel::parse(&mut payload).map(Sbp::MsgSsrFlagHighLevel)
             }
             MsgSsrFlagSatellites::MESSAGE_TYPE => {
-                let mut msg = MsgSsrFlagSatellites::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrFlagSatellites(msg))
+                MsgSsrFlagSatellites::parse(&mut payload).map(Sbp::MsgSsrFlagSatellites)
             }
             MsgSsrFlagTropoGridPoints::MESSAGE_TYPE => {
-                let mut msg = MsgSsrFlagTropoGridPoints::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrFlagTropoGridPoints(msg))
+                MsgSsrFlagTropoGridPoints::parse(&mut payload).map(Sbp::MsgSsrFlagTropoGridPoints)
             }
             MsgSsrFlagIonoGridPoints::MESSAGE_TYPE => {
-                let mut msg = MsgSsrFlagIonoGridPoints::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrFlagIonoGridPoints(msg))
+                MsgSsrFlagIonoGridPoints::parse(&mut payload).map(Sbp::MsgSsrFlagIonoGridPoints)
             }
             MsgSsrFlagIonoTileSatLos::MESSAGE_TYPE => {
-                let mut msg = MsgSsrFlagIonoTileSatLos::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrFlagIonoTileSatLos(msg))
+                MsgSsrFlagIonoTileSatLos::parse(&mut payload).map(Sbp::MsgSsrFlagIonoTileSatLos)
             }
             MsgSsrFlagIonoGridPointSatLos::MESSAGE_TYPE => {
-                let mut msg = MsgSsrFlagIonoGridPointSatLos::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrFlagIonoGridPointSatLos(msg))
+                MsgSsrFlagIonoGridPointSatLos::parse(&mut payload)
+                    .map(Sbp::MsgSsrFlagIonoGridPointSatLos)
             }
             MsgAcknowledge::MESSAGE_TYPE => {
-                let mut msg = MsgAcknowledge::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAcknowledge(msg))
+                MsgAcknowledge::parse(&mut payload).map(Sbp::MsgAcknowledge)
             }
             MsgEd25519SignatureDepA::MESSAGE_TYPE => {
-                let mut msg = MsgEd25519SignatureDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEd25519SignatureDepA(msg))
+                MsgEd25519SignatureDepA::parse(&mut payload).map(Sbp::MsgEd25519SignatureDepA)
             }
             MsgEd25519CertificateDep::MESSAGE_TYPE => {
-                let mut msg = MsgEd25519CertificateDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEd25519CertificateDep(msg))
+                MsgEd25519CertificateDep::parse(&mut payload).map(Sbp::MsgEd25519CertificateDep)
             }
             MsgEd25519SignatureDepB::MESSAGE_TYPE => {
-                let mut msg = MsgEd25519SignatureDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEd25519SignatureDepB(msg))
+                MsgEd25519SignatureDepB::parse(&mut payload).map(Sbp::MsgEd25519SignatureDepB)
             }
             MsgEcdsaCertificate::MESSAGE_TYPE => {
-                let mut msg = MsgEcdsaCertificate::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEcdsaCertificate(msg))
+                MsgEcdsaCertificate::parse(&mut payload).map(Sbp::MsgEcdsaCertificate)
             }
             MsgCertificateChainDep::MESSAGE_TYPE => {
-                let mut msg = MsgCertificateChainDep::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCertificateChainDep(msg))
+                MsgCertificateChainDep::parse(&mut payload).map(Sbp::MsgCertificateChainDep)
             }
             MsgEcdsaSignatureDepA::MESSAGE_TYPE => {
-                let mut msg = MsgEcdsaSignatureDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEcdsaSignatureDepA(msg))
+                MsgEcdsaSignatureDepA::parse(&mut payload).map(Sbp::MsgEcdsaSignatureDepA)
             }
             MsgEcdsaSignatureDepB::MESSAGE_TYPE => {
-                let mut msg = MsgEcdsaSignatureDepB::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEcdsaSignatureDepB(msg))
+                MsgEcdsaSignatureDepB::parse(&mut payload).map(Sbp::MsgEcdsaSignatureDepB)
             }
             MsgEcdsaSignature::MESSAGE_TYPE => {
-                let mut msg = MsgEcdsaSignature::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEcdsaSignature(msg))
+                MsgEcdsaSignature::parse(&mut payload).map(Sbp::MsgEcdsaSignature)
             }
             MsgCertificateChain::MESSAGE_TYPE => {
-                let mut msg = MsgCertificateChain::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCertificateChain(msg))
+                MsgCertificateChain::parse(&mut payload).map(Sbp::MsgCertificateChain)
             }
             MsgFileioConfigReq::MESSAGE_TYPE => {
-                let mut msg = MsgFileioConfigReq::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFileioConfigReq(msg))
+                MsgFileioConfigReq::parse(&mut payload).map(Sbp::MsgFileioConfigReq)
             }
             MsgFileioConfigResp::MESSAGE_TYPE => {
-                let mut msg = MsgFileioConfigResp::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgFileioConfigResp(msg))
+                MsgFileioConfigResp::parse(&mut payload).map(Sbp::MsgFileioConfigResp)
             }
-            MsgSbasRaw::MESSAGE_TYPE => {
-                let mut msg = MsgSbasRaw::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSbasRaw(msg))
-            }
+            MsgSbasRaw::MESSAGE_TYPE => MsgSbasRaw::parse(&mut payload).map(Sbp::MsgSbasRaw),
             MsgLinuxCpuStateDepA::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxCpuStateDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxCpuStateDepA(msg))
+                MsgLinuxCpuStateDepA::parse(&mut payload).map(Sbp::MsgLinuxCpuStateDepA)
             }
             MsgLinuxMemStateDepA::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxMemStateDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxMemStateDepA(msg))
+                MsgLinuxMemStateDepA::parse(&mut payload).map(Sbp::MsgLinuxMemStateDepA)
             }
             MsgLinuxSysStateDepA::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxSysStateDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxSysStateDepA(msg))
+                MsgLinuxSysStateDepA::parse(&mut payload).map(Sbp::MsgLinuxSysStateDepA)
             }
             MsgLinuxProcessSocketCounts::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxProcessSocketCounts::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxProcessSocketCounts(msg))
+                MsgLinuxProcessSocketCounts::parse(&mut payload)
+                    .map(Sbp::MsgLinuxProcessSocketCounts)
             }
             MsgLinuxProcessSocketQueues::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxProcessSocketQueues::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxProcessSocketQueues(msg))
+                MsgLinuxProcessSocketQueues::parse(&mut payload)
+                    .map(Sbp::MsgLinuxProcessSocketQueues)
             }
             MsgLinuxSocketUsage::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxSocketUsage::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxSocketUsage(msg))
+                MsgLinuxSocketUsage::parse(&mut payload).map(Sbp::MsgLinuxSocketUsage)
             }
             MsgLinuxProcessFdCount::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxProcessFdCount::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxProcessFdCount(msg))
+                MsgLinuxProcessFdCount::parse(&mut payload).map(Sbp::MsgLinuxProcessFdCount)
             }
             MsgLinuxProcessFdSummary::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxProcessFdSummary::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxProcessFdSummary(msg))
+                MsgLinuxProcessFdSummary::parse(&mut payload).map(Sbp::MsgLinuxProcessFdSummary)
             }
             MsgLinuxCpuState::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxCpuState::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxCpuState(msg))
+                MsgLinuxCpuState::parse(&mut payload).map(Sbp::MsgLinuxCpuState)
             }
             MsgLinuxMemState::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxMemState::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxMemState(msg))
+                MsgLinuxMemState::parse(&mut payload).map(Sbp::MsgLinuxMemState)
             }
             MsgLinuxSysState::MESSAGE_TYPE => {
-                let mut msg = MsgLinuxSysState::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgLinuxSysState(msg))
+                MsgLinuxSysState::parse(&mut payload).map(Sbp::MsgLinuxSysState)
             }
-            MsgStartup::MESSAGE_TYPE => {
-                let mut msg = MsgStartup::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgStartup(msg))
-            }
+            MsgStartup::MESSAGE_TYPE => MsgStartup::parse(&mut payload).map(Sbp::MsgStartup),
             MsgDgnssStatus::MESSAGE_TYPE => {
-                let mut msg = MsgDgnssStatus::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgDgnssStatus(msg))
+                MsgDgnssStatus::parse(&mut payload).map(Sbp::MsgDgnssStatus)
             }
-            MsgInsStatus::MESSAGE_TYPE => {
-                let mut msg = MsgInsStatus::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgInsStatus(msg))
-            }
+            MsgInsStatus::MESSAGE_TYPE => MsgInsStatus::parse(&mut payload).map(Sbp::MsgInsStatus),
             MsgCsacTelemetry::MESSAGE_TYPE => {
-                let mut msg = MsgCsacTelemetry::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCsacTelemetry(msg))
+                MsgCsacTelemetry::parse(&mut payload).map(Sbp::MsgCsacTelemetry)
             }
             MsgCsacTelemetryLabels::MESSAGE_TYPE => {
-                let mut msg = MsgCsacTelemetryLabels::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCsacTelemetryLabels(msg))
+                MsgCsacTelemetryLabels::parse(&mut payload).map(Sbp::MsgCsacTelemetryLabels)
             }
             MsgInsUpdates::MESSAGE_TYPE => {
-                let mut msg = MsgInsUpdates::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgInsUpdates(msg))
+                MsgInsUpdates::parse(&mut payload).map(Sbp::MsgInsUpdates)
             }
             MsgGnssTimeOffset::MESSAGE_TYPE => {
-                let mut msg = MsgGnssTimeOffset::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgGnssTimeOffset(msg))
+                MsgGnssTimeOffset::parse(&mut payload).map(Sbp::MsgGnssTimeOffset)
             }
-            MsgPpsTime::MESSAGE_TYPE => {
-                let mut msg = MsgPpsTime::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgPpsTime(msg))
-            }
+            MsgPpsTime::MESSAGE_TYPE => MsgPpsTime::parse(&mut payload).map(Sbp::MsgPpsTime),
             MsgSensorAidEvent::MESSAGE_TYPE => {
-                let mut msg = MsgSensorAidEvent::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSensorAidEvent(msg))
+                MsgSensorAidEvent::parse(&mut payload).map(Sbp::MsgSensorAidEvent)
             }
-            MsgGroupMeta::MESSAGE_TYPE => {
-                let mut msg = MsgGroupMeta::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgGroupMeta(msg))
-            }
-            MsgSolnMeta::MESSAGE_TYPE => {
-                let mut msg = MsgSolnMeta::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSolnMeta(msg))
-            }
+            MsgGroupMeta::MESSAGE_TYPE => MsgGroupMeta::parse(&mut payload).map(Sbp::MsgGroupMeta),
+            MsgSolnMeta::MESSAGE_TYPE => MsgSolnMeta::parse(&mut payload).map(Sbp::MsgSolnMeta),
             MsgSolnMetaDepA::MESSAGE_TYPE => {
-                let mut msg = MsgSolnMetaDepA::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSolnMetaDepA(msg))
+                MsgSolnMetaDepA::parse(&mut payload).map(Sbp::MsgSolnMetaDepA)
             }
             MsgStatusJournal::MESSAGE_TYPE => {
-                let mut msg = MsgStatusJournal::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgStatusJournal(msg))
+                MsgStatusJournal::parse(&mut payload).map(Sbp::MsgStatusJournal)
             }
             MsgStatusReport::MESSAGE_TYPE => {
-                let mut msg = MsgStatusReport::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgStatusReport(msg))
+                MsgStatusReport::parse(&mut payload).map(Sbp::MsgStatusReport)
             }
-            MsgHeartbeat::MESSAGE_TYPE => {
-                let mut msg = MsgHeartbeat::parse(&mut payload)?;
+            MsgHeartbeat::MESSAGE_TYPE => MsgHeartbeat::parse(&mut payload).map(Sbp::MsgHeartbeat),
+            _ => Unknown::parse(&mut payload).map(Sbp::Unknown),
+        };
+        match sbp_msg {
+            Ok(mut msg) => {
                 msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgHeartbeat(msg))
+                Ok(msg)
             }
-            _ => {
-                let mut msg = Unknown::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::Unknown(msg))
-            }
+            Err(PayloadParseError {
+                raw_invalid_payload_bytes,
+            }) => Err(SbpMsgParseError {
+                msg_type,
+                sender_id,
+                raw_invalid_payload_bytes,
+            }),
         }
     }
 }
@@ -4482,7 +3960,7 @@ impl WireFormat for Sbp {
     const MIN_LEN: usize = crate::MAX_FRAME_LEN;
 
     fn parse_unchecked<B: Buf>(_: &mut B) -> Self {
-        unimplemented!("Sbp must be parsed with Sbp::from_frame");
+        unimplemented!("Sbp must be parsed with Sbp::from_parts");
     }
 
     fn write<B: BufMut>(&self, buf: &mut B) {

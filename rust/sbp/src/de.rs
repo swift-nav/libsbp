@@ -9,7 +9,9 @@ use dencode::FramedRead;
 #[cfg(feature = "async")]
 use futures::StreamExt;
 
-use crate::{wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE};
+use crate::{
+    messages::SbpMsgParseError, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE,
+};
 
 /// Deserialize the IO stream into an iterator of messages.
 ///
@@ -105,7 +107,7 @@ pub fn stream_frames_with_timeout<R: futures::AsyncRead + Unpin>(
 /// All errors that can occur while reading messages.
 #[derive(Debug)]
 pub enum Error {
-    PayloadParseError(wire_format::PayloadParseError),
+    SbpMsgParseError(SbpMsgParseError),
     CrcError(CrcError),
     IoError(io::Error),
 }
@@ -113,7 +115,7 @@ pub enum Error {
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Error::PayloadParseError(e) => e.fmt(f),
+            Error::SbpMsgParseError(e) => e.fmt(f),
             Error::CrcError(e) => e.fmt(f),
             Error::IoError(e) => e.fmt(f),
         }
@@ -122,9 +124,9 @@ impl std::fmt::Display for Error {
 
 impl std::error::Error for Error {}
 
-impl From<wire_format::PayloadParseError> for Error {
-    fn from(e: wire_format::PayloadParseError) -> Self {
-        Error::PayloadParseError(e)
+impl From<SbpMsgParseError> for Error {
+    fn from(e: SbpMsgParseError) -> Self {
+        Error::SbpMsgParseError(e)
     }
 }
 
@@ -304,9 +306,7 @@ impl Frame {
     }
 
     pub fn to_sbp(&self) -> Result<Sbp, Error> {
-        if let Err(e) = self.check_crc() {
-            todo!("figure this out");
-        }
+        self.check_crc()?;
 
         Ok(Sbp::from_parts(
             self.msg_type(),
@@ -463,7 +463,7 @@ mod tests {
         let mut actual = crate::de::Decoder::new(bytes.reader());
         assert!(matches!(
             actual.next().unwrap(),
-            Err(Error::PayloadParseError(_))
+            Err(Error::SbpMsgParseError(_))
         ));
     }
 

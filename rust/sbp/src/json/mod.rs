@@ -123,6 +123,7 @@ impl Formatter for HaskellishFloatFormatter {
 /// All possible error types when encoding/decoding a stream of json messages.
 #[derive(Debug)]
 pub enum JsonError {
+    SbpMsgParseError(crate::messages::SbpMsgParseError),
     PayloadParseError(crate::wire_format::PayloadParseError),
     CrcError(crate::de::CrcError),
     WriteFrameError(crate::ser::WriteFrameError),
@@ -134,6 +135,7 @@ pub enum JsonError {
 impl std::fmt::Display for JsonError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            JsonError::SbpMsgParseError(e) => e.fmt(f),
             JsonError::PayloadParseError(e) => e.fmt(f),
             JsonError::CrcError(e) => e.fmt(f),
             JsonError::WriteFrameError(e) => e.fmt(f),
@@ -145,6 +147,12 @@ impl std::fmt::Display for JsonError {
 }
 
 impl std::error::Error for JsonError {}
+
+impl From<crate::messages::SbpMsgParseError> for JsonError {
+    fn from(e: crate::messages::SbpMsgParseError) -> Self {
+        JsonError::SbpMsgParseError(e)
+    }
+}
 
 impl From<crate::wire_format::PayloadParseError> for JsonError {
     fn from(e: crate::wire_format::PayloadParseError) -> Self {
