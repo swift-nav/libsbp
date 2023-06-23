@@ -8,6 +8,11 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 //! SBP message definitions.
+
+//****************************************************************************
+// Automatically generated from yaml/
+// with generate.py. Please do not hand edit!
+//****************************************************************************/
 pub mod acquisition;
 pub mod bootload;
 pub mod ext_events;
@@ -1590,7 +1595,10 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             Some(MsgHeartbeat::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgHeartbeat>(value).map(Sbp::MsgHeartbeat)
             }
-            _ => serde_json::from_value::<Unknown>(value).map(Sbp::Unknown),
+            Some(msg_id) => serde_json::from_value::<Unknown>(value)
+                .map(|msg| Unknown { msg_id, ..msg })
+                .map(Sbp::Unknown),
+            None => serde_json::from_value::<Unknown>(value).map(Sbp::Unknown),
         }
         .map_err(serde::de::Error::custom)
     }
@@ -2260,11 +2268,14 @@ impl Sbp {
                 MsgStatusReport::parse(&mut payload).map(Sbp::MsgStatusReport)
             }
             MsgHeartbeat::MESSAGE_TYPE => MsgHeartbeat::parse(&mut payload).map(Sbp::MsgHeartbeat),
-            msg_id => Unknown::parse(&mut payload)
-                // keep the msg ID we originally saw
-                .map(|msg| Unknown { msg_id, ..msg })
-                .map(Sbp::Unknown),
+            msg_uid => {
+                Unknown::parse(&mut payload)
+                    // keep the msg ID we originally saw
+                    .map(|msg| Unknown { msg_id, ..msg })
+                    .map(Sbp::Unknown)
+            }
         };
+        // Inject sender_id, handle error
         match sbp_msg {
             Ok(mut msg) => {
                 msg.set_sender_id(sender_id);

@@ -9,6 +9,12 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 //! SBP message definitions.
 
+//****************************************************************************
+// Automatically generated from yaml/(((filepath)))
+// with generate.py. Please do not hand edit!
+//****************************************************************************/
+
+
 ((*- for m in mods *))
 pub mod (((m)));
 ((*- endfor *))
@@ -145,12 +151,52 @@ impl<'de> serde::Deserialize<'de> for Sbp {
                 serde_json::from_value::<(((m.msg_name)))>(value).map(Sbp::(((m.msg_name))) )
             },
             ((*- endfor *))
-            _ => {
+            Some(msg_id) => {
+                serde_json::from_value::<Unknown>(value)
+                    .map(|msg| Unknown {
+                        msg_id,
+                        ..msg
+                    })
+                    .map(Sbp::Unknown)
+            },
+            None => {
                 serde_json::from_value::<Unknown>(value).map(Sbp::Unknown)
             },
         }.map_err(serde::de::Error::custom)
     }
 }
+
+#[derive(Debug, Clone)]
+pub struct SbpMsgParseError {
+    /// the message type
+    pub msg_type: u16,
+    /// the sender_id
+    pub sender_id: u16,
+    /// A vec that just contains all the bytes
+    pub raw_invalid_payload_bytes: Vec<u8>,
+}
+
+impl From<SbpMsgParseError> for PayloadParseError {
+    fn from(
+        SbpMsgParseError {
+            raw_invalid_payload_bytes,
+            ..
+        }: SbpMsgParseError,
+    ) -> Self {
+        Self {
+            raw_invalid_payload_bytes,
+        }
+    }
+}
+
+impl std::fmt::Display for SbpMsgParseError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "error parsing payload")
+    }
+}
+
+impl std::error::Error for SbpMsgParseError {}
+
 
 impl Sbp {
     /// Parse a message from given fields.
@@ -176,20 +222,34 @@ impl Sbp {
     ///     Ok(())
     /// }
     /// ```
-    pub fn from_parts<B: bytes::Buf>(msg_type: u16, sender_id: u16, mut payload: B) -> Result<Sbp, PayloadParseError> {
-        match msg_type {
+    pub fn from_parts<B: bytes::Buf>(msg_type: u16, sender_id: u16, mut payload: B) -> Result<Sbp, SbpMsgParseError> {
+        let sbp_msg = match msg_type {
             ((*- for m in msgs *))
             (((m.msg_name)))::MESSAGE_TYPE => {
-                let mut msg = (((m.msg_name)))::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::(((m.msg_name)))(msg))
+                (((m.msg_name)))::parse(&mut payload)
+                    .map(Sbp::(((m.msg_name))) )
             },
             ((*- endfor *))
-            _ => {
-                let mut msg = Unknown::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::Unknown(msg))
+            msg_uid => {
+                Unknown::parse(&mut payload)
+                  // keep the msg ID we originally saw
+                  .map(|msg| Unknown { msg_id, ..msg })
+                  .map(Sbp::Unknown)
             }
+        };
+        // Inject sender_id, handle error
+        match sbp_msg {
+            Ok(mut msg) => {
+                msg.set_sender_id(sender_id);
+                Ok(msg)
+            }
+            Err(PayloadParseError {
+                raw_invalid_payload_bytes,
+            }) => Err(SbpMsgParseError {
+                msg_type,
+                sender_id,
+                raw_invalid_payload_bytes,
+            }),
         }
     }
 }
@@ -292,7 +352,7 @@ impl WireFormat for Sbp {
     const MIN_LEN: usize = crate::MAX_FRAME_LEN;
 
     fn parse_unchecked<B: Buf>(_: &mut B) -> Self {
-        unimplemented!("Sbp must be parsed with Sbp::from_frame");
+        unimplemented!("Sbp must be parsed with Sbp::from_parts");
     }
 
     fn write<B: BufMut>(&self, buf: &mut B) {
