@@ -21,6 +21,7 @@ pub mod flash;
 pub mod gnss;
 pub mod imu;
 pub mod integrity;
+pub mod invalid;
 pub mod linux;
 pub mod logging;
 pub mod mag;
@@ -81,6 +82,7 @@ use self::integrity::msg_ssr_flag_iono_grid_points::MsgSsrFlagIonoGridPoints;
 use self::integrity::msg_ssr_flag_iono_tile_sat_los::MsgSsrFlagIonoTileSatLos;
 use self::integrity::msg_ssr_flag_satellites::MsgSsrFlagSatellites;
 use self::integrity::msg_ssr_flag_tropo_grid_points::MsgSsrFlagTropoGridPoints;
+use self::invalid::Invalid;
 use self::linux::msg_linux_cpu_state::MsgLinuxCpuState;
 use self::linux::msg_linux_cpu_state_dep_a::MsgLinuxCpuStateDepA;
 use self::linux::msg_linux_mem_state::MsgLinuxMemState;
@@ -844,6 +846,8 @@ pub enum Sbp {
     MsgHeartbeat(MsgHeartbeat),
     /// Unknown message type
     Unknown(Unknown),
+    /// Invalid message type.
+    Invalid(Invalid),
 }
 
 #[cfg(feature = "serde_json")]
@@ -1595,10 +1599,9 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             Some(MsgHeartbeat::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgHeartbeat>(value).map(Sbp::MsgHeartbeat)
             }
-            Some(msg_id) => serde_json::from_value::<Unknown>(value)
+            msg_id => serde_json::from_value::<Unknown>(value)
                 .map(|msg| Unknown { msg_id, ..msg })
                 .map(Sbp::Unknown),
-            None => serde_json::from_value::<Unknown>(value).map(Sbp::Unknown),
         }
         .map_err(serde::de::Error::custom)
     }
@@ -2268,10 +2271,13 @@ impl Sbp {
                 MsgStatusReport::parse(&mut payload).map(Sbp::MsgStatusReport)
             }
             MsgHeartbeat::MESSAGE_TYPE => MsgHeartbeat::parse(&mut payload).map(Sbp::MsgHeartbeat),
-            msg_id => {
+            msg_type => {
                 Unknown::parse(&mut payload)
                     // keep the msg ID we originally saw
-                    .map(|msg| Unknown { msg_id, ..msg })
+                    .map(|msg| Unknown {
+                        msg_id: Some(msg_type),
+                        ..msg
+                    })
                     .map(Sbp::Unknown)
             }
         };
@@ -2529,6 +2535,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgStatusReport(msg) => msg.message_name(),
             Sbp::MsgHeartbeat(msg) => msg.message_name(),
             Sbp::Unknown(msg) => msg.message_name(),
+            Sbp::Invalid(msg) => msg.message_name(),
         }
     }
 
@@ -2768,6 +2775,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgStatusReport(msg) => msg.message_type(),
             Sbp::MsgHeartbeat(msg) => msg.message_type(),
             Sbp::Unknown(msg) => msg.message_type(),
+            Sbp::Invalid(msg) => msg.message_type(),
         }
     }
 
@@ -3007,6 +3015,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgStatusReport(msg) => msg.sender_id(),
             Sbp::MsgHeartbeat(msg) => msg.sender_id(),
             Sbp::Unknown(msg) => msg.sender_id(),
+            Sbp::Invalid(msg) => msg.sender_id(),
         }
     }
 
@@ -3246,6 +3255,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgStatusReport(msg) => msg.set_sender_id(new_id),
             Sbp::MsgHeartbeat(msg) => msg.set_sender_id(new_id),
             Sbp::Unknown(msg) => msg.set_sender_id(new_id),
+            Sbp::Invalid(msg) => msg.set_sender_id(new_id),
         }
     }
 
@@ -3485,6 +3495,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgStatusReport(msg) => msg.encoded_len(),
             Sbp::MsgHeartbeat(msg) => msg.encoded_len(),
             Sbp::Unknown(msg) => msg.encoded_len(),
+            Sbp::Invalid(msg) => msg.encoded_len(),
         }
     }
 
@@ -3727,6 +3738,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgStatusReport(msg) => msg.gps_time(),
             Sbp::MsgHeartbeat(msg) => msg.gps_time(),
             Sbp::Unknown(msg) => msg.gps_time(),
+            Sbp::Invalid(msg) => msg.gps_time(),
         }
     }
 
@@ -3966,6 +3978,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgStatusReport(msg) => msg.friendly_name(),
             Sbp::MsgHeartbeat(msg) => msg.friendly_name(),
             Sbp::Unknown(msg) => msg.friendly_name(),
+            Sbp::Invalid(msg) => msg.friendly_name(),
         }
     }
 }
@@ -4213,6 +4226,7 @@ impl WireFormat for Sbp {
             Sbp::MsgStatusReport(msg) => WireFormat::write(msg, buf),
             Sbp::MsgHeartbeat(msg) => WireFormat::write(msg, buf),
             Sbp::Unknown(msg) => WireFormat::write(msg, buf),
+            Sbp::Invalid(msg) => WireFormat::write(msg, buf),
         }
     }
 
@@ -4452,6 +4466,7 @@ impl WireFormat for Sbp {
             Sbp::MsgStatusReport(msg) => WireFormat::len(msg),
             Sbp::MsgHeartbeat(msg) => WireFormat::len(msg),
             Sbp::Unknown(msg) => WireFormat::len(msg),
+            Sbp::Invalid(msg) => WireFormat::len(msg),
         }
     }
 }
@@ -5857,5 +5872,10 @@ impl From<MsgHeartbeat> for Sbp {
 impl From<Unknown> for Sbp {
     fn from(msg: Unknown) -> Self {
         Sbp::Unknown(msg)
+    }
+}
+impl From<Invalid> for Sbp {
+    fn from(msg: Invalid) -> Self {
+        Sbp::Invalid(msg)
     }
 }

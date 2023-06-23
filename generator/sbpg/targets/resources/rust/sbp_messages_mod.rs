@@ -19,6 +19,7 @@
 pub mod (((m)));
 ((*- endfor *))
 pub mod unknown;
+pub mod invalid;
 
 ((*- for m in msgs *))
 ((*- if m.is_real_message *))
@@ -26,6 +27,7 @@ use self::(((m.parent_mod_name)))::(((m.mod_name)))::(((m.msg_name)));
 ((*- endif *))
 ((*- endfor *))
 use self::unknown::Unknown;
+use self::invalid::Invalid;
 
 mod lib {
     //! Common imports so we can just `use super::lib::*` in all the message files
@@ -136,6 +138,8 @@ pub enum Sbp {
     ((*- endfor *))
     /// Unknown message type
     Unknown( Unknown ),
+    /// Invalid message type.
+    Invalid( Invalid )
 }
 
 #[cfg(feature = "serde_json")]
@@ -151,16 +155,13 @@ impl<'de> serde::Deserialize<'de> for Sbp {
                 serde_json::from_value::<(((m.msg_name)))>(value).map(Sbp::(((m.msg_name))) )
             },
             ((*- endfor *))
-            Some(msg_id) => {
+            msg_id => {
                 serde_json::from_value::<Unknown>(value)
                     .map(|msg| Unknown {
                         msg_id,
                         ..msg
                     })
                     .map(Sbp::Unknown)
-            },
-            None => {
-                serde_json::from_value::<Unknown>(value).map(Sbp::Unknown)
             },
         }.map_err(serde::de::Error::custom)
     }
@@ -230,10 +231,10 @@ impl Sbp {
                     .map(Sbp::(((m.msg_name))) )
             },
             ((*- endfor *))
-            msg_id => {
+            msg_type => {
                 Unknown::parse(&mut payload)
                   // keep the msg ID we originally saw
-                  .map(|msg| Unknown { msg_id, ..msg })
+                  .map(|msg| Unknown { msg_id: Some(msg_type), ..msg })
                   .map(Sbp::Unknown)
             }
         };
@@ -265,6 +266,9 @@ impl SbpMessage for Sbp {
             Sbp::Unknown(msg) => {
                 msg.message_name()
             },
+            Sbp::Invalid(msg) => {
+                msg.message_name()
+            },
         }
     }
 
@@ -276,6 +280,9 @@ impl SbpMessage for Sbp {
             },
             ((*- endfor *))
             Sbp::Unknown(msg) => {
+                msg.message_type()
+            },
+            Sbp::Invalid(msg) => {
                 msg.message_type()
             },
         }
@@ -291,6 +298,9 @@ impl SbpMessage for Sbp {
             Sbp::Unknown(msg) => {
                 msg.sender_id()
             },
+            Sbp::Invalid(msg) => {
+                msg.sender_id()
+            },
         }
     }
 
@@ -304,6 +314,9 @@ impl SbpMessage for Sbp {
             Sbp::Unknown(msg) => {
                 msg.set_sender_id(new_id)
             },
+            Sbp::Invalid(msg) => {
+                msg.set_sender_id(new_id)
+            },
         }
     }
 
@@ -315,6 +328,9 @@ impl SbpMessage for Sbp {
             },
             ((*- endfor *))
             Sbp::Unknown(msg) => {
+                msg.encoded_len()
+            },
+            Sbp::Invalid(msg) => {
                 msg.encoded_len()
             },
         }
@@ -331,6 +347,9 @@ impl SbpMessage for Sbp {
             Sbp::Unknown(msg) => {
                 msg.gps_time()
             },
+            Sbp::Invalid(msg) => {
+                msg.gps_time()
+            },
         }
     }
 
@@ -342,6 +361,9 @@ impl SbpMessage for Sbp {
             },
             ((*- endfor -*))
             Sbp::Unknown(msg) => {
+                msg.friendly_name()
+            },
+            Sbp::Invalid(msg) => {
                 msg.friendly_name()
             },
         }
@@ -365,6 +387,9 @@ impl WireFormat for Sbp {
             Sbp::Unknown(msg) => {
                 WireFormat::write(msg, buf)
             },
+            Sbp::Invalid(msg) => {
+                WireFormat::write(msg, buf)
+            },
         }
     }
 
@@ -376,6 +401,9 @@ impl WireFormat for Sbp {
             },
             ((*- endfor *))
             Sbp::Unknown(msg) => {
+                WireFormat::len(msg)
+            },
+            Sbp::Invalid(msg) => {
                 WireFormat::len(msg)
             },
         }
@@ -393,5 +421,10 @@ impl From<(((m.msg_name)))> for Sbp {
 impl From<Unknown> for Sbp {
     fn from(msg: Unknown) -> Self {
         Sbp::Unknown(msg)
+    }
+}
+impl From<Invalid> for Sbp {
+    fn from(msg: Invalid) -> Self {
+        Sbp::Invalid(msg)
     }
 }

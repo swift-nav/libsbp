@@ -8,6 +8,12 @@ use serde_json::ser::Formatter;
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
 
+pub enum ErrorHandlerOptions {
+    FailOnError,
+    FilterOutErrors,
+    CoerceToInvalidMsg,
+}
+
 pub fn json2sbp<R, W>(input: R, output: W, buffered: bool, fatal_errors: bool) -> Result<()>
 where
     R: Read,
@@ -79,7 +85,6 @@ where
     F: Formatter + Clone,
 {
     let source = maybe_fatal_errors(sbp::iter_messages(input), fatal_errors);
-
     let mut sink = JsonEncoder::new(output, formatter);
     if buffered {
         sink.send_all(source)?;
