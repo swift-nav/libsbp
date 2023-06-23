@@ -2268,7 +2268,7 @@ impl Sbp {
                 MsgStatusReport::parse(&mut payload).map(Sbp::MsgStatusReport)
             }
             MsgHeartbeat::MESSAGE_TYPE => MsgHeartbeat::parse(&mut payload).map(Sbp::MsgHeartbeat),
-            msg_uid => {
+            msg_id => {
                 Unknown::parse(&mut payload)
                     // keep the msg ID we originally saw
                     .map(|msg| Unknown { msg_id, ..msg })

@@ -230,7 +230,7 @@ impl Sbp {
                     .map(Sbp::(((m.msg_name))) )
             },
             ((*- endfor *))
-            msg_uid => {
+            msg_id => {
                 Unknown::parse(&mut payload)
                   // keep the msg ID we originally saw
                   .map(|msg| Unknown { msg_id, ..msg })
