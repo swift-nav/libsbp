@@ -100,7 +100,7 @@ impl From<SbpMsgParseError> for Invalid {
         (msg_payload.len() as u8).write(&mut payload);
         msg_payload.write(&mut payload);
         let crc =
-            crc16::State::<crc16::XMODEM>::calculate(&payload.get(1..).expect("vec has capacity"));
+            crc16::State::<crc16::XMODEM>::calculate(payload.get(1..).expect("vec has capacity"));
         crc.write(&mut payload);
 
         Self {
@@ -123,9 +123,9 @@ impl From<CrcError> for Invalid {
     ) -> Self {
         Self {
             msg_id: msg_type,
-            sender_id: sender_id,
+            sender_id,
             payload,
-            crc: crc,
+            crc,
         }
     }
 }

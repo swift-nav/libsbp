@@ -87,7 +87,7 @@ pub fn to_buffer<M: SbpMessage>(buf: &mut BytesMut, msg: &M) -> Result<(), Write
     (payload_len as u8).write(buf);
     msg.write(buf);
     let crc = crc16::State::<crc16::XMODEM>::calculate(
-        &buf.get(1..)
+        buf.get(1..)
             .expect("is safe because written several bytes to the buf"),
     );
     crc.write(buf);

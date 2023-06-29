@@ -299,17 +299,16 @@ impl Frame {
         let measured_crc = self
             .payload_len()
             .and_then(|payload_len| self.as_bytes().get(1..HEADER_LEN + payload_len))
-            .map(|data| crc16::State::<crc16::XMODEM>::calculate(data));
+            .map(crc16::State::<crc16::XMODEM>::calculate);
 
-        if actual == measured_crc && actual.is_some() {
-            Ok(actual.expect("is safe because guard pattern."))
-        } else {
-            Err(CrcError {
+        match (actual, measured_crc) {
+            (Some(actual), Some(crc)) if actual == crc => Ok(actual),
+            (actual, _measured) => Err(CrcError {
                 msg_type: self.msg_type(),
                 sender_id: self.sender_id(),
                 crc: actual,
                 raw_frame_bytes: self.as_bytes().to_vec(),
-            })
+            }),
         }
     }
 
