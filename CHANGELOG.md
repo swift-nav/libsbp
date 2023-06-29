@@ -1,5 +1,24 @@
 # Changelog
 
+## [v4.16.0](https://github.com/swift-nav/libsbp/tree/v4.16.0) (2023-06-29)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.15.0...v4.16.0)
+
+**Closed issues:**
+
+- Week number is always 0 in Message Protection Level [\#1340](https://github.com/swift-nav/libsbp/issues/1340)
+- Unknown CMake command "add\_link\_options" [\#1320](https://github.com/swift-nav/libsbp/issues/1320)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - rename starling-core-utils \[STR-195\] \(\#156\) [\#1343](https://github.com/swift-nav/libsbp/pull/1343) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- c: bump minimum cmake to 3.13 [\#1342](https://github.com/swift-nav/libsbp/pull/1342) ([silverjam](https://github.com/silverjam))
+- Auto submodule update: cmake - fix: make test\_srcs target project specific \(\#158\) [\#1341](https://github.com/swift-nav/libsbp/pull/1341) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Add tdk-icm42670 to imu.yaml [\#1338](https://github.com/swift-nav/libsbp/pull/1338) ([EricCalgary](https://github.com/EricCalgary))
+- Fix/improve construct version of sbp2json [\#1337](https://github.com/swift-nav/libsbp/pull/1337) ([dgburr](https://github.com/dgburr))
+- Generate Kaitai Struct Format Descriptions and run Kaitai Struct Compiler to generate language bindings [\#1336](https://github.com/swift-nav/libsbp/pull/1336) ([dgburr](https://github.com/dgburr))
+- prep next release \#no\_auto\_pr [\#1335](https://github.com/swift-nav/libsbp/pull/1335) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.15.0](https://github.com/swift-nav/libsbp/tree/v4.15.0) (2023-05-29)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.14.1...v4.15.0)
