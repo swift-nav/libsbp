@@ -1,10 +1,22 @@
-//! Invalid messages, maybe don't have enough bytes are Crc Errors.
+//! Invalid messages. This message type should be created out of two errors:
+//! The SbpMsgParseError, & the CrcError. They correspond to two cases
+//! 1) the Frame is invalid because either it either has an invalid CRC or
+//! it is missing some metadata like msg_type or similar.
+//! 2) The message is invalid because the payload is not large enough and cannot be
+//! parsed into a message. This is the SbpMsgParseError.
 
 use bytes::{Buf, BufMut};
 
 use crate::{de::CrcError, messages::SbpMsgParseError, wire_format::WireFormat, SbpMessage};
 
-/// The message returned by the parser when the message type does not correspond to a known message.
+/// Invalid messages occur when either the frame or message payload doesn't have enough bytes or
+/// the Crc does not match the messages payload. If the message is well formed with a message
+/// id and crc and payload that all are consistent, but its message type is unknown, it should be
+/// parsed into a Unknown message.
+///
+/// There is something unique about Invalid messages that the payload is actually the entire frame.
+/// This is because it is possible to be able to create invalid messages from invalid frames, that
+/// may not even contain a message payload.
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub struct Invalid {
