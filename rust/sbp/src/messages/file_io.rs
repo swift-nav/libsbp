@@ -76,6 +76,9 @@ pub mod msg_fileio_config_req {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgFileioConfigReq {
@@ -166,6 +169,9 @@ pub mod msg_fileio_config_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -271,6 +277,9 @@ pub mod msg_fileio_read_dir_req {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgFileioReadDirReq {
@@ -363,6 +372,9 @@ pub mod msg_fileio_read_dir_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -458,6 +470,9 @@ pub mod msg_fileio_read_req {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -555,6 +570,9 @@ pub mod msg_fileio_read_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgFileioReadResp {
@@ -637,6 +655,9 @@ pub mod msg_fileio_remove {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -731,6 +752,9 @@ pub mod msg_fileio_write_req {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgFileioWriteReq {
@@ -823,6 +847,9 @@ pub mod msg_fileio_write_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 

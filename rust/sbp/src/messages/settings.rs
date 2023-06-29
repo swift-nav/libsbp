@@ -89,6 +89,9 @@ pub mod msg_settings_read_by_index_done {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgSettingsReadByIndexDone {
@@ -163,6 +166,9 @@ pub mod msg_settings_read_by_index_req {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -256,6 +262,9 @@ pub mod msg_settings_read_by_index_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgSettingsReadByIndexResp {
@@ -345,6 +354,9 @@ pub mod msg_settings_read_req {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgSettingsReadReq {
@@ -429,6 +441,9 @@ pub mod msg_settings_read_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgSettingsReadResp {
@@ -509,6 +524,9 @@ pub mod msg_settings_register {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -611,6 +629,9 @@ pub mod msg_settings_register_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -743,6 +764,9 @@ pub mod msg_settings_save {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgSettingsSave {
@@ -822,6 +846,9 @@ pub mod msg_settings_write {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -926,6 +953,9 @@ pub mod msg_settings_write_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 

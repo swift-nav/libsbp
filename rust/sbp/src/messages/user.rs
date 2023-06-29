@@ -59,6 +59,9 @@ pub mod msg_user_data {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgUserData {

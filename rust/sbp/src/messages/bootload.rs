@@ -67,6 +67,9 @@ pub mod msg_bootloader_handshake_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgBootloaderHandshakeDepA {
@@ -143,6 +146,9 @@ pub mod msg_bootloader_handshake_req {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -265,6 +271,9 @@ pub mod msg_bootloader_handshake_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgBootloaderHandshakeResp {
@@ -346,6 +355,9 @@ pub mod msg_bootloader_jump_to_app {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgBootloaderJumpToApp {
@@ -426,6 +438,9 @@ pub mod msg_nap_device_dna_req {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgNapDeviceDnaReq {
@@ -503,6 +518,9 @@ pub mod msg_nap_device_dna_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 

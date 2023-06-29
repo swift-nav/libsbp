@@ -345,6 +345,8 @@ pub trait SbpMessage: WireFormat + Clone + Sized {
     fn friendly_name(&self) -> &'static str {
         ""
     }
+    /// Tells you if the message is invalid and may need to be special cased at certain points.
+    fn is_invalid(&self) -> bool;
 }
 
 /// Implemented by messages who's message name and type are known at compile time.
@@ -3980,6 +3982,10 @@ impl SbpMessage for Sbp {
             Sbp::Unknown(msg) => msg.friendly_name(),
             Sbp::Invalid(msg) => msg.friendly_name(),
         }
+    }
+
+    fn is_invalid(&self) -> bool {
+        matches!(self, Sbp::Invalid(_))
     }
 }
 

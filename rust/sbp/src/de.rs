@@ -10,7 +10,8 @@ use dencode::FramedRead;
 use futures::StreamExt;
 
 use crate::{
-    messages::SbpMsgParseError, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE,
+    messages::invalid::Invalid, messages::SbpMsgParseError, HandleParseError, Sbp, CRC_LEN,
+    HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE,
 };
 
 /// Deserialize the IO stream into an iterator of messages.
@@ -112,6 +113,18 @@ pub enum Error {
     IoError(io::Error),
 }
 
+impl HandleParseError<Sbp> for Error {
+    fn handle_parse_error(self) -> Sbp {
+        match self {
+            Error::SbpMsgParseError(e) => Invalid::from(e).into(),
+            Error::CrcError(e) => Invalid::from(e).into(),
+            Error::IoError(e) => {
+                panic!("unrecoverable I/O error: {}", e);
+            }
+        }
+    }
+}
+
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -144,9 +157,9 @@ impl From<io::Error> for Error {
 
 #[derive(Debug, Clone)]
 pub struct CrcError {
-    pub msg_type: u16,
-    pub sender_id: u16,
-    pub crc: u16,
+    pub msg_type: Option<u16>,
+    pub sender_id: Option<u16>,
+    pub crc: Option<u16>,
     pub raw_frame_bytes: Vec<u8>,
 }
 
@@ -259,39 +272,37 @@ impl dencode::Decoder for FramerImpl {
 pub struct Frame(BytesMut);
 
 impl Frame {
-    /// Warning: can panic
-    pub fn msg_type(&self) -> u16 {
-        let mut slice = &self.0.chunk()[1..];
-        slice.get_u16_le()
+    pub fn msg_type(&self) -> Option<u16> {
+        self.as_bytes().get(1..).map(|mut slice| slice.get_u16_le())
     }
 
-    /// Warning: can panic
-    pub fn sender_id(&self) -> u16 {
-        let mut slice = &self.0.chunk()[3..];
-        slice.get_u16_le()
+    pub fn sender_id(&self) -> Option<u16> {
+        self.as_bytes().get(3..).map(|mut slice| slice.get_u16_le())
     }
-    /// Warning: can panic
-    pub fn payload_len(&self) -> usize {
-        self.as_bytes()[PAYLOAD_INDEX] as usize
+    pub fn payload_len(&self) -> Option<usize> {
+        self.as_bytes().get(PAYLOAD_INDEX).map(|&x| x as usize)
     }
 
-    /// Warning: can panic
-    pub fn payload(&self) -> &[u8] {
-        &self.as_bytes()[HEADER_LEN..HEADER_LEN + self.payload_len()]
+    pub fn payload(&self) -> Option<&[u8]> {
+        self.payload_len()
+            .and_then(|payload_len| self.as_bytes().get(HEADER_LEN..HEADER_LEN + payload_len))
     }
 
-    /// Warning: can panic
-    pub fn crc(&self) -> u16 {
-        let mut slice = &self.as_bytes()[HEADER_LEN + self.payload_len()..];
-        slice.get_u16_le()
+    pub fn crc(&self) -> Option<u16> {
+        self.payload_len()
+            .and_then(|payload_len| self.as_bytes().get(HEADER_LEN + payload_len..))
+            .map(|mut slice| slice.get_u16_le())
     }
 
-    /// Warning: can panic
     pub fn check_crc(&self) -> Result<u16, CrcError> {
         let actual = self.crc();
-        let data = &self.as_bytes()[1..HEADER_LEN + self.payload_len()];
-        if actual == crc16::State::<crc16::XMODEM>::calculate(data) {
-            Ok(actual)
+        let measured_crc = self
+            .payload_len()
+            .and_then(|payload_len| self.as_bytes().get(1..HEADER_LEN + payload_len))
+            .map(|data| crc16::State::<crc16::XMODEM>::calculate(data));
+
+        if actual == measured_crc && actual.is_some() {
+            Ok(actual.expect("is safe because guard pattern."))
         } else {
             Err(CrcError {
                 msg_type: self.msg_type(),
@@ -313,11 +324,18 @@ impl Frame {
     pub fn to_sbp(&self) -> Result<Sbp, Error> {
         self.check_crc()?;
 
-        Ok(Sbp::from_parts(
-            self.msg_type(),
-            self.sender_id(),
-            self.payload(),
-        )?)
+        match (self.msg_type(), self.sender_id(), self.payload()) {
+            (Some(msg_type), Some(sender_id), Some(payload)) => {
+                Ok(Sbp::from_parts(msg_type, sender_id, payload)?)
+            }
+            (msg_type, sender_id, _payload) => Err(CrcError {
+                msg_type,
+                sender_id,
+                crc: self.crc(),
+                raw_frame_bytes: self.as_bytes().to_vec(),
+            }
+            .into()),
+        }
     }
 
     #[inline]
@@ -443,10 +461,10 @@ mod tests {
         buf.put_u8(missing_byte);
 
         let res = FramerImpl.decode(&mut buf).unwrap().unwrap();
-        assert_eq!(res.msg_type(), 523); // 0x020B
-        assert_eq!(res.sender_id(), 35027); // 0x88D3
+        assert_eq!(res.msg_type(), Some(523)); // 0x020B
+        assert_eq!(res.sender_id(), Some(35027)); // 0x88D3
         assert_eq!(
-            res.payload(),
+            res.payload().unwrap(),
             BytesMut::from(&packet[HEADER_LEN..packet.len() - 1])
         );
         assert!(buf.is_empty());

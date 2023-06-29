@@ -147,6 +147,9 @@ pub mod msg_almanac {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgAlmanac {
@@ -228,6 +231,9 @@ pub mod msg_cell_modem_status {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -321,6 +327,9 @@ pub mod msg_command_output {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgCommandOutput {
@@ -408,6 +417,9 @@ pub mod msg_command_req {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgCommandReq {
@@ -494,6 +506,9 @@ pub mod msg_command_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgCommandResp {
@@ -574,6 +589,9 @@ pub mod msg_cw_results {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgCwResults {
@@ -646,6 +664,9 @@ pub mod msg_cw_start {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -734,6 +755,9 @@ pub mod msg_device_monitor {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -839,6 +863,9 @@ pub mod msg_front_end_gain {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgFrontEndGain {
@@ -922,6 +949,9 @@ pub mod msg_iar_state {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgIarState {
@@ -997,6 +1027,9 @@ pub mod msg_init_base_dep {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -1105,6 +1138,9 @@ pub mod msg_mask_satellite {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -1284,6 +1320,9 @@ pub mod msg_mask_satellite_dep {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgMaskSatelliteDep {
@@ -1429,6 +1468,9 @@ pub mod msg_network_bandwidth_usage {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgNetworkBandwidthUsage {
@@ -1505,6 +1547,9 @@ pub mod msg_network_state_req {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -1822,6 +1867,9 @@ pub mod msg_network_state_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgNetworkStateResp {
@@ -1945,6 +1993,9 @@ pub mod msg_reset {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgReset {
@@ -2053,6 +2104,9 @@ pub mod msg_reset_dep {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgResetDep {
@@ -2146,6 +2200,9 @@ pub mod msg_reset_filters {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -2259,6 +2316,9 @@ pub mod msg_set_time {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgSetTime {
@@ -2350,6 +2410,9 @@ pub mod msg_specan {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -2472,6 +2535,9 @@ pub mod msg_specan_dep {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgSpecanDep {
@@ -2584,6 +2650,9 @@ pub mod msg_thread_state {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgThreadState {
@@ -2690,6 +2759,9 @@ pub mod msg_uart_state {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgUartState {
@@ -2793,6 +2865,9 @@ pub mod msg_uart_state_depa {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 

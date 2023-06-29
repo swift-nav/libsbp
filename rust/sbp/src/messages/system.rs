@@ -78,6 +78,9 @@ pub mod msg_csac_telemetry {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgCsacTelemetry {
@@ -164,6 +167,9 @@ pub mod msg_csac_telemetry_labels {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -272,6 +278,9 @@ pub mod msg_dgnss_status {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -409,6 +418,9 @@ pub mod msg_gnss_time_offset {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgGnssTimeOffset {
@@ -526,6 +538,9 @@ pub mod msg_group_meta {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -774,6 +789,9 @@ pub mod msg_heartbeat {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -1109,6 +1127,9 @@ pub mod msg_ins_status {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -1717,6 +1738,9 @@ pub mod msg_ins_updates {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
             let tow_s = (self.tow as f64) / 1000.0;
@@ -1867,6 +1891,9 @@ pub mod msg_pps_time {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -2027,6 +2054,9 @@ pub mod msg_sensor_aid_event {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -2230,6 +2260,9 @@ pub mod msg_startup {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 
@@ -2458,6 +2491,9 @@ pub mod msg_status_journal {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_invalid(&self) -> bool {
+            false
+        }
     }
 
     impl FriendlyName for MsgStatusJournal {
@@ -2656,6 +2692,9 @@ pub mod msg_status_report {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_invalid(&self) -> bool {
+            false
         }
     }
 

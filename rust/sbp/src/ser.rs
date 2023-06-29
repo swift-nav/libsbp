@@ -71,6 +71,10 @@ pub fn to_vec<M: SbpMessage>(msg: &M) -> Result<Vec<u8>, Error> {
 }
 
 pub fn to_buffer<M: SbpMessage>(buf: &mut BytesMut, msg: &M) -> Result<(), WriteFrameError> {
+    if msg.is_invalid() {
+        msg.write(buf);
+        return Ok(());
+    }
     let payload_len = msg.len();
     if payload_len > MAX_PAYLOAD_LEN {
         return Err(WriteFrameError::TooLarge);
@@ -82,7 +86,10 @@ pub fn to_buffer<M: SbpMessage>(buf: &mut BytesMut, msg: &M) -> Result<(), Write
     sender_id.write(buf);
     (payload_len as u8).write(buf);
     msg.write(buf);
-    let crc = crc16::State::<crc16::XMODEM>::calculate(&buf[1..]);
+    let crc = crc16::State::<crc16::XMODEM>::calculate(
+        &buf.get(1..)
+            .expect("is safe because written several bytes to the buf"),
+    );
     crc.write(buf);
     buf.unsplit(old_buf);
     Ok(())

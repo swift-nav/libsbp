@@ -28,7 +28,8 @@ pub struct Invalid {
     )]
     pub crc: Option<u16>,
 
-    /// Raw payload of the message.
+    /// payload here is actually the raw frame with the given
+    /// crc, msg_id & sender_id, if any
     pub payload: Vec<u8>,
 }
 
@@ -50,7 +51,14 @@ impl SbpMessage for Invalid {
     }
 
     fn encoded_len(&self) -> usize {
-        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        // note here we don't add the header and crc etc because the
+        // invalid message holds the entire frame in
+        // its payload
+        WireFormat::len(self)
+    }
+
+    fn is_invalid(&self) -> bool {
+        true
     }
 }
 
@@ -63,6 +71,8 @@ impl WireFormat for Invalid {
         self.payload.write(buf)
     }
 
+    /// In general it is better to construct invalid messages
+    /// from thrown errors, not to directly parse to them
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         Invalid {
             msg_id: None,
@@ -78,14 +88,26 @@ impl From<SbpMsgParseError> for Invalid {
         SbpMsgParseError {
             msg_type,
             sender_id,
-            raw_invalid_payload_bytes: payload,
+            raw_invalid_payload_bytes: msg_payload,
         }: SbpMsgParseError,
     ) -> Self {
+        // payload here is the whole frame
+        let mut payload =
+            Vec::with_capacity(msg_payload.len() + crate::HEADER_LEN + crate::CRC_LEN);
+        crate::PREAMBLE.write(&mut payload);
+        msg_type.write(&mut payload);
+        sender_id.write(&mut payload);
+        (msg_payload.len() as u8).write(&mut payload);
+        msg_payload.write(&mut payload);
+        let crc =
+            crc16::State::<crc16::XMODEM>::calculate(&payload.get(1..).expect("vec has capacity"));
+        crc.write(&mut payload);
+
         Self {
             msg_id: Some(msg_type),
             sender_id: Some(sender_id),
             payload,
-            crc: None,
+            crc: Some(crc),
         }
     }
 }
@@ -100,10 +122,10 @@ impl From<CrcError> for Invalid {
         }: CrcError,
     ) -> Self {
         Self {
-            msg_id: Some(msg_type),
-            sender_id: Some(sender_id),
+            msg_id: msg_type,
+            sender_id: sender_id,
             payload,
-            crc: Some(crc),
+            crc: crc,
         }
     }
 }

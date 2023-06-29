@@ -5,7 +5,7 @@ use std::path::PathBuf;
 
 use clap::Parser;
 
-use converters::{json2sbp, jsonfields2sbp, Result};
+use converters::{json2sbp, jsonfields2sbp, ErrorHandlerOptions, Result};
 
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
@@ -28,9 +28,9 @@ struct Options {
     #[clap(short, long)]
     buffered: bool,
 
-    /// Stop on first error encountered
-    #[clap(long)]
-    fatal_errors: bool,
+    /// what to do if encounter an error while parsing.
+    #[clap(long, default_value = "skip")]
+    error_handler: ErrorHandlerOptions,
 
     /// Generate SBP from the json fields instead of the base64 encoded payload
     #[clap(long)]
@@ -57,8 +57,8 @@ fn main() -> Result<()> {
     };
 
     if options.from_fields {
-        jsonfields2sbp(stdin, stdout, options.buffered, options.fatal_errors)
+        jsonfields2sbp(stdin, stdout, options.buffered, options.error_handler)
     } else {
-        json2sbp(stdin, stdout, options.buffered, options.fatal_errors)
+        json2sbp(stdin, stdout, options.buffered, options.error_handler)
     }
 }

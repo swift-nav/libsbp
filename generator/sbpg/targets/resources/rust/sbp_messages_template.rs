@@ -137,6 +137,9 @@ impl SbpMessage for (((m.msg_name))) {
     fn encoded_len(&self) -> usize {
         WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
+    fn is_invalid(&self) -> bool {
+        false
+    }
     (((m.gps_time_fn)))
 }
 

@@ -2,25 +2,89 @@ use std::io::{Read, Write};
 
 use sbp::{
     json::{Json2JsonEncoder, JsonEncoder},
-    SbpEncoder,
+    HandleParseError, SbpEncoder,
 };
 use serde_json::ser::Formatter;
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
 
+#[derive(Copy, Clone, Debug)]
 pub enum ErrorHandlerOptions {
-    FailOnError,
+    ReturnOnFirstError,
     FilterOutErrors,
-    CoerceToInvalidMsg,
+    CoerceErrorsToInvalidMsg,
+}
+
+impl std::str::FromStr for ErrorHandlerOptions {
+    type Err = String;
+
+    fn from_str(s: &str) -> std::result::Result<ErrorHandlerOptions, Self::Err> {
+        match s {
+            s if s.eq_ignore_ascii_case("Return") => Ok(ErrorHandlerOptions::ReturnOnFirstError),
+            s if s.eq_ignore_ascii_case("Skip") => Ok(ErrorHandlerOptions::FilterOutErrors),
+            s if s.eq_ignore_ascii_case("ToInvalid") | s.eq_ignore_ascii_case("to-invalid") => {
+                Ok(ErrorHandlerOptions::CoerceErrorsToInvalidMsg)
+            }
+
+            s => Err(format!(
+                "Unable to cast option {} to a valid error handler option. \
+                    Valid options are 'return', 'skip', & 'to-invalid')",
+                s
+            )),
+        }
+    }
 }
 
 /// Impl from bool for backwards compatibility
 impl From<bool> for ErrorHandlerOptions {
     fn from(bool_flag: bool) -> Self {
         if bool_flag {
-            Self::FailOnError
+            Self::ReturnOnFirstError
         } else {
             Self::FilterOutErrors
+        }
+    }
+}
+
+/// This struct is a wrapper of an iter that returns messages or errors.
+pub struct ErrorHandler<'a, T, E: std::error::Error + Send + Sync + HandleParseError<T>> {
+    inner_iter: Box<dyn Iterator<Item = std::result::Result<T, E>> + 'a>,
+    opts: ErrorHandlerOptions,
+}
+
+impl<'a, T, E: std::error::Error + Send + Sync + HandleParseError<T>> ErrorHandler<'a, T, E> {
+    pub fn new(
+        inner_iter: impl Iterator<Item = std::result::Result<T, E>> + 'a,
+        opts: ErrorHandlerOptions,
+    ) -> Self {
+        Self {
+            inner_iter: Box::new(inner_iter),
+            opts,
+        }
+    }
+}
+
+impl<M, E: std::error::Error + Send + Sync + HandleParseError<M>> Iterator
+    for ErrorHandler<'_, M, E>
+{
+    type Item = M;
+
+    fn next(&mut self) -> Option<M> {
+        match (self.opts, self.inner_iter.next()) {
+            (_, None) => None,
+            (_, Some(Ok(x))) => Some(x),
+            (ErrorHandlerOptions::ReturnOnFirstError, Some(Err(e))) => {
+                eprintln!("{e}");
+                None
+            }
+            (ErrorHandlerOptions::FilterOutErrors, Some(Err(e))) => {
+                eprintln!("{e}");
+                self.next()
+            }
+            (ErrorHandlerOptions::CoerceErrorsToInvalidMsg, Some(Err(e))) => {
+                eprintln!("{e}");
+                Some(e.handle_parse_error())
+            }
         }
     }
 }
@@ -35,7 +99,7 @@ where
     R: Read,
     W: Write,
 {
-    let source = maybe_fatal_errors(sbp::json::iter_messages(input), error_handler_opt.into());
+    let source = ErrorHandler::new(sbp::json::iter_messages(input), error_handler_opt.into());
     let mut sink = SbpEncoder::new(output);
     if buffered {
         sink.send_all(source)?;
@@ -57,7 +121,7 @@ where
     R: Read,
     W: Write,
 {
-    let source = maybe_fatal_errors(
+    let source = ErrorHandler::new(
         sbp::json::iter_messages_from_fields(input),
         error_handler_opt.into(),
     );
@@ -84,10 +148,14 @@ where
     W: Write,
     F: Formatter + Clone,
 {
-    let source = maybe_fatal_errors(
-        sbp::json::iter_json2json_messages(input),
-        error_handler_opt.into(),
-    );
+    let opt = error_handler_opt.into();
+    if matches!(opt, ErrorHandlerOptions::CoerceErrorsToInvalidMsg) {
+        unimplemented!(
+            "We do not yet support coverting to invalid messages \
+        in json2json."
+        );
+    }
+    let source = ErrorHandler::new(sbp::json::iter_json2json_messages(input), opt);
     let mut sink = Json2JsonEncoder::new(output, formatter);
     if buffered {
         sink.send_all(source)?;
@@ -111,7 +179,7 @@ where
     W: Write,
     F: Formatter + Clone,
 {
-    let source = maybe_fatal_errors(sbp::iter_messages(input), error_handler_opt.into());
+    let source = ErrorHandler::new(sbp::iter_messages(input), error_handler_opt.into());
     let mut sink = JsonEncoder::new(output, formatter);
     if buffered {
         sink.send_all(source)?;
@@ -121,28 +189,4 @@ where
         }
     }
     Ok(())
-}
-
-fn maybe_fatal_errors<'a, M, I, E>(
-    messages: I,
-    opts: ErrorHandlerOptions,
-) -> Box<dyn Iterator<Item = M> + 'a>
-where
-    M: 'a,
-    I: Iterator<Item = std::result::Result<M, E>> + 'a,
-    E: std::error::Error + 'a,
-{
-    match opts {
-        ErrorHandlerOptions::FailOnError => Box::new(
-            messages
-                .take_while(|m| m.as_ref().map_err(|e| eprintln!("{e}")).is_ok())
-                .map(|m| m.unwrap()),
-        ),
-        ErrorHandlerOptions::FilterOutErrors => {
-            Box::new(messages.filter_map(|m| m.map_err(|e| eprintln!("{e}")).ok()))
-        }
-        ErrorHandlerOptions::CoerceToInvalidMsg => {
-            todo!("final part of this ticket");
-        }
-    }
 }

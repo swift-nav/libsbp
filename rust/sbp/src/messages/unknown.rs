@@ -44,6 +44,10 @@ impl SbpMessage for Unknown {
     fn encoded_len(&self) -> usize {
         WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
+
+    fn is_invalid(&self) -> bool {
+        false
+    }
 }
 
 impl WireFormat for Unknown {

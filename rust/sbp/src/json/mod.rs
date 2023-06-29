@@ -11,6 +11,7 @@ use serde_json::{ser::Formatter, Value};
 
 pub use serde_json::ser::CompactFormatter;
 
+use crate::{messages::invalid::Invalid, HandleParseError, Sbp};
 #[cfg(feature = "async")]
 pub use de::stream_messages;
 pub use de::{iter_json2json_messages, iter_messages, iter_messages_from_fields};
@@ -124,7 +125,6 @@ impl Formatter for HaskellishFloatFormatter {
 #[derive(Debug)]
 pub enum JsonError {
     SbpMsgParseError(crate::messages::SbpMsgParseError),
-    PayloadParseError(crate::wire_format::PayloadParseError),
     CrcError(crate::de::CrcError),
     WriteFrameError(crate::ser::WriteFrameError),
     IoError(io::Error),
@@ -132,11 +132,41 @@ pub enum JsonError {
     SerdeJsonError(serde_json::Error),
 }
 
+impl HandleParseError<Sbp> for JsonError {
+    fn handle_parse_error(self) -> Sbp {
+        match self {
+            Self::SbpMsgParseError(e) => Invalid::from(e).into(),
+            Self::CrcError(e) => Invalid::from(e).into(),
+            Self::WriteFrameError(e) => {
+                panic!("Unable to recover from WriteFrameError {}", e)
+            }
+            Self::IoError(e) => {
+                panic!("Unable to recover from IoError {}", e)
+            }
+
+            Self::Base64Error(e) => {
+                panic!("Unable to recover from Base64 decoding error {}", e)
+            }
+
+            Self::SerdeJsonError(e) => {
+                // We may need to handle this error path if we want to recover
+                // from errors with Json2Json
+                panic!("Unable to recover from SerdeJsonError {}", e)
+            }
+        }
+    }
+}
+
+impl HandleParseError<Json2JsonInput> for JsonError {
+    fn handle_parse_error(self) -> Json2JsonInput {
+        todo!("We do not yet support falling back to invalid messages for Json2Json");
+    }
+}
+
 impl std::fmt::Display for JsonError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             JsonError::SbpMsgParseError(e) => e.fmt(f),
-            JsonError::PayloadParseError(e) => e.fmt(f),
             JsonError::CrcError(e) => e.fmt(f),
             JsonError::WriteFrameError(e) => e.fmt(f),
             JsonError::IoError(e) => e.fmt(f),
@@ -151,12 +181,6 @@ impl std::error::Error for JsonError {}
 impl From<crate::messages::SbpMsgParseError> for JsonError {
     fn from(e: crate::messages::SbpMsgParseError) -> Self {
         JsonError::SbpMsgParseError(e)
-    }
-}
-
-impl From<crate::wire_format::PayloadParseError> for JsonError {
-    fn from(e: crate::wire_format::PayloadParseError) -> Self {
-        JsonError::PayloadParseError(e)
     }
 }
 

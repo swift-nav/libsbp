@@ -207,3 +207,12 @@ pub use sbp_iter_ext::SbpIterExt;
 
 #[doc(inline)]
 pub use sbp_string::SbpString;
+
+/// A trait that is used for converting an error in parsing of a
+/// messages into a message. A separate trait other than the `Into`
+/// trait is defined because it makes it clear that it is ok to
+/// panic inside of the handle_error function if it is not recoverable...
+/// e.g. if the error is from an I/O error while parsing a message
+pub trait HandleParseError<T> {
+    fn handle_parse_error(self) -> T;
+}
