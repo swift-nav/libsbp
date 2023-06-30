@@ -3699,6 +3699,21 @@ pub mod satellite_apc {
 
         /// QZSS
         Qzss = 19,
+
+        /// BEIDOU 3I
+        Beidou3I = 20,
+
+        /// BEIDOU 3SM, CAST
+        Beidou3SMCast = 21,
+
+        /// BEIDOU 3SI, CAST
+        Beidou3SICast = 22,
+
+        /// BEIDOU 3SM, SECM
+        Beidou3SMSecm = 23,
+
+        /// BEIDOU 3SI, SECM
+        Beidou3SISecm = 24,
     }
 
     impl std::fmt::Display for SatelliteType {
@@ -3724,6 +3739,11 @@ pub mod satellite_apc {
                 SatelliteType::Beidou3GCast => f.write_str("BEIDOU 3G, CAST"),
                 SatelliteType::Beidou3ICast => f.write_str("BEIDOU 3I, CAST"),
                 SatelliteType::Qzss => f.write_str("QZSS"),
+                SatelliteType::Beidou3I => f.write_str("BEIDOU 3I"),
+                SatelliteType::Beidou3SMCast => f.write_str("BEIDOU 3SM, CAST"),
+                SatelliteType::Beidou3SICast => f.write_str("BEIDOU 3SI, CAST"),
+                SatelliteType::Beidou3SMSecm => f.write_str("BEIDOU 3SM, SECM"),
+                SatelliteType::Beidou3SISecm => f.write_str("BEIDOU 3SI, SECM"),
             }
         }
     }
