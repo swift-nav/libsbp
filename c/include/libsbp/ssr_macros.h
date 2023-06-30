@@ -299,7 +299,6 @@
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_BEIDOU_3SI_CAST (22)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_BEIDOU_3SM_SECM (23)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_BEIDOU_3SI_SECM (24)
-
 /**
  * The maximum number of items that can be stored in sbp_satellite_apc_t::pco
  * (V4 API) or satellite_apc_t::pco (legacy API) before the maximum SBP message
