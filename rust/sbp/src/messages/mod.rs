@@ -10,8 +10,10 @@
 //! SBP message definitions.
 
 //****************************************************************************
-// Automatically generated from yaml/
-// with generate.py. Please do not hand edit!
+// Automatically generated from
+// 'generator/sbpg/targets/resources/rust/sbp_messages_mod.rs'
+//
+// Please do not hand edit!
 //****************************************************************************/
 pub mod acquisition;
 pub mod bootload;
