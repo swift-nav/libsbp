@@ -3759,6 +3759,21 @@ pub mod satellite_apc {
 
         /// QZSS
         Qzss = 19,
+
+        /// BEIDOU 3I
+        Beidou3I = 20,
+
+        /// BEIDOU 3SM, CAST
+        Beidou3SmCast = 21,
+
+        /// BEIDOU 3SI, CAST
+        Beidou3SiCast = 22,
+
+        /// BEIDOU 3SM, SECM
+        Beidou3SmSecm = 23,
+
+        /// BEIDOU 3SI, SECM
+        Beidou3SiSecm = 24,
     }
 
     impl std::fmt::Display for SatelliteType {
@@ -3784,6 +3799,11 @@ pub mod satellite_apc {
                 SatelliteType::Beidou3GCast => f.write_str("BEIDOU 3G, CAST"),
                 SatelliteType::Beidou3ICast => f.write_str("BEIDOU 3I, CAST"),
                 SatelliteType::Qzss => f.write_str("QZSS"),
+                SatelliteType::Beidou3I => f.write_str("BEIDOU 3I"),
+                SatelliteType::Beidou3SmCast => f.write_str("BEIDOU 3SM, CAST"),
+                SatelliteType::Beidou3SiCast => f.write_str("BEIDOU 3SI, CAST"),
+                SatelliteType::Beidou3SmSecm => f.write_str("BEIDOU 3SM, SECM"),
+                SatelliteType::Beidou3SiSecm => f.write_str("BEIDOU 3SI, SECM"),
             }
         }
     }
@@ -3812,6 +3832,11 @@ pub mod satellite_apc {
                 17 => Ok(SatelliteType::Beidou3GCast),
                 18 => Ok(SatelliteType::Beidou3ICast),
                 19 => Ok(SatelliteType::Qzss),
+                20 => Ok(SatelliteType::Beidou3I),
+                21 => Ok(SatelliteType::Beidou3SmCast),
+                22 => Ok(SatelliteType::Beidou3SiCast),
+                23 => Ok(SatelliteType::Beidou3SmSecm),
+                24 => Ok(SatelliteType::Beidou3SiSecm),
                 i => Err(i),
             }
         }

@@ -889,6 +889,11 @@ definitions:
                    - 17: BEIDOU 3G, CAST
                    - 18: BEIDOU 3I, CAST
                    - 19: QZSS
+                   - 20: BEIDOU 3I
+                   - 21: BEIDOU 3SM, CAST
+                   - 22: BEIDOU 3SI, CAST
+                   - 23: BEIDOU 3SM, SECM
+                   - 24: BEIDOU 3SI, SECM
        - svn:
            type: u16
            desc: Satellite Code, as defined by IGS. Typically the space vehicle number.

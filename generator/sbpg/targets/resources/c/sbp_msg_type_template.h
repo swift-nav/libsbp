@@ -37,6 +37,18 @@ typedef enum {
   SbpMsgUnknown = SBP_MSG_ALL,
 } sbp_msg_type_t;
 
+static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
+  switch(msg_type) {
+    ((*- for m in real_messages *))
+    case (((m.v4_msg_type))):
+      return "(((m.name)))";
+    ((*- endfor *))
+    case SbpMsgAll:
+    default:
+      return "(unknown)";
+  }
+}
+
 #ifdef __cplusplus
 }
 #endif
