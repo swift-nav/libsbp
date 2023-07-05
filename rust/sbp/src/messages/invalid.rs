@@ -11,7 +11,7 @@ use crate::{de::CrcError, messages::SbpMsgParseError, wire_format::WireFormat, S
 
 /// Invalid messages occur when either the frame or message payload doesn't have enough bytes or
 /// the CRC does not match the messages payload. If the message is well formed with a message
-/// id and crc and payload that all are consistent, but its message type is unknown, it should be
+/// id and CRC and payload that all are consistent, but its message type is unknown, it should be
 /// parsed into a Unknown message.
 ///
 /// There is something unique about Invalid messages that the payload is actually the entire frame.
