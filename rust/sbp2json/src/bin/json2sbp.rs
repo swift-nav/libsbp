@@ -28,7 +28,7 @@ struct Options {
     #[clap(short, long)]
     buffered: bool,
 
-    /// what to do if encounter an error while parsing.
+    /// What to do if encounter an error while parsing
     #[clap(long, default_value = "skip")]
     error_handler: ErrorHandlerOptions,
 
