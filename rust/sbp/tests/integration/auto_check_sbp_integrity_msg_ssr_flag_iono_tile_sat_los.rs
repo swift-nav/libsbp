@@ -35,11 +35,11 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_iono_tile_sat_los() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgSsrFlagIonoTileSatLos(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    3021,
+                    msg_type, 3021,
                     "Incorrect message type, expected 3021, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -152,11 +152,11 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_iono_tile_sat_los() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgSsrFlagIonoTileSatLos(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    3021,
+                    msg_type, 3021,
                     "Incorrect message type, expected 3021, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -277,11 +277,11 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_iono_tile_sat_los() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgSsrFlagIonoTileSatLos(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    3021,
+                    msg_type, 3021,
                     "Incorrect message type, expected 3021, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

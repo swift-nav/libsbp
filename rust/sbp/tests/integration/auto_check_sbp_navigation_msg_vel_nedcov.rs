@@ -36,11 +36,11 @@ fn test_auto_check_sbp_navigation_msg_vel_nedcov() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgVelNedCov(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x212,
+                    msg_type, 0x212,
                     "Incorrect message type, expected 0x212, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -136,11 +136,11 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_nedcov() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgVelNedCov(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x212,
+                    msg_type, 0x212,
                     "Incorrect message type, expected 0x212, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -245,11 +245,11 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_nedcov() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgVelNedCov(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x212,
+                    msg_type, 0x212,
                     "Incorrect message type, expected 0x212, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

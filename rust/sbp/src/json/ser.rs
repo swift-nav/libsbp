@@ -10,6 +10,7 @@ use super::{JsonError, JsonOutput};
 use crate::{
     json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput},
     messages::Sbp,
+    wire_format::WireFormat,
     SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, MIN_FRAME_LEN, PREAMBLE,
 };
 
@@ -19,7 +20,7 @@ const BASE64_BUFLEN: usize = BUFLEN * 4;
 pub fn to_writer<W, M>(mut writer: W, msg: &M) -> Result<(), JsonError>
 where
     W: io::Write,
-    M: SbpMessage + Serialize,
+    M: SbpMessage + Serialize + WireFormat + Clone,
 {
     let mut frame = BytesMut::with_capacity(BUFLEN);
     let mut payload = String::with_capacity(BUFLEN);
@@ -38,7 +39,7 @@ where
 /// Serialize the given message as a JSON byte vector.
 pub fn to_vec<M>(msg: &M) -> Result<Vec<u8>, JsonError>
 where
-    M: SbpMessage + Serialize,
+    M: SbpMessage + Serialize + WireFormat + Clone,
 {
     let mut frame = BytesMut::with_capacity(BUFLEN);
     let mut payload = String::with_capacity(BUFLEN);
@@ -62,7 +63,7 @@ pub fn to_buffer<M, F>(
 ) -> Result<(), JsonError>
 where
     F: Formatter,
-    M: SbpMessage + Serialize,
+    M: SbpMessage + Serialize + WireFormat + Clone,
 {
     let output = JsonOutput {
         common: get_common_fields(payload_buf, frame_buf, msg)?,
@@ -212,7 +213,7 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
     }
 }
 
-fn get_common_fields<'a, M: SbpMessage>(
+fn get_common_fields<'a, M: SbpMessage + WireFormat + Clone>(
     payload_buf: &'a mut String,
     frame_buf: &'a mut BytesMut,
     msg: &M,
@@ -224,6 +225,7 @@ fn get_common_fields<'a, M: SbpMessage>(
     if frame_buf.len() < MIN_FRAME_LEN {
         return Ok(None);
     }
+    // could panic
     let crc = {
         let crc_b0 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][0] as u16;
         let crc_b1 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][1] as u16;

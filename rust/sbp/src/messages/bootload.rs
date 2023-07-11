@@ -55,8 +55,8 @@ pub mod msg_bootloader_handshake_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -67,8 +67,8 @@ pub mod msg_bootloader_handshake_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -135,8 +135,8 @@ pub mod msg_bootloader_handshake_req {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -147,8 +147,8 @@ pub mod msg_bootloader_handshake_req {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -259,8 +259,8 @@ pub mod msg_bootloader_handshake_resp {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -271,8 +271,8 @@ pub mod msg_bootloader_handshake_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -343,8 +343,8 @@ pub mod msg_bootloader_jump_to_app {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -355,8 +355,8 @@ pub mod msg_bootloader_jump_to_app {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -426,8 +426,8 @@ pub mod msg_nap_device_dna_req {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -438,8 +438,8 @@ pub mod msg_nap_device_dna_req {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -507,8 +507,8 @@ pub mod msg_nap_device_dna_resp {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -519,8 +519,8 @@ pub mod msg_nap_device_dna_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 

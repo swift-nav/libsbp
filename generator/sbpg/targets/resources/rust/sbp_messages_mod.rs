@@ -79,11 +79,11 @@ mod lib {
 use lib::*;
 
 /// Common functionality available to all SBP messages.
-pub trait SbpMessage: WireFormat + Clone + Sized {
+pub trait SbpMessage {
     /// Get the message name.
     fn message_name(&self) -> &'static str;
     /// Get the message type.
-    fn message_type(&self) -> u16;
+    fn message_type(&self) -> Option<u16>;
     /// Get the sender_id if it is set.
     fn sender_id(&self) -> Option<u16>;
     /// Set the sender id.
@@ -99,8 +99,9 @@ pub trait SbpMessage: WireFormat + Clone + Sized {
     fn friendly_name(&self) -> &'static str {
         ""
     }
-    /// Tells you if the message is invalid and may need to be special cased at certain points.
-    fn is_invalid(&self) -> bool;
+    /// Tells you if the message is valid or if it is not a valid message and may need to be 
+    /// special cased at certain points.
+    fn is_valid(&self) -> bool;
 }
 
 /// Implemented by messages who's message name and type are known at compile time.
@@ -159,7 +160,7 @@ impl<'de> serde::Deserialize<'de> for Sbp {
                 serde_json::from_value::<(((m.msg_name)))>(value).map(Sbp::(((m.msg_name))) )
             },
             ((*- endfor *))
-            msg_id => {
+            msg_id @ Some(_) => {
                 serde_json::from_value::<Unknown>(value)
                     .map(|msg| Unknown {
                         msg_id,
@@ -167,6 +168,13 @@ impl<'de> serde::Deserialize<'de> for Sbp {
                     })
                     .map(Sbp::Unknown)
             },
+            None => {
+                serde_json::from_value::<Invalid>(value)
+                    .map(|msg| Invalid {
+                        ..msg
+                    })
+                    .map(Sbp::Invalid)
+            }
         }.map_err(serde::de::Error::custom)
     }
 }
@@ -177,19 +185,19 @@ pub struct SbpMsgParseError {
     pub msg_type: u16,
     /// the sender_id
     pub sender_id: u16,
-    /// A vec that just contains all the bytes
-    pub raw_invalid_payload_bytes: Vec<u8>,
+    /// A vec that just contains the invalid payload bytes
+    pub invalid_payload: Vec<u8>,
 }
 
 impl From<SbpMsgParseError> for PayloadParseError {
     fn from(
         SbpMsgParseError {
-            raw_invalid_payload_bytes,
+            invalid_payload,
             ..
         }: SbpMsgParseError,
     ) -> Self {
         Self {
-            raw_invalid_payload_bytes,
+            invalid_payload,
         }
     }
 }
@@ -249,11 +257,11 @@ impl Sbp {
                 Ok(msg)
             }
             Err(PayloadParseError {
-                raw_invalid_payload_bytes,
+                invalid_payload,
             }) => Err(SbpMsgParseError {
                 msg_type,
                 sender_id,
-                raw_invalid_payload_bytes,
+                invalid_payload,
             }),
         }
     }
@@ -276,7 +284,7 @@ impl SbpMessage for Sbp {
         }
     }
 
-    fn message_type(&self) -> u16 {
+    fn message_type(&self) -> Option<u16> {
         match self {
             ((*- for m in msgs *))
             Sbp::(((m.msg_name)))(msg) => {
@@ -373,10 +381,21 @@ impl SbpMessage for Sbp {
         }
     }
 
-    fn is_invalid(&self) -> bool {
-        matches!(self, Sbp::Invalid(_))
+    fn is_valid(&self) -> bool {
+        match self {
+            ((*- for m in msgs *))
+            Sbp::(((m.msg_name)))(msg) => {
+                msg.is_valid()
+            },
+            ((*- endfor -*))
+            Sbp::Unknown(msg) => {
+                msg.is_valid()
+            },
+            Sbp::Invalid(msg) => {
+                msg.is_valid()
+            },
+        }
     }
-
 }
 
 impl WireFormat for Sbp {

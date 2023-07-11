@@ -160,7 +160,7 @@ pub struct CrcError {
     pub msg_type: Option<u16>,
     pub sender_id: Option<u16>,
     pub crc: Option<u16>,
-    pub raw_frame_bytes: Vec<u8>,
+    pub invalid_frame: Vec<u8>,
 }
 
 impl std::fmt::Display for CrcError {
@@ -295,19 +295,19 @@ impl Frame {
     }
 
     pub fn check_crc(&self) -> Result<u16, CrcError> {
-        let actual = self.crc();
+        let given = self.crc();
         let measured_crc = self
             .payload_len()
             .and_then(|payload_len| self.as_bytes().get(1..HEADER_LEN + payload_len))
             .map(crc16::State::<crc16::XMODEM>::calculate);
 
-        match (actual, measured_crc) {
-            (Some(actual), Some(crc)) if actual == crc => Ok(actual),
-            (actual, _measured) => Err(CrcError {
+        match (given, measured_crc) {
+            (Some(given), Some(crc)) if given == crc => Ok(given),
+            (given, _measured) => Err(CrcError {
                 msg_type: self.msg_type(),
                 sender_id: self.sender_id(),
-                crc: actual,
-                raw_frame_bytes: self.as_bytes().to_vec(),
+                crc: given,
+                invalid_frame: self.as_bytes().to_vec(),
             }),
         }
     }
@@ -331,7 +331,7 @@ impl Frame {
                 msg_type,
                 sender_id,
                 crc: self.crc(),
-                raw_frame_bytes: self.as_bytes().to_vec(),
+                invalid_frame: self.as_bytes().to_vec(),
             }
             .into()),
         }

@@ -22,7 +22,10 @@ impl std::str::FromStr for ErrorHandlerOptions {
         match s {
             s if s.eq_ignore_ascii_case("Return") => Ok(ErrorHandlerOptions::ReturnOnFirstError),
             s if s.eq_ignore_ascii_case("Skip") => Ok(ErrorHandlerOptions::FilterOutErrors),
-            s if s.eq_ignore_ascii_case("ToInvalid") | s.eq_ignore_ascii_case("to-invalid") => {
+            s if s.eq_ignore_ascii_case("ToInvalid")
+                | s.eq_ignore_ascii_case("to-invalid")
+                | s.eq_ignore_ascii_case("to_invalid") =>
+            {
                 Ok(ErrorHandlerOptions::CoerceErrorsToInvalidMsg)
             }
 

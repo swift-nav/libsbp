@@ -72,7 +72,7 @@ struct Json2JsonOutput<'a, M> {
 struct CommonJson<'a> {
     crc: u16,
     length: u8,
-    msg_type: u16,
+    msg_type: Option<u16>,
     msg_name: &'a str,
     payload: &'a str,
     preamble: u8,
@@ -159,7 +159,7 @@ impl HandleParseError<Sbp> for JsonError {
 
 impl HandleParseError<Json2JsonInput> for JsonError {
     fn handle_parse_error(self) -> Json2JsonInput {
-        todo!("We do not yet support falling back to invalid messages for Json2Json");
+        unimplemented!("We do not yet support falling back to invalid messages for Json2Json");
     }
 }
 

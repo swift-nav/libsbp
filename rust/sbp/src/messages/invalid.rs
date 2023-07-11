@@ -21,28 +21,19 @@ use crate::{de::CrcError, messages::SbpMsgParseError, wire_format::WireFormat, S
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub struct Invalid {
     /// The message id of the message.
-    #[cfg_attr(
-        feature = "serde",
-        serde(default, skip_serializing_if = "Option::is_none")
-    )]
+    #[cfg_attr(feature = "serde", serde(default, skip_serializing))]
     pub msg_id: Option<u16>,
     /// The message sender_id.
-    #[cfg_attr(
-        feature = "serde",
-        serde(default, skip_serializing_if = "Option::is_none")
-    )]
+    #[cfg_attr(feature = "serde", serde(default, skip_serializing, alias = "sender"))]
     pub sender_id: Option<u16>,
-
     /// The crc that was in the frame
     #[cfg_attr(
         feature = "serde",
         serde(default, skip_serializing_if = "Option::is_none")
     )]
     pub crc: Option<u16>,
-
-    /// payload here is actually the raw frame with the given
-    /// crc, msg_id & sender_id, if any
-    pub payload: Vec<u8>,
+    #[cfg_attr(feature = "serde", serde(default, with = "base64"))]
+    pub invalid_frame: Vec<u8>,
 }
 
 impl SbpMessage for Invalid {
@@ -50,8 +41,8 @@ impl SbpMessage for Invalid {
         "INVALID"
     }
 
-    fn message_type(&self) -> u16 {
-        self.msg_id.unwrap_or(0xffff)
+    fn message_type(&self) -> Option<u16> {
+        self.msg_id
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -68,19 +59,21 @@ impl SbpMessage for Invalid {
         // its payload
         WireFormat::len(self)
     }
-
-    fn is_invalid(&self) -> bool {
-        true
+    fn is_valid(&self) -> bool {
+        // Invalid messages can never be valid
+        false
     }
 }
 
 impl WireFormat for Invalid {
+    /// because this is an invalid message, the length may disagree
+    /// with what you would expect from parsing the frame itself
     fn len(&self) -> usize {
-        self.payload.len()
+        self.invalid_frame.len()
     }
 
     fn write<B: BufMut>(&self, buf: &mut B) {
-        self.payload.write(buf)
+        self.invalid_frame.write(buf)
     }
 
     /// In general it is better to construct invalid messages
@@ -90,7 +83,7 @@ impl WireFormat for Invalid {
             msg_id: None,
             sender_id: None,
             crc: None,
-            payload: WireFormat::parse_unchecked(buf),
+            invalid_frame: WireFormat::parse_unchecked(buf),
         }
     }
 }
@@ -100,7 +93,7 @@ impl From<SbpMsgParseError> for Invalid {
         SbpMsgParseError {
             msg_type,
             sender_id,
-            raw_invalid_payload_bytes: msg_payload,
+            invalid_payload: msg_payload,
         }: SbpMsgParseError,
     ) -> Self {
         // payload here is the whole frame
@@ -118,7 +111,7 @@ impl From<SbpMsgParseError> for Invalid {
         Self {
             msg_id: Some(msg_type),
             sender_id: Some(sender_id),
-            payload,
+            invalid_frame: payload,
             crc: Some(crc),
         }
     }
@@ -129,15 +122,31 @@ impl From<CrcError> for Invalid {
         CrcError {
             msg_type,
             sender_id,
-            raw_frame_bytes: payload,
+            invalid_frame,
             crc,
         }: CrcError,
     ) -> Self {
         Self {
             msg_id: msg_type,
             sender_id,
-            payload,
+            invalid_frame,
             crc,
         }
+    }
+}
+
+#[cfg(feature = "serde")]
+mod base64 {
+    use serde::{Deserialize, Serialize};
+    use serde::{Deserializer, Serializer};
+
+    pub fn serialize<S: Serializer>(v: &Vec<u8>, s: S) -> Result<S::Ok, S::Error> {
+        let base64 = base64::encode(v);
+        String::serialize(&base64, s)
+    }
+
+    pub fn deserialize<'de, D: Deserializer<'de>>(d: D) -> Result<Vec<u8>, D::Error> {
+        let base64 = String::deserialize(d)?;
+        base64::decode(base64.as_bytes()).map_err(|e| serde::de::Error::custom(e))
     }
 }

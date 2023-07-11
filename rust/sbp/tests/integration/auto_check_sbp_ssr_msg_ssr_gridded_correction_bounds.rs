@@ -36,11 +36,11 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgSsrGriddedCorrectionBounds(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    1534,
+                    msg_type, 1534,
                     "Incorrect message type, expected 1534, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -219,11 +219,11 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgSsrGriddedCorrectionBounds(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    1534,
+                    msg_type, 1534,
                     "Incorrect message type, expected 1534, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -366,11 +366,11 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgSsrGriddedCorrectionBounds(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    1534,
+                    msg_type, 1534,
                     "Incorrect message type, expected 1534, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -555,11 +555,11 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgSsrGriddedCorrectionBounds(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    1534,
+                    msg_type, 1534,
                     "Incorrect message type, expected 1534, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -711,11 +711,11 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgSsrGriddedCorrectionBounds(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    1534,
+                    msg_type, 1534,
                     "Incorrect message type, expected 1534, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -913,11 +913,11 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgSsrGriddedCorrectionBounds(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    1534,
+                    msg_type, 1534,
                     "Incorrect message type, expected 1534, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

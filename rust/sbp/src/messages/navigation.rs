@@ -162,8 +162,8 @@ pub mod msg_age_corrections {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -174,8 +174,8 @@ pub mod msg_age_corrections {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -293,8 +293,8 @@ pub mod msg_baseline_ecef {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -305,8 +305,8 @@ pub mod msg_baseline_ecef {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -509,8 +509,8 @@ pub mod msg_baseline_ecef_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -521,8 +521,8 @@ pub mod msg_baseline_ecef_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -772,8 +772,8 @@ pub mod msg_baseline_heading_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -784,8 +784,8 @@ pub mod msg_baseline_heading_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1014,8 +1014,8 @@ pub mod msg_baseline_ned {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1026,8 +1026,8 @@ pub mod msg_baseline_ned {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1237,8 +1237,8 @@ pub mod msg_baseline_ned_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1249,8 +1249,8 @@ pub mod msg_baseline_ned_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1501,8 +1501,8 @@ pub mod msg_dops {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1513,8 +1513,8 @@ pub mod msg_dops {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1685,8 +1685,8 @@ pub mod msg_dops_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1697,8 +1697,8 @@ pub mod msg_dops_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1835,8 +1835,8 @@ pub mod msg_gps_time {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1847,8 +1847,8 @@ pub mod msg_gps_time {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1987,8 +1987,8 @@ pub mod msg_gps_time_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1999,8 +1999,8 @@ pub mod msg_gps_time_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -2133,8 +2133,8 @@ pub mod msg_gps_time_gnss {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -2145,8 +2145,8 @@ pub mod msg_gps_time_gnss {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -2398,8 +2398,8 @@ pub mod msg_pose_relative {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -2410,8 +2410,8 @@ pub mod msg_pose_relative {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -2742,8 +2742,8 @@ pub mod msg_pos_ecef {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -2754,8 +2754,8 @@ pub mod msg_pos_ecef {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3062,8 +3062,8 @@ pub mod msg_pos_ecef_cov {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -3074,8 +3074,8 @@ pub mod msg_pos_ecef_cov {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3370,8 +3370,8 @@ pub mod msg_pos_ecef_cov_gnss {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -3382,8 +3382,8 @@ pub mod msg_pos_ecef_cov_gnss {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3616,8 +3616,8 @@ pub mod msg_pos_ecef_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -3628,8 +3628,8 @@ pub mod msg_pos_ecef_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3874,8 +3874,8 @@ pub mod msg_pos_ecef_gnss {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -3886,8 +3886,8 @@ pub mod msg_pos_ecef_gnss {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -4116,8 +4116,8 @@ pub mod msg_pos_llh {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -4128,8 +4128,8 @@ pub mod msg_pos_llh {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -4487,8 +4487,8 @@ pub mod msg_pos_llh_acc {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -4499,8 +4499,8 @@ pub mod msg_pos_llh_acc {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -4901,8 +4901,8 @@ pub mod msg_pos_llh_cov {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -4913,8 +4913,8 @@ pub mod msg_pos_llh_cov {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -5209,8 +5209,8 @@ pub mod msg_pos_llh_cov_gnss {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -5221,8 +5221,8 @@ pub mod msg_pos_llh_cov_gnss {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -5477,8 +5477,8 @@ pub mod msg_pos_llh_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -5489,8 +5489,8 @@ pub mod msg_pos_llh_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -5774,8 +5774,8 @@ pub mod msg_pos_llh_gnss {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -5786,8 +5786,8 @@ pub mod msg_pos_llh_gnss {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -6191,8 +6191,8 @@ pub mod msg_protection_level {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -6203,8 +6203,8 @@ pub mod msg_protection_level {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -6525,8 +6525,8 @@ pub mod msg_protection_level_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -6537,8 +6537,8 @@ pub mod msg_protection_level_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -6734,8 +6734,8 @@ pub mod msg_reference_frame_param {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -6746,8 +6746,8 @@ pub mod msg_reference_frame_param {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -6917,8 +6917,8 @@ pub mod msg_utc_leap_second {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -6929,8 +6929,8 @@ pub mod msg_utc_leap_second {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -7090,8 +7090,8 @@ pub mod msg_utc_time {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -7102,8 +7102,8 @@ pub mod msg_utc_time {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -7341,8 +7341,8 @@ pub mod msg_utc_time_gnss {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -7353,8 +7353,8 @@ pub mod msg_utc_time_gnss {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -7607,8 +7607,8 @@ pub mod msg_vel_body {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -7619,8 +7619,8 @@ pub mod msg_vel_body {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -7948,8 +7948,8 @@ pub mod msg_vel_cog {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -7960,8 +7960,8 @@ pub mod msg_vel_cog {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -8356,8 +8356,8 @@ pub mod msg_vel_ecef {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -8368,8 +8368,8 @@ pub mod msg_vel_ecef {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -8653,8 +8653,8 @@ pub mod msg_vel_ecef_cov {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -8665,8 +8665,8 @@ pub mod msg_vel_ecef_cov {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -8941,8 +8941,8 @@ pub mod msg_vel_ecef_cov_gnss {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -8953,8 +8953,8 @@ pub mod msg_vel_ecef_cov_gnss {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -9128,8 +9128,8 @@ pub mod msg_vel_ecef_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -9140,8 +9140,8 @@ pub mod msg_vel_ecef_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -9281,8 +9281,8 @@ pub mod msg_vel_ecef_gnss {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -9293,8 +9293,8 @@ pub mod msg_vel_ecef_gnss {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -9502,8 +9502,8 @@ pub mod msg_vel_ned {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -9514,8 +9514,8 @@ pub mod msg_vel_ned {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -9806,8 +9806,8 @@ pub mod msg_vel_ned_cov {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -9818,8 +9818,8 @@ pub mod msg_vel_ned_cov {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -10097,8 +10097,8 @@ pub mod msg_vel_ned_cov_gnss {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -10109,8 +10109,8 @@ pub mod msg_vel_ned_cov_gnss {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -10287,8 +10287,8 @@ pub mod msg_vel_ned_dep_a {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -10299,8 +10299,8 @@ pub mod msg_vel_ned_dep_a {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -10448,8 +10448,8 @@ pub mod msg_vel_ned_gnss {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -10460,8 +10460,8 @@ pub mod msg_vel_ned_gnss {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {

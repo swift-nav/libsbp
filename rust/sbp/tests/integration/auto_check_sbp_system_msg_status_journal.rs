@@ -35,11 +35,11 @@ fn test_auto_check_sbp_system_msg_status_journal() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgStatusJournal(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xFFFD,
+                    msg_type, 0xFFFD,
                     "Incorrect message type, expected 0xFFFD, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -147,11 +147,11 @@ fn test_auto_check_sbp_system_msg_status_journal() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgStatusJournal(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xFFFD,
+                    msg_type, 0xFFFD,
                     "Incorrect message type, expected 0xFFFD, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -239,11 +239,11 @@ fn test_json2sbp_auto_check_sbp_system_msg_status_journal() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgStatusJournal(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xFFFD,
+                    msg_type, 0xFFFD,
                     "Incorrect message type, expected 0xFFFD, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -357,11 +357,11 @@ fn test_json2sbp_auto_check_sbp_system_msg_status_journal() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgStatusJournal(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xFFFD,
+                    msg_type, 0xFFFD,
                     "Incorrect message type, expected 0xFFFD, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -457,11 +457,11 @@ fn test_sbp2json_auto_check_sbp_system_msg_status_journal() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgStatusJournal(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xFFFD,
+                    msg_type, 0xFFFD,
                     "Incorrect message type, expected 0xFFFD, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -588,11 +588,11 @@ fn test_sbp2json_auto_check_sbp_system_msg_status_journal() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgStatusJournal(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xFFFD,
+                    msg_type, 0xFFFD,
                     "Incorrect message type, expected 0xFFFD, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

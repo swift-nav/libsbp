@@ -34,11 +34,11 @@ fn test_auto_check_sbp_system_msg_sensor_aid_event() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgSensorAidEvent(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xFF09,
+                    msg_type, 0xFF09,
                     "Incorrect message type, expected 0xFF09, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -126,11 +126,11 @@ fn test_json2sbp_auto_check_sbp_system_msg_sensor_aid_event() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgSensorAidEvent(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xFF09,
+                    msg_type, 0xFF09,
                     "Incorrect message type, expected 0xFF09, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -225,11 +225,11 @@ fn test_sbp2json_auto_check_sbp_system_msg_sensor_aid_event() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgSensorAidEvent(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xFF09,
+                    msg_type, 0xFF09,
                     "Incorrect message type, expected 0xFF09, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

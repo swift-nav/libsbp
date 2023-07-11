@@ -77,8 +77,8 @@ pub mod msg_settings_read_by_index_done {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -89,8 +89,8 @@ pub mod msg_settings_read_by_index_done {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -155,8 +155,8 @@ pub mod msg_settings_read_by_index_req {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -167,8 +167,8 @@ pub mod msg_settings_read_by_index_req {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -250,8 +250,8 @@ pub mod msg_settings_read_by_index_resp {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -262,8 +262,8 @@ pub mod msg_settings_read_by_index_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -342,8 +342,8 @@ pub mod msg_settings_read_req {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -354,8 +354,8 @@ pub mod msg_settings_read_req {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -429,8 +429,8 @@ pub mod msg_settings_read_resp {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -441,8 +441,8 @@ pub mod msg_settings_read_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -513,8 +513,8 @@ pub mod msg_settings_register {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -525,8 +525,8 @@ pub mod msg_settings_register {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -618,8 +618,8 @@ pub mod msg_settings_register_resp {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -630,8 +630,8 @@ pub mod msg_settings_register_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -752,8 +752,8 @@ pub mod msg_settings_save {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -764,8 +764,8 @@ pub mod msg_settings_save {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -835,8 +835,8 @@ pub mod msg_settings_write {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -847,8 +847,8 @@ pub mod msg_settings_write {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 
@@ -942,8 +942,8 @@ pub mod msg_settings_write_resp {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -954,8 +954,8 @@ pub mod msg_settings_write_resp {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        fn is_invalid(&self) -> bool {
-            false
+        fn is_valid(&self) -> bool {
+            true
         }
     }
 

@@ -31,7 +31,7 @@ pub trait WireFormat: Sized {
             Ok(Self::parse_unchecked(buf))
         } else {
             Err(PayloadParseError {
-                raw_invalid_payload_bytes: buf.chunk().to_vec(),
+                invalid_payload: buf.chunk().to_vec(),
             })
         }
     }
@@ -182,7 +182,7 @@ impl WireFormat for f64 {
 #[derive(Debug, Clone)]
 pub struct PayloadParseError {
     /// A vec that just contains all the bytes
-    pub raw_invalid_payload_bytes: Vec<u8>,
+    pub invalid_payload: Vec<u8>,
 }
 
 impl std::fmt::Display for PayloadParseError {

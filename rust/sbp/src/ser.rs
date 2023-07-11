@@ -34,7 +34,7 @@ use crate::{BUFLEN, MAX_PAYLOAD_LEN, PREAMBLE};
 pub fn to_writer<W, M>(mut writer: W, msg: &M) -> Result<(), Error>
 where
     W: io::Write,
-    M: SbpMessage,
+    M: SbpMessage + WireFormat,
 {
     let mut buf = BytesMut::with_capacity(BUFLEN);
     to_buffer(&mut buf, msg)?;
@@ -64,25 +64,41 @@ where
 ///     Ok(())
 /// }
 /// ```
-pub fn to_vec<M: SbpMessage>(msg: &M) -> Result<Vec<u8>, Error> {
+pub fn to_vec<M: SbpMessage + WireFormat>(msg: &M) -> Result<Vec<u8>, Error> {
     let mut buf = BytesMut::with_capacity(BUFLEN);
     to_buffer(&mut buf, msg)?;
     Ok(buf.to_vec())
 }
 
-pub fn to_buffer<M: SbpMessage>(buf: &mut BytesMut, msg: &M) -> Result<(), WriteFrameError> {
-    if msg.is_invalid() {
+pub fn to_buffer<M: SbpMessage + WireFormat>(
+    buf: &mut BytesMut,
+    msg: &M,
+) -> Result<(), WriteFrameError> {
+    if !msg.is_valid() {
         msg.write(buf);
         return Ok(());
     }
+    // validate message in other ways before writing to buf
     let payload_len = msg.len();
     if payload_len > MAX_PAYLOAD_LEN {
         return Err(WriteFrameError::TooLarge);
     }
+    let Some(sender_id) = msg.sender_id() else {
+        // this should be unreachable because things
+        // without sender ids should be written as invalid
+        // messages
+        return Err(WriteFrameError::NoSenderId);
+    };
+    let Some(msg_type) = msg.message_type() else {
+        // this should be unreachable because things
+        // without sender ids should be caught by invalid
+        // messages
+        return Err(WriteFrameError::NoSenderId);
+    };
+
     let old_buf = buf.split();
     PREAMBLE.write(buf);
-    msg.message_type().write(buf);
-    let sender_id = msg.sender_id().ok_or(WriteFrameError::NoSenderId)?;
+    msg_type.write(buf);
     sender_id.write(buf);
     (payload_len as u8).write(buf);
     msg.write(buf);

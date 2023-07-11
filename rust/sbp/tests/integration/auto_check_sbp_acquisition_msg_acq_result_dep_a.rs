@@ -34,11 +34,11 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -85,11 +85,11 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -136,11 +136,11 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -188,11 +188,11 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -239,11 +239,11 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -290,11 +290,11 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -362,11 +362,11 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -420,11 +420,11 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -478,11 +478,11 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -536,11 +536,11 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -594,11 +594,11 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -652,11 +652,11 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -731,11 +731,11 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -801,11 +801,11 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -871,11 +871,11 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -942,11 +942,11 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1012,11 +1012,11 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1082,11 +1082,11 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgAcqResultDepA(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x15,
+                    msg_type, 0x15,
                     "Incorrect message type, expected 0x15, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

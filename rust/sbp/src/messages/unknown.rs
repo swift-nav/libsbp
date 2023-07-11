@@ -5,22 +5,21 @@ use bytes::{Buf, BufMut};
 use crate::{wire_format::WireFormat, SbpMessage};
 
 /// The message returned by the parser when the message type does not correspond to a known message.
+///
+/// The message should be well formed and must include a msg_id to be
+/// considered valid. If it is missing these items, it should be instead be an invalid
+/// message. This distinction is not enforced at compile-time nor by the type-system
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub struct Unknown {
     /// The message id of the message.
-    #[cfg_attr(
-        feature = "serde",
-        serde(default, skip_serializing_if = "Option::is_none")
-    )]
+    #[cfg_attr(feature = "serde", serde(default, skip_serializing))]
     pub msg_id: Option<u16>,
     /// The message sender_id.
-    #[cfg_attr(
-        feature = "serde",
-        serde(default, skip_serializing_if = "Option::is_none")
-    )]
+    #[cfg_attr(feature = "serde", serde(default, skip_serializing, alias = "sender"))]
     pub sender_id: Option<u16>,
     /// Raw payload of the message.
+    #[cfg_attr(feature = "serde", serde(default, skip_serializing))]
     pub payload: Vec<u8>,
 }
 
@@ -29,8 +28,8 @@ impl SbpMessage for Unknown {
         "UNKNOWN"
     }
 
-    fn message_type(&self) -> u16 {
-        self.msg_id.unwrap_or(0xffff)
+    fn message_type(&self) -> Option<u16> {
+        self.msg_id
     }
 
     fn sender_id(&self) -> Option<u16> {
@@ -45,8 +44,8 @@ impl SbpMessage for Unknown {
         WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 
-    fn is_invalid(&self) -> bool {
-        false
+    fn is_valid(&self) -> bool {
+        self.msg_id.is_some()
     }
 }
 

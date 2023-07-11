@@ -35,11 +35,11 @@ fn test_auto_check_sbp_navigation_msg_baseline_ecef() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -102,11 +102,11 @@ fn test_auto_check_sbp_navigation_msg_baseline_ecef() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -169,11 +169,11 @@ fn test_auto_check_sbp_navigation_msg_baseline_ecef() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -236,11 +236,11 @@ fn test_auto_check_sbp_navigation_msg_baseline_ecef() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -303,11 +303,11 @@ fn test_auto_check_sbp_navigation_msg_baseline_ecef() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -390,11 +390,11 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_baseline_ecef() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -463,11 +463,11 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_baseline_ecef() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -536,11 +536,11 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_baseline_ecef() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -609,11 +609,11 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_baseline_ecef() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -682,11 +682,11 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_baseline_ecef() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -777,11 +777,11 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_baseline_ecef() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -863,11 +863,11 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_baseline_ecef() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -949,11 +949,11 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_baseline_ecef() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1035,11 +1035,11 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_baseline_ecef() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1121,11 +1121,11 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_baseline_ecef() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgBaselineEcef(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x20b,
+                    msg_type, 0x20b,
                     "Incorrect message type, expected 0x20b, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

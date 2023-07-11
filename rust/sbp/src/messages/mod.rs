@@ -327,11 +327,11 @@ mod lib {
 use lib::*;
 
 /// Common functionality available to all SBP messages.
-pub trait SbpMessage: WireFormat + Clone + Sized {
+pub trait SbpMessage {
     /// Get the message name.
     fn message_name(&self) -> &'static str;
     /// Get the message type.
-    fn message_type(&self) -> u16;
+    fn message_type(&self) -> Option<u16>;
     /// Get the sender_id if it is set.
     fn sender_id(&self) -> Option<u16>;
     /// Set the sender id.
@@ -347,8 +347,9 @@ pub trait SbpMessage: WireFormat + Clone + Sized {
     fn friendly_name(&self) -> &'static str {
         ""
     }
-    /// Tells you if the message is invalid and may need to be special cased at certain points.
-    fn is_invalid(&self) -> bool;
+    /// Tells you if the message is valid or if it is not a valid message and may need to be
+    /// special cased at certain points.
+    fn is_valid(&self) -> bool;
 }
 
 /// Implemented by messages who's message name and type are known at compile time.
@@ -1603,9 +1604,12 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             Some(MsgHeartbeat::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgHeartbeat>(value).map(Sbp::MsgHeartbeat)
             }
-            msg_id => serde_json::from_value::<Unknown>(value)
+            msg_id @ Some(_) => serde_json::from_value::<Unknown>(value)
                 .map(|msg| Unknown { msg_id, ..msg })
                 .map(Sbp::Unknown),
+            None => serde_json::from_value::<Invalid>(value)
+                .map(|msg| Invalid { ..msg })
+                .map(Sbp::Invalid),
         }
         .map_err(serde::de::Error::custom)
     }
@@ -1617,20 +1621,17 @@ pub struct SbpMsgParseError {
     pub msg_type: u16,
     /// the sender_id
     pub sender_id: u16,
-    /// A vec that just contains all the bytes
-    pub raw_invalid_payload_bytes: Vec<u8>,
+    /// A vec that just contains the invalid payload bytes
+    pub invalid_payload: Vec<u8>,
 }
 
 impl From<SbpMsgParseError> for PayloadParseError {
     fn from(
         SbpMsgParseError {
-            raw_invalid_payload_bytes,
-            ..
+            invalid_payload, ..
         }: SbpMsgParseError,
     ) -> Self {
-        Self {
-            raw_invalid_payload_bytes,
-        }
+        Self { invalid_payload }
     }
 }
 
@@ -2291,12 +2292,10 @@ impl Sbp {
                 msg.set_sender_id(sender_id);
                 Ok(msg)
             }
-            Err(PayloadParseError {
-                raw_invalid_payload_bytes,
-            }) => Err(SbpMsgParseError {
+            Err(PayloadParseError { invalid_payload }) => Err(SbpMsgParseError {
                 msg_type,
                 sender_id,
-                raw_invalid_payload_bytes,
+                invalid_payload,
             }),
         }
     }
@@ -2543,7 +2542,7 @@ impl SbpMessage for Sbp {
         }
     }
 
-    fn message_type(&self) -> u16 {
+    fn message_type(&self) -> Option<u16> {
         match self {
             Sbp::MsgPrintDep(msg) => msg.message_type(),
             Sbp::MsgTrackingStateDetailedDep(msg) => msg.message_type(),
@@ -3986,8 +3985,244 @@ impl SbpMessage for Sbp {
         }
     }
 
-    fn is_invalid(&self) -> bool {
-        matches!(self, Sbp::Invalid(_))
+    fn is_valid(&self) -> bool {
+        match self {
+            Sbp::MsgPrintDep(msg) => msg.is_valid(),
+            Sbp::MsgTrackingStateDetailedDep(msg) => msg.is_valid(),
+            Sbp::MsgTrackingStateDepB(msg) => msg.is_valid(),
+            Sbp::MsgAcqResultDepB(msg) => msg.is_valid(),
+            Sbp::MsgAcqResultDepA(msg) => msg.is_valid(),
+            Sbp::MsgTrackingStateDepA(msg) => msg.is_valid(),
+            Sbp::MsgThreadState(msg) => msg.is_valid(),
+            Sbp::MsgUartStateDepa(msg) => msg.is_valid(),
+            Sbp::MsgIarState(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisDepA(msg) => msg.is_valid(),
+            Sbp::MsgMaskSatelliteDep(msg) => msg.is_valid(),
+            Sbp::MsgTrackingIqDepA(msg) => msg.is_valid(),
+            Sbp::MsgUartState(msg) => msg.is_valid(),
+            Sbp::MsgAcqSvProfileDep(msg) => msg.is_valid(),
+            Sbp::MsgAcqResultDepC(msg) => msg.is_valid(),
+            Sbp::MsgTrackingStateDetailedDepA(msg) => msg.is_valid(),
+            Sbp::MsgResetFilters(msg) => msg.is_valid(),
+            Sbp::MsgInitBaseDep(msg) => msg.is_valid(),
+            Sbp::MsgMaskSatellite(msg) => msg.is_valid(),
+            Sbp::MsgTrackingIqDepB(msg) => msg.is_valid(),
+            Sbp::MsgTrackingIq(msg) => msg.is_valid(),
+            Sbp::MsgAcqSvProfile(msg) => msg.is_valid(),
+            Sbp::MsgAcqResult(msg) => msg.is_valid(),
+            Sbp::MsgTrackingState(msg) => msg.is_valid(),
+            Sbp::MsgObsDepB(msg) => msg.is_valid(),
+            Sbp::MsgBasePosLlh(msg) => msg.is_valid(),
+            Sbp::MsgObsDepA(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisDepB(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisDepC(msg) => msg.is_valid(),
+            Sbp::MsgBasePosEcef(msg) => msg.is_valid(),
+            Sbp::MsgObsDepC(msg) => msg.is_valid(),
+            Sbp::MsgObs(msg) => msg.is_valid(),
+            Sbp::MsgSpecanDep(msg) => msg.is_valid(),
+            Sbp::MsgSpecan(msg) => msg.is_valid(),
+            Sbp::MsgMeasurementState(msg) => msg.is_valid(),
+            Sbp::MsgSetTime(msg) => msg.is_valid(),
+            Sbp::MsgAlmanac(msg) => msg.is_valid(),
+            Sbp::MsgAlmanacGpsDep(msg) => msg.is_valid(),
+            Sbp::MsgAlmanacGloDep(msg) => msg.is_valid(),
+            Sbp::MsgAlmanacGps(msg) => msg.is_valid(),
+            Sbp::MsgAlmanacGlo(msg) => msg.is_valid(),
+            Sbp::MsgGloBiases(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisDepD(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisGpsDepE(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisSbasDepA(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisGloDepA(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisSbasDepB(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisGloDepB(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisGpsDepF(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisGloDepC(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisGloDepD(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisBds(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisGps(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisGlo(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisSbas(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisGal(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisQzss(msg) => msg.is_valid(),
+            Sbp::MsgIono(msg) => msg.is_valid(),
+            Sbp::MsgSvConfigurationGpsDep(msg) => msg.is_valid(),
+            Sbp::MsgGroupDelayDepA(msg) => msg.is_valid(),
+            Sbp::MsgGroupDelayDepB(msg) => msg.is_valid(),
+            Sbp::MsgGroupDelay(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisGalDepA(msg) => msg.is_valid(),
+            Sbp::MsgGnssCapb(msg) => msg.is_valid(),
+            Sbp::MsgSvAzEl(msg) => msg.is_valid(),
+            Sbp::MsgSettingsWrite(msg) => msg.is_valid(),
+            Sbp::MsgSettingsSave(msg) => msg.is_valid(),
+            Sbp::MsgSettingsReadByIndexReq(msg) => msg.is_valid(),
+            Sbp::MsgFileioReadResp(msg) => msg.is_valid(),
+            Sbp::MsgSettingsReadReq(msg) => msg.is_valid(),
+            Sbp::MsgSettingsReadResp(msg) => msg.is_valid(),
+            Sbp::MsgSettingsReadByIndexDone(msg) => msg.is_valid(),
+            Sbp::MsgSettingsReadByIndexResp(msg) => msg.is_valid(),
+            Sbp::MsgFileioReadReq(msg) => msg.is_valid(),
+            Sbp::MsgFileioReadDirReq(msg) => msg.is_valid(),
+            Sbp::MsgFileioReadDirResp(msg) => msg.is_valid(),
+            Sbp::MsgFileioWriteResp(msg) => msg.is_valid(),
+            Sbp::MsgFileioRemove(msg) => msg.is_valid(),
+            Sbp::MsgFileioWriteReq(msg) => msg.is_valid(),
+            Sbp::MsgSettingsRegister(msg) => msg.is_valid(),
+            Sbp::MsgSettingsWriteResp(msg) => msg.is_valid(),
+            Sbp::MsgBootloaderHandshakeDepA(msg) => msg.is_valid(),
+            Sbp::MsgBootloaderJumpToApp(msg) => msg.is_valid(),
+            Sbp::MsgResetDep(msg) => msg.is_valid(),
+            Sbp::MsgBootloaderHandshakeReq(msg) => msg.is_valid(),
+            Sbp::MsgBootloaderHandshakeResp(msg) => msg.is_valid(),
+            Sbp::MsgDeviceMonitor(msg) => msg.is_valid(),
+            Sbp::MsgReset(msg) => msg.is_valid(),
+            Sbp::MsgCommandReq(msg) => msg.is_valid(),
+            Sbp::MsgCommandResp(msg) => msg.is_valid(),
+            Sbp::MsgNetworkStateReq(msg) => msg.is_valid(),
+            Sbp::MsgNetworkStateResp(msg) => msg.is_valid(),
+            Sbp::MsgCommandOutput(msg) => msg.is_valid(),
+            Sbp::MsgNetworkBandwidthUsage(msg) => msg.is_valid(),
+            Sbp::MsgCellModemStatus(msg) => msg.is_valid(),
+            Sbp::MsgFrontEndGain(msg) => msg.is_valid(),
+            Sbp::MsgCwResults(msg) => msg.is_valid(),
+            Sbp::MsgCwStart(msg) => msg.is_valid(),
+            Sbp::MsgNapDeviceDnaResp(msg) => msg.is_valid(),
+            Sbp::MsgNapDeviceDnaReq(msg) => msg.is_valid(),
+            Sbp::MsgFlashDone(msg) => msg.is_valid(),
+            Sbp::MsgFlashReadResp(msg) => msg.is_valid(),
+            Sbp::MsgFlashErase(msg) => msg.is_valid(),
+            Sbp::MsgStmFlashLockSector(msg) => msg.is_valid(),
+            Sbp::MsgStmFlashUnlockSector(msg) => msg.is_valid(),
+            Sbp::MsgStmUniqueIdResp(msg) => msg.is_valid(),
+            Sbp::MsgFlashProgram(msg) => msg.is_valid(),
+            Sbp::MsgFlashReadReq(msg) => msg.is_valid(),
+            Sbp::MsgStmUniqueIdReq(msg) => msg.is_valid(),
+            Sbp::MsgM25FlashWriteStatus(msg) => msg.is_valid(),
+            Sbp::MsgGpsTimeDepA(msg) => msg.is_valid(),
+            Sbp::MsgExtEvent(msg) => msg.is_valid(),
+            Sbp::MsgGpsTime(msg) => msg.is_valid(),
+            Sbp::MsgUtcTime(msg) => msg.is_valid(),
+            Sbp::MsgGpsTimeGnss(msg) => msg.is_valid(),
+            Sbp::MsgUtcTimeGnss(msg) => msg.is_valid(),
+            Sbp::MsgTelSv(msg) => msg.is_valid(),
+            Sbp::MsgSettingsRegisterResp(msg) => msg.is_valid(),
+            Sbp::MsgPosEcefDepA(msg) => msg.is_valid(),
+            Sbp::MsgPosLlhDepA(msg) => msg.is_valid(),
+            Sbp::MsgBaselineEcefDepA(msg) => msg.is_valid(),
+            Sbp::MsgBaselineNedDepA(msg) => msg.is_valid(),
+            Sbp::MsgVelEcefDepA(msg) => msg.is_valid(),
+            Sbp::MsgVelNedDepA(msg) => msg.is_valid(),
+            Sbp::MsgDopsDepA(msg) => msg.is_valid(),
+            Sbp::MsgBaselineHeadingDepA(msg) => msg.is_valid(),
+            Sbp::MsgDops(msg) => msg.is_valid(),
+            Sbp::MsgPosEcef(msg) => msg.is_valid(),
+            Sbp::MsgPosLlh(msg) => msg.is_valid(),
+            Sbp::MsgBaselineEcef(msg) => msg.is_valid(),
+            Sbp::MsgBaselineNed(msg) => msg.is_valid(),
+            Sbp::MsgVelEcef(msg) => msg.is_valid(),
+            Sbp::MsgVelNed(msg) => msg.is_valid(),
+            Sbp::MsgBaselineHeading(msg) => msg.is_valid(),
+            Sbp::MsgAgeCorrections(msg) => msg.is_valid(),
+            Sbp::MsgPosLlhCov(msg) => msg.is_valid(),
+            Sbp::MsgVelNedCov(msg) => msg.is_valid(),
+            Sbp::MsgVelBody(msg) => msg.is_valid(),
+            Sbp::MsgPosEcefCov(msg) => msg.is_valid(),
+            Sbp::MsgVelEcefCov(msg) => msg.is_valid(),
+            Sbp::MsgProtectionLevelDepA(msg) => msg.is_valid(),
+            Sbp::MsgProtectionLevel(msg) => msg.is_valid(),
+            Sbp::MsgPosLlhAcc(msg) => msg.is_valid(),
+            Sbp::MsgVelCog(msg) => msg.is_valid(),
+            Sbp::MsgOrientQuat(msg) => msg.is_valid(),
+            Sbp::MsgOrientEuler(msg) => msg.is_valid(),
+            Sbp::MsgAngularRate(msg) => msg.is_valid(),
+            Sbp::MsgPosEcefGnss(msg) => msg.is_valid(),
+            Sbp::MsgPosLlhGnss(msg) => msg.is_valid(),
+            Sbp::MsgVelEcefGnss(msg) => msg.is_valid(),
+            Sbp::MsgVelNedGnss(msg) => msg.is_valid(),
+            Sbp::MsgPosLlhCovGnss(msg) => msg.is_valid(),
+            Sbp::MsgVelNedCovGnss(msg) => msg.is_valid(),
+            Sbp::MsgPosEcefCovGnss(msg) => msg.is_valid(),
+            Sbp::MsgVelEcefCovGnss(msg) => msg.is_valid(),
+            Sbp::MsgUtcLeapSecond(msg) => msg.is_valid(),
+            Sbp::MsgReferenceFrameParam(msg) => msg.is_valid(),
+            Sbp::MsgPoseRelative(msg) => msg.is_valid(),
+            Sbp::MsgNdbEvent(msg) => msg.is_valid(),
+            Sbp::MsgLog(msg) => msg.is_valid(),
+            Sbp::MsgFwd(msg) => msg.is_valid(),
+            Sbp::MsgSsrOrbitClockDepA(msg) => msg.is_valid(),
+            Sbp::MsgSsrOrbitClock(msg) => msg.is_valid(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.is_valid(),
+            Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => msg.is_valid(),
+            Sbp::MsgSsrCodeBiases(msg) => msg.is_valid(),
+            Sbp::MsgSsrPhaseBiases(msg) => msg.is_valid(),
+            Sbp::MsgSsrStecCorrectionDepA(msg) => msg.is_valid(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.is_valid(),
+            Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.is_valid(),
+            Sbp::MsgSsrGridDefinitionDepA(msg) => msg.is_valid(),
+            Sbp::MsgSsrTileDefinitionDepA(msg) => msg.is_valid(),
+            Sbp::MsgSsrTileDefinitionDepB(msg) => msg.is_valid(),
+            Sbp::MsgSsrTileDefinition(msg) => msg.is_valid(),
+            Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.is_valid(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.is_valid(),
+            Sbp::MsgSsrGriddedCorrection(msg) => msg.is_valid(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.is_valid(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.is_valid(),
+            Sbp::MsgSsrSatelliteApcDep(msg) => msg.is_valid(),
+            Sbp::MsgSsrSatelliteApc(msg) => msg.is_valid(),
+            Sbp::MsgOsr(msg) => msg.is_valid(),
+            Sbp::MsgUserData(msg) => msg.is_valid(),
+            Sbp::MsgImuRaw(msg) => msg.is_valid(),
+            Sbp::MsgImuAux(msg) => msg.is_valid(),
+            Sbp::MsgMagRaw(msg) => msg.is_valid(),
+            Sbp::MsgOdometry(msg) => msg.is_valid(),
+            Sbp::MsgWheeltick(msg) => msg.is_valid(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.is_valid(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.is_valid(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.is_valid(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.is_valid(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.is_valid(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.is_valid(),
+            Sbp::MsgAcknowledge(msg) => msg.is_valid(),
+            Sbp::MsgEd25519SignatureDepA(msg) => msg.is_valid(),
+            Sbp::MsgEd25519CertificateDep(msg) => msg.is_valid(),
+            Sbp::MsgEd25519SignatureDepB(msg) => msg.is_valid(),
+            Sbp::MsgEcdsaCertificate(msg) => msg.is_valid(),
+            Sbp::MsgCertificateChainDep(msg) => msg.is_valid(),
+            Sbp::MsgEcdsaSignatureDepA(msg) => msg.is_valid(),
+            Sbp::MsgEcdsaSignatureDepB(msg) => msg.is_valid(),
+            Sbp::MsgEcdsaSignature(msg) => msg.is_valid(),
+            Sbp::MsgCertificateChain(msg) => msg.is_valid(),
+            Sbp::MsgFileioConfigReq(msg) => msg.is_valid(),
+            Sbp::MsgFileioConfigResp(msg) => msg.is_valid(),
+            Sbp::MsgSbasRaw(msg) => msg.is_valid(),
+            Sbp::MsgLinuxCpuStateDepA(msg) => msg.is_valid(),
+            Sbp::MsgLinuxMemStateDepA(msg) => msg.is_valid(),
+            Sbp::MsgLinuxSysStateDepA(msg) => msg.is_valid(),
+            Sbp::MsgLinuxProcessSocketCounts(msg) => msg.is_valid(),
+            Sbp::MsgLinuxProcessSocketQueues(msg) => msg.is_valid(),
+            Sbp::MsgLinuxSocketUsage(msg) => msg.is_valid(),
+            Sbp::MsgLinuxProcessFdCount(msg) => msg.is_valid(),
+            Sbp::MsgLinuxProcessFdSummary(msg) => msg.is_valid(),
+            Sbp::MsgLinuxCpuState(msg) => msg.is_valid(),
+            Sbp::MsgLinuxMemState(msg) => msg.is_valid(),
+            Sbp::MsgLinuxSysState(msg) => msg.is_valid(),
+            Sbp::MsgStartup(msg) => msg.is_valid(),
+            Sbp::MsgDgnssStatus(msg) => msg.is_valid(),
+            Sbp::MsgInsStatus(msg) => msg.is_valid(),
+            Sbp::MsgCsacTelemetry(msg) => msg.is_valid(),
+            Sbp::MsgCsacTelemetryLabels(msg) => msg.is_valid(),
+            Sbp::MsgInsUpdates(msg) => msg.is_valid(),
+            Sbp::MsgGnssTimeOffset(msg) => msg.is_valid(),
+            Sbp::MsgPpsTime(msg) => msg.is_valid(),
+            Sbp::MsgSensorAidEvent(msg) => msg.is_valid(),
+            Sbp::MsgGroupMeta(msg) => msg.is_valid(),
+            Sbp::MsgSolnMeta(msg) => msg.is_valid(),
+            Sbp::MsgSolnMetaDepA(msg) => msg.is_valid(),
+            Sbp::MsgStatusJournal(msg) => msg.is_valid(),
+            Sbp::MsgStatusReport(msg) => msg.is_valid(),
+            Sbp::MsgHeartbeat(msg) => msg.is_valid(),
+            Sbp::Unknown(msg) => msg.is_valid(),
+            Sbp::Invalid(msg) => msg.is_valid(),
+        }
     }
 }
 
