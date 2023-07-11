@@ -32,7 +32,7 @@ pub struct Invalid {
         serde(default, skip_serializing_if = "Option::is_none")
     )]
     pub crc: Option<u16>,
-    #[cfg_attr(feature = "serde", serde(default, with = "base64"))]
+    #[cfg_attr(feature = "json", serde(default, with = "base64"))]
     pub invalid_frame: Vec<u8>,
 }
 
@@ -135,7 +135,7 @@ impl From<CrcError> for Invalid {
     }
 }
 
-#[cfg(feature = "serde")]
+#[cfg(feature = "json")]
 mod base64 {
     use serde::{Deserialize, Serialize};
     use serde::{Deserializer, Serializer};

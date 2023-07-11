@@ -91,9 +91,9 @@ pub fn to_buffer<M: SbpMessage + WireFormat>(
     };
     let Some(msg_type) = msg.message_type() else {
         // this should be unreachable because things
-        // without sender ids should be caught by invalid
+        // without message ids should be caught by invalid
         // messages
-        return Err(WriteFrameError::NoSenderId);
+        return Err(WriteFrameError::NoMessageType);
     };
 
     let old_buf = buf.split();
@@ -145,6 +145,7 @@ impl From<io::Error> for Error {
 pub enum WriteFrameError {
     TooLarge,
     NoSenderId,
+    NoMessageType,
 }
 
 impl std::fmt::Display for WriteFrameError {
@@ -152,6 +153,7 @@ impl std::fmt::Display for WriteFrameError {
         match self {
             WriteFrameError::TooLarge => write!(f, "message is too large to fit into a frame"),
             WriteFrameError::NoSenderId => write!(f, "no sender id present in the message"),
+            WriteFrameError::NoMessageType => write!(f, "no message id present in the message"),
         }
     }
 }
