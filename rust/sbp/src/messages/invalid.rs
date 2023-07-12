@@ -27,7 +27,7 @@ pub struct Invalid {
     #[cfg_attr(feature = "serde", serde(default, skip_serializing, alias = "sender"))]
     pub sender_id: Option<u16>,
     /// The crc that was in the frame
-    #[cfg_attr(feature = "serde", serde(default, skip))]
+    #[cfg_attr(feature = "serde", serde(default, skip_serializing))]
     pub crc: Option<u16>,
     #[cfg_attr(feature = "serde", serde(default, skip))]
     pub invalid_frame: Vec<u8>,
