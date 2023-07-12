@@ -77,7 +77,7 @@ where
 /// Serialize the given message as a JSON byte vector.
 pub fn to_value<M>(msg: &M) -> Result<serde_json::Value, JsonError>
 where
-    M: SbpMessage + Serialize + WireFormat + Clone,
+    M: SbpMessage + Serialize,
 {
     let mut frame = BytesMut::with_capacity(BUFLEN);
     let mut payload = String::with_capacity(BUFLEN);
