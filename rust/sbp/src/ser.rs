@@ -83,17 +83,23 @@ pub fn to_buffer<M: SbpMessage + WireFormat>(
     if payload_len > MAX_PAYLOAD_LEN {
         return Err(WriteFrameError::TooLarge);
     }
-    let Some(sender_id) = msg.sender_id() else {
-        // this should be unreachable because things
-        // without sender ids should be written as invalid
-        // messages
-        return Err(WriteFrameError::NoSenderId);
+    let sender_id = match msg.sender_id() {
+        Some(id) => id,
+        None => {
+            // this should be unreachable because things
+            // without sender ids should be written as invalid
+            // messages
+            return Err(WriteFrameError::NoSenderId);
+        }
     };
-    let Some(msg_type) = msg.message_type() else {
-        // this should be unreachable because things
-        // without message ids should be caught by invalid
-        // messages
-        return Err(WriteFrameError::NoMessageType);
+    let msg_type = match msg.message_type() {
+        Some(t) => t,
+        None => {
+            // this should be unreachable because things
+            // without message ids should be caught by invalid
+            // messages
+            return Err(WriteFrameError::NoMessageType);
+        }
     };
 
     let old_buf = buf.split();
