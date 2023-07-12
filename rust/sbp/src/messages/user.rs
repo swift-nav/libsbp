@@ -62,6 +62,9 @@ pub mod msg_user_data {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgUserData {

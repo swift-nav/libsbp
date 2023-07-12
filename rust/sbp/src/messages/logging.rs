@@ -76,6 +76,9 @@ pub mod msg_fwd {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgFwd {
@@ -185,6 +188,9 @@ pub mod msg_log {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -329,6 +335,9 @@ pub mod msg_print_dep {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 

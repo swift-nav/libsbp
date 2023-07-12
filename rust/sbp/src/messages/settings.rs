@@ -92,6 +92,9 @@ pub mod msg_settings_read_by_index_done {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSettingsReadByIndexDone {
@@ -169,6 +172,9 @@ pub mod msg_settings_read_by_index_req {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -265,6 +271,9 @@ pub mod msg_settings_read_by_index_resp {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSettingsReadByIndexResp {
@@ -357,6 +366,9 @@ pub mod msg_settings_read_req {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSettingsReadReq {
@@ -444,6 +456,9 @@ pub mod msg_settings_read_resp {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSettingsReadResp {
@@ -527,6 +542,9 @@ pub mod msg_settings_register {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -632,6 +650,9 @@ pub mod msg_settings_register_resp {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -767,6 +788,9 @@ pub mod msg_settings_save {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSettingsSave {
@@ -849,6 +873,9 @@ pub mod msg_settings_write {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -956,6 +983,9 @@ pub mod msg_settings_write_resp {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 

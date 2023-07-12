@@ -1,4 +1,4 @@
-use std::{borrow::Borrow, io};
+use std::{borrow::Borrow, convert::TryInto, io};
 
 use bytes::{BufMut, BytesMut};
 use dencode::{Encoder, FramedWrite, IterSinkExt};
@@ -221,27 +221,44 @@ fn get_common_fields<'a, M: SbpMessage + WireFormat + Clone>(
     payload_buf.clear();
     frame_buf.clear();
     let size = msg.len();
+    if let Err(crate::messages::invalid::Invalid { invalid_frame, .. }) =
+        (*msg).clone().into_valid_msg()
+    {
+        base64::encode_config_buf(&invalid_frame, base64::STANDARD, payload_buf);
+        return Ok(Some(CommonJson {
+            preamble: None,
+            sender: None,
+            msg_name: msg.message_name(),
+            msg_type: None,
+            length: None,
+            payload: payload_buf,
+            crc: None,
+        }));
+    }
+
     crate::ser::to_buffer(frame_buf, msg)?;
+
     if frame_buf.len() < MIN_FRAME_LEN {
+        // arguably dead code because of the invalid earlier
         return Ok(None);
     }
-    // could panic
-    let crc = {
-        let crc_b0 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][0] as u16;
-        let crc_b1 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][1] as u16;
-        (crc_b1 << 8) | crc_b0
-    };
+    let crc = frame_buf
+        .get(HEADER_LEN + size..HEADER_LEN + size + CRC_LEN)
+        .and_then(|slice| TryInto::<[u8; CRC_LEN]>::try_into(slice).ok())
+        .map(u16::from_le_bytes);
+
+    // won't panic because MIN_FRAME_LEN > HEADER_LEN
     base64::encode_config_buf(
         &frame_buf[HEADER_LEN..HEADER_LEN + size],
         base64::STANDARD,
         payload_buf,
     );
     Ok(Some(CommonJson {
-        preamble: PREAMBLE,
-        sender: msg.sender_id().unwrap_or(0),
+        preamble: Some(PREAMBLE),
+        sender: Some(msg.sender_id().unwrap_or_default()),
         msg_name: msg.message_name(),
         msg_type: msg.message_type(),
-        length: size as u8,
+        length: size.try_into().ok(),
         payload: payload_buf,
         crc,
     }))

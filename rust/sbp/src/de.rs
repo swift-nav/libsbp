@@ -1,4 +1,5 @@
 use std::{
+    convert::TryInto,
     io,
     time::{Duration, Instant},
 };
@@ -244,7 +245,7 @@ struct FramerImpl;
 impl dencode::Decoder for FramerImpl {
     type Item = Frame;
     type Error = Error;
-
+    #[allow(clippy::assertions_on_constants)]
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
         let start = match src.iter().position(|b| b == &PREAMBLE) {
             Some(idx) => idx,
@@ -258,6 +259,11 @@ impl dencode::Decoder for FramerImpl {
             src.reserve(MAX_FRAME_LEN);
             return Ok(None);
         }
+
+        debug_assert!(
+            PAYLOAD_INDEX < HEADER_LEN,
+            "payload_index must be less than header len"
+        );
         let end = HEADER_LEN + src[PAYLOAD_INDEX] as usize + CRC_LEN;
         if src.len() < end {
             src.reserve(MAX_FRAME_LEN);
@@ -273,11 +279,17 @@ pub struct Frame(BytesMut);
 
 impl Frame {
     pub fn msg_type(&self) -> Option<u16> {
-        self.as_bytes().get(1..).map(|mut slice| slice.get_u16_le())
+        self.as_bytes()
+            .get(1..3)
+            .and_then(|slice| TryInto::<[u8; 2]>::try_into(slice).ok())
+            .map(u16::from_le_bytes)
     }
 
     pub fn sender_id(&self) -> Option<u16> {
-        self.as_bytes().get(3..).map(|mut slice| slice.get_u16_le())
+        self.as_bytes()
+            .get(3..5)
+            .and_then(|slice| TryInto::<[u8; 2]>::try_into(slice).ok())
+            .map(u16::from_le_bytes)
     }
     pub fn payload_len(&self) -> Option<usize> {
         self.as_bytes().get(PAYLOAD_INDEX).map(|&x| x as usize)
@@ -290,8 +302,12 @@ impl Frame {
 
     pub fn crc(&self) -> Option<u16> {
         self.payload_len()
-            .and_then(|payload_len| self.as_bytes().get(HEADER_LEN + payload_len..))
-            .map(|mut slice| slice.get_u16_le())
+            .and_then(|payload_len| {
+                let start = HEADER_LEN + payload_len;
+                self.as_bytes().get(start..start + CRC_LEN)
+            })
+            .and_then(|slice| TryInto::<[u8; CRC_LEN]>::try_into(slice).ok())
+            .map(u16::from_le_bytes)
     }
 
     pub fn check_crc(&self) -> Result<u16, CrcError> {

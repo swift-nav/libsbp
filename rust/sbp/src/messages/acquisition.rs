@@ -309,6 +309,9 @@ pub mod msg_acq_result {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgAcqResult {
@@ -414,6 +417,9 @@ pub mod msg_acq_result_dep_a {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgAcqResultDepA {
@@ -518,6 +524,9 @@ pub mod msg_acq_result_dep_b {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgAcqResultDepB {
@@ -621,6 +630,9 @@ pub mod msg_acq_result_dep_c {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgAcqResultDepC {
@@ -716,6 +728,9 @@ pub mod msg_acq_sv_profile {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgAcqSvProfile {
@@ -797,6 +812,9 @@ pub mod msg_acq_sv_profile_dep {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 

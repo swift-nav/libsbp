@@ -81,6 +81,9 @@ pub mod msg_csac_telemetry {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgCsacTelemetry {
@@ -170,6 +173,9 @@ pub mod msg_csac_telemetry_labels {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -281,6 +287,9 @@ pub mod msg_dgnss_status {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -421,6 +430,9 @@ pub mod msg_gnss_time_offset {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgGnssTimeOffset {
@@ -541,6 +553,9 @@ pub mod msg_group_meta {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -792,6 +807,9 @@ pub mod msg_heartbeat {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1130,6 +1148,9 @@ pub mod msg_ins_status {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1741,6 +1762,10 @@ pub mod msg_ins_updates {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
+
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
             let tow_s = (self.tow as f64) / 1000.0;
@@ -1894,6 +1919,9 @@ pub mod msg_pps_time {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -2057,6 +2085,9 @@ pub mod msg_sensor_aid_event {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -2263,6 +2294,9 @@ pub mod msg_startup {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -2494,6 +2528,9 @@ pub mod msg_status_journal {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgStatusJournal {
@@ -2695,6 +2732,9 @@ pub mod msg_status_report {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 

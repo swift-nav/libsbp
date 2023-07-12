@@ -79,6 +79,9 @@ pub mod msg_fileio_config_req {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgFileioConfigReq {
@@ -172,6 +175,9 @@ pub mod msg_fileio_config_resp {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -280,6 +286,9 @@ pub mod msg_fileio_read_dir_req {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgFileioReadDirReq {
@@ -375,6 +384,9 @@ pub mod msg_fileio_read_dir_resp {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -473,6 +485,9 @@ pub mod msg_fileio_read_req {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -573,6 +588,9 @@ pub mod msg_fileio_read_resp {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgFileioReadResp {
@@ -658,6 +676,9 @@ pub mod msg_fileio_remove {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -755,6 +776,9 @@ pub mod msg_fileio_write_req {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgFileioWriteReq {
@@ -850,6 +874,9 @@ pub mod msg_fileio_write_resp {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 

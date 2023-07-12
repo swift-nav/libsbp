@@ -70,13 +70,18 @@ struct Json2JsonOutput<'a, M> {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct CommonJson<'a> {
-    crc: u16,
-    length: u8,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    crc: Option<u16>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    length: Option<u8>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     msg_type: Option<u16>,
     msg_name: &'a str,
     payload: &'a str,
-    preamble: u8,
-    sender: u16,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    preamble: Option<u8>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    sender: Option<u16>,
 }
 
 #[derive(Debug, Serialize)]

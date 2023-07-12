@@ -70,6 +70,9 @@ pub mod msg_bootloader_handshake_dep_a {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgBootloaderHandshakeDepA {
@@ -149,6 +152,9 @@ pub mod msg_bootloader_handshake_req {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -274,6 +280,9 @@ pub mod msg_bootloader_handshake_resp {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgBootloaderHandshakeResp {
@@ -358,6 +367,9 @@ pub mod msg_bootloader_jump_to_app {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgBootloaderJumpToApp {
@@ -441,6 +453,9 @@ pub mod msg_nap_device_dna_req {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgNapDeviceDnaReq {
@@ -521,6 +536,9 @@ pub mod msg_nap_device_dna_resp {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 

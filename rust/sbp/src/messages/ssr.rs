@@ -523,6 +523,9 @@ pub mod msg_ssr_code_biases {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrCodeBiases {
@@ -628,6 +631,9 @@ pub mod msg_ssr_code_phase_biases_bounds {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -737,6 +743,9 @@ pub mod msg_ssr_gridded_correction {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -869,6 +878,9 @@ pub mod msg_ssr_gridded_correction_bounds {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1009,6 +1021,9 @@ pub mod msg_ssr_gridded_correction_dep_a {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrGriddedCorrectionDepA {
@@ -1112,6 +1127,9 @@ pub mod msg_ssr_gridded_correction_no_std_dep_a {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrGriddedCorrectionNoStdDepA {
@@ -1211,6 +1229,9 @@ pub mod msg_ssr_grid_definition_dep_a {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1339,6 +1360,9 @@ pub mod msg_ssr_orbit_clock {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1490,6 +1514,9 @@ pub mod msg_ssr_orbit_clock_bounds {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrOrbitClockBounds {
@@ -1597,6 +1624,9 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1736,6 +1766,9 @@ pub mod msg_ssr_orbit_clock_dep_a {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1901,6 +1934,9 @@ pub mod msg_ssr_phase_biases {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrPhaseBiases {
@@ -2025,6 +2061,9 @@ pub mod msg_ssr_satellite_apc {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrSatelliteApc {
@@ -2123,6 +2162,9 @@ pub mod msg_ssr_satellite_apc_dep {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrSatelliteApcDep {
@@ -2215,6 +2257,9 @@ pub mod msg_ssr_stec_correction {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -2321,6 +2366,9 @@ pub mod msg_ssr_stec_correction_dep {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrStecCorrectionDep {
@@ -2408,6 +2456,9 @@ pub mod msg_ssr_stec_correction_dep_a {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -2569,6 +2620,9 @@ pub mod msg_ssr_tile_definition {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -2761,6 +2815,9 @@ pub mod msg_ssr_tile_definition_dep_a {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrTileDefinitionDepA {
@@ -2938,6 +2995,9 @@ pub mod msg_ssr_tile_definition_dep_b {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 

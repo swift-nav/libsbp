@@ -43,9 +43,23 @@ impl SbpMessage for Unknown {
     fn encoded_len(&self) -> usize {
         WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
-
     fn is_valid(&self) -> bool {
         self.msg_id.is_some()
+    }
+    fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+        if self.is_valid() {
+            Ok(self)
+        } else {
+            // warning this can cause loss of data because it casts a payload
+            // to a frame. However, this branch should not be reached unless
+            // you construct Unknown messages directly.
+            Err(crate::messages::Invalid {
+                msg_id: self.msg_id,
+                sender_id: self.sender_id,
+                invalid_frame: self.payload,
+                crc: None,
+            })
+        }
     }
 }
 

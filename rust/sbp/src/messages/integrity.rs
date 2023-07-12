@@ -410,6 +410,9 @@ pub mod msg_acknowledge {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgAcknowledge {
@@ -1086,6 +1089,9 @@ pub mod msg_ssr_flag_high_level {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrFlagHighLevel {
@@ -1502,6 +1508,9 @@ pub mod msg_ssr_flag_iono_grid_points {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgSsrFlagIonoGridPoints {
@@ -1596,6 +1605,9 @@ pub mod msg_ssr_flag_iono_grid_point_sat_los {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1692,6 +1704,9 @@ pub mod msg_ssr_flag_iono_tile_sat_los {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1799,6 +1814,9 @@ pub mod msg_ssr_flag_satellites {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1911,6 +1929,9 @@ pub mod msg_ssr_flag_tropo_grid_points {
         }
         fn is_valid(&self) -> bool {
             true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 

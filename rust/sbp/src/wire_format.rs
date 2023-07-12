@@ -93,6 +93,10 @@ impl WireFormat for u8 {
     fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_u8(*self)
     }
+    /// # panics
+    ///
+    /// this function panics if there is not enough at least a byte
+    /// remaining in buf.
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_u8()
     }
@@ -102,6 +106,10 @@ impl WireFormat for u16 {
     fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_u16_le(*self)
     }
+    /// # panics
+    ///
+    /// this function panics if there is not enough at least 2 bytes
+    /// remaining in buf.
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_u16_le()
     }
@@ -111,6 +119,11 @@ impl WireFormat for u32 {
     fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_u32_le(*self)
     }
+
+    /// # panics
+    ///
+    /// this function panics if there is not enough at least 4 bytes
+    /// remaining in buf.
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_u32_le()
     }
@@ -120,6 +133,10 @@ impl WireFormat for u64 {
     fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_u64_le(*self)
     }
+    /// # panics
+    ///
+    /// this function panics if there is not enough at least 8 bytes
+    /// remaining in buf.
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_u64_le()
     }
@@ -129,6 +146,10 @@ impl WireFormat for i8 {
     fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_i8(*self)
     }
+    /// # panics
+    ///
+    /// this function panics if there is not enough at least a byte
+    /// remaining in buf.
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_i8()
     }
@@ -138,6 +159,11 @@ impl WireFormat for i16 {
     fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_i16_le(*self)
     }
+
+    /// # panics
+    ///
+    /// this function panics if there is not enough at least 2 bytes
+    /// remaining in buf.
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_i16_le()
     }
@@ -147,6 +173,11 @@ impl WireFormat for i32 {
     fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_i32_le(*self)
     }
+
+    /// # panics
+    ///
+    /// this function panics if there is not enough at least 4 bytes
+    /// remaining in buf.
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_i32_le()
     }
@@ -156,6 +187,10 @@ impl WireFormat for i64 {
     fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_i64_le(*self)
     }
+    /// # panics
+    ///
+    /// this function panics if there is not enough at least 8 bytes
+    /// remaining in buf.
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_i64_le()
     }

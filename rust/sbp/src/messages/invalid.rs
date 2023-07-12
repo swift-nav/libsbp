@@ -32,7 +32,7 @@ pub struct Invalid {
         serde(default, skip_serializing_if = "Option::is_none")
     )]
     pub crc: Option<u16>,
-    #[cfg_attr(feature = "json", serde(default, with = "base64"))]
+    #[cfg_attr(feature = "serde", serde(default, skip))]
     pub invalid_frame: Vec<u8>,
 }
 
@@ -62,6 +62,10 @@ impl SbpMessage for Invalid {
     fn is_valid(&self) -> bool {
         // Invalid messages can never be valid
         false
+    }
+    fn into_valid_msg(self) -> Result<Self, Self> {
+        // Invalid messages can never be valid
+        Err(self)
     }
 }
 
@@ -132,21 +136,5 @@ impl From<CrcError> for Invalid {
             invalid_frame,
             crc,
         }
-    }
-}
-
-#[cfg(feature = "json")]
-mod base64 {
-    use serde::{Deserialize, Serialize};
-    use serde::{Deserializer, Serializer};
-
-    pub fn serialize<S: Serializer>(v: &Vec<u8>, s: S) -> Result<S::Ok, S::Error> {
-        let base64 = base64::encode(v);
-        String::serialize(&base64, s)
-    }
-
-    pub fn deserialize<'de, D: Deserializer<'de>>(d: D) -> Result<Vec<u8>, D::Error> {
-        let base64 = String::deserialize(d)?;
-        base64::decode(base64.as_bytes()).map_err(serde::de::Error::custom)
     }
 }

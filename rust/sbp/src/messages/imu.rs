@@ -114,6 +114,9 @@ pub mod msg_imu_aux {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
     }
 
     impl FriendlyName for MsgImuAux {
@@ -413,6 +416,10 @@ pub mod msg_imu_raw {
         fn is_valid(&self) -> bool {
             true
         }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
+
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
             const IMU_RAW_TIME_STATUS_MASK: u32 = (1 << 30) | (1 << 31);

@@ -350,6 +350,9 @@ pub trait SbpMessage {
     /// Tells you if the message is valid or if it is not a valid message and may need to be
     /// special cased at certain points.
     fn is_valid(&self) -> bool;
+    fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid>
+    where
+        Self: Sized;
 }
 
 /// Implemented by messages who's message name and type are known at compile time.
@@ -4222,6 +4225,342 @@ impl SbpMessage for Sbp {
             Sbp::MsgHeartbeat(msg) => msg.is_valid(),
             Sbp::Unknown(msg) => msg.is_valid(),
             Sbp::Invalid(msg) => msg.is_valid(),
+        }
+    }
+    fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+        match self {
+            Sbp::MsgPrintDep(msg) => Ok(Sbp::MsgPrintDep(msg.into_valid_msg()?)),
+            Sbp::MsgTrackingStateDetailedDep(msg) => {
+                Ok(Sbp::MsgTrackingStateDetailedDep(msg.into_valid_msg()?))
+            }
+            Sbp::MsgTrackingStateDepB(msg) => Ok(Sbp::MsgTrackingStateDepB(msg.into_valid_msg()?)),
+            Sbp::MsgAcqResultDepB(msg) => Ok(Sbp::MsgAcqResultDepB(msg.into_valid_msg()?)),
+            Sbp::MsgAcqResultDepA(msg) => Ok(Sbp::MsgAcqResultDepA(msg.into_valid_msg()?)),
+            Sbp::MsgTrackingStateDepA(msg) => Ok(Sbp::MsgTrackingStateDepA(msg.into_valid_msg()?)),
+            Sbp::MsgThreadState(msg) => Ok(Sbp::MsgThreadState(msg.into_valid_msg()?)),
+            Sbp::MsgUartStateDepa(msg) => Ok(Sbp::MsgUartStateDepa(msg.into_valid_msg()?)),
+            Sbp::MsgIarState(msg) => Ok(Sbp::MsgIarState(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisDepA(msg) => Ok(Sbp::MsgEphemerisDepA(msg.into_valid_msg()?)),
+            Sbp::MsgMaskSatelliteDep(msg) => Ok(Sbp::MsgMaskSatelliteDep(msg.into_valid_msg()?)),
+            Sbp::MsgTrackingIqDepA(msg) => Ok(Sbp::MsgTrackingIqDepA(msg.into_valid_msg()?)),
+            Sbp::MsgUartState(msg) => Ok(Sbp::MsgUartState(msg.into_valid_msg()?)),
+            Sbp::MsgAcqSvProfileDep(msg) => Ok(Sbp::MsgAcqSvProfileDep(msg.into_valid_msg()?)),
+            Sbp::MsgAcqResultDepC(msg) => Ok(Sbp::MsgAcqResultDepC(msg.into_valid_msg()?)),
+            Sbp::MsgTrackingStateDetailedDepA(msg) => {
+                Ok(Sbp::MsgTrackingStateDetailedDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgResetFilters(msg) => Ok(Sbp::MsgResetFilters(msg.into_valid_msg()?)),
+            Sbp::MsgInitBaseDep(msg) => Ok(Sbp::MsgInitBaseDep(msg.into_valid_msg()?)),
+            Sbp::MsgMaskSatellite(msg) => Ok(Sbp::MsgMaskSatellite(msg.into_valid_msg()?)),
+            Sbp::MsgTrackingIqDepB(msg) => Ok(Sbp::MsgTrackingIqDepB(msg.into_valid_msg()?)),
+            Sbp::MsgTrackingIq(msg) => Ok(Sbp::MsgTrackingIq(msg.into_valid_msg()?)),
+            Sbp::MsgAcqSvProfile(msg) => Ok(Sbp::MsgAcqSvProfile(msg.into_valid_msg()?)),
+            Sbp::MsgAcqResult(msg) => Ok(Sbp::MsgAcqResult(msg.into_valid_msg()?)),
+            Sbp::MsgTrackingState(msg) => Ok(Sbp::MsgTrackingState(msg.into_valid_msg()?)),
+            Sbp::MsgObsDepB(msg) => Ok(Sbp::MsgObsDepB(msg.into_valid_msg()?)),
+            Sbp::MsgBasePosLlh(msg) => Ok(Sbp::MsgBasePosLlh(msg.into_valid_msg()?)),
+            Sbp::MsgObsDepA(msg) => Ok(Sbp::MsgObsDepA(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisDepB(msg) => Ok(Sbp::MsgEphemerisDepB(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisDepC(msg) => Ok(Sbp::MsgEphemerisDepC(msg.into_valid_msg()?)),
+            Sbp::MsgBasePosEcef(msg) => Ok(Sbp::MsgBasePosEcef(msg.into_valid_msg()?)),
+            Sbp::MsgObsDepC(msg) => Ok(Sbp::MsgObsDepC(msg.into_valid_msg()?)),
+            Sbp::MsgObs(msg) => Ok(Sbp::MsgObs(msg.into_valid_msg()?)),
+            Sbp::MsgSpecanDep(msg) => Ok(Sbp::MsgSpecanDep(msg.into_valid_msg()?)),
+            Sbp::MsgSpecan(msg) => Ok(Sbp::MsgSpecan(msg.into_valid_msg()?)),
+            Sbp::MsgMeasurementState(msg) => Ok(Sbp::MsgMeasurementState(msg.into_valid_msg()?)),
+            Sbp::MsgSetTime(msg) => Ok(Sbp::MsgSetTime(msg.into_valid_msg()?)),
+            Sbp::MsgAlmanac(msg) => Ok(Sbp::MsgAlmanac(msg.into_valid_msg()?)),
+            Sbp::MsgAlmanacGpsDep(msg) => Ok(Sbp::MsgAlmanacGpsDep(msg.into_valid_msg()?)),
+            Sbp::MsgAlmanacGloDep(msg) => Ok(Sbp::MsgAlmanacGloDep(msg.into_valid_msg()?)),
+            Sbp::MsgAlmanacGps(msg) => Ok(Sbp::MsgAlmanacGps(msg.into_valid_msg()?)),
+            Sbp::MsgAlmanacGlo(msg) => Ok(Sbp::MsgAlmanacGlo(msg.into_valid_msg()?)),
+            Sbp::MsgGloBiases(msg) => Ok(Sbp::MsgGloBiases(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisDepD(msg) => Ok(Sbp::MsgEphemerisDepD(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisGpsDepE(msg) => Ok(Sbp::MsgEphemerisGpsDepE(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisSbasDepA(msg) => Ok(Sbp::MsgEphemerisSbasDepA(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisGloDepA(msg) => Ok(Sbp::MsgEphemerisGloDepA(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisSbasDepB(msg) => Ok(Sbp::MsgEphemerisSbasDepB(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisGloDepB(msg) => Ok(Sbp::MsgEphemerisGloDepB(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisGpsDepF(msg) => Ok(Sbp::MsgEphemerisGpsDepF(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisGloDepC(msg) => Ok(Sbp::MsgEphemerisGloDepC(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisGloDepD(msg) => Ok(Sbp::MsgEphemerisGloDepD(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisBds(msg) => Ok(Sbp::MsgEphemerisBds(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisGps(msg) => Ok(Sbp::MsgEphemerisGps(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisGlo(msg) => Ok(Sbp::MsgEphemerisGlo(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisSbas(msg) => Ok(Sbp::MsgEphemerisSbas(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisGal(msg) => Ok(Sbp::MsgEphemerisGal(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisQzss(msg) => Ok(Sbp::MsgEphemerisQzss(msg.into_valid_msg()?)),
+            Sbp::MsgIono(msg) => Ok(Sbp::MsgIono(msg.into_valid_msg()?)),
+            Sbp::MsgSvConfigurationGpsDep(msg) => {
+                Ok(Sbp::MsgSvConfigurationGpsDep(msg.into_valid_msg()?))
+            }
+            Sbp::MsgGroupDelayDepA(msg) => Ok(Sbp::MsgGroupDelayDepA(msg.into_valid_msg()?)),
+            Sbp::MsgGroupDelayDepB(msg) => Ok(Sbp::MsgGroupDelayDepB(msg.into_valid_msg()?)),
+            Sbp::MsgGroupDelay(msg) => Ok(Sbp::MsgGroupDelay(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisGalDepA(msg) => Ok(Sbp::MsgEphemerisGalDepA(msg.into_valid_msg()?)),
+            Sbp::MsgGnssCapb(msg) => Ok(Sbp::MsgGnssCapb(msg.into_valid_msg()?)),
+            Sbp::MsgSvAzEl(msg) => Ok(Sbp::MsgSvAzEl(msg.into_valid_msg()?)),
+            Sbp::MsgSettingsWrite(msg) => Ok(Sbp::MsgSettingsWrite(msg.into_valid_msg()?)),
+            Sbp::MsgSettingsSave(msg) => Ok(Sbp::MsgSettingsSave(msg.into_valid_msg()?)),
+            Sbp::MsgSettingsReadByIndexReq(msg) => {
+                Ok(Sbp::MsgSettingsReadByIndexReq(msg.into_valid_msg()?))
+            }
+            Sbp::MsgFileioReadResp(msg) => Ok(Sbp::MsgFileioReadResp(msg.into_valid_msg()?)),
+            Sbp::MsgSettingsReadReq(msg) => Ok(Sbp::MsgSettingsReadReq(msg.into_valid_msg()?)),
+            Sbp::MsgSettingsReadResp(msg) => Ok(Sbp::MsgSettingsReadResp(msg.into_valid_msg()?)),
+            Sbp::MsgSettingsReadByIndexDone(msg) => {
+                Ok(Sbp::MsgSettingsReadByIndexDone(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSettingsReadByIndexResp(msg) => {
+                Ok(Sbp::MsgSettingsReadByIndexResp(msg.into_valid_msg()?))
+            }
+            Sbp::MsgFileioReadReq(msg) => Ok(Sbp::MsgFileioReadReq(msg.into_valid_msg()?)),
+            Sbp::MsgFileioReadDirReq(msg) => Ok(Sbp::MsgFileioReadDirReq(msg.into_valid_msg()?)),
+            Sbp::MsgFileioReadDirResp(msg) => Ok(Sbp::MsgFileioReadDirResp(msg.into_valid_msg()?)),
+            Sbp::MsgFileioWriteResp(msg) => Ok(Sbp::MsgFileioWriteResp(msg.into_valid_msg()?)),
+            Sbp::MsgFileioRemove(msg) => Ok(Sbp::MsgFileioRemove(msg.into_valid_msg()?)),
+            Sbp::MsgFileioWriteReq(msg) => Ok(Sbp::MsgFileioWriteReq(msg.into_valid_msg()?)),
+            Sbp::MsgSettingsRegister(msg) => Ok(Sbp::MsgSettingsRegister(msg.into_valid_msg()?)),
+            Sbp::MsgSettingsWriteResp(msg) => Ok(Sbp::MsgSettingsWriteResp(msg.into_valid_msg()?)),
+            Sbp::MsgBootloaderHandshakeDepA(msg) => {
+                Ok(Sbp::MsgBootloaderHandshakeDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgBootloaderJumpToApp(msg) => {
+                Ok(Sbp::MsgBootloaderJumpToApp(msg.into_valid_msg()?))
+            }
+            Sbp::MsgResetDep(msg) => Ok(Sbp::MsgResetDep(msg.into_valid_msg()?)),
+            Sbp::MsgBootloaderHandshakeReq(msg) => {
+                Ok(Sbp::MsgBootloaderHandshakeReq(msg.into_valid_msg()?))
+            }
+            Sbp::MsgBootloaderHandshakeResp(msg) => {
+                Ok(Sbp::MsgBootloaderHandshakeResp(msg.into_valid_msg()?))
+            }
+            Sbp::MsgDeviceMonitor(msg) => Ok(Sbp::MsgDeviceMonitor(msg.into_valid_msg()?)),
+            Sbp::MsgReset(msg) => Ok(Sbp::MsgReset(msg.into_valid_msg()?)),
+            Sbp::MsgCommandReq(msg) => Ok(Sbp::MsgCommandReq(msg.into_valid_msg()?)),
+            Sbp::MsgCommandResp(msg) => Ok(Sbp::MsgCommandResp(msg.into_valid_msg()?)),
+            Sbp::MsgNetworkStateReq(msg) => Ok(Sbp::MsgNetworkStateReq(msg.into_valid_msg()?)),
+            Sbp::MsgNetworkStateResp(msg) => Ok(Sbp::MsgNetworkStateResp(msg.into_valid_msg()?)),
+            Sbp::MsgCommandOutput(msg) => Ok(Sbp::MsgCommandOutput(msg.into_valid_msg()?)),
+            Sbp::MsgNetworkBandwidthUsage(msg) => {
+                Ok(Sbp::MsgNetworkBandwidthUsage(msg.into_valid_msg()?))
+            }
+            Sbp::MsgCellModemStatus(msg) => Ok(Sbp::MsgCellModemStatus(msg.into_valid_msg()?)),
+            Sbp::MsgFrontEndGain(msg) => Ok(Sbp::MsgFrontEndGain(msg.into_valid_msg()?)),
+            Sbp::MsgCwResults(msg) => Ok(Sbp::MsgCwResults(msg.into_valid_msg()?)),
+            Sbp::MsgCwStart(msg) => Ok(Sbp::MsgCwStart(msg.into_valid_msg()?)),
+            Sbp::MsgNapDeviceDnaResp(msg) => Ok(Sbp::MsgNapDeviceDnaResp(msg.into_valid_msg()?)),
+            Sbp::MsgNapDeviceDnaReq(msg) => Ok(Sbp::MsgNapDeviceDnaReq(msg.into_valid_msg()?)),
+            Sbp::MsgFlashDone(msg) => Ok(Sbp::MsgFlashDone(msg.into_valid_msg()?)),
+            Sbp::MsgFlashReadResp(msg) => Ok(Sbp::MsgFlashReadResp(msg.into_valid_msg()?)),
+            Sbp::MsgFlashErase(msg) => Ok(Sbp::MsgFlashErase(msg.into_valid_msg()?)),
+            Sbp::MsgStmFlashLockSector(msg) => {
+                Ok(Sbp::MsgStmFlashLockSector(msg.into_valid_msg()?))
+            }
+            Sbp::MsgStmFlashUnlockSector(msg) => {
+                Ok(Sbp::MsgStmFlashUnlockSector(msg.into_valid_msg()?))
+            }
+            Sbp::MsgStmUniqueIdResp(msg) => Ok(Sbp::MsgStmUniqueIdResp(msg.into_valid_msg()?)),
+            Sbp::MsgFlashProgram(msg) => Ok(Sbp::MsgFlashProgram(msg.into_valid_msg()?)),
+            Sbp::MsgFlashReadReq(msg) => Ok(Sbp::MsgFlashReadReq(msg.into_valid_msg()?)),
+            Sbp::MsgStmUniqueIdReq(msg) => Ok(Sbp::MsgStmUniqueIdReq(msg.into_valid_msg()?)),
+            Sbp::MsgM25FlashWriteStatus(msg) => {
+                Ok(Sbp::MsgM25FlashWriteStatus(msg.into_valid_msg()?))
+            }
+            Sbp::MsgGpsTimeDepA(msg) => Ok(Sbp::MsgGpsTimeDepA(msg.into_valid_msg()?)),
+            Sbp::MsgExtEvent(msg) => Ok(Sbp::MsgExtEvent(msg.into_valid_msg()?)),
+            Sbp::MsgGpsTime(msg) => Ok(Sbp::MsgGpsTime(msg.into_valid_msg()?)),
+            Sbp::MsgUtcTime(msg) => Ok(Sbp::MsgUtcTime(msg.into_valid_msg()?)),
+            Sbp::MsgGpsTimeGnss(msg) => Ok(Sbp::MsgGpsTimeGnss(msg.into_valid_msg()?)),
+            Sbp::MsgUtcTimeGnss(msg) => Ok(Sbp::MsgUtcTimeGnss(msg.into_valid_msg()?)),
+            Sbp::MsgTelSv(msg) => Ok(Sbp::MsgTelSv(msg.into_valid_msg()?)),
+            Sbp::MsgSettingsRegisterResp(msg) => {
+                Ok(Sbp::MsgSettingsRegisterResp(msg.into_valid_msg()?))
+            }
+            Sbp::MsgPosEcefDepA(msg) => Ok(Sbp::MsgPosEcefDepA(msg.into_valid_msg()?)),
+            Sbp::MsgPosLlhDepA(msg) => Ok(Sbp::MsgPosLlhDepA(msg.into_valid_msg()?)),
+            Sbp::MsgBaselineEcefDepA(msg) => Ok(Sbp::MsgBaselineEcefDepA(msg.into_valid_msg()?)),
+            Sbp::MsgBaselineNedDepA(msg) => Ok(Sbp::MsgBaselineNedDepA(msg.into_valid_msg()?)),
+            Sbp::MsgVelEcefDepA(msg) => Ok(Sbp::MsgVelEcefDepA(msg.into_valid_msg()?)),
+            Sbp::MsgVelNedDepA(msg) => Ok(Sbp::MsgVelNedDepA(msg.into_valid_msg()?)),
+            Sbp::MsgDopsDepA(msg) => Ok(Sbp::MsgDopsDepA(msg.into_valid_msg()?)),
+            Sbp::MsgBaselineHeadingDepA(msg) => {
+                Ok(Sbp::MsgBaselineHeadingDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgDops(msg) => Ok(Sbp::MsgDops(msg.into_valid_msg()?)),
+            Sbp::MsgPosEcef(msg) => Ok(Sbp::MsgPosEcef(msg.into_valid_msg()?)),
+            Sbp::MsgPosLlh(msg) => Ok(Sbp::MsgPosLlh(msg.into_valid_msg()?)),
+            Sbp::MsgBaselineEcef(msg) => Ok(Sbp::MsgBaselineEcef(msg.into_valid_msg()?)),
+            Sbp::MsgBaselineNed(msg) => Ok(Sbp::MsgBaselineNed(msg.into_valid_msg()?)),
+            Sbp::MsgVelEcef(msg) => Ok(Sbp::MsgVelEcef(msg.into_valid_msg()?)),
+            Sbp::MsgVelNed(msg) => Ok(Sbp::MsgVelNed(msg.into_valid_msg()?)),
+            Sbp::MsgBaselineHeading(msg) => Ok(Sbp::MsgBaselineHeading(msg.into_valid_msg()?)),
+            Sbp::MsgAgeCorrections(msg) => Ok(Sbp::MsgAgeCorrections(msg.into_valid_msg()?)),
+            Sbp::MsgPosLlhCov(msg) => Ok(Sbp::MsgPosLlhCov(msg.into_valid_msg()?)),
+            Sbp::MsgVelNedCov(msg) => Ok(Sbp::MsgVelNedCov(msg.into_valid_msg()?)),
+            Sbp::MsgVelBody(msg) => Ok(Sbp::MsgVelBody(msg.into_valid_msg()?)),
+            Sbp::MsgPosEcefCov(msg) => Ok(Sbp::MsgPosEcefCov(msg.into_valid_msg()?)),
+            Sbp::MsgVelEcefCov(msg) => Ok(Sbp::MsgVelEcefCov(msg.into_valid_msg()?)),
+            Sbp::MsgProtectionLevelDepA(msg) => {
+                Ok(Sbp::MsgProtectionLevelDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgProtectionLevel(msg) => Ok(Sbp::MsgProtectionLevel(msg.into_valid_msg()?)),
+            Sbp::MsgPosLlhAcc(msg) => Ok(Sbp::MsgPosLlhAcc(msg.into_valid_msg()?)),
+            Sbp::MsgVelCog(msg) => Ok(Sbp::MsgVelCog(msg.into_valid_msg()?)),
+            Sbp::MsgOrientQuat(msg) => Ok(Sbp::MsgOrientQuat(msg.into_valid_msg()?)),
+            Sbp::MsgOrientEuler(msg) => Ok(Sbp::MsgOrientEuler(msg.into_valid_msg()?)),
+            Sbp::MsgAngularRate(msg) => Ok(Sbp::MsgAngularRate(msg.into_valid_msg()?)),
+            Sbp::MsgPosEcefGnss(msg) => Ok(Sbp::MsgPosEcefGnss(msg.into_valid_msg()?)),
+            Sbp::MsgPosLlhGnss(msg) => Ok(Sbp::MsgPosLlhGnss(msg.into_valid_msg()?)),
+            Sbp::MsgVelEcefGnss(msg) => Ok(Sbp::MsgVelEcefGnss(msg.into_valid_msg()?)),
+            Sbp::MsgVelNedGnss(msg) => Ok(Sbp::MsgVelNedGnss(msg.into_valid_msg()?)),
+            Sbp::MsgPosLlhCovGnss(msg) => Ok(Sbp::MsgPosLlhCovGnss(msg.into_valid_msg()?)),
+            Sbp::MsgVelNedCovGnss(msg) => Ok(Sbp::MsgVelNedCovGnss(msg.into_valid_msg()?)),
+            Sbp::MsgPosEcefCovGnss(msg) => Ok(Sbp::MsgPosEcefCovGnss(msg.into_valid_msg()?)),
+            Sbp::MsgVelEcefCovGnss(msg) => Ok(Sbp::MsgVelEcefCovGnss(msg.into_valid_msg()?)),
+            Sbp::MsgUtcLeapSecond(msg) => Ok(Sbp::MsgUtcLeapSecond(msg.into_valid_msg()?)),
+            Sbp::MsgReferenceFrameParam(msg) => {
+                Ok(Sbp::MsgReferenceFrameParam(msg.into_valid_msg()?))
+            }
+            Sbp::MsgPoseRelative(msg) => Ok(Sbp::MsgPoseRelative(msg.into_valid_msg()?)),
+            Sbp::MsgNdbEvent(msg) => Ok(Sbp::MsgNdbEvent(msg.into_valid_msg()?)),
+            Sbp::MsgLog(msg) => Ok(Sbp::MsgLog(msg.into_valid_msg()?)),
+            Sbp::MsgFwd(msg) => Ok(Sbp::MsgFwd(msg.into_valid_msg()?)),
+            Sbp::MsgSsrOrbitClockDepA(msg) => Ok(Sbp::MsgSsrOrbitClockDepA(msg.into_valid_msg()?)),
+            Sbp::MsgSsrOrbitClock(msg) => Ok(Sbp::MsgSsrOrbitClock(msg.into_valid_msg()?)),
+            Sbp::MsgSsrOrbitClockBounds(msg) => {
+                Ok(Sbp::MsgSsrOrbitClockBounds(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => Ok(
+                Sbp::MsgSsrOrbitClockBoundsDegradation(msg.into_valid_msg()?),
+            ),
+            Sbp::MsgSsrCodeBiases(msg) => Ok(Sbp::MsgSsrCodeBiases(msg.into_valid_msg()?)),
+            Sbp::MsgSsrPhaseBiases(msg) => Ok(Sbp::MsgSsrPhaseBiases(msg.into_valid_msg()?)),
+            Sbp::MsgSsrStecCorrectionDepA(msg) => {
+                Ok(Sbp::MsgSsrStecCorrectionDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => {
+                Ok(Sbp::MsgSsrCodePhaseBiasesBounds(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => {
+                Ok(Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrGridDefinitionDepA(msg) => {
+                Ok(Sbp::MsgSsrGridDefinitionDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrTileDefinitionDepA(msg) => {
+                Ok(Sbp::MsgSsrTileDefinitionDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrTileDefinitionDepB(msg) => {
+                Ok(Sbp::MsgSsrTileDefinitionDepB(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrTileDefinition(msg) => Ok(Sbp::MsgSsrTileDefinition(msg.into_valid_msg()?)),
+            Sbp::MsgSsrGriddedCorrectionDepA(msg) => {
+                Ok(Sbp::MsgSsrGriddedCorrectionDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrStecCorrectionDep(msg) => {
+                Ok(Sbp::MsgSsrStecCorrectionDep(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrGriddedCorrection(msg) => {
+                Ok(Sbp::MsgSsrGriddedCorrection(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrStecCorrection(msg) => Ok(Sbp::MsgSsrStecCorrection(msg.into_valid_msg()?)),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => {
+                Ok(Sbp::MsgSsrGriddedCorrectionBounds(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrSatelliteApcDep(msg) => {
+                Ok(Sbp::MsgSsrSatelliteApcDep(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrSatelliteApc(msg) => Ok(Sbp::MsgSsrSatelliteApc(msg.into_valid_msg()?)),
+            Sbp::MsgOsr(msg) => Ok(Sbp::MsgOsr(msg.into_valid_msg()?)),
+            Sbp::MsgUserData(msg) => Ok(Sbp::MsgUserData(msg.into_valid_msg()?)),
+            Sbp::MsgImuRaw(msg) => Ok(Sbp::MsgImuRaw(msg.into_valid_msg()?)),
+            Sbp::MsgImuAux(msg) => Ok(Sbp::MsgImuAux(msg.into_valid_msg()?)),
+            Sbp::MsgMagRaw(msg) => Ok(Sbp::MsgMagRaw(msg.into_valid_msg()?)),
+            Sbp::MsgOdometry(msg) => Ok(Sbp::MsgOdometry(msg.into_valid_msg()?)),
+            Sbp::MsgWheeltick(msg) => Ok(Sbp::MsgWheeltick(msg.into_valid_msg()?)),
+            Sbp::MsgSsrFlagHighLevel(msg) => Ok(Sbp::MsgSsrFlagHighLevel(msg.into_valid_msg()?)),
+            Sbp::MsgSsrFlagSatellites(msg) => Ok(Sbp::MsgSsrFlagSatellites(msg.into_valid_msg()?)),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => {
+                Ok(Sbp::MsgSsrFlagTropoGridPoints(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => {
+                Ok(Sbp::MsgSsrFlagIonoGridPoints(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => {
+                Ok(Sbp::MsgSsrFlagIonoTileSatLos(msg.into_valid_msg()?))
+            }
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => {
+                Ok(Sbp::MsgSsrFlagIonoGridPointSatLos(msg.into_valid_msg()?))
+            }
+            Sbp::MsgAcknowledge(msg) => Ok(Sbp::MsgAcknowledge(msg.into_valid_msg()?)),
+            Sbp::MsgEd25519SignatureDepA(msg) => {
+                Ok(Sbp::MsgEd25519SignatureDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgEd25519CertificateDep(msg) => {
+                Ok(Sbp::MsgEd25519CertificateDep(msg.into_valid_msg()?))
+            }
+            Sbp::MsgEd25519SignatureDepB(msg) => {
+                Ok(Sbp::MsgEd25519SignatureDepB(msg.into_valid_msg()?))
+            }
+            Sbp::MsgEcdsaCertificate(msg) => Ok(Sbp::MsgEcdsaCertificate(msg.into_valid_msg()?)),
+            Sbp::MsgCertificateChainDep(msg) => {
+                Ok(Sbp::MsgCertificateChainDep(msg.into_valid_msg()?))
+            }
+            Sbp::MsgEcdsaSignatureDepA(msg) => {
+                Ok(Sbp::MsgEcdsaSignatureDepA(msg.into_valid_msg()?))
+            }
+            Sbp::MsgEcdsaSignatureDepB(msg) => {
+                Ok(Sbp::MsgEcdsaSignatureDepB(msg.into_valid_msg()?))
+            }
+            Sbp::MsgEcdsaSignature(msg) => Ok(Sbp::MsgEcdsaSignature(msg.into_valid_msg()?)),
+            Sbp::MsgCertificateChain(msg) => Ok(Sbp::MsgCertificateChain(msg.into_valid_msg()?)),
+            Sbp::MsgFileioConfigReq(msg) => Ok(Sbp::MsgFileioConfigReq(msg.into_valid_msg()?)),
+            Sbp::MsgFileioConfigResp(msg) => Ok(Sbp::MsgFileioConfigResp(msg.into_valid_msg()?)),
+            Sbp::MsgSbasRaw(msg) => Ok(Sbp::MsgSbasRaw(msg.into_valid_msg()?)),
+            Sbp::MsgLinuxCpuStateDepA(msg) => Ok(Sbp::MsgLinuxCpuStateDepA(msg.into_valid_msg()?)),
+            Sbp::MsgLinuxMemStateDepA(msg) => Ok(Sbp::MsgLinuxMemStateDepA(msg.into_valid_msg()?)),
+            Sbp::MsgLinuxSysStateDepA(msg) => Ok(Sbp::MsgLinuxSysStateDepA(msg.into_valid_msg()?)),
+            Sbp::MsgLinuxProcessSocketCounts(msg) => {
+                Ok(Sbp::MsgLinuxProcessSocketCounts(msg.into_valid_msg()?))
+            }
+            Sbp::MsgLinuxProcessSocketQueues(msg) => {
+                Ok(Sbp::MsgLinuxProcessSocketQueues(msg.into_valid_msg()?))
+            }
+            Sbp::MsgLinuxSocketUsage(msg) => Ok(Sbp::MsgLinuxSocketUsage(msg.into_valid_msg()?)),
+            Sbp::MsgLinuxProcessFdCount(msg) => {
+                Ok(Sbp::MsgLinuxProcessFdCount(msg.into_valid_msg()?))
+            }
+            Sbp::MsgLinuxProcessFdSummary(msg) => {
+                Ok(Sbp::MsgLinuxProcessFdSummary(msg.into_valid_msg()?))
+            }
+            Sbp::MsgLinuxCpuState(msg) => Ok(Sbp::MsgLinuxCpuState(msg.into_valid_msg()?)),
+            Sbp::MsgLinuxMemState(msg) => Ok(Sbp::MsgLinuxMemState(msg.into_valid_msg()?)),
+            Sbp::MsgLinuxSysState(msg) => Ok(Sbp::MsgLinuxSysState(msg.into_valid_msg()?)),
+            Sbp::MsgStartup(msg) => Ok(Sbp::MsgStartup(msg.into_valid_msg()?)),
+            Sbp::MsgDgnssStatus(msg) => Ok(Sbp::MsgDgnssStatus(msg.into_valid_msg()?)),
+            Sbp::MsgInsStatus(msg) => Ok(Sbp::MsgInsStatus(msg.into_valid_msg()?)),
+            Sbp::MsgCsacTelemetry(msg) => Ok(Sbp::MsgCsacTelemetry(msg.into_valid_msg()?)),
+            Sbp::MsgCsacTelemetryLabels(msg) => {
+                Ok(Sbp::MsgCsacTelemetryLabels(msg.into_valid_msg()?))
+            }
+            Sbp::MsgInsUpdates(msg) => Ok(Sbp::MsgInsUpdates(msg.into_valid_msg()?)),
+            Sbp::MsgGnssTimeOffset(msg) => Ok(Sbp::MsgGnssTimeOffset(msg.into_valid_msg()?)),
+            Sbp::MsgPpsTime(msg) => Ok(Sbp::MsgPpsTime(msg.into_valid_msg()?)),
+            Sbp::MsgSensorAidEvent(msg) => Ok(Sbp::MsgSensorAidEvent(msg.into_valid_msg()?)),
+            Sbp::MsgGroupMeta(msg) => Ok(Sbp::MsgGroupMeta(msg.into_valid_msg()?)),
+            Sbp::MsgSolnMeta(msg) => Ok(Sbp::MsgSolnMeta(msg.into_valid_msg()?)),
+            Sbp::MsgSolnMetaDepA(msg) => Ok(Sbp::MsgSolnMetaDepA(msg.into_valid_msg()?)),
+            Sbp::MsgStatusJournal(msg) => Ok(Sbp::MsgStatusJournal(msg.into_valid_msg()?)),
+            Sbp::MsgStatusReport(msg) => Ok(Sbp::MsgStatusReport(msg.into_valid_msg()?)),
+            Sbp::MsgHeartbeat(msg) => Ok(Sbp::MsgHeartbeat(msg.into_valid_msg()?)),
+            Sbp::Unknown(msg) => Ok(Sbp::Unknown(msg.into_valid_msg()?)),
+            Sbp::Invalid(msg) => {
+                // should never pass
+                let res = msg.into_valid_msg();
+                debug_assert!(res.is_err(), "invalid messages may never be valid");
+                Ok(Sbp::Invalid(res?))
+            }
         }
     }
 }
