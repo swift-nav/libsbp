@@ -26,18 +26,49 @@ enum JsonInput {
 }
 
 impl JsonInput {
-    fn into_inner(self) -> CommonJsonInput {
-        match self {
+    fn into_inner(self) -> Result<MaybeValidJsonInput, JsonError> {
+        let CommonJsonInput {
+            msg_type,
+            msg_name,
+            payload,
+            sender,
+        } = match self {
             JsonInput::Input(data) | JsonInput::Nested { data } => data,
+        };
+        match (msg_type, sender) {
+            (Some(msg_type), Some(sender)) if !msg_name.eq_ignore_ascii_case("INVALID") => {
+                Ok(MaybeValidJsonInput {
+                    msg_type,
+                    payload,
+                    sender,
+                })
+            }
+            _ => Err(JsonError::InvalidMsg(InvalidMsgInput { payload })),
         }
     }
 }
 
 #[derive(Debug, Deserialize)]
 struct CommonJsonInput {
+    #[serde(default)]
+    msg_name: String,
+    #[serde(default)]
+    msg_type: Option<u16>,
+    payload: String,
+    #[serde(default)]
+    sender: Option<u16>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct MaybeValidJsonInput {
     msg_type: u16,
     payload: String,
     sender: u16,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct InvalidMsgInput {
+    payload: String,
 }
 
 /// 'Compressed' Sbp JSON messages. Unlike normal SBP json these messages
@@ -134,6 +165,7 @@ pub enum JsonError {
     WriteFrameError(crate::ser::WriteFrameError),
     IoError(io::Error),
     Base64Error(base64::DecodeError),
+    InvalidMsg(InvalidMsgInput),
     SerdeJsonError(serde_json::Error),
 }
 
@@ -142,6 +174,19 @@ impl HandleParseError<Sbp> for JsonError {
         match self {
             Self::SbpMsgParseError(e) => Invalid::from(e).into(),
             Self::CrcError(e) => Invalid::from(e).into(),
+            Self::InvalidMsg(InvalidMsgInput { payload }) => {
+                // todo remove allocation here
+                let mut invalid_frame = Vec::<u8>::new();
+                base64::decode_config_buf(&payload, base64::STANDARD, &mut invalid_frame)
+                    .expect("unable to recover from base64 error");
+                Invalid {
+                    msg_id: None,
+                    sender_id: None,
+                    crc: None,
+                    invalid_frame,
+                }
+                .into()
+            }
             Self::WriteFrameError(e) => {
                 panic!("Unable to recover from WriteFrameError {}", e)
             }
@@ -177,6 +222,7 @@ impl std::fmt::Display for JsonError {
             JsonError::IoError(e) => e.fmt(f),
             JsonError::Base64Error(e) => e.fmt(f),
             JsonError::SerdeJsonError(e) => e.fmt(f),
+            JsonError::InvalidMsg(_e) => write!(f, "Received an json value with type INVALID",),
         }
     }
 }

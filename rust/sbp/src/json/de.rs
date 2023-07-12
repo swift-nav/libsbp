@@ -60,7 +60,7 @@ impl JsonDecoder {
     }
 
     fn parse_json(&mut self, input: JsonInput) -> Result<Sbp, JsonError> {
-        let data = input.into_inner();
+        let data = input.into_inner()?;
         self.payload_buf.clear();
         base64::decode_config_buf(&data.payload, base64::STANDARD, &mut self.payload_buf)?;
         Sbp::from_parts(
