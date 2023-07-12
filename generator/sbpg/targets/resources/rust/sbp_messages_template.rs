@@ -140,6 +140,10 @@ impl SbpMessage for (((m.msg_name))) {
     fn is_valid(&self) -> bool {
         true
     }
+    fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+        Ok(self)
+    }
+
     (((m.gps_time_fn)))
 }
 

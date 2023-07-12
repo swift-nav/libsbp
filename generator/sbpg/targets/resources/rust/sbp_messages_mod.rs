@@ -102,6 +102,8 @@ pub trait SbpMessage {
     /// Tells you if the message is valid or if it is not a valid message and may need to be 
     /// special cased at certain points.
     fn is_valid(&self) -> bool;
+    fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> 
+        where Self: Sized;
 }
 
 /// Implemented by messages who's message name and type are known at compile time.
@@ -396,6 +398,25 @@ impl SbpMessage for Sbp {
             },
         }
     }
+    fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+        match self {
+            ((*- for m in msgs *))
+            Sbp::(((m.msg_name)))(msg) => {
+                Ok(Sbp::(((m.msg_name)))(msg.into_valid_msg()?))
+            },
+            ((*- endfor -*))
+            Sbp::Unknown(msg) => {
+                Ok(Sbp::Unknown(msg.into_valid_msg()?))
+            },
+            Sbp::Invalid(msg) => {
+                // should never pass
+                let res = msg.into_valid_msg();
+                debug_assert!(res.is_err(), "invalid messages may never be valid");
+                Ok(Sbp::Invalid(res?))
+            },
+        }
+    }
+
 }
 
 impl WireFormat for Sbp {
