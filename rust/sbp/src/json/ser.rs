@@ -74,6 +74,22 @@ where
     Ok(())
 }
 
+/// Serialize the given message as a JSON byte vector.
+pub fn to_value<M>(msg: &M) -> Result<serde_json::Value, JsonError>
+where
+    M: SbpMessage + Serialize + WireFormat + Clone,
+{
+    let mut frame = BytesMut::with_capacity(BUFLEN);
+    let mut payload = String::with_capacity(BUFLEN);
+
+    let output = JsonOutput {
+        common: get_common_fields(&mut payload, &mut frame, msg)?,
+        msg,
+    };
+
+    serde_json::to_value(output).map_err(|e| e.into())
+}
+
 /// Writes [Sbp] messages as JSON into a writer.
 #[derive(Debug)]
 pub struct JsonEncoder<W, F>(FramedWrite<W, JsonEncoderInner<F>>);
