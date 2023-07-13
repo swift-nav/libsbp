@@ -11,8 +11,8 @@ use dencode::FramedRead;
 use futures::StreamExt;
 
 use crate::{
-    messages::invalid::Invalid, messages::SbpMsgParseError, HandleParseError, Sbp, CRC_LEN,
-    HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE,
+    messages::{invalid::Invalid, SbpMsgParseError},
+    HandleParseError, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE,
 };
 
 /// Deserialize the IO stream into an iterator of messages.
@@ -265,6 +265,7 @@ impl dencode::Decoder for FramerImpl {
             "payload_index must be less than header len"
         );
         let end = HEADER_LEN + src[PAYLOAD_INDEX] as usize + CRC_LEN;
+
         if src.len() < end {
             src.reserve(MAX_FRAME_LEN);
             return Ok(None);
@@ -435,7 +436,10 @@ mod tests {
         io::{Cursor, Write},
     };
 
-    use crate::{messages::navigation::MsgBaselineEcef, wire_format::WireFormat};
+    use crate::{
+        messages::{invalid::Invalid, navigation::MsgBaselineEcef},
+        wire_format::WireFormat,
+    };
 
     use super::*;
 
@@ -497,12 +501,27 @@ mod tests {
     fn test_parse_bad_message() {
         // Properly framed data but the payload isn't right given the message type
         let data: Vec<u8> = vec![0x55, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x65, 0x8D];
-        let bytes = BytesMut::from(&data[..]);
-        let mut actual = crate::de::Decoder::new(bytes.reader());
-        assert!(matches!(
-            actual.next().unwrap(),
-            Err(Error::SbpMsgParseError(_))
-        ));
+        let input = Cursor::new(data.clone());
+        let mut msgs = iter_messages(input);
+        if let Some(Err(Error::SbpMsgParseError(e))) = msgs.next() {
+            let invalid = Invalid::from(e);
+            assert_eq!(
+                invalid,
+                Invalid {
+                    msg_id: Some(257),
+                    sender_id: Some(257),
+                    crc: Some(36197),
+                    invalid_frame: data
+                }
+            )
+        } else {
+            panic!(
+                "expecting unable to parse error because message is framed \
+            but not valid"
+            );
+        }
+        // msgs should be exhausted
+        assert_eq!(msgs.count(), 0);
     }
 
     #[test]
@@ -511,7 +530,7 @@ mod tests {
             0x55u8, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee, 0xff,
             0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb, 0xbf,
         ];
-        payload.append(&mut payload.clone());
+        payload.extend(payload.clone());
         let input = Cursor::new(payload);
         let mut count = 0;
         for msg in iter_messages(input) {
@@ -522,21 +541,72 @@ mod tests {
     }
 
     #[test]
+    fn test_no_message_if_improperly_framed() {
+        let corrupted_input: Vec<u8> = vec![
+            0x55, 0x28, 0x61, 0xb2, 0x99, 0xba, 0xd6, 0x1d, 0x42, 0x15, 0xf7, 0x9f, 0x36, 0xf8,
+            0xca, 0x72, 0x97, 0x41, 0xaf, 0x29, 0xb9, 0x0b, 0xf1, 0x0e, 0xd3, 0x1d, 0xef, 0xab,
+            0xd4, 0x70, 0xac, 0x1e, 0x02, 0x71, 0xa0, 0x59, 0xc1, 0x78, 0x95, 0x5d, 0xf9, 0xe5,
+            0xf9, 0x00, 0x6a, 0x38, 0x06, 0x69, 0x06, 0x8d, 0xf1, 0x80, 0xa3, 0xe2, 0xa1, 0x3c,
+            0x6b, 0xab, 0x42, 0xe8, 0x18, 0x0a, 0xf0, 0x70,
+        ];
+        let mut msgs = iter_messages(Cursor::new(corrupted_input.clone()));
+        match msgs.next() {
+            None if corrupted_input[PAYLOAD_INDEX] as usize > corrupted_input.len() => {
+                // in theory some day we want to recover here with a invalid message
+                // however that will require a change to how framed reads are
+                // taken in
+            }
+            _ => {
+                panic!(
+                    "Expecting None because the data are not large enough to hold the \
+                expected frame"
+                );
+            }
+        }
+    }
+    #[test]
     fn test_parse_crc_error() {
-        let packet = vec![
-            // Start with a mostly valid message, with a single byte error
-            0x55, 0x0c, // This byte should be 0x0b, changed to intentionally cause a CRC error
-            0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee, 0xff, 0xbe, 0x40,
-            0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb, 0xbf, 0xde, 0xad,
-            0xbe, 0xef, // Include another valid message to properly parse
+        let valid_message = vec![
             0x55, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee, 0xff,
             0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb, 0xbf,
             0xde, 0xad, 0xbe, 0xef,
         ];
+
+        // A mostly valid message
+        let invalid_message_bytes = {
+            let mut invalid = valid_message.clone();
+            // add one to one of the bytes in the header to intentionally cause a CRC error
+            invalid[1] += 1;
+            invalid
+        };
+
+        let packet: Vec<_> = invalid_message_bytes
+            .iter()
+            .cloned()
+            .chain(valid_message.into_iter())
+            .collect();
+
         let mut msgs = iter_messages(Cursor::new(packet));
 
-        let res = msgs.next().unwrap().unwrap_err();
-        assert!(matches!(res, Error::CrcError(..)));
+        let crc_err = if let Some(Err(Error::CrcError(inner_err))) = msgs.next() {
+            inner_err
+        } else {
+            panic!("expecting CrcError because CRC is incorrect.")
+        };
+
+        let invalid_msg = Invalid::from(crc_err);
+        assert_eq!(
+            invalid_msg,
+            Invalid {
+                msg_id: Some(524),
+                sender_id: Some(35027),
+                crc: Some(49115),
+                // note that the message here is missing the values in
+                // 28..32 (not sure if that is desired behavior but hard
+                // to fix without more breaking changes)
+                invalid_frame: invalid_message_bytes[0..28].to_vec(),
+            }
+        );
 
         let res = msgs.next().unwrap();
         assert!(res.is_ok());
