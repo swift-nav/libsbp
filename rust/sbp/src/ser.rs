@@ -34,7 +34,7 @@ use crate::{BUFLEN, MAX_PAYLOAD_LEN, PREAMBLE};
 pub fn to_writer<W, M>(mut writer: W, msg: &M) -> Result<(), Error>
 where
     W: io::Write,
-    M: SbpMessage + WireFormat,
+    M: SbpMessage,
 {
     let mut buf = BytesMut::with_capacity(BUFLEN);
     to_buffer(&mut buf, msg)?;
@@ -64,16 +64,13 @@ where
 ///     Ok(())
 /// }
 /// ```
-pub fn to_vec<M: SbpMessage + WireFormat>(msg: &M) -> Result<Vec<u8>, Error> {
+pub fn to_vec<M: SbpMessage>(msg: &M) -> Result<Vec<u8>, Error> {
     let mut buf = BytesMut::with_capacity(BUFLEN);
     to_buffer(&mut buf, msg)?;
     Ok(buf.to_vec())
 }
 
-pub fn to_buffer<M: SbpMessage + WireFormat>(
-    buf: &mut BytesMut,
-    msg: &M,
-) -> Result<(), WriteFrameError> {
+pub fn to_buffer<M: SbpMessage>(buf: &mut BytesMut, msg: &M) -> Result<(), WriteFrameError> {
     if !msg.is_valid() {
         msg.write(buf);
         return Ok(());

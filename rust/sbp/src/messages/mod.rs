@@ -327,7 +327,7 @@ mod lib {
 use lib::*;
 
 /// Common functionality available to all SBP messages.
-pub trait SbpMessage {
+pub trait SbpMessage: WireFormat + Clone {
     /// Get the message name.
     fn message_name(&self) -> &'static str;
     /// Get the message type.
@@ -350,9 +350,7 @@ pub trait SbpMessage {
     /// Tells you if the message is valid or if it is not a valid message and may need to be
     /// special cased at certain points.
     fn is_valid(&self) -> bool;
-    fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid>
-    where
-        Self: Sized;
+    fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid>;
 }
 
 /// Implemented by messages who's message name and type are known at compile time.
