@@ -5,10 +5,11 @@ use dencode::{Encoder, FramedWrite, IterSinkExt};
 use serde::Serialize;
 use serde_json::{ser::Formatter, Serializer};
 
-use super::{JsonError, JsonOutput};
-
 use crate::{
-    json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput},
+    json::{
+        CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput, JsonError,
+        JsonOutput,
+    },
     messages::Sbp,
     SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, PREAMBLE,
 };
@@ -64,10 +65,7 @@ where
     F: Formatter,
     M: SbpMessage + Serialize,
 {
-    let output = JsonOutput {
-        common: get_common_fields(payload_buf, frame_buf, msg)?,
-        msg,
-    };
+    let output = JsonOutput::new_from_sbp(payload_buf, frame_buf, msg)?;
     let mut ser = Serializer::with_formatter(dst.writer(), formatter);
     output.serialize(&mut ser)?;
     dst.put_slice(b"\n");
@@ -199,10 +197,8 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
             BytesMut::from(&payload[..]),
         )?;
         let output = Json2JsonOutput {
-            data: JsonOutput {
-                common: get_common_fields(&mut self.payload_buf, &mut self.frame_buf, &msg)?,
-                msg: &msg,
-            },
+            data: JsonOutput::new_from_sbp(&mut self.payload_buf, &mut self.frame_buf, &msg)?,
+
             other: input.other,
         };
         let mut ser = Serializer::with_formatter(dst.writer(), formatter);
@@ -212,7 +208,7 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
     }
 }
 
-fn get_common_fields<'a, M: SbpMessage>(
+pub(super) fn get_common_fields<'a, M: SbpMessage>(
     payload_buf: &'a mut String,
     frame_buf: &'a mut BytesMut,
     msg: &M,

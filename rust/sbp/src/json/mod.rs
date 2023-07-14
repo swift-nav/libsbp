@@ -1,11 +1,13 @@
 //! Encode/decode SBP messages as JSON.
 
+mod convert;
 mod de;
 mod ser;
 
 use std::collections::HashMap;
 use std::io;
 
+use bytes::BytesMut;
 use serde::{Deserialize, Serialize};
 use serde_json::{ser::Formatter, Value};
 
@@ -16,6 +18,10 @@ pub use de::stream_messages;
 pub use de::{iter_json2json_messages, iter_messages, iter_messages_from_fields};
 
 pub use ser::{to_vec, to_writer, Json2JsonEncoder, JsonEncoder};
+
+use crate::SbpMessage;
+pub use convert::JsonMap;
+use ser::get_common_fields;
 
 #[derive(Debug, Deserialize)]
 #[serde(untagged)]
@@ -85,6 +91,19 @@ struct JsonOutput<'a, M> {
 
     #[serde(flatten)]
     msg: &'a M,
+}
+
+impl<'a, M: SbpMessage + Serialize> JsonOutput<'a, M> {
+    fn new_from_sbp(
+        payload_buf: &'a mut String,
+        frame_buf: &'a mut BytesMut,
+        msg: &'a M,
+    ) -> Result<Self, JsonError> {
+        Ok(JsonOutput {
+            common: get_common_fields(payload_buf, frame_buf, msg)?,
+            msg,
+        })
+    }
 }
 
 /// Provide Haskell style formatting. Output should be similar to:
