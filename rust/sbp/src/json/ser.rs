@@ -6,7 +6,10 @@ use serde::Serialize;
 use serde_json::{ser::Formatter, Serializer};
 
 use crate::{
-    json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput, JsonError, JsonOutput},
+    json::{
+        CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput, JsonError,
+        JsonOutput,
+    },
     messages::Sbp,
     SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, PREAMBLE,
 };
@@ -210,7 +213,7 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
     }
 }
 
-pub (in super) fn get_common_fields<'a, M: SbpMessage>(
+pub(super) fn get_common_fields<'a, M: SbpMessage>(
     payload_buf: &'a mut String,
     frame_buf: &'a mut BytesMut,
     msg: &M,

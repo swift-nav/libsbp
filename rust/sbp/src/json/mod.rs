@@ -1,8 +1,8 @@
 //! Encode/decode SBP messages as JSON.
 
+mod convert;
 mod de;
 mod ser;
-mod convert;
 
 use std::collections::HashMap;
 use std::io;

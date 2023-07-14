@@ -23,8 +23,7 @@ use super::{JsonError, JsonOutput};
 /// }
 pub type JsonMap = serde_json::Map<String, serde_json::Value>;
 
-impl<'a> TryFrom<crate::Sbp> for JsonMap
-{
+impl<'a> TryFrom<crate::Sbp> for JsonMap {
     type Error = JsonError;
 
     fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
