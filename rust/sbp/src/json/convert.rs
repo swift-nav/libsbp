@@ -29,10 +29,7 @@ impl TryFrom<crate::Sbp> for JsonMap {
     fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         let mut frame = BytesMut::with_capacity(crate::BUFLEN);
         let mut payload = String::with_capacity(crate::BUFLEN);
-        let output = JsonOutput {
-            common: super::ser::get_common_fields(&mut payload, &mut frame, &msg)?,
-            msg: &msg,
-        };
+        let output = JsonOutput::new_from_sbp(&mut payload, &mut frame, &msg)?;
         let output = serde_json::to_value(output)?;
         let output: serde_json::Map<String, serde_json::Value> = serde_json::from_value(output)?;
         Ok(output)
