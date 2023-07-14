@@ -5,10 +5,8 @@ use dencode::{Encoder, FramedWrite, IterSinkExt};
 use serde::Serialize;
 use serde_json::{ser::Formatter, Serializer};
 
-use super::{JsonError, JsonOutput};
-
 use crate::{
-    json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput},
+    json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput, JsonError, JsonOutput},
     messages::Sbp,
     SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, PREAMBLE,
 };
@@ -72,22 +70,6 @@ where
     output.serialize(&mut ser)?;
     dst.put_slice(b"\n");
     Ok(())
-}
-
-/// Serialize the given message as a JSON byte vector.
-pub fn to_value<M>(msg: &M) -> Result<serde_json::Value, JsonError>
-where
-    M: SbpMessage + Serialize,
-{
-    let mut frame = BytesMut::with_capacity(BUFLEN);
-    let mut payload = String::with_capacity(BUFLEN);
-
-    let output = JsonOutput {
-        common: get_common_fields(&mut payload, &mut frame, msg)?,
-        msg,
-    };
-
-    serde_json::to_value(output).map_err(|e| e.into())
 }
 
 /// Writes [Sbp] messages as JSON into a writer.
@@ -228,7 +210,7 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
     }
 }
 
-fn get_common_fields<'a, M: SbpMessage>(
+pub (in super) fn get_common_fields<'a, M: SbpMessage>(
     payload_buf: &'a mut String,
     frame_buf: &'a mut BytesMut,
     msg: &M,

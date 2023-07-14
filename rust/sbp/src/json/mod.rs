@@ -2,6 +2,7 @@
 
 mod de;
 mod ser;
+mod convert;
 
 use std::collections::HashMap;
 use std::io;
@@ -15,7 +16,7 @@ pub use serde_json::ser::CompactFormatter;
 pub use de::stream_messages;
 pub use de::{iter_json2json_messages, iter_messages, iter_messages_from_fields};
 
-pub use ser::{to_value, to_vec, to_writer, Json2JsonEncoder, JsonEncoder};
+pub use ser::{to_vec, to_writer, Json2JsonEncoder, JsonEncoder};
 
 #[derive(Debug, Deserialize)]
 #[serde(untagged)]
