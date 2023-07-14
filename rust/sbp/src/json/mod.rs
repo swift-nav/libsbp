@@ -18,6 +18,8 @@ pub use de::{iter_json2json_messages, iter_messages, iter_messages_from_fields};
 
 pub use ser::{to_vec, to_writer, Json2JsonEncoder, JsonEncoder};
 
+pub use convert::JsonMap;
+
 #[derive(Debug, Deserialize)]
 #[serde(untagged)]
 enum JsonInput {

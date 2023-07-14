@@ -6,7 +6,9 @@ use crate::Sbp;
 
 use super::{JsonError, JsonOutput};
 
-impl<'a> TryFrom<crate::Sbp> for serde_json::Map<String, serde_json::Value>
+pub type JsonMap = serde_json::Map<String, serde_json::Value>;
+
+impl<'a> TryFrom<crate::Sbp> for JsonMap
 {
     type Error = JsonError;
 
