@@ -99,8 +99,8 @@ pub mod msg_imu_aux {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -110,6 +110,12 @@ pub mod msg_imu_aux {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -395,8 +401,8 @@ pub mod msg_imu_raw {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -407,6 +413,13 @@ pub mod msg_imu_raw {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
+
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
             const IMU_RAW_TIME_STATUS_MASK: u32 = (1 << 30) | (1 << 31);

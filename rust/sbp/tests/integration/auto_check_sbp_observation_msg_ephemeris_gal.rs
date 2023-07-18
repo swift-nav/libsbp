@@ -41,11 +41,11 @@ fn test_auto_check_sbp_observation_msg_ephemeris_gal() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgEphemerisGal(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x8d,
+                    msg_type, 0x8d,
                     "Incorrect message type, expected 0x8d, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -258,11 +258,11 @@ fn test_json2sbp_auto_check_sbp_observation_msg_ephemeris_gal() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgEphemerisGal(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x8d,
+                    msg_type, 0x8d,
                     "Incorrect message type, expected 0x8d, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -489,11 +489,11 @@ fn test_sbp2json_auto_check_sbp_observation_msg_ephemeris_gal() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgEphemerisGal(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0x8d,
+                    msg_type, 0x8d,
                     "Incorrect message type, expected 0x8d, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

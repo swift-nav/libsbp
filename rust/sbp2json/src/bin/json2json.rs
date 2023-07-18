@@ -6,7 +6,7 @@ use std::path::PathBuf;
 use clap::Parser;
 use sbp::json::{CompactFormatter, HaskellishFloatFormatter};
 
-use converters::{json2json, Result};
+use converters::{json2json, ErrorHandlerOptions, Result};
 
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
@@ -33,9 +33,9 @@ struct Options {
     #[clap(short, long)]
     buffered: bool,
 
-    /// Stop on first error encountered
-    #[clap(long)]
-    fatal_errors: bool,
+    /// What to do if encounter an error while parsing
+    #[clap(long, default_value = "skip")]
+    error_handler: ErrorHandlerOptions,
 }
 
 fn main() -> Result<()> {
@@ -63,7 +63,7 @@ fn main() -> Result<()> {
             stdout,
             HaskellishFloatFormatter {},
             options.buffered,
-            options.fatal_errors,
+            options.error_handler,
         )
     } else {
         json2json(
@@ -71,7 +71,7 @@ fn main() -> Result<()> {
             stdout,
             CompactFormatter {},
             options.buffered,
-            options.fatal_errors,
+            options.error_handler,
         )
     }
 }

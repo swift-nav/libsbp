@@ -32,11 +32,11 @@ fn test_auto_check_sbp_settings_msg_settings_read_by_index_done() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgSettingsReadByIndexDone(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xa6,
+                    msg_type, 0xa6,
                     "Incorrect message type, expected 0xa6, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -84,11 +84,11 @@ fn test_json2sbp_auto_check_sbp_settings_msg_settings_read_by_index_done() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgSettingsReadByIndexDone(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xa6,
+                    msg_type, 0xa6,
                     "Incorrect message type, expected 0xa6, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -141,11 +141,11 @@ fn test_sbp2json_auto_check_sbp_settings_msg_settings_read_by_index_done() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgSettingsReadByIndexDone(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    0xa6,
+                    msg_type, 0xa6,
                     "Incorrect message type, expected 0xa6, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

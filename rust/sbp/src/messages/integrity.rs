@@ -395,8 +395,8 @@ pub mod msg_acknowledge {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -406,6 +406,12 @@ pub mod msg_acknowledge {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1068,8 +1074,8 @@ pub mod msg_ssr_flag_high_level {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1079,6 +1085,12 @@ pub mod msg_ssr_flag_high_level {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1481,8 +1493,8 @@ pub mod msg_ssr_flag_iono_grid_points {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1492,6 +1504,12 @@ pub mod msg_ssr_flag_iono_grid_points {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1573,8 +1591,8 @@ pub mod msg_ssr_flag_iono_grid_point_sat_los {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1584,6 +1602,12 @@ pub mod msg_ssr_flag_iono_grid_point_sat_los {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1666,8 +1690,8 @@ pub mod msg_ssr_flag_iono_tile_sat_los {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1677,6 +1701,12 @@ pub mod msg_ssr_flag_iono_tile_sat_los {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1770,8 +1800,8 @@ pub mod msg_ssr_flag_satellites {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1781,6 +1811,12 @@ pub mod msg_ssr_flag_satellites {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 
@@ -1879,8 +1915,8 @@ pub mod msg_ssr_flag_tropo_grid_points {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
         }
         fn sender_id(&self) -> Option<u16> {
             self.sender_id
@@ -1890,6 +1926,12 @@ pub mod msg_ssr_flag_tropo_grid_points {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
         }
     }
 

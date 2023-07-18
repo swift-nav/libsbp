@@ -9,10 +9,19 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 //! SBP message definitions.
 
+//****************************************************************************
+// Automatically generated from
+// 'generator/sbpg/targets/resources/rust/sbp_messages_mod.rs'
+//
+// Please do not hand edit!
+//****************************************************************************/
+
+
 ((*- for m in mods *))
 pub mod (((m)));
 ((*- endfor *))
 pub mod unknown;
+pub mod invalid;
 
 ((*- for m in msgs *))
 ((*- if m.is_real_message *))
@@ -20,6 +29,7 @@ use self::(((m.parent_mod_name)))::(((m.mod_name)))::(((m.msg_name)));
 ((*- endif *))
 ((*- endfor *))
 use self::unknown::Unknown;
+use self::invalid::Invalid;
 
 mod lib {
     //! Common imports so we can just `use super::lib::*` in all the message files
@@ -69,11 +79,11 @@ mod lib {
 use lib::*;
 
 /// Common functionality available to all SBP messages.
-pub trait SbpMessage: WireFormat + Clone + Sized {
+pub trait SbpMessage: WireFormat + Clone {
     /// Get the message name.
     fn message_name(&self) -> &'static str;
     /// Get the message type.
-    fn message_type(&self) -> u16;
+    fn message_type(&self) -> Option<u16>;
     /// Get the sender_id if it is set.
     fn sender_id(&self) -> Option<u16>;
     /// Set the sender id.
@@ -89,6 +99,10 @@ pub trait SbpMessage: WireFormat + Clone + Sized {
     fn friendly_name(&self) -> &'static str {
         ""
     }
+    /// Tells you if the message is valid or if it is not a valid message and may need to be 
+    /// special cased at certain points.
+    fn is_valid(&self) -> bool;
+    fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid>;
 }
 
 /// Implemented by messages who's message name and type are known at compile time.
@@ -130,6 +144,8 @@ pub enum Sbp {
     ((*- endfor *))
     /// Unknown message type
     Unknown( Unknown ),
+    /// Invalid message type.
+    Invalid( Invalid )
 }
 
 #[cfg(feature = "serde_json")]
@@ -145,12 +161,56 @@ impl<'de> serde::Deserialize<'de> for Sbp {
                 serde_json::from_value::<(((m.msg_name)))>(value).map(Sbp::(((m.msg_name))) )
             },
             ((*- endfor *))
-            _ => {
-                serde_json::from_value::<Unknown>(value).map(Sbp::Unknown)
+            msg_id @ Some(_) => {
+                serde_json::from_value::<Unknown>(value)
+                    .map(|msg| Unknown {
+                        msg_id,
+                        ..msg
+                    })
+                    .map(Sbp::Unknown)
             },
+            None => {
+                serde_json::from_value::<Invalid>(value)
+                    .map(|msg| Invalid {
+                        ..msg
+                    })
+                    .map(Sbp::Invalid)
+            }
         }.map_err(serde::de::Error::custom)
     }
 }
+
+#[derive(Debug, Clone)]
+pub struct SbpMsgParseError {
+    /// the message type
+    pub msg_type: u16,
+    /// the sender_id
+    pub sender_id: u16,
+    /// A vec that just contains the invalid payload bytes
+    pub invalid_payload: Vec<u8>,
+}
+
+impl From<SbpMsgParseError> for PayloadParseError {
+    fn from(
+        SbpMsgParseError {
+            invalid_payload,
+            ..
+        }: SbpMsgParseError,
+    ) -> Self {
+        Self {
+            invalid_payload,
+        }
+    }
+}
+
+impl std::fmt::Display for SbpMsgParseError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "error parsing payload")
+    }
+}
+
+impl std::error::Error for SbpMsgParseError {}
+
 
 impl Sbp {
     /// Parse a message from given fields.
@@ -176,20 +236,34 @@ impl Sbp {
     ///     Ok(())
     /// }
     /// ```
-    pub fn from_parts<B: bytes::Buf>(msg_type: u16, sender_id: u16, mut payload: B) -> Result<Sbp, PayloadParseError> {
-        match msg_type {
+    pub fn from_parts<B: bytes::Buf>(msg_type: u16, sender_id: u16, mut payload: B) -> Result<Sbp, SbpMsgParseError> {
+        let sbp_msg = match msg_type {
             ((*- for m in msgs *))
             (((m.msg_name)))::MESSAGE_TYPE => {
-                let mut msg = (((m.msg_name)))::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::(((m.msg_name)))(msg))
+                (((m.msg_name)))::parse(&mut payload)
+                    .map(Sbp::(((m.msg_name))) )
             },
             ((*- endfor *))
-            _ => {
-                let mut msg = Unknown::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::Unknown(msg))
+            msg_type => {
+                Unknown::parse(&mut payload)
+                  // keep the msg ID we originally saw
+                  .map(|msg| Unknown { msg_id: Some(msg_type), ..msg })
+                  .map(Sbp::Unknown)
             }
+        };
+        // Inject sender_id, handle error
+        match sbp_msg {
+            Ok(mut msg) => {
+                msg.set_sender_id(sender_id);
+                Ok(msg)
+            }
+            Err(PayloadParseError {
+                invalid_payload,
+            }) => Err(SbpMsgParseError {
+                msg_type,
+                sender_id,
+                invalid_payload,
+            }),
         }
     }
 }
@@ -205,10 +279,13 @@ impl SbpMessage for Sbp {
             Sbp::Unknown(msg) => {
                 msg.message_name()
             },
+            Sbp::Invalid(msg) => {
+                msg.message_name()
+            },
         }
     }
 
-    fn message_type(&self) -> u16 {
+    fn message_type(&self) -> Option<u16> {
         match self {
             ((*- for m in msgs *))
             Sbp::(((m.msg_name)))(msg) => {
@@ -216,6 +293,9 @@ impl SbpMessage for Sbp {
             },
             ((*- endfor *))
             Sbp::Unknown(msg) => {
+                msg.message_type()
+            },
+            Sbp::Invalid(msg) => {
                 msg.message_type()
             },
         }
@@ -231,6 +311,9 @@ impl SbpMessage for Sbp {
             Sbp::Unknown(msg) => {
                 msg.sender_id()
             },
+            Sbp::Invalid(msg) => {
+                msg.sender_id()
+            },
         }
     }
 
@@ -244,6 +327,9 @@ impl SbpMessage for Sbp {
             Sbp::Unknown(msg) => {
                 msg.set_sender_id(new_id)
             },
+            Sbp::Invalid(msg) => {
+                msg.set_sender_id(new_id)
+            },
         }
     }
 
@@ -255,6 +341,9 @@ impl SbpMessage for Sbp {
             },
             ((*- endfor *))
             Sbp::Unknown(msg) => {
+                msg.encoded_len()
+            },
+            Sbp::Invalid(msg) => {
                 msg.encoded_len()
             },
         }
@@ -271,6 +360,9 @@ impl SbpMessage for Sbp {
             Sbp::Unknown(msg) => {
                 msg.gps_time()
             },
+            Sbp::Invalid(msg) => {
+                msg.gps_time()
+            },
         }
     }
 
@@ -284,15 +376,53 @@ impl SbpMessage for Sbp {
             Sbp::Unknown(msg) => {
                 msg.friendly_name()
             },
+            Sbp::Invalid(msg) => {
+                msg.friendly_name()
+            },
         }
     }
+
+    fn is_valid(&self) -> bool {
+        match self {
+            ((*- for m in msgs *))
+            Sbp::(((m.msg_name)))(msg) => {
+                msg.is_valid()
+            },
+            ((*- endfor -*))
+            Sbp::Unknown(msg) => {
+                msg.is_valid()
+            },
+            Sbp::Invalid(msg) => {
+                msg.is_valid()
+            },
+        }
+    }
+    fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+        match self {
+            ((*- for m in msgs *))
+            Sbp::(((m.msg_name)))(msg) => {
+                Ok(Sbp::(((m.msg_name)))(msg.into_valid_msg()?))
+            },
+            ((*- endfor -*))
+            Sbp::Unknown(msg) => {
+                Ok(Sbp::Unknown(msg.into_valid_msg()?))
+            },
+            Sbp::Invalid(msg) => {
+                // should never pass
+                let res = msg.into_valid_msg();
+                debug_assert!(res.is_err(), "invalid messages may never be valid");
+                Ok(Sbp::Invalid(res?))
+            },
+        }
+    }
+
 }
 
 impl WireFormat for Sbp {
     const MIN_LEN: usize = crate::MAX_FRAME_LEN;
 
     fn parse_unchecked<B: Buf>(_: &mut B) -> Self {
-        unimplemented!("Sbp must be parsed with Sbp::from_frame");
+        unimplemented!("Sbp must be parsed with Sbp::from_parts");
     }
 
     fn write<B: BufMut>(&self, buf: &mut B) {
@@ -303,6 +433,9 @@ impl WireFormat for Sbp {
             },
             ((*- endfor *))
             Sbp::Unknown(msg) => {
+                WireFormat::write(msg, buf)
+            },
+            Sbp::Invalid(msg) => {
                 WireFormat::write(msg, buf)
             },
         }
@@ -316,6 +449,9 @@ impl WireFormat for Sbp {
             },
             ((*- endfor *))
             Sbp::Unknown(msg) => {
+                WireFormat::len(msg)
+            },
+            Sbp::Invalid(msg) => {
                 WireFormat::len(msg)
             },
         }
@@ -333,5 +469,10 @@ impl From<(((m.msg_name)))> for Sbp {
 impl From<Unknown> for Sbp {
     fn from(msg: Unknown) -> Self {
         Sbp::Unknown(msg)
+    }
+}
+impl From<Invalid> for Sbp {
+    fn from(msg: Invalid) -> Self {
+        Sbp::Invalid(msg)
     }
 }

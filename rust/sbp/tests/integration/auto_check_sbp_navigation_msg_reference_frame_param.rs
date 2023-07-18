@@ -38,11 +38,11 @@ fn test_auto_check_sbp_navigation_msg_reference_frame_param() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgReferenceFrameParam(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    580,
+                    msg_type, 580,
                     "Incorrect message type, expected 580, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -206,11 +206,11 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_reference_frame_param() {
         };
         match &sbp_msg {
             sbp::messages::Sbp::MsgReferenceFrameParam(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    580,
+                    msg_type, 580,
                     "Incorrect message type, expected 580, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -385,11 +385,11 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_reference_frame_param() {
         );
         match &sbp_msg {
             sbp::messages::Sbp::MsgReferenceFrameParam(msg) => {
+                let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg.message_type(),
-                    580,
+                    msg_type, 580,
                     "Incorrect message type, expected 580, is {}",
-                    msg.message_type()
+                    msg_type
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

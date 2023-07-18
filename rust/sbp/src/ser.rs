@@ -71,24 +71,46 @@ pub fn to_vec<M: SbpMessage>(msg: &M) -> Result<Vec<u8>, Error> {
 }
 
 pub fn to_buffer<M: SbpMessage>(buf: &mut BytesMut, msg: &M) -> Result<(), WriteFrameError> {
-    let sender_id = msg.sender_id().ok_or(WriteFrameError::NoSenderId)?;
+    if !msg.is_valid() {
+        msg.write(buf);
+        return Ok(());
+    }
+    // validate message in other ways before writing to buf
     let payload_len = msg.len();
     if payload_len > MAX_PAYLOAD_LEN {
         return Err(WriteFrameError::TooLarge);
     }
+    let sender_id = match msg.sender_id() {
+        Some(id) => id,
+        None => {
+            // this should be unreachable because things
+            // without sender ids should be written as invalid
+            // messages
+            return Err(WriteFrameError::NoSenderId);
+        }
+    };
+    let msg_type = match msg.message_type() {
+        Some(t) => t,
+        None => {
+            // this should be unreachable because things
+            // without message ids should be caught by invalid
+            // messages
+            return Err(WriteFrameError::NoMessageType);
+        }
+    };
 
     let old_buf = buf.split();
-
     PREAMBLE.write(buf);
-    msg.message_type().write(buf);
+    msg_type.write(buf);
     sender_id.write(buf);
     (payload_len as u8).write(buf);
     msg.write(buf);
-    let crc = crc16::State::<crc16::XMODEM>::calculate(&buf[1..]);
+    let crc = crc16::State::<crc16::XMODEM>::calculate(
+        buf.get(1..)
+            .expect("is safe because written several bytes to the buf"),
+    );
     crc.write(buf);
-
     buf.unsplit(old_buf);
-
     Ok(())
 }
 
@@ -126,6 +148,7 @@ impl From<io::Error> for Error {
 pub enum WriteFrameError {
     TooLarge,
     NoSenderId,
+    NoMessageType,
 }
 
 impl std::fmt::Display for WriteFrameError {
@@ -133,6 +156,7 @@ impl std::fmt::Display for WriteFrameError {
         match self {
             WriteFrameError::TooLarge => write!(f, "message is too large to fit into a frame"),
             WriteFrameError::NoSenderId => write!(f, "no sender id present in the message"),
+            WriteFrameError::NoMessageType => write!(f, "no message id present in the message"),
         }
     }
 }

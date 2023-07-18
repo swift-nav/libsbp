@@ -180,8 +180,11 @@ pub const MAX_PAYLOAD_LEN: usize = 255;
 /// Length of the crc of the payload.
 pub const CRC_LEN: usize = 2;
 
+/// Min length of a frame (e.g. when payload is empty)
+pub const MIN_FRAME_LEN: usize = HEADER_LEN + CRC_LEN;
+
 /// Max length of a frame (header + payload + crc).
-pub const MAX_FRAME_LEN: usize = HEADER_LEN + MAX_PAYLOAD_LEN + CRC_LEN;
+pub const MAX_FRAME_LEN: usize = MIN_FRAME_LEN + MAX_PAYLOAD_LEN;
 
 #[doc(inline)]
 pub use messages::Sbp;
@@ -204,3 +207,12 @@ pub use sbp_iter_ext::SbpIterExt;
 
 #[doc(inline)]
 pub use sbp_string::SbpString;
+
+/// A trait that is used for converting an error in parsing of a
+/// messages into a message. A separate trait other than the `Into`
+/// trait is defined because it makes it clear that it is ok to
+/// panic inside of the handle_error function if it is not recoverable...
+/// e.g. if the error is from an I/O error while parsing a message
+pub trait HandleParseError<T> {
+    fn handle_parse_error(self) -> T;
+}
