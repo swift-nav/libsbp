@@ -1,5 +1,16 @@
 # Changelog
 
+## [v4.17.0](https://github.com/swift-nav/libsbp/tree/v4.17.0) (2023-07-18)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.16.0...v4.17.0)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - Don't fail sanitizer builds on failed optimizations [\#1348](https://github.com/swift-nav/libsbp/pull/1348) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- rust: ability to convert to common serde map structure [\#1346](https://github.com/swift-nav/libsbp/pull/1346) ([silverjam](https://github.com/silverjam))
+- Add APC types \[OI-89\] [\#1345](https://github.com/swift-nav/libsbp/pull/1345) ([armallen](https://github.com/armallen))
+- Add function to convert sbp\_msg\_type\_t to string \[ESD-2613\] [\#1344](https://github.com/swift-nav/libsbp/pull/1344) ([woodfell](https://github.com/woodfell))
+
 ## [v4.16.0](https://github.com/swift-nav/libsbp/tree/v4.16.0) (2023-06-29)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.15.0...v4.16.0)
