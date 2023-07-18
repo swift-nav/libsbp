@@ -1,6 +1,6 @@
 use std::{
     fs::File,
-    io::{BufRead, BufReader, Cursor, Write},
+    io::{BufRead, BufReader, Cursor},
 };
 
 #[macro_use]
