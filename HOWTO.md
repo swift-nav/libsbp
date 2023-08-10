@@ -203,7 +203,7 @@ inside the container (so you don't have to setup git inside the docker container
     ```
 
    For Java, jsonschema, and Protobuf (these should not require bumping the git tag,
-   unless the geneated files are out of date):
+   unless the generated files are out of date):
 
     ```shell
     make java jsonschema protobuf
