@@ -203,7 +203,7 @@ inside the container (so you don't have to setup git inside the docker container
     ```
 
    For Java, jsonschema, and Protobuf (these should not require bumping the git tag,
-   unless the geneated files are out of date):
+   unless the generated files are out of date):
 
     ```shell
     make java jsonschema protobuf
@@ -217,6 +217,12 @@ inside the container (so you don't have to setup git inside the docker container
     git commit --amend -a -m 'Release <INCREMENTED_TAG>'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
+
+   JavaScript, make needs to be run twice to update the package information
+
+   ```shell
+   make javascript
+   ```
 
 4. Finally, build the docs:
 
