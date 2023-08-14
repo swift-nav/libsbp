@@ -1,5 +1,17 @@
 # Changelog
 
+## [v5.0.0](https://github.com/swift-nav/libsbp/tree/v5.0.0) (2023-08-10)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.17.0...v5.0.0)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - add CODEOWNERS \(\#161\) [\#1353](https://github.com/swift-nav/libsbp/pull/1353) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- add test to round trip an invalid sbp message [\#1352](https://github.com/swift-nav/libsbp/pull/1352) ([pcrumley](https://github.com/pcrumley))
+- Auto submodule update: cmake - Clang tidy Google Style Guide \(\#155\) [\#1351](https://github.com/swift-nav/libsbp/pull/1351) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- prep next release \#no\_auto\_pr [\#1350](https://github.com/swift-nav/libsbp/pull/1350) ([adrian-kong](https://github.com/adrian-kong))
+- Parse error falls back to Invalid [\#1312](https://github.com/swift-nav/libsbp/pull/1312) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.17.0](https://github.com/swift-nav/libsbp/tree/v4.17.0) (2023-07-18)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.16.0...v4.17.0)
