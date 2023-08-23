@@ -49,8 +49,6 @@ extern "C" {
 /** Return value indicating an error while decoding an SBP message from wire format */
 #define SBP_DECODE_ERROR (-8)
 
-/** Default sender ID. Intended for messages sent from the host to the device. */
-#define SBP_SENDER_ID 0x42
 /** Header length in bytes. */
 #define SBP_HEADER_LEN 6
 /** CRC length in bytes. */
