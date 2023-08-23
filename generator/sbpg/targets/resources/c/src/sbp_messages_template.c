@@ -8,6 +8,7 @@
 #include <stdbool.h>
 
 #include <libsbp/sbp.h>
+#include <libsbp/legacy/api.h>
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/v4/(((package.name))).h>
 #include <libsbp/internal/v4/(((package.name))).h>

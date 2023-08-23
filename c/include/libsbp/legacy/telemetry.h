@@ -27,12 +27,17 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/legacy/gnss.h>
 #include <libsbp/telemetry_macros.h>
 
 SBP_PACK_START
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 az;                    /**< Azimuth angle (range 0..179) [deg * 2] */
   s8 el;                    /**< Elevation angle (range -90..90) [deg] */
   u8 availability_flags;    /**< Observation availability at filter update */
@@ -53,7 +58,7 @@ typedef struct SBP_ATTR_PACKED {
  * Starling.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 wn;          /**< GPS week number [weeks] */
   u32 tow;         /**< GPS Time of Week [ms] */
   u8 n_obs;        /**< Total number of observations. First nibble is the

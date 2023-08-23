@@ -25,12 +25,17 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/integrity_macros.h>
 #include <libsbp/legacy/gnss.h>
 
 SBP_PACK_START
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t obs_time; /**< GNSS reference time of the observation
                                 used to generate the flag. */
   u8 num_msgs;             /**< Number of messages in the dataset */
@@ -70,7 +75,7 @@ typedef struct SBP_ATTR_PACKED {
  * elements in the group.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t obs_time;        /**< GNSS reference time of
                                        the observation used to
                                        generate the flag. */
@@ -93,7 +98,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 use_iono_grid_point_sat_los; /**< Use iono grid point satellite LoS. */
 } msg_ssr_flag_high_level_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t obs_time; /**< GNSS reference time of the observation
                                 used to generate the flag. */
   u8 num_msgs;             /**< Number of messages in the dataset */
@@ -105,27 +110,27 @@ typedef struct SBP_ATTR_PACKED {
   u8 faulty_sats[0];       /**< List of faulty satellites. */
 } msg_ssr_flag_satellites_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   integrity_ssr_header_t header; /**< Header of an integrity
                                       message. */
   u8 n_faulty_points;            /**< Number of faulty grid points. */
   u16 faulty_points[0];          /**< List of faulty grid points. */
 } msg_ssr_flag_tropo_grid_points_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   integrity_ssr_header_t header; /**< Header of an integrity
                                       message. */
   u8 n_faulty_points;            /**< Number of faulty grid points. */
   u16 faulty_points[0];          /**< List of faulty grid points. */
 } msg_ssr_flag_iono_grid_points_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   integrity_ssr_header_t header; /**< Header of an integrity message. */
   u8 n_faulty_los;               /**< Number of faulty LOS. */
   sv_id_t faulty_los[0];         /**< List of faulty LOS */
 } msg_ssr_flag_iono_tile_sat_los_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   integrity_ssr_header_t header; /**< Header of an integrity
                                       message. */
   u16 grid_point_id;             /**< Index of the grid point. */
@@ -133,7 +138,7 @@ typedef struct SBP_ATTR_PACKED {
   sv_id_t faulty_los[0];         /**< List of faulty LOS */
 } msg_ssr_flag_iono_grid_point_sat_los_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 request_id;                 /**< Echo of the request ID field from the
                                       corresponding CRA message, or 255 if
                                       no request ID was provided. */

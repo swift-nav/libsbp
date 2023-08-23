@@ -25,6 +25,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/imu_macros.h>
 
 SBP_PACK_START
@@ -45,7 +50,7 @@ SBP_PACK_START
  * The time-tagging mode should not change throughout a run.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;   /**< Milliseconds since reference epoch and time status. */
   u8 tow_f;  /**< Milliseconds since reference epoch, fractional part [ms / 256]
               */
@@ -64,7 +69,7 @@ typedef struct SBP_ATTR_PACKED {
  * depends on the value of `imu_type`.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 imu_type; /**< IMU type */
   s16 temp;    /**< Raw IMU temperature */
   u8 imu_conf; /**< IMU configuration */

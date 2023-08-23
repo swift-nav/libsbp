@@ -13,6 +13,7 @@
 #include <libsbp/internal/v4/string/multipart.h>
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
+#include <libsbp/legacy/api.h>
 #include <libsbp/sbp.h>
 #include <libsbp/v4/linux.h>
 

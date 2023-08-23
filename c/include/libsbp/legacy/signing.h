@@ -25,11 +25,16 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/signing_macros.h>
 
 SBP_PACK_START
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 year;   /**< Year [year] */
   u8 month;   /**< Month (range 1 .. 12) [months] */
   u8 day;     /**< days in the month (range 1-31) [day] */
@@ -39,7 +44,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 ns;     /**< nanoseconds of second (range 0-999999999) [nanoseconds] */
 } utc_time_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 len;      /**< Number of bytes to use of the signature field.  The DER
                     encoded signature has a maximum size of 72 bytes but can
                     vary between 70 and 72 bytes in length. */
@@ -52,7 +57,7 @@ typedef struct SBP_ATTR_PACKED {
  * A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1).
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 n_msg;             /**< Total number messages that make up the
                              certificate. The first nibble (mask 0xF0 or
                              left shifted by 4 bits) is the size of the
@@ -64,7 +69,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 certificate_bytes[0]; /**< DER encoded x.509 ECDSA certificate bytes */
 } msg_ecdsa_certificate_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 root_certificate[20];         /**< SHA-1 fingerprint of the root
                                         certificate */
   u8 intermediate_certificate[20]; /**< SHA-1 fingerprint of the intermediate
@@ -104,7 +109,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 root_certificate[20];         /**< SHA-1 fingerprint of the root
                                         certificate */
   u8 intermediate_certificate[20]; /**< SHA-1 fingerprint of the intermediate
@@ -134,7 +139,7 @@ typedef struct SBP_ATTR_PACKED {
  * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 flags;             /**< Describes the format of the `signed\_messages`
                              field below. */
   u8 stream_counter;    /**< Signature message counter. Zero indexed and
@@ -169,7 +174,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 flags;              /**< Describes the format of the `signed\_messages`
                               field below. */
   u8 stream_counter;     /**< Signature message counter. Zero indexed and
@@ -208,7 +213,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 flags;              /**< Describes the format of the `signed\_messages`
                               field below. */
   u8 stream_counter;     /**< Signature message counter. Zero indexed and
@@ -243,7 +248,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 n_msg;                /**< Total number messages that make up the
                                 certificate. First nibble is the size of the
                                 sequence (n), second nibble is the zero-
@@ -258,7 +263,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 signature[64];   /**< ED25519 signature for messages. */
   u8 fingerprint[20]; /**< SHA-1 fingerprint of the associated certificate. */
   u32 signed_messages[0]; /**< CRCs of signed messages. */
@@ -269,7 +274,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 stream_counter;      /**< Signature message counter. Zero indexed and
                                incremented with each signature message.  The
                                counter will not increment if this message was

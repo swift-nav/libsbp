@@ -14,9 +14,9 @@
 #define LIBSBP_COMMON_H
 
 #ifndef _RUSTC_BINDGEN_
-#include <stdint.h>
-#include <stdbool.h>
 #include <inttypes.h>
+#include <stdbool.h>
+#include <stdint.h>
 #endif
 
 /* Should match guard in libswiftnav/common.h */
@@ -66,9 +66,10 @@ typedef uint64_t u64;
  * Write callback
  *
  * The user of libsbp must provide a write callback conforming to this type
- * to functions which send messages (eg, #sbp_message_send). The write 
- * function will be called several times during the course of sending a single 
- * message. The context parameter can be set by calling #sbp_state_set_io_context.
+ * to functions which send messages (eg, #sbp_message_send). The write
+ * function will be called several times during the course of sending a single
+ * message. The context parameter can be set by calling
+ * #sbp_state_set_io_context.
  *
  * @param buff Data to write
  * @param n Length of \p buff
@@ -81,8 +82,8 @@ typedef s32 (*sbp_write_fn_t)(u8 *buff, u32 n, void *context);
  * Read callback
  *
  * The user of libsbp must provide a read callback conforming to this type when
- * calling #sbp_process. This function will be called once per invocation of 
- * #sbp_process in order to read data from an input source. Once the entire 
+ * calling #sbp_process. This function will be called once per invocation of
+ * #sbp_process in order to read data from an input source. Once the entire
  * frame has been read any registered callbacks will be invoked.
  *
  * @param buff Destination buffer
@@ -91,6 +92,13 @@ typedef s32 (*sbp_write_fn_t)(u8 *buff, u32 n, void *context);
  * @return Number of bytes read, or -1 to indicate error
  */
 typedef s32 (*sbp_read_fn_t)(u8 *buff, u32 n, void *context);
+
+/** SBP callback function prototype definitions. */
+typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[],
+                                   void *context);
+typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
+                                     u8 payload_len, u8 payload[],
+                                     u16 frame_len, u8 frame[], void *context);
 
 /* Forward declarations */
 struct sbp_state;
@@ -102,23 +110,23 @@ typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
 #if defined(__GNUC__) || defined(__clang__)
 
 #define SBP_PACK_START /* Intentionally empty */
-#define SBP_PACK_END /* Intentionally empty */
+#define SBP_PACK_END   /* Intentionally empty */
 #define SBP_ATTR_PACKED __attribute__((packed))
 #define DO_PRAGMA(x) _Pragma(#x)
-#define SBP_MESSAGE(msg) DO_PRAGMA(message (msg))
+#define SBP_MESSAGE(msg) DO_PRAGMA(message(msg))
 #define SBP_DEPRECATED __attribute__((deprecated))
-#define SBP_ATTR_FORMAT(fmt,args) __attribute__((format(printf,fmt,args)))
-#define SBP_ATTR_VFORMAT(fmt) __attribute__((format(printf,fmt,0)))
+#define SBP_ATTR_FORMAT(fmt, args) __attribute__((format(printf, fmt, args)))
+#define SBP_ATTR_VFORMAT(fmt) __attribute__((format(printf, fmt, 0)))
 #define SBP_EXPORT __attribute__((visibility("default")))
 
 #elif defined(_MSC_VER)
 
 #define SBP_PACK_START __pragma(pack(1));
 #define SBP_PACK_END __pragma(pack());
-#define SBP_ATTR_PACKED /* Intentionally empty */
+#define SBP_ATTR_PACKED  /* Intentionally empty */
 #define SBP_MESSAGE(msg) /* Intentionally empty */
 #define SBP_DEPRECATED __declspec(deprecated)
-#define SBP_ATTR_FORMAT(fmt,args)
+#define SBP_ATTR_FORMAT(fmt, args)
 #define SBP_ATTR_VFORMAT(fmt)
 
 #if !defined(_WINDLL)
@@ -132,19 +140,20 @@ typedef struct sbp_msg_callbacks_node sbp_msg_callbacks_node_t;
 #elif defined(__ghs__)
 
 #define SBP_PACK_START /* Intentionally empty */
-#define SBP_PACK_END /* Intentionally empty */
+#define SBP_PACK_END   /* Intentionally empty */
 #define SBP_ATTR_PACKED __attribute__((packed))
 #define SBP_MESSAGE(msg) /* Intentionally empty */
-#define SBP_DEPRECATED /* Intentionally empty */
-#define SBP_ATTR_FORMAT(fmt,args)
+#define SBP_DEPRECATED   /* Intentionally empty */
+#define SBP_ATTR_FORMAT(fmt, args)
 #define SBP_ATTR_VFORMAT(fmt)
 #define SBP_EXPORT /* Intentionally empty */
 
 #else
 
-#if !defined(SBP_PACK_START) || !defined(SBP_PACK_END) || !defined(SBP_ATTR_PACKED)
+#if !defined(SBP_PACK_START) || !defined(SBP_PACK_END) ||                      \
+    !defined(SBP_ATTR_PACKED)
 #error Unknown compiler, please override SBP_PACK_START, SBP_PACK_END, and SBP_ATTR_PACKED
-#endif 
+#endif
 
 #endif /* toolchaing packing macros */
 

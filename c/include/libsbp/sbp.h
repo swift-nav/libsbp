@@ -14,10 +14,8 @@
 #define LIBSBP_SBP_H
 
 #include <libsbp/common.h>
-#include <libsbp/legacy/api.h>
-#include <libsbp/legacy/compat.h>
-#include <libsbp/v4/api.h>
 #include <libsbp/sbp_msg_type.h>
+#include <libsbp/v4/api.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,29 +25,34 @@ extern "C" {
  * \{ */
 
 /** Return value indicating success. */
-#define SBP_OK                    0
-/** Return value indicating message decoded and callback executed by sbp_process. */
-#define SBP_OK_CALLBACK_EXECUTED  1
-/** Return value indicating message decoded with no associated callback in sbp_process. */
+#define SBP_OK 0
+/** Return value indicating message decoded and callback executed by
+ * sbp_process. */
+#define SBP_OK_CALLBACK_EXECUTED 1
+/** Return value indicating message decoded with no associated callback in
+ * sbp_process. */
 #define SBP_OK_CALLBACK_UNDEFINED 2
 /** Return value indicating an error with the callback (function defined). */
-#define SBP_CALLBACK_ERROR       (-1)
+#define SBP_CALLBACK_ERROR (-1)
 /** Return value indicating a CRC error. */
-#define SBP_CRC_ERROR            (-2)
+#define SBP_CRC_ERROR (-2)
 /** Return value indicating an error occured whilst sending an SBP message. */
-#define SBP_SEND_ERROR           (-3)
+#define SBP_SEND_ERROR (-3)
 /** Return value indicating an error occured because an argument was NULL. */
-#define SBP_NULL_ERROR           (-4)
+#define SBP_NULL_ERROR (-4)
 /** Return value indicating an error occured in the write() operation. */
-#define SBP_WRITE_ERROR          (-5)
+#define SBP_WRITE_ERROR (-5)
 /** Return value indicating an error occured in the read() operation. */
-#define SBP_READ_ERROR           (-6)
-/** Return value indicating an error while encoding an SBP message to the wire format */
+#define SBP_READ_ERROR (-6)
+/** Return value indicating an error while encoding an SBP message to the wire
+ * format */
 #define SBP_ENCODE_ERROR (-7)
-/** Return value indicating an error while decoding an SBP message from wire format */
+/** Return value indicating an error while decoding an SBP message from wire
+ * format */
 #define SBP_DECODE_ERROR (-8)
 
-/** Default sender ID. Intended for messages sent from the host to the device. */
+/** Default sender ID. Intended for messages sent from the host to the device.
+ */
 #define SBP_SENDER_ID 0x42
 /** Header length in bytes. */
 #define SBP_HEADER_LEN 6
@@ -85,16 +88,17 @@ typedef union {
 } sbp_callback_t;
 
 /** SBP callback type enum:
- * SBP_PAYLOAD_CALLBACK are the original callbacks in libsbp without framing args
- * SBP_FRAME_CALLBACK are raw frame callbacks that include framing data as args.
- * SBP_DECODED_CALLBACK are callbacks which receive decoded (ie, not raw) messages
+ * SBP_PAYLOAD_CALLBACK are the original callbacks in libsbp without framing
+ * args SBP_FRAME_CALLBACK are raw frame callbacks that include framing data as
+ * args. SBP_DECODED_CALLBACK are callbacks which receive decoded (ie, not raw)
+ * messages
  *
  * This enum is stored on each sbp_msg_callback_node struct to identify how
  * to cast the callback function pointer stored within.
  *
- * SBP_PAYLOAD_CALLBACK and SBP_FRAME_CALLBACK are part of the legacy libsbp API. They
- * are both deprecated and should not be used in new code. SBP_DECODED_CALLBACK should
- * be used for all new development.
+ * SBP_PAYLOAD_CALLBACK and SBP_FRAME_CALLBACK are part of the legacy libsbp
+ * API. They are both deprecated and should not be used in new code.
+ * SBP_DECODED_CALLBACK should be used for all new development.
  */
 enum sbp_cb_type {
   SBP_MSG_CALLBACK = 0,
@@ -104,8 +108,7 @@ enum sbp_cb_type {
 };
 
 #define SBP_CALLBACK_FLAG(cb_type) (1u << (cb_type))
-#define SBP_CALLBACK_ALL_MASK \
-  ((SBP_CALLBACK_FLAG(SBP_CALLBACK_TYPE_COUNT)) - 1)
+#define SBP_CALLBACK_ALL_MASK ((SBP_CALLBACK_FLAG(SBP_CALLBACK_TYPE_COUNT)) - 1)
 
 typedef enum sbp_cb_type sbp_cb_type;
 /** SBP callback node.
@@ -114,11 +117,11 @@ typedef enum sbp_cb_type sbp_cb_type;
  *       and sbp_register_frame_callback().
  */
 struct sbp_msg_callbacks_node {
-  sbp_msg_type_t msg_type;      /**< Message ID associated with callback. */
-  sbp_callback_t cb; /**< Pointer to callback function. */
-  void *context;     /**< Pointer to a context */
+  sbp_msg_type_t msg_type; /**< Message ID associated with callback. */
+  sbp_callback_t cb;       /**< Pointer to callback function. */
+  void *context;           /**< Pointer to a context */
   struct sbp_msg_callbacks_node *next; /**< Pointer to next node in list. */
-  sbp_cb_type cb_type;                 /**< Enum that holds the type of callback. */
+  sbp_cb_type cb_type; /**< Enum that holds the type of callback. */
 };
 
 /** State structure for processing SBP messages. */
@@ -138,17 +141,18 @@ struct sbp_state {
   u16 frame_len;
   u8 n_read;
   u8 frame_buff[SBP_MAX_FRAME_LEN];
-  u8* msg_buff;
-  void* io_context;
-  sbp_msg_callbacks_node_t* sbp_msg_callbacks_head;
+  u8 *msg_buff;
+  void *io_context;
+  sbp_msg_callbacks_node_t *sbp_msg_callbacks_head;
 };
 
 /** \} */
 
-SBP_EXPORT s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
-SBP_EXPORT void sbp_clear_callbacks(sbp_state_t* s);
+SBP_EXPORT s8 sbp_remove_callback(sbp_state_t *s,
+                                  sbp_msg_callbacks_node_t *node);
+SBP_EXPORT void sbp_clear_callbacks(sbp_state_t *s);
 SBP_EXPORT void sbp_state_init(sbp_state_t *s);
-SBP_EXPORT void sbp_state_set_io_context(sbp_state_t *s, void* context);
+SBP_EXPORT void sbp_state_set_io_context(sbp_state_t *s, void *context);
 SBP_EXPORT s8 sbp_process(sbp_state_t *s, sbp_read_fn_t read);
 
 #ifdef __cplusplus
@@ -156,4 +160,3 @@ SBP_EXPORT s8 sbp_process(sbp_state_t *s, sbp_read_fn_t read);
 #endif
 
 #endif /* LIBSBP_SBP_H */
-

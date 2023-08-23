@@ -25,6 +25,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/vehicle_macros.h>
 
 SBP_PACK_START
@@ -42,7 +47,7 @@ SBP_PACK_START
  * to zero after one week.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;      /**< Time field representing either milliseconds in the GPS
                      Week or local CPU time from the producing system in
                      milliseconds.  See the tow_source flag for the exact
@@ -66,7 +71,7 @@ typedef struct SBP_ATTR_PACKED {
  * GNSS. Local CPU time shall roll over to zero after one week.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u64 time;  /**< Time field representing either microseconds since the
                   last PPS, microseconds in the GPS Week or local CPU time
                   from the producing system in microseconds. See the

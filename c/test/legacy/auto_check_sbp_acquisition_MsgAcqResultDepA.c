@@ -16,7 +16,8 @@
 
 #include <check.h>
 #include <libsbp/legacy/acquisition.h>
-#include <sbp.h>
+#include <libsbp/legacy/api.h>
+#include <libsbp/sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

@@ -25,6 +25,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/user_macros.h>
 
 SBP_PACK_START
@@ -35,7 +40,7 @@ SBP_PACK_START
  * length of 255 bytes per message.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 contents[0]; /**< User data payload */
 } msg_user_data_t;
 

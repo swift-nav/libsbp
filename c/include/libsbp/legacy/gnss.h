@@ -25,6 +25,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/gnss_macros.h>
 
 SBP_PACK_START
@@ -34,7 +39,7 @@ SBP_PACK_START
  * Signal identifier containing constellation, band, and satellite identifier.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 sat;  /**< Constellation-specific satellite id. For GLO can either be
                 (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28]. */
   u8 code; /**< Signal constellation, band and code */
@@ -46,7 +51,7 @@ typedef struct SBP_ATTR_PACKED {
  * vehicle.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 satId;         /**< Constellation-specific satellite id. For GLO can
                          either be (100+FCN) where FCN is in [-7,+6] or the
                          Slot ID in [1,28]. */
@@ -58,7 +63,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 sat;     /**< Constellation-specific satellite identifier.
 
                     Note: unlike GnssSignal, GPS satellites are encoded as
@@ -74,7 +79,7 @@ typedef struct SBP_ATTR_PACKED {
  * beginning of the week on the Saturday/Sunday transition.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow; /**< Milliseconds since start of GPS week [ms] */
   u16 wn;  /**< GPS week number [week] */
 } gps_time_dep_t;
@@ -85,7 +90,7 @@ typedef struct SBP_ATTR_PACKED {
  * the Saturday/Sunday transition.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow; /**< Seconds since start of GPS week [s] */
   u16 wn;  /**< GPS week number [week] */
 } gps_time_sec_t;
@@ -97,7 +102,7 @@ typedef struct SBP_ATTR_PACKED {
  * observations are epoch aligned so ns field will be 0.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;         /**< Milliseconds since start of GPS week [ms] */
   s32 ns_residual; /**< Nanosecond residual of millisecond-rounded TOW
                         (ranges from -500000 to 500000) [ns] */
@@ -111,7 +116,7 @@ typedef struct SBP_ATTR_PACKED {
  * fractional cycles. This phase has the same sign as the pseudorange.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s32 i; /**< Carrier phase whole cycles [cycles] */
   u8 f;  /**< Carrier phase fractional part [cycles / 256] */
 } carrier_phase_t;

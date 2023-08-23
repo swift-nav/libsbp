@@ -25,6 +25,8 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE("Legacy SBP types have been deprecated and will be remove in version 6. Do not use any types from this file in new code, alter existing code to make use of the libsbp V4 API")
+
 #include <libsbp/(((pkg_name)))_macros.h>
 ((*- for i in include *))
 #include <libsbp/legacy/(((i)))>
@@ -41,7 +43,7 @@ SBP_PACK_START
 ((*- endif *))
 ((*- if m.fields *))
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   ((*- for f in m.fields *))
   ((*- if f.desc *))
   (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4)))) /**< ((( f.desc|commentify_field(f,m) ))) ((* if f.units *))[(((f.units)))] ((* endif *))*/

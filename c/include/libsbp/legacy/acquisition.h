@@ -25,6 +25,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/acquisition_macros.h>
 #include <libsbp/legacy/gnss.h>
 
@@ -38,7 +43,7 @@ SBP_PACK_START
  * the best carrier-to-noise (CN/0) ratio.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   float cn0;             /**< CN/0 of best point [dB Hz] */
   float cp;              /**< Code phase of best point [chips] */
   float cf;              /**< Carrier frequency of best point [hz] */
@@ -51,7 +56,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   float cn0;             /**< CN/0 of best point [dB Hz] */
   float cp;              /**< Code phase of best point [chips] */
   float cf;              /**< Carrier frequency of best point [hz] */
@@ -64,7 +69,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   float snr; /**< SNR of best point. Currently in arbitrary SNR points, but
                   will be in units of dB Hz in a later revision of this
                   message. */
@@ -79,7 +84,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   float snr; /**< SNR of best point. Currently dimensionless, but will have
                   units of dB Hz in the revision of this message. */
   float cp;  /**< Code phase of best point [chips] */
@@ -95,7 +100,7 @@ typedef struct SBP_ATTR_PACKED {
  * the performance.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 job_type; /**< SV search job type (deep, fallback, etc) */
   u8 status;   /**< Acquisition status 1 is Success, 0 is Failure */
   u16 cn0;     /**< CN0 value. Only valid if status is '1' [dB-Hz*10] */
@@ -118,7 +123,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 job_type; /**< SV search job type (deep, fallback, etc) */
   u8 status;   /**< Acquisition status 1 is Success, 0 is Failure */
   u16 cn0;     /**< CN0 value. Only valid if status is '1' [dB-Hz*10] */
@@ -142,7 +147,7 @@ typedef struct SBP_ATTR_PACKED {
  * is used to debug and measure the performance.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   acq_sv_profile_t
       acq_sv_profile[0]; /**< SV profiles during acquisition time */
 } msg_acq_sv_profile_t;
@@ -152,7 +157,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   acq_sv_profile_dep_t acq_sv_profile[0]; /**< SV profiles during acquisition
                                                time */
 } msg_acq_sv_profile_dep_t;

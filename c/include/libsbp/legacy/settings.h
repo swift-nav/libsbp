@@ -49,6 +49,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/settings_macros.h>
 
 SBP_PACK_START
@@ -70,7 +75,7 @@ SBP_PACK_START
  * "solution\0soln_freq\010\0".
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with
                         contents "SECTION_SETTING\0SETTING\0VALUE\0" */
 } msg_settings_write_t;
@@ -85,7 +90,7 @@ typedef struct SBP_ATTR_PACKED {
  * that could be sent from device is "solution\0soln_freq\010\0".
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 status;       /**< Write status */
   char setting[0]; /**< A NULL-terminated and delimited string with contents
                         "SECTION_SETTING\0SETTING\0VALUE\0" */
@@ -103,7 +108,7 @@ typedef struct SBP_ATTR_PACKED {
  * 0x00A5).
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with
                         contents "SECTION_SETTING\0SETTING\0" */
 } msg_settings_read_req_t;
@@ -118,7 +123,7 @@ typedef struct SBP_ATTR_PACKED {
  * that could be sent from device is "solution\0soln_freq\010\0".
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with
                         contents "SECTION_SETTING\0SETTING\0VALUE\0" */
 } msg_settings_read_resp_t;
@@ -129,7 +134,7 @@ typedef struct SBP_ATTR_PACKED {
  * will respond to this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP".
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 index; /**< An index into the device settings, with values ranging
                   from 0 to length(settings). */
 } msg_settings_read_by_index_req_t;
@@ -148,7 +153,7 @@ typedef struct SBP_ATTR_PACKED {
  * "simulator\0enabled\0True\0enum:True,False\0".
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 index;       /**< An index into the device settings, with values ranging
                         from 0 to length(settings) */
   char setting[0]; /**< A NULL-terminated and delimited string with contents
@@ -167,7 +172,7 @@ typedef struct SBP_ATTR_PACKED {
  * setting to set the initial value.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   char setting[0]; /**< A NULL-terminated and delimited string with contents
                         "SECTION_SETTING\0SETTING\0VALUE". */
 } msg_settings_register_t;
@@ -180,7 +185,7 @@ typedef struct SBP_ATTR_PACKED {
  * a different value.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 status;       /**< Register status */
   char setting[0]; /**< A NULL-terminated and delimited string with contents
                         "SECTION_SETTING\0SETTING\0VALUE". The meaning of

@@ -25,6 +25,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/orientation_macros.h>
 
 SBP_PACK_START
@@ -37,7 +42,7 @@ SBP_PACK_START
  * that time-matched RTK mode is used when the base station is moving.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;     /**< GPS Time of Week [ms] */
   u32 heading; /**< Heading [mdeg] */
   u8 n_sats;   /**< Number of satellites used in solution */
@@ -54,7 +59,7 @@ typedef struct SBP_ATTR_PACKED {
  * Duro.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;          /**< GPS Time of Week [ms] */
   s32 w;            /**< Real component [2^-31] */
   s32 x;            /**< 1st imaginary component [2^-31] */
@@ -77,7 +82,7 @@ typedef struct SBP_ATTR_PACKED {
  * or Duro.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;   /**< GPS Time of Week [ms] */
   s32 roll;  /**< rotation about the forward axis of the vehicle [microdegrees]
               */
@@ -104,7 +109,7 @@ typedef struct SBP_ATTR_PACKED {
  * Swift Products and is not produced by Piksi Multi or Duro.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;  /**< GPS Time of Week [ms] */
   s32 x;    /**< angular rate about x axis [microdegrees/s] */
   s32 y;    /**< angular rate about y axis [microdegrees/s] */

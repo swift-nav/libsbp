@@ -15,8 +15,9 @@
 // not modify by hand!
 
 #include <check.h>
+#include <libsbp/legacy/api.h>
 #include <libsbp/legacy/observation.h>
-#include <sbp.h>
+#include <libsbp/sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

@@ -15,15 +15,13 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE("The legacy libsbp API has been deprecated and will be removed in "
+            "version 6. Do not use any types or functions from this header in "
+            "new code, transition existing code to use the libsbp V4 API")
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/** SBP callback function prototype definitions. */
-typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
-typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
-                                     u8 payload_len, u8 payload[],
-                                     u16 frame_len, u8 frame[], void *context);
 
 /** Register a payload callback for a message type.
  *
@@ -41,10 +39,11 @@ typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
  *         `SBP_CALLBACK_ERROR` if the callback was already
  *         registered for that message type.
  */
-SBP_EXPORT s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
-                         sbp_msg_callbacks_node_t *node);
+SBP_DEPRECATED SBP_EXPORT s8 sbp_payload_callback_register(
+    sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, void *context,
+    sbp_msg_callbacks_node_t *node);
 
- /** Register a frame callback for a msg_type.
+/** Register a frame callback for a msg_type.
  *
  * \param s        Pointer to sbp_state
  * \param cb       Pointer to message callback function
@@ -56,9 +55,9 @@ SBP_EXPORT s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_ms
  *         `SBP_CALLBACK_ERROR` if the if callback was already
  *         registered for that message type.
  */
-SBP_EXPORT s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
-                               sbp_frame_callback_t cb, void* context,
-                               sbp_msg_callbacks_node_t *node);
+SBP_DEPRECATED SBP_EXPORT s8 sbp_frame_callback_register(
+    sbp_state_t *s, u16 msg_type, sbp_frame_callback_t cb, void *context,
+    sbp_msg_callbacks_node_t *node);
 
 /** Register a frame callback for ANY message.
  *
@@ -69,8 +68,9 @@ SBP_EXPORT s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
  * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
  *         `SBP_CALLBACK_ERROR` if the node already exists
  */
-SBP_EXPORT s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
-                                 void *context, sbp_msg_callbacks_node_t *node);
+SBP_DEPRECATED SBP_EXPORT s8 sbp_all_payload_callback_register(
+    sbp_state_t *s, sbp_frame_callback_t cb, void *context,
+    sbp_msg_callbacks_node_t *node);
 
 /** Directly process an SBP frame.
  * Use this function to directly process the entire SBP frame after
@@ -79,21 +79,22 @@ SBP_EXPORT s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callba
  *
  * \param s           State structure
  * \param sender_id   SBP message sender id
- * \param msg_type    SBP message type. Type SBP_MSG_ALL will fire for all messages.
- * \param payload_len SBP message length
- * \param payload     SBP Message payload
- * \param frame_len   Length of ENTIRE frame (from header to CRC).  Max of 263.
- * \param frame       Pointer to the entire SBP frame (stored on state struct)
- * \param cb_mask     Bitmask defining which callbacks to include/exclude from
- *                    processing. Use SBP_CALLBACK_ALL_MASK for all callback
+ * \param msg_type    SBP message type. Type SBP_MSG_ALL will fire for all
+ * messages. \param payload_len SBP message length \param payload     SBP
+ * Message payload \param frame_len   Length of ENTIRE frame (from header to
+ * CRC).  Max of 263. \param frame       Pointer to the entire SBP frame (stored
+ * on state struct) \param cb_mask     Bitmask defining which callbacks to
+ * include/exclude from processing. Use SBP_CALLBACK_ALL_MASK for all callback
  *                    types or construct custom mask using
  *                    SBP_CALLBACK_FLAG(cb_type).
- * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed
- *          SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no
- *          associated callback.
+ * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback
+ * executed SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
+ * callback.
  */
-SBP_EXPORT s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
-                     u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask);
+SBP_DEPRECATED SBP_EXPORT s8 sbp_frame_process(sbp_state_t *s, u16 sender_id,
+                                               u16 msg_type, u8 payload_len,
+                                               u8 payload[], u16 frame_len,
+                                               u8 frame[], u8 cb_mask);
 
 /** Directly process an SBP message.
  * If a SBP message has already been decoded (for example, from a binary
@@ -104,12 +105,13 @@ SBP_EXPORT s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
  * \param msg_type  SBP message type
  * \param msg_len   SBP message length
  * \param payload   SBP message payload
- * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed,
- *         `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
- *         callback.
+ * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback
+ * executed, `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no
+ * associated callback.
  */
-SBP_EXPORT s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
-    u8 payload[]);
+SBP_DEPRECATED SBP_EXPORT s8 sbp_payload_process(sbp_state_t *s, u16 sender_id,
+                                                 u16 msg_type, u8 msg_len,
+                                                 u8 payload[]);
 
 /** Send SBP messages.
  * Takes an SBP message payload, type and sender ID then writes a message to
@@ -140,12 +142,13 @@ SBP_EXPORT s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u
  * \return `SBP_OK` (0) if successful, `SBP_WRITE_ERROR` if the message could
  *         not be sent or was only partially sent.
  */
-SBP_EXPORT s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
-                    sbp_write_fn_t write);
+SBP_DEPRECATED SBP_EXPORT s8 sbp_payload_send(sbp_state_t *s, u16 msg_type,
+                                              u16 sender_id, u8 len,
+                                              u8 *payload,
+                                              sbp_write_fn_t write);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* LIBSBP_LEGACY_API_H */
-

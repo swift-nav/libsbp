@@ -25,6 +25,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/logging_macros.h>
 
 SBP_PACK_START
@@ -36,7 +41,7 @@ SBP_PACK_START
  * DEBUG, INFO logging levels.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 level;     /**< Logging level */
   char text[0]; /**< Human-readable string */
 } msg_log_t;
@@ -53,7 +58,7 @@ typedef struct SBP_ATTR_PACKED {
  * are implementation defined.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 source;         /**< source identifier */
   u8 protocol;       /**< protocol identifier */
   u8 fwd_payload[0]; /**< variable length wrapped binary message */
@@ -64,7 +69,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   char text[0]; /**< Human-readable string */
 } msg_print_dep_t;
 

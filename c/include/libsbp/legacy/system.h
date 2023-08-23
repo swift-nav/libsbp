@@ -25,6 +25,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/system_macros.h>
 
 SBP_PACK_START
@@ -36,7 +41,7 @@ SBP_PACK_START
  * ready to respond to commands or configuration requests.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 cause;        /**< Cause of startup */
   u8 startup_type; /**< Startup type */
   u16 reserved;    /**< Reserved */
@@ -49,7 +54,7 @@ typedef struct SBP_ATTR_PACKED {
  * corrections packet.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 flags;       /**< Status flags */
   u16 latency;    /**< Latency of observation receipt [deci-seconds] */
   u8 num_signals; /**< Number of signals from base station */
@@ -69,7 +74,7 @@ typedef struct SBP_ATTR_PACKED {
  * should be inspected.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 flags; /**< Status flags */
 } msg_heartbeat_t;
 
@@ -79,7 +84,7 @@ typedef struct SBP_ATTR_PACKED {
  * is reported as initializing, the specific state should be ignored.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 component; /**< Identity of reporting subsystem */
   u8 generic;    /**< Generic form status report */
   u8 specific;   /**< Subsystem specific status code */
@@ -97,7 +102,7 @@ typedef struct SBP_ATTR_PACKED {
  * Refer to product documentation for details.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 reporting_system;          /**< Identity of reporting system */
   u16 sbp_version;               /**< SBP protocol version */
   u32 sequence;                  /**< Increments on each status report sent */
@@ -113,7 +118,7 @@ typedef struct SBP_ATTR_PACKED {
  * specific state should be ignored.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 uptime; /**< Milliseconds since system startup */
   sub_system_report_t report;
 } status_journal_item_t;
@@ -125,7 +130,7 @@ typedef struct SBP_ATTR_PACKED {
  * purposes.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 reporting_system;     /**< Identity of reporting system */
   u16 sbp_version;          /**< SBP protocol version */
   u32 total_status_reports; /**< Total number of status reports sent since
@@ -143,7 +148,7 @@ typedef struct SBP_ATTR_PACKED {
  * initialization of the inertial navigation system.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 flags; /**< Status flags */
 } msg_ins_status_t;
 
@@ -154,7 +159,7 @@ typedef struct SBP_ATTR_PACKED {
  * It is intended to be a low rate message for status purposes.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 id;             /**< Index representing the type of telemetry in use.  It
                           is implementation defined. */
   char telemetry[0]; /**< Comma separated list of values as defined by the
@@ -168,7 +173,7 @@ typedef struct SBP_ATTR_PACKED {
  * lower rate than the MSG_CSAC_TELEMETRY.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 id;                    /**< Index representing the type of telemetry in
                                  use.  It is implementation defined. */
   char telemetry_labels[0]; /**< Comma separated list of telemetry field
@@ -182,7 +187,7 @@ typedef struct SBP_ATTR_PACKED {
  * as new types of measurements are being added.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   u8 gnsspos;    /**< GNSS position update status flags */
   u8 gnssvel;    /**< GNSS velocity update status flags */
@@ -199,7 +204,7 @@ typedef struct SBP_ATTR_PACKED {
  * messages) to GNSS time for the sender producing this message.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s16 weeks;        /**< Weeks portion of the time offset [weeks] */
   s32 milliseconds; /**< Milliseconds portion of the time offset [ms] */
   s16 microseconds; /**< Microseconds portion of the time offset [microseconds]
@@ -222,7 +227,7 @@ typedef struct SBP_ATTR_PACKED {
  * sender ID of the respective sensor data.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u64 time; /**< Local time in microseconds [microseconds] */
   u8 flags; /**< Status flags */
 } msg_pps_time_t;
@@ -235,7 +240,7 @@ typedef struct SBP_ATTR_PACKED {
  * anytime a sensor update is being processed.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 time;            /**< Update timestamp in milliseconds. [milliseconds] */
   u8 sensor_type;      /**< Sensor type */
   u16 sensor_id;       /**< Sensor identifier */
@@ -253,7 +258,7 @@ typedef struct SBP_ATTR_PACKED {
  * Group.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 group_id;       /**< Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2
                           is Gnss */
   u8 flags;          /**< Status flags (reserved) */

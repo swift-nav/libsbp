@@ -25,6 +25,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/legacy/gnss.h>
 #include <libsbp/ndb_macros.h>
 
@@ -36,7 +41,7 @@ SBP_PACK_START
  * message could also be sent out when fetching an object from NDB.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u64 recv_time;  /**< HW time in milliseconds. [ms] */
   u8 event;       /**< Event type. */
   u8 object_type; /**< Event object type. */

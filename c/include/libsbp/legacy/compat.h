@@ -16,49 +16,59 @@
 #include <libsbp/common.h>
 #include <libsbp/legacy/api.h>
 
+SBP_MESSAGE("The legacy libsbp API has been deprecated and will be removed in "
+            "version 6. Do not use any types or functions from this header in "
+            "new code, transition existing code to use the libsbp V4 API")
 
 #ifdef __cplusplus
 extern "C" {
-#endif 
+#endif
 
 SBP_DEPRECATED
-static inline s8 sbp_register_callback(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context, sbp_msg_callbacks_node_t *node)
-{
+static inline s8 sbp_register_callback(sbp_state_t *s, u16 msg_type,
+                                       sbp_msg_callback_t cb, void *context,
+                                       sbp_msg_callbacks_node_t *node) {
   return sbp_payload_callback_register(s, msg_type, cb, context, node);
 }
 
 SBP_DEPRECATED
-static inline s8 sbp_register_frame_callback(sbp_state_t* s, u16 msg_type, sbp_frame_callback_t cb, void* context, sbp_msg_callbacks_node_t *node)
-{
+static inline s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
+                                             sbp_frame_callback_t cb,
+                                             void *context,
+                                             sbp_msg_callbacks_node_t *node) {
   return sbp_frame_callback_register(s, msg_type, cb, context, node);
 }
 
 SBP_DEPRECATED
-static inline s8 sbp_register_all_msg_callback(sbp_state_t* s, sbp_frame_callback_t cb, void* context, sbp_msg_callbacks_node_t *node)
-{
+static inline s8 sbp_register_all_msg_callback(sbp_state_t *s,
+                                               sbp_frame_callback_t cb,
+                                               void *context,
+                                               sbp_msg_callbacks_node_t *node) {
   return sbp_all_payload_callback_register(s, cb, context, node);
 }
 
 SBP_DEPRECATED
-static inline s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask)
-{
-  return sbp_frame_process(s, sender_id, msg_type, payload_len, payload, frame_len, frame, cb_mask);
+static inline s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
+                                   u8 payload_len, u8 payload[], u16 frame_len,
+                                   u8 frame[], u8 cb_mask) {
+  return sbp_frame_process(s, sender_id, msg_type, payload_len, payload,
+                           frame_len, frame, cb_mask);
 }
 
 SBP_DEPRECATED
-static inline s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len, u8 payload[])
-{
+static inline s8 sbp_process_payload(sbp_state_t *s, u16 sender_id,
+                                     u16 msg_type, u8 msg_len, u8 payload[]) {
   return sbp_payload_process(s, sender_id, msg_type, msg_len, payload);
 }
 
 SBP_DEPRECATED
-static inline s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 payload[], sbp_write_fn_t write)
-{
+static inline s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id,
+                                  u8 len, u8 payload[], sbp_write_fn_t write) {
   return sbp_payload_send(s, msg_type, sender_id, len, payload, write);
 }
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif /* LIBSBP_LEGACY_COMPAT_H */

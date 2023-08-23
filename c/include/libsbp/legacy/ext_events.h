@@ -26,6 +26,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/ext_events_macros.h>
 
 SBP_PACK_START
@@ -36,7 +41,7 @@ SBP_PACK_START
  * it was and whether it was rising or falling.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 wn;  /**< GPS week number [weeks] */
   u32 tow; /**< GPS time of week rounded to the nearest millisecond [ms] */
   s32 ns_residual; /**< Nanosecond residual of millisecond-rounded TOW

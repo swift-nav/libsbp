@@ -11,7 +11,8 @@
  */
 
 #include <check.h>
-#include <sbp.h>
+#include <libsbp/legacy/compat.h>
+#include <libsbp/sbp.h>
 #include <stdio.h>
 
 int DUMMY_MEMORY_FOR_CALLBACKS = (int)0xdeadbeef;
@@ -20,14 +21,14 @@ int DUMMY_MEMORY_FOR_IO = (int)0xdead0000;
 u32 dummy_wr = 0u;
 u32 dummy_rd = 0u;
 u8 dummy_buff[1024];
-void* last_io_context;
+void *last_io_context;
 
 void dummy_reset(void) {
   dummy_rd = dummy_wr = 0;
   memset(dummy_buff, 0, sizeof(dummy_buff));
 }
 
-s32 dummy_write(u8* buff, u32 n, void* context) {
+s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
   u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
@@ -35,7 +36,7 @@ s32 dummy_write(u8* buff, u32 n, void* context) {
   return (s32)real_n;
 }
 
-s32 dummy_read(u8* buff, u32 n, void* context) {
+s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
   u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
@@ -43,7 +44,7 @@ s32 dummy_read(u8* buff, u32 n, void* context) {
   return (s32)real_n;
 }
 
-s32 dummy_read_single_byte(u8* buff, u32 n, void* context) {
+s32 dummy_read_single_byte(u8 *buff, u32 n, void *context) {
   (void)n;
   last_io_context = context;
   memcpy(buff, dummy_buff + dummy_rd, 1);
@@ -51,7 +52,7 @@ s32 dummy_read_single_byte(u8* buff, u32 n, void* context) {
   return 1;
 }
 
-s32 dummy_write_single_byte(u8* buff, u32 n, void* context) {
+s32 dummy_write_single_byte(u8 *buff, u32 n, void *context) {
   (void)n;
   last_io_context = context;
   memcpy(dummy_buff + dummy_wr, buff, 1);
@@ -59,7 +60,7 @@ s32 dummy_write_single_byte(u8* buff, u32 n, void* context) {
   return 1;
 }
 
-void printy_callback(u16 sender_id, u8 len, u8 msg[], void* context) {
+void printy_callback(u16 sender_id, u8 len, u8 msg[], void *context) {
   (void)context;
   printf("MSG id: 0x%04X, len: %d\n", sender_id, len);
   if (len > 0) {
@@ -72,7 +73,7 @@ u32 n_callbacks_logged;
 u16 last_sender_id;
 u8 last_len;
 u8 last_msg[256];
-void* last_context;
+void *last_context;
 
 u32 n_frame_callbacks_logged;
 u16 last_frame_sender_id;
@@ -80,7 +81,7 @@ u16 last_frame_msg_type;
 u8 last_frame_payload_len;
 u16 last_frame_len;
 u8 last_frame[256 + 8];
-void* last_frame_context;
+void *last_frame_context;
 
 void logging_reset(void) {
   n_callbacks_logged = 0;
@@ -97,7 +98,7 @@ void logging_reset(void) {
   memset(last_frame, 0, sizeof(last_frame));
 }
 
-void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context) {
+void logging_callback(u16 sender_id, u8 len, u8 msg[], void *context) {
   n_callbacks_logged++;
   last_sender_id = sender_id;
   last_len = len;
@@ -109,7 +110,7 @@ void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context) {
 
 void frame_logging_callback(u16 sender_id, u16 msg_type, u8 payload_len,
                             u8 payload[], u16 frame_len, u8 frame[],
-                            void* context) {
+                            void *context) {
   (void)payload;
   n_frame_callbacks_logged++;
   last_frame_sender_id = sender_id;
@@ -122,14 +123,14 @@ void frame_logging_callback(u16 sender_id, u16 msg_type, u8 payload_len,
   /*printy_callback(sender_id, len, msg);*/
 }
 
-void test_callback(u16 sender_id, u8 len, u8 msg[], void* context) {
+void test_callback(u16 sender_id, u8 len, u8 msg[], void *context) {
   /* Do nothing. */
   (void)sender_id;
   (void)len;
   (void)msg;
   (void)context;
 }
-void test_callback2(u16 sender_id, u8 len, u8 msg[], void* context) {
+void test_callback2(u16 sender_id, u8 len, u8 msg[], void *context) {
   /* Do nothing. */
   (void)sender_id;
   (void)len;
@@ -139,7 +140,7 @@ void test_callback2(u16 sender_id, u8 len, u8 msg[], void* context) {
 
 void test_frame_callback(u16 sender_id, u16 msg_type, u8 payload_len,
                          u8 payload[], u16 frame_len, u8 frame[],
-                         void* context) {
+                         void *context) {
   /* Do nothing. */
   (void)sender_id;
   (void)msg_type;
@@ -152,7 +153,7 @@ void test_frame_callback(u16 sender_id, u16 msg_type, u8 payload_len,
 
 void test_frame_callback2(u16 sender_id, u16 msg_type, u8 payload_len,
                           u8 payload[], u16 frame_len, u8 frame[],
-                          void* context) {
+                          void *context) {
   /* Do nothing. */
   (void)sender_id;
   (void)msg_type;
@@ -163,7 +164,7 @@ void test_frame_callback2(u16 sender_id, u16 msg_type, u8 payload_len,
   (void)context;
 }
 
-sbp_msg_callbacks_node_t* sbp_find_callback(sbp_state_t* s, u16 msg_type) {
+sbp_msg_callbacks_node_t *sbp_find_callback(sbp_state_t *s, u16 msg_type) {
   /* If our list is empty, return NULL. */
   if (!s->sbp_msg_callbacks_head) return 0;
 
@@ -171,7 +172,7 @@ sbp_msg_callbacks_node_t* sbp_find_callback(sbp_state_t* s, u16 msg_type) {
    * function pointer if we find a node with a matching
    * message id.
    */
-  sbp_msg_callbacks_node_t* p = s->sbp_msg_callbacks_head;
+  sbp_msg_callbacks_node_t *p = s->sbp_msg_callbacks_head;
   do
     if (p->msg_type == msg_type) return p;
 
@@ -390,7 +391,7 @@ START_TEST(test_sbp_frame) {
                 "frame len decoded incorrectly");
   ck_assert_msg(last_frame_msg_type == 0x2269, "msg_type decoded incorrectly");
   char test[1024];
-  char* ptr = test;
+  char *ptr = test;
   for (int i = 0; i < last_frame_len; i++) {
     ptr += sprintf(ptr, "%02X", last_frame[i]);
   }
@@ -852,10 +853,10 @@ START_TEST(test_msg_buff_backwards_compatibility) {
 }
 END_TEST
 
-Suite* sbp_suite(void) {
-  Suite* s = suite_create("SBP");
+Suite *sbp_suite(void) {
+  Suite *s = suite_create("SBP");
 
-  TCase* tc_core = tcase_create("Core");
+  TCase *tc_core = tcase_create("Core");
 
   tcase_add_test(tc_core, test_msg_buff_backwards_compatibility);
   tcase_add_test(tc_core, test_callbacks);

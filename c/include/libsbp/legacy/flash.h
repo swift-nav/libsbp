@@ -28,6 +28,11 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "Legacy SBP types have been deprecated and will be remove in version 6. Do "
+    "not use any types from this file in new code, alter existing code to make "
+    "use of the libsbp V4 API")
+
 #include <libsbp/flash_macros.h>
 
 SBP_PACK_START
@@ -41,7 +46,7 @@ SBP_PACK_START
  * addresses must be erased before addresses can be programmed.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 target;        /**< Target flags */
   u8 addr_start[3]; /**< Starting address offset to program [bytes] */
   u8 addr_len;      /**< Length of set of addresses to program, counting up
@@ -58,7 +63,7 @@ typedef struct SBP_ATTR_PACKED {
  * failure.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 response; /**< Response flags */
 } msg_flash_done_t;
 
@@ -72,7 +77,7 @@ typedef struct SBP_ATTR_PACKED {
  * allowed range.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 target;        /**< Target flags */
   u8 addr_start[3]; /**< Starting address offset to read from [bytes] */
   u8 addr_len;      /**< Length of set of addresses to read, counting up from
@@ -89,7 +94,7 @@ typedef struct SBP_ATTR_PACKED {
  * allowed range.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 target;        /**< Target flags */
   u8 addr_start[3]; /**< Starting address offset to read from [bytes] */
   u8 addr_len;      /**< Length of set of addresses to read, counting up from
@@ -104,7 +109,7 @@ typedef struct SBP_ATTR_PACKED {
  * FLASH_INVALID_FLASH (1) if the flash specified is invalid.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 target;      /**< Target flags */
   u32 sector_num; /**< Flash sector number to erase (0-11 for the STM, 0-15
                        for the M25) */
@@ -116,7 +121,7 @@ typedef struct SBP_ATTR_PACKED {
  * replies with a MSG_FLASH_DONE message.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 sector; /**< Flash sector number to lock */
 } msg_stm_flash_lock_sector_t;
 
@@ -126,7 +131,7 @@ typedef struct SBP_ATTR_PACKED {
  * device replies with a MSG_FLASH_DONE message.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 sector; /**< Flash sector number to unlock */
 } msg_stm_flash_unlock_sector_t;
 
@@ -146,7 +151,7 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 stm_id[12]; /**< Device unique ID */
 } msg_stm_unique_id_resp_t;
 
@@ -156,7 +161,7 @@ typedef struct SBP_ATTR_PACKED {
  * device replies with a MSG_FLASH_DONE message.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 status[1]; /**< Byte to write to the M25 flash status register */
 } msg_m25_flash_write_status_t;
 
