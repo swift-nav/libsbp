@@ -1,5 +1,14 @@
 # Changelog
 
+## [v5.0.1](https://github.com/swift-nav/libsbp/tree/v5.0.1) (2023-08-24)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.0...v5.0.1)
+
+**Merged pull requests:**
+
+- Remove SBP\_SENDER\_ID: it is not used anywhere and can conflict with user code [\#1355](https://github.com/swift-nav/libsbp/pull/1355) ([dgburr](https://github.com/dgburr))
+- update the howto [\#1354](https://github.com/swift-nav/libsbp/pull/1354) ([pcrumley](https://github.com/pcrumley))
+
 ## [v5.0.0](https://github.com/swift-nav/libsbp/tree/v5.0.0) (2023-08-10)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.17.0...v5.0.0)
