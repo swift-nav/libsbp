@@ -459,7 +459,7 @@ mod tests {
         let timeout_duration = Duration::from_secs(2);
         let now = Instant::now();
         let mut messages = iter_messages_with_timeout(rdr, timeout_duration);
-        assert!(matches!(messages.next().unwrap(), Err(Error::IoError(_))));
+        assert_eq!(messages.next().unwrap(), Err(Error::IoError(_)));
         assert!(now.elapsed() >= timeout_duration);
     }
 
@@ -494,7 +494,7 @@ mod tests {
         let data = vec![0u8; 1000];
         let mut bytes = BytesMut::from(&data[..]);
         assert_eq!(bytes.len(), 1000);
-        assert!(matches!(FramerImpl.decode(&mut bytes).unwrap(), None));
+        assert_eq!(FramerImpl.decode(&mut bytes).unwrap(), None);
     }
 
     #[test]
@@ -583,7 +583,7 @@ mod tests {
         let packet: Vec<_> = invalid_message_bytes
             .iter()
             .cloned()
-            .chain(valid_message.into_iter())
+            .chain(valid_message)
             .collect();
 
         let mut msgs = iter_messages(Cursor::new(packet));
