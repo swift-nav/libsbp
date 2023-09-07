@@ -1,5 +1,16 @@
 # Changelog
 
+## [v5.0.2](https://github.com/swift-nav/libsbp/tree/v5.0.2) (2023-09-07)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.1...v5.0.2)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - Enable starling-core test libs \[AP-454\] \(\#166\) [\#1360](https://github.com/swift-nav/libsbp/pull/1360) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- fix bug [\#1359](https://github.com/swift-nav/libsbp/pull/1359) ([pcrumley](https://github.com/pcrumley))
+- fix new clippy warning in rust 1.71 [\#1358](https://github.com/swift-nav/libsbp/pull/1358) ([pcrumley](https://github.com/pcrumley))
+- Auto submodule update: cmake - Update CODEOWNERS \(\#163\) [\#1357](https://github.com/swift-nav/libsbp/pull/1357) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+
 ## [v5.0.1](https://github.com/swift-nav/libsbp/tree/v5.0.1) (2023-08-24)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.0...v5.0.1)
