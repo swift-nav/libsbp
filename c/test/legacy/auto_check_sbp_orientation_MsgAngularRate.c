@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -194,16 +194,20 @@ START_TEST(test_legacy_auto_check_sbp_orientation_MsgAngularRate) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->tow == 2,
-                  "incorrect value for tow, expected 2, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->x == 2, "incorrect value for x, expected 2, is %d",
-                  check_msg->x);
-    ck_assert_msg(check_msg->y == 5, "incorrect value for y, expected 5, is %d",
-                  check_msg->y);
-    ck_assert_msg(check_msg->z == 2, "incorrect value for z, expected 2, is %d",
-                  check_msg->z);
+                  "incorrect value for tow, expected 2, is %" PRId64,
+                  (int64_t)check_msg->tow);
+    ck_assert_msg(check_msg->x == 2,
+                  "incorrect value for x, expected 2, is %" PRId64,
+                  (int64_t)check_msg->x);
+    ck_assert_msg(check_msg->y == 5,
+                  "incorrect value for y, expected 5, is %" PRId64,
+                  (int64_t)check_msg->y);
+    ck_assert_msg(check_msg->z == 2,
+                  "incorrect value for z, expected 2, is %" PRId64,
+                  (int64_t)check_msg->z);
   }
 }
 END_TEST

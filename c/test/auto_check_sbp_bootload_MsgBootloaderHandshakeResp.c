@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -141,8 +141,8 @@ START_TEST(test_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
     ck_assert_msg(
         last_msg.msg.bootloader_handshake_resp.flags == 0,
         "incorrect value for last_msg.msg.bootloader_handshake_resp.flags, "
-        "expected 0, is %d",
-        last_msg.msg.bootloader_handshake_resp.flags);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.bootloader_handshake_resp.flags);
 
     ck_assert_msg(sbp_msg_bootloader_handshake_resp_version_encoded_len(
                       &last_msg.msg.bootloader_handshake_resp) == 5,

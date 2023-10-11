@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -229,8 +229,8 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgPosLlhCovGnss) {
         "incorrect value for cov_n_n, expected 0.00748897157609, is %f",
         check_msg->cov_n_n);
     ck_assert_msg(check_msg->flags == 4,
-                  "incorrect value for flags, expected 4, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 4, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg((check_msg->height * 100 - -17.3938212478 * 100) < 0.05,
                   "incorrect value for height, expected -17.3938212478, is %f",
                   check_msg->height);
@@ -241,11 +241,11 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgPosLlhCovGnss) {
                   "incorrect value for lon, expected -122.28650381, is %f",
                   check_msg->lon);
     ck_assert_msg(check_msg->n_sats == 18,
-                  "incorrect value for n_sats, expected 18, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 18, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 501867800,
-                  "incorrect value for tow, expected 501867800, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 501867800, is %" PRId64,
+                  (int64_t)check_msg->tow);
   }
 }
 END_TEST

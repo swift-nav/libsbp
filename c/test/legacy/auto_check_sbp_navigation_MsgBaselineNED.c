@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -196,28 +196,29 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgBaselineNED) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->d == 32153,
-                  "incorrect value for d, expected 32153, is %d", check_msg->d);
+                  "incorrect value for d, expected 32153, is %" PRId64,
+                  (int64_t)check_msg->d);
     ck_assert_msg(check_msg->e == -1681229,
-                  "incorrect value for e, expected -1681229, is %d",
-                  check_msg->e);
+                  "incorrect value for e, expected -1681229, is %" PRId64,
+                  (int64_t)check_msg->e);
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
-                  "incorrect value for h_accuracy, expected 0, is %d",
-                  check_msg->h_accuracy);
+                  "incorrect value for h_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->h_accuracy);
     ck_assert_msg(check_msg->n == 816073,
-                  "incorrect value for n, expected 816073, is %d",
-                  check_msg->n);
+                  "incorrect value for n, expected 816073, is %" PRId64,
+                  (int64_t)check_msg->n);
     ck_assert_msg(check_msg->n_sats == 14,
-                  "incorrect value for n_sats, expected 14, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 14, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 326825000,
-                  "incorrect value for tow, expected 326825000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326825000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
-                  "incorrect value for v_accuracy, expected 0, is %d",
-                  check_msg->v_accuracy);
+                  "incorrect value for v_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -311,28 +312,29 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgBaselineNED) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->d == 32622,
-                  "incorrect value for d, expected 32622, is %d", check_msg->d);
+                  "incorrect value for d, expected 32622, is %" PRId64,
+                  (int64_t)check_msg->d);
     ck_assert_msg(check_msg->e == -1681214,
-                  "incorrect value for e, expected -1681214, is %d",
-                  check_msg->e);
+                  "incorrect value for e, expected -1681214, is %" PRId64,
+                  (int64_t)check_msg->e);
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
-                  "incorrect value for h_accuracy, expected 0, is %d",
-                  check_msg->h_accuracy);
+                  "incorrect value for h_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->h_accuracy);
     ck_assert_msg(check_msg->n == 815970,
-                  "incorrect value for n, expected 815970, is %d",
-                  check_msg->n);
+                  "incorrect value for n, expected 815970, is %" PRId64,
+                  (int64_t)check_msg->n);
     ck_assert_msg(check_msg->n_sats == 15,
-                  "incorrect value for n_sats, expected 15, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 15, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 326826000,
-                  "incorrect value for tow, expected 326826000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326826000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
-                  "incorrect value for v_accuracy, expected 0, is %d",
-                  check_msg->v_accuracy);
+                  "incorrect value for v_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -426,28 +428,29 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgBaselineNED) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->d == 32750,
-                  "incorrect value for d, expected 32750, is %d", check_msg->d);
+                  "incorrect value for d, expected 32750, is %" PRId64,
+                  (int64_t)check_msg->d);
     ck_assert_msg(check_msg->e == -1681235,
-                  "incorrect value for e, expected -1681235, is %d",
-                  check_msg->e);
+                  "incorrect value for e, expected -1681235, is %" PRId64,
+                  (int64_t)check_msg->e);
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
-                  "incorrect value for h_accuracy, expected 0, is %d",
-                  check_msg->h_accuracy);
+                  "incorrect value for h_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->h_accuracy);
     ck_assert_msg(check_msg->n == 815759,
-                  "incorrect value for n, expected 815759, is %d",
-                  check_msg->n);
+                  "incorrect value for n, expected 815759, is %" PRId64,
+                  (int64_t)check_msg->n);
     ck_assert_msg(check_msg->n_sats == 15,
-                  "incorrect value for n_sats, expected 15, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 15, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 326827000,
-                  "incorrect value for tow, expected 326827000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326827000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
-                  "incorrect value for v_accuracy, expected 0, is %d",
-                  check_msg->v_accuracy);
+                  "incorrect value for v_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -541,28 +544,29 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgBaselineNED) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->d == 32559,
-                  "incorrect value for d, expected 32559, is %d", check_msg->d);
+                  "incorrect value for d, expected 32559, is %" PRId64,
+                  (int64_t)check_msg->d);
     ck_assert_msg(check_msg->e == -1681357,
-                  "incorrect value for e, expected -1681357, is %d",
-                  check_msg->e);
+                  "incorrect value for e, expected -1681357, is %" PRId64,
+                  (int64_t)check_msg->e);
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
-                  "incorrect value for h_accuracy, expected 0, is %d",
-                  check_msg->h_accuracy);
+                  "incorrect value for h_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->h_accuracy);
     ck_assert_msg(check_msg->n == 815190,
-                  "incorrect value for n, expected 815190, is %d",
-                  check_msg->n);
+                  "incorrect value for n, expected 815190, is %" PRId64,
+                  (int64_t)check_msg->n);
     ck_assert_msg(check_msg->n_sats == 15,
-                  "incorrect value for n_sats, expected 15, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 15, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 326828000,
-                  "incorrect value for tow, expected 326828000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326828000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
-                  "incorrect value for v_accuracy, expected 0, is %d",
-                  check_msg->v_accuracy);
+                  "incorrect value for v_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -656,28 +660,29 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgBaselineNED) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->d == 32421,
-                  "incorrect value for d, expected 32421, is %d", check_msg->d);
+                  "incorrect value for d, expected 32421, is %" PRId64,
+                  (int64_t)check_msg->d);
     ck_assert_msg(check_msg->e == -1681444,
-                  "incorrect value for e, expected -1681444, is %d",
-                  check_msg->e);
+                  "incorrect value for e, expected -1681444, is %" PRId64,
+                  (int64_t)check_msg->e);
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
-                  "incorrect value for h_accuracy, expected 0, is %d",
-                  check_msg->h_accuracy);
+                  "incorrect value for h_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->h_accuracy);
     ck_assert_msg(check_msg->n == 814806,
-                  "incorrect value for n, expected 814806, is %d",
-                  check_msg->n);
+                  "incorrect value for n, expected 814806, is %" PRId64,
+                  (int64_t)check_msg->n);
     ck_assert_msg(check_msg->n_sats == 15,
-                  "incorrect value for n_sats, expected 15, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 15, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 326829000,
-                  "incorrect value for tow, expected 326829000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326829000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
-                  "incorrect value for v_accuracy, expected 0, is %d",
-                  check_msg->v_accuracy);
+                  "incorrect value for v_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->v_accuracy);
   }
 }
 END_TEST

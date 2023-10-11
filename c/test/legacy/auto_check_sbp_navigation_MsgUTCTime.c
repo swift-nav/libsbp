@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -197,31 +197,32 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgUTCTime) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->day == 9,
-                  "incorrect value for day, expected 9, is %d", check_msg->day);
+                  "incorrect value for day, expected 9, is %" PRId64,
+                  (int64_t)check_msg->day);
     ck_assert_msg(check_msg->flags == 1,
-                  "incorrect value for flags, expected 1, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 1, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->hours == 19,
-                  "incorrect value for hours, expected 19, is %d",
-                  check_msg->hours);
+                  "incorrect value for hours, expected 19, is %" PRId64,
+                  (int64_t)check_msg->hours);
     ck_assert_msg(check_msg->minutes == 24,
-                  "incorrect value for minutes, expected 24, is %d",
-                  check_msg->minutes);
+                  "incorrect value for minutes, expected 24, is %" PRId64,
+                  (int64_t)check_msg->minutes);
     ck_assert_msg(check_msg->month == 4,
-                  "incorrect value for month, expected 4, is %d",
-                  check_msg->month);
+                  "incorrect value for month, expected 4, is %" PRId64,
+                  (int64_t)check_msg->month);
     ck_assert_msg(check_msg->ns == 800000000,
-                  "incorrect value for ns, expected 800000000, is %d",
-                  check_msg->ns);
+                  "incorrect value for ns, expected 800000000, is %" PRId64,
+                  (int64_t)check_msg->ns);
     ck_assert_msg(check_msg->seconds == 9,
-                  "incorrect value for seconds, expected 9, is %d",
-                  check_msg->seconds);
+                  "incorrect value for seconds, expected 9, is %" PRId64,
+                  (int64_t)check_msg->seconds);
     ck_assert_msg(check_msg->tow == 501867800,
-                  "incorrect value for tow, expected 501867800, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 501867800, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->year == 2021,
-                  "incorrect value for year, expected 2021, is %d",
-                  check_msg->year);
+                  "incorrect value for year, expected 2021, is %" PRId64,
+                  (int64_t)check_msg->year);
   }
 }
 END_TEST

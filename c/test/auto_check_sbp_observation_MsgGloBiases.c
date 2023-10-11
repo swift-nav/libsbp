@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -137,28 +137,28 @@ START_TEST(test_auto_check_sbp_observation_MsgGloBiases) {
 
     ck_assert_msg(last_msg.msg.glo_biases.l1ca_bias == 0,
                   "incorrect value for last_msg.msg.glo_biases.l1ca_bias, "
-                  "expected 0, is %d",
-                  last_msg.msg.glo_biases.l1ca_bias);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.glo_biases.l1ca_bias);
 
     ck_assert_msg(last_msg.msg.glo_biases.l1p_bias == 0,
                   "incorrect value for last_msg.msg.glo_biases.l1p_bias, "
-                  "expected 0, is %d",
-                  last_msg.msg.glo_biases.l1p_bias);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.glo_biases.l1p_bias);
 
     ck_assert_msg(last_msg.msg.glo_biases.l2ca_bias == 0,
                   "incorrect value for last_msg.msg.glo_biases.l2ca_bias, "
-                  "expected 0, is %d",
-                  last_msg.msg.glo_biases.l2ca_bias);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.glo_biases.l2ca_bias);
 
     ck_assert_msg(last_msg.msg.glo_biases.l2p_bias == 0,
                   "incorrect value for last_msg.msg.glo_biases.l2p_bias, "
-                  "expected 0, is %d",
-                  last_msg.msg.glo_biases.l2p_bias);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.glo_biases.l2p_bias);
 
-    ck_assert_msg(
-        last_msg.msg.glo_biases.mask == 0,
-        "incorrect value for last_msg.msg.glo_biases.mask, expected 0, is %d",
-        last_msg.msg.glo_biases.mask);
+    ck_assert_msg(last_msg.msg.glo_biases.mask == 0,
+                  "incorrect value for last_msg.msg.glo_biases.mask, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.glo_biases.mask);
   }
 }
 END_TEST

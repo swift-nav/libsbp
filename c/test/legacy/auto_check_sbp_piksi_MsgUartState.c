@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -214,37 +214,38 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgUartState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->latency.avg == -1,
-                  "incorrect value for latency.avg, expected -1, is %d",
-                  check_msg->latency.avg);
-    ck_assert_msg(check_msg->latency.current == -1,
-                  "incorrect value for latency.current, expected -1, is %d",
-                  check_msg->latency.current);
+                  "incorrect value for latency.avg, expected -1, is %" PRId64,
+                  (int64_t)check_msg->latency.avg);
+    ck_assert_msg(
+        check_msg->latency.current == -1,
+        "incorrect value for latency.current, expected -1, is %" PRId64,
+        (int64_t)check_msg->latency.current);
     ck_assert_msg(check_msg->latency.lmax == 0,
-                  "incorrect value for latency.lmax, expected 0, is %d",
-                  check_msg->latency.lmax);
+                  "incorrect value for latency.lmax, expected 0, is %" PRId64,
+                  (int64_t)check_msg->latency.lmax);
     ck_assert_msg(check_msg->latency.lmin == 0,
-                  "incorrect value for latency.lmin, expected 0, is %d",
-                  check_msg->latency.lmin);
+                  "incorrect value for latency.lmin, expected 0, is %" PRId64,
+                  (int64_t)check_msg->latency.lmin);
     ck_assert_msg(
         check_msg->uart_a.crc_error_count == 0,
-        "incorrect value for uart_a.crc_error_count, expected 0, is %d",
-        check_msg->uart_a.crc_error_count);
+        "incorrect value for uart_a.crc_error_count, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_a.crc_error_count);
     ck_assert_msg(
         check_msg->uart_a.io_error_count == 0,
-        "incorrect value for uart_a.io_error_count, expected 0, is %d",
-        check_msg->uart_a.io_error_count);
+        "incorrect value for uart_a.io_error_count, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_a.io_error_count);
     ck_assert_msg(
         check_msg->uart_a.rx_buffer_level == 0,
-        "incorrect value for uart_a.rx_buffer_level, expected 0, is %d",
-        check_msg->uart_a.rx_buffer_level);
+        "incorrect value for uart_a.rx_buffer_level, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_a.rx_buffer_level);
     ck_assert_msg(
         (check_msg->uart_a.rx_throughput * 100 - 0.0 * 100) < 0.05,
         "incorrect value for uart_a.rx_throughput, expected 0.0, is %f",
         check_msg->uart_a.rx_throughput);
     ck_assert_msg(
         check_msg->uart_a.tx_buffer_level == 24,
-        "incorrect value for uart_a.tx_buffer_level, expected 24, is %d",
-        check_msg->uart_a.tx_buffer_level);
+        "incorrect value for uart_a.tx_buffer_level, expected 24, is %" PRId64,
+        (int64_t)check_msg->uart_a.tx_buffer_level);
     ck_assert_msg(
         (check_msg->uart_a.tx_throughput * 100 - 0.866197228432 * 100) < 0.05,
         "incorrect value for uart_a.tx_throughput, expected 0.866197228432, is "
@@ -252,50 +253,50 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgUartState) {
         check_msg->uart_a.tx_throughput);
     ck_assert_msg(
         check_msg->uart_b.crc_error_count == 0,
-        "incorrect value for uart_b.crc_error_count, expected 0, is %d",
-        check_msg->uart_b.crc_error_count);
+        "incorrect value for uart_b.crc_error_count, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_b.crc_error_count);
     ck_assert_msg(
         check_msg->uart_b.io_error_count == 0,
-        "incorrect value for uart_b.io_error_count, expected 0, is %d",
-        check_msg->uart_b.io_error_count);
+        "incorrect value for uart_b.io_error_count, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_b.io_error_count);
     ck_assert_msg(
         check_msg->uart_b.rx_buffer_level == 0,
-        "incorrect value for uart_b.rx_buffer_level, expected 0, is %d",
-        check_msg->uart_b.rx_buffer_level);
+        "incorrect value for uart_b.rx_buffer_level, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_b.rx_buffer_level);
     ck_assert_msg(
         (check_msg->uart_b.rx_throughput * 100 - 0.0 * 100) < 0.05,
         "incorrect value for uart_b.rx_throughput, expected 0.0, is %f",
         check_msg->uart_b.rx_throughput);
     ck_assert_msg(
         check_msg->uart_b.tx_buffer_level == 40,
-        "incorrect value for uart_b.tx_buffer_level, expected 40, is %d",
-        check_msg->uart_b.tx_buffer_level);
+        "incorrect value for uart_b.tx_buffer_level, expected 40, is %" PRId64,
+        (int64_t)check_msg->uart_b.tx_buffer_level);
     ck_assert_msg(
         (check_msg->uart_b.tx_throughput * 100 - 2.9718310833 * 100) < 0.05,
         "incorrect value for uart_b.tx_throughput, expected 2.9718310833, is "
         "%f",
         check_msg->uart_b.tx_throughput);
-    ck_assert_msg(
-        check_msg->uart_ftdi.crc_error_count == 0,
-        "incorrect value for uart_ftdi.crc_error_count, expected 0, is %d",
-        check_msg->uart_ftdi.crc_error_count);
+    ck_assert_msg(check_msg->uart_ftdi.crc_error_count == 0,
+                  "incorrect value for uart_ftdi.crc_error_count, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->uart_ftdi.crc_error_count);
     ck_assert_msg(
         check_msg->uart_ftdi.io_error_count == 0,
-        "incorrect value for uart_ftdi.io_error_count, expected 0, is %d",
-        check_msg->uart_ftdi.io_error_count);
-    ck_assert_msg(
-        check_msg->uart_ftdi.rx_buffer_level == 1,
-        "incorrect value for uart_ftdi.rx_buffer_level, expected 1, is %d",
-        check_msg->uart_ftdi.rx_buffer_level);
+        "incorrect value for uart_ftdi.io_error_count, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_ftdi.io_error_count);
+    ck_assert_msg(check_msg->uart_ftdi.rx_buffer_level == 1,
+                  "incorrect value for uart_ftdi.rx_buffer_level, expected 1, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->uart_ftdi.rx_buffer_level);
     ck_assert_msg((check_msg->uart_ftdi.rx_throughput * 100 -
                    0.0352112688124 * 100) < 0.05,
                   "incorrect value for uart_ftdi.rx_throughput, expected "
                   "0.0352112688124, is %f",
                   check_msg->uart_ftdi.rx_throughput);
-    ck_assert_msg(
-        check_msg->uart_ftdi.tx_buffer_level == 81,
-        "incorrect value for uart_ftdi.tx_buffer_level, expected 81, is %d",
-        check_msg->uart_ftdi.tx_buffer_level);
+    ck_assert_msg(check_msg->uart_ftdi.tx_buffer_level == 81,
+                  "incorrect value for uart_ftdi.tx_buffer_level, expected 81, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->uart_ftdi.tx_buffer_level);
     ck_assert_msg(
         (check_msg->uart_ftdi.tx_throughput * 100 - 5.06338024139 * 100) < 0.05,
         "incorrect value for uart_ftdi.tx_throughput, expected 5.06338024139, "
@@ -412,37 +413,38 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgUartState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->latency.avg == -1,
-                  "incorrect value for latency.avg, expected -1, is %d",
-                  check_msg->latency.avg);
-    ck_assert_msg(check_msg->latency.current == -1,
-                  "incorrect value for latency.current, expected -1, is %d",
-                  check_msg->latency.current);
+                  "incorrect value for latency.avg, expected -1, is %" PRId64,
+                  (int64_t)check_msg->latency.avg);
+    ck_assert_msg(
+        check_msg->latency.current == -1,
+        "incorrect value for latency.current, expected -1, is %" PRId64,
+        (int64_t)check_msg->latency.current);
     ck_assert_msg(check_msg->latency.lmax == 0,
-                  "incorrect value for latency.lmax, expected 0, is %d",
-                  check_msg->latency.lmax);
+                  "incorrect value for latency.lmax, expected 0, is %" PRId64,
+                  (int64_t)check_msg->latency.lmax);
     ck_assert_msg(check_msg->latency.lmin == 0,
-                  "incorrect value for latency.lmin, expected 0, is %d",
-                  check_msg->latency.lmin);
+                  "incorrect value for latency.lmin, expected 0, is %" PRId64,
+                  (int64_t)check_msg->latency.lmin);
     ck_assert_msg(
         check_msg->uart_a.crc_error_count == 0,
-        "incorrect value for uart_a.crc_error_count, expected 0, is %d",
-        check_msg->uart_a.crc_error_count);
+        "incorrect value for uart_a.crc_error_count, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_a.crc_error_count);
     ck_assert_msg(
         check_msg->uart_a.io_error_count == 0,
-        "incorrect value for uart_a.io_error_count, expected 0, is %d",
-        check_msg->uart_a.io_error_count);
+        "incorrect value for uart_a.io_error_count, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_a.io_error_count);
     ck_assert_msg(
         check_msg->uart_a.rx_buffer_level == 0,
-        "incorrect value for uart_a.rx_buffer_level, expected 0, is %d",
-        check_msg->uart_a.rx_buffer_level);
+        "incorrect value for uart_a.rx_buffer_level, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_a.rx_buffer_level);
     ck_assert_msg(
         (check_msg->uart_a.rx_throughput * 100 - 0.0 * 100) < 0.05,
         "incorrect value for uart_a.rx_throughput, expected 0.0, is %f",
         check_msg->uart_a.rx_throughput);
     ck_assert_msg(
         check_msg->uart_a.tx_buffer_level == 24,
-        "incorrect value for uart_a.tx_buffer_level, expected 24, is %d",
-        check_msg->uart_a.tx_buffer_level);
+        "incorrect value for uart_a.tx_buffer_level, expected 24, is %" PRId64,
+        (int64_t)check_msg->uart_a.tx_buffer_level);
     ck_assert_msg(
         (check_msg->uart_a.tx_throughput * 100 - 0.874647915363 * 100) < 0.05,
         "incorrect value for uart_a.tx_throughput, expected 0.874647915363, is "
@@ -450,50 +452,50 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgUartState) {
         check_msg->uart_a.tx_throughput);
     ck_assert_msg(
         check_msg->uart_b.crc_error_count == 0,
-        "incorrect value for uart_b.crc_error_count, expected 0, is %d",
-        check_msg->uart_b.crc_error_count);
+        "incorrect value for uart_b.crc_error_count, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_b.crc_error_count);
     ck_assert_msg(
         check_msg->uart_b.io_error_count == 0,
-        "incorrect value for uart_b.io_error_count, expected 0, is %d",
-        check_msg->uart_b.io_error_count);
+        "incorrect value for uart_b.io_error_count, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_b.io_error_count);
     ck_assert_msg(
         check_msg->uart_b.rx_buffer_level == 0,
-        "incorrect value for uart_b.rx_buffer_level, expected 0, is %d",
-        check_msg->uart_b.rx_buffer_level);
+        "incorrect value for uart_b.rx_buffer_level, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_b.rx_buffer_level);
     ck_assert_msg(
         (check_msg->uart_b.rx_throughput * 100 - 0.0 * 100) < 0.05,
         "incorrect value for uart_b.rx_throughput, expected 0.0, is %f",
         check_msg->uart_b.rx_throughput);
     ck_assert_msg(
         check_msg->uart_b.tx_buffer_level == 40,
-        "incorrect value for uart_b.tx_buffer_level, expected 40, is %d",
-        check_msg->uart_b.tx_buffer_level);
+        "incorrect value for uart_b.tx_buffer_level, expected 40, is %" PRId64,
+        (int64_t)check_msg->uart_b.tx_buffer_level);
     ck_assert_msg(
         (check_msg->uart_b.tx_throughput * 100 - 2.99577474594 * 100) < 0.05,
         "incorrect value for uart_b.tx_throughput, expected 2.99577474594, is "
         "%f",
         check_msg->uart_b.tx_throughput);
-    ck_assert_msg(
-        check_msg->uart_ftdi.crc_error_count == 0,
-        "incorrect value for uart_ftdi.crc_error_count, expected 0, is %d",
-        check_msg->uart_ftdi.crc_error_count);
+    ck_assert_msg(check_msg->uart_ftdi.crc_error_count == 0,
+                  "incorrect value for uart_ftdi.crc_error_count, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->uart_ftdi.crc_error_count);
     ck_assert_msg(
         check_msg->uart_ftdi.io_error_count == 0,
-        "incorrect value for uart_ftdi.io_error_count, expected 0, is %d",
-        check_msg->uart_ftdi.io_error_count);
-    ck_assert_msg(
-        check_msg->uart_ftdi.rx_buffer_level == 1,
-        "incorrect value for uart_ftdi.rx_buffer_level, expected 1, is %d",
-        check_msg->uart_ftdi.rx_buffer_level);
+        "incorrect value for uart_ftdi.io_error_count, expected 0, is %" PRId64,
+        (int64_t)check_msg->uart_ftdi.io_error_count);
+    ck_assert_msg(check_msg->uart_ftdi.rx_buffer_level == 1,
+                  "incorrect value for uart_ftdi.rx_buffer_level, expected 1, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->uart_ftdi.rx_buffer_level);
     ck_assert_msg((check_msg->uart_ftdi.rx_throughput * 100 -
                    0.352112680674 * 100) < 0.05,
                   "incorrect value for uart_ftdi.rx_throughput, expected "
                   "0.352112680674, is %f",
                   check_msg->uart_ftdi.rx_throughput);
-    ck_assert_msg(
-        check_msg->uart_ftdi.tx_buffer_level == 85,
-        "incorrect value for uart_ftdi.tx_buffer_level, expected 85, is %d",
-        check_msg->uart_ftdi.tx_buffer_level);
+    ck_assert_msg(check_msg->uart_ftdi.tx_buffer_level == 85,
+                  "incorrect value for uart_ftdi.tx_buffer_level, expected 85, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->uart_ftdi.tx_buffer_level);
     ck_assert_msg(
         (check_msg->uart_ftdi.tx_throughput * 100 - 6.79014110565 * 100) < 0.05,
         "incorrect value for uart_ftdi.tx_throughput, expected 6.79014110565, "

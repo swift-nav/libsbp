@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -143,50 +143,50 @@ START_TEST(test_auto_check_sbp_navigation_MsgUTCTime) {
     ck_assert_msg(sbp_message_cmp(SbpMsgUtcTime, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.utc_time.day == 9,
-        "incorrect value for last_msg.msg.utc_time.day, expected 9, is %d",
-        last_msg.msg.utc_time.day);
+    ck_assert_msg(last_msg.msg.utc_time.day == 9,
+                  "incorrect value for last_msg.msg.utc_time.day, expected 9, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time.day);
 
-    ck_assert_msg(
-        last_msg.msg.utc_time.flags == 1,
-        "incorrect value for last_msg.msg.utc_time.flags, expected 1, is %d",
-        last_msg.msg.utc_time.flags);
+    ck_assert_msg(last_msg.msg.utc_time.flags == 1,
+                  "incorrect value for last_msg.msg.utc_time.flags, expected "
+                  "1, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time.flags);
 
-    ck_assert_msg(
-        last_msg.msg.utc_time.hours == 19,
-        "incorrect value for last_msg.msg.utc_time.hours, expected 19, is %d",
-        last_msg.msg.utc_time.hours);
+    ck_assert_msg(last_msg.msg.utc_time.hours == 19,
+                  "incorrect value for last_msg.msg.utc_time.hours, expected "
+                  "19, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time.hours);
 
-    ck_assert_msg(
-        last_msg.msg.utc_time.minutes == 24,
-        "incorrect value for last_msg.msg.utc_time.minutes, expected 24, is %d",
-        last_msg.msg.utc_time.minutes);
+    ck_assert_msg(last_msg.msg.utc_time.minutes == 24,
+                  "incorrect value for last_msg.msg.utc_time.minutes, expected "
+                  "24, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time.minutes);
 
-    ck_assert_msg(
-        last_msg.msg.utc_time.month == 4,
-        "incorrect value for last_msg.msg.utc_time.month, expected 4, is %d",
-        last_msg.msg.utc_time.month);
+    ck_assert_msg(last_msg.msg.utc_time.month == 4,
+                  "incorrect value for last_msg.msg.utc_time.month, expected "
+                  "4, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time.month);
 
     ck_assert_msg(last_msg.msg.utc_time.ns == 800000000,
                   "incorrect value for last_msg.msg.utc_time.ns, expected "
-                  "800000000, is %d",
-                  last_msg.msg.utc_time.ns);
+                  "800000000, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time.ns);
 
-    ck_assert_msg(
-        last_msg.msg.utc_time.seconds == 9,
-        "incorrect value for last_msg.msg.utc_time.seconds, expected 9, is %d",
-        last_msg.msg.utc_time.seconds);
+    ck_assert_msg(last_msg.msg.utc_time.seconds == 9,
+                  "incorrect value for last_msg.msg.utc_time.seconds, expected "
+                  "9, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time.seconds);
 
     ck_assert_msg(last_msg.msg.utc_time.tow == 501867800,
                   "incorrect value for last_msg.msg.utc_time.tow, expected "
-                  "501867800, is %d",
-                  last_msg.msg.utc_time.tow);
+                  "501867800, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time.tow);
 
-    ck_assert_msg(
-        last_msg.msg.utc_time.year == 2021,
-        "incorrect value for last_msg.msg.utc_time.year, expected 2021, is %d",
-        last_msg.msg.utc_time.year);
+    ck_assert_msg(last_msg.msg.utc_time.year == 2021,
+                  "incorrect value for last_msg.msg.utc_time.year, expected "
+                  "2021, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time.year);
   }
 }
 END_TEST

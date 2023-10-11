@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -141,38 +141,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgDops) {
 
     ck_assert_msg(
         last_msg.msg.dops.flags == 0,
-        "incorrect value for last_msg.msg.dops.flags, expected 0, is %d",
-        last_msg.msg.dops.flags);
+        "incorrect value for last_msg.msg.dops.flags, expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.dops.flags);
 
     ck_assert_msg(
         last_msg.msg.dops.gdop == 2,
-        "incorrect value for last_msg.msg.dops.gdop, expected 2, is %d",
-        last_msg.msg.dops.gdop);
+        "incorrect value for last_msg.msg.dops.gdop, expected 2, is %" PRId64,
+        (int64_t)last_msg.msg.dops.gdop);
 
     ck_assert_msg(
         last_msg.msg.dops.hdop == 5,
-        "incorrect value for last_msg.msg.dops.hdop, expected 5, is %d",
-        last_msg.msg.dops.hdop);
+        "incorrect value for last_msg.msg.dops.hdop, expected 5, is %" PRId64,
+        (int64_t)last_msg.msg.dops.hdop);
 
     ck_assert_msg(
         last_msg.msg.dops.pdop == 6,
-        "incorrect value for last_msg.msg.dops.pdop, expected 6, is %d",
-        last_msg.msg.dops.pdop);
+        "incorrect value for last_msg.msg.dops.pdop, expected 6, is %" PRId64,
+        (int64_t)last_msg.msg.dops.pdop);
 
     ck_assert_msg(
         last_msg.msg.dops.tdop == 5,
-        "incorrect value for last_msg.msg.dops.tdop, expected 5, is %d",
-        last_msg.msg.dops.tdop);
+        "incorrect value for last_msg.msg.dops.tdop, expected 5, is %" PRId64,
+        (int64_t)last_msg.msg.dops.tdop);
 
     ck_assert_msg(
         last_msg.msg.dops.tow == 100,
-        "incorrect value for last_msg.msg.dops.tow, expected 100, is %d",
-        last_msg.msg.dops.tow);
+        "incorrect value for last_msg.msg.dops.tow, expected 100, is %" PRId64,
+        (int64_t)last_msg.msg.dops.tow);
 
     ck_assert_msg(
         last_msg.msg.dops.vdop == 5,
-        "incorrect value for last_msg.msg.dops.vdop, expected 5, is %d",
-        last_msg.msg.dops.vdop);
+        "incorrect value for last_msg.msg.dops.vdop, expected 5, is %" PRId64,
+        (int64_t)last_msg.msg.dops.vdop);
   }
 }
 END_TEST

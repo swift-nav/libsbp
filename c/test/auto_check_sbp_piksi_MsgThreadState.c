@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -139,10 +139,10 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
         sbp_message_cmp(SbpMsgThreadState, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.thread_state.cpu == 0,
-        "incorrect value for last_msg.msg.thread_state.cpu, expected 0, is %d",
-        last_msg.msg.thread_state.cpu);
+    ck_assert_msg(last_msg.msg.thread_state.cpu == 0,
+                  "incorrect value for last_msg.msg.thread_state.cpu, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {
@@ -158,8 +158,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 2460,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 2460, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 2460, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -224,8 +224,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.cpu == 595,
                   "incorrect value for last_msg.msg.thread_state.cpu, expected "
-                  "595, is %d",
-                  last_msg.msg.thread_state.cpu);
+                  "595, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {
@@ -241,8 +241,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 36,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 36, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 36, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -305,10 +305,10 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
         sbp_message_cmp(SbpMsgThreadState, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.thread_state.cpu == 14,
-        "incorrect value for last_msg.msg.thread_state.cpu, expected 14, is %d",
-        last_msg.msg.thread_state.cpu);
+    ck_assert_msg(last_msg.msg.thread_state.cpu == 14,
+                  "incorrect value for last_msg.msg.thread_state.cpu, expected "
+                  "14, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {
@@ -324,8 +324,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 1140,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 1140, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 1140, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -388,10 +388,10 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
         sbp_message_cmp(SbpMsgThreadState, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.thread_state.cpu == 1,
-        "incorrect value for last_msg.msg.thread_state.cpu, expected 1, is %d",
-        last_msg.msg.thread_state.cpu);
+    ck_assert_msg(last_msg.msg.thread_state.cpu == 1,
+                  "incorrect value for last_msg.msg.thread_state.cpu, expected "
+                  "1, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {
@@ -407,8 +407,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 5060,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 5060, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 5060, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -473,10 +473,10 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
         sbp_message_cmp(SbpMsgThreadState, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.thread_state.cpu == 7,
-        "incorrect value for last_msg.msg.thread_state.cpu, expected 7, is %d",
-        last_msg.msg.thread_state.cpu);
+    ck_assert_msg(last_msg.msg.thread_state.cpu == 7,
+                  "incorrect value for last_msg.msg.thread_state.cpu, expected "
+                  "7, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {(char)109, (char)97,  (char)110, (char)97,
@@ -493,8 +493,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 2324,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 2324, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 2324, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -557,10 +557,10 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
         sbp_message_cmp(SbpMsgThreadState, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.thread_state.cpu == 0,
-        "incorrect value for last_msg.msg.thread_state.cpu, expected 0, is %d",
-        last_msg.msg.thread_state.cpu);
+    ck_assert_msg(last_msg.msg.thread_state.cpu == 0,
+                  "incorrect value for last_msg.msg.thread_state.cpu, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {
@@ -576,8 +576,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 2452,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 2452, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 2452, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -642,8 +642,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.cpu == 484,
                   "incorrect value for last_msg.msg.thread_state.cpu, expected "
-                  "484, is %d",
-                  last_msg.msg.thread_state.cpu);
+                  "484, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {
@@ -659,8 +659,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 36,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 36, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 36, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -725,8 +725,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.cpu == 394,
                   "incorrect value for last_msg.msg.thread_state.cpu, expected "
-                  "394, is %d",
-                  last_msg.msg.thread_state.cpu);
+                  "394, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {
@@ -742,8 +742,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 1884,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 1884, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 1884, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -806,10 +806,10 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
         sbp_message_cmp(SbpMsgThreadState, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.thread_state.cpu == 1,
-        "incorrect value for last_msg.msg.thread_state.cpu, expected 1, is %d",
-        last_msg.msg.thread_state.cpu);
+    ck_assert_msg(last_msg.msg.thread_state.cpu == 1,
+                  "incorrect value for last_msg.msg.thread_state.cpu, expected "
+                  "1, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {
@@ -825,8 +825,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 3076,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 3076, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 3076, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -890,10 +890,10 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
         sbp_message_cmp(SbpMsgThreadState, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.thread_state.cpu == 10,
-        "incorrect value for last_msg.msg.thread_state.cpu, expected 10, is %d",
-        last_msg.msg.thread_state.cpu);
+    ck_assert_msg(last_msg.msg.thread_state.cpu == 10,
+                  "incorrect value for last_msg.msg.thread_state.cpu, expected "
+                  "10, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {(char)109, (char)97,  (char)110, (char)97,
@@ -910,8 +910,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 2428,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 2428, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 2428, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
   // Test successful parsing of a message
   {
@@ -976,10 +976,10 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
         sbp_message_cmp(SbpMsgThreadState, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.thread_state.cpu == 0,
-        "incorrect value for last_msg.msg.thread_state.cpu, expected 0, is %d",
-        last_msg.msg.thread_state.cpu);
+    ck_assert_msg(last_msg.msg.thread_state.cpu == 0,
+                  "incorrect value for last_msg.msg.thread_state.cpu, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.cpu);
 
     {
       const char check_string[] = {(char)109, (char)97,  (char)110, (char)97,
@@ -996,8 +996,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgThreadState) {
 
     ck_assert_msg(last_msg.msg.thread_state.stack_free == 2332,
                   "incorrect value for last_msg.msg.thread_state.stack_free, "
-                  "expected 2332, is %d",
-                  last_msg.msg.thread_state.stack_free);
+                  "expected 2332, is %" PRId64,
+                  (int64_t)last_msg.msg.thread_state.stack_free);
   }
 }
 END_TEST

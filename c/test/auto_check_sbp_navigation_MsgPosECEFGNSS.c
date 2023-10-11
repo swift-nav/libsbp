@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -144,40 +144,40 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEFGNSS) {
 
     ck_assert_msg(last_msg.msg.pos_ecef_gnss.accuracy == 182,
                   "incorrect value for last_msg.msg.pos_ecef_gnss.accuracy, "
-                  "expected 182, is %d",
-                  last_msg.msg.pos_ecef_gnss.accuracy);
+                  "expected 182, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef_gnss.accuracy);
 
     ck_assert_msg(last_msg.msg.pos_ecef_gnss.flags == 4,
                   "incorrect value for last_msg.msg.pos_ecef_gnss.flags, "
-                  "expected 4, is %d",
-                  last_msg.msg.pos_ecef_gnss.flags);
+                  "expected 4, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef_gnss.flags);
 
     ck_assert_msg(last_msg.msg.pos_ecef_gnss.n_sats == 18,
                   "incorrect value for last_msg.msg.pos_ecef_gnss.n_sats, "
-                  "expected 18, is %d",
-                  last_msg.msg.pos_ecef_gnss.n_sats);
+                  "expected 18, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef_gnss.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_ecef_gnss.tow == 501867800,
                   "incorrect value for last_msg.msg.pos_ecef_gnss.tow, "
-                  "expected 501867800, is %d",
-                  last_msg.msg.pos_ecef_gnss.tow);
+                  "expected 501867800, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef_gnss.tow);
 
     ck_assert_msg(
         (last_msg.msg.pos_ecef_gnss.x * 100 - -2694229.70798 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_ecef_gnss.x, expected "
-        "-2694229.70798, is %s",
+        "-2694229.70798, is %f",
         last_msg.msg.pos_ecef_gnss.x);
 
     ck_assert_msg(
         (last_msg.msg.pos_ecef_gnss.y * 100 - -4264073.42735 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_ecef_gnss.y, expected "
-        "-4264073.42735, is %s",
+        "-4264073.42735, is %f",
         last_msg.msg.pos_ecef_gnss.y);
 
     ck_assert_msg(
         (last_msg.msg.pos_ecef_gnss.z * 100 - 3890655.01319 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_ecef_gnss.z, expected "
-        "3890655.01319, is %s",
+        "3890655.01319, is %f",
         last_msg.msg.pos_ecef_gnss.z);
   }
 }

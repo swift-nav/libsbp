@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -208,85 +208,93 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBoundsDegradation) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->const_id == 1,
-                  "incorrect value for const_id, expected 1, is %d",
-                  check_msg->const_id);
-    ck_assert_msg(check_msg->header.num_msgs == 1,
-                  "incorrect value for header.num_msgs, expected 1, is %d",
-                  check_msg->header.num_msgs);
+                  "incorrect value for const_id, expected 1, is %" PRId64,
+                  (int64_t)check_msg->const_id);
+    ck_assert_msg(
+        check_msg->header.num_msgs == 1,
+        "incorrect value for header.num_msgs, expected 1, is %" PRId64,
+        (int64_t)check_msg->header.num_msgs);
     ck_assert_msg(check_msg->header.seq_num == 2,
-                  "incorrect value for header.seq_num, expected 2, is %d",
-                  check_msg->header.seq_num);
+                  "incorrect value for header.seq_num, expected 2, is %" PRId64,
+                  (int64_t)check_msg->header.seq_num);
     ck_assert_msg(check_msg->header.sol_id == 48,
-                  "incorrect value for header.sol_id, expected 48, is %d",
-                  check_msg->header.sol_id);
-    ck_assert_msg(check_msg->header.time.tow == 180,
-                  "incorrect value for header.time.tow, expected 180, is %d",
-                  check_msg->header.time.tow);
+                  "incorrect value for header.sol_id, expected 48, is %" PRId64,
+                  (int64_t)check_msg->header.sol_id);
+    ck_assert_msg(
+        check_msg->header.time.tow == 180,
+        "incorrect value for header.time.tow, expected 180, is %" PRId64,
+        (int64_t)check_msg->header.time.tow);
     ck_assert_msg(check_msg->header.time.wn == 3,
-                  "incorrect value for header.time.wn, expected 3, is %d",
-                  check_msg->header.time.wn);
+                  "incorrect value for header.time.wn, expected 3, is %" PRId64,
+                  (int64_t)check_msg->header.time.wn);
     ck_assert_msg(
         check_msg->header.update_interval == 3,
-        "incorrect value for header.update_interval, expected 3, is %d",
-        check_msg->header.update_interval);
+        "incorrect value for header.update_interval, expected 3, is %" PRId64,
+        (int64_t)check_msg->header.update_interval);
     ck_assert_msg(
         check_msg->orbit_clock_bounds_degradation.clock_bound_mu_dot == 194,
         "incorrect value for "
         "orbit_clock_bounds_degradation.clock_bound_mu_dot, expected 194, is "
-        "%d",
-        check_msg->orbit_clock_bounds_degradation.clock_bound_mu_dot);
+        "%" PRId64,
+        (int64_t)check_msg->orbit_clock_bounds_degradation.clock_bound_mu_dot);
     ck_assert_msg(
         check_msg->orbit_clock_bounds_degradation.clock_bound_sig_dot == 193,
         "incorrect value for "
         "orbit_clock_bounds_degradation.clock_bound_sig_dot, expected 193, is "
-        "%d",
-        check_msg->orbit_clock_bounds_degradation.clock_bound_sig_dot);
+        "%" PRId64,
+        (int64_t)check_msg->orbit_clock_bounds_degradation.clock_bound_sig_dot);
     ck_assert_msg(
         check_msg->orbit_clock_bounds_degradation.orb_along_bound_mu_dot == 199,
         "incorrect value for "
         "orbit_clock_bounds_degradation.orb_along_bound_mu_dot, expected 199, "
-        "is %d",
-        check_msg->orbit_clock_bounds_degradation.orb_along_bound_mu_dot);
+        "is %" PRId64,
+        (int64_t)
+            check_msg->orbit_clock_bounds_degradation.orb_along_bound_mu_dot);
     ck_assert_msg(
         check_msg->orbit_clock_bounds_degradation.orb_along_bound_sig_dot ==
             196,
         "incorrect value for "
         "orbit_clock_bounds_degradation.orb_along_bound_sig_dot, expected 196, "
-        "is %d",
-        check_msg->orbit_clock_bounds_degradation.orb_along_bound_sig_dot);
+        "is %" PRId64,
+        (int64_t)
+            check_msg->orbit_clock_bounds_degradation.orb_along_bound_sig_dot);
     ck_assert_msg(
         check_msg->orbit_clock_bounds_degradation.orb_cross_bound_mu_dot == 198,
         "incorrect value for "
         "orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, expected 198, "
-        "is %d",
-        check_msg->orbit_clock_bounds_degradation.orb_cross_bound_mu_dot);
+        "is %" PRId64,
+        (int64_t)
+            check_msg->orbit_clock_bounds_degradation.orb_cross_bound_mu_dot);
     ck_assert_msg(
         check_msg->orbit_clock_bounds_degradation.orb_cross_bound_sig_dot ==
             195,
         "incorrect value for "
         "orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, expected 195, "
-        "is %d",
-        check_msg->orbit_clock_bounds_degradation.orb_cross_bound_sig_dot);
+        "is %" PRId64,
+        (int64_t)
+            check_msg->orbit_clock_bounds_degradation.orb_cross_bound_sig_dot);
     ck_assert_msg(
         check_msg->orbit_clock_bounds_degradation.orb_radial_bound_mu_dot ==
             200,
         "incorrect value for "
         "orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, expected 200, "
-        "is %d",
-        check_msg->orbit_clock_bounds_degradation.orb_radial_bound_mu_dot);
+        "is %" PRId64,
+        (int64_t)
+            check_msg->orbit_clock_bounds_degradation.orb_radial_bound_mu_dot);
     ck_assert_msg(
         check_msg->orbit_clock_bounds_degradation.orb_radial_bound_sig_dot ==
             197,
         "incorrect value for "
         "orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, expected "
-        "197, is %d",
-        check_msg->orbit_clock_bounds_degradation.orb_radial_bound_sig_dot);
+        "197, is %" PRId64,
+        (int64_t)
+            check_msg->orbit_clock_bounds_degradation.orb_radial_bound_sig_dot);
     ck_assert_msg(check_msg->sat_bitmask == 10,
-                  "incorrect value for sat_bitmask, expected 10, is %d",
-                  check_msg->sat_bitmask);
+                  "incorrect value for sat_bitmask, expected 10, is %" PRId64,
+                  (int64_t)check_msg->sat_bitmask);
     ck_assert_msg(check_msg->ssr_iod == 15,
-                  "incorrect value for ssr_iod, expected 15, is %d",
-                  check_msg->ssr_iod);
+                  "incorrect value for ssr_iod, expected 15, is %" PRId64,
+                  (int64_t)check_msg->ssr_iod);
   }
 }
 END_TEST

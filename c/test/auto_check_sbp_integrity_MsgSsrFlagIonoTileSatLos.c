@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -158,88 +158,95 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos) {
             11,
         "incorrect value for "
         "last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].constellation, "
-        "expected 11, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].constellation);
+        "expected 11, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0]
+            .constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].satId == 10,
         "incorrect value for "
         "last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].satId, expected "
-        "10, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].satId);
+        "10, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].constellation ==
             14,
         "incorrect value for "
         "last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].constellation, "
-        "expected 14, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].constellation);
+        "expected 14, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1]
+            .constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].satId == 15,
         "incorrect value for "
         "last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].satId, expected "
-        "15, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].satId);
+        "15, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].satId);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_iono_tile_sat_los.header.chain_id == 6,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_iono_tile_sat_los.header.chain_id, "
-                  "expected 6, is %d",
-                  last_msg.msg.ssr_flag_iono_tile_sat_los.header.chain_id);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.chain_id == 6,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.header.chain_id, expected 6, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.header.chain_id);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_iono_tile_sat_los.header.num_msgs == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_iono_tile_sat_los.header.num_msgs, "
-                  "expected 1, is %d",
-                  last_msg.msg.ssr_flag_iono_tile_sat_los.header.num_msgs);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.num_msgs == 1,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.header.num_msgs, expected 1, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.header.num_msgs);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.tow == 180,
         "incorrect value for "
         "last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.tow, expected "
-        "180, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.tow);
+        "180, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.tow);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.wn == 3,
         "incorrect value for "
         "last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.wn, expected "
-        "3, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.wn);
+        "3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.wn);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_iono_tile_sat_los.header.seq_num == 2,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_iono_tile_sat_los.header.seq_num, "
-                  "expected 2, is %d",
-                  last_msg.msg.ssr_flag_iono_tile_sat_los.header.seq_num);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.seq_num == 2,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.header.seq_num, expected 2, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.header.seq_num);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_iono_tile_sat_los.header.ssr_sol_id == 3,
         "incorrect value for "
         "last_msg.msg.ssr_flag_iono_tile_sat_los.header.ssr_sol_id, expected "
-        "3, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.header.ssr_sol_id);
+        "3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.header.ssr_sol_id);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_id == 5,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_id, "
-                  "expected 5, is %d",
-                  last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_id);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_id == 5,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_id, expected 5, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_set_id == 4,
         "incorrect value for "
         "last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_set_id, expected "
-        "4, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_set_id);
+        "4, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_set_id);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_iono_tile_sat_los.n_faulty_los == 2,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_iono_tile_sat_los.n_faulty_los, "
-                  "expected 2, is %d",
-                  last_msg.msg.ssr_flag_iono_tile_sat_los.n_faulty_los);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_iono_tile_sat_los.n_faulty_los == 2,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.n_faulty_los, expected 2, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_iono_tile_sat_los.n_faulty_los);
   }
 }
 END_TEST

@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -757,816 +757,918 @@ START_TEST(test_legacy_auto_check_sbp_tracking_MsgMeasurementState) {
         (msg_measurement_state_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->states[0].cn0 == 162,
-                  "incorrect value for states[0].cn0, expected 162, is %d",
-                  check_msg->states[0].cn0);
-    ck_assert_msg(check_msg->states[0].mesid.code == 0,
-                  "incorrect value for states[0].mesid.code, expected 0, is %d",
-                  check_msg->states[0].mesid.code);
-    ck_assert_msg(check_msg->states[0].mesid.sat == 29,
-                  "incorrect value for states[0].mesid.sat, expected 29, is %d",
-                  check_msg->states[0].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[0].cn0 == 162,
+        "incorrect value for states[0].cn0, expected 162, is %" PRId64,
+        (int64_t)check_msg->states[0].cn0);
+    ck_assert_msg(
+        check_msg->states[0].mesid.code == 0,
+        "incorrect value for states[0].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[0].mesid.code);
+    ck_assert_msg(
+        check_msg->states[0].mesid.sat == 29,
+        "incorrect value for states[0].mesid.sat, expected 29, is %" PRId64,
+        (int64_t)check_msg->states[0].mesid.sat);
     ck_assert_msg(check_msg->states[1].cn0 == 0,
-                  "incorrect value for states[1].cn0, expected 0, is %d",
-                  check_msg->states[1].cn0);
-    ck_assert_msg(check_msg->states[1].mesid.code == 0,
-                  "incorrect value for states[1].mesid.code, expected 0, is %d",
-                  check_msg->states[1].mesid.code);
-    ck_assert_msg(check_msg->states[1].mesid.sat == 0,
-                  "incorrect value for states[1].mesid.sat, expected 0, is %d",
-                  check_msg->states[1].mesid.sat);
+                  "incorrect value for states[1].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[1].cn0);
+    ck_assert_msg(
+        check_msg->states[1].mesid.code == 0,
+        "incorrect value for states[1].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[1].mesid.code);
+    ck_assert_msg(
+        check_msg->states[1].mesid.sat == 0,
+        "incorrect value for states[1].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[1].mesid.sat);
     ck_assert_msg(check_msg->states[2].cn0 == 0,
-                  "incorrect value for states[2].cn0, expected 0, is %d",
-                  check_msg->states[2].cn0);
-    ck_assert_msg(check_msg->states[2].mesid.code == 0,
-                  "incorrect value for states[2].mesid.code, expected 0, is %d",
-                  check_msg->states[2].mesid.code);
-    ck_assert_msg(check_msg->states[2].mesid.sat == 0,
-                  "incorrect value for states[2].mesid.sat, expected 0, is %d",
-                  check_msg->states[2].mesid.sat);
-    ck_assert_msg(check_msg->states[3].cn0 == 201,
-                  "incorrect value for states[3].cn0, expected 201, is %d",
-                  check_msg->states[3].cn0);
-    ck_assert_msg(check_msg->states[3].mesid.code == 0,
-                  "incorrect value for states[3].mesid.code, expected 0, is %d",
-                  check_msg->states[3].mesid.code);
-    ck_assert_msg(check_msg->states[3].mesid.sat == 27,
-                  "incorrect value for states[3].mesid.sat, expected 27, is %d",
-                  check_msg->states[3].mesid.sat);
-    ck_assert_msg(check_msg->states[4].cn0 == 168,
-                  "incorrect value for states[4].cn0, expected 168, is %d",
-                  check_msg->states[4].cn0);
-    ck_assert_msg(check_msg->states[4].mesid.code == 0,
-                  "incorrect value for states[4].mesid.code, expected 0, is %d",
-                  check_msg->states[4].mesid.code);
-    ck_assert_msg(check_msg->states[4].mesid.sat == 20,
-                  "incorrect value for states[4].mesid.sat, expected 20, is %d",
-                  check_msg->states[4].mesid.sat);
-    ck_assert_msg(check_msg->states[5].cn0 == 184,
-                  "incorrect value for states[5].cn0, expected 184, is %d",
-                  check_msg->states[5].cn0);
-    ck_assert_msg(check_msg->states[5].mesid.code == 0,
-                  "incorrect value for states[5].mesid.code, expected 0, is %d",
-                  check_msg->states[5].mesid.code);
-    ck_assert_msg(check_msg->states[5].mesid.sat == 32,
-                  "incorrect value for states[5].mesid.sat, expected 32, is %d",
-                  check_msg->states[5].mesid.sat);
-    ck_assert_msg(check_msg->states[6].cn0 == 187,
-                  "incorrect value for states[6].cn0, expected 187, is %d",
-                  check_msg->states[6].cn0);
-    ck_assert_msg(check_msg->states[6].mesid.code == 0,
-                  "incorrect value for states[6].mesid.code, expected 0, is %d",
-                  check_msg->states[6].mesid.code);
-    ck_assert_msg(check_msg->states[6].mesid.sat == 15,
-                  "incorrect value for states[6].mesid.sat, expected 15, is %d",
-                  check_msg->states[6].mesid.sat);
+                  "incorrect value for states[2].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[2].cn0);
+    ck_assert_msg(
+        check_msg->states[2].mesid.code == 0,
+        "incorrect value for states[2].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[2].mesid.code);
+    ck_assert_msg(
+        check_msg->states[2].mesid.sat == 0,
+        "incorrect value for states[2].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[2].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[3].cn0 == 201,
+        "incorrect value for states[3].cn0, expected 201, is %" PRId64,
+        (int64_t)check_msg->states[3].cn0);
+    ck_assert_msg(
+        check_msg->states[3].mesid.code == 0,
+        "incorrect value for states[3].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[3].mesid.code);
+    ck_assert_msg(
+        check_msg->states[3].mesid.sat == 27,
+        "incorrect value for states[3].mesid.sat, expected 27, is %" PRId64,
+        (int64_t)check_msg->states[3].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[4].cn0 == 168,
+        "incorrect value for states[4].cn0, expected 168, is %" PRId64,
+        (int64_t)check_msg->states[4].cn0);
+    ck_assert_msg(
+        check_msg->states[4].mesid.code == 0,
+        "incorrect value for states[4].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[4].mesid.code);
+    ck_assert_msg(
+        check_msg->states[4].mesid.sat == 20,
+        "incorrect value for states[4].mesid.sat, expected 20, is %" PRId64,
+        (int64_t)check_msg->states[4].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[5].cn0 == 184,
+        "incorrect value for states[5].cn0, expected 184, is %" PRId64,
+        (int64_t)check_msg->states[5].cn0);
+    ck_assert_msg(
+        check_msg->states[5].mesid.code == 0,
+        "incorrect value for states[5].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[5].mesid.code);
+    ck_assert_msg(
+        check_msg->states[5].mesid.sat == 32,
+        "incorrect value for states[5].mesid.sat, expected 32, is %" PRId64,
+        (int64_t)check_msg->states[5].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[6].cn0 == 187,
+        "incorrect value for states[6].cn0, expected 187, is %" PRId64,
+        (int64_t)check_msg->states[6].cn0);
+    ck_assert_msg(
+        check_msg->states[6].mesid.code == 0,
+        "incorrect value for states[6].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[6].mesid.code);
+    ck_assert_msg(
+        check_msg->states[6].mesid.sat == 15,
+        "incorrect value for states[6].mesid.sat, expected 15, is %" PRId64,
+        (int64_t)check_msg->states[6].mesid.sat);
     ck_assert_msg(check_msg->states[7].cn0 == 0,
-                  "incorrect value for states[7].cn0, expected 0, is %d",
-                  check_msg->states[7].cn0);
-    ck_assert_msg(check_msg->states[7].mesid.code == 0,
-                  "incorrect value for states[7].mesid.code, expected 0, is %d",
-                  check_msg->states[7].mesid.code);
-    ck_assert_msg(check_msg->states[7].mesid.sat == 0,
-                  "incorrect value for states[7].mesid.sat, expected 0, is %d",
-                  check_msg->states[7].mesid.sat);
-    ck_assert_msg(check_msg->states[8].cn0 == 210,
-                  "incorrect value for states[8].cn0, expected 210, is %d",
-                  check_msg->states[8].cn0);
-    ck_assert_msg(check_msg->states[8].mesid.code == 0,
-                  "incorrect value for states[8].mesid.code, expected 0, is %d",
-                  check_msg->states[8].mesid.code);
-    ck_assert_msg(check_msg->states[8].mesid.sat == 18,
-                  "incorrect value for states[8].mesid.sat, expected 18, is %d",
-                  check_msg->states[8].mesid.sat);
-    ck_assert_msg(check_msg->states[9].cn0 == 167,
-                  "incorrect value for states[9].cn0, expected 167, is %d",
-                  check_msg->states[9].cn0);
-    ck_assert_msg(check_msg->states[9].mesid.code == 0,
-                  "incorrect value for states[9].mesid.code, expected 0, is %d",
-                  check_msg->states[9].mesid.code);
-    ck_assert_msg(check_msg->states[9].mesid.sat == 16,
-                  "incorrect value for states[9].mesid.sat, expected 16, is %d",
-                  check_msg->states[9].mesid.sat);
+                  "incorrect value for states[7].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[7].cn0);
+    ck_assert_msg(
+        check_msg->states[7].mesid.code == 0,
+        "incorrect value for states[7].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[7].mesid.code);
+    ck_assert_msg(
+        check_msg->states[7].mesid.sat == 0,
+        "incorrect value for states[7].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[7].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[8].cn0 == 210,
+        "incorrect value for states[8].cn0, expected 210, is %" PRId64,
+        (int64_t)check_msg->states[8].cn0);
+    ck_assert_msg(
+        check_msg->states[8].mesid.code == 0,
+        "incorrect value for states[8].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[8].mesid.code);
+    ck_assert_msg(
+        check_msg->states[8].mesid.sat == 18,
+        "incorrect value for states[8].mesid.sat, expected 18, is %" PRId64,
+        (int64_t)check_msg->states[8].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[9].cn0 == 167,
+        "incorrect value for states[9].cn0, expected 167, is %" PRId64,
+        (int64_t)check_msg->states[9].cn0);
+    ck_assert_msg(
+        check_msg->states[9].mesid.code == 0,
+        "incorrect value for states[9].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[9].mesid.code);
+    ck_assert_msg(
+        check_msg->states[9].mesid.sat == 16,
+        "incorrect value for states[9].mesid.sat, expected 16, is %" PRId64,
+        (int64_t)check_msg->states[9].mesid.sat);
     ck_assert_msg(check_msg->states[10].cn0 == 0,
-                  "incorrect value for states[10].cn0, expected 0, is %d",
-                  check_msg->states[10].cn0);
+                  "incorrect value for states[10].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[10].cn0);
     ck_assert_msg(
         check_msg->states[10].mesid.code == 0,
-        "incorrect value for states[10].mesid.code, expected 0, is %d",
-        check_msg->states[10].mesid.code);
-    ck_assert_msg(check_msg->states[10].mesid.sat == 0,
-                  "incorrect value for states[10].mesid.sat, expected 0, is %d",
-                  check_msg->states[10].mesid.sat);
-    ck_assert_msg(check_msg->states[11].cn0 == 213,
-                  "incorrect value for states[11].cn0, expected 213, is %d",
-                  check_msg->states[11].cn0);
+        "incorrect value for states[10].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[10].mesid.code);
+    ck_assert_msg(
+        check_msg->states[10].mesid.sat == 0,
+        "incorrect value for states[10].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[10].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[11].cn0 == 213,
+        "incorrect value for states[11].cn0, expected 213, is %" PRId64,
+        (int64_t)check_msg->states[11].cn0);
     ck_assert_msg(
         check_msg->states[11].mesid.code == 0,
-        "incorrect value for states[11].mesid.code, expected 0, is %d",
-        check_msg->states[11].mesid.code);
+        "incorrect value for states[11].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[11].mesid.code);
     ck_assert_msg(
         check_msg->states[11].mesid.sat == 23,
-        "incorrect value for states[11].mesid.sat, expected 23, is %d",
-        check_msg->states[11].mesid.sat);
-    ck_assert_msg(check_msg->states[12].cn0 == 223,
-                  "incorrect value for states[12].cn0, expected 223, is %d",
-                  check_msg->states[12].cn0);
+        "incorrect value for states[11].mesid.sat, expected 23, is %" PRId64,
+        (int64_t)check_msg->states[11].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[12].cn0 == 223,
+        "incorrect value for states[12].cn0, expected 223, is %" PRId64,
+        (int64_t)check_msg->states[12].cn0);
     ck_assert_msg(
         check_msg->states[12].mesid.code == 0,
-        "incorrect value for states[12].mesid.code, expected 0, is %d",
-        check_msg->states[12].mesid.code);
+        "incorrect value for states[12].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[12].mesid.code);
     ck_assert_msg(
         check_msg->states[12].mesid.sat == 10,
-        "incorrect value for states[12].mesid.sat, expected 10, is %d",
-        check_msg->states[12].mesid.sat);
+        "incorrect value for states[12].mesid.sat, expected 10, is %" PRId64,
+        (int64_t)check_msg->states[12].mesid.sat);
     ck_assert_msg(check_msg->states[13].cn0 == 0,
-                  "incorrect value for states[13].cn0, expected 0, is %d",
-                  check_msg->states[13].cn0);
+                  "incorrect value for states[13].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[13].cn0);
     ck_assert_msg(
         check_msg->states[13].mesid.code == 0,
-        "incorrect value for states[13].mesid.code, expected 0, is %d",
-        check_msg->states[13].mesid.code);
-    ck_assert_msg(check_msg->states[13].mesid.sat == 0,
-                  "incorrect value for states[13].mesid.sat, expected 0, is %d",
-                  check_msg->states[13].mesid.sat);
+        "incorrect value for states[13].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[13].mesid.code);
+    ck_assert_msg(
+        check_msg->states[13].mesid.sat == 0,
+        "incorrect value for states[13].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[13].mesid.sat);
     ck_assert_msg(check_msg->states[14].cn0 == 0,
-                  "incorrect value for states[14].cn0, expected 0, is %d",
-                  check_msg->states[14].cn0);
+                  "incorrect value for states[14].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[14].cn0);
     ck_assert_msg(
         check_msg->states[14].mesid.code == 0,
-        "incorrect value for states[14].mesid.code, expected 0, is %d",
-        check_msg->states[14].mesid.code);
-    ck_assert_msg(check_msg->states[14].mesid.sat == 0,
-                  "incorrect value for states[14].mesid.sat, expected 0, is %d",
-                  check_msg->states[14].mesid.sat);
+        "incorrect value for states[14].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[14].mesid.code);
+    ck_assert_msg(
+        check_msg->states[14].mesid.sat == 0,
+        "incorrect value for states[14].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[14].mesid.sat);
     ck_assert_msg(check_msg->states[15].cn0 == 0,
-                  "incorrect value for states[15].cn0, expected 0, is %d",
-                  check_msg->states[15].cn0);
+                  "incorrect value for states[15].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[15].cn0);
     ck_assert_msg(
         check_msg->states[15].mesid.code == 0,
-        "incorrect value for states[15].mesid.code, expected 0, is %d",
-        check_msg->states[15].mesid.code);
-    ck_assert_msg(check_msg->states[15].mesid.sat == 0,
-                  "incorrect value for states[15].mesid.sat, expected 0, is %d",
-                  check_msg->states[15].mesid.sat);
+        "incorrect value for states[15].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[15].mesid.code);
+    ck_assert_msg(
+        check_msg->states[15].mesid.sat == 0,
+        "incorrect value for states[15].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[15].mesid.sat);
     ck_assert_msg(check_msg->states[16].cn0 == 0,
-                  "incorrect value for states[16].cn0, expected 0, is %d",
-                  check_msg->states[16].cn0);
+                  "incorrect value for states[16].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[16].cn0);
     ck_assert_msg(
         check_msg->states[16].mesid.code == 0,
-        "incorrect value for states[16].mesid.code, expected 0, is %d",
-        check_msg->states[16].mesid.code);
-    ck_assert_msg(check_msg->states[16].mesid.sat == 0,
-                  "incorrect value for states[16].mesid.sat, expected 0, is %d",
-                  check_msg->states[16].mesid.sat);
-    ck_assert_msg(check_msg->states[17].cn0 == 202,
-                  "incorrect value for states[17].cn0, expected 202, is %d",
-                  check_msg->states[17].cn0);
+        "incorrect value for states[16].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[16].mesid.code);
+    ck_assert_msg(
+        check_msg->states[16].mesid.sat == 0,
+        "incorrect value for states[16].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[16].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[17].cn0 == 202,
+        "incorrect value for states[17].cn0, expected 202, is %" PRId64,
+        (int64_t)check_msg->states[17].cn0);
     ck_assert_msg(
         check_msg->states[17].mesid.code == 2,
-        "incorrect value for states[17].mesid.code, expected 2, is %d",
-        check_msg->states[17].mesid.code);
+        "incorrect value for states[17].mesid.code, expected 2, is %" PRId64,
+        (int64_t)check_msg->states[17].mesid.code);
     ck_assert_msg(
         check_msg->states[17].mesid.sat == 131,
-        "incorrect value for states[17].mesid.sat, expected 131, is %d",
-        check_msg->states[17].mesid.sat);
-    ck_assert_msg(check_msg->states[18].cn0 == 192,
-                  "incorrect value for states[18].cn0, expected 192, is %d",
-                  check_msg->states[18].cn0);
+        "incorrect value for states[17].mesid.sat, expected 131, is %" PRId64,
+        (int64_t)check_msg->states[17].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[18].cn0 == 192,
+        "incorrect value for states[18].cn0, expected 192, is %" PRId64,
+        (int64_t)check_msg->states[18].cn0);
     ck_assert_msg(
         check_msg->states[18].mesid.code == 1,
-        "incorrect value for states[18].mesid.code, expected 1, is %d",
-        check_msg->states[18].mesid.code);
+        "incorrect value for states[18].mesid.code, expected 1, is %" PRId64,
+        (int64_t)check_msg->states[18].mesid.code);
     ck_assert_msg(
         check_msg->states[18].mesid.sat == 27,
-        "incorrect value for states[18].mesid.sat, expected 27, is %d",
-        check_msg->states[18].mesid.sat);
-    ck_assert_msg(check_msg->states[19].cn0 == 165,
-                  "incorrect value for states[19].cn0, expected 165, is %d",
-                  check_msg->states[19].cn0);
+        "incorrect value for states[18].mesid.sat, expected 27, is %" PRId64,
+        (int64_t)check_msg->states[18].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[19].cn0 == 165,
+        "incorrect value for states[19].cn0, expected 165, is %" PRId64,
+        (int64_t)check_msg->states[19].cn0);
     ck_assert_msg(
         check_msg->states[19].mesid.code == 1,
-        "incorrect value for states[19].mesid.code, expected 1, is %d",
-        check_msg->states[19].mesid.code);
+        "incorrect value for states[19].mesid.code, expected 1, is %" PRId64,
+        (int64_t)check_msg->states[19].mesid.code);
     ck_assert_msg(
         check_msg->states[19].mesid.sat == 15,
-        "incorrect value for states[19].mesid.sat, expected 15, is %d",
-        check_msg->states[19].mesid.sat);
-    ck_assert_msg(check_msg->states[20].cn0 == 146,
-                  "incorrect value for states[20].cn0, expected 146, is %d",
-                  check_msg->states[20].cn0);
+        "incorrect value for states[19].mesid.sat, expected 15, is %" PRId64,
+        (int64_t)check_msg->states[19].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[20].cn0 == 146,
+        "incorrect value for states[20].cn0, expected 146, is %" PRId64,
+        (int64_t)check_msg->states[20].cn0);
     ck_assert_msg(
         check_msg->states[20].mesid.code == 1,
-        "incorrect value for states[20].mesid.code, expected 1, is %d",
-        check_msg->states[20].mesid.code);
+        "incorrect value for states[20].mesid.code, expected 1, is %" PRId64,
+        (int64_t)check_msg->states[20].mesid.code);
     ck_assert_msg(
         check_msg->states[20].mesid.sat == 29,
-        "incorrect value for states[20].mesid.sat, expected 29, is %d",
-        check_msg->states[20].mesid.sat);
-    ck_assert_msg(check_msg->states[21].cn0 == 170,
-                  "incorrect value for states[21].cn0, expected 170, is %d",
-                  check_msg->states[21].cn0);
+        "incorrect value for states[20].mesid.sat, expected 29, is %" PRId64,
+        (int64_t)check_msg->states[20].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[21].cn0 == 170,
+        "incorrect value for states[21].cn0, expected 170, is %" PRId64,
+        (int64_t)check_msg->states[21].cn0);
     ck_assert_msg(
         check_msg->states[21].mesid.code == 1,
-        "incorrect value for states[21].mesid.code, expected 1, is %d",
-        check_msg->states[21].mesid.code);
+        "incorrect value for states[21].mesid.code, expected 1, is %" PRId64,
+        (int64_t)check_msg->states[21].mesid.code);
     ck_assert_msg(
         check_msg->states[21].mesid.sat == 32,
-        "incorrect value for states[21].mesid.sat, expected 32, is %d",
-        check_msg->states[21].mesid.sat);
-    ck_assert_msg(check_msg->states[22].cn0 == 201,
-                  "incorrect value for states[22].cn0, expected 201, is %d",
-                  check_msg->states[22].cn0);
+        "incorrect value for states[21].mesid.sat, expected 32, is %" PRId64,
+        (int64_t)check_msg->states[21].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[22].cn0 == 201,
+        "incorrect value for states[22].cn0, expected 201, is %" PRId64,
+        (int64_t)check_msg->states[22].cn0);
     ck_assert_msg(
         check_msg->states[22].mesid.code == 1,
-        "incorrect value for states[22].mesid.code, expected 1, is %d",
-        check_msg->states[22].mesid.code);
+        "incorrect value for states[22].mesid.code, expected 1, is %" PRId64,
+        (int64_t)check_msg->states[22].mesid.code);
     ck_assert_msg(
         check_msg->states[22].mesid.sat == 18,
-        "incorrect value for states[22].mesid.sat, expected 18, is %d",
-        check_msg->states[22].mesid.sat);
+        "incorrect value for states[22].mesid.sat, expected 18, is %" PRId64,
+        (int64_t)check_msg->states[22].mesid.sat);
     ck_assert_msg(check_msg->states[23].cn0 == 0,
-                  "incorrect value for states[23].cn0, expected 0, is %d",
-                  check_msg->states[23].cn0);
+                  "incorrect value for states[23].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[23].cn0);
     ck_assert_msg(
         check_msg->states[23].mesid.code == 0,
-        "incorrect value for states[23].mesid.code, expected 0, is %d",
-        check_msg->states[23].mesid.code);
-    ck_assert_msg(check_msg->states[23].mesid.sat == 0,
-                  "incorrect value for states[23].mesid.sat, expected 0, is %d",
-                  check_msg->states[23].mesid.sat);
+        "incorrect value for states[23].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[23].mesid.code);
+    ck_assert_msg(
+        check_msg->states[23].mesid.sat == 0,
+        "incorrect value for states[23].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[23].mesid.sat);
     ck_assert_msg(check_msg->states[24].cn0 == 0,
-                  "incorrect value for states[24].cn0, expected 0, is %d",
-                  check_msg->states[24].cn0);
+                  "incorrect value for states[24].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[24].cn0);
     ck_assert_msg(
         check_msg->states[24].mesid.code == 0,
-        "incorrect value for states[24].mesid.code, expected 0, is %d",
-        check_msg->states[24].mesid.code);
-    ck_assert_msg(check_msg->states[24].mesid.sat == 0,
-                  "incorrect value for states[24].mesid.sat, expected 0, is %d",
-                  check_msg->states[24].mesid.sat);
+        "incorrect value for states[24].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[24].mesid.code);
+    ck_assert_msg(
+        check_msg->states[24].mesid.sat == 0,
+        "incorrect value for states[24].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[24].mesid.sat);
     ck_assert_msg(check_msg->states[25].cn0 == 0,
-                  "incorrect value for states[25].cn0, expected 0, is %d",
-                  check_msg->states[25].cn0);
+                  "incorrect value for states[25].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[25].cn0);
     ck_assert_msg(
         check_msg->states[25].mesid.code == 0,
-        "incorrect value for states[25].mesid.code, expected 0, is %d",
-        check_msg->states[25].mesid.code);
-    ck_assert_msg(check_msg->states[25].mesid.sat == 0,
-                  "incorrect value for states[25].mesid.sat, expected 0, is %d",
-                  check_msg->states[25].mesid.sat);
-    ck_assert_msg(check_msg->states[26].cn0 == 212,
-                  "incorrect value for states[26].cn0, expected 212, is %d",
-                  check_msg->states[26].cn0);
+        "incorrect value for states[25].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[25].mesid.code);
+    ck_assert_msg(
+        check_msg->states[25].mesid.sat == 0,
+        "incorrect value for states[25].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[25].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[26].cn0 == 212,
+        "incorrect value for states[26].cn0, expected 212, is %" PRId64,
+        (int64_t)check_msg->states[26].cn0);
     ck_assert_msg(
         check_msg->states[26].mesid.code == 1,
-        "incorrect value for states[26].mesid.code, expected 1, is %d",
-        check_msg->states[26].mesid.code);
+        "incorrect value for states[26].mesid.code, expected 1, is %" PRId64,
+        (int64_t)check_msg->states[26].mesid.code);
     ck_assert_msg(
         check_msg->states[26].mesid.sat == 23,
-        "incorrect value for states[26].mesid.sat, expected 23, is %d",
-        check_msg->states[26].mesid.sat);
-    ck_assert_msg(check_msg->states[27].cn0 == 205,
-                  "incorrect value for states[27].cn0, expected 205, is %d",
-                  check_msg->states[27].cn0);
+        "incorrect value for states[26].mesid.sat, expected 23, is %" PRId64,
+        (int64_t)check_msg->states[26].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[27].cn0 == 205,
+        "incorrect value for states[27].cn0, expected 205, is %" PRId64,
+        (int64_t)check_msg->states[27].cn0);
     ck_assert_msg(
         check_msg->states[27].mesid.code == 1,
-        "incorrect value for states[27].mesid.code, expected 1, is %d",
-        check_msg->states[27].mesid.code);
+        "incorrect value for states[27].mesid.code, expected 1, is %" PRId64,
+        (int64_t)check_msg->states[27].mesid.code);
     ck_assert_msg(
         check_msg->states[27].mesid.sat == 10,
-        "incorrect value for states[27].mesid.sat, expected 10, is %d",
-        check_msg->states[27].mesid.sat);
+        "incorrect value for states[27].mesid.sat, expected 10, is %" PRId64,
+        (int64_t)check_msg->states[27].mesid.sat);
     ck_assert_msg(check_msg->states[28].cn0 == 0,
-                  "incorrect value for states[28].cn0, expected 0, is %d",
-                  check_msg->states[28].cn0);
+                  "incorrect value for states[28].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[28].cn0);
     ck_assert_msg(
         check_msg->states[28].mesid.code == 0,
-        "incorrect value for states[28].mesid.code, expected 0, is %d",
-        check_msg->states[28].mesid.code);
-    ck_assert_msg(check_msg->states[28].mesid.sat == 0,
-                  "incorrect value for states[28].mesid.sat, expected 0, is %d",
-                  check_msg->states[28].mesid.sat);
-    ck_assert_msg(check_msg->states[29].cn0 == 230,
-                  "incorrect value for states[29].cn0, expected 230, is %d",
-                  check_msg->states[29].cn0);
+        "incorrect value for states[28].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[28].mesid.code);
+    ck_assert_msg(
+        check_msg->states[28].mesid.sat == 0,
+        "incorrect value for states[28].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[28].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[29].cn0 == 230,
+        "incorrect value for states[29].cn0, expected 230, is %" PRId64,
+        (int64_t)check_msg->states[29].cn0);
     ck_assert_msg(
         check_msg->states[29].mesid.code == 3,
-        "incorrect value for states[29].mesid.code, expected 3, is %d",
-        check_msg->states[29].mesid.code);
+        "incorrect value for states[29].mesid.code, expected 3, is %" PRId64,
+        (int64_t)check_msg->states[29].mesid.code);
     ck_assert_msg(
         check_msg->states[29].mesid.sat == 96,
-        "incorrect value for states[29].mesid.sat, expected 96, is %d",
-        check_msg->states[29].mesid.sat);
+        "incorrect value for states[29].mesid.sat, expected 96, is %" PRId64,
+        (int64_t)check_msg->states[29].mesid.sat);
     ck_assert_msg(check_msg->states[30].cn0 == 0,
-                  "incorrect value for states[30].cn0, expected 0, is %d",
-                  check_msg->states[30].cn0);
+                  "incorrect value for states[30].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[30].cn0);
     ck_assert_msg(
         check_msg->states[30].mesid.code == 0,
-        "incorrect value for states[30].mesid.code, expected 0, is %d",
-        check_msg->states[30].mesid.code);
-    ck_assert_msg(check_msg->states[30].mesid.sat == 0,
-                  "incorrect value for states[30].mesid.sat, expected 0, is %d",
-                  check_msg->states[30].mesid.sat);
-    ck_assert_msg(check_msg->states[31].cn0 == 214,
-                  "incorrect value for states[31].cn0, expected 214, is %d",
-                  check_msg->states[31].cn0);
+        "incorrect value for states[30].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[30].mesid.code);
+    ck_assert_msg(
+        check_msg->states[30].mesid.sat == 0,
+        "incorrect value for states[30].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[30].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[31].cn0 == 214,
+        "incorrect value for states[31].cn0, expected 214, is %" PRId64,
+        (int64_t)check_msg->states[31].cn0);
     ck_assert_msg(
         check_msg->states[31].mesid.code == 3,
-        "incorrect value for states[31].mesid.code, expected 3, is %d",
-        check_msg->states[31].mesid.code);
+        "incorrect value for states[31].mesid.code, expected 3, is %" PRId64,
+        (int64_t)check_msg->states[31].mesid.code);
     ck_assert_msg(
         check_msg->states[31].mesid.sat == 101,
-        "incorrect value for states[31].mesid.sat, expected 101, is %d",
-        check_msg->states[31].mesid.sat);
-    ck_assert_msg(check_msg->states[32].cn0 == 212,
-                  "incorrect value for states[32].cn0, expected 212, is %d",
-                  check_msg->states[32].cn0);
+        "incorrect value for states[31].mesid.sat, expected 101, is %" PRId64,
+        (int64_t)check_msg->states[31].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[32].cn0 == 212,
+        "incorrect value for states[32].cn0, expected 212, is %" PRId64,
+        (int64_t)check_msg->states[32].cn0);
     ck_assert_msg(
         check_msg->states[32].mesid.code == 3,
-        "incorrect value for states[32].mesid.code, expected 3, is %d",
-        check_msg->states[32].mesid.code);
+        "incorrect value for states[32].mesid.code, expected 3, is %" PRId64,
+        (int64_t)check_msg->states[32].mesid.code);
     ck_assert_msg(
         check_msg->states[32].mesid.sat == 103,
-        "incorrect value for states[32].mesid.sat, expected 103, is %d",
-        check_msg->states[32].mesid.sat);
-    ck_assert_msg(check_msg->states[33].cn0 == 209,
-                  "incorrect value for states[33].cn0, expected 209, is %d",
-                  check_msg->states[33].cn0);
+        "incorrect value for states[32].mesid.sat, expected 103, is %" PRId64,
+        (int64_t)check_msg->states[32].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[33].cn0 == 209,
+        "incorrect value for states[33].cn0, expected 209, is %" PRId64,
+        (int64_t)check_msg->states[33].cn0);
     ck_assert_msg(
         check_msg->states[33].mesid.code == 3,
-        "incorrect value for states[33].mesid.code, expected 3, is %d",
-        check_msg->states[33].mesid.code);
+        "incorrect value for states[33].mesid.code, expected 3, is %" PRId64,
+        (int64_t)check_msg->states[33].mesid.code);
     ck_assert_msg(
         check_msg->states[33].mesid.sat == 104,
-        "incorrect value for states[33].mesid.sat, expected 104, is %d",
-        check_msg->states[33].mesid.sat);
-    ck_assert_msg(check_msg->states[34].cn0 == 157,
-                  "incorrect value for states[34].cn0, expected 157, is %d",
-                  check_msg->states[34].cn0);
+        "incorrect value for states[33].mesid.sat, expected 104, is %" PRId64,
+        (int64_t)check_msg->states[33].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[34].cn0 == 157,
+        "incorrect value for states[34].cn0, expected 157, is %" PRId64,
+        (int64_t)check_msg->states[34].cn0);
     ck_assert_msg(
         check_msg->states[34].mesid.code == 3,
-        "incorrect value for states[34].mesid.code, expected 3, is %d",
-        check_msg->states[34].mesid.code);
+        "incorrect value for states[34].mesid.code, expected 3, is %" PRId64,
+        (int64_t)check_msg->states[34].mesid.code);
     ck_assert_msg(
         check_msg->states[34].mesid.sat == 106,
-        "incorrect value for states[34].mesid.sat, expected 106, is %d",
-        check_msg->states[34].mesid.sat);
-    ck_assert_msg(check_msg->states[35].cn0 == 230,
-                  "incorrect value for states[35].cn0, expected 230, is %d",
-                  check_msg->states[35].cn0);
+        "incorrect value for states[34].mesid.sat, expected 106, is %" PRId64,
+        (int64_t)check_msg->states[34].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[35].cn0 == 230,
+        "incorrect value for states[35].cn0, expected 230, is %" PRId64,
+        (int64_t)check_msg->states[35].cn0);
     ck_assert_msg(
         check_msg->states[35].mesid.code == 3,
-        "incorrect value for states[35].mesid.code, expected 3, is %d",
-        check_msg->states[35].mesid.code);
+        "incorrect value for states[35].mesid.code, expected 3, is %" PRId64,
+        (int64_t)check_msg->states[35].mesid.code);
     ck_assert_msg(
         check_msg->states[35].mesid.sat == 102,
-        "incorrect value for states[35].mesid.sat, expected 102, is %d",
-        check_msg->states[35].mesid.sat);
+        "incorrect value for states[35].mesid.sat, expected 102, is %" PRId64,
+        (int64_t)check_msg->states[35].mesid.sat);
     ck_assert_msg(check_msg->states[36].cn0 == 0,
-                  "incorrect value for states[36].cn0, expected 0, is %d",
-                  check_msg->states[36].cn0);
+                  "incorrect value for states[36].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[36].cn0);
     ck_assert_msg(
         check_msg->states[36].mesid.code == 0,
-        "incorrect value for states[36].mesid.code, expected 0, is %d",
-        check_msg->states[36].mesid.code);
-    ck_assert_msg(check_msg->states[36].mesid.sat == 0,
-                  "incorrect value for states[36].mesid.sat, expected 0, is %d",
-                  check_msg->states[36].mesid.sat);
+        "incorrect value for states[36].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[36].mesid.code);
+    ck_assert_msg(
+        check_msg->states[36].mesid.sat == 0,
+        "incorrect value for states[36].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[36].mesid.sat);
     ck_assert_msg(check_msg->states[37].cn0 == 0,
-                  "incorrect value for states[37].cn0, expected 0, is %d",
-                  check_msg->states[37].cn0);
+                  "incorrect value for states[37].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[37].cn0);
     ck_assert_msg(
         check_msg->states[37].mesid.code == 0,
-        "incorrect value for states[37].mesid.code, expected 0, is %d",
-        check_msg->states[37].mesid.code);
-    ck_assert_msg(check_msg->states[37].mesid.sat == 0,
-                  "incorrect value for states[37].mesid.sat, expected 0, is %d",
-                  check_msg->states[37].mesid.sat);
-    ck_assert_msg(check_msg->states[38].cn0 == 189,
-                  "incorrect value for states[38].cn0, expected 189, is %d",
-                  check_msg->states[38].cn0);
+        "incorrect value for states[37].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[37].mesid.code);
+    ck_assert_msg(
+        check_msg->states[37].mesid.sat == 0,
+        "incorrect value for states[37].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[37].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[38].cn0 == 189,
+        "incorrect value for states[38].cn0, expected 189, is %" PRId64,
+        (int64_t)check_msg->states[38].cn0);
     ck_assert_msg(
         check_msg->states[38].mesid.code == 4,
-        "incorrect value for states[38].mesid.code, expected 4, is %d",
-        check_msg->states[38].mesid.code);
+        "incorrect value for states[38].mesid.code, expected 4, is %" PRId64,
+        (int64_t)check_msg->states[38].mesid.code);
     ck_assert_msg(
         check_msg->states[38].mesid.sat == 101,
-        "incorrect value for states[38].mesid.sat, expected 101, is %d",
-        check_msg->states[38].mesid.sat);
-    ck_assert_msg(check_msg->states[39].cn0 == 207,
-                  "incorrect value for states[39].cn0, expected 207, is %d",
-                  check_msg->states[39].cn0);
+        "incorrect value for states[38].mesid.sat, expected 101, is %" PRId64,
+        (int64_t)check_msg->states[38].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[39].cn0 == 207,
+        "incorrect value for states[39].cn0, expected 207, is %" PRId64,
+        (int64_t)check_msg->states[39].cn0);
     ck_assert_msg(
         check_msg->states[39].mesid.code == 4,
-        "incorrect value for states[39].mesid.code, expected 4, is %d",
-        check_msg->states[39].mesid.code);
+        "incorrect value for states[39].mesid.code, expected 4, is %" PRId64,
+        (int64_t)check_msg->states[39].mesid.code);
     ck_assert_msg(
         check_msg->states[39].mesid.sat == 96,
-        "incorrect value for states[39].mesid.sat, expected 96, is %d",
-        check_msg->states[39].mesid.sat);
-    ck_assert_msg(check_msg->states[40].cn0 == 164,
-                  "incorrect value for states[40].cn0, expected 164, is %d",
-                  check_msg->states[40].cn0);
+        "incorrect value for states[39].mesid.sat, expected 96, is %" PRId64,
+        (int64_t)check_msg->states[39].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[40].cn0 == 164,
+        "incorrect value for states[40].cn0, expected 164, is %" PRId64,
+        (int64_t)check_msg->states[40].cn0);
     ck_assert_msg(
         check_msg->states[40].mesid.code == 4,
-        "incorrect value for states[40].mesid.code, expected 4, is %d",
-        check_msg->states[40].mesid.code);
+        "incorrect value for states[40].mesid.code, expected 4, is %" PRId64,
+        (int64_t)check_msg->states[40].mesid.code);
     ck_assert_msg(
         check_msg->states[40].mesid.sat == 106,
-        "incorrect value for states[40].mesid.sat, expected 106, is %d",
-        check_msg->states[40].mesid.sat);
-    ck_assert_msg(check_msg->states[41].cn0 == 193,
-                  "incorrect value for states[41].cn0, expected 193, is %d",
-                  check_msg->states[41].cn0);
+        "incorrect value for states[40].mesid.sat, expected 106, is %" PRId64,
+        (int64_t)check_msg->states[40].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[41].cn0 == 193,
+        "incorrect value for states[41].cn0, expected 193, is %" PRId64,
+        (int64_t)check_msg->states[41].cn0);
     ck_assert_msg(
         check_msg->states[41].mesid.code == 4,
-        "incorrect value for states[41].mesid.code, expected 4, is %d",
-        check_msg->states[41].mesid.code);
+        "incorrect value for states[41].mesid.code, expected 4, is %" PRId64,
+        (int64_t)check_msg->states[41].mesid.code);
     ck_assert_msg(
         check_msg->states[41].mesid.sat == 104,
-        "incorrect value for states[41].mesid.sat, expected 104, is %d",
-        check_msg->states[41].mesid.sat);
+        "incorrect value for states[41].mesid.sat, expected 104, is %" PRId64,
+        (int64_t)check_msg->states[41].mesid.sat);
     ck_assert_msg(check_msg->states[42].cn0 == 0,
-                  "incorrect value for states[42].cn0, expected 0, is %d",
-                  check_msg->states[42].cn0);
+                  "incorrect value for states[42].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[42].cn0);
     ck_assert_msg(
         check_msg->states[42].mesid.code == 0,
-        "incorrect value for states[42].mesid.code, expected 0, is %d",
-        check_msg->states[42].mesid.code);
-    ck_assert_msg(check_msg->states[42].mesid.sat == 0,
-                  "incorrect value for states[42].mesid.sat, expected 0, is %d",
-                  check_msg->states[42].mesid.sat);
-    ck_assert_msg(check_msg->states[43].cn0 == 208,
-                  "incorrect value for states[43].cn0, expected 208, is %d",
-                  check_msg->states[43].cn0);
+        "incorrect value for states[42].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[42].mesid.code);
+    ck_assert_msg(
+        check_msg->states[42].mesid.sat == 0,
+        "incorrect value for states[42].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[42].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[43].cn0 == 208,
+        "incorrect value for states[43].cn0, expected 208, is %" PRId64,
+        (int64_t)check_msg->states[43].cn0);
     ck_assert_msg(
         check_msg->states[43].mesid.code == 4,
-        "incorrect value for states[43].mesid.code, expected 4, is %d",
-        check_msg->states[43].mesid.code);
+        "incorrect value for states[43].mesid.code, expected 4, is %" PRId64,
+        (int64_t)check_msg->states[43].mesid.code);
     ck_assert_msg(
         check_msg->states[43].mesid.sat == 102,
-        "incorrect value for states[43].mesid.sat, expected 102, is %d",
-        check_msg->states[43].mesid.sat);
+        "incorrect value for states[43].mesid.sat, expected 102, is %" PRId64,
+        (int64_t)check_msg->states[43].mesid.sat);
     ck_assert_msg(check_msg->states[44].cn0 == 0,
-                  "incorrect value for states[44].cn0, expected 0, is %d",
-                  check_msg->states[44].cn0);
+                  "incorrect value for states[44].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[44].cn0);
     ck_assert_msg(
         check_msg->states[44].mesid.code == 0,
-        "incorrect value for states[44].mesid.code, expected 0, is %d",
-        check_msg->states[44].mesid.code);
-    ck_assert_msg(check_msg->states[44].mesid.sat == 0,
-                  "incorrect value for states[44].mesid.sat, expected 0, is %d",
-                  check_msg->states[44].mesid.sat);
-    ck_assert_msg(check_msg->states[45].cn0 == 212,
-                  "incorrect value for states[45].cn0, expected 212, is %d",
-                  check_msg->states[45].cn0);
+        "incorrect value for states[44].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[44].mesid.code);
+    ck_assert_msg(
+        check_msg->states[44].mesid.sat == 0,
+        "incorrect value for states[44].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[44].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[45].cn0 == 212,
+        "incorrect value for states[45].cn0, expected 212, is %" PRId64,
+        (int64_t)check_msg->states[45].cn0);
     ck_assert_msg(
         check_msg->states[45].mesid.code == 12,
-        "incorrect value for states[45].mesid.code, expected 12, is %d",
-        check_msg->states[45].mesid.code);
+        "incorrect value for states[45].mesid.code, expected 12, is %" PRId64,
+        (int64_t)check_msg->states[45].mesid.code);
     ck_assert_msg(
         check_msg->states[45].mesid.sat == 27,
-        "incorrect value for states[45].mesid.sat, expected 27, is %d",
-        check_msg->states[45].mesid.sat);
-    ck_assert_msg(check_msg->states[46].cn0 == 161,
-                  "incorrect value for states[46].cn0, expected 161, is %d",
-                  check_msg->states[46].cn0);
+        "incorrect value for states[45].mesid.sat, expected 27, is %" PRId64,
+        (int64_t)check_msg->states[45].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[46].cn0 == 161,
+        "incorrect value for states[46].cn0, expected 161, is %" PRId64,
+        (int64_t)check_msg->states[46].cn0);
     ck_assert_msg(
         check_msg->states[46].mesid.code == 12,
-        "incorrect value for states[46].mesid.code, expected 12, is %d",
-        check_msg->states[46].mesid.code);
+        "incorrect value for states[46].mesid.code, expected 12, is %" PRId64,
+        (int64_t)check_msg->states[46].mesid.code);
     ck_assert_msg(
         check_msg->states[46].mesid.sat == 29,
-        "incorrect value for states[46].mesid.sat, expected 29, is %d",
-        check_msg->states[46].mesid.sat);
-    ck_assert_msg(check_msg->states[47].cn0 == 216,
-                  "incorrect value for states[47].cn0, expected 216, is %d",
-                  check_msg->states[47].cn0);
+        "incorrect value for states[46].mesid.sat, expected 29, is %" PRId64,
+        (int64_t)check_msg->states[46].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[47].cn0 == 216,
+        "incorrect value for states[47].cn0, expected 216, is %" PRId64,
+        (int64_t)check_msg->states[47].cn0);
     ck_assert_msg(
         check_msg->states[47].mesid.code == 12,
-        "incorrect value for states[47].mesid.code, expected 12, is %d",
-        check_msg->states[47].mesid.code);
+        "incorrect value for states[47].mesid.code, expected 12, is %" PRId64,
+        (int64_t)check_msg->states[47].mesid.code);
     ck_assert_msg(
         check_msg->states[47].mesid.sat == 32,
-        "incorrect value for states[47].mesid.sat, expected 32, is %d",
-        check_msg->states[47].mesid.sat);
-    ck_assert_msg(check_msg->states[48].cn0 == 216,
-                  "incorrect value for states[48].cn0, expected 216, is %d",
-                  check_msg->states[48].cn0);
+        "incorrect value for states[47].mesid.sat, expected 32, is %" PRId64,
+        (int64_t)check_msg->states[47].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[48].cn0 == 216,
+        "incorrect value for states[48].cn0, expected 216, is %" PRId64,
+        (int64_t)check_msg->states[48].cn0);
     ck_assert_msg(
         check_msg->states[48].mesid.code == 12,
-        "incorrect value for states[48].mesid.code, expected 12, is %d",
-        check_msg->states[48].mesid.code);
+        "incorrect value for states[48].mesid.code, expected 12, is %" PRId64,
+        (int64_t)check_msg->states[48].mesid.code);
     ck_assert_msg(
         check_msg->states[48].mesid.sat == 30,
-        "incorrect value for states[48].mesid.sat, expected 30, is %d",
-        check_msg->states[48].mesid.sat);
-    ck_assert_msg(check_msg->states[49].cn0 == 178,
-                  "incorrect value for states[49].cn0, expected 178, is %d",
-                  check_msg->states[49].cn0);
+        "incorrect value for states[48].mesid.sat, expected 30, is %" PRId64,
+        (int64_t)check_msg->states[48].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[49].cn0 == 178,
+        "incorrect value for states[49].cn0, expected 178, is %" PRId64,
+        (int64_t)check_msg->states[49].cn0);
     ck_assert_msg(
         check_msg->states[49].mesid.code == 12,
-        "incorrect value for states[49].mesid.code, expected 12, is %d",
-        check_msg->states[49].mesid.code);
+        "incorrect value for states[49].mesid.code, expected 12, is %" PRId64,
+        (int64_t)check_msg->states[49].mesid.code);
     ck_assert_msg(
         check_msg->states[49].mesid.sat == 20,
-        "incorrect value for states[49].mesid.sat, expected 20, is %d",
-        check_msg->states[49].mesid.sat);
+        "incorrect value for states[49].mesid.sat, expected 20, is %" PRId64,
+        (int64_t)check_msg->states[49].mesid.sat);
     ck_assert_msg(check_msg->states[50].cn0 == 0,
-                  "incorrect value for states[50].cn0, expected 0, is %d",
-                  check_msg->states[50].cn0);
+                  "incorrect value for states[50].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[50].cn0);
     ck_assert_msg(
         check_msg->states[50].mesid.code == 0,
-        "incorrect value for states[50].mesid.code, expected 0, is %d",
-        check_msg->states[50].mesid.code);
-    ck_assert_msg(check_msg->states[50].mesid.sat == 0,
-                  "incorrect value for states[50].mesid.sat, expected 0, is %d",
-                  check_msg->states[50].mesid.sat);
+        "incorrect value for states[50].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[50].mesid.code);
+    ck_assert_msg(
+        check_msg->states[50].mesid.sat == 0,
+        "incorrect value for states[50].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[50].mesid.sat);
     ck_assert_msg(check_msg->states[51].cn0 == 0,
-                  "incorrect value for states[51].cn0, expected 0, is %d",
-                  check_msg->states[51].cn0);
+                  "incorrect value for states[51].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[51].cn0);
     ck_assert_msg(
         check_msg->states[51].mesid.code == 0,
-        "incorrect value for states[51].mesid.code, expected 0, is %d",
-        check_msg->states[51].mesid.code);
-    ck_assert_msg(check_msg->states[51].mesid.sat == 0,
-                  "incorrect value for states[51].mesid.sat, expected 0, is %d",
-                  check_msg->states[51].mesid.sat);
+        "incorrect value for states[51].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[51].mesid.code);
+    ck_assert_msg(
+        check_msg->states[51].mesid.sat == 0,
+        "incorrect value for states[51].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[51].mesid.sat);
     ck_assert_msg(check_msg->states[52].cn0 == 0,
-                  "incorrect value for states[52].cn0, expected 0, is %d",
-                  check_msg->states[52].cn0);
+                  "incorrect value for states[52].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[52].cn0);
     ck_assert_msg(
         check_msg->states[52].mesid.code == 0,
-        "incorrect value for states[52].mesid.code, expected 0, is %d",
-        check_msg->states[52].mesid.code);
-    ck_assert_msg(check_msg->states[52].mesid.sat == 0,
-                  "incorrect value for states[52].mesid.sat, expected 0, is %d",
-                  check_msg->states[52].mesid.sat);
+        "incorrect value for states[52].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[52].mesid.code);
+    ck_assert_msg(
+        check_msg->states[52].mesid.sat == 0,
+        "incorrect value for states[52].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[52].mesid.sat);
     ck_assert_msg(check_msg->states[53].cn0 == 0,
-                  "incorrect value for states[53].cn0, expected 0, is %d",
-                  check_msg->states[53].cn0);
+                  "incorrect value for states[53].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[53].cn0);
     ck_assert_msg(
         check_msg->states[53].mesid.code == 0,
-        "incorrect value for states[53].mesid.code, expected 0, is %d",
-        check_msg->states[53].mesid.code);
-    ck_assert_msg(check_msg->states[53].mesid.sat == 0,
-                  "incorrect value for states[53].mesid.sat, expected 0, is %d",
-                  check_msg->states[53].mesid.sat);
+        "incorrect value for states[53].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[53].mesid.code);
+    ck_assert_msg(
+        check_msg->states[53].mesid.sat == 0,
+        "incorrect value for states[53].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[53].mesid.sat);
     ck_assert_msg(check_msg->states[54].cn0 == 0,
-                  "incorrect value for states[54].cn0, expected 0, is %d",
-                  check_msg->states[54].cn0);
+                  "incorrect value for states[54].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[54].cn0);
     ck_assert_msg(
         check_msg->states[54].mesid.code == 0,
-        "incorrect value for states[54].mesid.code, expected 0, is %d",
-        check_msg->states[54].mesid.code);
-    ck_assert_msg(check_msg->states[54].mesid.sat == 0,
-                  "incorrect value for states[54].mesid.sat, expected 0, is %d",
-                  check_msg->states[54].mesid.sat);
+        "incorrect value for states[54].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[54].mesid.code);
+    ck_assert_msg(
+        check_msg->states[54].mesid.sat == 0,
+        "incorrect value for states[54].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[54].mesid.sat);
     ck_assert_msg(check_msg->states[55].cn0 == 0,
-                  "incorrect value for states[55].cn0, expected 0, is %d",
-                  check_msg->states[55].cn0);
+                  "incorrect value for states[55].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[55].cn0);
     ck_assert_msg(
         check_msg->states[55].mesid.code == 0,
-        "incorrect value for states[55].mesid.code, expected 0, is %d",
-        check_msg->states[55].mesid.code);
-    ck_assert_msg(check_msg->states[55].mesid.sat == 0,
-                  "incorrect value for states[55].mesid.sat, expected 0, is %d",
-                  check_msg->states[55].mesid.sat);
+        "incorrect value for states[55].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[55].mesid.code);
+    ck_assert_msg(
+        check_msg->states[55].mesid.sat == 0,
+        "incorrect value for states[55].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[55].mesid.sat);
     ck_assert_msg(check_msg->states[56].cn0 == 0,
-                  "incorrect value for states[56].cn0, expected 0, is %d",
-                  check_msg->states[56].cn0);
+                  "incorrect value for states[56].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[56].cn0);
     ck_assert_msg(
         check_msg->states[56].mesid.code == 0,
-        "incorrect value for states[56].mesid.code, expected 0, is %d",
-        check_msg->states[56].mesid.code);
-    ck_assert_msg(check_msg->states[56].mesid.sat == 0,
-                  "incorrect value for states[56].mesid.sat, expected 0, is %d",
-                  check_msg->states[56].mesid.sat);
+        "incorrect value for states[56].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[56].mesid.code);
+    ck_assert_msg(
+        check_msg->states[56].mesid.sat == 0,
+        "incorrect value for states[56].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[56].mesid.sat);
     ck_assert_msg(check_msg->states[57].cn0 == 0,
-                  "incorrect value for states[57].cn0, expected 0, is %d",
-                  check_msg->states[57].cn0);
+                  "incorrect value for states[57].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[57].cn0);
     ck_assert_msg(
         check_msg->states[57].mesid.code == 0,
-        "incorrect value for states[57].mesid.code, expected 0, is %d",
-        check_msg->states[57].mesid.code);
-    ck_assert_msg(check_msg->states[57].mesid.sat == 0,
-                  "incorrect value for states[57].mesid.sat, expected 0, is %d",
-                  check_msg->states[57].mesid.sat);
+        "incorrect value for states[57].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[57].mesid.code);
+    ck_assert_msg(
+        check_msg->states[57].mesid.sat == 0,
+        "incorrect value for states[57].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[57].mesid.sat);
     ck_assert_msg(check_msg->states[58].cn0 == 0,
-                  "incorrect value for states[58].cn0, expected 0, is %d",
-                  check_msg->states[58].cn0);
+                  "incorrect value for states[58].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[58].cn0);
     ck_assert_msg(
         check_msg->states[58].mesid.code == 0,
-        "incorrect value for states[58].mesid.code, expected 0, is %d",
-        check_msg->states[58].mesid.code);
-    ck_assert_msg(check_msg->states[58].mesid.sat == 0,
-                  "incorrect value for states[58].mesid.sat, expected 0, is %d",
-                  check_msg->states[58].mesid.sat);
+        "incorrect value for states[58].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[58].mesid.code);
+    ck_assert_msg(
+        check_msg->states[58].mesid.sat == 0,
+        "incorrect value for states[58].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[58].mesid.sat);
     ck_assert_msg(check_msg->states[59].cn0 == 0,
-                  "incorrect value for states[59].cn0, expected 0, is %d",
-                  check_msg->states[59].cn0);
+                  "incorrect value for states[59].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[59].cn0);
     ck_assert_msg(
         check_msg->states[59].mesid.code == 0,
-        "incorrect value for states[59].mesid.code, expected 0, is %d",
-        check_msg->states[59].mesid.code);
-    ck_assert_msg(check_msg->states[59].mesid.sat == 0,
-                  "incorrect value for states[59].mesid.sat, expected 0, is %d",
-                  check_msg->states[59].mesid.sat);
+        "incorrect value for states[59].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[59].mesid.code);
+    ck_assert_msg(
+        check_msg->states[59].mesid.sat == 0,
+        "incorrect value for states[59].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[59].mesid.sat);
     ck_assert_msg(check_msg->states[60].cn0 == 0,
-                  "incorrect value for states[60].cn0, expected 0, is %d",
-                  check_msg->states[60].cn0);
+                  "incorrect value for states[60].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[60].cn0);
     ck_assert_msg(
         check_msg->states[60].mesid.code == 0,
-        "incorrect value for states[60].mesid.code, expected 0, is %d",
-        check_msg->states[60].mesid.code);
-    ck_assert_msg(check_msg->states[60].mesid.sat == 0,
-                  "incorrect value for states[60].mesid.sat, expected 0, is %d",
-                  check_msg->states[60].mesid.sat);
+        "incorrect value for states[60].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[60].mesid.code);
+    ck_assert_msg(
+        check_msg->states[60].mesid.sat == 0,
+        "incorrect value for states[60].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[60].mesid.sat);
     ck_assert_msg(check_msg->states[61].cn0 == 0,
-                  "incorrect value for states[61].cn0, expected 0, is %d",
-                  check_msg->states[61].cn0);
+                  "incorrect value for states[61].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[61].cn0);
     ck_assert_msg(
         check_msg->states[61].mesid.code == 0,
-        "incorrect value for states[61].mesid.code, expected 0, is %d",
-        check_msg->states[61].mesid.code);
-    ck_assert_msg(check_msg->states[61].mesid.sat == 0,
-                  "incorrect value for states[61].mesid.sat, expected 0, is %d",
-                  check_msg->states[61].mesid.sat);
+        "incorrect value for states[61].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[61].mesid.code);
+    ck_assert_msg(
+        check_msg->states[61].mesid.sat == 0,
+        "incorrect value for states[61].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[61].mesid.sat);
     ck_assert_msg(check_msg->states[62].cn0 == 0,
-                  "incorrect value for states[62].cn0, expected 0, is %d",
-                  check_msg->states[62].cn0);
+                  "incorrect value for states[62].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[62].cn0);
     ck_assert_msg(
         check_msg->states[62].mesid.code == 0,
-        "incorrect value for states[62].mesid.code, expected 0, is %d",
-        check_msg->states[62].mesid.code);
-    ck_assert_msg(check_msg->states[62].mesid.sat == 0,
-                  "incorrect value for states[62].mesid.sat, expected 0, is %d",
-                  check_msg->states[62].mesid.sat);
-    ck_assert_msg(check_msg->states[63].cn0 == 203,
-                  "incorrect value for states[63].cn0, expected 203, is %d",
-                  check_msg->states[63].cn0);
+        "incorrect value for states[62].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[62].mesid.code);
+    ck_assert_msg(
+        check_msg->states[62].mesid.sat == 0,
+        "incorrect value for states[62].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[62].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[63].cn0 == 203,
+        "incorrect value for states[63].cn0, expected 203, is %" PRId64,
+        (int64_t)check_msg->states[63].cn0);
     ck_assert_msg(
         check_msg->states[63].mesid.code == 14,
-        "incorrect value for states[63].mesid.code, expected 14, is %d",
-        check_msg->states[63].mesid.code);
+        "incorrect value for states[63].mesid.code, expected 14, is %" PRId64,
+        (int64_t)check_msg->states[63].mesid.code);
     ck_assert_msg(
         check_msg->states[63].mesid.sat == 36,
-        "incorrect value for states[63].mesid.sat, expected 36, is %d",
-        check_msg->states[63].mesid.sat);
+        "incorrect value for states[63].mesid.sat, expected 36, is %" PRId64,
+        (int64_t)check_msg->states[63].mesid.sat);
     ck_assert_msg(check_msg->states[64].cn0 == 0,
-                  "incorrect value for states[64].cn0, expected 0, is %d",
-                  check_msg->states[64].cn0);
+                  "incorrect value for states[64].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[64].cn0);
     ck_assert_msg(
         check_msg->states[64].mesid.code == 0,
-        "incorrect value for states[64].mesid.code, expected 0, is %d",
-        check_msg->states[64].mesid.code);
-    ck_assert_msg(check_msg->states[64].mesid.sat == 0,
-                  "incorrect value for states[64].mesid.sat, expected 0, is %d",
-                  check_msg->states[64].mesid.sat);
-    ck_assert_msg(check_msg->states[65].cn0 == 158,
-                  "incorrect value for states[65].cn0, expected 158, is %d",
-                  check_msg->states[65].cn0);
+        "incorrect value for states[64].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[64].mesid.code);
+    ck_assert_msg(
+        check_msg->states[64].mesid.sat == 0,
+        "incorrect value for states[64].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[64].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[65].cn0 == 158,
+        "incorrect value for states[65].cn0, expected 158, is %" PRId64,
+        (int64_t)check_msg->states[65].cn0);
     ck_assert_msg(
         check_msg->states[65].mesid.code == 14,
-        "incorrect value for states[65].mesid.code, expected 14, is %d",
-        check_msg->states[65].mesid.code);
-    ck_assert_msg(check_msg->states[65].mesid.sat == 5,
-                  "incorrect value for states[65].mesid.sat, expected 5, is %d",
-                  check_msg->states[65].mesid.sat);
-    ck_assert_msg(check_msg->states[66].cn0 == 194,
-                  "incorrect value for states[66].cn0, expected 194, is %d",
-                  check_msg->states[66].cn0);
+        "incorrect value for states[65].mesid.code, expected 14, is %" PRId64,
+        (int64_t)check_msg->states[65].mesid.code);
+    ck_assert_msg(
+        check_msg->states[65].mesid.sat == 5,
+        "incorrect value for states[65].mesid.sat, expected 5, is %" PRId64,
+        (int64_t)check_msg->states[65].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[66].cn0 == 194,
+        "incorrect value for states[66].cn0, expected 194, is %" PRId64,
+        (int64_t)check_msg->states[66].cn0);
     ck_assert_msg(
         check_msg->states[66].mesid.code == 14,
-        "incorrect value for states[66].mesid.code, expected 14, is %d",
-        check_msg->states[66].mesid.code);
-    ck_assert_msg(check_msg->states[66].mesid.sat == 4,
-                  "incorrect value for states[66].mesid.sat, expected 4, is %d",
-                  check_msg->states[66].mesid.sat);
-    ck_assert_msg(check_msg->states[67].cn0 == 192,
-                  "incorrect value for states[67].cn0, expected 192, is %d",
-                  check_msg->states[67].cn0);
+        "incorrect value for states[66].mesid.code, expected 14, is %" PRId64,
+        (int64_t)check_msg->states[66].mesid.code);
+    ck_assert_msg(
+        check_msg->states[66].mesid.sat == 4,
+        "incorrect value for states[66].mesid.sat, expected 4, is %" PRId64,
+        (int64_t)check_msg->states[66].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[67].cn0 == 192,
+        "incorrect value for states[67].cn0, expected 192, is %" PRId64,
+        (int64_t)check_msg->states[67].cn0);
     ck_assert_msg(
         check_msg->states[67].mesid.code == 14,
-        "incorrect value for states[67].mesid.code, expected 14, is %d",
-        check_msg->states[67].mesid.code);
+        "incorrect value for states[67].mesid.code, expected 14, is %" PRId64,
+        (int64_t)check_msg->states[67].mesid.code);
     ck_assert_msg(
         check_msg->states[67].mesid.sat == 11,
-        "incorrect value for states[67].mesid.sat, expected 11, is %d",
-        check_msg->states[67].mesid.sat);
-    ck_assert_msg(check_msg->states[68].cn0 == 207,
-                  "incorrect value for states[68].cn0, expected 207, is %d",
-                  check_msg->states[68].cn0);
+        "incorrect value for states[67].mesid.sat, expected 11, is %" PRId64,
+        (int64_t)check_msg->states[67].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[68].cn0 == 207,
+        "incorrect value for states[68].cn0, expected 207, is %" PRId64,
+        (int64_t)check_msg->states[68].cn0);
     ck_assert_msg(
         check_msg->states[68].mesid.code == 14,
-        "incorrect value for states[68].mesid.code, expected 14, is %d",
-        check_msg->states[68].mesid.code);
-    ck_assert_msg(check_msg->states[68].mesid.sat == 9,
-                  "incorrect value for states[68].mesid.sat, expected 9, is %d",
-                  check_msg->states[68].mesid.sat);
+        "incorrect value for states[68].mesid.code, expected 14, is %" PRId64,
+        (int64_t)check_msg->states[68].mesid.code);
+    ck_assert_msg(
+        check_msg->states[68].mesid.sat == 9,
+        "incorrect value for states[68].mesid.sat, expected 9, is %" PRId64,
+        (int64_t)check_msg->states[68].mesid.sat);
     ck_assert_msg(check_msg->states[69].cn0 == 0,
-                  "incorrect value for states[69].cn0, expected 0, is %d",
-                  check_msg->states[69].cn0);
+                  "incorrect value for states[69].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[69].cn0);
     ck_assert_msg(
         check_msg->states[69].mesid.code == 0,
-        "incorrect value for states[69].mesid.code, expected 0, is %d",
-        check_msg->states[69].mesid.code);
-    ck_assert_msg(check_msg->states[69].mesid.sat == 0,
-                  "incorrect value for states[69].mesid.sat, expected 0, is %d",
-                  check_msg->states[69].mesid.sat);
+        "incorrect value for states[69].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[69].mesid.code);
+    ck_assert_msg(
+        check_msg->states[69].mesid.sat == 0,
+        "incorrect value for states[69].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[69].mesid.sat);
     ck_assert_msg(check_msg->states[70].cn0 == 0,
-                  "incorrect value for states[70].cn0, expected 0, is %d",
-                  check_msg->states[70].cn0);
+                  "incorrect value for states[70].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[70].cn0);
     ck_assert_msg(
         check_msg->states[70].mesid.code == 0,
-        "incorrect value for states[70].mesid.code, expected 0, is %d",
-        check_msg->states[70].mesid.code);
-    ck_assert_msg(check_msg->states[70].mesid.sat == 0,
-                  "incorrect value for states[70].mesid.sat, expected 0, is %d",
-                  check_msg->states[70].mesid.sat);
+        "incorrect value for states[70].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[70].mesid.code);
+    ck_assert_msg(
+        check_msg->states[70].mesid.sat == 0,
+        "incorrect value for states[70].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[70].mesid.sat);
     ck_assert_msg(check_msg->states[71].cn0 == 0,
-                  "incorrect value for states[71].cn0, expected 0, is %d",
-                  check_msg->states[71].cn0);
+                  "incorrect value for states[71].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[71].cn0);
     ck_assert_msg(
         check_msg->states[71].mesid.code == 0,
-        "incorrect value for states[71].mesid.code, expected 0, is %d",
-        check_msg->states[71].mesid.code);
-    ck_assert_msg(check_msg->states[71].mesid.sat == 0,
-                  "incorrect value for states[71].mesid.sat, expected 0, is %d",
-                  check_msg->states[71].mesid.sat);
-    ck_assert_msg(check_msg->states[72].cn0 == 218,
-                  "incorrect value for states[72].cn0, expected 218, is %d",
-                  check_msg->states[72].cn0);
+        "incorrect value for states[71].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[71].mesid.code);
+    ck_assert_msg(
+        check_msg->states[71].mesid.sat == 0,
+        "incorrect value for states[71].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[71].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[72].cn0 == 218,
+        "incorrect value for states[72].cn0, expected 218, is %" PRId64,
+        (int64_t)check_msg->states[72].cn0);
     ck_assert_msg(
         check_msg->states[72].mesid.code == 20,
-        "incorrect value for states[72].mesid.code, expected 20, is %d",
-        check_msg->states[72].mesid.code);
-    ck_assert_msg(check_msg->states[72].mesid.sat == 9,
-                  "incorrect value for states[72].mesid.sat, expected 9, is %d",
-                  check_msg->states[72].mesid.sat);
-    ck_assert_msg(check_msg->states[73].cn0 == 176,
-                  "incorrect value for states[73].cn0, expected 176, is %d",
-                  check_msg->states[73].cn0);
+        "incorrect value for states[72].mesid.code, expected 20, is %" PRId64,
+        (int64_t)check_msg->states[72].mesid.code);
+    ck_assert_msg(
+        check_msg->states[72].mesid.sat == 9,
+        "incorrect value for states[72].mesid.sat, expected 9, is %" PRId64,
+        (int64_t)check_msg->states[72].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[73].cn0 == 176,
+        "incorrect value for states[73].cn0, expected 176, is %" PRId64,
+        (int64_t)check_msg->states[73].cn0);
     ck_assert_msg(
         check_msg->states[73].mesid.code == 20,
-        "incorrect value for states[73].mesid.code, expected 20, is %d",
-        check_msg->states[73].mesid.code);
-    ck_assert_msg(check_msg->states[73].mesid.sat == 5,
-                  "incorrect value for states[73].mesid.sat, expected 5, is %d",
-                  check_msg->states[73].mesid.sat);
-    ck_assert_msg(check_msg->states[74].cn0 == 217,
-                  "incorrect value for states[74].cn0, expected 217, is %d",
-                  check_msg->states[74].cn0);
+        "incorrect value for states[73].mesid.code, expected 20, is %" PRId64,
+        (int64_t)check_msg->states[73].mesid.code);
+    ck_assert_msg(
+        check_msg->states[73].mesid.sat == 5,
+        "incorrect value for states[73].mesid.sat, expected 5, is %" PRId64,
+        (int64_t)check_msg->states[73].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[74].cn0 == 217,
+        "incorrect value for states[74].cn0, expected 217, is %" PRId64,
+        (int64_t)check_msg->states[74].cn0);
     ck_assert_msg(
         check_msg->states[74].mesid.code == 20,
-        "incorrect value for states[74].mesid.code, expected 20, is %d",
-        check_msg->states[74].mesid.code);
+        "incorrect value for states[74].mesid.code, expected 20, is %" PRId64,
+        (int64_t)check_msg->states[74].mesid.code);
     ck_assert_msg(
         check_msg->states[74].mesid.sat == 36,
-        "incorrect value for states[74].mesid.sat, expected 36, is %d",
-        check_msg->states[74].mesid.sat);
-    ck_assert_msg(check_msg->states[75].cn0 == 200,
-                  "incorrect value for states[75].cn0, expected 200, is %d",
-                  check_msg->states[75].cn0);
+        "incorrect value for states[74].mesid.sat, expected 36, is %" PRId64,
+        (int64_t)check_msg->states[74].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[75].cn0 == 200,
+        "incorrect value for states[75].cn0, expected 200, is %" PRId64,
+        (int64_t)check_msg->states[75].cn0);
     ck_assert_msg(
         check_msg->states[75].mesid.code == 20,
-        "incorrect value for states[75].mesid.code, expected 20, is %d",
-        check_msg->states[75].mesid.code);
+        "incorrect value for states[75].mesid.code, expected 20, is %" PRId64,
+        (int64_t)check_msg->states[75].mesid.code);
     ck_assert_msg(
         check_msg->states[75].mesid.sat == 11,
-        "incorrect value for states[75].mesid.sat, expected 11, is %d",
-        check_msg->states[75].mesid.sat);
-    ck_assert_msg(check_msg->states[76].cn0 == 205,
-                  "incorrect value for states[76].cn0, expected 205, is %d",
-                  check_msg->states[76].cn0);
+        "incorrect value for states[75].mesid.sat, expected 11, is %" PRId64,
+        (int64_t)check_msg->states[75].mesid.sat);
+    ck_assert_msg(
+        check_msg->states[76].cn0 == 205,
+        "incorrect value for states[76].cn0, expected 205, is %" PRId64,
+        (int64_t)check_msg->states[76].cn0);
     ck_assert_msg(
         check_msg->states[76].mesid.code == 20,
-        "incorrect value for states[76].mesid.code, expected 20, is %d",
-        check_msg->states[76].mesid.code);
-    ck_assert_msg(check_msg->states[76].mesid.sat == 4,
-                  "incorrect value for states[76].mesid.sat, expected 4, is %d",
-                  check_msg->states[76].mesid.sat);
+        "incorrect value for states[76].mesid.code, expected 20, is %" PRId64,
+        (int64_t)check_msg->states[76].mesid.code);
+    ck_assert_msg(
+        check_msg->states[76].mesid.sat == 4,
+        "incorrect value for states[76].mesid.sat, expected 4, is %" PRId64,
+        (int64_t)check_msg->states[76].mesid.sat);
     ck_assert_msg(check_msg->states[77].cn0 == 0,
-                  "incorrect value for states[77].cn0, expected 0, is %d",
-                  check_msg->states[77].cn0);
+                  "incorrect value for states[77].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[77].cn0);
     ck_assert_msg(
         check_msg->states[77].mesid.code == 0,
-        "incorrect value for states[77].mesid.code, expected 0, is %d",
-        check_msg->states[77].mesid.code);
-    ck_assert_msg(check_msg->states[77].mesid.sat == 0,
-                  "incorrect value for states[77].mesid.sat, expected 0, is %d",
-                  check_msg->states[77].mesid.sat);
+        "incorrect value for states[77].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[77].mesid.code);
+    ck_assert_msg(
+        check_msg->states[77].mesid.sat == 0,
+        "incorrect value for states[77].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[77].mesid.sat);
     ck_assert_msg(check_msg->states[78].cn0 == 0,
-                  "incorrect value for states[78].cn0, expected 0, is %d",
-                  check_msg->states[78].cn0);
+                  "incorrect value for states[78].cn0, expected 0, is %" PRId64,
+                  (int64_t)check_msg->states[78].cn0);
     ck_assert_msg(
         check_msg->states[78].mesid.code == 0,
-        "incorrect value for states[78].mesid.code, expected 0, is %d",
-        check_msg->states[78].mesid.code);
-    ck_assert_msg(check_msg->states[78].mesid.sat == 0,
-                  "incorrect value for states[78].mesid.sat, expected 0, is %d",
-                  check_msg->states[78].mesid.sat);
+        "incorrect value for states[78].mesid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[78].mesid.code);
+    ck_assert_msg(
+        check_msg->states[78].mesid.sat == 0,
+        "incorrect value for states[78].mesid.sat, expected 0, is %" PRId64,
+        (int64_t)check_msg->states[78].mesid.sat);
   }
 }
 END_TEST

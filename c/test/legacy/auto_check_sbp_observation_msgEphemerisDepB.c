@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -263,8 +263,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for ecc, expected 0.0111326099141, is %f",
                   check_msg->ecc);
     ck_assert_msg(check_msg->healthy == 1,
-                  "incorrect value for healthy, expected 1, is %d",
-                  check_msg->healthy);
+                  "incorrect value for healthy, expected 1, is %" PRId64,
+                  (int64_t)check_msg->healthy);
     ck_assert_msg((check_msg->inc * 100 - 0.939552483058 * 100) < 0.05,
                   "incorrect value for inc, expected 0.939552483058, is %f",
                   check_msg->inc);
@@ -273,8 +273,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for inc_dot, expected -3.29656588663e-10, is %f",
         check_msg->inc_dot);
     ck_assert_msg(check_msg->iode == 0,
-                  "incorrect value for iode, expected 0, is %d",
-                  check_msg->iode);
+                  "incorrect value for iode, expected 0, is %" PRId64,
+                  (int64_t)check_msg->iode);
     ck_assert_msg((check_msg->m0 * 100 - 2.46734839563 * 100) < 0.05,
                   "incorrect value for m0, expected 2.46734839563, is %f",
                   check_msg->m0);
@@ -286,7 +286,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for omegadot, expected -8.20105589261e-09, is %f",
         check_msg->omegadot);
     ck_assert_msg(check_msg->prn == 3,
-                  "incorrect value for prn, expected 3, is %d", check_msg->prn);
+                  "incorrect value for prn, expected 3, is %" PRId64,
+                  (int64_t)check_msg->prn);
     ck_assert_msg((check_msg->sqrta * 100 - 5153.71430397 * 100) < 0.05,
                   "incorrect value for sqrta, expected 5153.71430397, is %f",
                   check_msg->sqrta);
@@ -297,17 +298,17 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for toc_tow, expected 410400.0, is %f",
                   check_msg->toc_tow);
     ck_assert_msg(check_msg->toc_wn == 1838,
-                  "incorrect value for toc_wn, expected 1838, is %d",
-                  check_msg->toc_wn);
+                  "incorrect value for toc_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toc_wn);
     ck_assert_msg((check_msg->toe_tow * 100 - 410400.0 * 100) < 0.05,
                   "incorrect value for toe_tow, expected 410400.0, is %f",
                   check_msg->toe_tow);
     ck_assert_msg(check_msg->toe_wn == 1838,
-                  "incorrect value for toe_wn, expected 1838, is %d",
-                  check_msg->toe_wn);
+                  "incorrect value for toe_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toe_wn);
     ck_assert_msg(check_msg->valid == 1,
-                  "incorrect value for valid, expected 1, is %d",
-                  check_msg->valid);
+                  "incorrect value for valid, expected 1, is %" PRId64,
+                  (int64_t)check_msg->valid);
     ck_assert_msg((check_msg->w * 100 - 1.05250472004 * 100) < 0.05,
                   "incorrect value for w, expected 1.05250472004, is %f",
                   check_msg->w);
@@ -469,8 +470,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for ecc, expected 0.00792274158448, is %f",
                   check_msg->ecc);
     ck_assert_msg(check_msg->healthy == 1,
-                  "incorrect value for healthy, expected 1, is %d",
-                  check_msg->healthy);
+                  "incorrect value for healthy, expected 1, is %" PRId64,
+                  (int64_t)check_msg->healthy);
     ck_assert_msg((check_msg->inc * 100 - 0.966901291823 * 100) < 0.05,
                   "incorrect value for inc, expected 0.966901291823, is %f",
                   check_msg->inc);
@@ -479,8 +480,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for inc_dot, expected 2.62510934634e-10, is %f",
         check_msg->inc_dot);
     ck_assert_msg(check_msg->iode == 0,
-                  "incorrect value for iode, expected 0, is %d",
-                  check_msg->iode);
+                  "incorrect value for iode, expected 0, is %" PRId64,
+                  (int64_t)check_msg->iode);
     ck_assert_msg((check_msg->m0 * 100 - -1.58816085572 * 100) < 0.05,
                   "incorrect value for m0, expected -1.58816085572, is %f",
                   check_msg->m0);
@@ -492,8 +493,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for omegadot, expected -8.29570269217e-09, is %f",
         check_msg->omegadot);
     ck_assert_msg(check_msg->prn == 13,
-                  "incorrect value for prn, expected 13, is %d",
-                  check_msg->prn);
+                  "incorrect value for prn, expected 13, is %" PRId64,
+                  (int64_t)check_msg->prn);
     ck_assert_msg((check_msg->sqrta * 100 - 5153.57085609 * 100) < 0.05,
                   "incorrect value for sqrta, expected 5153.57085609, is %f",
                   check_msg->sqrta);
@@ -504,17 +505,17 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for toc_tow, expected 410400.0, is %f",
                   check_msg->toc_tow);
     ck_assert_msg(check_msg->toc_wn == 1838,
-                  "incorrect value for toc_wn, expected 1838, is %d",
-                  check_msg->toc_wn);
+                  "incorrect value for toc_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toc_wn);
     ck_assert_msg((check_msg->toe_tow * 100 - 410400.0 * 100) < 0.05,
                   "incorrect value for toe_tow, expected 410400.0, is %f",
                   check_msg->toe_tow);
     ck_assert_msg(check_msg->toe_wn == 1838,
-                  "incorrect value for toe_wn, expected 1838, is %d",
-                  check_msg->toe_wn);
+                  "incorrect value for toe_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toe_wn);
     ck_assert_msg(check_msg->valid == 1,
-                  "incorrect value for valid, expected 1, is %d",
-                  check_msg->valid);
+                  "incorrect value for valid, expected 1, is %" PRId64,
+                  (int64_t)check_msg->valid);
     ck_assert_msg((check_msg->w * 100 - -1.97360228379 * 100) < 0.05,
                   "incorrect value for w, expected -1.97360228379, is %f",
                   check_msg->w);
@@ -679,8 +680,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for ecc, expected 0.00404041714501, is %f",
                   check_msg->ecc);
     ck_assert_msg(check_msg->healthy == 1,
-                  "incorrect value for healthy, expected 1, is %d",
-                  check_msg->healthy);
+                  "incorrect value for healthy, expected 1, is %" PRId64,
+                  (int64_t)check_msg->healthy);
     ck_assert_msg((check_msg->inc * 100 - 0.96190219207 * 100) < 0.05,
                   "incorrect value for inc, expected 0.96190219207, is %f",
                   check_msg->inc);
@@ -689,8 +690,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for inc_dot, expected -3.36442585613e-10, is %f",
         check_msg->inc_dot);
     ck_assert_msg(check_msg->iode == 0,
-                  "incorrect value for iode, expected 0, is %d",
-                  check_msg->iode);
+                  "incorrect value for iode, expected 0, is %" PRId64,
+                  (int64_t)check_msg->iode);
     ck_assert_msg((check_msg->m0 * 100 - 2.70552550587 * 100) < 0.05,
                   "incorrect value for m0, expected 2.70552550587, is %f",
                   check_msg->m0);
@@ -702,7 +703,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for omegadot, expected -8.08212236712e-09, is %f",
         check_msg->omegadot);
     ck_assert_msg(check_msg->prn == 0,
-                  "incorrect value for prn, expected 0, is %d", check_msg->prn);
+                  "incorrect value for prn, expected 0, is %" PRId64,
+                  (int64_t)check_msg->prn);
     ck_assert_msg((check_msg->sqrta * 100 - 5153.66935349 * 100) < 0.05,
                   "incorrect value for sqrta, expected 5153.66935349, is %f",
                   check_msg->sqrta);
@@ -713,17 +715,17 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for toc_tow, expected 410400.0, is %f",
                   check_msg->toc_tow);
     ck_assert_msg(check_msg->toc_wn == 1838,
-                  "incorrect value for toc_wn, expected 1838, is %d",
-                  check_msg->toc_wn);
+                  "incorrect value for toc_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toc_wn);
     ck_assert_msg((check_msg->toe_tow * 100 - 410400.0 * 100) < 0.05,
                   "incorrect value for toe_tow, expected 410400.0, is %f",
                   check_msg->toe_tow);
     ck_assert_msg(check_msg->toe_wn == 1838,
-                  "incorrect value for toe_wn, expected 1838, is %d",
-                  check_msg->toe_wn);
+                  "incorrect value for toe_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toe_wn);
     ck_assert_msg(check_msg->valid == 1,
-                  "incorrect value for valid, expected 1, is %d",
-                  check_msg->valid);
+                  "incorrect value for valid, expected 1, is %" PRId64,
+                  (int64_t)check_msg->valid);
     ck_assert_msg((check_msg->w * 100 - 0.378735666146 * 100) < 0.05,
                   "incorrect value for w, expected 0.378735666146, is %f",
                   check_msg->w);
@@ -885,8 +887,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for ecc, expected 0.00792274158448, is %f",
                   check_msg->ecc);
     ck_assert_msg(check_msg->healthy == 1,
-                  "incorrect value for healthy, expected 1, is %d",
-                  check_msg->healthy);
+                  "incorrect value for healthy, expected 1, is %" PRId64,
+                  (int64_t)check_msg->healthy);
     ck_assert_msg((check_msg->inc * 100 - 0.966901291823 * 100) < 0.05,
                   "incorrect value for inc, expected 0.966901291823, is %f",
                   check_msg->inc);
@@ -895,8 +897,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for inc_dot, expected 2.62510934634e-10, is %f",
         check_msg->inc_dot);
     ck_assert_msg(check_msg->iode == 0,
-                  "incorrect value for iode, expected 0, is %d",
-                  check_msg->iode);
+                  "incorrect value for iode, expected 0, is %" PRId64,
+                  (int64_t)check_msg->iode);
     ck_assert_msg((check_msg->m0 * 100 - -1.58816085572 * 100) < 0.05,
                   "incorrect value for m0, expected -1.58816085572, is %f",
                   check_msg->m0);
@@ -908,8 +910,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for omegadot, expected -8.29570269217e-09, is %f",
         check_msg->omegadot);
     ck_assert_msg(check_msg->prn == 13,
-                  "incorrect value for prn, expected 13, is %d",
-                  check_msg->prn);
+                  "incorrect value for prn, expected 13, is %" PRId64,
+                  (int64_t)check_msg->prn);
     ck_assert_msg((check_msg->sqrta * 100 - 5153.57085609 * 100) < 0.05,
                   "incorrect value for sqrta, expected 5153.57085609, is %f",
                   check_msg->sqrta);
@@ -920,17 +922,17 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for toc_tow, expected 410400.0, is %f",
                   check_msg->toc_tow);
     ck_assert_msg(check_msg->toc_wn == 1838,
-                  "incorrect value for toc_wn, expected 1838, is %d",
-                  check_msg->toc_wn);
+                  "incorrect value for toc_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toc_wn);
     ck_assert_msg((check_msg->toe_tow * 100 - 410400.0 * 100) < 0.05,
                   "incorrect value for toe_tow, expected 410400.0, is %f",
                   check_msg->toe_tow);
     ck_assert_msg(check_msg->toe_wn == 1838,
-                  "incorrect value for toe_wn, expected 1838, is %d",
-                  check_msg->toe_wn);
+                  "incorrect value for toe_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toe_wn);
     ck_assert_msg(check_msg->valid == 1,
-                  "incorrect value for valid, expected 1, is %d",
-                  check_msg->valid);
+                  "incorrect value for valid, expected 1, is %" PRId64,
+                  (int64_t)check_msg->valid);
     ck_assert_msg((check_msg->w * 100 - -1.97360228379 * 100) < 0.05,
                   "incorrect value for w, expected -1.97360228379, is %f",
                   check_msg->w);
@@ -1094,8 +1096,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for ecc, expected 0.00992374494672, is %f",
                   check_msg->ecc);
     ck_assert_msg(check_msg->healthy == 1,
-                  "incorrect value for healthy, expected 1, is %d",
-                  check_msg->healthy);
+                  "incorrect value for healthy, expected 1, is %" PRId64,
+                  (int64_t)check_msg->healthy);
     ck_assert_msg((check_msg->inc * 100 - 0.948751322181 * 100) < 0.05,
                   "incorrect value for inc, expected 0.948751322181, is %f",
                   check_msg->inc);
@@ -1104,8 +1106,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for inc_dot, expected 3.00012496725e-10, is %f",
         check_msg->inc_dot);
     ck_assert_msg(check_msg->iode == 0,
-                  "incorrect value for iode, expected 0, is %d",
-                  check_msg->iode);
+                  "incorrect value for iode, expected 0, is %" PRId64,
+                  (int64_t)check_msg->iode);
     ck_assert_msg((check_msg->m0 * 100 - -2.66616027191 * 100) < 0.05,
                   "incorrect value for m0, expected -2.66616027191, is %f",
                   check_msg->m0);
@@ -1117,8 +1119,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for omegadot, expected -8.4599952499e-09, is %f",
         check_msg->omegadot);
     ck_assert_msg(check_msg->prn == 22,
-                  "incorrect value for prn, expected 22, is %d",
-                  check_msg->prn);
+                  "incorrect value for prn, expected 22, is %" PRId64,
+                  (int64_t)check_msg->prn);
     ck_assert_msg((check_msg->sqrta * 100 - 5153.63666725 * 100) < 0.05,
                   "incorrect value for sqrta, expected 5153.63666725, is %f",
                   check_msg->sqrta);
@@ -1129,17 +1131,17 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for toc_tow, expected 410400.0, is %f",
                   check_msg->toc_tow);
     ck_assert_msg(check_msg->toc_wn == 1838,
-                  "incorrect value for toc_wn, expected 1838, is %d",
-                  check_msg->toc_wn);
+                  "incorrect value for toc_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toc_wn);
     ck_assert_msg((check_msg->toe_tow * 100 - 410400.0 * 100) < 0.05,
                   "incorrect value for toe_tow, expected 410400.0, is %f",
                   check_msg->toe_tow);
     ck_assert_msg(check_msg->toe_wn == 1838,
-                  "incorrect value for toe_wn, expected 1838, is %d",
-                  check_msg->toe_wn);
+                  "incorrect value for toe_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toe_wn);
     ck_assert_msg(check_msg->valid == 1,
-                  "incorrect value for valid, expected 1, is %d",
-                  check_msg->valid);
+                  "incorrect value for valid, expected 1, is %" PRId64,
+                  (int64_t)check_msg->valid);
     ck_assert_msg((check_msg->w * 100 - -2.70212414527 * 100) < 0.05,
                   "incorrect value for w, expected -2.70212414527, is %f",
                   check_msg->w);
@@ -1302,8 +1304,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for ecc, expected 0.00817864493001, is %f",
                   check_msg->ecc);
     ck_assert_msg(check_msg->healthy == 1,
-                  "incorrect value for healthy, expected 1, is %d",
-                  check_msg->healthy);
+                  "incorrect value for healthy, expected 1, is %" PRId64,
+                  (int64_t)check_msg->healthy);
     ck_assert_msg((check_msg->inc * 100 - 0.975512201725 * 100) < 0.05,
                   "incorrect value for inc, expected 0.975512201725, is %f",
                   check_msg->inc);
@@ -1312,8 +1314,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for inc_dot, expected -5.88238788221e-10, is %f",
         check_msg->inc_dot);
     ck_assert_msg(check_msg->iode == 0,
-                  "incorrect value for iode, expected 0, is %d",
-                  check_msg->iode);
+                  "incorrect value for iode, expected 0, is %" PRId64,
+                  (int64_t)check_msg->iode);
     ck_assert_msg((check_msg->m0 * 100 - 1.94018234598 * 100) < 0.05,
                   "incorrect value for m0, expected 1.94018234598, is %f",
                   check_msg->m0);
@@ -1325,8 +1327,8 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
         "incorrect value for omegadot, expected -7.96247452617e-09, is %f",
         check_msg->omegadot);
     ck_assert_msg(check_msg->prn == 30,
-                  "incorrect value for prn, expected 30, is %d",
-                  check_msg->prn);
+                  "incorrect value for prn, expected 30, is %" PRId64,
+                  (int64_t)check_msg->prn);
     ck_assert_msg((check_msg->sqrta * 100 - 5153.75399208 * 100) < 0.05,
                   "incorrect value for sqrta, expected 5153.75399208, is %f",
                   check_msg->sqrta);
@@ -1337,17 +1339,17 @@ START_TEST(test_legacy_auto_check_sbp_observation_msgEphemerisDepB) {
                   "incorrect value for toc_tow, expected 410400.0, is %f",
                   check_msg->toc_tow);
     ck_assert_msg(check_msg->toc_wn == 1838,
-                  "incorrect value for toc_wn, expected 1838, is %d",
-                  check_msg->toc_wn);
+                  "incorrect value for toc_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toc_wn);
     ck_assert_msg((check_msg->toe_tow * 100 - 410400.0 * 100) < 0.05,
                   "incorrect value for toe_tow, expected 410400.0, is %f",
                   check_msg->toe_tow);
     ck_assert_msg(check_msg->toe_wn == 1838,
-                  "incorrect value for toe_wn, expected 1838, is %d",
-                  check_msg->toe_wn);
+                  "incorrect value for toe_wn, expected 1838, is %" PRId64,
+                  (int64_t)check_msg->toe_wn);
     ck_assert_msg(check_msg->valid == 1,
-                  "incorrect value for valid, expected 1, is %d",
-                  check_msg->valid);
+                  "incorrect value for valid, expected 1, is %" PRId64,
+                  (int64_t)check_msg->valid);
     ck_assert_msg((check_msg->w * 100 - -0.523790171609 * 100) < 0.05,
                   "incorrect value for w, expected -0.523790171609, is %f",
                   check_msg->w);

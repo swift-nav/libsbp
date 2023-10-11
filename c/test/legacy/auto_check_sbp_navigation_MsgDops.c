@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -195,26 +195,26 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgDops) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->gdop == 2,
-                  "incorrect value for gdop, expected 2, is %d",
-                  check_msg->gdop);
+                  "incorrect value for gdop, expected 2, is %" PRId64,
+                  (int64_t)check_msg->gdop);
     ck_assert_msg(check_msg->hdop == 5,
-                  "incorrect value for hdop, expected 5, is %d",
-                  check_msg->hdop);
+                  "incorrect value for hdop, expected 5, is %" PRId64,
+                  (int64_t)check_msg->hdop);
     ck_assert_msg(check_msg->pdop == 6,
-                  "incorrect value for pdop, expected 6, is %d",
-                  check_msg->pdop);
+                  "incorrect value for pdop, expected 6, is %" PRId64,
+                  (int64_t)check_msg->pdop);
     ck_assert_msg(check_msg->tdop == 5,
-                  "incorrect value for tdop, expected 5, is %d",
-                  check_msg->tdop);
+                  "incorrect value for tdop, expected 5, is %" PRId64,
+                  (int64_t)check_msg->tdop);
     ck_assert_msg(check_msg->tow == 100,
-                  "incorrect value for tow, expected 100, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 100, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vdop == 5,
-                  "incorrect value for vdop, expected 5, is %d",
-                  check_msg->vdop);
+                  "incorrect value for vdop, expected 5, is %" PRId64,
+                  (int64_t)check_msg->vdop);
   }
 }
 END_TEST

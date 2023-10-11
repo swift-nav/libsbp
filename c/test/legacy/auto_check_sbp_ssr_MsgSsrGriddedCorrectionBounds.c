@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -234,141 +234,146 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
         (msg_ssr_gridded_correction_bounds_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->grid_point_id == 1000,
-                  "incorrect value for grid_point_id, expected 1000, is %d",
-                  check_msg->grid_point_id);
-    ck_assert_msg(check_msg->header.num_msgs == 1,
-                  "incorrect value for header.num_msgs, expected 1, is %d",
-                  check_msg->header.num_msgs);
+    ck_assert_msg(
+        check_msg->grid_point_id == 1000,
+        "incorrect value for grid_point_id, expected 1000, is %" PRId64,
+        (int64_t)check_msg->grid_point_id);
+    ck_assert_msg(
+        check_msg->header.num_msgs == 1,
+        "incorrect value for header.num_msgs, expected 1, is %" PRId64,
+        (int64_t)check_msg->header.num_msgs);
     ck_assert_msg(check_msg->header.seq_num == 0,
-                  "incorrect value for header.seq_num, expected 0, is %d",
-                  check_msg->header.seq_num);
+                  "incorrect value for header.seq_num, expected 0, is %" PRId64,
+                  (int64_t)check_msg->header.seq_num);
     ck_assert_msg(check_msg->header.sol_id == 0,
-                  "incorrect value for header.sol_id, expected 0, is %d",
-                  check_msg->header.sol_id);
-    ck_assert_msg(check_msg->header.time.tow == 180,
-                  "incorrect value for header.time.tow, expected 180, is %d",
-                  check_msg->header.time.tow);
+                  "incorrect value for header.sol_id, expected 0, is %" PRId64,
+                  (int64_t)check_msg->header.sol_id);
+    ck_assert_msg(
+        check_msg->header.time.tow == 180,
+        "incorrect value for header.time.tow, expected 180, is %" PRId64,
+        (int64_t)check_msg->header.time.tow);
     ck_assert_msg(check_msg->header.time.wn == 3,
-                  "incorrect value for header.time.wn, expected 3, is %d",
-                  check_msg->header.time.wn);
+                  "incorrect value for header.time.wn, expected 3, is %" PRId64,
+                  (int64_t)check_msg->header.time.wn);
     ck_assert_msg(
         check_msg->header.update_interval == 10,
-        "incorrect value for header.update_interval, expected 10, is %d",
-        check_msg->header.update_interval);
+        "incorrect value for header.update_interval, expected 10, is %" PRId64,
+        (int64_t)check_msg->header.update_interval);
     ck_assert_msg(check_msg->n_sats == 2,
-                  "incorrect value for n_sats, expected 2, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 2, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->ssr_iod_atmo == 15,
-                  "incorrect value for ssr_iod_atmo, expected 15, is %d",
-                  check_msg->ssr_iod_atmo);
+                  "incorrect value for ssr_iod_atmo, expected 15, is %" PRId64,
+                  (int64_t)check_msg->ssr_iod_atmo);
     ck_assert_msg(check_msg->stec_sat_list[0].stec_bound_mu == 18,
                   "incorrect value for stec_sat_list[0].stec_bound_mu, "
-                  "expected 18, is %d",
-                  check_msg->stec_sat_list[0].stec_bound_mu);
+                  "expected 18, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].stec_bound_mu);
     ck_assert_msg(check_msg->stec_sat_list[0].stec_bound_mu_dot == 20,
                   "incorrect value for stec_sat_list[0].stec_bound_mu_dot, "
-                  "expected 20, is %d",
-                  check_msg->stec_sat_list[0].stec_bound_mu_dot);
+                  "expected 20, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].stec_bound_mu_dot);
     ck_assert_msg(check_msg->stec_sat_list[0].stec_bound_sig == 19,
                   "incorrect value for stec_sat_list[0].stec_bound_sig, "
-                  "expected 19, is %d",
-                  check_msg->stec_sat_list[0].stec_bound_sig);
+                  "expected 19, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].stec_bound_sig);
     ck_assert_msg(check_msg->stec_sat_list[0].stec_bound_sig_dot == 21,
                   "incorrect value for stec_sat_list[0].stec_bound_sig_dot, "
-                  "expected 21, is %d",
-                  check_msg->stec_sat_list[0].stec_bound_sig_dot);
-    ck_assert_msg(check_msg->stec_sat_list[0].stec_residual.residual == 16,
-                  "incorrect value for "
-                  "stec_sat_list[0].stec_residual.residual, expected 16, is %d",
-                  check_msg->stec_sat_list[0].stec_residual.residual);
+                  "expected 21, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].stec_bound_sig_dot);
+    ck_assert_msg(
+        check_msg->stec_sat_list[0].stec_residual.residual == 16,
+        "incorrect value for stec_sat_list[0].stec_residual.residual, expected "
+        "16, is %" PRId64,
+        (int64_t)check_msg->stec_sat_list[0].stec_residual.residual);
     ck_assert_msg(check_msg->stec_sat_list[0].stec_residual.stddev == 17,
                   "incorrect value for stec_sat_list[0].stec_residual.stddev, "
-                  "expected 17, is %d",
-                  check_msg->stec_sat_list[0].stec_residual.stddev);
+                  "expected 17, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].stec_residual.stddev);
     ck_assert_msg(
         check_msg->stec_sat_list[0].stec_residual.sv_id.constellation == 10,
         "incorrect value for "
         "stec_sat_list[0].stec_residual.sv_id.constellation, expected 10, is "
-        "%d",
-        check_msg->stec_sat_list[0].stec_residual.sv_id.constellation);
+        "%" PRId64,
+        (int64_t)check_msg->stec_sat_list[0].stec_residual.sv_id.constellation);
     ck_assert_msg(
         check_msg->stec_sat_list[0].stec_residual.sv_id.satId == 5,
         "incorrect value for stec_sat_list[0].stec_residual.sv_id.satId, "
-        "expected 5, is %d",
-        check_msg->stec_sat_list[0].stec_residual.sv_id.satId);
+        "expected 5, is %" PRId64,
+        (int64_t)check_msg->stec_sat_list[0].stec_residual.sv_id.satId);
     ck_assert_msg(check_msg->stec_sat_list[1].stec_bound_mu == 24,
                   "incorrect value for stec_sat_list[1].stec_bound_mu, "
-                  "expected 24, is %d",
-                  check_msg->stec_sat_list[1].stec_bound_mu);
+                  "expected 24, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].stec_bound_mu);
     ck_assert_msg(check_msg->stec_sat_list[1].stec_bound_mu_dot == 26,
                   "incorrect value for stec_sat_list[1].stec_bound_mu_dot, "
-                  "expected 26, is %d",
-                  check_msg->stec_sat_list[1].stec_bound_mu_dot);
+                  "expected 26, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].stec_bound_mu_dot);
     ck_assert_msg(check_msg->stec_sat_list[1].stec_bound_sig == 25,
                   "incorrect value for stec_sat_list[1].stec_bound_sig, "
-                  "expected 25, is %d",
-                  check_msg->stec_sat_list[1].stec_bound_sig);
+                  "expected 25, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].stec_bound_sig);
     ck_assert_msg(check_msg->stec_sat_list[1].stec_bound_sig_dot == 27,
                   "incorrect value for stec_sat_list[1].stec_bound_sig_dot, "
-                  "expected 27, is %d",
-                  check_msg->stec_sat_list[1].stec_bound_sig_dot);
-    ck_assert_msg(check_msg->stec_sat_list[1].stec_residual.residual == 22,
-                  "incorrect value for "
-                  "stec_sat_list[1].stec_residual.residual, expected 22, is %d",
-                  check_msg->stec_sat_list[1].stec_residual.residual);
+                  "expected 27, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].stec_bound_sig_dot);
+    ck_assert_msg(
+        check_msg->stec_sat_list[1].stec_residual.residual == 22,
+        "incorrect value for stec_sat_list[1].stec_residual.residual, expected "
+        "22, is %" PRId64,
+        (int64_t)check_msg->stec_sat_list[1].stec_residual.residual);
     ck_assert_msg(check_msg->stec_sat_list[1].stec_residual.stddev == 23,
                   "incorrect value for stec_sat_list[1].stec_residual.stddev, "
-                  "expected 23, is %d",
-                  check_msg->stec_sat_list[1].stec_residual.stddev);
+                  "expected 23, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].stec_residual.stddev);
     ck_assert_msg(
         check_msg->stec_sat_list[1].stec_residual.sv_id.constellation == 10,
         "incorrect value for "
         "stec_sat_list[1].stec_residual.sv_id.constellation, expected 10, is "
-        "%d",
-        check_msg->stec_sat_list[1].stec_residual.sv_id.constellation);
+        "%" PRId64,
+        (int64_t)check_msg->stec_sat_list[1].stec_residual.sv_id.constellation);
     ck_assert_msg(
         check_msg->stec_sat_list[1].stec_residual.sv_id.satId == 6,
         "incorrect value for stec_sat_list[1].stec_residual.sv_id.satId, "
-        "expected 6, is %d",
-        check_msg->stec_sat_list[1].stec_residual.sv_id.satId);
+        "expected 6, is %" PRId64,
+        (int64_t)check_msg->stec_sat_list[1].stec_residual.sv_id.satId);
     ck_assert_msg(check_msg->tile_id == 10,
-                  "incorrect value for tile_id, expected 10, is %d",
-                  check_msg->tile_id);
+                  "incorrect value for tile_id, expected 10, is %" PRId64,
+                  (int64_t)check_msg->tile_id);
     ck_assert_msg(check_msg->tile_set_id == 1,
-                  "incorrect value for tile_set_id, expected 1, is %d",
-                  check_msg->tile_set_id);
-    ck_assert_msg(
-        check_msg->tropo_delay_correction.hydro == 500,
-        "incorrect value for tropo_delay_correction.hydro, expected 500, is %d",
-        check_msg->tropo_delay_correction.hydro);
+                  "incorrect value for tile_set_id, expected 1, is %" PRId64,
+                  (int64_t)check_msg->tile_set_id);
+    ck_assert_msg(check_msg->tropo_delay_correction.hydro == 500,
+                  "incorrect value for tropo_delay_correction.hydro, expected "
+                  "500, is %" PRId64,
+                  (int64_t)check_msg->tropo_delay_correction.hydro);
     ck_assert_msg(check_msg->tropo_delay_correction.stddev == 200,
                   "incorrect value for tropo_delay_correction.stddev, expected "
-                  "200, is %d",
-                  check_msg->tropo_delay_correction.stddev);
-    ck_assert_msg(
-        check_msg->tropo_delay_correction.wet == 100,
-        "incorrect value for tropo_delay_correction.wet, expected 100, is %d",
-        check_msg->tropo_delay_correction.wet);
+                  "200, is %" PRId64,
+                  (int64_t)check_msg->tropo_delay_correction.stddev);
+    ck_assert_msg(check_msg->tropo_delay_correction.wet == 100,
+                  "incorrect value for tropo_delay_correction.wet, expected "
+                  "100, is %" PRId64,
+                  (int64_t)check_msg->tropo_delay_correction.wet);
     ck_assert_msg(check_msg->tropo_qi == 39,
-                  "incorrect value for tropo_qi, expected 39, is %d",
-                  check_msg->tropo_qi);
+                  "incorrect value for tropo_qi, expected 39, is %" PRId64,
+                  (int64_t)check_msg->tropo_qi);
     ck_assert_msg(
         check_msg->tropo_v_hydro_bound_mu == 150,
-        "incorrect value for tropo_v_hydro_bound_mu, expected 150, is %d",
-        check_msg->tropo_v_hydro_bound_mu);
-    ck_assert_msg(
-        check_msg->tropo_v_hydro_bound_sig == 100,
-        "incorrect value for tropo_v_hydro_bound_sig, expected 100, is %d",
-        check_msg->tropo_v_hydro_bound_sig);
+        "incorrect value for tropo_v_hydro_bound_mu, expected 150, is %" PRId64,
+        (int64_t)check_msg->tropo_v_hydro_bound_mu);
+    ck_assert_msg(check_msg->tropo_v_hydro_bound_sig == 100,
+                  "incorrect value for tropo_v_hydro_bound_sig, expected 100, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->tropo_v_hydro_bound_sig);
     ck_assert_msg(
         check_msg->tropo_v_wet_bound_mu == 150,
-        "incorrect value for tropo_v_wet_bound_mu, expected 150, is %d",
-        check_msg->tropo_v_wet_bound_mu);
+        "incorrect value for tropo_v_wet_bound_mu, expected 150, is %" PRId64,
+        (int64_t)check_msg->tropo_v_wet_bound_mu);
     ck_assert_msg(
         check_msg->tropo_v_wet_bound_sig == 100,
-        "incorrect value for tropo_v_wet_bound_sig, expected 100, is %d",
-        check_msg->tropo_v_wet_bound_sig);
+        "incorrect value for tropo_v_wet_bound_sig, expected 100, is %" PRId64,
+        (int64_t)check_msg->tropo_v_wet_bound_sig);
   }
   // Test successful parsing of a message
   {
@@ -475,71 +480,74 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
         (msg_ssr_gridded_correction_bounds_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->grid_point_id == 1000,
-                  "incorrect value for grid_point_id, expected 1000, is %d",
-                  check_msg->grid_point_id);
-    ck_assert_msg(check_msg->header.num_msgs == 1,
-                  "incorrect value for header.num_msgs, expected 1, is %d",
-                  check_msg->header.num_msgs);
+    ck_assert_msg(
+        check_msg->grid_point_id == 1000,
+        "incorrect value for grid_point_id, expected 1000, is %" PRId64,
+        (int64_t)check_msg->grid_point_id);
+    ck_assert_msg(
+        check_msg->header.num_msgs == 1,
+        "incorrect value for header.num_msgs, expected 1, is %" PRId64,
+        (int64_t)check_msg->header.num_msgs);
     ck_assert_msg(check_msg->header.seq_num == 0,
-                  "incorrect value for header.seq_num, expected 0, is %d",
-                  check_msg->header.seq_num);
+                  "incorrect value for header.seq_num, expected 0, is %" PRId64,
+                  (int64_t)check_msg->header.seq_num);
     ck_assert_msg(check_msg->header.sol_id == 0,
-                  "incorrect value for header.sol_id, expected 0, is %d",
-                  check_msg->header.sol_id);
-    ck_assert_msg(check_msg->header.time.tow == 180,
-                  "incorrect value for header.time.tow, expected 180, is %d",
-                  check_msg->header.time.tow);
+                  "incorrect value for header.sol_id, expected 0, is %" PRId64,
+                  (int64_t)check_msg->header.sol_id);
+    ck_assert_msg(
+        check_msg->header.time.tow == 180,
+        "incorrect value for header.time.tow, expected 180, is %" PRId64,
+        (int64_t)check_msg->header.time.tow);
     ck_assert_msg(check_msg->header.time.wn == 3,
-                  "incorrect value for header.time.wn, expected 3, is %d",
-                  check_msg->header.time.wn);
+                  "incorrect value for header.time.wn, expected 3, is %" PRId64,
+                  (int64_t)check_msg->header.time.wn);
     ck_assert_msg(
         check_msg->header.update_interval == 10,
-        "incorrect value for header.update_interval, expected 10, is %d",
-        check_msg->header.update_interval);
+        "incorrect value for header.update_interval, expected 10, is %" PRId64,
+        (int64_t)check_msg->header.update_interval);
     ck_assert_msg(check_msg->n_sats == 0,
-                  "incorrect value for n_sats, expected 0, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 0, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->ssr_iod_atmo == 15,
-                  "incorrect value for ssr_iod_atmo, expected 15, is %d",
-                  check_msg->ssr_iod_atmo);
+                  "incorrect value for ssr_iod_atmo, expected 15, is %" PRId64,
+                  (int64_t)check_msg->ssr_iod_atmo);
     ck_assert_msg(check_msg->tile_id == 10,
-                  "incorrect value for tile_id, expected 10, is %d",
-                  check_msg->tile_id);
+                  "incorrect value for tile_id, expected 10, is %" PRId64,
+                  (int64_t)check_msg->tile_id);
     ck_assert_msg(check_msg->tile_set_id == 1,
-                  "incorrect value for tile_set_id, expected 1, is %d",
-                  check_msg->tile_set_id);
-    ck_assert_msg(
-        check_msg->tropo_delay_correction.hydro == 500,
-        "incorrect value for tropo_delay_correction.hydro, expected 500, is %d",
-        check_msg->tropo_delay_correction.hydro);
+                  "incorrect value for tile_set_id, expected 1, is %" PRId64,
+                  (int64_t)check_msg->tile_set_id);
+    ck_assert_msg(check_msg->tropo_delay_correction.hydro == 500,
+                  "incorrect value for tropo_delay_correction.hydro, expected "
+                  "500, is %" PRId64,
+                  (int64_t)check_msg->tropo_delay_correction.hydro);
     ck_assert_msg(check_msg->tropo_delay_correction.stddev == 200,
                   "incorrect value for tropo_delay_correction.stddev, expected "
-                  "200, is %d",
-                  check_msg->tropo_delay_correction.stddev);
-    ck_assert_msg(
-        check_msg->tropo_delay_correction.wet == 100,
-        "incorrect value for tropo_delay_correction.wet, expected 100, is %d",
-        check_msg->tropo_delay_correction.wet);
+                  "200, is %" PRId64,
+                  (int64_t)check_msg->tropo_delay_correction.stddev);
+    ck_assert_msg(check_msg->tropo_delay_correction.wet == 100,
+                  "incorrect value for tropo_delay_correction.wet, expected "
+                  "100, is %" PRId64,
+                  (int64_t)check_msg->tropo_delay_correction.wet);
     ck_assert_msg(check_msg->tropo_qi == 39,
-                  "incorrect value for tropo_qi, expected 39, is %d",
-                  check_msg->tropo_qi);
+                  "incorrect value for tropo_qi, expected 39, is %" PRId64,
+                  (int64_t)check_msg->tropo_qi);
     ck_assert_msg(
         check_msg->tropo_v_hydro_bound_mu == 150,
-        "incorrect value for tropo_v_hydro_bound_mu, expected 150, is %d",
-        check_msg->tropo_v_hydro_bound_mu);
-    ck_assert_msg(
-        check_msg->tropo_v_hydro_bound_sig == 100,
-        "incorrect value for tropo_v_hydro_bound_sig, expected 100, is %d",
-        check_msg->tropo_v_hydro_bound_sig);
+        "incorrect value for tropo_v_hydro_bound_mu, expected 150, is %" PRId64,
+        (int64_t)check_msg->tropo_v_hydro_bound_mu);
+    ck_assert_msg(check_msg->tropo_v_hydro_bound_sig == 100,
+                  "incorrect value for tropo_v_hydro_bound_sig, expected 100, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->tropo_v_hydro_bound_sig);
     ck_assert_msg(
         check_msg->tropo_v_wet_bound_mu == 150,
-        "incorrect value for tropo_v_wet_bound_mu, expected 150, is %d",
-        check_msg->tropo_v_wet_bound_mu);
+        "incorrect value for tropo_v_wet_bound_mu, expected 150, is %" PRId64,
+        (int64_t)check_msg->tropo_v_wet_bound_mu);
     ck_assert_msg(
         check_msg->tropo_v_wet_bound_sig == 100,
-        "incorrect value for tropo_v_wet_bound_sig, expected 100, is %d",
-        check_msg->tropo_v_wet_bound_sig);
+        "incorrect value for tropo_v_wet_bound_sig, expected 100, is %" PRId64,
+        (int64_t)check_msg->tropo_v_wet_bound_sig);
   }
 }
 END_TEST

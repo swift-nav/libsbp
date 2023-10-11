@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -183,132 +183,132 @@ START_TEST(test_auto_check_sbp_navigation_MsgPoseRelative) {
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_c_x_x * 100 - 2.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_c_x_x, expected "
-        "2.0, is %s",
+        "2.0, is %f",
         last_msg.msg.pose_relative.cov_c_x_x);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_c_x_y * 100 - 0.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_c_x_y, expected "
-        "0.0, is %s",
+        "0.0, is %f",
         last_msg.msg.pose_relative.cov_c_x_y);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_c_x_z * 100 - 0.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_c_x_z, expected "
-        "0.0, is %s",
+        "0.0, is %f",
         last_msg.msg.pose_relative.cov_c_x_z);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_c_y_y * 100 - 2.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_c_y_y, expected "
-        "2.0, is %s",
+        "2.0, is %f",
         last_msg.msg.pose_relative.cov_c_y_y);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_c_y_z * 100 - 0.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_c_y_z, expected "
-        "0.0, is %s",
+        "0.0, is %f",
         last_msg.msg.pose_relative.cov_c_y_z);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_c_z_z * 100 - 2.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_c_z_z, expected "
-        "2.0, is %s",
+        "2.0, is %f",
         last_msg.msg.pose_relative.cov_c_z_z);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_r_x_x * 100 - 1.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_r_x_x, expected "
-        "1.0, is %s",
+        "1.0, is %f",
         last_msg.msg.pose_relative.cov_r_x_x);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_r_x_y * 100 - 0.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_r_x_y, expected "
-        "0.0, is %s",
+        "0.0, is %f",
         last_msg.msg.pose_relative.cov_r_x_y);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_r_x_z * 100 - 0.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_r_x_z, expected "
-        "0.0, is %s",
+        "0.0, is %f",
         last_msg.msg.pose_relative.cov_r_x_z);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_r_y_y * 100 - 1.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_r_y_y, expected "
-        "1.0, is %s",
+        "1.0, is %f",
         last_msg.msg.pose_relative.cov_r_y_y);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_r_y_z * 100 - 0.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_r_y_z, expected "
-        "0.0, is %s",
+        "0.0, is %f",
         last_msg.msg.pose_relative.cov_r_y_z);
 
     ck_assert_msg(
         (last_msg.msg.pose_relative.cov_r_z_z * 100 - 1.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.pose_relative.cov_r_z_z, expected "
-        "1.0, is %s",
+        "1.0, is %f",
         last_msg.msg.pose_relative.cov_r_z_z);
 
     ck_assert_msg(last_msg.msg.pose_relative.flags == 5,
                   "incorrect value for last_msg.msg.pose_relative.flags, "
-                  "expected 5, is %d",
-                  last_msg.msg.pose_relative.flags);
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.flags);
 
     ck_assert_msg(last_msg.msg.pose_relative.sensor_id == 0,
                   "incorrect value for last_msg.msg.pose_relative.sensor_id, "
-                  "expected 0, is %d",
-                  last_msg.msg.pose_relative.sensor_id);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.sensor_id);
 
     ck_assert_msg(last_msg.msg.pose_relative.timestamp_1 == 1110,
                   "incorrect value for last_msg.msg.pose_relative.timestamp_1, "
-                  "expected 1110, is %d",
-                  last_msg.msg.pose_relative.timestamp_1);
+                  "expected 1110, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.timestamp_1);
 
     ck_assert_msg(last_msg.msg.pose_relative.timestamp_2 == 2220,
                   "incorrect value for last_msg.msg.pose_relative.timestamp_2, "
-                  "expected 2220, is %d",
-                  last_msg.msg.pose_relative.timestamp_2);
+                  "expected 2220, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.timestamp_2);
 
     ck_assert_msg(last_msg.msg.pose_relative.tow == 1110,
                   "incorrect value for last_msg.msg.pose_relative.tow, "
-                  "expected 1110, is %d",
-                  last_msg.msg.pose_relative.tow);
+                  "expected 1110, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.tow);
 
     ck_assert_msg(last_msg.msg.pose_relative.trans[0] == 1100,
                   "incorrect value for last_msg.msg.pose_relative.trans[0], "
-                  "expected 1100, is %d",
-                  last_msg.msg.pose_relative.trans[0]);
+                  "expected 1100, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.trans[0]);
     ck_assert_msg(last_msg.msg.pose_relative.trans[1] == 550,
                   "incorrect value for last_msg.msg.pose_relative.trans[1], "
-                  "expected 550, is %d",
-                  last_msg.msg.pose_relative.trans[1]);
+                  "expected 550, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.trans[1]);
     ck_assert_msg(last_msg.msg.pose_relative.trans[2] == 100,
                   "incorrect value for last_msg.msg.pose_relative.trans[2], "
-                  "expected 100, is %d",
-                  last_msg.msg.pose_relative.trans[2]);
+                  "expected 100, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.trans[2]);
 
     ck_assert_msg(last_msg.msg.pose_relative.w == -859307164,
                   "incorrect value for last_msg.msg.pose_relative.w, expected "
-                  "-859307164, is %d",
-                  last_msg.msg.pose_relative.w);
+                  "-859307164, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.w);
 
     ck_assert_msg(last_msg.msg.pose_relative.x == -6444804,
                   "incorrect value for last_msg.msg.pose_relative.x, expected "
-                  "-6444804, is %d",
-                  last_msg.msg.pose_relative.x);
+                  "-6444804, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.x);
 
     ck_assert_msg(last_msg.msg.pose_relative.y == -1866844813,
                   "incorrect value for last_msg.msg.pose_relative.y, expected "
-                  "-1866844813, is %d",
-                  last_msg.msg.pose_relative.y);
+                  "-1866844813, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.y);
 
     ck_assert_msg(last_msg.msg.pose_relative.z == 622997694,
                   "incorrect value for last_msg.msg.pose_relative.z, expected "
-                  "622997694, is %d",
-                  last_msg.msg.pose_relative.z);
+                  "622997694, is %" PRId64,
+                  (int64_t)last_msg.msg.pose_relative.z);
   }
 }
 END_TEST

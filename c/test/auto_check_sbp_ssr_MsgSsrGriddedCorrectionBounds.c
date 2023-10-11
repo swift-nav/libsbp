@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -215,216 +215,236 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
         last_msg.msg.ssr_gridded_correction_bounds.grid_point_id == 1000,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.grid_point_id, expected "
-        "1000, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.grid_point_id);
+        "1000, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.grid_point_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs == 1,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs, expected "
-        "1, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs);
+        "1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.header.seq_num == 0,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.seq_num, expected "
-        "0, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.header.seq_num);
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.header.seq_num);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.header.sol_id == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.header.sol_id, "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.header.sol_id);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.header.sol_id == 0,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.header.sol_id, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.header.sol_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.header.time.tow == 180,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.time.tow, expected "
-        "180, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.header.time.tow);
+        "180, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.header.time.tow);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.header.time.wn == 3,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.time.wn, expected "
-        "3, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.header.time.wn);
+        "3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.header.time.wn);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.header.update_interval == 10,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.update_interval, "
-        "expected 10, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.header.update_interval);
+        "expected 10, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_bounds.header.update_interval);
+
+    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.n_sats == 2,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_gridded_correction_bounds.n_sats, expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_bounds.n_sats);
 
     ck_assert_msg(
-        last_msg.msg.ssr_gridded_correction_bounds.n_sats == 2,
+        last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo == 15,
         "incorrect value for "
-        "last_msg.msg.ssr_gridded_correction_bounds.n_sats, expected 2, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.n_sats);
+        "last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo, expected 15, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo == 15,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo, "
-                  "expected 15, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+                .stec_bound_mu == 18,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0].stec_"
+        "bound_mu, expected 18, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+            .stec_bound_mu);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                          .stec_bound_mu == 18,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]."
-                  "stec_bound_mu, expected 18, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                      .stec_bound_mu);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+                .stec_bound_mu_dot == 20,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0].stec_"
+        "bound_mu_dot, expected 20, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+            .stec_bound_mu_dot);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                          .stec_bound_mu_dot == 20,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]."
-                  "stec_bound_mu_dot, expected 20, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                      .stec_bound_mu_dot);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+                .stec_bound_sig == 19,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0].stec_"
+        "bound_sig, expected 19, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+            .stec_bound_sig);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                          .stec_bound_sig == 19,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]."
-                  "stec_bound_sig, expected 19, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                      .stec_bound_sig);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+                .stec_bound_sig_dot == 21,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0].stec_"
+        "bound_sig_dot, expected 21, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+            .stec_bound_sig_dot);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                          .stec_bound_sig_dot == 21,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]."
-                  "stec_bound_sig_dot, expected 21, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                      .stec_bound_sig_dot);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+                .stec_residual.residual == 16,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0].stec_"
+        "residual.residual, expected 16, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+            .stec_residual.residual);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                          .stec_residual.residual == 16,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]."
-                  "stec_residual.residual, expected 16, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                      .stec_residual.residual);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+                .stec_residual.stddev == 17,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0].stec_"
+        "residual.stddev, expected 17, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+            .stec_residual.stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                          .stec_residual.stddev == 17,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]."
-                  "stec_residual.stddev, expected 17, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                      .stec_residual.stddev);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+                .stec_residual.sv_id.constellation == 10,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0].stec_"
+        "residual.sv_id.constellation, expected 10, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+            .stec_residual.sv_id.constellation);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                          .stec_residual.sv_id.constellation == 10,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]."
-                  "stec_residual.sv_id.constellation, expected 10, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                      .stec_residual.sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+                .stec_residual.sv_id.satId == 5,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0].stec_"
+        "residual.sv_id.satId, expected 5, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
+            .stec_residual.sv_id.satId);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                          .stec_residual.sv_id.satId == 5,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]."
-                  "stec_residual.sv_id.satId, expected 5, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[0]
-                      .stec_residual.sv_id.satId);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+                .stec_bound_mu == 24,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1].stec_"
+        "bound_mu, expected 24, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+            .stec_bound_mu);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                          .stec_bound_mu == 24,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]."
-                  "stec_bound_mu, expected 24, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                      .stec_bound_mu);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+                .stec_bound_mu_dot == 26,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1].stec_"
+        "bound_mu_dot, expected 26, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+            .stec_bound_mu_dot);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                          .stec_bound_mu_dot == 26,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]."
-                  "stec_bound_mu_dot, expected 26, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                      .stec_bound_mu_dot);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+                .stec_bound_sig == 25,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1].stec_"
+        "bound_sig, expected 25, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+            .stec_bound_sig);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                          .stec_bound_sig == 25,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]."
-                  "stec_bound_sig, expected 25, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                      .stec_bound_sig);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+                .stec_bound_sig_dot == 27,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1].stec_"
+        "bound_sig_dot, expected 27, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+            .stec_bound_sig_dot);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                          .stec_bound_sig_dot == 27,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]."
-                  "stec_bound_sig_dot, expected 27, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                      .stec_bound_sig_dot);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+                .stec_residual.residual == 22,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1].stec_"
+        "residual.residual, expected 22, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+            .stec_residual.residual);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                          .stec_residual.residual == 22,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]."
-                  "stec_residual.residual, expected 22, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                      .stec_residual.residual);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+                .stec_residual.stddev == 23,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1].stec_"
+        "residual.stddev, expected 23, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+            .stec_residual.stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                          .stec_residual.stddev == 23,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]."
-                  "stec_residual.stddev, expected 23, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                      .stec_residual.stddev);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+                .stec_residual.sv_id.constellation == 10,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1].stec_"
+        "residual.sv_id.constellation, expected 10, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+            .stec_residual.sv_id.constellation);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                          .stec_residual.sv_id.constellation == 10,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]."
-                  "stec_residual.sv_id.constellation, expected 10, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                      .stec_residual.sv_id.constellation);
-
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                          .stec_residual.sv_id.satId == 6,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]."
-                  "stec_residual.sv_id.satId, expected 6, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
-                      .stec_residual.sv_id.satId);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+                .stec_residual.sv_id.satId == 6,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1].stec_"
+        "residual.sv_id.satId, expected 6, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
+            .stec_residual.sv_id.satId);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.tile_id == 10,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_bounds.tile_id, "
-                  "expected 10, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.tile_id);
+                  "expected 10, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_bounds.tile_id);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.tile_set_id == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.tile_set_id, "
-                  "expected 1, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.tile_set_id);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tile_set_id == 1,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tile_set_id, expected 1, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.tile_set_id);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds
                           .tropo_delay_correction.hydro == 500,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_"
-                  "correction.hydro, expected 500, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds
+                  "correction.hydro, expected 500, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_bounds
                       .tropo_delay_correction.hydro);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds
                           .tropo_delay_correction.stddev == 200,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_"
-                  "correction.stddev, expected 200, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds
+                  "correction.stddev, expected 200, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_bounds
                       .tropo_delay_correction.stddev);
 
     ck_assert_msg(
@@ -432,44 +452,49 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
             100,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_correction.wet,"
-        " expected 100, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_correction.wet);
+        " expected 100, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds
+            .tropo_delay_correction.wet);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.tropo_qi == 39,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_bounds.tropo_qi, "
-                  "expected 39, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.tropo_qi);
+                  "expected 39, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_bounds.tropo_qi);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu ==
             150,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu, "
-        "expected 150, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu);
+        "expected 150, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig ==
             100,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig, "
-        "expected 100, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig);
+        "expected 100, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu == 150,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu, "
-        "expected 150, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu);
+        "expected 150, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig == 100,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig, "
-        "expected 100, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig);
+        "expected 100, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig);
   }
   // Test successful parsing of a message
   {
@@ -563,88 +588,92 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
         last_msg.msg.ssr_gridded_correction_bounds.grid_point_id == 1000,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.grid_point_id, expected "
-        "1000, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.grid_point_id);
+        "1000, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.grid_point_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs == 1,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs, expected "
-        "1, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs);
+        "1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.header.seq_num == 0,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.seq_num, expected "
-        "0, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.header.seq_num);
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.header.seq_num);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.header.sol_id == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.header.sol_id, "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.header.sol_id);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.header.sol_id == 0,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.header.sol_id, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.header.sol_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.header.time.tow == 180,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.time.tow, expected "
-        "180, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.header.time.tow);
+        "180, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.header.time.tow);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.header.time.wn == 3,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.time.wn, expected "
-        "3, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.header.time.wn);
+        "3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.header.time.wn);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.header.update_interval == 10,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.update_interval, "
-        "expected 10, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.header.update_interval);
+        "expected 10, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_bounds.header.update_interval);
+
+    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.n_sats == 0,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_gridded_correction_bounds.n_sats, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_bounds.n_sats);
 
     ck_assert_msg(
-        last_msg.msg.ssr_gridded_correction_bounds.n_sats == 0,
+        last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo == 15,
         "incorrect value for "
-        "last_msg.msg.ssr_gridded_correction_bounds.n_sats, expected 0, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.n_sats);
-
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo == 15,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo, "
-                  "expected 15, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo);
+        "last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo, expected 15, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.tile_id == 10,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_bounds.tile_id, "
-                  "expected 10, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.tile_id);
+                  "expected 10, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_bounds.tile_id);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.tile_set_id == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction_bounds.tile_set_id, "
-                  "expected 1, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.tile_set_id);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tile_set_id == 1,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tile_set_id, expected 1, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds.tile_set_id);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds
                           .tropo_delay_correction.hydro == 500,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_"
-                  "correction.hydro, expected 500, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds
+                  "correction.hydro, expected 500, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_bounds
                       .tropo_delay_correction.hydro);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds
                           .tropo_delay_correction.stddev == 200,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_"
-                  "correction.stddev, expected 200, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds
+                  "correction.stddev, expected 200, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_bounds
                       .tropo_delay_correction.stddev);
 
     ck_assert_msg(
@@ -652,44 +681,49 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
             100,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_correction.wet,"
-        " expected 100, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_correction.wet);
+        " expected 100, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_bounds
+            .tropo_delay_correction.wet);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.tropo_qi == 39,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_bounds.tropo_qi, "
-                  "expected 39, is %d",
-                  last_msg.msg.ssr_gridded_correction_bounds.tropo_qi);
+                  "expected 39, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_bounds.tropo_qi);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu ==
             150,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu, "
-        "expected 150, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu);
+        "expected 150, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig ==
             100,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig, "
-        "expected 100, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig);
+        "expected 100, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu == 150,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu, "
-        "expected 150, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu);
+        "expected 150, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig == 100,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig, "
-        "expected 100, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig);
+        "expected 100, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig);
   }
 }
 END_TEST

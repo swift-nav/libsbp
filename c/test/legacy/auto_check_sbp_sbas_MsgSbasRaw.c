@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -328,98 +328,98 @@ START_TEST(test_legacy_auto_check_sbp_sbas_MsgSbasRaw) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->data[0] == 23,
-                  "incorrect value for data[0], expected 23, is %d",
-                  check_msg->data[0]);
+                  "incorrect value for data[0], expected 23, is %" PRId64,
+                  (int64_t)check_msg->data[0]);
     ck_assert_msg(check_msg->data[1] == 255,
-                  "incorrect value for data[1], expected 255, is %d",
-                  check_msg->data[1]);
+                  "incorrect value for data[1], expected 255, is %" PRId64,
+                  (int64_t)check_msg->data[1]);
     ck_assert_msg(check_msg->data[2] == 0,
-                  "incorrect value for data[2], expected 0, is %d",
-                  check_msg->data[2]);
+                  "incorrect value for data[2], expected 0, is %" PRId64,
+                  (int64_t)check_msg->data[2]);
     ck_assert_msg(check_msg->data[3] == 23,
-                  "incorrect value for data[3], expected 23, is %d",
-                  check_msg->data[3]);
+                  "incorrect value for data[3], expected 23, is %" PRId64,
+                  (int64_t)check_msg->data[3]);
     ck_assert_msg(check_msg->data[4] == 255,
-                  "incorrect value for data[4], expected 255, is %d",
-                  check_msg->data[4]);
+                  "incorrect value for data[4], expected 255, is %" PRId64,
+                  (int64_t)check_msg->data[4]);
     ck_assert_msg(check_msg->data[5] == 0,
-                  "incorrect value for data[5], expected 0, is %d",
-                  check_msg->data[5]);
+                  "incorrect value for data[5], expected 0, is %" PRId64,
+                  (int64_t)check_msg->data[5]);
     ck_assert_msg(check_msg->data[6] == 23,
-                  "incorrect value for data[6], expected 23, is %d",
-                  check_msg->data[6]);
+                  "incorrect value for data[6], expected 23, is %" PRId64,
+                  (int64_t)check_msg->data[6]);
     ck_assert_msg(check_msg->data[7] == 255,
-                  "incorrect value for data[7], expected 255, is %d",
-                  check_msg->data[7]);
+                  "incorrect value for data[7], expected 255, is %" PRId64,
+                  (int64_t)check_msg->data[7]);
     ck_assert_msg(check_msg->data[8] == 127,
-                  "incorrect value for data[8], expected 127, is %d",
-                  check_msg->data[8]);
+                  "incorrect value for data[8], expected 127, is %" PRId64,
+                  (int64_t)check_msg->data[8]);
     ck_assert_msg(check_msg->data[9] == 240,
-                  "incorrect value for data[9], expected 240, is %d",
-                  check_msg->data[9]);
+                  "incorrect value for data[9], expected 240, is %" PRId64,
+                  (int64_t)check_msg->data[9]);
     ck_assert_msg(check_msg->data[10] == 2,
-                  "incorrect value for data[10], expected 2, is %d",
-                  check_msg->data[10]);
+                  "incorrect value for data[10], expected 2, is %" PRId64,
+                  (int64_t)check_msg->data[10]);
     ck_assert_msg(check_msg->data[11] == 255,
-                  "incorrect value for data[11], expected 255, is %d",
-                  check_msg->data[11]);
+                  "incorrect value for data[11], expected 255, is %" PRId64,
+                  (int64_t)check_msg->data[11]);
     ck_assert_msg(check_msg->data[12] == 192,
-                  "incorrect value for data[12], expected 192, is %d",
-                  check_msg->data[12]);
+                  "incorrect value for data[12], expected 192, is %" PRId64,
+                  (int64_t)check_msg->data[12]);
     ck_assert_msg(check_msg->data[13] == 3,
-                  "incorrect value for data[13], expected 3, is %d",
-                  check_msg->data[13]);
+                  "incorrect value for data[13], expected 3, is %" PRId64,
+                  (int64_t)check_msg->data[13]);
     ck_assert_msg(check_msg->data[14] == 127,
-                  "incorrect value for data[14], expected 127, is %d",
-                  check_msg->data[14]);
+                  "incorrect value for data[14], expected 127, is %" PRId64,
+                  (int64_t)check_msg->data[14]);
     ck_assert_msg(check_msg->data[15] == 247,
-                  "incorrect value for data[15], expected 247, is %d",
-                  check_msg->data[15]);
+                  "incorrect value for data[15], expected 247, is %" PRId64,
+                  (int64_t)check_msg->data[15]);
     ck_assert_msg(check_msg->data[16] == 255,
-                  "incorrect value for data[16], expected 255, is %d",
-                  check_msg->data[16]);
+                  "incorrect value for data[16], expected 255, is %" PRId64,
+                  (int64_t)check_msg->data[16]);
     ck_assert_msg(check_msg->data[17] == 127,
-                  "incorrect value for data[17], expected 127, is %d",
-                  check_msg->data[17]);
+                  "incorrect value for data[17], expected 127, is %" PRId64,
+                  (int64_t)check_msg->data[17]);
     ck_assert_msg(check_msg->data[18] == 247,
-                  "incorrect value for data[18], expected 247, is %d",
-                  check_msg->data[18]);
+                  "incorrect value for data[18], expected 247, is %" PRId64,
+                  (int64_t)check_msg->data[18]);
     ck_assert_msg(check_msg->data[19] == 255,
-                  "incorrect value for data[19], expected 255, is %d",
-                  check_msg->data[19]);
+                  "incorrect value for data[19], expected 255, is %" PRId64,
+                  (int64_t)check_msg->data[19]);
     ck_assert_msg(check_msg->data[20] == 229,
-                  "incorrect value for data[20], expected 229, is %d",
-                  check_msg->data[20]);
+                  "incorrect value for data[20], expected 229, is %" PRId64,
+                  (int64_t)check_msg->data[20]);
     ck_assert_msg(check_msg->data[21] == 229,
-                  "incorrect value for data[21], expected 229, is %d",
-                  check_msg->data[21]);
+                  "incorrect value for data[21], expected 229, is %" PRId64,
+                  (int64_t)check_msg->data[21]);
     ck_assert_msg(check_msg->data[22] == 238,
-                  "incorrect value for data[22], expected 238, is %d",
-                  check_msg->data[22]);
+                  "incorrect value for data[22], expected 238, is %" PRId64,
+                  (int64_t)check_msg->data[22]);
     ck_assert_msg(check_msg->data[23] == 170,
-                  "incorrect value for data[23], expected 170, is %d",
-                  check_msg->data[23]);
+                  "incorrect value for data[23], expected 170, is %" PRId64,
+                  (int64_t)check_msg->data[23]);
     ck_assert_msg(check_msg->data[24] == 175,
-                  "incorrect value for data[24], expected 175, is %d",
-                  check_msg->data[24]);
+                  "incorrect value for data[24], expected 175, is %" PRId64,
+                  (int64_t)check_msg->data[24]);
     ck_assert_msg(check_msg->data[25] == 255,
-                  "incorrect value for data[25], expected 255, is %d",
-                  check_msg->data[25]);
+                  "incorrect value for data[25], expected 255, is %" PRId64,
+                  (int64_t)check_msg->data[25]);
     ck_assert_msg(check_msg->data[26] == 240,
-                  "incorrect value for data[26], expected 240, is %d",
-                  check_msg->data[26]);
+                  "incorrect value for data[26], expected 240, is %" PRId64,
+                  (int64_t)check_msg->data[26]);
     ck_assert_msg(check_msg->message_type == 4,
-                  "incorrect value for message_type, expected 4, is %d",
-                  check_msg->message_type);
+                  "incorrect value for message_type, expected 4, is %" PRId64,
+                  (int64_t)check_msg->message_type);
     ck_assert_msg(check_msg->sid.code == 2,
-                  "incorrect value for sid.code, expected 2, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 2, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.sat == 131,
-                  "incorrect value for sid.sat, expected 131, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 131, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg(check_msg->tow == 501867721,
-                  "incorrect value for tow, expected 501867721, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 501867721, is %" PRId64,
+                  (int64_t)check_msg->tow);
   }
 }
 END_TEST

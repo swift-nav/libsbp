@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -143,8 +143,8 @@ START_TEST(test_auto_check_sbp_logging_MsgLog) {
 
     ck_assert_msg(
         last_msg.msg.log.level == 6,
-        "incorrect value for last_msg.msg.log.level, expected 6, is %d",
-        last_msg.msg.log.level);
+        "incorrect value for last_msg.msg.log.level, expected 6, is %" PRId64,
+        (int64_t)last_msg.msg.log.level);
 
     ck_assert_msg(sbp_msg_log_text_encoded_len(&last_msg.msg.log) == 43,
                   "Invalid encoded len");

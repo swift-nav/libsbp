@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -201,181 +201,182 @@ START_TEST(test_auto_check_sbp_observation_MsgEphemerisGPS) {
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.af0 * 100 - -0.00063150189817 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.af0, expected "
-        "-0.00063150189817, is %s",
+        "-0.00063150189817, is %f",
         last_msg.msg.ephemeris_gps.af0);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.af1 * 100 - 8.98126018001e-12 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.af1, expected "
-        "8.98126018001e-12, is %s",
+        "8.98126018001e-12, is %f",
         last_msg.msg.ephemeris_gps.af1);
 
     ck_assert_msg((last_msg.msg.ephemeris_gps.af2 * 100 - 0.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_gps.af2, "
-                  "expected 0.0, is %s",
+                  "expected 0.0, is %f",
                   last_msg.msg.ephemeris_gps.af2);
 
     ck_assert_msg((last_msg.msg.ephemeris_gps.c_ic * 100 -
                    7.45058059692e-09 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_gps.c_ic, "
-                  "expected 7.45058059692e-09, is %s",
+                  "expected 7.45058059692e-09, is %f",
                   last_msg.msg.ephemeris_gps.c_ic);
 
     ck_assert_msg((last_msg.msg.ephemeris_gps.c_is * 100 -
                    -1.15483999252e-07 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_gps.c_is, "
-                  "expected -1.15483999252e-07, is %s",
+                  "expected -1.15483999252e-07, is %f",
                   last_msg.msg.ephemeris_gps.c_is);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.c_rc * 100 - 308.625 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.c_rc, expected "
-        "308.625, is %s",
+        "308.625, is %f",
         last_msg.msg.ephemeris_gps.c_rc);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.c_rs * 100 - -52.3125 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.c_rs, expected "
-        "-52.3125, is %s",
+        "-52.3125, is %f",
         last_msg.msg.ephemeris_gps.c_rs);
 
     ck_assert_msg((last_msg.msg.ephemeris_gps.c_uc * 100 -
                    -2.74367630482e-06 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_gps.c_uc, "
-                  "expected -2.74367630482e-06, is %s",
+                  "expected -2.74367630482e-06, is %f",
                   last_msg.msg.ephemeris_gps.c_uc);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.c_us * 100 - 3.1366944313e-06 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.c_us, expected "
-        "3.1366944313e-06, is %s",
+        "3.1366944313e-06, is %f",
         last_msg.msg.ephemeris_gps.c_us);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_gps.common.fit_interval == 14400,
         "incorrect value for last_msg.msg.ephemeris_gps.common.fit_interval, "
-        "expected 14400, is %d",
-        last_msg.msg.ephemeris_gps.common.fit_interval);
+        "expected 14400, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_gps.common.fit_interval);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_gps.common.health_bits == 0,
         "incorrect value for last_msg.msg.ephemeris_gps.common.health_bits, "
-        "expected 0, is %d",
-        last_msg.msg.ephemeris_gps.common.health_bits);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_gps.common.health_bits);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_gps.common.sid.code == 0,
         "incorrect value for last_msg.msg.ephemeris_gps.common.sid.code, "
-        "expected 0, is %d",
-        last_msg.msg.ephemeris_gps.common.sid.code);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_gps.common.sid.code);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_gps.common.sid.sat == 22,
         "incorrect value for last_msg.msg.ephemeris_gps.common.sid.sat, "
-        "expected 22, is %d",
-        last_msg.msg.ephemeris_gps.common.sid.sat);
+        "expected 22, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_gps.common.sid.sat);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_gps.common.toe.tow == 446384,
         "incorrect value for last_msg.msg.ephemeris_gps.common.toe.tow, "
-        "expected 446384, is %d",
-        last_msg.msg.ephemeris_gps.common.toe.tow);
+        "expected 446384, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_gps.common.toe.tow);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_gps.common.toe.wn == 2154,
         "incorrect value for last_msg.msg.ephemeris_gps.common.toe.wn, "
-        "expected 2154, is %d",
-        last_msg.msg.ephemeris_gps.common.toe.wn);
+        "expected 2154, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_gps.common.toe.wn);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.common.ura * 100 - 2.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.common.ura, expected "
-        "2.0, is %s",
+        "2.0, is %f",
         last_msg.msg.ephemeris_gps.common.ura);
 
-    ck_assert_msg(last_msg.msg.ephemeris_gps.common.valid == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ephemeris_gps.common.valid, expected 1, is %d",
-                  last_msg.msg.ephemeris_gps.common.valid);
+    ck_assert_msg(
+        last_msg.msg.ephemeris_gps.common.valid == 1,
+        "incorrect value for last_msg.msg.ephemeris_gps.common.valid, expected "
+        "1, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_gps.common.valid);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.dn * 100 - 5.69452291402e-09 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.dn, expected "
-        "5.69452291402e-09, is %s",
+        "5.69452291402e-09, is %f",
         last_msg.msg.ephemeris_gps.dn);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.ecc * 100 - 0.00707220705226 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.ecc, expected "
-        "0.00707220705226, is %s",
+        "0.00707220705226, is %f",
         last_msg.msg.ephemeris_gps.ecc);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.inc * 100 - 0.934151448026 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.inc, expected "
-        "0.934151448026, is %s",
+        "0.934151448026, is %f",
         last_msg.msg.ephemeris_gps.inc);
 
     ck_assert_msg((last_msg.msg.ephemeris_gps.inc_dot * 100 -
                    -4.03588239642e-11 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_gps.inc_dot, "
-                  "expected -4.03588239642e-11, is %s",
+                  "expected -4.03588239642e-11, is %f",
                   last_msg.msg.ephemeris_gps.inc_dot);
 
     ck_assert_msg(last_msg.msg.ephemeris_gps.iodc == 45,
                   "incorrect value for last_msg.msg.ephemeris_gps.iodc, "
-                  "expected 45, is %d",
-                  last_msg.msg.ephemeris_gps.iodc);
+                  "expected 45, is %" PRId64,
+                  (int64_t)last_msg.msg.ephemeris_gps.iodc);
 
     ck_assert_msg(last_msg.msg.ephemeris_gps.iode == 45,
                   "incorrect value for last_msg.msg.ephemeris_gps.iode, "
-                  "expected 45, is %d",
-                  last_msg.msg.ephemeris_gps.iode);
+                  "expected 45, is %" PRId64,
+                  (int64_t)last_msg.msg.ephemeris_gps.iode);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.m0 * 100 - -0.0220007884211 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.m0, expected "
-        "-0.0220007884211, is %s",
+        "-0.0220007884211, is %f",
         last_msg.msg.ephemeris_gps.m0);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.omega0 * 100 - -1.87318184488 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.omega0, expected "
-        "-1.87318184488, is %s",
+        "-1.87318184488, is %f",
         last_msg.msg.ephemeris_gps.omega0);
 
     ck_assert_msg((last_msg.msg.ephemeris_gps.omegadot * 100 -
                    -8.90358515577e-09 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_gps.omegadot, "
-                  "expected -8.90358515577e-09, is %s",
+                  "expected -8.90358515577e-09, is %f",
                   last_msg.msg.ephemeris_gps.omegadot);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.sqrta * 100 - 5153.55002975 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.sqrta, expected "
-        "5153.55002975, is %s",
+        "5153.55002975, is %f",
         last_msg.msg.ephemeris_gps.sqrta);
 
     ck_assert_msg((last_msg.msg.ephemeris_gps.tgd * 100 -
                    -1.76951289177e-08 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_gps.tgd, "
-                  "expected -1.76951289177e-08, is %s",
+                  "expected -1.76951289177e-08, is %f",
                   last_msg.msg.ephemeris_gps.tgd);
 
     ck_assert_msg(last_msg.msg.ephemeris_gps.toc.tow == 446384,
                   "incorrect value for last_msg.msg.ephemeris_gps.toc.tow, "
-                  "expected 446384, is %d",
-                  last_msg.msg.ephemeris_gps.toc.tow);
+                  "expected 446384, is %" PRId64,
+                  (int64_t)last_msg.msg.ephemeris_gps.toc.tow);
 
     ck_assert_msg(last_msg.msg.ephemeris_gps.toc.wn == 2154,
                   "incorrect value for last_msg.msg.ephemeris_gps.toc.wn, "
-                  "expected 2154, is %d",
-                  last_msg.msg.ephemeris_gps.toc.wn);
+                  "expected 2154, is %" PRId64,
+                  (int64_t)last_msg.msg.ephemeris_gps.toc.wn);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_gps.w * 100 - -0.98930366296 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_gps.w, expected "
-        "-0.98930366296, is %s",
+        "-0.98930366296, is %f",
         last_msg.msg.ephemeris_gps.w);
   }
 }

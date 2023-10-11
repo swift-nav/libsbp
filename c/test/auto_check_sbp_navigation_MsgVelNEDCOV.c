@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -153,63 +153,63 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNEDCOV) {
 
     ck_assert_msg((last_msg.msg.vel_ned_cov.cov_d_d * 100 - 1.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov.cov_d_d, "
-                  "expected 1.0, is %s",
+                  "expected 1.0, is %f",
                   last_msg.msg.vel_ned_cov.cov_d_d);
 
     ck_assert_msg((last_msg.msg.vel_ned_cov.cov_e_d * 100 - 1.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov.cov_e_d, "
-                  "expected 1.0, is %s",
+                  "expected 1.0, is %f",
                   last_msg.msg.vel_ned_cov.cov_e_d);
 
     ck_assert_msg((last_msg.msg.vel_ned_cov.cov_e_e * 100 - 1.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov.cov_e_e, "
-                  "expected 1.0, is %s",
+                  "expected 1.0, is %f",
                   last_msg.msg.vel_ned_cov.cov_e_e);
 
     ck_assert_msg((last_msg.msg.vel_ned_cov.cov_n_d * 100 - 1.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov.cov_n_d, "
-                  "expected 1.0, is %s",
+                  "expected 1.0, is %f",
                   last_msg.msg.vel_ned_cov.cov_n_d);
 
     ck_assert_msg((last_msg.msg.vel_ned_cov.cov_n_e * 100 - 1.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov.cov_n_e, "
-                  "expected 1.0, is %s",
+                  "expected 1.0, is %f",
                   last_msg.msg.vel_ned_cov.cov_n_e);
 
     ck_assert_msg((last_msg.msg.vel_ned_cov.cov_n_n * 100 - 1.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov.cov_n_n, "
-                  "expected 1.0, is %s",
+                  "expected 1.0, is %f",
                   last_msg.msg.vel_ned_cov.cov_n_n);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned_cov.d == 1,
-        "incorrect value for last_msg.msg.vel_ned_cov.d, expected 1, is %d",
-        last_msg.msg.vel_ned_cov.d);
+    ck_assert_msg(last_msg.msg.vel_ned_cov.d == 1,
+                  "incorrect value for last_msg.msg.vel_ned_cov.d, expected 1, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov.d);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned_cov.e == 1,
-        "incorrect value for last_msg.msg.vel_ned_cov.e, expected 1, is %d",
-        last_msg.msg.vel_ned_cov.e);
+    ck_assert_msg(last_msg.msg.vel_ned_cov.e == 1,
+                  "incorrect value for last_msg.msg.vel_ned_cov.e, expected 1, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov.e);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned_cov.flags == 0,
-        "incorrect value for last_msg.msg.vel_ned_cov.flags, expected 0, is %d",
-        last_msg.msg.vel_ned_cov.flags);
+    ck_assert_msg(last_msg.msg.vel_ned_cov.flags == 0,
+                  "incorrect value for last_msg.msg.vel_ned_cov.flags, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov.flags);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned_cov.n == 1,
-        "incorrect value for last_msg.msg.vel_ned_cov.n, expected 1, is %d",
-        last_msg.msg.vel_ned_cov.n);
+    ck_assert_msg(last_msg.msg.vel_ned_cov.n == 1,
+                  "incorrect value for last_msg.msg.vel_ned_cov.n, expected 1, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov.n);
 
     ck_assert_msg(last_msg.msg.vel_ned_cov.n_sats == 10,
                   "incorrect value for last_msg.msg.vel_ned_cov.n_sats, "
-                  "expected 10, is %d",
-                  last_msg.msg.vel_ned_cov.n_sats);
+                  "expected 10, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov.n_sats);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned_cov.tow == 100,
-        "incorrect value for last_msg.msg.vel_ned_cov.tow, expected 100, is %d",
-        last_msg.msg.vel_ned_cov.tow);
+    ck_assert_msg(last_msg.msg.vel_ned_cov.tow == 100,
+                  "incorrect value for last_msg.msg.vel_ned_cov.tow, expected "
+                  "100, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov.tow);
   }
 }
 END_TEST

@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -194,23 +194,23 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgDopsDepA) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->gdop == 180,
-                  "incorrect value for gdop, expected 180, is %d",
-                  check_msg->gdop);
+                  "incorrect value for gdop, expected 180, is %" PRId64,
+                  (int64_t)check_msg->gdop);
     ck_assert_msg(check_msg->hdop == 160,
-                  "incorrect value for hdop, expected 160, is %d",
-                  check_msg->hdop);
+                  "incorrect value for hdop, expected 160, is %" PRId64,
+                  (int64_t)check_msg->hdop);
     ck_assert_msg(check_msg->pdop == 190,
-                  "incorrect value for pdop, expected 190, is %d",
-                  check_msg->pdop);
+                  "incorrect value for pdop, expected 190, is %" PRId64,
+                  (int64_t)check_msg->pdop);
     ck_assert_msg(check_msg->tdop == 170,
-                  "incorrect value for tdop, expected 170, is %d",
-                  check_msg->tdop);
+                  "incorrect value for tdop, expected 170, is %" PRId64,
+                  (int64_t)check_msg->tdop);
     ck_assert_msg(check_msg->tow == 2568200,
-                  "incorrect value for tow, expected 2568200, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 2568200, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vdop == 150,
-                  "incorrect value for vdop, expected 150, is %d",
-                  check_msg->vdop);
+                  "incorrect value for vdop, expected 150, is %" PRId64,
+                  (int64_t)check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -302,23 +302,23 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgDopsDepA) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->gdop == 180,
-                  "incorrect value for gdop, expected 180, is %d",
-                  check_msg->gdop);
+                  "incorrect value for gdop, expected 180, is %" PRId64,
+                  (int64_t)check_msg->gdop);
     ck_assert_msg(check_msg->hdop == 160,
-                  "incorrect value for hdop, expected 160, is %d",
-                  check_msg->hdop);
+                  "incorrect value for hdop, expected 160, is %" PRId64,
+                  (int64_t)check_msg->hdop);
     ck_assert_msg(check_msg->pdop == 190,
-                  "incorrect value for pdop, expected 190, is %d",
-                  check_msg->pdop);
+                  "incorrect value for pdop, expected 190, is %" PRId64,
+                  (int64_t)check_msg->pdop);
     ck_assert_msg(check_msg->tdop == 170,
-                  "incorrect value for tdop, expected 170, is %d",
-                  check_msg->tdop);
+                  "incorrect value for tdop, expected 170, is %" PRId64,
+                  (int64_t)check_msg->tdop);
     ck_assert_msg(check_msg->tow == 2569200,
-                  "incorrect value for tow, expected 2569200, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 2569200, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vdop == 150,
-                  "incorrect value for vdop, expected 150, is %d",
-                  check_msg->vdop);
+                  "incorrect value for vdop, expected 150, is %" PRId64,
+                  (int64_t)check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -410,23 +410,23 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgDopsDepA) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->gdop == 180,
-                  "incorrect value for gdop, expected 180, is %d",
-                  check_msg->gdop);
+                  "incorrect value for gdop, expected 180, is %" PRId64,
+                  (int64_t)check_msg->gdop);
     ck_assert_msg(check_msg->hdop == 160,
-                  "incorrect value for hdop, expected 160, is %d",
-                  check_msg->hdop);
+                  "incorrect value for hdop, expected 160, is %" PRId64,
+                  (int64_t)check_msg->hdop);
     ck_assert_msg(check_msg->pdop == 190,
-                  "incorrect value for pdop, expected 190, is %d",
-                  check_msg->pdop);
+                  "incorrect value for pdop, expected 190, is %" PRId64,
+                  (int64_t)check_msg->pdop);
     ck_assert_msg(check_msg->tdop == 170,
-                  "incorrect value for tdop, expected 170, is %d",
-                  check_msg->tdop);
+                  "incorrect value for tdop, expected 170, is %" PRId64,
+                  (int64_t)check_msg->tdop);
     ck_assert_msg(check_msg->tow == 2570200,
-                  "incorrect value for tow, expected 2570200, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 2570200, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vdop == 150,
-                  "incorrect value for vdop, expected 150, is %d",
-                  check_msg->vdop);
+                  "incorrect value for vdop, expected 150, is %" PRId64,
+                  (int64_t)check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -518,23 +518,23 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgDopsDepA) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->gdop == 247,
-                  "incorrect value for gdop, expected 247, is %d",
-                  check_msg->gdop);
+                  "incorrect value for gdop, expected 247, is %" PRId64,
+                  (int64_t)check_msg->gdop);
     ck_assert_msg(check_msg->hdop == 273,
-                  "incorrect value for hdop, expected 273, is %d",
-                  check_msg->hdop);
+                  "incorrect value for hdop, expected 273, is %" PRId64,
+                  (int64_t)check_msg->hdop);
     ck_assert_msg(check_msg->pdop == 215,
-                  "incorrect value for pdop, expected 215, is %d",
-                  check_msg->pdop);
+                  "incorrect value for pdop, expected 215, is %" PRId64,
+                  (int64_t)check_msg->pdop);
     ck_assert_msg(check_msg->tdop == 123,
-                  "incorrect value for tdop, expected 123, is %d",
-                  check_msg->tdop);
+                  "incorrect value for tdop, expected 123, is %" PRId64,
+                  (int64_t)check_msg->tdop);
     ck_assert_msg(check_msg->tow == 407084500,
-                  "incorrect value for tow, expected 407084500, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 407084500, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vdop == 44,
-                  "incorrect value for vdop, expected 44, is %d",
-                  check_msg->vdop);
+                  "incorrect value for vdop, expected 44, is %" PRId64,
+                  (int64_t)check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -626,22 +626,23 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgDopsDepA) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->gdop == 65535,
-                  "incorrect value for gdop, expected 65535, is %d",
-                  check_msg->gdop);
+                  "incorrect value for gdop, expected 65535, is %" PRId64,
+                  (int64_t)check_msg->gdop);
     ck_assert_msg(check_msg->hdop == 0,
-                  "incorrect value for hdop, expected 0, is %d",
-                  check_msg->hdop);
+                  "incorrect value for hdop, expected 0, is %" PRId64,
+                  (int64_t)check_msg->hdop);
     ck_assert_msg(check_msg->pdop == 65535,
-                  "incorrect value for pdop, expected 65535, is %d",
-                  check_msg->pdop);
+                  "incorrect value for pdop, expected 65535, is %" PRId64,
+                  (int64_t)check_msg->pdop);
     ck_assert_msg(check_msg->tdop == 0,
-                  "incorrect value for tdop, expected 0, is %d",
-                  check_msg->tdop);
+                  "incorrect value for tdop, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tdop);
     ck_assert_msg(check_msg->tow == 0,
-                  "incorrect value for tow, expected 0, is %d", check_msg->tow);
+                  "incorrect value for tow, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vdop == 0,
-                  "incorrect value for vdop, expected 0, is %d",
-                  check_msg->vdop);
+                  "incorrect value for vdop, expected 0, is %" PRId64,
+                  (int64_t)check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -733,23 +734,23 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgDopsDepA) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->gdop == 348,
-                  "incorrect value for gdop, expected 348, is %d",
-                  check_msg->gdop);
+                  "incorrect value for gdop, expected 348, is %" PRId64,
+                  (int64_t)check_msg->gdop);
     ck_assert_msg(check_msg->hdop == 637,
-                  "incorrect value for hdop, expected 637, is %d",
-                  check_msg->hdop);
+                  "incorrect value for hdop, expected 637, is %" PRId64,
+                  (int64_t)check_msg->hdop);
     ck_assert_msg(check_msg->pdop == 312,
-                  "incorrect value for pdop, expected 312, is %d",
-                  check_msg->pdop);
+                  "incorrect value for pdop, expected 312, is %" PRId64,
+                  (int64_t)check_msg->pdop);
     ck_assert_msg(check_msg->tdop == 155,
-                  "incorrect value for tdop, expected 155, is %d",
-                  check_msg->tdop);
+                  "incorrect value for tdop, expected 155, is %" PRId64,
+                  (int64_t)check_msg->tdop);
     ck_assert_msg(check_msg->tow == 407152000,
-                  "incorrect value for tow, expected 407152000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 407152000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vdop == 113,
-                  "incorrect value for vdop, expected 113, is %d",
-                  check_msg->vdop);
+                  "incorrect value for vdop, expected 113, is %" PRId64,
+                  (int64_t)check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -841,23 +842,23 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgDopsDepA) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->gdop == 348,
-                  "incorrect value for gdop, expected 348, is %d",
-                  check_msg->gdop);
+                  "incorrect value for gdop, expected 348, is %" PRId64,
+                  (int64_t)check_msg->gdop);
     ck_assert_msg(check_msg->hdop == 637,
-                  "incorrect value for hdop, expected 637, is %d",
-                  check_msg->hdop);
+                  "incorrect value for hdop, expected 637, is %" PRId64,
+                  (int64_t)check_msg->hdop);
     ck_assert_msg(check_msg->pdop == 311,
-                  "incorrect value for pdop, expected 311, is %d",
-                  check_msg->pdop);
+                  "incorrect value for pdop, expected 311, is %" PRId64,
+                  (int64_t)check_msg->pdop);
     ck_assert_msg(check_msg->tdop == 155,
-                  "incorrect value for tdop, expected 155, is %d",
-                  check_msg->tdop);
+                  "incorrect value for tdop, expected 155, is %" PRId64,
+                  (int64_t)check_msg->tdop);
     ck_assert_msg(check_msg->tow == 407153000,
-                  "incorrect value for tow, expected 407153000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 407153000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vdop == 113,
-                  "incorrect value for vdop, expected 113, is %d",
-                  check_msg->vdop);
+                  "incorrect value for vdop, expected 113, is %" PRId64,
+                  (int64_t)check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -949,23 +950,23 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgDopsDepA) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->gdop == 348,
-                  "incorrect value for gdop, expected 348, is %d",
-                  check_msg->gdop);
+                  "incorrect value for gdop, expected 348, is %" PRId64,
+                  (int64_t)check_msg->gdop);
     ck_assert_msg(check_msg->hdop == 637,
-                  "incorrect value for hdop, expected 637, is %d",
-                  check_msg->hdop);
+                  "incorrect value for hdop, expected 637, is %" PRId64,
+                  (int64_t)check_msg->hdop);
     ck_assert_msg(check_msg->pdop == 311,
-                  "incorrect value for pdop, expected 311, is %d",
-                  check_msg->pdop);
+                  "incorrect value for pdop, expected 311, is %" PRId64,
+                  (int64_t)check_msg->pdop);
     ck_assert_msg(check_msg->tdop == 155,
-                  "incorrect value for tdop, expected 155, is %d",
-                  check_msg->tdop);
+                  "incorrect value for tdop, expected 155, is %" PRId64,
+                  (int64_t)check_msg->tdop);
     ck_assert_msg(check_msg->tow == 407154000,
-                  "incorrect value for tow, expected 407154000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 407154000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vdop == 112,
-                  "incorrect value for vdop, expected 112, is %d",
-                  check_msg->vdop);
+                  "incorrect value for vdop, expected 112, is %" PRId64,
+                  (int64_t)check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -1057,23 +1058,23 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgDopsDepA) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->gdop == 348,
-                  "incorrect value for gdop, expected 348, is %d",
-                  check_msg->gdop);
+                  "incorrect value for gdop, expected 348, is %" PRId64,
+                  (int64_t)check_msg->gdop);
     ck_assert_msg(check_msg->hdop == 637,
-                  "incorrect value for hdop, expected 637, is %d",
-                  check_msg->hdop);
+                  "incorrect value for hdop, expected 637, is %" PRId64,
+                  (int64_t)check_msg->hdop);
     ck_assert_msg(check_msg->pdop == 311,
-                  "incorrect value for pdop, expected 311, is %d",
-                  check_msg->pdop);
+                  "incorrect value for pdop, expected 311, is %" PRId64,
+                  (int64_t)check_msg->pdop);
     ck_assert_msg(check_msg->tdop == 155,
-                  "incorrect value for tdop, expected 155, is %d",
-                  check_msg->tdop);
+                  "incorrect value for tdop, expected 155, is %" PRId64,
+                  (int64_t)check_msg->tdop);
     ck_assert_msg(check_msg->tow == 407155000,
-                  "incorrect value for tow, expected 407155000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 407155000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vdop == 112,
-                  "incorrect value for vdop, expected 112, is %d",
-                  check_msg->vdop);
+                  "incorrect value for vdop, expected 112, is %" PRId64,
+                  (int64_t)check_msg->vdop);
   }
 }
 END_TEST

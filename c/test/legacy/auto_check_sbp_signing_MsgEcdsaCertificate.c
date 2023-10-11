@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -1465,1010 +1465,1014 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaCertificate) {
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
         check_msg->certificate_bytes[0] == 180,
-        "incorrect value for certificate_bytes[0], expected 180, is %d",
-        check_msg->certificate_bytes[0]);
+        "incorrect value for certificate_bytes[0], expected 180, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[0]);
     ck_assert_msg(
         check_msg->certificate_bytes[1] == 160,
-        "incorrect value for certificate_bytes[1], expected 160, is %d",
-        check_msg->certificate_bytes[1]);
+        "incorrect value for certificate_bytes[1], expected 160, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[1]);
     ck_assert_msg(
         check_msg->certificate_bytes[2] == 116,
-        "incorrect value for certificate_bytes[2], expected 116, is %d",
-        check_msg->certificate_bytes[2]);
+        "incorrect value for certificate_bytes[2], expected 116, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[2]);
     ck_assert_msg(
         check_msg->certificate_bytes[3] == 77,
-        "incorrect value for certificate_bytes[3], expected 77, is %d",
-        check_msg->certificate_bytes[3]);
+        "incorrect value for certificate_bytes[3], expected 77, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[3]);
     ck_assert_msg(
         check_msg->certificate_bytes[4] == 243,
-        "incorrect value for certificate_bytes[4], expected 243, is %d",
-        check_msg->certificate_bytes[4]);
+        "incorrect value for certificate_bytes[4], expected 243, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[4]);
     ck_assert_msg(
         check_msg->certificate_bytes[5] == 28,
-        "incorrect value for certificate_bytes[5], expected 28, is %d",
-        check_msg->certificate_bytes[5]);
+        "incorrect value for certificate_bytes[5], expected 28, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[5]);
     ck_assert_msg(
         check_msg->certificate_bytes[6] == 173,
-        "incorrect value for certificate_bytes[6], expected 173, is %d",
-        check_msg->certificate_bytes[6]);
+        "incorrect value for certificate_bytes[6], expected 173, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[6]);
     ck_assert_msg(
         check_msg->certificate_bytes[7] == 36,
-        "incorrect value for certificate_bytes[7], expected 36, is %d",
-        check_msg->certificate_bytes[7]);
+        "incorrect value for certificate_bytes[7], expected 36, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[7]);
     ck_assert_msg(
         check_msg->certificate_bytes[8] == 86,
-        "incorrect value for certificate_bytes[8], expected 86, is %d",
-        check_msg->certificate_bytes[8]);
+        "incorrect value for certificate_bytes[8], expected 86, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[8]);
     ck_assert_msg(
         check_msg->certificate_bytes[9] == 33,
-        "incorrect value for certificate_bytes[9], expected 33, is %d",
-        check_msg->certificate_bytes[9]);
+        "incorrect value for certificate_bytes[9], expected 33, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[9]);
     ck_assert_msg(
         check_msg->certificate_bytes[10] == 8,
-        "incorrect value for certificate_bytes[10], expected 8, is %d",
-        check_msg->certificate_bytes[10]);
+        "incorrect value for certificate_bytes[10], expected 8, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[10]);
     ck_assert_msg(
         check_msg->certificate_bytes[11] == 31,
-        "incorrect value for certificate_bytes[11], expected 31, is %d",
-        check_msg->certificate_bytes[11]);
+        "incorrect value for certificate_bytes[11], expected 31, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[11]);
     ck_assert_msg(
         check_msg->certificate_bytes[12] == 120,
-        "incorrect value for certificate_bytes[12], expected 120, is %d",
-        check_msg->certificate_bytes[12]);
+        "incorrect value for certificate_bytes[12], expected 120, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[12]);
     ck_assert_msg(
         check_msg->certificate_bytes[13] == 73,
-        "incorrect value for certificate_bytes[13], expected 73, is %d",
-        check_msg->certificate_bytes[13]);
+        "incorrect value for certificate_bytes[13], expected 73, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[13]);
     ck_assert_msg(
         check_msg->certificate_bytes[14] == 64,
-        "incorrect value for certificate_bytes[14], expected 64, is %d",
-        check_msg->certificate_bytes[14]);
+        "incorrect value for certificate_bytes[14], expected 64, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[14]);
     ck_assert_msg(
         check_msg->certificate_bytes[15] == 169,
-        "incorrect value for certificate_bytes[15], expected 169, is %d",
-        check_msg->certificate_bytes[15]);
+        "incorrect value for certificate_bytes[15], expected 169, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[15]);
     ck_assert_msg(
         check_msg->certificate_bytes[16] == 148,
-        "incorrect value for certificate_bytes[16], expected 148, is %d",
-        check_msg->certificate_bytes[16]);
+        "incorrect value for certificate_bytes[16], expected 148, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[16]);
     ck_assert_msg(
         check_msg->certificate_bytes[17] == 224,
-        "incorrect value for certificate_bytes[17], expected 224, is %d",
-        check_msg->certificate_bytes[17]);
+        "incorrect value for certificate_bytes[17], expected 224, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[17]);
     ck_assert_msg(
         check_msg->certificate_bytes[18] == 57,
-        "incorrect value for certificate_bytes[18], expected 57, is %d",
-        check_msg->certificate_bytes[18]);
+        "incorrect value for certificate_bytes[18], expected 57, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[18]);
     ck_assert_msg(
         check_msg->certificate_bytes[19] == 95,
-        "incorrect value for certificate_bytes[19], expected 95, is %d",
-        check_msg->certificate_bytes[19]);
+        "incorrect value for certificate_bytes[19], expected 95, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[19]);
     ck_assert_msg(
         check_msg->certificate_bytes[20] == 17,
-        "incorrect value for certificate_bytes[20], expected 17, is %d",
-        check_msg->certificate_bytes[20]);
+        "incorrect value for certificate_bytes[20], expected 17, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[20]);
     ck_assert_msg(
         check_msg->certificate_bytes[21] == 40,
-        "incorrect value for certificate_bytes[21], expected 40, is %d",
-        check_msg->certificate_bytes[21]);
+        "incorrect value for certificate_bytes[21], expected 40, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[21]);
     ck_assert_msg(
         check_msg->certificate_bytes[22] == 213,
-        "incorrect value for certificate_bytes[22], expected 213, is %d",
-        check_msg->certificate_bytes[22]);
+        "incorrect value for certificate_bytes[22], expected 213, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[22]);
     ck_assert_msg(
         check_msg->certificate_bytes[23] == 92,
-        "incorrect value for certificate_bytes[23], expected 92, is %d",
-        check_msg->certificate_bytes[23]);
+        "incorrect value for certificate_bytes[23], expected 92, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[23]);
     ck_assert_msg(
         check_msg->certificate_bytes[24] == 195,
-        "incorrect value for certificate_bytes[24], expected 195, is %d",
-        check_msg->certificate_bytes[24]);
+        "incorrect value for certificate_bytes[24], expected 195, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[24]);
     ck_assert_msg(
         check_msg->certificate_bytes[25] == 146,
-        "incorrect value for certificate_bytes[25], expected 146, is %d",
-        check_msg->certificate_bytes[25]);
+        "incorrect value for certificate_bytes[25], expected 146, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[25]);
     ck_assert_msg(
         check_msg->certificate_bytes[26] == 235,
-        "incorrect value for certificate_bytes[26], expected 235, is %d",
-        check_msg->certificate_bytes[26]);
+        "incorrect value for certificate_bytes[26], expected 235, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[26]);
     ck_assert_msg(
         check_msg->certificate_bytes[27] == 228,
-        "incorrect value for certificate_bytes[27], expected 228, is %d",
-        check_msg->certificate_bytes[27]);
+        "incorrect value for certificate_bytes[27], expected 228, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[27]);
     ck_assert_msg(
         check_msg->certificate_bytes[28] == 177,
-        "incorrect value for certificate_bytes[28], expected 177, is %d",
-        check_msg->certificate_bytes[28]);
+        "incorrect value for certificate_bytes[28], expected 177, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[28]);
     ck_assert_msg(
         check_msg->certificate_bytes[29] == 101,
-        "incorrect value for certificate_bytes[29], expected 101, is %d",
-        check_msg->certificate_bytes[29]);
+        "incorrect value for certificate_bytes[29], expected 101, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[29]);
     ck_assert_msg(
         check_msg->certificate_bytes[30] == 82,
-        "incorrect value for certificate_bytes[30], expected 82, is %d",
-        check_msg->certificate_bytes[30]);
+        "incorrect value for certificate_bytes[30], expected 82, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[30]);
     ck_assert_msg(
         check_msg->certificate_bytes[31] == 182,
-        "incorrect value for certificate_bytes[31], expected 182, is %d",
-        check_msg->certificate_bytes[31]);
+        "incorrect value for certificate_bytes[31], expected 182, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[31]);
     ck_assert_msg(
         check_msg->certificate_bytes[32] == 25,
-        "incorrect value for certificate_bytes[32], expected 25, is %d",
-        check_msg->certificate_bytes[32]);
+        "incorrect value for certificate_bytes[32], expected 25, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[32]);
     ck_assert_msg(
         check_msg->certificate_bytes[33] == 172,
-        "incorrect value for certificate_bytes[33], expected 172, is %d",
-        check_msg->certificate_bytes[33]);
+        "incorrect value for certificate_bytes[33], expected 172, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[33]);
     ck_assert_msg(
         check_msg->certificate_bytes[34] == 170,
-        "incorrect value for certificate_bytes[34], expected 170, is %d",
-        check_msg->certificate_bytes[34]);
+        "incorrect value for certificate_bytes[34], expected 170, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[34]);
     ck_assert_msg(
         check_msg->certificate_bytes[35] == 250,
-        "incorrect value for certificate_bytes[35], expected 250, is %d",
-        check_msg->certificate_bytes[35]);
+        "incorrect value for certificate_bytes[35], expected 250, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[35]);
     ck_assert_msg(
         check_msg->certificate_bytes[36] == 236,
-        "incorrect value for certificate_bytes[36], expected 236, is %d",
-        check_msg->certificate_bytes[36]);
+        "incorrect value for certificate_bytes[36], expected 236, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[36]);
     ck_assert_msg(
         check_msg->certificate_bytes[37] == 7,
-        "incorrect value for certificate_bytes[37], expected 7, is %d",
-        check_msg->certificate_bytes[37]);
+        "incorrect value for certificate_bytes[37], expected 7, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[37]);
     ck_assert_msg(
         check_msg->certificate_bytes[38] == 119,
-        "incorrect value for certificate_bytes[38], expected 119, is %d",
-        check_msg->certificate_bytes[38]);
+        "incorrect value for certificate_bytes[38], expected 119, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[38]);
     ck_assert_msg(
         check_msg->certificate_bytes[39] == 4,
-        "incorrect value for certificate_bytes[39], expected 4, is %d",
-        check_msg->certificate_bytes[39]);
+        "incorrect value for certificate_bytes[39], expected 4, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[39]);
     ck_assert_msg(
         check_msg->certificate_bytes[40] == 201,
-        "incorrect value for certificate_bytes[40], expected 201, is %d",
-        check_msg->certificate_bytes[40]);
+        "incorrect value for certificate_bytes[40], expected 201, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[40]);
     ck_assert_msg(
         check_msg->certificate_bytes[41] == 10,
-        "incorrect value for certificate_bytes[41], expected 10, is %d",
-        check_msg->certificate_bytes[41]);
+        "incorrect value for certificate_bytes[41], expected 10, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[41]);
     ck_assert_msg(
         check_msg->certificate_bytes[42] == 14,
-        "incorrect value for certificate_bytes[42], expected 14, is %d",
-        check_msg->certificate_bytes[42]);
+        "incorrect value for certificate_bytes[42], expected 14, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[42]);
     ck_assert_msg(
         check_msg->certificate_bytes[43] == 208,
-        "incorrect value for certificate_bytes[43], expected 208, is %d",
-        check_msg->certificate_bytes[43]);
+        "incorrect value for certificate_bytes[43], expected 208, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[43]);
     ck_assert_msg(
         check_msg->certificate_bytes[44] == 47,
-        "incorrect value for certificate_bytes[44], expected 47, is %d",
-        check_msg->certificate_bytes[44]);
+        "incorrect value for certificate_bytes[44], expected 47, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[44]);
     ck_assert_msg(
         check_msg->certificate_bytes[45] == 126,
-        "incorrect value for certificate_bytes[45], expected 126, is %d",
-        check_msg->certificate_bytes[45]);
+        "incorrect value for certificate_bytes[45], expected 126, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[45]);
     ck_assert_msg(
         check_msg->certificate_bytes[46] == 49,
-        "incorrect value for certificate_bytes[46], expected 49, is %d",
-        check_msg->certificate_bytes[46]);
+        "incorrect value for certificate_bytes[46], expected 49, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[46]);
     ck_assert_msg(
         check_msg->certificate_bytes[47] == 210,
-        "incorrect value for certificate_bytes[47], expected 210, is %d",
-        check_msg->certificate_bytes[47]);
+        "incorrect value for certificate_bytes[47], expected 210, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[47]);
     ck_assert_msg(
         check_msg->certificate_bytes[48] == 174,
-        "incorrect value for certificate_bytes[48], expected 174, is %d",
-        check_msg->certificate_bytes[48]);
+        "incorrect value for certificate_bytes[48], expected 174, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[48]);
     ck_assert_msg(
         check_msg->certificate_bytes[49] == 75,
-        "incorrect value for certificate_bytes[49], expected 75, is %d",
-        check_msg->certificate_bytes[49]);
+        "incorrect value for certificate_bytes[49], expected 75, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[49]);
     ck_assert_msg(
         check_msg->certificate_bytes[50] == 221,
-        "incorrect value for certificate_bytes[50], expected 221, is %d",
-        check_msg->certificate_bytes[50]);
+        "incorrect value for certificate_bytes[50], expected 221, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[50]);
     ck_assert_msg(
         check_msg->certificate_bytes[51] == 203,
-        "incorrect value for certificate_bytes[51], expected 203, is %d",
-        check_msg->certificate_bytes[51]);
+        "incorrect value for certificate_bytes[51], expected 203, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[51]);
     ck_assert_msg(
         check_msg->certificate_bytes[52] == 24,
-        "incorrect value for certificate_bytes[52], expected 24, is %d",
-        check_msg->certificate_bytes[52]);
+        "incorrect value for certificate_bytes[52], expected 24, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[52]);
     ck_assert_msg(
         check_msg->certificate_bytes[53] == 66,
-        "incorrect value for certificate_bytes[53], expected 66, is %d",
-        check_msg->certificate_bytes[53]);
+        "incorrect value for certificate_bytes[53], expected 66, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[53]);
     ck_assert_msg(
         check_msg->certificate_bytes[54] == 52,
-        "incorrect value for certificate_bytes[54], expected 52, is %d",
-        check_msg->certificate_bytes[54]);
+        "incorrect value for certificate_bytes[54], expected 52, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[54]);
     ck_assert_msg(
         check_msg->certificate_bytes[55] == 35,
-        "incorrect value for certificate_bytes[55], expected 35, is %d",
-        check_msg->certificate_bytes[55]);
+        "incorrect value for certificate_bytes[55], expected 35, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[55]);
     ck_assert_msg(
         check_msg->certificate_bytes[56] == 26,
-        "incorrect value for certificate_bytes[56], expected 26, is %d",
-        check_msg->certificate_bytes[56]);
+        "incorrect value for certificate_bytes[56], expected 26, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[56]);
     ck_assert_msg(
         check_msg->certificate_bytes[57] == 30,
-        "incorrect value for certificate_bytes[57], expected 30, is %d",
-        check_msg->certificate_bytes[57]);
+        "incorrect value for certificate_bytes[57], expected 30, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[57]);
     ck_assert_msg(
         check_msg->certificate_bytes[58] == 140,
-        "incorrect value for certificate_bytes[58], expected 140, is %d",
-        check_msg->certificate_bytes[58]);
+        "incorrect value for certificate_bytes[58], expected 140, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[58]);
     ck_assert_msg(
         check_msg->certificate_bytes[59] == 111,
-        "incorrect value for certificate_bytes[59], expected 111, is %d",
-        check_msg->certificate_bytes[59]);
+        "incorrect value for certificate_bytes[59], expected 111, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[59]);
     ck_assert_msg(
         check_msg->certificate_bytes[60] == 246,
-        "incorrect value for certificate_bytes[60], expected 246, is %d",
-        check_msg->certificate_bytes[60]);
+        "incorrect value for certificate_bytes[60], expected 246, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[60]);
     ck_assert_msg(
         check_msg->certificate_bytes[61] == 39,
-        "incorrect value for certificate_bytes[61], expected 39, is %d",
-        check_msg->certificate_bytes[61]);
+        "incorrect value for certificate_bytes[61], expected 39, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[61]);
     ck_assert_msg(
         check_msg->certificate_bytes[62] == 226,
-        "incorrect value for certificate_bytes[62], expected 226, is %d",
-        check_msg->certificate_bytes[62]);
+        "incorrect value for certificate_bytes[62], expected 226, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[62]);
     ck_assert_msg(
         check_msg->certificate_bytes[63] == 205,
-        "incorrect value for certificate_bytes[63], expected 205, is %d",
-        check_msg->certificate_bytes[63]);
+        "incorrect value for certificate_bytes[63], expected 205, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[63]);
     ck_assert_msg(
         check_msg->certificate_bytes[64] == 198,
-        "incorrect value for certificate_bytes[64], expected 198, is %d",
-        check_msg->certificate_bytes[64]);
+        "incorrect value for certificate_bytes[64], expected 198, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[64]);
     ck_assert_msg(
         check_msg->certificate_bytes[65] == 178,
-        "incorrect value for certificate_bytes[65], expected 178, is %d",
-        check_msg->certificate_bytes[65]);
+        "incorrect value for certificate_bytes[65], expected 178, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[65]);
     ck_assert_msg(
         check_msg->certificate_bytes[66] == 196,
-        "incorrect value for certificate_bytes[66], expected 196, is %d",
-        check_msg->certificate_bytes[66]);
+        "incorrect value for certificate_bytes[66], expected 196, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[66]);
     ck_assert_msg(
         check_msg->certificate_bytes[67] == 5,
-        "incorrect value for certificate_bytes[67], expected 5, is %d",
-        check_msg->certificate_bytes[67]);
+        "incorrect value for certificate_bytes[67], expected 5, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[67]);
     ck_assert_msg(
         check_msg->certificate_bytes[68] == 81,
-        "incorrect value for certificate_bytes[68], expected 81, is %d",
-        check_msg->certificate_bytes[68]);
+        "incorrect value for certificate_bytes[68], expected 81, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[68]);
     ck_assert_msg(
         check_msg->certificate_bytes[69] == 9,
-        "incorrect value for certificate_bytes[69], expected 9, is %d",
-        check_msg->certificate_bytes[69]);
+        "incorrect value for certificate_bytes[69], expected 9, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[69]);
     ck_assert_msg(
         check_msg->certificate_bytes[70] == 44,
-        "incorrect value for certificate_bytes[70], expected 44, is %d",
-        check_msg->certificate_bytes[70]);
+        "incorrect value for certificate_bytes[70], expected 44, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[70]);
     ck_assert_msg(
         check_msg->certificate_bytes[71] == 164,
-        "incorrect value for certificate_bytes[71], expected 164, is %d",
-        check_msg->certificate_bytes[71]);
+        "incorrect value for certificate_bytes[71], expected 164, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[71]);
     ck_assert_msg(
         check_msg->certificate_bytes[72] == 163,
-        "incorrect value for certificate_bytes[72], expected 163, is %d",
-        check_msg->certificate_bytes[72]);
+        "incorrect value for certificate_bytes[72], expected 163, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[72]);
     ck_assert_msg(
         check_msg->certificate_bytes[73] == 214,
-        "incorrect value for certificate_bytes[73], expected 214, is %d",
-        check_msg->certificate_bytes[73]);
+        "incorrect value for certificate_bytes[73], expected 214, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[73]);
     ck_assert_msg(
         check_msg->certificate_bytes[74] == 138,
-        "incorrect value for certificate_bytes[74], expected 138, is %d",
-        check_msg->certificate_bytes[74]);
+        "incorrect value for certificate_bytes[74], expected 138, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[74]);
     ck_assert_msg(
         check_msg->certificate_bytes[75] == 123,
-        "incorrect value for certificate_bytes[75], expected 123, is %d",
-        check_msg->certificate_bytes[75]);
+        "incorrect value for certificate_bytes[75], expected 123, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[75]);
     ck_assert_msg(
         check_msg->certificate_bytes[76] == 76,
-        "incorrect value for certificate_bytes[76], expected 76, is %d",
-        check_msg->certificate_bytes[76]);
+        "incorrect value for certificate_bytes[76], expected 76, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[76]);
     ck_assert_msg(
         check_msg->certificate_bytes[77] == 74,
-        "incorrect value for certificate_bytes[77], expected 74, is %d",
-        check_msg->certificate_bytes[77]);
+        "incorrect value for certificate_bytes[77], expected 74, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[77]);
     ck_assert_msg(
         check_msg->certificate_bytes[78] == 237,
-        "incorrect value for certificate_bytes[78], expected 237, is %d",
-        check_msg->certificate_bytes[78]);
+        "incorrect value for certificate_bytes[78], expected 237, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[78]);
     ck_assert_msg(
         check_msg->certificate_bytes[79] == 121,
-        "incorrect value for certificate_bytes[79], expected 121, is %d",
-        check_msg->certificate_bytes[79]);
+        "incorrect value for certificate_bytes[79], expected 121, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[79]);
     ck_assert_msg(
         check_msg->certificate_bytes[80] == 13,
-        "incorrect value for certificate_bytes[80], expected 13, is %d",
-        check_msg->certificate_bytes[80]);
+        "incorrect value for certificate_bytes[80], expected 13, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[80]);
     ck_assert_msg(
         check_msg->certificate_bytes[81] == 137,
-        "incorrect value for certificate_bytes[81], expected 137, is %d",
-        check_msg->certificate_bytes[81]);
+        "incorrect value for certificate_bytes[81], expected 137, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[81]);
     ck_assert_msg(
         check_msg->certificate_bytes[82] == 186,
-        "incorrect value for certificate_bytes[82], expected 186, is %d",
-        check_msg->certificate_bytes[82]);
+        "incorrect value for certificate_bytes[82], expected 186, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[82]);
     ck_assert_msg(
         check_msg->certificate_bytes[83] == 97,
-        "incorrect value for certificate_bytes[83], expected 97, is %d",
-        check_msg->certificate_bytes[83]);
+        "incorrect value for certificate_bytes[83], expected 97, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[83]);
     ck_assert_msg(
         check_msg->certificate_bytes[84] == 193,
-        "incorrect value for certificate_bytes[84], expected 193, is %d",
-        check_msg->certificate_bytes[84]);
+        "incorrect value for certificate_bytes[84], expected 193, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[84]);
     ck_assert_msg(
         check_msg->certificate_bytes[85] == 189,
-        "incorrect value for certificate_bytes[85], expected 189, is %d",
-        check_msg->certificate_bytes[85]);
+        "incorrect value for certificate_bytes[85], expected 189, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[85]);
     ck_assert_msg(
         check_msg->certificate_bytes[86] == 200,
-        "incorrect value for certificate_bytes[86], expected 200, is %d",
-        check_msg->certificate_bytes[86]);
+        "incorrect value for certificate_bytes[86], expected 200, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[86]);
     ck_assert_msg(
         check_msg->certificate_bytes[87] == 124,
-        "incorrect value for certificate_bytes[87], expected 124, is %d",
-        check_msg->certificate_bytes[87]);
+        "incorrect value for certificate_bytes[87], expected 124, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[87]);
     ck_assert_msg(
         check_msg->certificate_bytes[88] == 69,
-        "incorrect value for certificate_bytes[88], expected 69, is %d",
-        check_msg->certificate_bytes[88]);
+        "incorrect value for certificate_bytes[88], expected 69, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[88]);
     ck_assert_msg(
         check_msg->certificate_bytes[89] == 115,
-        "incorrect value for certificate_bytes[89], expected 115, is %d",
-        check_msg->certificate_bytes[89]);
+        "incorrect value for certificate_bytes[89], expected 115, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[89]);
     ck_assert_msg(
         check_msg->certificate_bytes[90] == 230,
-        "incorrect value for certificate_bytes[90], expected 230, is %d",
-        check_msg->certificate_bytes[90]);
+        "incorrect value for certificate_bytes[90], expected 230, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[90]);
     ck_assert_msg(
         check_msg->certificate_bytes[91] == 159,
-        "incorrect value for certificate_bytes[91], expected 159, is %d",
-        check_msg->certificate_bytes[91]);
+        "incorrect value for certificate_bytes[91], expected 159, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[91]);
     ck_assert_msg(
         check_msg->certificate_bytes[92] == 185,
-        "incorrect value for certificate_bytes[92], expected 185, is %d",
-        check_msg->certificate_bytes[92]);
+        "incorrect value for certificate_bytes[92], expected 185, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[92]);
     ck_assert_msg(
         check_msg->certificate_bytes[93] == 158,
-        "incorrect value for certificate_bytes[93], expected 158, is %d",
-        check_msg->certificate_bytes[93]);
+        "incorrect value for certificate_bytes[93], expected 158, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[93]);
     ck_assert_msg(
         check_msg->certificate_bytes[94] == 51,
-        "incorrect value for certificate_bytes[94], expected 51, is %d",
-        check_msg->certificate_bytes[94]);
+        "incorrect value for certificate_bytes[94], expected 51, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[94]);
     ck_assert_msg(
         check_msg->certificate_bytes[95] == 12,
-        "incorrect value for certificate_bytes[95], expected 12, is %d",
-        check_msg->certificate_bytes[95]);
+        "incorrect value for certificate_bytes[95], expected 12, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[95]);
     ck_assert_msg(
         check_msg->certificate_bytes[96] == 225,
-        "incorrect value for certificate_bytes[96], expected 225, is %d",
-        check_msg->certificate_bytes[96]);
+        "incorrect value for certificate_bytes[96], expected 225, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[96]);
     ck_assert_msg(
         check_msg->certificate_bytes[97] == 65,
-        "incorrect value for certificate_bytes[97], expected 65, is %d",
-        check_msg->certificate_bytes[97]);
+        "incorrect value for certificate_bytes[97], expected 65, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[97]);
     ck_assert_msg(
         check_msg->certificate_bytes[98] == 192,
-        "incorrect value for certificate_bytes[98], expected 192, is %d",
-        check_msg->certificate_bytes[98]);
+        "incorrect value for certificate_bytes[98], expected 192, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[98]);
     ck_assert_msg(
         check_msg->certificate_bytes[99] == 105,
-        "incorrect value for certificate_bytes[99], expected 105, is %d",
-        check_msg->certificate_bytes[99]);
+        "incorrect value for certificate_bytes[99], expected 105, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[99]);
     ck_assert_msg(
         check_msg->certificate_bytes[100] == 56,
-        "incorrect value for certificate_bytes[100], expected 56, is %d",
-        check_msg->certificate_bytes[100]);
+        "incorrect value for certificate_bytes[100], expected 56, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[100]);
     ck_assert_msg(
         check_msg->certificate_bytes[101] == 41,
-        "incorrect value for certificate_bytes[101], expected 41, is %d",
-        check_msg->certificate_bytes[101]);
+        "incorrect value for certificate_bytes[101], expected 41, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[101]);
     ck_assert_msg(
         check_msg->certificate_bytes[102] == 85,
-        "incorrect value for certificate_bytes[102], expected 85, is %d",
-        check_msg->certificate_bytes[102]);
+        "incorrect value for certificate_bytes[102], expected 85, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[102]);
     ck_assert_msg(
         check_msg->certificate_bytes[103] == 133,
-        "incorrect value for certificate_bytes[103], expected 133, is %d",
-        check_msg->certificate_bytes[103]);
+        "incorrect value for certificate_bytes[103], expected 133, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[103]);
     ck_assert_msg(
         check_msg->certificate_bytes[104] == 19,
-        "incorrect value for certificate_bytes[104], expected 19, is %d",
-        check_msg->certificate_bytes[104]);
+        "incorrect value for certificate_bytes[104], expected 19, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[104]);
     ck_assert_msg(
         check_msg->certificate_bytes[105] == 217,
-        "incorrect value for certificate_bytes[105], expected 217, is %d",
-        check_msg->certificate_bytes[105]);
+        "incorrect value for certificate_bytes[105], expected 217, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[105]);
     ck_assert_msg(
         check_msg->certificate_bytes[106] == 166,
-        "incorrect value for certificate_bytes[106], expected 166, is %d",
-        check_msg->certificate_bytes[106]);
+        "incorrect value for certificate_bytes[106], expected 166, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[106]);
     ck_assert_msg(
         check_msg->certificate_bytes[107] == 48,
-        "incorrect value for certificate_bytes[107], expected 48, is %d",
-        check_msg->certificate_bytes[107]);
+        "incorrect value for certificate_bytes[107], expected 48, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[107]);
     ck_assert_msg(
         check_msg->certificate_bytes[108] == 139,
-        "incorrect value for certificate_bytes[108], expected 139, is %d",
-        check_msg->certificate_bytes[108]);
+        "incorrect value for certificate_bytes[108], expected 139, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[108]);
     ck_assert_msg(
         check_msg->certificate_bytes[109] == 131,
-        "incorrect value for certificate_bytes[109], expected 131, is %d",
-        check_msg->certificate_bytes[109]);
+        "incorrect value for certificate_bytes[109], expected 131, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[109]);
     ck_assert_msg(
         check_msg->certificate_bytes[110] == 96,
-        "incorrect value for certificate_bytes[110], expected 96, is %d",
-        check_msg->certificate_bytes[110]);
+        "incorrect value for certificate_bytes[110], expected 96, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[110]);
     ck_assert_msg(
         check_msg->certificate_bytes[111] == 216,
-        "incorrect value for certificate_bytes[111], expected 216, is %d",
-        check_msg->certificate_bytes[111]);
+        "incorrect value for certificate_bytes[111], expected 216, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[111]);
     ck_assert_msg(
         check_msg->certificate_bytes[112] == 98,
-        "incorrect value for certificate_bytes[112], expected 98, is %d",
-        check_msg->certificate_bytes[112]);
+        "incorrect value for certificate_bytes[112], expected 98, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[112]);
     ck_assert_msg(
         check_msg->certificate_bytes[113] == 147,
-        "incorrect value for certificate_bytes[113], expected 147, is %d",
-        check_msg->certificate_bytes[113]);
+        "incorrect value for certificate_bytes[113], expected 147, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[113]);
     ck_assert_msg(
         check_msg->certificate_bytes[114] == 132,
-        "incorrect value for certificate_bytes[114], expected 132, is %d",
-        check_msg->certificate_bytes[114]);
+        "incorrect value for certificate_bytes[114], expected 132, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[114]);
     ck_assert_msg(
         check_msg->certificate_bytes[115] == 234,
-        "incorrect value for certificate_bytes[115], expected 234, is %d",
-        check_msg->certificate_bytes[115]);
+        "incorrect value for certificate_bytes[115], expected 234, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[115]);
     ck_assert_msg(
         check_msg->certificate_bytes[116] == 167,
-        "incorrect value for certificate_bytes[116], expected 167, is %d",
-        check_msg->certificate_bytes[116]);
+        "incorrect value for certificate_bytes[116], expected 167, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[116]);
     ck_assert_msg(
         check_msg->certificate_bytes[117] == 248,
-        "incorrect value for certificate_bytes[117], expected 248, is %d",
-        check_msg->certificate_bytes[117]);
+        "incorrect value for certificate_bytes[117], expected 248, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[117]);
     ck_assert_msg(
         check_msg->certificate_bytes[118] == 247,
-        "incorrect value for certificate_bytes[118], expected 247, is %d",
-        check_msg->certificate_bytes[118]);
+        "incorrect value for certificate_bytes[118], expected 247, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[118]);
     ck_assert_msg(
         check_msg->certificate_bytes[119] == 32,
-        "incorrect value for certificate_bytes[119], expected 32, is %d",
-        check_msg->certificate_bytes[119]);
+        "incorrect value for certificate_bytes[119], expected 32, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[119]);
     ck_assert_msg(
         check_msg->certificate_bytes[120] == 239,
-        "incorrect value for certificate_bytes[120], expected 239, is %d",
-        check_msg->certificate_bytes[120]);
+        "incorrect value for certificate_bytes[120], expected 239, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[120]);
     ck_assert_msg(
         check_msg->certificate_bytes[121] == 194,
-        "incorrect value for certificate_bytes[121], expected 194, is %d",
-        check_msg->certificate_bytes[121]);
+        "incorrect value for certificate_bytes[121], expected 194, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[121]);
     ck_assert_msg(
         check_msg->certificate_bytes[122] == 188,
-        "incorrect value for certificate_bytes[122], expected 188, is %d",
-        check_msg->certificate_bytes[122]);
+        "incorrect value for certificate_bytes[122], expected 188, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[122]);
     ck_assert_msg(
         check_msg->certificate_bytes[123] == 254,
-        "incorrect value for certificate_bytes[123], expected 254, is %d",
-        check_msg->certificate_bytes[123]);
+        "incorrect value for certificate_bytes[123], expected 254, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[123]);
     ck_assert_msg(
         check_msg->certificate_bytes[124] == 114,
-        "incorrect value for certificate_bytes[124], expected 114, is %d",
-        check_msg->certificate_bytes[124]);
+        "incorrect value for certificate_bytes[124], expected 114, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[124]);
     ck_assert_msg(
         check_msg->certificate_bytes[125] == 117,
-        "incorrect value for certificate_bytes[125], expected 117, is %d",
-        check_msg->certificate_bytes[125]);
+        "incorrect value for certificate_bytes[125], expected 117, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[125]);
     ck_assert_msg(
         check_msg->certificate_bytes[126] == 83,
-        "incorrect value for certificate_bytes[126], expected 83, is %d",
-        check_msg->certificate_bytes[126]);
+        "incorrect value for certificate_bytes[126], expected 83, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[126]);
     ck_assert_msg(
         check_msg->certificate_bytes[127] == 25,
-        "incorrect value for certificate_bytes[127], expected 25, is %d",
-        check_msg->certificate_bytes[127]);
+        "incorrect value for certificate_bytes[127], expected 25, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[127]);
     ck_assert_msg(
         check_msg->certificate_bytes[128] == 251,
-        "incorrect value for certificate_bytes[128], expected 251, is %d",
-        check_msg->certificate_bytes[128]);
+        "incorrect value for certificate_bytes[128], expected 251, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[128]);
     ck_assert_msg(
         check_msg->certificate_bytes[129] == 191,
-        "incorrect value for certificate_bytes[129], expected 191, is %d",
-        check_msg->certificate_bytes[129]);
+        "incorrect value for certificate_bytes[129], expected 191, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[129]);
     ck_assert_msg(
         check_msg->certificate_bytes[130] == 104,
-        "incorrect value for certificate_bytes[130], expected 104, is %d",
-        check_msg->certificate_bytes[130]);
+        "incorrect value for certificate_bytes[130], expected 104, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[130]);
     ck_assert_msg(
         check_msg->certificate_bytes[131] == 240,
-        "incorrect value for certificate_bytes[131], expected 240, is %d",
-        check_msg->certificate_bytes[131]);
+        "incorrect value for certificate_bytes[131], expected 240, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[131]);
     ck_assert_msg(
         check_msg->certificate_bytes[132] == 118,
-        "incorrect value for certificate_bytes[132], expected 118, is %d",
-        check_msg->certificate_bytes[132]);
+        "incorrect value for certificate_bytes[132], expected 118, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[132]);
     ck_assert_msg(
         check_msg->certificate_bytes[133] == 68,
-        "incorrect value for certificate_bytes[133], expected 68, is %d",
-        check_msg->certificate_bytes[133]);
+        "incorrect value for certificate_bytes[133], expected 68, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[133]);
     ck_assert_msg(
         check_msg->certificate_bytes[134] == 42,
-        "incorrect value for certificate_bytes[134], expected 42, is %d",
-        check_msg->certificate_bytes[134]);
+        "incorrect value for certificate_bytes[134], expected 42, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[134]);
     ck_assert_msg(
         check_msg->certificate_bytes[135] == 93,
-        "incorrect value for certificate_bytes[135], expected 93, is %d",
-        check_msg->certificate_bytes[135]);
+        "incorrect value for certificate_bytes[135], expected 93, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[135]);
     ck_assert_msg(
         check_msg->certificate_bytes[136] == 18,
-        "incorrect value for certificate_bytes[136], expected 18, is %d",
-        check_msg->certificate_bytes[136]);
+        "incorrect value for certificate_bytes[136], expected 18, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[136]);
     ck_assert_msg(
         check_msg->certificate_bytes[137] == 16,
-        "incorrect value for certificate_bytes[137], expected 16, is %d",
-        check_msg->certificate_bytes[137]);
+        "incorrect value for certificate_bytes[137], expected 16, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[137]);
     ck_assert_msg(
         check_msg->certificate_bytes[138] == 37,
-        "incorrect value for certificate_bytes[138], expected 37, is %d",
-        check_msg->certificate_bytes[138]);
+        "incorrect value for certificate_bytes[138], expected 37, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[138]);
     ck_assert_msg(
         check_msg->certificate_bytes[139] == 232,
-        "incorrect value for certificate_bytes[139], expected 232, is %d",
-        check_msg->certificate_bytes[139]);
+        "incorrect value for certificate_bytes[139], expected 232, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[139]);
     ck_assert_msg(
         check_msg->certificate_bytes[140] == 99,
-        "incorrect value for certificate_bytes[140], expected 99, is %d",
-        check_msg->certificate_bytes[140]);
+        "incorrect value for certificate_bytes[140], expected 99, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[140]);
     ck_assert_msg(
         check_msg->certificate_bytes[141] == 179,
-        "incorrect value for certificate_bytes[141], expected 179, is %d",
-        check_msg->certificate_bytes[141]);
+        "incorrect value for certificate_bytes[141], expected 179, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[141]);
     ck_assert_msg(
         check_msg->certificate_bytes[142] == 23,
-        "incorrect value for certificate_bytes[142], expected 23, is %d",
-        check_msg->certificate_bytes[142]);
+        "incorrect value for certificate_bytes[142], expected 23, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[142]);
     ck_assert_msg(
         check_msg->certificate_bytes[143] == 90,
-        "incorrect value for certificate_bytes[143], expected 90, is %d",
-        check_msg->certificate_bytes[143]);
+        "incorrect value for certificate_bytes[143], expected 90, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[143]);
     ck_assert_msg(
         check_msg->certificate_bytes[144] == 94,
-        "incorrect value for certificate_bytes[144], expected 94, is %d",
-        check_msg->certificate_bytes[144]);
+        "incorrect value for certificate_bytes[144], expected 94, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[144]);
     ck_assert_msg(
         check_msg->certificate_bytes[145] == 136,
-        "incorrect value for certificate_bytes[145], expected 136, is %d",
-        check_msg->certificate_bytes[145]);
+        "incorrect value for certificate_bytes[145], expected 136, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[145]);
     ck_assert_msg(
         check_msg->certificate_bytes[146] == 6,
-        "incorrect value for certificate_bytes[146], expected 6, is %d",
-        check_msg->certificate_bytes[146]);
+        "incorrect value for certificate_bytes[146], expected 6, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[146]);
     ck_assert_msg(
         check_msg->certificate_bytes[147] == 125,
-        "incorrect value for certificate_bytes[147], expected 125, is %d",
-        check_msg->certificate_bytes[147]);
+        "incorrect value for certificate_bytes[147], expected 125, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[147]);
     ck_assert_msg(
         check_msg->certificate_bytes[148] == 91,
-        "incorrect value for certificate_bytes[148], expected 91, is %d",
-        check_msg->certificate_bytes[148]);
+        "incorrect value for certificate_bytes[148], expected 91, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[148]);
     ck_assert_msg(
         check_msg->certificate_bytes[149] == 255,
-        "incorrect value for certificate_bytes[149], expected 255, is %d",
-        check_msg->certificate_bytes[149]);
+        "incorrect value for certificate_bytes[149], expected 255, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[149]);
     ck_assert_msg(
         check_msg->certificate_bytes[150] == 15,
-        "incorrect value for certificate_bytes[150], expected 15, is %d",
-        check_msg->certificate_bytes[150]);
+        "incorrect value for certificate_bytes[150], expected 15, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[150]);
     ck_assert_msg(
         check_msg->certificate_bytes[151] == 71,
-        "incorrect value for certificate_bytes[151], expected 71, is %d",
-        check_msg->certificate_bytes[151]);
+        "incorrect value for certificate_bytes[151], expected 71, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[151]);
     ck_assert_msg(
         check_msg->certificate_bytes[152] == 43,
-        "incorrect value for certificate_bytes[152], expected 43, is %d",
-        check_msg->certificate_bytes[152]);
+        "incorrect value for certificate_bytes[152], expected 43, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[152]);
     ck_assert_msg(
         check_msg->certificate_bytes[153] == 46,
-        "incorrect value for certificate_bytes[153], expected 46, is %d",
-        check_msg->certificate_bytes[153]);
+        "incorrect value for certificate_bytes[153], expected 46, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[153]);
     ck_assert_msg(
         check_msg->certificate_bytes[154] == 25,
-        "incorrect value for certificate_bytes[154], expected 25, is %d",
-        check_msg->certificate_bytes[154]);
+        "incorrect value for certificate_bytes[154], expected 25, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[154]);
     ck_assert_msg(
         check_msg->certificate_bytes[155] == 252,
-        "incorrect value for certificate_bytes[155], expected 252, is %d",
-        check_msg->certificate_bytes[155]);
+        "incorrect value for certificate_bytes[155], expected 252, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[155]);
     ck_assert_msg(
         check_msg->certificate_bytes[156] == 229,
-        "incorrect value for certificate_bytes[156], expected 229, is %d",
-        check_msg->certificate_bytes[156]);
+        "incorrect value for certificate_bytes[156], expected 229, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[156]);
     ck_assert_msg(
         check_msg->certificate_bytes[157] == 80,
-        "incorrect value for certificate_bytes[157], expected 80, is %d",
-        check_msg->certificate_bytes[157]);
+        "incorrect value for certificate_bytes[157], expected 80, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[157]);
     ck_assert_msg(
         check_msg->certificate_bytes[158] == 143,
-        "incorrect value for certificate_bytes[158], expected 143, is %d",
-        check_msg->certificate_bytes[158]);
+        "incorrect value for certificate_bytes[158], expected 143, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[158]);
     ck_assert_msg(
         check_msg->certificate_bytes[159] == 58,
-        "incorrect value for certificate_bytes[159], expected 58, is %d",
-        check_msg->certificate_bytes[159]);
+        "incorrect value for certificate_bytes[159], expected 58, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[159]);
     ck_assert_msg(
         check_msg->certificate_bytes[160] == 241,
-        "incorrect value for certificate_bytes[160], expected 241, is %d",
-        check_msg->certificate_bytes[160]);
+        "incorrect value for certificate_bytes[160], expected 241, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[160]);
     ck_assert_msg(
         check_msg->certificate_bytes[161] == 11,
-        "incorrect value for certificate_bytes[161], expected 11, is %d",
-        check_msg->certificate_bytes[161]);
+        "incorrect value for certificate_bytes[161], expected 11, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[161]);
     ck_assert_msg(
         check_msg->certificate_bytes[162] == 62,
-        "incorrect value for certificate_bytes[162], expected 62, is %d",
-        check_msg->certificate_bytes[162]);
+        "incorrect value for certificate_bytes[162], expected 62, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[162]);
     ck_assert_msg(
         check_msg->certificate_bytes[163] == 181,
-        "incorrect value for certificate_bytes[163], expected 181, is %d",
-        check_msg->certificate_bytes[163]);
+        "incorrect value for certificate_bytes[163], expected 181, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[163]);
     ck_assert_msg(
         check_msg->certificate_bytes[164] == 155,
-        "incorrect value for certificate_bytes[164], expected 155, is %d",
-        check_msg->certificate_bytes[164]);
+        "incorrect value for certificate_bytes[164], expected 155, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[164]);
     ck_assert_msg(
         check_msg->certificate_bytes[165] == 53,
-        "incorrect value for certificate_bytes[165], expected 53, is %d",
-        check_msg->certificate_bytes[165]);
+        "incorrect value for certificate_bytes[165], expected 53, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[165]);
     ck_assert_msg(
         check_msg->certificate_bytes[166] == 153,
-        "incorrect value for certificate_bytes[166], expected 153, is %d",
-        check_msg->certificate_bytes[166]);
+        "incorrect value for certificate_bytes[166], expected 153, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[166]);
     ck_assert_msg(
         check_msg->certificate_bytes[167] == 149,
-        "incorrect value for certificate_bytes[167], expected 149, is %d",
-        check_msg->certificate_bytes[167]);
+        "incorrect value for certificate_bytes[167], expected 149, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[167]);
     ck_assert_msg(
         check_msg->certificate_bytes[168] == 152,
-        "incorrect value for certificate_bytes[168], expected 152, is %d",
-        check_msg->certificate_bytes[168]);
+        "incorrect value for certificate_bytes[168], expected 152, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[168]);
     ck_assert_msg(
         check_msg->certificate_bytes[169] == 227,
-        "incorrect value for certificate_bytes[169], expected 227, is %d",
-        check_msg->certificate_bytes[169]);
+        "incorrect value for certificate_bytes[169], expected 227, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[169]);
     ck_assert_msg(
         check_msg->certificate_bytes[170] == 150,
-        "incorrect value for certificate_bytes[170], expected 150, is %d",
-        check_msg->certificate_bytes[170]);
+        "incorrect value for certificate_bytes[170], expected 150, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[170]);
     ck_assert_msg(
         check_msg->certificate_bytes[171] == 87,
-        "incorrect value for certificate_bytes[171], expected 87, is %d",
-        check_msg->certificate_bytes[171]);
+        "incorrect value for certificate_bytes[171], expected 87, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[171]);
     ck_assert_msg(
         check_msg->certificate_bytes[172] == 112,
-        "incorrect value for certificate_bytes[172], expected 112, is %d",
-        check_msg->certificate_bytes[172]);
+        "incorrect value for certificate_bytes[172], expected 112, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[172]);
     ck_assert_msg(
         check_msg->certificate_bytes[173] == 165,
-        "incorrect value for certificate_bytes[173], expected 165, is %d",
-        check_msg->certificate_bytes[173]);
+        "incorrect value for certificate_bytes[173], expected 165, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[173]);
     ck_assert_msg(
         check_msg->certificate_bytes[174] == 2,
-        "incorrect value for certificate_bytes[174], expected 2, is %d",
-        check_msg->certificate_bytes[174]);
+        "incorrect value for certificate_bytes[174], expected 2, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[174]);
     ck_assert_msg(
         check_msg->certificate_bytes[175] == 128,
-        "incorrect value for certificate_bytes[175], expected 128, is %d",
-        check_msg->certificate_bytes[175]);
+        "incorrect value for certificate_bytes[175], expected 128, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[175]);
     ck_assert_msg(
         check_msg->certificate_bytes[176] == 231,
-        "incorrect value for certificate_bytes[176], expected 231, is %d",
-        check_msg->certificate_bytes[176]);
+        "incorrect value for certificate_bytes[176], expected 231, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[176]);
     ck_assert_msg(
         check_msg->certificate_bytes[177] == 25,
-        "incorrect value for certificate_bytes[177], expected 25, is %d",
-        check_msg->certificate_bytes[177]);
+        "incorrect value for certificate_bytes[177], expected 25, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[177]);
     ck_assert_msg(
         check_msg->certificate_bytes[178] == 157,
-        "incorrect value for certificate_bytes[178], expected 157, is %d",
-        check_msg->certificate_bytes[178]);
+        "incorrect value for certificate_bytes[178], expected 157, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[178]);
     ck_assert_msg(
         check_msg->certificate_bytes[179] == 244,
-        "incorrect value for certificate_bytes[179], expected 244, is %d",
-        check_msg->certificate_bytes[179]);
+        "incorrect value for certificate_bytes[179], expected 244, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[179]);
     ck_assert_msg(
         check_msg->certificate_bytes[180] == 204,
-        "incorrect value for certificate_bytes[180], expected 204, is %d",
-        check_msg->certificate_bytes[180]);
+        "incorrect value for certificate_bytes[180], expected 204, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[180]);
     ck_assert_msg(
         check_msg->certificate_bytes[181] == 108,
-        "incorrect value for certificate_bytes[181], expected 108, is %d",
-        check_msg->certificate_bytes[181]);
+        "incorrect value for certificate_bytes[181], expected 108, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[181]);
     ck_assert_msg(
         check_msg->certificate_bytes[182] == 253,
-        "incorrect value for certificate_bytes[182], expected 253, is %d",
-        check_msg->certificate_bytes[182]);
+        "incorrect value for certificate_bytes[182], expected 253, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[182]);
     ck_assert_msg(
         check_msg->certificate_bytes[183] == 127,
-        "incorrect value for certificate_bytes[183], expected 127, is %d",
-        check_msg->certificate_bytes[183]);
+        "incorrect value for certificate_bytes[183], expected 127, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[183]);
     ck_assert_msg(
         check_msg->certificate_bytes[184] == 122,
-        "incorrect value for certificate_bytes[184], expected 122, is %d",
-        check_msg->certificate_bytes[184]);
+        "incorrect value for certificate_bytes[184], expected 122, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[184]);
     ck_assert_msg(
         check_msg->certificate_bytes[185] == 145,
-        "incorrect value for certificate_bytes[185], expected 145, is %d",
-        check_msg->certificate_bytes[185]);
+        "incorrect value for certificate_bytes[185], expected 145, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[185]);
     ck_assert_msg(
         check_msg->certificate_bytes[186] == 113,
-        "incorrect value for certificate_bytes[186], expected 113, is %d",
-        check_msg->certificate_bytes[186]);
+        "incorrect value for certificate_bytes[186], expected 113, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[186]);
     ck_assert_msg(
         check_msg->certificate_bytes[187] == 162,
-        "incorrect value for certificate_bytes[187], expected 162, is %d",
-        check_msg->certificate_bytes[187]);
+        "incorrect value for certificate_bytes[187], expected 162, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[187]);
     ck_assert_msg(
         check_msg->certificate_bytes[188] == 197,
-        "incorrect value for certificate_bytes[188], expected 197, is %d",
-        check_msg->certificate_bytes[188]);
+        "incorrect value for certificate_bytes[188], expected 197, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[188]);
     ck_assert_msg(
         check_msg->certificate_bytes[189] == 171,
-        "incorrect value for certificate_bytes[189], expected 171, is %d",
-        check_msg->certificate_bytes[189]);
+        "incorrect value for certificate_bytes[189], expected 171, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[189]);
     ck_assert_msg(
         check_msg->certificate_bytes[190] == 199,
-        "incorrect value for certificate_bytes[190], expected 199, is %d",
-        check_msg->certificate_bytes[190]);
+        "incorrect value for certificate_bytes[190], expected 199, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[190]);
     ck_assert_msg(
         check_msg->certificate_bytes[191] == 54,
-        "incorrect value for certificate_bytes[191], expected 54, is %d",
-        check_msg->certificate_bytes[191]);
+        "incorrect value for certificate_bytes[191], expected 54, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[191]);
     ck_assert_msg(
         check_msg->certificate_bytes[192] == 184,
-        "incorrect value for certificate_bytes[192], expected 184, is %d",
-        check_msg->certificate_bytes[192]);
+        "incorrect value for certificate_bytes[192], expected 184, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[192]);
     ck_assert_msg(
         check_msg->certificate_bytes[193] == 222,
-        "incorrect value for certificate_bytes[193], expected 222, is %d",
-        check_msg->certificate_bytes[193]);
+        "incorrect value for certificate_bytes[193], expected 222, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[193]);
     ck_assert_msg(
         check_msg->certificate_bytes[194] == 206,
-        "incorrect value for certificate_bytes[194], expected 206, is %d",
-        check_msg->certificate_bytes[194]);
+        "incorrect value for certificate_bytes[194], expected 206, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[194]);
     ck_assert_msg(
         check_msg->certificate_bytes[195] == 67,
-        "incorrect value for certificate_bytes[195], expected 67, is %d",
-        check_msg->certificate_bytes[195]);
+        "incorrect value for certificate_bytes[195], expected 67, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[195]);
     ck_assert_msg(
         check_msg->certificate_bytes[196] == 144,
-        "incorrect value for certificate_bytes[196], expected 144, is %d",
-        check_msg->certificate_bytes[196]);
+        "incorrect value for certificate_bytes[196], expected 144, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[196]);
     ck_assert_msg(
         check_msg->certificate_bytes[197] == 78,
-        "incorrect value for certificate_bytes[197], expected 78, is %d",
-        check_msg->certificate_bytes[197]);
+        "incorrect value for certificate_bytes[197], expected 78, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[197]);
     ck_assert_msg(
         check_msg->certificate_bytes[198] == 187,
-        "incorrect value for certificate_bytes[198], expected 187, is %d",
-        check_msg->certificate_bytes[198]);
+        "incorrect value for certificate_bytes[198], expected 187, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[198]);
     ck_assert_msg(
         check_msg->certificate_bytes[199] == 207,
-        "incorrect value for certificate_bytes[199], expected 207, is %d",
-        check_msg->certificate_bytes[199]);
+        "incorrect value for certificate_bytes[199], expected 207, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[199]);
     ck_assert_msg(
         check_msg->certificate_bytes[200] == 60,
-        "incorrect value for certificate_bytes[200], expected 60, is %d",
-        check_msg->certificate_bytes[200]);
+        "incorrect value for certificate_bytes[200], expected 60, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[200]);
     ck_assert_msg(
         check_msg->certificate_bytes[201] == 211,
-        "incorrect value for certificate_bytes[201], expected 211, is %d",
-        check_msg->certificate_bytes[201]);
+        "incorrect value for certificate_bytes[201], expected 211, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[201]);
     ck_assert_msg(
         check_msg->certificate_bytes[202] == 141,
-        "incorrect value for certificate_bytes[202], expected 141, is %d",
-        check_msg->certificate_bytes[202]);
+        "incorrect value for certificate_bytes[202], expected 141, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[202]);
     ck_assert_msg(
         check_msg->certificate_bytes[203] == 135,
-        "incorrect value for certificate_bytes[203], expected 135, is %d",
-        check_msg->certificate_bytes[203]);
+        "incorrect value for certificate_bytes[203], expected 135, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[203]);
     ck_assert_msg(
         check_msg->certificate_bytes[204] == 106,
-        "incorrect value for certificate_bytes[204], expected 106, is %d",
-        check_msg->certificate_bytes[204]);
+        "incorrect value for certificate_bytes[204], expected 106, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[204]);
     ck_assert_msg(
         check_msg->certificate_bytes[205] == 220,
-        "incorrect value for certificate_bytes[205], expected 220, is %d",
-        check_msg->certificate_bytes[205]);
+        "incorrect value for certificate_bytes[205], expected 220, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[205]);
     ck_assert_msg(
         check_msg->certificate_bytes[206] == 79,
-        "incorrect value for certificate_bytes[206], expected 79, is %d",
-        check_msg->certificate_bytes[206]);
+        "incorrect value for certificate_bytes[206], expected 79, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[206]);
     ck_assert_msg(
         check_msg->certificate_bytes[207] == 183,
-        "incorrect value for certificate_bytes[207], expected 183, is %d",
-        check_msg->certificate_bytes[207]);
+        "incorrect value for certificate_bytes[207], expected 183, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[207]);
     ck_assert_msg(
         check_msg->certificate_bytes[208] == 245,
-        "incorrect value for certificate_bytes[208], expected 245, is %d",
-        check_msg->certificate_bytes[208]);
+        "incorrect value for certificate_bytes[208], expected 245, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[208]);
     ck_assert_msg(
         check_msg->certificate_bytes[209] == 21,
-        "incorrect value for certificate_bytes[209], expected 21, is %d",
-        check_msg->certificate_bytes[209]);
+        "incorrect value for certificate_bytes[209], expected 21, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[209]);
     ck_assert_msg(
         check_msg->certificate_bytes[210] == 161,
-        "incorrect value for certificate_bytes[210], expected 161, is %d",
-        check_msg->certificate_bytes[210]);
+        "incorrect value for certificate_bytes[210], expected 161, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[210]);
     ck_assert_msg(
         check_msg->certificate_bytes[211] == 168,
-        "incorrect value for certificate_bytes[211], expected 168, is %d",
-        check_msg->certificate_bytes[211]);
+        "incorrect value for certificate_bytes[211], expected 168, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[211]);
     ck_assert_msg(
         check_msg->certificate_bytes[212] == 34,
-        "incorrect value for certificate_bytes[212], expected 34, is %d",
-        check_msg->certificate_bytes[212]);
+        "incorrect value for certificate_bytes[212], expected 34, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[212]);
     ck_assert_msg(
         check_msg->certificate_bytes[213] == 129,
-        "incorrect value for certificate_bytes[213], expected 129, is %d",
-        check_msg->certificate_bytes[213]);
+        "incorrect value for certificate_bytes[213], expected 129, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[213]);
     ck_assert_msg(
         check_msg->certificate_bytes[214] == 50,
-        "incorrect value for certificate_bytes[214], expected 50, is %d",
-        check_msg->certificate_bytes[214]);
+        "incorrect value for certificate_bytes[214], expected 50, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[214]);
     ck_assert_msg(
         check_msg->certificate_bytes[215] == 176,
-        "incorrect value for certificate_bytes[215], expected 176, is %d",
-        check_msg->certificate_bytes[215]);
+        "incorrect value for certificate_bytes[215], expected 176, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[215]);
     ck_assert_msg(
         check_msg->certificate_bytes[216] == 1,
-        "incorrect value for certificate_bytes[216], expected 1, is %d",
-        check_msg->certificate_bytes[216]);
+        "incorrect value for certificate_bytes[216], expected 1, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[216]);
     ck_assert_msg(
         check_msg->certificate_bytes[217] == 218,
-        "incorrect value for certificate_bytes[217], expected 218, is %d",
-        check_msg->certificate_bytes[217]);
+        "incorrect value for certificate_bytes[217], expected 218, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[217]);
     ck_assert_msg(
         check_msg->certificate_bytes[218] == 20,
-        "incorrect value for certificate_bytes[218], expected 20, is %d",
-        check_msg->certificate_bytes[218]);
+        "incorrect value for certificate_bytes[218], expected 20, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[218]);
     ck_assert_msg(
         check_msg->certificate_bytes[219] == 130,
-        "incorrect value for certificate_bytes[219], expected 130, is %d",
-        check_msg->certificate_bytes[219]);
+        "incorrect value for certificate_bytes[219], expected 130, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[219]);
     ck_assert_msg(
         check_msg->certificate_bytes[220] == 59,
-        "incorrect value for certificate_bytes[220], expected 59, is %d",
-        check_msg->certificate_bytes[220]);
+        "incorrect value for certificate_bytes[220], expected 59, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[220]);
     ck_assert_msg(
         check_msg->certificate_bytes[221] == 249,
-        "incorrect value for certificate_bytes[221], expected 249, is %d",
-        check_msg->certificate_bytes[221]);
+        "incorrect value for certificate_bytes[221], expected 249, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[221]);
     ck_assert_msg(
         check_msg->certificate_bytes[222] == 109,
-        "incorrect value for certificate_bytes[222], expected 109, is %d",
-        check_msg->certificate_bytes[222]);
+        "incorrect value for certificate_bytes[222], expected 109, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[222]);
     ck_assert_msg(
         check_msg->certificate_bytes[223] == 219,
-        "incorrect value for certificate_bytes[223], expected 219, is %d",
-        check_msg->certificate_bytes[223]);
+        "incorrect value for certificate_bytes[223], expected 219, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[223]);
     ck_assert_msg(
         check_msg->certificate_bytes[224] == 0,
-        "incorrect value for certificate_bytes[224], expected 0, is %d",
-        check_msg->certificate_bytes[224]);
+        "incorrect value for certificate_bytes[224], expected 0, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[224]);
     ck_assert_msg(
         check_msg->certificate_bytes[225] == 100,
-        "incorrect value for certificate_bytes[225], expected 100, is %d",
-        check_msg->certificate_bytes[225]);
+        "incorrect value for certificate_bytes[225], expected 100, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[225]);
     ck_assert_msg(
         check_msg->certificate_bytes[226] == 103,
-        "incorrect value for certificate_bytes[226], expected 103, is %d",
-        check_msg->certificate_bytes[226]);
+        "incorrect value for certificate_bytes[226], expected 103, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[226]);
     ck_assert_msg(
         check_msg->certificate_bytes[227] == 55,
-        "incorrect value for certificate_bytes[227], expected 55, is %d",
-        check_msg->certificate_bytes[227]);
+        "incorrect value for certificate_bytes[227], expected 55, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[227]);
     ck_assert_msg(
         check_msg->certificate_bytes[228] == 29,
-        "incorrect value for certificate_bytes[228], expected 29, is %d",
-        check_msg->certificate_bytes[228]);
+        "incorrect value for certificate_bytes[228], expected 29, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[228]);
     ck_assert_msg(
         check_msg->certificate_bytes[229] == 242,
-        "incorrect value for certificate_bytes[229], expected 242, is %d",
-        check_msg->certificate_bytes[229]);
+        "incorrect value for certificate_bytes[229], expected 242, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[229]);
     ck_assert_msg(
         check_msg->certificate_bytes[230] == 110,
-        "incorrect value for certificate_bytes[230], expected 110, is %d",
-        check_msg->certificate_bytes[230]);
+        "incorrect value for certificate_bytes[230], expected 110, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[230]);
     ck_assert_msg(
         check_msg->certificate_bytes[231] == 154,
-        "incorrect value for certificate_bytes[231], expected 154, is %d",
-        check_msg->certificate_bytes[231]);
+        "incorrect value for certificate_bytes[231], expected 154, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[231]);
     ck_assert_msg(
         check_msg->certificate_bytes[232] == 190,
-        "incorrect value for certificate_bytes[232], expected 190, is %d",
-        check_msg->certificate_bytes[232]);
+        "incorrect value for certificate_bytes[232], expected 190, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[232]);
     ck_assert_msg(
         check_msg->certificate_bytes[233] == 233,
-        "incorrect value for certificate_bytes[233], expected 233, is %d",
-        check_msg->certificate_bytes[233]);
+        "incorrect value for certificate_bytes[233], expected 233, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[233]);
     ck_assert_msg(
         check_msg->certificate_bytes[234] == 142,
-        "incorrect value for certificate_bytes[234], expected 142, is %d",
-        check_msg->certificate_bytes[234]);
+        "incorrect value for certificate_bytes[234], expected 142, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[234]);
     ck_assert_msg(
         check_msg->certificate_bytes[235] == 45,
-        "incorrect value for certificate_bytes[235], expected 45, is %d",
-        check_msg->certificate_bytes[235]);
+        "incorrect value for certificate_bytes[235], expected 45, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[235]);
     ck_assert_msg(
         check_msg->certificate_bytes[236] == 61,
-        "incorrect value for certificate_bytes[236], expected 61, is %d",
-        check_msg->certificate_bytes[236]);
+        "incorrect value for certificate_bytes[236], expected 61, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[236]);
     ck_assert_msg(
         check_msg->certificate_bytes[237] == 215,
-        "incorrect value for certificate_bytes[237], expected 215, is %d",
-        check_msg->certificate_bytes[237]);
+        "incorrect value for certificate_bytes[237], expected 215, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[237]);
     ck_assert_msg(
         check_msg->certificate_bytes[238] == 202,
-        "incorrect value for certificate_bytes[238], expected 202, is %d",
-        check_msg->certificate_bytes[238]);
+        "incorrect value for certificate_bytes[238], expected 202, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[238]);
     ck_assert_msg(
         check_msg->certificate_bytes[239] == 238,
-        "incorrect value for certificate_bytes[239], expected 238, is %d",
-        check_msg->certificate_bytes[239]);
+        "incorrect value for certificate_bytes[239], expected 238, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[239]);
     ck_assert_msg(
         check_msg->certificate_bytes[240] == 88,
-        "incorrect value for certificate_bytes[240], expected 88, is %d",
-        check_msg->certificate_bytes[240]);
+        "incorrect value for certificate_bytes[240], expected 88, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[240]);
     ck_assert_msg(
         check_msg->certificate_bytes[241] == 209,
-        "incorrect value for certificate_bytes[241], expected 209, is %d",
-        check_msg->certificate_bytes[241]);
+        "incorrect value for certificate_bytes[241], expected 209, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[241]);
     ck_assert_msg(
         check_msg->certificate_bytes[242] == 70,
-        "incorrect value for certificate_bytes[242], expected 70, is %d",
-        check_msg->certificate_bytes[242]);
+        "incorrect value for certificate_bytes[242], expected 70, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[242]);
     ck_assert_msg(
         check_msg->certificate_bytes[243] == 63,
-        "incorrect value for certificate_bytes[243], expected 63, is %d",
-        check_msg->certificate_bytes[243]);
+        "incorrect value for certificate_bytes[243], expected 63, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[243]);
     ck_assert_msg(
         check_msg->certificate_bytes[244] == 151,
-        "incorrect value for certificate_bytes[244], expected 151, is %d",
-        check_msg->certificate_bytes[244]);
+        "incorrect value for certificate_bytes[244], expected 151, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[244]);
     ck_assert_msg(
         check_msg->certificate_bytes[245] == 27,
-        "incorrect value for certificate_bytes[245], expected 27, is %d",
-        check_msg->certificate_bytes[245]);
+        "incorrect value for certificate_bytes[245], expected 27, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[245]);
     ck_assert_msg(
         check_msg->certificate_bytes[246] == 102,
-        "incorrect value for certificate_bytes[246], expected 102, is %d",
-        check_msg->certificate_bytes[246]);
-    ck_assert_msg(check_msg->certificate_id[0] == 10,
-                  "incorrect value for certificate_id[0], expected 10, is %d",
-                  check_msg->certificate_id[0]);
-    ck_assert_msg(check_msg->certificate_id[1] == 11,
-                  "incorrect value for certificate_id[1], expected 11, is %d",
-                  check_msg->certificate_id[1]);
-    ck_assert_msg(check_msg->certificate_id[2] == 12,
-                  "incorrect value for certificate_id[2], expected 12, is %d",
-                  check_msg->certificate_id[2]);
-    ck_assert_msg(check_msg->certificate_id[3] == 13,
-                  "incorrect value for certificate_id[3], expected 13, is %d",
-                  check_msg->certificate_id[3]);
+        "incorrect value for certificate_bytes[246], expected 102, is %" PRId64,
+        (int64_t)check_msg->certificate_bytes[246]);
+    ck_assert_msg(
+        check_msg->certificate_id[0] == 10,
+        "incorrect value for certificate_id[0], expected 10, is %" PRId64,
+        (int64_t)check_msg->certificate_id[0]);
+    ck_assert_msg(
+        check_msg->certificate_id[1] == 11,
+        "incorrect value for certificate_id[1], expected 11, is %" PRId64,
+        (int64_t)check_msg->certificate_id[1]);
+    ck_assert_msg(
+        check_msg->certificate_id[2] == 12,
+        "incorrect value for certificate_id[2], expected 12, is %" PRId64,
+        (int64_t)check_msg->certificate_id[2]);
+    ck_assert_msg(
+        check_msg->certificate_id[3] == 13,
+        "incorrect value for certificate_id[3], expected 13, is %" PRId64,
+        (int64_t)check_msg->certificate_id[3]);
     ck_assert_msg(check_msg->flags == 2,
-                  "incorrect value for flags, expected 2, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 2, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->n_msg == 48,
-                  "incorrect value for n_msg, expected 48, is %d",
-                  check_msg->n_msg);
+                  "incorrect value for n_msg, expected 48, is %" PRId64,
+                  (int64_t)check_msg->n_msg);
   }
 }
 END_TEST

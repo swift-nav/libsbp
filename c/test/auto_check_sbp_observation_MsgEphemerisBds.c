@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -204,188 +204,189 @@ START_TEST(test_auto_check_sbp_observation_MsgEphemerisBds) {
     ck_assert_msg((last_msg.msg.ephemeris_bds.af0 * 100 -
                    -0.000891132280231 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_bds.af0, "
-                  "expected -0.000891132280231, is %s",
+                  "expected -0.000891132280231, is %f",
                   last_msg.msg.ephemeris_bds.af0);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.af1 * 100 - 1.2398970739e-12 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.af1, expected "
-        "1.2398970739e-12, is %s",
+        "1.2398970739e-12, is %f",
         last_msg.msg.ephemeris_bds.af1);
 
     ck_assert_msg((last_msg.msg.ephemeris_bds.af2 * 100 -
                    -7.31836466428e-19 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_bds.af2, "
-                  "expected -7.31836466428e-19, is %s",
+                  "expected -7.31836466428e-19, is %f",
                   last_msg.msg.ephemeris_bds.af2);
 
     ck_assert_msg((last_msg.msg.ephemeris_bds.c_ic * 100 -
                    -6.6589564085e-08 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_bds.c_ic, "
-                  "expected -6.6589564085e-08, is %s",
+                  "expected -6.6589564085e-08, is %f",
                   last_msg.msg.ephemeris_bds.c_ic);
 
     ck_assert_msg((last_msg.msg.ephemeris_bds.c_is * 100 -
                    3.55299562216e-07 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_bds.c_is, "
-                  "expected 3.55299562216e-07, is %s",
+                  "expected 3.55299562216e-07, is %f",
                   last_msg.msg.ephemeris_bds.c_is);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.c_rc * 100 - 234.640625 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.c_rc, expected "
-        "234.640625, is %s",
+        "234.640625, is %f",
         last_msg.msg.ephemeris_bds.c_rc);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.c_rs * 100 - 224.4375 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.c_rs, expected "
-        "224.4375, is %s",
+        "224.4375, is %f",
         last_msg.msg.ephemeris_bds.c_rs);
 
     ck_assert_msg((last_msg.msg.ephemeris_bds.c_uc * 100 -
                    7.60657712817e-06 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_bds.c_uc, "
-                  "expected 7.60657712817e-06, is %s",
+                  "expected 7.60657712817e-06, is %f",
                   last_msg.msg.ephemeris_bds.c_uc);
 
     ck_assert_msg((last_msg.msg.ephemeris_bds.c_us * 100 -
                    6.55185431242e-07 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_bds.c_us, "
-                  "expected 6.55185431242e-07, is %s",
+                  "expected 6.55185431242e-07, is %f",
                   last_msg.msg.ephemeris_bds.c_us);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_bds.common.fit_interval == 10800,
         "incorrect value for last_msg.msg.ephemeris_bds.common.fit_interval, "
-        "expected 10800, is %d",
-        last_msg.msg.ephemeris_bds.common.fit_interval);
+        "expected 10800, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_bds.common.fit_interval);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_bds.common.health_bits == 0,
         "incorrect value for last_msg.msg.ephemeris_bds.common.health_bits, "
-        "expected 0, is %d",
-        last_msg.msg.ephemeris_bds.common.health_bits);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_bds.common.health_bits);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_bds.common.sid.code == 12,
         "incorrect value for last_msg.msg.ephemeris_bds.common.sid.code, "
-        "expected 12, is %d",
-        last_msg.msg.ephemeris_bds.common.sid.code);
+        "expected 12, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_bds.common.sid.code);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_bds.common.sid.sat == 8,
         "incorrect value for last_msg.msg.ephemeris_bds.common.sid.sat, "
-        "expected 8, is %d",
-        last_msg.msg.ephemeris_bds.common.sid.sat);
+        "expected 8, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_bds.common.sid.sat);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_bds.common.toe.tow == 439214,
         "incorrect value for last_msg.msg.ephemeris_bds.common.toe.tow, "
-        "expected 439214, is %d",
-        last_msg.msg.ephemeris_bds.common.toe.tow);
+        "expected 439214, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_bds.common.toe.tow);
 
     ck_assert_msg(
         last_msg.msg.ephemeris_bds.common.toe.wn == 2154,
         "incorrect value for last_msg.msg.ephemeris_bds.common.toe.wn, "
-        "expected 2154, is %d",
-        last_msg.msg.ephemeris_bds.common.toe.wn);
+        "expected 2154, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_bds.common.toe.wn);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.common.ura * 100 - 2.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.common.ura, expected "
-        "2.0, is %s",
+        "2.0, is %f",
         last_msg.msg.ephemeris_bds.common.ura);
 
-    ck_assert_msg(last_msg.msg.ephemeris_bds.common.valid == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ephemeris_bds.common.valid, expected 1, is %d",
-                  last_msg.msg.ephemeris_bds.common.valid);
+    ck_assert_msg(
+        last_msg.msg.ephemeris_bds.common.valid == 1,
+        "incorrect value for last_msg.msg.ephemeris_bds.common.valid, expected "
+        "1, is %" PRId64,
+        (int64_t)last_msg.msg.ephemeris_bds.common.valid);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.dn * 100 - 1.12968991326e-09 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.dn, expected "
-        "1.12968991326e-09, is %s",
+        "1.12968991326e-09, is %f",
         last_msg.msg.ephemeris_bds.dn);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.ecc * 100 - 0.0051847374998 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.ecc, expected "
-        "0.0051847374998, is %s",
+        "0.0051847374998, is %f",
         last_msg.msg.ephemeris_bds.ecc);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.inc * 100 - 1.04217695435 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.inc, expected "
-        "1.04217695435, is %s",
+        "1.04217695435, is %f",
         last_msg.msg.ephemeris_bds.inc);
 
     ck_assert_msg((last_msg.msg.ephemeris_bds.inc_dot * 100 -
                    7.5074555728e-10 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_bds.inc_dot, "
-                  "expected 7.5074555728e-10, is %s",
+                  "expected 7.5074555728e-10, is %f",
                   last_msg.msg.ephemeris_bds.inc_dot);
 
     ck_assert_msg(last_msg.msg.ephemeris_bds.iodc == 5,
                   "incorrect value for last_msg.msg.ephemeris_bds.iodc, "
-                  "expected 5, is %d",
-                  last_msg.msg.ephemeris_bds.iodc);
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.ephemeris_bds.iodc);
 
     ck_assert_msg(last_msg.msg.ephemeris_bds.iode == 6,
                   "incorrect value for last_msg.msg.ephemeris_bds.iode, "
-                  "expected 6, is %d",
-                  last_msg.msg.ephemeris_bds.iode);
+                  "expected 6, is %" PRId64,
+                  (int64_t)last_msg.msg.ephemeris_bds.iode);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.m0 * 100 - 1.69439581907 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.m0, expected "
-        "1.69439581907, is %s",
+        "1.69439581907, is %f",
         last_msg.msg.ephemeris_bds.m0);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.omega0 * 100 - -2.58107376287 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.omega0, expected "
-        "-2.58107376287, is %s",
+        "-2.58107376287, is %f",
         last_msg.msg.ephemeris_bds.omega0);
 
     ck_assert_msg((last_msg.msg.ephemeris_bds.omegadot * 100 -
                    -2.30331022783e-09 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_bds.omegadot, "
-                  "expected -2.30331022783e-09, is %s",
+                  "expected -2.30331022783e-09, is %f",
                   last_msg.msg.ephemeris_bds.omegadot);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.sqrta * 100 - 6493.49845123 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.sqrta, expected "
-        "6493.49845123, is %s",
+        "6493.49845123, is %f",
         last_msg.msg.ephemeris_bds.sqrta);
 
     ck_assert_msg((last_msg.msg.ephemeris_bds.tgd1 * 100 -
                    1.04999999806e-08 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_bds.tgd1, "
-                  "expected 1.04999999806e-08, is %s",
+                  "expected 1.04999999806e-08, is %f",
                   last_msg.msg.ephemeris_bds.tgd1);
 
     ck_assert_msg((last_msg.msg.ephemeris_bds.tgd2 * 100 -
                    -1.09999997999e-09 * 100) < 0.05,
                   "incorrect value for last_msg.msg.ephemeris_bds.tgd2, "
-                  "expected -1.09999997999e-09, is %s",
+                  "expected -1.09999997999e-09, is %f",
                   last_msg.msg.ephemeris_bds.tgd2);
 
     ck_assert_msg(last_msg.msg.ephemeris_bds.toc.tow == 439214,
                   "incorrect value for last_msg.msg.ephemeris_bds.toc.tow, "
-                  "expected 439214, is %d",
-                  last_msg.msg.ephemeris_bds.toc.tow);
+                  "expected 439214, is %" PRId64,
+                  (int64_t)last_msg.msg.ephemeris_bds.toc.tow);
 
     ck_assert_msg(last_msg.msg.ephemeris_bds.toc.wn == 2154,
                   "incorrect value for last_msg.msg.ephemeris_bds.toc.wn, "
-                  "expected 2154, is %d",
-                  last_msg.msg.ephemeris_bds.toc.wn);
+                  "expected 2154, is %" PRId64,
+                  (int64_t)last_msg.msg.ephemeris_bds.toc.wn);
 
     ck_assert_msg(
         (last_msg.msg.ephemeris_bds.w * 100 - -2.69860320574 * 100) < 0.05,
         "incorrect value for last_msg.msg.ephemeris_bds.w, expected "
-        "-2.69860320574, is %s",
+        "-2.69860320574, is %f",
         last_msg.msg.ephemeris_bds.w);
   }
 }

@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -199,27 +199,32 @@ START_TEST(test_legacy_auto_check_sbp_orientation_MsgOrientQuat) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 1,
-                  "incorrect value for flags, expected 1, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 1, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->tow == 0,
-                  "incorrect value for tow, expected 0, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->w == 3, "incorrect value for w, expected 3, is %d",
-                  check_msg->w);
+                  "incorrect value for tow, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tow);
+    ck_assert_msg(check_msg->w == 3,
+                  "incorrect value for w, expected 3, is %" PRId64,
+                  (int64_t)check_msg->w);
     ck_assert_msg((check_msg->w_accuracy * 100 - 3.0 * 100) < 0.05,
                   "incorrect value for w_accuracy, expected 3.0, is %f",
                   check_msg->w_accuracy);
-    ck_assert_msg(check_msg->x == 7, "incorrect value for x, expected 7, is %d",
-                  check_msg->x);
+    ck_assert_msg(check_msg->x == 7,
+                  "incorrect value for x, expected 7, is %" PRId64,
+                  (int64_t)check_msg->x);
     ck_assert_msg((check_msg->x_accuracy * 100 - 4.0 * 100) < 0.05,
                   "incorrect value for x_accuracy, expected 4.0, is %f",
                   check_msg->x_accuracy);
-    ck_assert_msg(check_msg->y == 8, "incorrect value for y, expected 8, is %d",
-                  check_msg->y);
+    ck_assert_msg(check_msg->y == 8,
+                  "incorrect value for y, expected 8, is %" PRId64,
+                  (int64_t)check_msg->y);
     ck_assert_msg((check_msg->y_accuracy * 100 - 8.0 * 100) < 0.05,
                   "incorrect value for y_accuracy, expected 8.0, is %f",
                   check_msg->y_accuracy);
-    ck_assert_msg(check_msg->z == 4, "incorrect value for z, expected 4, is %d",
-                  check_msg->z);
+    ck_assert_msg(check_msg->z == 4,
+                  "incorrect value for z, expected 4, is %" PRId64,
+                  (int64_t)check_msg->z);
     ck_assert_msg((check_msg->z_accuracy * 100 - 3.0 * 100) < 0.05,
                   "incorrect value for z_accuracy, expected 3.0, is %f",
                   check_msg->z_accuracy);

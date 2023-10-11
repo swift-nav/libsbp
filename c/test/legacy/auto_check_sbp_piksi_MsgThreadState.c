@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -200,7 +200,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 0,
-                  "incorrect value for cpu, expected 0, is %d", check_msg->cpu);
+                  "incorrect value for cpu, expected 0, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {
           (char)109, (char)97, (char)105, (char)110, (char)0, (char)0, (char)0,
@@ -212,8 +213,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 2460,
-                  "incorrect value for stack_free, expected 2460, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 2460, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -311,8 +312,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 595,
-                  "incorrect value for cpu, expected 595, is %d",
-                  check_msg->cpu);
+                  "incorrect value for cpu, expected 595, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {
           (char)105, (char)100, (char)108, (char)101, (char)0, (char)0, (char)0,
@@ -324,8 +325,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 36,
-                  "incorrect value for stack_free, expected 36, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 36, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -423,8 +424,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 14,
-                  "incorrect value for cpu, expected 14, is %d",
-                  check_msg->cpu);
+                  "incorrect value for cpu, expected 14, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {
           (char)78, (char)65, (char)80, (char)32, (char)73, (char)83, (char)82,
@@ -436,8 +437,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 1140,
-                  "incorrect value for stack_free, expected 1140, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 1140, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -535,7 +536,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 1,
-                  "incorrect value for cpu, expected 1, is %d", check_msg->cpu);
+                  "incorrect value for cpu, expected 1, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {
           (char)83, (char)66, (char)80, (char)0, (char)0, (char)0, (char)0,
@@ -547,8 +549,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 5060,
-                  "incorrect value for stack_free, expected 5060, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 5060, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -648,7 +650,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 7,
-                  "incorrect value for cpu, expected 7, is %d", check_msg->cpu);
+                  "incorrect value for cpu, expected 7, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {(char)109, (char)97,  (char)110, (char)97,
                                    (char)103, (char)101, (char)32,  (char)97,
@@ -661,8 +664,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 2324,
-                  "incorrect value for stack_free, expected 2324, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 2324, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -760,7 +763,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 0,
-                  "incorrect value for cpu, expected 0, is %d", check_msg->cpu);
+                  "incorrect value for cpu, expected 0, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {
           (char)109, (char)97, (char)105, (char)110, (char)0, (char)0, (char)0,
@@ -772,8 +776,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 2452,
-                  "incorrect value for stack_free, expected 2452, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 2452, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -871,8 +875,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 484,
-                  "incorrect value for cpu, expected 484, is %d",
-                  check_msg->cpu);
+                  "incorrect value for cpu, expected 484, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {
           (char)105, (char)100, (char)108, (char)101, (char)0, (char)0, (char)0,
@@ -884,8 +888,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 36,
-                  "incorrect value for stack_free, expected 36, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 36, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -983,8 +987,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 394,
-                  "incorrect value for cpu, expected 394, is %d",
-                  check_msg->cpu);
+                  "incorrect value for cpu, expected 394, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {
           (char)78, (char)65, (char)80, (char)32, (char)73, (char)83, (char)82,
@@ -996,8 +1000,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 1884,
-                  "incorrect value for stack_free, expected 1884, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 1884, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1095,7 +1099,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 1,
-                  "incorrect value for cpu, expected 1, is %d", check_msg->cpu);
+                  "incorrect value for cpu, expected 1, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {
           (char)83, (char)66, (char)80, (char)0, (char)0, (char)0, (char)0,
@@ -1107,8 +1112,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 3076,
-                  "incorrect value for stack_free, expected 3076, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 3076, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1207,8 +1212,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 10,
-                  "incorrect value for cpu, expected 10, is %d",
-                  check_msg->cpu);
+                  "incorrect value for cpu, expected 10, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {(char)109, (char)97,  (char)110, (char)97,
                                    (char)103, (char)101, (char)32,  (char)97,
@@ -1221,8 +1226,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 2428,
-                  "incorrect value for stack_free, expected 2428, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 2428, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -1322,7 +1327,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cpu == 0,
-                  "incorrect value for cpu, expected 0, is %d", check_msg->cpu);
+                  "incorrect value for cpu, expected 0, is %" PRId64,
+                  (int64_t)check_msg->cpu);
     {
       const char check_string[] = {(char)109, (char)97,  (char)110, (char)97,
                                    (char)103, (char)101, (char)32,  (char)116,
@@ -1335,8 +1341,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgThreadState) {
           check_string, check_msg->name);
     }
     ck_assert_msg(check_msg->stack_free == 2332,
-                  "incorrect value for stack_free, expected 2332, is %d",
-                  check_msg->stack_free);
+                  "incorrect value for stack_free, expected 2332, is %" PRId64,
+                  (int64_t)check_msg->stack_free);
   }
 }
 END_TEST

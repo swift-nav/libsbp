@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -190,11 +190,11 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgAgeCorrections) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->age == 30,
-                  "incorrect value for age, expected 30, is %d",
-                  check_msg->age);
+                  "incorrect value for age, expected 30, is %" PRId64,
+                  (int64_t)check_msg->age);
     ck_assert_msg(check_msg->tow == 100,
-                  "incorrect value for tow, expected 100, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 100, is %" PRId64,
+                  (int64_t)check_msg->tow);
   }
 }
 END_TEST

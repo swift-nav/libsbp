@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -197,26 +197,29 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelNedGnss) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->d == -10,
-                  "incorrect value for d, expected -10, is %d", check_msg->d);
-    ck_assert_msg(check_msg->e == 0, "incorrect value for e, expected 0, is %d",
-                  check_msg->e);
+                  "incorrect value for d, expected -10, is %" PRId64,
+                  (int64_t)check_msg->d);
+    ck_assert_msg(check_msg->e == 0,
+                  "incorrect value for e, expected 0, is %" PRId64,
+                  (int64_t)check_msg->e);
     ck_assert_msg(check_msg->flags == 2,
-                  "incorrect value for flags, expected 2, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 2, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->h_accuracy == 40,
-                  "incorrect value for h_accuracy, expected 40, is %d",
-                  check_msg->h_accuracy);
+                  "incorrect value for h_accuracy, expected 40, is %" PRId64,
+                  (int64_t)check_msg->h_accuracy);
     ck_assert_msg(check_msg->n == -5,
-                  "incorrect value for n, expected -5, is %d", check_msg->n);
+                  "incorrect value for n, expected -5, is %" PRId64,
+                  (int64_t)check_msg->n);
     ck_assert_msg(check_msg->n_sats == 21,
-                  "incorrect value for n_sats, expected 21, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 21, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 501868200,
-                  "incorrect value for tow, expected 501868200, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 501868200, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->v_accuracy == 89,
-                  "incorrect value for v_accuracy, expected 89, is %d",
-                  check_msg->v_accuracy);
+                  "incorrect value for v_accuracy, expected 89, is %" PRId64,
+                  (int64_t)check_msg->v_accuracy);
   }
 }
 END_TEST

@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -592,255 +592,264 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignatureDepB) {
         (msg_ecdsa_signature_dep_b_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->certificate_id[0] == 1,
-                  "incorrect value for certificate_id[0], expected 1, is %d",
-                  check_msg->certificate_id[0]);
-    ck_assert_msg(check_msg->certificate_id[1] == 2,
-                  "incorrect value for certificate_id[1], expected 2, is %d",
-                  check_msg->certificate_id[1]);
-    ck_assert_msg(check_msg->certificate_id[2] == 3,
-                  "incorrect value for certificate_id[2], expected 3, is %d",
-                  check_msg->certificate_id[2]);
-    ck_assert_msg(check_msg->certificate_id[3] == 4,
-                  "incorrect value for certificate_id[3], expected 4, is %d",
-                  check_msg->certificate_id[3]);
+    ck_assert_msg(
+        check_msg->certificate_id[0] == 1,
+        "incorrect value for certificate_id[0], expected 1, is %" PRId64,
+        (int64_t)check_msg->certificate_id[0]);
+    ck_assert_msg(
+        check_msg->certificate_id[1] == 2,
+        "incorrect value for certificate_id[1], expected 2, is %" PRId64,
+        (int64_t)check_msg->certificate_id[1]);
+    ck_assert_msg(
+        check_msg->certificate_id[2] == 3,
+        "incorrect value for certificate_id[2], expected 3, is %" PRId64,
+        (int64_t)check_msg->certificate_id[2]);
+    ck_assert_msg(
+        check_msg->certificate_id[3] == 4,
+        "incorrect value for certificate_id[3], expected 4, is %" PRId64,
+        (int64_t)check_msg->certificate_id[3]);
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
-    ck_assert_msg(check_msg->n_signature_bytes == 72,
-                  "incorrect value for n_signature_bytes, expected 72, is %d",
-                  check_msg->n_signature_bytes);
-    ck_assert_msg(check_msg->on_demand_counter == 2,
-                  "incorrect value for on_demand_counter, expected 2, is %d",
-                  check_msg->on_demand_counter);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
+    ck_assert_msg(
+        check_msg->n_signature_bytes == 72,
+        "incorrect value for n_signature_bytes, expected 72, is %" PRId64,
+        (int64_t)check_msg->n_signature_bytes);
+    ck_assert_msg(
+        check_msg->on_demand_counter == 2,
+        "incorrect value for on_demand_counter, expected 2, is %" PRId64,
+        (int64_t)check_msg->on_demand_counter);
     ck_assert_msg(check_msg->signature[0] == 0,
-                  "incorrect value for signature[0], expected 0, is %d",
-                  check_msg->signature[0]);
+                  "incorrect value for signature[0], expected 0, is %" PRId64,
+                  (int64_t)check_msg->signature[0]);
     ck_assert_msg(check_msg->signature[1] == 1,
-                  "incorrect value for signature[1], expected 1, is %d",
-                  check_msg->signature[1]);
+                  "incorrect value for signature[1], expected 1, is %" PRId64,
+                  (int64_t)check_msg->signature[1]);
     ck_assert_msg(check_msg->signature[2] == 2,
-                  "incorrect value for signature[2], expected 2, is %d",
-                  check_msg->signature[2]);
+                  "incorrect value for signature[2], expected 2, is %" PRId64,
+                  (int64_t)check_msg->signature[2]);
     ck_assert_msg(check_msg->signature[3] == 3,
-                  "incorrect value for signature[3], expected 3, is %d",
-                  check_msg->signature[3]);
+                  "incorrect value for signature[3], expected 3, is %" PRId64,
+                  (int64_t)check_msg->signature[3]);
     ck_assert_msg(check_msg->signature[4] == 4,
-                  "incorrect value for signature[4], expected 4, is %d",
-                  check_msg->signature[4]);
+                  "incorrect value for signature[4], expected 4, is %" PRId64,
+                  (int64_t)check_msg->signature[4]);
     ck_assert_msg(check_msg->signature[5] == 5,
-                  "incorrect value for signature[5], expected 5, is %d",
-                  check_msg->signature[5]);
+                  "incorrect value for signature[5], expected 5, is %" PRId64,
+                  (int64_t)check_msg->signature[5]);
     ck_assert_msg(check_msg->signature[6] == 6,
-                  "incorrect value for signature[6], expected 6, is %d",
-                  check_msg->signature[6]);
+                  "incorrect value for signature[6], expected 6, is %" PRId64,
+                  (int64_t)check_msg->signature[6]);
     ck_assert_msg(check_msg->signature[7] == 7,
-                  "incorrect value for signature[7], expected 7, is %d",
-                  check_msg->signature[7]);
+                  "incorrect value for signature[7], expected 7, is %" PRId64,
+                  (int64_t)check_msg->signature[7]);
     ck_assert_msg(check_msg->signature[8] == 8,
-                  "incorrect value for signature[8], expected 8, is %d",
-                  check_msg->signature[8]);
+                  "incorrect value for signature[8], expected 8, is %" PRId64,
+                  (int64_t)check_msg->signature[8]);
     ck_assert_msg(check_msg->signature[9] == 9,
-                  "incorrect value for signature[9], expected 9, is %d",
-                  check_msg->signature[9]);
+                  "incorrect value for signature[9], expected 9, is %" PRId64,
+                  (int64_t)check_msg->signature[9]);
     ck_assert_msg(check_msg->signature[10] == 10,
-                  "incorrect value for signature[10], expected 10, is %d",
-                  check_msg->signature[10]);
+                  "incorrect value for signature[10], expected 10, is %" PRId64,
+                  (int64_t)check_msg->signature[10]);
     ck_assert_msg(check_msg->signature[11] == 11,
-                  "incorrect value for signature[11], expected 11, is %d",
-                  check_msg->signature[11]);
+                  "incorrect value for signature[11], expected 11, is %" PRId64,
+                  (int64_t)check_msg->signature[11]);
     ck_assert_msg(check_msg->signature[12] == 12,
-                  "incorrect value for signature[12], expected 12, is %d",
-                  check_msg->signature[12]);
+                  "incorrect value for signature[12], expected 12, is %" PRId64,
+                  (int64_t)check_msg->signature[12]);
     ck_assert_msg(check_msg->signature[13] == 13,
-                  "incorrect value for signature[13], expected 13, is %d",
-                  check_msg->signature[13]);
+                  "incorrect value for signature[13], expected 13, is %" PRId64,
+                  (int64_t)check_msg->signature[13]);
     ck_assert_msg(check_msg->signature[14] == 14,
-                  "incorrect value for signature[14], expected 14, is %d",
-                  check_msg->signature[14]);
+                  "incorrect value for signature[14], expected 14, is %" PRId64,
+                  (int64_t)check_msg->signature[14]);
     ck_assert_msg(check_msg->signature[15] == 15,
-                  "incorrect value for signature[15], expected 15, is %d",
-                  check_msg->signature[15]);
+                  "incorrect value for signature[15], expected 15, is %" PRId64,
+                  (int64_t)check_msg->signature[15]);
     ck_assert_msg(check_msg->signature[16] == 16,
-                  "incorrect value for signature[16], expected 16, is %d",
-                  check_msg->signature[16]);
+                  "incorrect value for signature[16], expected 16, is %" PRId64,
+                  (int64_t)check_msg->signature[16]);
     ck_assert_msg(check_msg->signature[17] == 17,
-                  "incorrect value for signature[17], expected 17, is %d",
-                  check_msg->signature[17]);
+                  "incorrect value for signature[17], expected 17, is %" PRId64,
+                  (int64_t)check_msg->signature[17]);
     ck_assert_msg(check_msg->signature[18] == 18,
-                  "incorrect value for signature[18], expected 18, is %d",
-                  check_msg->signature[18]);
+                  "incorrect value for signature[18], expected 18, is %" PRId64,
+                  (int64_t)check_msg->signature[18]);
     ck_assert_msg(check_msg->signature[19] == 19,
-                  "incorrect value for signature[19], expected 19, is %d",
-                  check_msg->signature[19]);
+                  "incorrect value for signature[19], expected 19, is %" PRId64,
+                  (int64_t)check_msg->signature[19]);
     ck_assert_msg(check_msg->signature[20] == 20,
-                  "incorrect value for signature[20], expected 20, is %d",
-                  check_msg->signature[20]);
+                  "incorrect value for signature[20], expected 20, is %" PRId64,
+                  (int64_t)check_msg->signature[20]);
     ck_assert_msg(check_msg->signature[21] == 21,
-                  "incorrect value for signature[21], expected 21, is %d",
-                  check_msg->signature[21]);
+                  "incorrect value for signature[21], expected 21, is %" PRId64,
+                  (int64_t)check_msg->signature[21]);
     ck_assert_msg(check_msg->signature[22] == 22,
-                  "incorrect value for signature[22], expected 22, is %d",
-                  check_msg->signature[22]);
+                  "incorrect value for signature[22], expected 22, is %" PRId64,
+                  (int64_t)check_msg->signature[22]);
     ck_assert_msg(check_msg->signature[23] == 23,
-                  "incorrect value for signature[23], expected 23, is %d",
-                  check_msg->signature[23]);
+                  "incorrect value for signature[23], expected 23, is %" PRId64,
+                  (int64_t)check_msg->signature[23]);
     ck_assert_msg(check_msg->signature[24] == 24,
-                  "incorrect value for signature[24], expected 24, is %d",
-                  check_msg->signature[24]);
+                  "incorrect value for signature[24], expected 24, is %" PRId64,
+                  (int64_t)check_msg->signature[24]);
     ck_assert_msg(check_msg->signature[25] == 25,
-                  "incorrect value for signature[25], expected 25, is %d",
-                  check_msg->signature[25]);
+                  "incorrect value for signature[25], expected 25, is %" PRId64,
+                  (int64_t)check_msg->signature[25]);
     ck_assert_msg(check_msg->signature[26] == 26,
-                  "incorrect value for signature[26], expected 26, is %d",
-                  check_msg->signature[26]);
+                  "incorrect value for signature[26], expected 26, is %" PRId64,
+                  (int64_t)check_msg->signature[26]);
     ck_assert_msg(check_msg->signature[27] == 27,
-                  "incorrect value for signature[27], expected 27, is %d",
-                  check_msg->signature[27]);
+                  "incorrect value for signature[27], expected 27, is %" PRId64,
+                  (int64_t)check_msg->signature[27]);
     ck_assert_msg(check_msg->signature[28] == 28,
-                  "incorrect value for signature[28], expected 28, is %d",
-                  check_msg->signature[28]);
+                  "incorrect value for signature[28], expected 28, is %" PRId64,
+                  (int64_t)check_msg->signature[28]);
     ck_assert_msg(check_msg->signature[29] == 29,
-                  "incorrect value for signature[29], expected 29, is %d",
-                  check_msg->signature[29]);
+                  "incorrect value for signature[29], expected 29, is %" PRId64,
+                  (int64_t)check_msg->signature[29]);
     ck_assert_msg(check_msg->signature[30] == 30,
-                  "incorrect value for signature[30], expected 30, is %d",
-                  check_msg->signature[30]);
+                  "incorrect value for signature[30], expected 30, is %" PRId64,
+                  (int64_t)check_msg->signature[30]);
     ck_assert_msg(check_msg->signature[31] == 31,
-                  "incorrect value for signature[31], expected 31, is %d",
-                  check_msg->signature[31]);
+                  "incorrect value for signature[31], expected 31, is %" PRId64,
+                  (int64_t)check_msg->signature[31]);
     ck_assert_msg(check_msg->signature[32] == 32,
-                  "incorrect value for signature[32], expected 32, is %d",
-                  check_msg->signature[32]);
+                  "incorrect value for signature[32], expected 32, is %" PRId64,
+                  (int64_t)check_msg->signature[32]);
     ck_assert_msg(check_msg->signature[33] == 33,
-                  "incorrect value for signature[33], expected 33, is %d",
-                  check_msg->signature[33]);
+                  "incorrect value for signature[33], expected 33, is %" PRId64,
+                  (int64_t)check_msg->signature[33]);
     ck_assert_msg(check_msg->signature[34] == 34,
-                  "incorrect value for signature[34], expected 34, is %d",
-                  check_msg->signature[34]);
+                  "incorrect value for signature[34], expected 34, is %" PRId64,
+                  (int64_t)check_msg->signature[34]);
     ck_assert_msg(check_msg->signature[35] == 35,
-                  "incorrect value for signature[35], expected 35, is %d",
-                  check_msg->signature[35]);
+                  "incorrect value for signature[35], expected 35, is %" PRId64,
+                  (int64_t)check_msg->signature[35]);
     ck_assert_msg(check_msg->signature[36] == 36,
-                  "incorrect value for signature[36], expected 36, is %d",
-                  check_msg->signature[36]);
+                  "incorrect value for signature[36], expected 36, is %" PRId64,
+                  (int64_t)check_msg->signature[36]);
     ck_assert_msg(check_msg->signature[37] == 37,
-                  "incorrect value for signature[37], expected 37, is %d",
-                  check_msg->signature[37]);
+                  "incorrect value for signature[37], expected 37, is %" PRId64,
+                  (int64_t)check_msg->signature[37]);
     ck_assert_msg(check_msg->signature[38] == 38,
-                  "incorrect value for signature[38], expected 38, is %d",
-                  check_msg->signature[38]);
+                  "incorrect value for signature[38], expected 38, is %" PRId64,
+                  (int64_t)check_msg->signature[38]);
     ck_assert_msg(check_msg->signature[39] == 39,
-                  "incorrect value for signature[39], expected 39, is %d",
-                  check_msg->signature[39]);
+                  "incorrect value for signature[39], expected 39, is %" PRId64,
+                  (int64_t)check_msg->signature[39]);
     ck_assert_msg(check_msg->signature[40] == 40,
-                  "incorrect value for signature[40], expected 40, is %d",
-                  check_msg->signature[40]);
+                  "incorrect value for signature[40], expected 40, is %" PRId64,
+                  (int64_t)check_msg->signature[40]);
     ck_assert_msg(check_msg->signature[41] == 41,
-                  "incorrect value for signature[41], expected 41, is %d",
-                  check_msg->signature[41]);
+                  "incorrect value for signature[41], expected 41, is %" PRId64,
+                  (int64_t)check_msg->signature[41]);
     ck_assert_msg(check_msg->signature[42] == 42,
-                  "incorrect value for signature[42], expected 42, is %d",
-                  check_msg->signature[42]);
+                  "incorrect value for signature[42], expected 42, is %" PRId64,
+                  (int64_t)check_msg->signature[42]);
     ck_assert_msg(check_msg->signature[43] == 43,
-                  "incorrect value for signature[43], expected 43, is %d",
-                  check_msg->signature[43]);
+                  "incorrect value for signature[43], expected 43, is %" PRId64,
+                  (int64_t)check_msg->signature[43]);
     ck_assert_msg(check_msg->signature[44] == 44,
-                  "incorrect value for signature[44], expected 44, is %d",
-                  check_msg->signature[44]);
+                  "incorrect value for signature[44], expected 44, is %" PRId64,
+                  (int64_t)check_msg->signature[44]);
     ck_assert_msg(check_msg->signature[45] == 45,
-                  "incorrect value for signature[45], expected 45, is %d",
-                  check_msg->signature[45]);
+                  "incorrect value for signature[45], expected 45, is %" PRId64,
+                  (int64_t)check_msg->signature[45]);
     ck_assert_msg(check_msg->signature[46] == 46,
-                  "incorrect value for signature[46], expected 46, is %d",
-                  check_msg->signature[46]);
+                  "incorrect value for signature[46], expected 46, is %" PRId64,
+                  (int64_t)check_msg->signature[46]);
     ck_assert_msg(check_msg->signature[47] == 47,
-                  "incorrect value for signature[47], expected 47, is %d",
-                  check_msg->signature[47]);
+                  "incorrect value for signature[47], expected 47, is %" PRId64,
+                  (int64_t)check_msg->signature[47]);
     ck_assert_msg(check_msg->signature[48] == 48,
-                  "incorrect value for signature[48], expected 48, is %d",
-                  check_msg->signature[48]);
+                  "incorrect value for signature[48], expected 48, is %" PRId64,
+                  (int64_t)check_msg->signature[48]);
     ck_assert_msg(check_msg->signature[49] == 49,
-                  "incorrect value for signature[49], expected 49, is %d",
-                  check_msg->signature[49]);
+                  "incorrect value for signature[49], expected 49, is %" PRId64,
+                  (int64_t)check_msg->signature[49]);
     ck_assert_msg(check_msg->signature[50] == 50,
-                  "incorrect value for signature[50], expected 50, is %d",
-                  check_msg->signature[50]);
+                  "incorrect value for signature[50], expected 50, is %" PRId64,
+                  (int64_t)check_msg->signature[50]);
     ck_assert_msg(check_msg->signature[51] == 51,
-                  "incorrect value for signature[51], expected 51, is %d",
-                  check_msg->signature[51]);
+                  "incorrect value for signature[51], expected 51, is %" PRId64,
+                  (int64_t)check_msg->signature[51]);
     ck_assert_msg(check_msg->signature[52] == 52,
-                  "incorrect value for signature[52], expected 52, is %d",
-                  check_msg->signature[52]);
+                  "incorrect value for signature[52], expected 52, is %" PRId64,
+                  (int64_t)check_msg->signature[52]);
     ck_assert_msg(check_msg->signature[53] == 53,
-                  "incorrect value for signature[53], expected 53, is %d",
-                  check_msg->signature[53]);
+                  "incorrect value for signature[53], expected 53, is %" PRId64,
+                  (int64_t)check_msg->signature[53]);
     ck_assert_msg(check_msg->signature[54] == 54,
-                  "incorrect value for signature[54], expected 54, is %d",
-                  check_msg->signature[54]);
+                  "incorrect value for signature[54], expected 54, is %" PRId64,
+                  (int64_t)check_msg->signature[54]);
     ck_assert_msg(check_msg->signature[55] == 55,
-                  "incorrect value for signature[55], expected 55, is %d",
-                  check_msg->signature[55]);
+                  "incorrect value for signature[55], expected 55, is %" PRId64,
+                  (int64_t)check_msg->signature[55]);
     ck_assert_msg(check_msg->signature[56] == 56,
-                  "incorrect value for signature[56], expected 56, is %d",
-                  check_msg->signature[56]);
+                  "incorrect value for signature[56], expected 56, is %" PRId64,
+                  (int64_t)check_msg->signature[56]);
     ck_assert_msg(check_msg->signature[57] == 57,
-                  "incorrect value for signature[57], expected 57, is %d",
-                  check_msg->signature[57]);
+                  "incorrect value for signature[57], expected 57, is %" PRId64,
+                  (int64_t)check_msg->signature[57]);
     ck_assert_msg(check_msg->signature[58] == 58,
-                  "incorrect value for signature[58], expected 58, is %d",
-                  check_msg->signature[58]);
+                  "incorrect value for signature[58], expected 58, is %" PRId64,
+                  (int64_t)check_msg->signature[58]);
     ck_assert_msg(check_msg->signature[59] == 59,
-                  "incorrect value for signature[59], expected 59, is %d",
-                  check_msg->signature[59]);
+                  "incorrect value for signature[59], expected 59, is %" PRId64,
+                  (int64_t)check_msg->signature[59]);
     ck_assert_msg(check_msg->signature[60] == 60,
-                  "incorrect value for signature[60], expected 60, is %d",
-                  check_msg->signature[60]);
+                  "incorrect value for signature[60], expected 60, is %" PRId64,
+                  (int64_t)check_msg->signature[60]);
     ck_assert_msg(check_msg->signature[61] == 61,
-                  "incorrect value for signature[61], expected 61, is %d",
-                  check_msg->signature[61]);
+                  "incorrect value for signature[61], expected 61, is %" PRId64,
+                  (int64_t)check_msg->signature[61]);
     ck_assert_msg(check_msg->signature[62] == 62,
-                  "incorrect value for signature[62], expected 62, is %d",
-                  check_msg->signature[62]);
+                  "incorrect value for signature[62], expected 62, is %" PRId64,
+                  (int64_t)check_msg->signature[62]);
     ck_assert_msg(check_msg->signature[63] == 63,
-                  "incorrect value for signature[63], expected 63, is %d",
-                  check_msg->signature[63]);
+                  "incorrect value for signature[63], expected 63, is %" PRId64,
+                  (int64_t)check_msg->signature[63]);
     ck_assert_msg(check_msg->signature[64] == 64,
-                  "incorrect value for signature[64], expected 64, is %d",
-                  check_msg->signature[64]);
+                  "incorrect value for signature[64], expected 64, is %" PRId64,
+                  (int64_t)check_msg->signature[64]);
     ck_assert_msg(check_msg->signature[65] == 65,
-                  "incorrect value for signature[65], expected 65, is %d",
-                  check_msg->signature[65]);
+                  "incorrect value for signature[65], expected 65, is %" PRId64,
+                  (int64_t)check_msg->signature[65]);
     ck_assert_msg(check_msg->signature[66] == 66,
-                  "incorrect value for signature[66], expected 66, is %d",
-                  check_msg->signature[66]);
+                  "incorrect value for signature[66], expected 66, is %" PRId64,
+                  (int64_t)check_msg->signature[66]);
     ck_assert_msg(check_msg->signature[67] == 67,
-                  "incorrect value for signature[67], expected 67, is %d",
-                  check_msg->signature[67]);
+                  "incorrect value for signature[67], expected 67, is %" PRId64,
+                  (int64_t)check_msg->signature[67]);
     ck_assert_msg(check_msg->signature[68] == 68,
-                  "incorrect value for signature[68], expected 68, is %d",
-                  check_msg->signature[68]);
+                  "incorrect value for signature[68], expected 68, is %" PRId64,
+                  (int64_t)check_msg->signature[68]);
     ck_assert_msg(check_msg->signature[69] == 69,
-                  "incorrect value for signature[69], expected 69, is %d",
-                  check_msg->signature[69]);
+                  "incorrect value for signature[69], expected 69, is %" PRId64,
+                  (int64_t)check_msg->signature[69]);
     ck_assert_msg(check_msg->signature[70] == 70,
-                  "incorrect value for signature[70], expected 70, is %d",
-                  check_msg->signature[70]);
+                  "incorrect value for signature[70], expected 70, is %" PRId64,
+                  (int64_t)check_msg->signature[70]);
     ck_assert_msg(check_msg->signature[71] == 71,
-                  "incorrect value for signature[71], expected 71, is %d",
-                  check_msg->signature[71]);
-    ck_assert_msg(check_msg->signed_messages[0] == 10,
-                  "incorrect value for signed_messages[0], expected 10, is %d",
-                  check_msg->signed_messages[0]);
-    ck_assert_msg(check_msg->signed_messages[1] == 21,
-                  "incorrect value for signed_messages[1], expected 21, is %d",
-                  check_msg->signed_messages[1]);
-    ck_assert_msg(check_msg->signed_messages[2] == 23,
-                  "incorrect value for signed_messages[2], expected 23, is %d",
-                  check_msg->signed_messages[2]);
+                  "incorrect value for signature[71], expected 71, is %" PRId64,
+                  (int64_t)check_msg->signature[71]);
+    ck_assert_msg(
+        check_msg->signed_messages[0] == 10,
+        "incorrect value for signed_messages[0], expected 10, is %" PRId64,
+        (int64_t)check_msg->signed_messages[0]);
+    ck_assert_msg(
+        check_msg->signed_messages[1] == 21,
+        "incorrect value for signed_messages[1], expected 21, is %" PRId64,
+        (int64_t)check_msg->signed_messages[1]);
+    ck_assert_msg(
+        check_msg->signed_messages[2] == 23,
+        "incorrect value for signed_messages[2], expected 23, is %" PRId64,
+        (int64_t)check_msg->signed_messages[2]);
     ck_assert_msg(check_msg->stream_counter == 1,
-                  "incorrect value for stream_counter, expected 1, is %d",
-                  check_msg->stream_counter);
+                  "incorrect value for stream_counter, expected 1, is %" PRId64,
+                  (int64_t)check_msg->stream_counter);
   }
 }
 END_TEST

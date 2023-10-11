@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -190,14 +190,14 @@ START_TEST(test_legacy_auto_check_sbp_system_MsgStartup) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cause == 0,
-                  "incorrect value for cause, expected 0, is %d",
-                  check_msg->cause);
+                  "incorrect value for cause, expected 0, is %" PRId64,
+                  (int64_t)check_msg->cause);
     ck_assert_msg(check_msg->reserved == 0,
-                  "incorrect value for reserved, expected 0, is %d",
-                  check_msg->reserved);
+                  "incorrect value for reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->reserved);
     ck_assert_msg(check_msg->startup_type == 0,
-                  "incorrect value for startup_type, expected 0, is %d",
-                  check_msg->startup_type);
+                  "incorrect value for startup_type, expected 0, is %" PRId64,
+                  (int64_t)check_msg->startup_type);
   }
   // Test successful parsing of a message
   {
@@ -285,14 +285,14 @@ START_TEST(test_legacy_auto_check_sbp_system_MsgStartup) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cause == 0,
-                  "incorrect value for cause, expected 0, is %d",
-                  check_msg->cause);
+                  "incorrect value for cause, expected 0, is %" PRId64,
+                  (int64_t)check_msg->cause);
     ck_assert_msg(check_msg->reserved == 0,
-                  "incorrect value for reserved, expected 0, is %d",
-                  check_msg->reserved);
+                  "incorrect value for reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->reserved);
     ck_assert_msg(check_msg->startup_type == 0,
-                  "incorrect value for startup_type, expected 0, is %d",
-                  check_msg->startup_type);
+                  "incorrect value for startup_type, expected 0, is %" PRId64,
+                  (int64_t)check_msg->startup_type);
   }
 }
 END_TEST

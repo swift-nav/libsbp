@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -190,14 +190,14 @@ START_TEST(test_legacy_auto_check_sbp_imu_MsgImuAux) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->imu_conf == 66,
-                  "incorrect value for imu_conf, expected 66, is %d",
-                  check_msg->imu_conf);
+                  "incorrect value for imu_conf, expected 66, is %" PRId64,
+                  (int64_t)check_msg->imu_conf);
     ck_assert_msg(check_msg->imu_type == 1,
-                  "incorrect value for imu_type, expected 1, is %d",
-                  check_msg->imu_type);
+                  "incorrect value for imu_type, expected 1, is %" PRId64,
+                  (int64_t)check_msg->imu_type);
     ck_assert_msg(check_msg->temp == 2804,
-                  "incorrect value for temp, expected 2804, is %d",
-                  check_msg->temp);
+                  "incorrect value for temp, expected 2804, is %" PRId64,
+                  (int64_t)check_msg->temp);
   }
 }
 END_TEST

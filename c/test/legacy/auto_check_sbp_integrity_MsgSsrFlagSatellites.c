@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -213,38 +213,41 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgSsrFlagSatellites) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->chain_id == 4,
-                  "incorrect value for chain_id, expected 4, is %d",
-                  check_msg->chain_id);
+                  "incorrect value for chain_id, expected 4, is %" PRId64,
+                  (int64_t)check_msg->chain_id);
     ck_assert_msg(check_msg->const_id == 5,
-                  "incorrect value for const_id, expected 5, is %d",
-                  check_msg->const_id);
-    ck_assert_msg(check_msg->faulty_sats[0] == 10,
-                  "incorrect value for faulty_sats[0], expected 10, is %d",
-                  check_msg->faulty_sats[0]);
-    ck_assert_msg(check_msg->faulty_sats[1] == 11,
-                  "incorrect value for faulty_sats[1], expected 11, is %d",
-                  check_msg->faulty_sats[1]);
-    ck_assert_msg(check_msg->faulty_sats[2] == 12,
-                  "incorrect value for faulty_sats[2], expected 12, is %d",
-                  check_msg->faulty_sats[2]);
+                  "incorrect value for const_id, expected 5, is %" PRId64,
+                  (int64_t)check_msg->const_id);
+    ck_assert_msg(
+        check_msg->faulty_sats[0] == 10,
+        "incorrect value for faulty_sats[0], expected 10, is %" PRId64,
+        (int64_t)check_msg->faulty_sats[0]);
+    ck_assert_msg(
+        check_msg->faulty_sats[1] == 11,
+        "incorrect value for faulty_sats[1], expected 11, is %" PRId64,
+        (int64_t)check_msg->faulty_sats[1]);
+    ck_assert_msg(
+        check_msg->faulty_sats[2] == 12,
+        "incorrect value for faulty_sats[2], expected 12, is %" PRId64,
+        (int64_t)check_msg->faulty_sats[2]);
     ck_assert_msg(check_msg->n_faulty_sats == 3,
-                  "incorrect value for n_faulty_sats, expected 3, is %d",
-                  check_msg->n_faulty_sats);
+                  "incorrect value for n_faulty_sats, expected 3, is %" PRId64,
+                  (int64_t)check_msg->n_faulty_sats);
     ck_assert_msg(check_msg->num_msgs == 1,
-                  "incorrect value for num_msgs, expected 1, is %d",
-                  check_msg->num_msgs);
+                  "incorrect value for num_msgs, expected 1, is %" PRId64,
+                  (int64_t)check_msg->num_msgs);
     ck_assert_msg(check_msg->obs_time.tow == 180,
-                  "incorrect value for obs_time.tow, expected 180, is %d",
-                  check_msg->obs_time.tow);
+                  "incorrect value for obs_time.tow, expected 180, is %" PRId64,
+                  (int64_t)check_msg->obs_time.tow);
     ck_assert_msg(check_msg->obs_time.wn == 3,
-                  "incorrect value for obs_time.wn, expected 3, is %d",
-                  check_msg->obs_time.wn);
+                  "incorrect value for obs_time.wn, expected 3, is %" PRId64,
+                  (int64_t)check_msg->obs_time.wn);
     ck_assert_msg(check_msg->seq_num == 2,
-                  "incorrect value for seq_num, expected 2, is %d",
-                  check_msg->seq_num);
+                  "incorrect value for seq_num, expected 2, is %" PRId64,
+                  (int64_t)check_msg->seq_num);
     ck_assert_msg(check_msg->ssr_sol_id == 3,
-                  "incorrect value for ssr_sol_id, expected 3, is %d",
-                  check_msg->ssr_sol_id);
+                  "incorrect value for ssr_sol_id, expected 3, is %" PRId64,
+                  (int64_t)check_msg->ssr_sol_id);
   }
 }
 END_TEST

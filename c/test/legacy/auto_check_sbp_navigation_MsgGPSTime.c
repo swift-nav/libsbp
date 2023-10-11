@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -192,17 +192,18 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgGPSTime) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
-    ck_assert_msg(check_msg->ns_residual == 166900,
-                  "incorrect value for ns_residual, expected 166900, is %d",
-                  check_msg->ns_residual);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
+    ck_assert_msg(
+        check_msg->ns_residual == 166900,
+        "incorrect value for ns_residual, expected 166900, is %" PRId64,
+        (int64_t)check_msg->ns_residual);
     ck_assert_msg(check_msg->tow == 326825000,
-                  "incorrect value for tow, expected 326825000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326825000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->wn == 1920,
-                  "incorrect value for wn, expected 1920, is %d",
-                  check_msg->wn);
+                  "incorrect value for wn, expected 1920, is %" PRId64,
+                  (int64_t)check_msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -292,17 +293,18 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgGPSTime) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
-    ck_assert_msg(check_msg->ns_residual == 256638,
-                  "incorrect value for ns_residual, expected 256638, is %d",
-                  check_msg->ns_residual);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
+    ck_assert_msg(
+        check_msg->ns_residual == 256638,
+        "incorrect value for ns_residual, expected 256638, is %" PRId64,
+        (int64_t)check_msg->ns_residual);
     ck_assert_msg(check_msg->tow == 326825500,
-                  "incorrect value for tow, expected 326825500, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326825500, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->wn == 1920,
-                  "incorrect value for wn, expected 1920, is %d",
-                  check_msg->wn);
+                  "incorrect value for wn, expected 1920, is %" PRId64,
+                  (int64_t)check_msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -392,17 +394,18 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgGPSTime) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
-    ck_assert_msg(check_msg->ns_residual == 265345,
-                  "incorrect value for ns_residual, expected 265345, is %d",
-                  check_msg->ns_residual);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
+    ck_assert_msg(
+        check_msg->ns_residual == 265345,
+        "incorrect value for ns_residual, expected 265345, is %" PRId64,
+        (int64_t)check_msg->ns_residual);
     ck_assert_msg(check_msg->tow == 326826000,
-                  "incorrect value for tow, expected 326826000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326826000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->wn == 1920,
-                  "incorrect value for wn, expected 1920, is %d",
-                  check_msg->wn);
+                  "incorrect value for wn, expected 1920, is %" PRId64,
+                  (int64_t)check_msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -492,17 +495,18 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgGPSTime) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
-    ck_assert_msg(check_msg->ns_residual == 314505,
-                  "incorrect value for ns_residual, expected 314505, is %d",
-                  check_msg->ns_residual);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
+    ck_assert_msg(
+        check_msg->ns_residual == 314505,
+        "incorrect value for ns_residual, expected 314505, is %" PRId64,
+        (int64_t)check_msg->ns_residual);
     ck_assert_msg(check_msg->tow == 326826500,
-                  "incorrect value for tow, expected 326826500, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326826500, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->wn == 1920,
-                  "incorrect value for wn, expected 1920, is %d",
-                  check_msg->wn);
+                  "incorrect value for wn, expected 1920, is %" PRId64,
+                  (int64_t)check_msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -592,17 +596,18 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgGPSTime) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
-    ck_assert_msg(check_msg->ns_residual == 362933,
-                  "incorrect value for ns_residual, expected 362933, is %d",
-                  check_msg->ns_residual);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
+    ck_assert_msg(
+        check_msg->ns_residual == 362933,
+        "incorrect value for ns_residual, expected 362933, is %" PRId64,
+        (int64_t)check_msg->ns_residual);
     ck_assert_msg(check_msg->tow == 326827000,
-                  "incorrect value for tow, expected 326827000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326827000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->wn == 1920,
-                  "incorrect value for wn, expected 1920, is %d",
-                  check_msg->wn);
+                  "incorrect value for wn, expected 1920, is %" PRId64,
+                  (int64_t)check_msg->wn);
   }
 }
 END_TEST

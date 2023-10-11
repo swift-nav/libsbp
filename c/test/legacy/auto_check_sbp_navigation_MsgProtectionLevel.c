@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -198,13 +198,14 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgProtectionLevel) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg((check_msg->height * 100 - 0.0 * 100) < 0.05,
                   "incorrect value for height, expected 0.0, is %f",
                   check_msg->height);
     ck_assert_msg(check_msg->hpl == 0,
-                  "incorrect value for hpl, expected 0, is %d", check_msg->hpl);
+                  "incorrect value for hpl, expected 0, is %" PRId64,
+                  (int64_t)check_msg->hpl);
     ck_assert_msg((check_msg->lat * 100 - 0.0 * 100) < 0.05,
                   "incorrect value for lat, expected 0.0, is %f",
                   check_msg->lat);
@@ -212,10 +213,11 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgProtectionLevel) {
                   "incorrect value for lon, expected 0.0, is %f",
                   check_msg->lon);
     ck_assert_msg(check_msg->tow == 501867400,
-                  "incorrect value for tow, expected 501867400, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 501867400, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->vpl == 0,
-                  "incorrect value for vpl, expected 0, is %d", check_msg->vpl);
+                  "incorrect value for vpl, expected 0, is %" PRId64,
+                  (int64_t)check_msg->vpl);
   }
 }
 END_TEST

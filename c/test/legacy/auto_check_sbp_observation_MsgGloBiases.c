@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -192,20 +192,20 @@ START_TEST(test_legacy_auto_check_sbp_observation_MsgGloBiases) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->l1ca_bias == 0,
-                  "incorrect value for l1ca_bias, expected 0, is %d",
-                  check_msg->l1ca_bias);
+                  "incorrect value for l1ca_bias, expected 0, is %" PRId64,
+                  (int64_t)check_msg->l1ca_bias);
     ck_assert_msg(check_msg->l1p_bias == 0,
-                  "incorrect value for l1p_bias, expected 0, is %d",
-                  check_msg->l1p_bias);
+                  "incorrect value for l1p_bias, expected 0, is %" PRId64,
+                  (int64_t)check_msg->l1p_bias);
     ck_assert_msg(check_msg->l2ca_bias == 0,
-                  "incorrect value for l2ca_bias, expected 0, is %d",
-                  check_msg->l2ca_bias);
+                  "incorrect value for l2ca_bias, expected 0, is %" PRId64,
+                  (int64_t)check_msg->l2ca_bias);
     ck_assert_msg(check_msg->l2p_bias == 0,
-                  "incorrect value for l2p_bias, expected 0, is %d",
-                  check_msg->l2p_bias);
+                  "incorrect value for l2p_bias, expected 0, is %" PRId64,
+                  (int64_t)check_msg->l2p_bias);
     ck_assert_msg(check_msg->mask == 0,
-                  "incorrect value for mask, expected 0, is %d",
-                  check_msg->mask);
+                  "incorrect value for mask, expected 0, is %" PRId64,
+                  (int64_t)check_msg->mask);
   }
 }
 END_TEST

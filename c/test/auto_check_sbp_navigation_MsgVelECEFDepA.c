@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -143,38 +143,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 9,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 9, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 2567700,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 2567700, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 2567700, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == 3034,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
-                  "3034, is %d",
-                  last_msg.msg.vel_ecef_dep_a.x);
+                  "3034, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == -2682,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
-                  "-2682, is %d",
-                  last_msg.msg.vel_ecef_dep_a.y);
+                  "-2682, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == -861,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
-                  "-861, is %d",
-                  last_msg.msg.vel_ecef_dep_a.z);
+                  "-861, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
   // Test successful parsing of a message
   {
@@ -241,38 +241,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 9,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 9, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 2567800,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 2567800, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 2567800, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == 2884,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
-                  "2884, is %d",
-                  last_msg.msg.vel_ecef_dep_a.x);
+                  "2884, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == -2536,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
-                  "-2536, is %d",
-                  last_msg.msg.vel_ecef_dep_a.y);
+                  "-2536, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == -804,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
-                  "-804, is %d",
-                  last_msg.msg.vel_ecef_dep_a.z);
+                  "-804, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
   // Test successful parsing of a message
   {
@@ -339,38 +339,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 9,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 9, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 2567900,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 2567900, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 2567900, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == 2837,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
-                  "2837, is %d",
-                  last_msg.msg.vel_ecef_dep_a.x);
+                  "2837, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == -2483,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
-                  "-2483, is %d",
-                  last_msg.msg.vel_ecef_dep_a.y);
+                  "-2483, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == -777,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
-                  "-777, is %d",
-                  last_msg.msg.vel_ecef_dep_a.z);
+                  "-777, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
   // Test successful parsing of a message
   {
@@ -437,38 +437,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 9,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 9, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 2568000,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 2568000, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 2568000, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == 2937,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
-                  "2937, is %d",
-                  last_msg.msg.vel_ecef_dep_a.x);
+                  "2937, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == -2558,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
-                  "-2558, is %d",
-                  last_msg.msg.vel_ecef_dep_a.y);
+                  "-2558, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == -790,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
-                  "-790, is %d",
-                  last_msg.msg.vel_ecef_dep_a.z);
+                  "-790, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
   // Test successful parsing of a message
   {
@@ -535,38 +535,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 9,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 9, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 2568100,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 2568100, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 2568100, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == 2847,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
-                  "2847, is %d",
-                  last_msg.msg.vel_ecef_dep_a.x);
+                  "2847, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == -2467,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
-                  "-2467, is %d",
-                  last_msg.msg.vel_ecef_dep_a.y);
+                  "-2467, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == -752,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
-                  "-752, is %d",
-                  last_msg.msg.vel_ecef_dep_a.z);
+                  "-752, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
   // Test successful parsing of a message
   {
@@ -633,38 +633,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 8,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 8, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 407084500,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 407084500, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 407084500, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ecef_dep_a.x == 24,
-        "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected 24, is %d",
-        last_msg.msg.vel_ecef_dep_a.x);
+    ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == 24,
+                  "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
+                  "24, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == -11,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
-                  "-11, is %d",
-                  last_msg.msg.vel_ecef_dep_a.y);
+                  "-11, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == -37,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
-                  "-37, is %d",
-                  last_msg.msg.vel_ecef_dep_a.z);
+                  "-37, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
   // Test successful parsing of a message
   {
@@ -731,38 +731,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 8,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 8, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 407084600,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 407084600, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 407084600, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ecef_dep_a.x == 4,
-        "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected 4, is %d",
-        last_msg.msg.vel_ecef_dep_a.x);
+    ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == 4,
+                  "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
+                  "4, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == -22,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
-                  "-22, is %d",
-                  last_msg.msg.vel_ecef_dep_a.y);
+                  "-22, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ecef_dep_a.z == 18,
-        "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected 18, is %d",
-        last_msg.msg.vel_ecef_dep_a.z);
+    ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == 18,
+                  "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
+                  "18, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
   // Test successful parsing of a message
   {
@@ -829,38 +829,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 8,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 8, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 407084700,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 407084700, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 407084700, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == -26,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
-                  "-26, is %d",
-                  last_msg.msg.vel_ecef_dep_a.x);
+                  "-26, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ecef_dep_a.y == 4,
-        "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected 4, is %d",
-        last_msg.msg.vel_ecef_dep_a.y);
+    ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == 4,
+                  "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
+                  "4, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ecef_dep_a.z == 1,
-        "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected 1, is %d",
-        last_msg.msg.vel_ecef_dep_a.z);
+    ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == 1,
+                  "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
+                  "1, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
   // Test successful parsing of a message
   {
@@ -927,38 +927,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 8,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 8, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 407084800,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 407084800, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 407084800, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ecef_dep_a.x == -9,
-        "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected -9, is %d",
-        last_msg.msg.vel_ecef_dep_a.x);
+    ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == -9,
+                  "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
+                  "-9, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == -19,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
-                  "-19, is %d",
-                  last_msg.msg.vel_ecef_dep_a.y);
+                  "-19, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ecef_dep_a.z == 28,
-        "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected 28, is %d",
-        last_msg.msg.vel_ecef_dep_a.z);
+    ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == 28,
+                  "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
+                  "28, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
   // Test successful parsing of a message
   {
@@ -1025,38 +1025,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 8,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 8, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 407084900,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 407084900, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 407084900, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ecef_dep_a.x == -1,
-        "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected -1, is %d",
-        last_msg.msg.vel_ecef_dep_a.x);
+    ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == -1,
+                  "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
+                  "-1, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ecef_dep_a.y == 2,
-        "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected 2, is %d",
-        last_msg.msg.vel_ecef_dep_a.y);
+    ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == 2,
+                  "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == -11,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
-                  "-11, is %d",
-                  last_msg.msg.vel_ecef_dep_a.z);
+                  "-11, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
   // Test successful parsing of a message
   {
@@ -1123,38 +1123,38 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelECEFDepA) {
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.accuracy);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ecef_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.n_sats == 5,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.n_sats, "
-                  "expected 5, is %d",
-                  last_msg.msg.vel_ecef_dep_a.n_sats);
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.tow == 407151150,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.tow, "
-                  "expected 407151150, is %d",
-                  last_msg.msg.vel_ecef_dep_a.tow);
+                  "expected 407151150, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.x == -49,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.x, expected "
-                  "-49, is %d",
-                  last_msg.msg.vel_ecef_dep_a.x);
+                  "-49, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.x);
 
     ck_assert_msg(last_msg.msg.vel_ecef_dep_a.y == -71,
                   "incorrect value for last_msg.msg.vel_ecef_dep_a.y, expected "
-                  "-71, is %d",
-                  last_msg.msg.vel_ecef_dep_a.y);
+                  "-71, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.y);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ecef_dep_a.z == 65,
-        "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected 65, is %d",
-        last_msg.msg.vel_ecef_dep_a.z);
+    ck_assert_msg(last_msg.msg.vel_ecef_dep_a.z == 65,
+                  "incorrect value for last_msg.msg.vel_ecef_dep_a.z, expected "
+                  "65, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ecef_dep_a.z);
   }
 }
 END_TEST

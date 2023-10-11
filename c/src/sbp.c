@@ -41,7 +41,8 @@
  * or
  * ~~~
  * void my_frame_callback(u16 sender_id, u16 msg_type, u8 payload_len,
- *                         u8 payload[], u16 frame_len, u8 frame[], void *context)
+ *                         u8 payload[], u16 frame_len, u8 frame[], void
+ * *context)
  * {
  *   // Process msg.
  * }
@@ -58,7 +59,8 @@
  * Now register your callback function with the SBP library as follows:
  *
  * ~~~
- * sbp_register_callback(&sbp_state, SBP_MY_MSG_TYPE, &my_callback, &context, &my_callback_node);
+ * sbp_register_callback(&sbp_state, SBP_MY_MSG_TYPE, &my_callback, &context,
+ * &my_callback_node);
  * ~~~
  * or
  * ~~~
@@ -193,7 +195,8 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, sbp_msg_type_t msg_type,
     return SBP_NULL_ERROR;
   }
 
-  for (sbp_msg_callbacks_node_t *n = s->sbp_msg_callbacks_head; n; n = n->next) {
+  for (sbp_msg_callbacks_node_t *n = s->sbp_msg_callbacks_head; n;
+       n = n->next) {
     if (n == node) {
       return SBP_CALLBACK_ERROR;
     }
@@ -205,8 +208,7 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, sbp_msg_type_t msg_type,
       if ((cb_type == SBP_FRAME_CALLBACK) && (n->cb.frame == cb.frame)) {
         return SBP_CALLBACK_ERROR;
       }
-      if ((cb_type == SBP_DECODED_CALLBACK) &&
-          (n->cb.decoded == cb.decoded)) {
+      if ((cb_type == SBP_DECODED_CALLBACK) && (n->cb.decoded == cb.decoded)) {
         return SBP_CALLBACK_ERROR;
       }
     }
@@ -255,28 +257,26 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, sbp_msg_type_t msg_type,
  * \return `SBP_OK` (0) if successful, `SBP_CALLBACK_ERROR` if no callback was
  *         registered for that message type.
  */
-s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node)
-{
+s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node) {
   sbp_msg_callbacks_node_t *n;
 
   if (s->sbp_msg_callbacks_head == node) {
     s->sbp_msg_callbacks_head = node->next;
     return SBP_OK;
   }
-    for (n = s->sbp_msg_callbacks_head; n; n = n->next) {
-      if (n->next == node) {
-        n->next = node->next;
-        return SBP_OK;
-      }
+  for (n = s->sbp_msg_callbacks_head; n; n = n->next) {
+    if (n->next == node) {
+      n->next = node->next;
+      return SBP_OK;
     }
+  }
   return SBP_CALLBACK_ERROR;
 }
 
 /** Clear all registered callbacks.
  * This is probably only useful for testing but who knows!
  */
-void sbp_clear_callbacks(sbp_state_t *s)
-{
+void sbp_clear_callbacks(sbp_state_t *s) {
   /* Reset the head of the callbacks list to NULL. */
   s->sbp_msg_callbacks_head = 0;
 }
@@ -288,8 +288,7 @@ void sbp_clear_callbacks(sbp_state_t *s)
  *
  * \param s State structure
  */
-void sbp_state_init(sbp_state_t *s)
-{
+void sbp_state_init(sbp_state_t *s) {
   s->state = SBP_WAITING;
 
   /* Set the IO context pointer, passed to read and write functions, to NULL. */
@@ -300,15 +299,14 @@ void sbp_state_init(sbp_state_t *s)
   sbp_clear_callbacks(s);
 }
 
-
 /** Set a context to pass to all function pointer calls made by sbp functions
  * This helper function sets a void* context pointer in sbp_state.
- * Whenever `sbp_process` calls the `read` function pointer, it passes this context.
- * Whenever `sbp_payload_send` calls the `write` function pointer, it passes this context.
- * This allows C++ code to get a pointer to an object inside these functions.
+ * Whenever `sbp_process` calls the `read` function pointer, it passes this
+ * context. Whenever `sbp_payload_send` calls the `write` function pointer, it
+ * passes this context. This allows C++ code to get a pointer to an object
+ * inside these functions.
  */
-void sbp_state_set_io_context(sbp_state_t *s, void *context)
-{
+void sbp_state_set_io_context(sbp_state_t *s, void *context) {
   s->io_context = context;
 }
 
@@ -326,54 +324,47 @@ void sbp_state_set_io_context(sbp_state_t *s, void *context)
  *         `SBP_READ_ERROR` (-6) if no bytes could be read or read function
  *         returned error code.
  */
-static s8 sbp_state_read_to_frame_buffer(sbp_state_t *s,
-                                         s32 (*read)(u8 *buff, u32 n, void *context),
-                                         u8 to_read)
-{
-    s32 rd = (*read)(s->frame_buff + s->frame_len, to_read, s->io_context);
-    if (0 > rd) {
-      return SBP_READ_ERROR;
-    }
-    s->frame_len = (uint16_t)(s->frame_len + rd);
-    s->n_read = (uint8_t)(s->n_read + rd);
-    return SBP_OK;
+static s8 sbp_state_read_to_frame_buffer(
+    sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context), u8 to_read) {
+  s32 rd = (*read)(s->frame_buff + s->frame_len, to_read, s->io_context);
+  if (0 > rd) {
+    return SBP_READ_ERROR;
+  }
+  s->frame_len = (uint16_t)(s->frame_len + rd);
+  s->n_read = (uint8_t)(s->n_read + rd);
+  return SBP_OK;
 }
 
 /** Reset frame buffer on the sbp_state to zeros and reset frame length counter.
  */
-static void sbp_state_frame_buffer_clear(sbp_state_t *s)
-{
-    /* Note, library functions are not used to avoid more dependencies. */
-    for (u32 i = 0; i < sizeof(s->frame_buff); i++) {
-        s->frame_buff[i] = 0;
-    }
-    s->frame_len = 0;
+static void sbp_state_frame_buffer_clear(sbp_state_t *s) {
+  /* Note, library functions are not used to avoid more dependencies. */
+  for (u32 i = 0; i < sizeof(s->frame_buff); i++) {
+    s->frame_buff[i] = 0;
+  }
+  s->frame_len = 0;
 }
-
 
 /** Helper to convert a array of 2 bytes in network byte order
  *  to the platform's representation of a u16 without
  *  needing to use the word endian
  */
-static u16 sbp_u8_array_to_u16(u8 *array_start)
-{
-  return (u16) (array_start[0] + ((u16) array_start[1] << 8));
+static u16 sbp_u8_array_to_u16(u8 *array_start) {
+  return (u16)(array_start[0] + ((u16)array_start[1] << 8));
 }
 
 /** Helper to convert a u16 in the platform's representation
  *  to the a 2 byte array in little endian byte order without
  *  needing to use the word endian
  */
-static void sbp_u16_to_u8_array(const u16 v, u8 *array_start)
-{
+static void sbp_u16_to_u8_array(const u16 v, u8 *array_start) {
   array_start[0] = (u8)((v & 0x00ff) >> 0);
   array_start[1] = (u8)((v & 0xff00) >> 8);
 }
 
 static s8 process_frame(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
-                     u8 payload_len, u8 payload[],
-                     u16 frame_len, u8 frame[],
-                     u8 cb_mask) {
+                        u8 payload_len, u8 payload[], u16 frame_len, u8 frame[],
+                        u8 cb_mask) {
   s8 ret = SBP_OK_CALLBACK_UNDEFINED;
   sbp_msg_callbacks_node_t *node;
   sbp_msg_t unpacked_msg;
@@ -382,37 +373,36 @@ static s8 process_frame(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
   for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
     if ((SBP_CALLBACK_FLAG(node->cb_type) & cb_mask) &&
         ((node->msg_type == msg_type) || (node->msg_type == SbpMsgAll))) {
-        switch (node->cb_type) {
-        case SBP_FRAME_CALLBACK:
-        {
-          node->cb.frame(sender_id, (u16)msg_type, payload_len, payload, frame_len,
-                         frame, node->context);
-            ret = SBP_OK_CALLBACK_EXECUTED;
-        } break;
-        case SBP_MSG_CALLBACK:
-        {
-          node->cb.msg(sender_id, payload_len, payload, node->context);
-            ret = SBP_OK_CALLBACK_EXECUTED;
-        } break;
-        case SBP_DECODED_CALLBACK: {
-                                 if (need_unpack) {
-                                   need_unpack = false;
-                                   if (sbp_message_decode(payload, payload_len, NULL, msg_type, &unpacked_msg) == SBP_OK) {
-                                     unpacked_successfully = true;
-                                   }
-                                   else { ret = SBP_DECODE_ERROR; }
-                                 }
-                                 if (unpacked_successfully) {
-                                   node->cb.decoded(sender_id, msg_type, &unpacked_msg, node->context);
-                                   ret = SBP_OK_CALLBACK_EXECUTED;
-                                 } 
-                               } break;
-        case SBP_CALLBACK_TYPE_COUNT:
-        default:
-        {
-            // NOP
-        };
+      switch (node->cb_type) {
+      case SBP_FRAME_CALLBACK: {
+        node->cb.frame(sender_id, (u16)msg_type, payload_len, payload,
+                       frame_len, frame, node->context);
+        ret = SBP_OK_CALLBACK_EXECUTED;
+      } break;
+      case SBP_MSG_CALLBACK: {
+        node->cb.msg(sender_id, payload_len, payload, node->context);
+        ret = SBP_OK_CALLBACK_EXECUTED;
+      } break;
+      case SBP_DECODED_CALLBACK: {
+        if (need_unpack) {
+          need_unpack = false;
+          if (sbp_message_decode(payload, payload_len, NULL, msg_type,
+                                 &unpacked_msg) == SBP_OK) {
+            unpacked_successfully = true;
+          } else {
+            ret = SBP_DECODE_ERROR;
+          }
         }
+        if (unpacked_successfully) {
+          node->cb.decoded(sender_id, msg_type, &unpacked_msg, node->context);
+          ret = SBP_OK_CALLBACK_EXECUTED;
+        }
+      } break;
+      case SBP_CALLBACK_TYPE_COUNT:
+      default: {
+        // NOP
+      };
+      }
     }
   }
   return ret;
@@ -452,13 +442,12 @@ static s8 process_frame(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
  *             input source into `buff` and returns the number of bytes
  *             successfully read.
  * \return `SBP_OK` (0) if successful but no complete message yet,
- *         `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed,
- *         `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
- *         callback, and `SBP_CRC_ERROR` (-2) if a CRC error
- *         has occurred. Thus can check for >0 to ensure good processing.
+ *         `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback
+ * executed, `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no
+ * associated callback, and `SBP_CRC_ERROR` (-2) if a CRC error has occurred.
+ * Thus can check for >0 to ensure good processing.
  */
-s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
-{
+s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context)) {
   /* Sanity checks */
   if ((0 == s) || (0 == read)) {
     return SBP_NULL_ERROR;
@@ -488,31 +477,36 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case SBP_GET_TYPE:
-    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(sizeof(u16)-s->n_read));
+    ret =
+        sbp_state_read_to_frame_buffer(s, read, (u8)(sizeof(u16) - s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
     if (s->n_read >= sizeof(u16)) {
-      s->msg_type =  sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_MSGTYPE]));
+      s->msg_type =
+          sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_MSGTYPE]));
       s->n_read = 0;
       s->state = SBP_GET_SENDER;
     }
     break;
 
   case SBP_GET_SENDER:
-    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(sizeof(s->sender_id)-s->n_read));
+    ret = sbp_state_read_to_frame_buffer(
+        s, read, (u8)(sizeof(s->sender_id) - s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
     if (s->n_read >= sizeof(s->sender_id)) {
-      s->sender_id = sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_SENDERID]));
+      s->sender_id =
+          sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_SENDERID]));
       s->n_read = 0;
       s->state = SBP_GET_LEN;
     }
     break;
 
   case SBP_GET_LEN:
-    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(sizeof(s->msg_len)-s->n_read));
+    ret = sbp_state_read_to_frame_buffer(s, read,
+                                         (u8)(sizeof(s->msg_len) - s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
@@ -536,35 +530,37 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case SBP_GET_CRC:
-    ret = sbp_state_read_to_frame_buffer(s, read, (u8)(SBP_CRC_LEN - s->n_read));
+    ret =
+        sbp_state_read_to_frame_buffer(s, read, (u8)(SBP_CRC_LEN - s->n_read));
     if (ret != SBP_OK) {
       return ret;
     }
     if (s->n_read >= SBP_CRC_LEN) {
       s->state = SBP_WAITING;
-      s->crc = sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_CRC(s->msg_len)]));
+      s->crc = sbp_u8_array_to_u16(
+          &(s->frame_buff[SBP_FRAME_OFFSET_CRC(s->msg_len)]));
 
       u16 raw_msg_type = (u16)s->msg_type;
-      sbp_u16_to_u8_array(raw_msg_type, (u8*)&buf);
-      crc = crc16_ccitt((u8*)&(buf), 2, 0);
-      sbp_u16_to_u8_array(s->sender_id, (u8*)&buf);
-      crc = crc16_ccitt((u8*)&(buf), 2, crc);
+      sbp_u16_to_u8_array(raw_msg_type, (u8 *)&buf);
+      crc = crc16_ccitt((u8 *)&(buf), 2, 0);
+      sbp_u16_to_u8_array(s->sender_id, (u8 *)&buf);
+      crc = crc16_ccitt((u8 *)&(buf), 2, crc);
       crc = crc16_ccitt(&(s->msg_len), sizeof(s->msg_len), crc);
       crc = crc16_ccitt(SBP_FRAME_MSG_PAYLOAD(s->frame_buff), s->msg_len, crc);
 
-      #ifdef LIBSBP_DISABLE_CRC_VALIDATION
+#ifdef LIBSBP_DISABLE_CRC_VALIDATION
       const bool valid_crc = true;
-      #else
+#else
       const bool valid_crc = (s->crc == crc);
-      #endif
+#endif
 
       if (valid_crc) {
         /* Message complete, process frame callbacks and payload callbacks. */
-        ret = process_frame(s, s->sender_id, s->msg_type,
-                                s->msg_len, SBP_FRAME_MSG_PAYLOAD(s->frame_buff),
-                                s->frame_len, s->frame_buff, SBP_CALLBACK_ALL_MASK);
+        ret = process_frame(s, s->sender_id, s->msg_type, s->msg_len,
+                            SBP_FRAME_MSG_PAYLOAD(s->frame_buff), s->frame_len,
+                            s->frame_buff, SBP_CALLBACK_ALL_MASK);
         return ret;
-      } 
+      }
       return SBP_CRC_ERROR;
     }
     break;
@@ -577,9 +573,8 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   return SBP_OK;
 }
 
-static s8 send_payload(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, u8 len, u8 *payload,
-                    sbp_write_fn_t write)
-{
+static s8 send_payload(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id,
+                       u8 len, u8 *payload, sbp_write_fn_t write) {
   /* Check our payload data pointer isn't NULL unless len = 0. */
   if (len != 0 && payload == 0) {
     return SBP_NULL_ERROR;
@@ -590,7 +585,7 @@ static s8 send_payload(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, u
     return SBP_NULL_ERROR;
   }
 
-  u8 buf[2];
+  u8 buf[8];
   u16 crc;
   s32 wr = 0;
 
@@ -604,9 +599,9 @@ static s8 send_payload(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, u
   }
 
   u16 raw_msg_type = (u16)msg_type;
-  sbp_u16_to_u8_array(raw_msg_type, (u8*)&buf);
-  crc = crc16_ccitt((u8*)&(buf), 2, 0);
-  wr = (*write)((u8*)&buf, 2, s->io_context);
+  sbp_u16_to_u8_array(raw_msg_type, (u8 *)&buf);
+  crc = crc16_ccitt((u8 *)&(buf), 2, 0);
+  wr = (*write)((u8 *)&buf, 2, s->io_context);
   if (0 > wr) {
     return SBP_WRITE_ERROR;
   }
@@ -614,9 +609,9 @@ static s8 send_payload(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, u
     return SBP_SEND_ERROR;
   }
 
-  sbp_u16_to_u8_array(sender_id, (u8*)&buf);
-  crc = crc16_ccitt((u8*)&(buf), 2, crc);
-  wr = (*write)((u8*)&buf, 2, s->io_context);
+  sbp_u16_to_u8_array(sender_id, (u8 *)&buf);
+  crc = crc16_ccitt((u8 *)&(buf), 2, crc);
+  wr = (*write)((u8 *)&buf, 2, s->io_context);
   if (0 > wr) {
     return SBP_WRITE_ERROR;
   }
@@ -645,8 +640,8 @@ static s8 send_payload(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, u
   crc = crc16_ccitt(&(len), 1, crc);
   crc = crc16_ccitt(payload, len, crc);
 
-  sbp_u16_to_u8_array(crc, (u8*)&buf);
-  wr = (*write)((u8*)&buf, 2, s->io_context);
+  sbp_u16_to_u8_array(crc, (u8 *)&buf);
+  wr = (*write)((u8 *)&buf, 2, s->io_context);
   if (0 > wr) {
     return SBP_WRITE_ERROR;
   }
@@ -664,28 +659,32 @@ static s8 send_payload(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, u
  *****************************************************************************/
 
 s8 sbp_callback_register(sbp_state_t *s, sbp_msg_type_t msg_type,
-                                  sbp_decoded_callback_t cb, void *context,
-                                  sbp_msg_callbacks_node_t *node) {
+                         sbp_decoded_callback_t cb, void *context,
+                         sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
   callback.decoded = cb;
   return sbp_register_callback_generic(s, msg_type, callback,
                                        SBP_DECODED_CALLBACK, context, node);
 }
 
-s8 sbp_all_message_callback_register(sbp_state_t *s,
-                                 sbp_decoded_callback_t cb, void *context,
-                                 sbp_msg_callbacks_node_t *node) {
+s8 sbp_all_message_callback_register(sbp_state_t *s, sbp_decoded_callback_t cb,
+                                     void *context,
+                                     sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
   callback.decoded = cb;
   return sbp_register_callback_generic(s, SbpMsgAll, callback,
                                        SBP_DECODED_CALLBACK, context, node);
 }
 
-s8 sbp_message_send(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, const sbp_msg_t *msg, sbp_write_fn_t write) {
+s8 sbp_message_send(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id,
+                    const sbp_msg_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg);
-  if (ret != SBP_OK) { return ret; }
+  s8 ret =
+      sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg);
+  if (ret != SBP_OK) {
+    return ret;
+  }
   return send_payload(s, msg_type, sender_id, payload_len, payload, write);
 }
 
@@ -701,86 +700,88 @@ s8 sbp_message_process(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
   for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
     if (((node->msg_type == msg_type) || (node->msg_type == SbpMsgAll))) {
       switch (node->cb_type) {
-        case SBP_FRAME_CALLBACK:
-        case SBP_MSG_CALLBACK:
-          {
-            if (need_pack) {
-              need_pack = false;
-              if (sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg) == SBP_OK) {
-                packed_successfully = true;
-              }
-              else { ret = SBP_ENCODE_ERROR; }
-            }
-            if (packed_successfully) {
-              ret = SBP_OK_CALLBACK_EXECUTED;
-              if (node->cb_type == SBP_FRAME_CALLBACK) {
-                node->cb.frame(sender_id, (u16)msg_type, payload_len, payload, 0, 0, node->context);
-              } else {
-                node->cb.msg(sender_id, payload_len, payload, node->context);
-              }
-            }
+      case SBP_FRAME_CALLBACK:
+      case SBP_MSG_CALLBACK: {
+        if (need_pack) {
+          need_pack = false;
+          if (sbp_message_encode(payload, sizeof(payload), &payload_len,
+                                 msg_type, msg) == SBP_OK) {
+            packed_successfully = true;
+          } else {
+            ret = SBP_ENCODE_ERROR;
           }
-          break;
-        case SBP_DECODED_CALLBACK: {
-                                 node->cb.decoded(sender_id, msg_type, msg, node->context);
-                                 ret = SBP_OK_CALLBACK_EXECUTED;
-                               } break;
-        case SBP_CALLBACK_TYPE_COUNT:
-        default:
-                               break;
+        }
+        if (packed_successfully) {
+          ret = SBP_OK_CALLBACK_EXECUTED;
+          if (node->cb_type == SBP_FRAME_CALLBACK) {
+            node->cb.frame(sender_id, (u16)msg_type, payload_len, payload, 0, 0,
+                           node->context);
+          } else {
+            node->cb.msg(sender_id, payload_len, payload, node->context);
+          }
+        }
+      } break;
+      case SBP_DECODED_CALLBACK: {
+        node->cb.decoded(sender_id, msg_type, msg, node->context);
+        ret = SBP_OK_CALLBACK_EXECUTED;
+      } break;
+      case SBP_CALLBACK_TYPE_COUNT:
+      default:
+        break;
       }
     }
   }
   return ret;
 }
 
-
 /******************************************************************************
  *
  * Legacy API
  *
  *****************************************************************************/
-s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
-                         sbp_msg_callbacks_node_t *node)
-{
+s8 sbp_payload_callback_register(sbp_state_t *s, u16 msg_type,
+                                 sbp_msg_callback_t cb, void *context,
+                                 sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
   callback.msg = cb;
-  return sbp_register_callback_generic(s, (sbp_msg_type_t) msg_type, callback,
+  return sbp_register_callback_generic(s, (sbp_msg_type_t)msg_type, callback,
                                        SBP_MSG_CALLBACK, context, node);
 }
 
-s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
-                               sbp_frame_callback_t cb, void* context,
-                               sbp_msg_callbacks_node_t *node)
-{
+s8 sbp_frame_callback_register(sbp_state_t *s, u16 msg_type,
+                               sbp_frame_callback_t cb, void *context,
+                               sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
   callback.frame = cb;
-  return sbp_register_callback_generic(s, (sbp_msg_type_t) msg_type, callback,
+  return sbp_register_callback_generic(s, (sbp_msg_type_t)msg_type, callback,
                                        SBP_FRAME_CALLBACK, context, node);
 }
 
 s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
-                                 void *context, sbp_msg_callbacks_node_t *node)
-{
+                                     void *context,
+                                     sbp_msg_callbacks_node_t *node) {
   return sbp_frame_callback_register(s, SBP_MSG_ALL, cb, context, node);
 }
 
 s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
-                     u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask)
-{
-  return process_frame(s, sender_id, (sbp_msg_type_t)msg_type, payload_len, payload, frame_len, frame, cb_mask);
+                     u8 payload_len, u8 payload[], u16 frame_len, u8 frame[],
+                     u8 cb_mask) {
+  return process_frame(s, sender_id, (sbp_msg_type_t)msg_type, payload_len,
+                       payload, frame_len, frame, cb_mask);
 }
 
 s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
                        u8 payload[]) {
-  return process_frame(s, sender_id, (sbp_msg_type_t) msg_type, msg_len, payload,
-                          0, 0, SBP_CALLBACK_FLAG(SBP_MSG_CALLBACK) | SBP_CALLBACK_FLAG(SBP_DECODED_CALLBACK));
+  return process_frame(s, sender_id, (sbp_msg_type_t)msg_type, msg_len, payload,
+                       0, 0,
+                       SBP_CALLBACK_FLAG(SBP_MSG_CALLBACK) |
+                           SBP_CALLBACK_FLAG(SBP_DECODED_CALLBACK));
 }
 
-s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
-                    sbp_write_fn_t write)
-{
-  return send_payload(s, (sbp_msg_type_t)msg_type, sender_id, len, payload, write);
+s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len,
+                    u8 *payload, sbp_write_fn_t write) {
+  return send_payload(s, (sbp_msg_type_t)msg_type, sender_id, len, payload,
+                      write);
 }
 
 /** \} */

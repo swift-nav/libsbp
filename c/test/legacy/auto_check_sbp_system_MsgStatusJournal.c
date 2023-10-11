@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -217,64 +217,69 @@ START_TEST(test_legacy_auto_check_sbp_system_MsgStatusJournal) {
         (msg_status_journal_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->journal[0].report.component == 6,
+                  "incorrect value for journal[0].report.component, expected "
+                  "6, is %" PRId64,
+                  (int64_t)check_msg->journal[0].report.component);
+    ck_assert_msg(check_msg->journal[0].report.generic == 1,
+                  "incorrect value for journal[0].report.generic, expected 1, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->journal[0].report.generic);
+    ck_assert_msg(check_msg->journal[0].report.specific == 13,
+                  "incorrect value for journal[0].report.specific, expected "
+                  "13, is %" PRId64,
+                  (int64_t)check_msg->journal[0].report.specific);
     ck_assert_msg(
-        check_msg->journal[0].report.component == 6,
-        "incorrect value for journal[0].report.component, expected 6, is %d",
-        check_msg->journal[0].report.component);
+        check_msg->journal[0].uptime == 4242,
+        "incorrect value for journal[0].uptime, expected 4242, is %" PRId64,
+        (int64_t)check_msg->journal[0].uptime);
+    ck_assert_msg(check_msg->journal[1].report.component == 6,
+                  "incorrect value for journal[1].report.component, expected "
+                  "6, is %" PRId64,
+                  (int64_t)check_msg->journal[1].report.component);
+    ck_assert_msg(check_msg->journal[1].report.generic == 1,
+                  "incorrect value for journal[1].report.generic, expected 1, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->journal[1].report.generic);
+    ck_assert_msg(check_msg->journal[1].report.specific == 14,
+                  "incorrect value for journal[1].report.specific, expected "
+                  "14, is %" PRId64,
+                  (int64_t)check_msg->journal[1].report.specific);
     ck_assert_msg(
-        check_msg->journal[0].report.generic == 1,
-        "incorrect value for journal[0].report.generic, expected 1, is %d",
-        check_msg->journal[0].report.generic);
+        check_msg->journal[1].uptime == 5050,
+        "incorrect value for journal[1].uptime, expected 5050, is %" PRId64,
+        (int64_t)check_msg->journal[1].uptime);
+    ck_assert_msg(check_msg->journal[2].report.component == 6,
+                  "incorrect value for journal[2].report.component, expected "
+                  "6, is %" PRId64,
+                  (int64_t)check_msg->journal[2].report.component);
+    ck_assert_msg(check_msg->journal[2].report.generic == 1,
+                  "incorrect value for journal[2].report.generic, expected 1, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->journal[2].report.generic);
+    ck_assert_msg(check_msg->journal[2].report.specific == 15,
+                  "incorrect value for journal[2].report.specific, expected "
+                  "15, is %" PRId64,
+                  (int64_t)check_msg->journal[2].report.specific);
     ck_assert_msg(
-        check_msg->journal[0].report.specific == 13,
-        "incorrect value for journal[0].report.specific, expected 13, is %d",
-        check_msg->journal[0].report.specific);
-    ck_assert_msg(check_msg->journal[0].uptime == 4242,
-                  "incorrect value for journal[0].uptime, expected 4242, is %d",
-                  check_msg->journal[0].uptime);
+        check_msg->journal[2].uptime == 8888,
+        "incorrect value for journal[2].uptime, expected 8888, is %" PRId64,
+        (int64_t)check_msg->journal[2].uptime);
     ck_assert_msg(
-        check_msg->journal[1].report.component == 6,
-        "incorrect value for journal[1].report.component, expected 6, is %d",
-        check_msg->journal[1].report.component);
-    ck_assert_msg(
-        check_msg->journal[1].report.generic == 1,
-        "incorrect value for journal[1].report.generic, expected 1, is %d",
-        check_msg->journal[1].report.generic);
-    ck_assert_msg(
-        check_msg->journal[1].report.specific == 14,
-        "incorrect value for journal[1].report.specific, expected 14, is %d",
-        check_msg->journal[1].report.specific);
-    ck_assert_msg(check_msg->journal[1].uptime == 5050,
-                  "incorrect value for journal[1].uptime, expected 5050, is %d",
-                  check_msg->journal[1].uptime);
-    ck_assert_msg(
-        check_msg->journal[2].report.component == 6,
-        "incorrect value for journal[2].report.component, expected 6, is %d",
-        check_msg->journal[2].report.component);
-    ck_assert_msg(
-        check_msg->journal[2].report.generic == 1,
-        "incorrect value for journal[2].report.generic, expected 1, is %d",
-        check_msg->journal[2].report.generic);
-    ck_assert_msg(
-        check_msg->journal[2].report.specific == 15,
-        "incorrect value for journal[2].report.specific, expected 15, is %d",
-        check_msg->journal[2].report.specific);
-    ck_assert_msg(check_msg->journal[2].uptime == 8888,
-                  "incorrect value for journal[2].uptime, expected 8888, is %d",
-                  check_msg->journal[2].uptime);
-    ck_assert_msg(check_msg->reporting_system == 1,
-                  "incorrect value for reporting_system, expected 1, is %d",
-                  check_msg->reporting_system);
+        check_msg->reporting_system == 1,
+        "incorrect value for reporting_system, expected 1, is %" PRId64,
+        (int64_t)check_msg->reporting_system);
     ck_assert_msg(check_msg->sbp_version == 1025,
-                  "incorrect value for sbp_version, expected 1025, is %d",
-                  check_msg->sbp_version);
-    ck_assert_msg(check_msg->sequence_descriptor == 16,
-                  "incorrect value for sequence_descriptor, expected 16, is %d",
-                  check_msg->sequence_descriptor);
+                  "incorrect value for sbp_version, expected 1025, is %" PRId64,
+                  (int64_t)check_msg->sbp_version);
+    ck_assert_msg(
+        check_msg->sequence_descriptor == 16,
+        "incorrect value for sequence_descriptor, expected 16, is %" PRId64,
+        (int64_t)check_msg->sequence_descriptor);
     ck_assert_msg(
         check_msg->total_status_reports == 100,
-        "incorrect value for total_status_reports, expected 100, is %d",
-        check_msg->total_status_reports);
+        "incorrect value for total_status_reports, expected 100, is %" PRId64,
+        (int64_t)check_msg->total_status_reports);
   }
   // Test successful parsing of a message
   {
@@ -372,34 +377,37 @@ START_TEST(test_legacy_auto_check_sbp_system_MsgStatusJournal) {
         (msg_status_journal_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->journal[0].report.component == 6,
+                  "incorrect value for journal[0].report.component, expected "
+                  "6, is %" PRId64,
+                  (int64_t)check_msg->journal[0].report.component);
+    ck_assert_msg(check_msg->journal[0].report.generic == 1,
+                  "incorrect value for journal[0].report.generic, expected 1, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->journal[0].report.generic);
+    ck_assert_msg(check_msg->journal[0].report.specific == 13,
+                  "incorrect value for journal[0].report.specific, expected "
+                  "13, is %" PRId64,
+                  (int64_t)check_msg->journal[0].report.specific);
     ck_assert_msg(
-        check_msg->journal[0].report.component == 6,
-        "incorrect value for journal[0].report.component, expected 6, is %d",
-        check_msg->journal[0].report.component);
+        check_msg->journal[0].uptime == 4242,
+        "incorrect value for journal[0].uptime, expected 4242, is %" PRId64,
+        (int64_t)check_msg->journal[0].uptime);
     ck_assert_msg(
-        check_msg->journal[0].report.generic == 1,
-        "incorrect value for journal[0].report.generic, expected 1, is %d",
-        check_msg->journal[0].report.generic);
-    ck_assert_msg(
-        check_msg->journal[0].report.specific == 13,
-        "incorrect value for journal[0].report.specific, expected 13, is %d",
-        check_msg->journal[0].report.specific);
-    ck_assert_msg(check_msg->journal[0].uptime == 4242,
-                  "incorrect value for journal[0].uptime, expected 4242, is %d",
-                  check_msg->journal[0].uptime);
-    ck_assert_msg(check_msg->reporting_system == 1,
-                  "incorrect value for reporting_system, expected 1, is %d",
-                  check_msg->reporting_system);
+        check_msg->reporting_system == 1,
+        "incorrect value for reporting_system, expected 1, is %" PRId64,
+        (int64_t)check_msg->reporting_system);
     ck_assert_msg(check_msg->sbp_version == 1025,
-                  "incorrect value for sbp_version, expected 1025, is %d",
-                  check_msg->sbp_version);
-    ck_assert_msg(check_msg->sequence_descriptor == 16,
-                  "incorrect value for sequence_descriptor, expected 16, is %d",
-                  check_msg->sequence_descriptor);
+                  "incorrect value for sbp_version, expected 1025, is %" PRId64,
+                  (int64_t)check_msg->sbp_version);
+    ck_assert_msg(
+        check_msg->sequence_descriptor == 16,
+        "incorrect value for sequence_descriptor, expected 16, is %" PRId64,
+        (int64_t)check_msg->sequence_descriptor);
     ck_assert_msg(
         check_msg->total_status_reports == 100,
-        "incorrect value for total_status_reports, expected 100, is %d",
-        check_msg->total_status_reports);
+        "incorrect value for total_status_reports, expected 100, is %" PRId64,
+        (int64_t)check_msg->total_status_reports);
   }
 }
 END_TEST

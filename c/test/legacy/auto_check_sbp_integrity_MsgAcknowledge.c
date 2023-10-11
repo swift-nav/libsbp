@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -193,25 +193,25 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgAcknowledge) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->area_id == 123456,
-                  "incorrect value for area_id, expected 123456, is %d",
-                  check_msg->area_id);
-    ck_assert_msg(
-        check_msg->correction_mask_on_demand == 1,
-        "incorrect value for correction_mask_on_demand, expected 1, is %d",
-        check_msg->correction_mask_on_demand);
+                  "incorrect value for area_id, expected 123456, is %" PRId64,
+                  (int64_t)check_msg->area_id);
+    ck_assert_msg(check_msg->correction_mask_on_demand == 1,
+                  "incorrect value for correction_mask_on_demand, expected 1, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->correction_mask_on_demand);
     ck_assert_msg(
         check_msg->correction_mask_stream == 1,
-        "incorrect value for correction_mask_stream, expected 1, is %d",
-        check_msg->correction_mask_stream);
+        "incorrect value for correction_mask_stream, expected 1, is %" PRId64,
+        (int64_t)check_msg->correction_mask_stream);
     ck_assert_msg(check_msg->request_id == 30,
-                  "incorrect value for request_id, expected 30, is %d",
-                  check_msg->request_id);
+                  "incorrect value for request_id, expected 30, is %" PRId64,
+                  (int64_t)check_msg->request_id);
     ck_assert_msg(check_msg->response_code == 0,
-                  "incorrect value for response_code, expected 0, is %d",
-                  check_msg->response_code);
+                  "incorrect value for response_code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->response_code);
     ck_assert_msg(check_msg->solution_id == 2,
-                  "incorrect value for solution_id, expected 2, is %d",
-                  check_msg->solution_id);
+                  "incorrect value for solution_id, expected 2, is %" PRId64,
+                  (int64_t)check_msg->solution_id);
   }
 }
 END_TEST

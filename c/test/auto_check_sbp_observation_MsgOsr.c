@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -391,630 +391,630 @@ START_TEST(test_auto_check_sbp_observation_MsgOsr) {
     ck_assert_msg(sbp_message_cmp(SbpMsgOsr, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.osr.header.n_obs == 64,
-        "incorrect value for last_msg.msg.osr.header.n_obs, expected 64, is %d",
-        last_msg.msg.osr.header.n_obs);
+    ck_assert_msg(last_msg.msg.osr.header.n_obs == 64,
+                  "incorrect value for last_msg.msg.osr.header.n_obs, expected "
+                  "64, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.header.n_obs);
 
     ck_assert_msg(last_msg.msg.osr.header.t.ns_residual == 0,
                   "incorrect value for last_msg.msg.osr.header.t.ns_residual, "
-                  "expected 0, is %d",
-                  last_msg.msg.osr.header.t.ns_residual);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.header.t.ns_residual);
 
     ck_assert_msg(last_msg.msg.osr.header.t.tow == 501867000,
                   "incorrect value for last_msg.msg.osr.header.t.tow, expected "
-                  "501867000, is %d",
-                  last_msg.msg.osr.header.t.tow);
+                  "501867000, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.header.t.tow);
 
     ck_assert_msg(last_msg.msg.osr.header.t.wn == 2152,
                   "incorrect value for last_msg.msg.osr.header.t.wn, expected "
-                  "2152, is %d",
-                  last_msg.msg.osr.header.t.wn);
+                  "2152, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.header.t.wn);
 
     ck_assert_msg(
         last_msg.msg.osr.n_obs == 12,
-        "incorrect value for last_msg.msg.osr.n_obs, expected 12, is %d",
-        last_msg.msg.osr.n_obs);
+        "incorrect value for last_msg.msg.osr.n_obs, expected 12, is %" PRId64,
+        (int64_t)last_msg.msg.osr.n_obs);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[0].L.f == 66,
-        "incorrect value for last_msg.msg.osr.obs[0].L.f, expected 66, is %d",
-        last_msg.msg.osr.obs[0].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[0].L.f == 66,
+                  "incorrect value for last_msg.msg.osr.obs[0].L.f, expected "
+                  "66, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[0].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[0].L.i == 121567974,
                   "incorrect value for last_msg.msg.osr.obs[0].L.i, expected "
-                  "121567974, is %d",
-                  last_msg.msg.osr.obs[0].L.i);
+                  "121567974, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[0].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[0].P == 1156681547,
                   "incorrect value for last_msg.msg.osr.obs[0].P, expected "
-                  "1156681547, is %d",
-                  last_msg.msg.osr.obs[0].P);
+                  "1156681547, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[0].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[0].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[0].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[0].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[0].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[0].flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[0].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[0].iono_std == 13,
                   "incorrect value for last_msg.msg.osr.obs[0].iono_std, "
-                  "expected 13, is %d",
-                  last_msg.msg.osr.obs[0].iono_std);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[0].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[0].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[0].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[0].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[0].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[0].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[0].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[0].range_std == 7,
                   "incorrect value for last_msg.msg.osr.obs[0].range_std, "
-                  "expected 7, is %d",
-                  last_msg.msg.osr.obs[0].range_std);
+                  "expected 7, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[0].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[0].sid.code == 0,
                   "incorrect value for last_msg.msg.osr.obs[0].sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.osr.obs[0].sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[0].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[0].sid.sat == 1,
                   "incorrect value for last_msg.msg.osr.obs[0].sid.sat, "
-                  "expected 1, is %d",
-                  last_msg.msg.osr.obs[0].sid.sat);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[0].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[0].tropo_std == 7,
                   "incorrect value for last_msg.msg.osr.obs[0].tropo_std, "
-                  "expected 7, is %d",
-                  last_msg.msg.osr.obs[0].tropo_std);
+                  "expected 7, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[0].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[1].L.f == 75,
-        "incorrect value for last_msg.msg.osr.obs[1].L.f, expected 75, is %d",
-        last_msg.msg.osr.obs[1].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[1].L.f == 75,
+                  "incorrect value for last_msg.msg.osr.obs[1].L.f, expected "
+                  "75, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[1].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[1].L.i == 111817196,
                   "incorrect value for last_msg.msg.osr.obs[1].L.i, expected "
-                  "111817196, is %d",
-                  last_msg.msg.osr.obs[1].L.i);
+                  "111817196, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[1].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[1].P == 1063905486,
                   "incorrect value for last_msg.msg.osr.obs[1].P, expected "
-                  "1063905486, is %d",
-                  last_msg.msg.osr.obs[1].P);
+                  "1063905486, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[1].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[1].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[1].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[1].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[1].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[1].flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[1].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[1].iono_std == 13,
                   "incorrect value for last_msg.msg.osr.obs[1].iono_std, "
-                  "expected 13, is %d",
-                  last_msg.msg.osr.obs[1].iono_std);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[1].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[1].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[1].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[1].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[1].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[1].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[1].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[1].range_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[1].range_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[1].range_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[1].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[1].sid.code == 0,
                   "incorrect value for last_msg.msg.osr.obs[1].sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.osr.obs[1].sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[1].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[1].sid.sat == 13,
                   "incorrect value for last_msg.msg.osr.obs[1].sid.sat, "
-                  "expected 13, is %d",
-                  last_msg.msg.osr.obs[1].sid.sat);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[1].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[1].tropo_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[1].tropo_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[1].tropo_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[1].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[2].L.f == 128,
-        "incorrect value for last_msg.msg.osr.obs[2].L.f, expected 128, is %d",
-        last_msg.msg.osr.obs[2].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[2].L.f == 128,
+                  "incorrect value for last_msg.msg.osr.obs[2].L.f, expected "
+                  "128, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[2].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[2].L.i == 110692129,
                   "incorrect value for last_msg.msg.osr.obs[2].L.i, expected "
-                  "110692129, is %d",
-                  last_msg.msg.osr.obs[2].L.i);
+                  "110692129, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[2].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[2].P == 1053200685,
                   "incorrect value for last_msg.msg.osr.obs[2].P, expected "
-                  "1053200685, is %d",
-                  last_msg.msg.osr.obs[2].P);
+                  "1053200685, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[2].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[2].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[2].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[2].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[2].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[2].flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[2].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[2].iono_std == 13,
                   "incorrect value for last_msg.msg.osr.obs[2].iono_std, "
-                  "expected 13, is %d",
-                  last_msg.msg.osr.obs[2].iono_std);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[2].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[2].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[2].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[2].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[2].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[2].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[2].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[2].range_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[2].range_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[2].range_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[2].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[2].sid.code == 0,
                   "incorrect value for last_msg.msg.osr.obs[2].sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.osr.obs[2].sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[2].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[2].sid.sat == 14,
                   "incorrect value for last_msg.msg.osr.obs[2].sid.sat, "
-                  "expected 14, is %d",
-                  last_msg.msg.osr.obs[2].sid.sat);
+                  "expected 14, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[2].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[2].tropo_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[2].tropo_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[2].tropo_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[2].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[3].L.f == 127,
-        "incorrect value for last_msg.msg.osr.obs[3].L.f, expected 127, is %d",
-        last_msg.msg.osr.obs[3].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[3].L.f == 127,
+                  "incorrect value for last_msg.msg.osr.obs[3].L.f, expected "
+                  "127, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[3].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[3].L.i == 119549583,
                   "incorrect value for last_msg.msg.osr.obs[3].L.i, expected "
-                  "119549583, is %d",
-                  last_msg.msg.osr.obs[3].L.i);
+                  "119549583, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[3].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[3].P == 1137476697,
                   "incorrect value for last_msg.msg.osr.obs[3].P, expected "
-                  "1137476697, is %d",
-                  last_msg.msg.osr.obs[3].P);
+                  "1137476697, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[3].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[3].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[3].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[3].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[3].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[3].flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[3].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[3].iono_std == 13,
                   "incorrect value for last_msg.msg.osr.obs[3].iono_std, "
-                  "expected 13, is %d",
-                  last_msg.msg.osr.obs[3].iono_std);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[3].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[3].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[3].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[3].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[3].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[3].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[3].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[3].range_std == 5,
                   "incorrect value for last_msg.msg.osr.obs[3].range_std, "
-                  "expected 5, is %d",
-                  last_msg.msg.osr.obs[3].range_std);
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[3].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[3].sid.code == 0,
                   "incorrect value for last_msg.msg.osr.obs[3].sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.osr.obs[3].sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[3].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[3].sid.sat == 15,
                   "incorrect value for last_msg.msg.osr.obs[3].sid.sat, "
-                  "expected 15, is %d",
-                  last_msg.msg.osr.obs[3].sid.sat);
+                  "expected 15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[3].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[3].tropo_std == 5,
                   "incorrect value for last_msg.msg.osr.obs[3].tropo_std, "
-                  "expected 5, is %d",
-                  last_msg.msg.osr.obs[3].tropo_std);
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[3].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[4].L.f == 55,
-        "incorrect value for last_msg.msg.osr.obs[4].L.f, expected 55, is %d",
-        last_msg.msg.osr.obs[4].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[4].L.f == 55,
+                  "incorrect value for last_msg.msg.osr.obs[4].L.f, expected "
+                  "55, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[4].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[4].L.i == 106934294,
                   "incorrect value for last_msg.msg.osr.obs[4].L.i, expected "
-                  "106934294, is %d",
-                  last_msg.msg.osr.obs[4].L.i);
+                  "106934294, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[4].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[4].P == 1017446132,
                   "incorrect value for last_msg.msg.osr.obs[4].P, expected "
-                  "1017446132, is %d",
-                  last_msg.msg.osr.obs[4].P);
+                  "1017446132, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[4].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[4].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[4].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[4].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[4].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[4].flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[4].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[4].iono_std == 0,
                   "incorrect value for last_msg.msg.osr.obs[4].iono_std, "
-                  "expected 0, is %d",
-                  last_msg.msg.osr.obs[4].iono_std);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[4].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[4].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[4].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[4].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[4].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[4].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[4].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[4].range_std == 2,
                   "incorrect value for last_msg.msg.osr.obs[4].range_std, "
-                  "expected 2, is %d",
-                  last_msg.msg.osr.obs[4].range_std);
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[4].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[4].sid.code == 0,
                   "incorrect value for last_msg.msg.osr.obs[4].sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.osr.obs[4].sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[4].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[4].sid.sat == 17,
                   "incorrect value for last_msg.msg.osr.obs[4].sid.sat, "
-                  "expected 17, is %d",
-                  last_msg.msg.osr.obs[4].sid.sat);
+                  "expected 17, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[4].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[4].tropo_std == 2,
                   "incorrect value for last_msg.msg.osr.obs[4].tropo_std, "
-                  "expected 2, is %d",
-                  last_msg.msg.osr.obs[4].tropo_std);
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[4].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[5].L.f == 108,
-        "incorrect value for last_msg.msg.osr.obs[5].L.f, expected 108, is %d",
-        last_msg.msg.osr.obs[5].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[5].L.f == 108,
+                  "incorrect value for last_msg.msg.osr.obs[5].L.f, expected "
+                  "108, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[5].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[5].L.i == 110024343,
                   "incorrect value for last_msg.msg.osr.obs[5].L.i, expected "
-                  "110024343, is %d",
-                  last_msg.msg.osr.obs[5].L.i);
+                  "110024343, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[5].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[5].P == 1046846826,
                   "incorrect value for last_msg.msg.osr.obs[5].P, expected "
-                  "1046846826, is %d",
-                  last_msg.msg.osr.obs[5].P);
+                  "1046846826, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[5].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[5].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[5].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[5].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[5].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[5].flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[5].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[5].iono_std == 13,
                   "incorrect value for last_msg.msg.osr.obs[5].iono_std, "
-                  "expected 13, is %d",
-                  last_msg.msg.osr.obs[5].iono_std);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[5].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[5].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[5].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[5].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[5].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[5].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[5].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[5].range_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[5].range_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[5].range_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[5].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[5].sid.code == 0,
                   "incorrect value for last_msg.msg.osr.obs[5].sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.osr.obs[5].sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[5].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[5].sid.sat == 19,
                   "incorrect value for last_msg.msg.osr.obs[5].sid.sat, "
-                  "expected 19, is %d",
-                  last_msg.msg.osr.obs[5].sid.sat);
+                  "expected 19, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[5].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[5].tropo_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[5].tropo_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[5].tropo_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[5].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[6].L.f == 206,
-        "incorrect value for last_msg.msg.osr.obs[6].L.f, expected 206, is %d",
-        last_msg.msg.osr.obs[6].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[6].L.f == 206,
+                  "incorrect value for last_msg.msg.osr.obs[6].L.f, expected "
+                  "206, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[6].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[6].L.i == 111507381,
                   "incorrect value for last_msg.msg.osr.obs[6].L.i, expected "
-                  "111507381, is %d",
-                  last_msg.msg.osr.obs[6].L.i);
+                  "111507381, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[6].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[6].P == 1060957521,
                   "incorrect value for last_msg.msg.osr.obs[6].P, expected "
-                  "1060957521, is %d",
-                  last_msg.msg.osr.obs[6].P);
+                  "1060957521, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[6].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[6].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[6].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[6].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[6].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[6].flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[6].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[6].iono_std == 13,
                   "incorrect value for last_msg.msg.osr.obs[6].iono_std, "
-                  "expected 13, is %d",
-                  last_msg.msg.osr.obs[6].iono_std);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[6].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[6].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[6].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[6].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[6].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[6].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[6].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[6].range_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[6].range_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[6].range_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[6].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[6].sid.code == 0,
                   "incorrect value for last_msg.msg.osr.obs[6].sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.osr.obs[6].sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[6].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[6].sid.sat == 28,
                   "incorrect value for last_msg.msg.osr.obs[6].sid.sat, "
-                  "expected 28, is %d",
-                  last_msg.msg.osr.obs[6].sid.sat);
+                  "expected 28, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[6].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[6].tropo_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[6].tropo_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[6].tropo_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[6].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[7].L.f == 200,
-        "incorrect value for last_msg.msg.osr.obs[7].L.f, expected 200, is %d",
-        last_msg.msg.osr.obs[7].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[7].L.f == 200,
+                  "incorrect value for last_msg.msg.osr.obs[7].L.f, expected "
+                  "200, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[7].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[7].L.i == 113614775,
                   "incorrect value for last_msg.msg.osr.obs[7].L.i, expected "
-                  "113614775, is %d",
-                  last_msg.msg.osr.obs[7].L.i);
+                  "113614775, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[7].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[7].P == 1081009286,
                   "incorrect value for last_msg.msg.osr.obs[7].P, expected "
-                  "1081009286, is %d",
-                  last_msg.msg.osr.obs[7].P);
+                  "1081009286, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[7].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[7].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[7].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[7].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[7].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[7].flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[7].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[7].iono_std == 13,
                   "incorrect value for last_msg.msg.osr.obs[7].iono_std, "
-                  "expected 13, is %d",
-                  last_msg.msg.osr.obs[7].iono_std);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[7].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[7].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[7].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[7].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[7].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[7].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[7].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[7].range_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[7].range_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[7].range_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[7].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[7].sid.code == 0,
                   "incorrect value for last_msg.msg.osr.obs[7].sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.osr.obs[7].sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[7].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[7].sid.sat == 30,
                   "incorrect value for last_msg.msg.osr.obs[7].sid.sat, "
-                  "expected 30, is %d",
-                  last_msg.msg.osr.obs[7].sid.sat);
+                  "expected 30, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[7].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[7].tropo_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[7].tropo_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[7].tropo_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[7].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[8].L.f == 170,
-        "incorrect value for last_msg.msg.osr.obs[8].L.f, expected 170, is %d",
-        last_msg.msg.osr.obs[8].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[8].L.f == 170,
+                  "incorrect value for last_msg.msg.osr.obs[8].L.f, expected "
+                  "170, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[8].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[8].L.i == 94728270,
                   "incorrect value for last_msg.msg.osr.obs[8].L.i, expected "
-                  "94728270, is %d",
-                  last_msg.msg.osr.obs[8].L.i);
+                  "94728270, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[8].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[8].P == 1156681781,
                   "incorrect value for last_msg.msg.osr.obs[8].P, expected "
-                  "1156681781, is %d",
-                  last_msg.msg.osr.obs[8].P);
+                  "1156681781, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[8].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[8].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[8].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[8].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[8].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[8].flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[8].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[8].iono_std == 21,
                   "incorrect value for last_msg.msg.osr.obs[8].iono_std, "
-                  "expected 21, is %d",
-                  last_msg.msg.osr.obs[8].iono_std);
+                  "expected 21, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[8].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[8].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[8].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[8].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[8].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[8].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[8].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[8].range_std == 7,
                   "incorrect value for last_msg.msg.osr.obs[8].range_std, "
-                  "expected 7, is %d",
-                  last_msg.msg.osr.obs[8].range_std);
+                  "expected 7, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[8].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[8].sid.code == 6,
                   "incorrect value for last_msg.msg.osr.obs[8].sid.code, "
-                  "expected 6, is %d",
-                  last_msg.msg.osr.obs[8].sid.code);
+                  "expected 6, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[8].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[8].sid.sat == 1,
                   "incorrect value for last_msg.msg.osr.obs[8].sid.sat, "
-                  "expected 1, is %d",
-                  last_msg.msg.osr.obs[8].sid.sat);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[8].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[8].tropo_std == 7,
                   "incorrect value for last_msg.msg.osr.obs[8].tropo_std, "
-                  "expected 7, is %d",
-                  last_msg.msg.osr.obs[8].tropo_std);
+                  "expected 7, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[8].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[9].L.f == 129,
-        "incorrect value for last_msg.msg.osr.obs[9].L.f, expected 129, is %d",
-        last_msg.msg.osr.obs[9].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[9].L.f == 129,
+                  "incorrect value for last_msg.msg.osr.obs[9].L.f, expected "
+                  "129, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[9].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[9].L.i == 87130275,
                   "incorrect value for last_msg.msg.osr.obs[9].L.i, expected "
-                  "87130275, is %d",
-                  last_msg.msg.osr.obs[9].L.i);
+                  "87130275, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[9].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[9].P == 1063905531,
                   "incorrect value for last_msg.msg.osr.obs[9].P, expected "
-                  "1063905531, is %d",
-                  last_msg.msg.osr.obs[9].P);
+                  "1063905531, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[9].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[9].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[9].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[9].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[9].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[9].flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[9].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[9].iono_std == 21,
                   "incorrect value for last_msg.msg.osr.obs[9].iono_std, "
-                  "expected 21, is %d",
-                  last_msg.msg.osr.obs[9].iono_std);
+                  "expected 21, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[9].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[9].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[9].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[9].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[9].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[9].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[9].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[9].range_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[9].range_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[9].range_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[9].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[9].sid.code == 6,
                   "incorrect value for last_msg.msg.osr.obs[9].sid.code, "
-                  "expected 6, is %d",
-                  last_msg.msg.osr.obs[9].sid.code);
+                  "expected 6, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[9].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[9].sid.sat == 13,
                   "incorrect value for last_msg.msg.osr.obs[9].sid.sat, "
-                  "expected 13, is %d",
-                  last_msg.msg.osr.obs[9].sid.sat);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[9].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[9].tropo_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[9].tropo_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[9].tropo_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[9].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[10].L.f == 46,
-        "incorrect value for last_msg.msg.osr.obs[10].L.f, expected 46, is %d",
-        last_msg.msg.osr.obs[10].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[10].L.f == 46,
+                  "incorrect value for last_msg.msg.osr.obs[10].L.f, expected "
+                  "46, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[10].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[10].L.i == 86253605,
                   "incorrect value for last_msg.msg.osr.obs[10].L.i, expected "
-                  "86253605, is %d",
-                  last_msg.msg.osr.obs[10].L.i);
+                  "86253605, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[10].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[10].P == 1053200752,
                   "incorrect value for last_msg.msg.osr.obs[10].P, expected "
-                  "1053200752, is %d",
-                  last_msg.msg.osr.obs[10].P);
+                  "1053200752, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[10].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[10].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[10].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[10].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[10].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[10].flags, "
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[10].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[10].iono_std == 21,
                   "incorrect value for last_msg.msg.osr.obs[10].iono_std, "
-                  "expected 21, is %d",
-                  last_msg.msg.osr.obs[10].iono_std);
+                  "expected 21, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[10].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[10].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[10].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[10].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[10].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[10].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[10].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[10].range_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[10].range_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[10].range_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[10].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[10].sid.code == 6,
                   "incorrect value for last_msg.msg.osr.obs[10].sid.code, "
-                  "expected 6, is %d",
-                  last_msg.msg.osr.obs[10].sid.code);
+                  "expected 6, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[10].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[10].sid.sat == 14,
                   "incorrect value for last_msg.msg.osr.obs[10].sid.sat, "
-                  "expected 14, is %d",
-                  last_msg.msg.osr.obs[10].sid.sat);
+                  "expected 14, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[10].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[10].tropo_std == 3,
                   "incorrect value for last_msg.msg.osr.obs[10].tropo_std, "
-                  "expected 3, is %d",
-                  last_msg.msg.osr.obs[10].tropo_std);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[10].tropo_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[11].L.f == 95,
-        "incorrect value for last_msg.msg.osr.obs[11].L.f, expected 95, is %d",
-        last_msg.msg.osr.obs[11].L.f);
+    ck_assert_msg(last_msg.msg.osr.obs[11].L.f == 95,
+                  "incorrect value for last_msg.msg.osr.obs[11].L.f, expected "
+                  "95, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[11].L.f);
 
     ck_assert_msg(last_msg.msg.osr.obs[11].L.i == 93155512,
                   "incorrect value for last_msg.msg.osr.obs[11].L.i, expected "
-                  "93155512, is %d",
-                  last_msg.msg.osr.obs[11].L.i);
+                  "93155512, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[11].L.i);
 
     ck_assert_msg(last_msg.msg.osr.obs[11].P == 1137476774,
                   "incorrect value for last_msg.msg.osr.obs[11].P, expected "
-                  "1137476774, is %d",
-                  last_msg.msg.osr.obs[11].P);
+                  "1137476774, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[11].P);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[11].flags == 3,
-        "incorrect value for last_msg.msg.osr.obs[11].flags, expected 3, is %d",
-        last_msg.msg.osr.obs[11].flags);
+    ck_assert_msg(last_msg.msg.osr.obs[11].flags == 3,
+                  "incorrect value for last_msg.msg.osr.obs[11].flags, "
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[11].flags);
 
     ck_assert_msg(last_msg.msg.osr.obs[11].iono_std == 21,
                   "incorrect value for last_msg.msg.osr.obs[11].iono_std, "
-                  "expected 21, is %d",
-                  last_msg.msg.osr.obs[11].iono_std);
+                  "expected 21, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[11].iono_std);
 
-    ck_assert_msg(
-        last_msg.msg.osr.obs[11].lock == 15,
-        "incorrect value for last_msg.msg.osr.obs[11].lock, expected 15, is %d",
-        last_msg.msg.osr.obs[11].lock);
+    ck_assert_msg(last_msg.msg.osr.obs[11].lock == 15,
+                  "incorrect value for last_msg.msg.osr.obs[11].lock, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[11].lock);
 
     ck_assert_msg(last_msg.msg.osr.obs[11].range_std == 5,
                   "incorrect value for last_msg.msg.osr.obs[11].range_std, "
-                  "expected 5, is %d",
-                  last_msg.msg.osr.obs[11].range_std);
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[11].range_std);
 
     ck_assert_msg(last_msg.msg.osr.obs[11].sid.code == 6,
                   "incorrect value for last_msg.msg.osr.obs[11].sid.code, "
-                  "expected 6, is %d",
-                  last_msg.msg.osr.obs[11].sid.code);
+                  "expected 6, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[11].sid.code);
 
     ck_assert_msg(last_msg.msg.osr.obs[11].sid.sat == 15,
                   "incorrect value for last_msg.msg.osr.obs[11].sid.sat, "
-                  "expected 15, is %d",
-                  last_msg.msg.osr.obs[11].sid.sat);
+                  "expected 15, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[11].sid.sat);
 
     ck_assert_msg(last_msg.msg.osr.obs[11].tropo_std == 5,
                   "incorrect value for last_msg.msg.osr.obs[11].tropo_std, "
-                  "expected 5, is %d",
-                  last_msg.msg.osr.obs[11].tropo_std);
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.osr.obs[11].tropo_std);
   }
 }
 END_TEST

@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -216,8 +216,8 @@ START_TEST(test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->index == 0,
-                  "incorrect value for index, expected 0, is %d",
-                  check_msg->index);
+                  "incorrect value for index, expected 0, is %" PRId64,
+                  (int64_t)check_msg->index);
     {
       const char check_string[] = {
           (char)116, (char)101, (char)108, (char)101, (char)109, (char)101,
@@ -341,8 +341,8 @@ START_TEST(test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->index == 1,
-                  "incorrect value for index, expected 1, is %d",
-                  check_msg->index);
+                  "incorrect value for index, expected 1, is %" PRId64,
+                  (int64_t)check_msg->index);
     {
       const char check_string[] = {
           (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
@@ -460,8 +460,8 @@ START_TEST(test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->index == 2,
-                  "incorrect value for index, expected 2, is %d",
-                  check_msg->index);
+                  "incorrect value for index, expected 2, is %" PRId64,
+                  (int64_t)check_msg->index);
     {
       const char check_string[] = {
           (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
@@ -577,8 +577,8 @@ START_TEST(test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->index == 3,
-                  "incorrect value for index, expected 3, is %d",
-                  check_msg->index);
+                  "incorrect value for index, expected 3, is %" PRId64,
+                  (int64_t)check_msg->index);
     {
       const char check_string[] = {
           (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)102,
@@ -694,8 +694,8 @@ START_TEST(test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->index == 4,
-                  "incorrect value for index, expected 4, is %d",
-                  check_msg->index);
+                  "incorrect value for index, expected 4, is %" PRId64,
+                  (int64_t)check_msg->index);
     {
       const char check_string[] = {
           (char)117, (char)97,  (char)114, (char)116, (char)95,  (char)117,

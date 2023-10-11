@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -196,29 +196,29 @@ START_TEST(test_legacy_auto_check_sbp_imu_MsgImuRaw) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->acc_x == 96,
-                  "incorrect value for acc_x, expected 96, is %d",
-                  check_msg->acc_x);
+                  "incorrect value for acc_x, expected 96, is %" PRId64,
+                  (int64_t)check_msg->acc_x);
     ck_assert_msg(check_msg->acc_y == -33,
-                  "incorrect value for acc_y, expected -33, is %d",
-                  check_msg->acc_y);
+                  "incorrect value for acc_y, expected -33, is %" PRId64,
+                  (int64_t)check_msg->acc_y);
     ck_assert_msg(check_msg->acc_z == 4140,
-                  "incorrect value for acc_z, expected 4140, is %d",
-                  check_msg->acc_z);
+                  "incorrect value for acc_z, expected 4140, is %" PRId64,
+                  (int64_t)check_msg->acc_z);
     ck_assert_msg(check_msg->gyr_x == 60,
-                  "incorrect value for gyr_x, expected 60, is %d",
-                  check_msg->gyr_x);
+                  "incorrect value for gyr_x, expected 60, is %" PRId64,
+                  (int64_t)check_msg->gyr_x);
     ck_assert_msg(check_msg->gyr_y == -304,
-                  "incorrect value for gyr_y, expected -304, is %d",
-                  check_msg->gyr_y);
+                  "incorrect value for gyr_y, expected -304, is %" PRId64,
+                  (int64_t)check_msg->gyr_y);
     ck_assert_msg(check_msg->gyr_z == -18,
-                  "incorrect value for gyr_z, expected -18, is %d",
-                  check_msg->gyr_z);
+                  "incorrect value for gyr_z, expected -18, is %" PRId64,
+                  (int64_t)check_msg->gyr_z);
     ck_assert_msg(check_msg->tow == 3221225754,
-                  "incorrect value for tow, expected 3221225754, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 3221225754, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->tow_f == 206,
-                  "incorrect value for tow_f, expected 206, is %d",
-                  check_msg->tow_f);
+                  "incorrect value for tow_f, expected 206, is %" PRId64,
+                  (int64_t)check_msg->tow_f);
   }
 }
 END_TEST

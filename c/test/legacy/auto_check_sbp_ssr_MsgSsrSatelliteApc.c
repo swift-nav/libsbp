@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -325,104 +325,120 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrSatelliteApc) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->apc[0].pco[0] == 1,
-                  "incorrect value for apc[0].pco[0], expected 1, is %d",
-                  check_msg->apc[0].pco[0]);
+                  "incorrect value for apc[0].pco[0], expected 1, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pco[0]);
     ck_assert_msg(check_msg->apc[0].pco[1] == -1,
-                  "incorrect value for apc[0].pco[1], expected -1, is %d",
-                  check_msg->apc[0].pco[1]);
-    ck_assert_msg(check_msg->apc[0].pco[2] == 729,
-                  "incorrect value for apc[0].pco[2], expected 729, is %d",
-                  check_msg->apc[0].pco[2]);
+                  "incorrect value for apc[0].pco[1], expected -1, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pco[1]);
+    ck_assert_msg(
+        check_msg->apc[0].pco[2] == 729,
+        "incorrect value for apc[0].pco[2], expected 729, is %" PRId64,
+        (int64_t)check_msg->apc[0].pco[2]);
     ck_assert_msg(check_msg->apc[0].pcv[0] == 11,
-                  "incorrect value for apc[0].pcv[0], expected 11, is %d",
-                  check_msg->apc[0].pcv[0]);
+                  "incorrect value for apc[0].pcv[0], expected 11, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pcv[0]);
     ck_assert_msg(check_msg->apc[0].pcv[1] == 10,
-                  "incorrect value for apc[0].pcv[1], expected 10, is %d",
-                  check_msg->apc[0].pcv[1]);
+                  "incorrect value for apc[0].pcv[1], expected 10, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pcv[1]);
     ck_assert_msg(check_msg->apc[0].pcv[2] == 8,
-                  "incorrect value for apc[0].pcv[2], expected 8, is %d",
-                  check_msg->apc[0].pcv[2]);
+                  "incorrect value for apc[0].pcv[2], expected 8, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pcv[2]);
     ck_assert_msg(check_msg->apc[0].pcv[3] == 5,
-                  "incorrect value for apc[0].pcv[3], expected 5, is %d",
-                  check_msg->apc[0].pcv[3]);
+                  "incorrect value for apc[0].pcv[3], expected 5, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pcv[3]);
     ck_assert_msg(check_msg->apc[0].pcv[4] == 1,
-                  "incorrect value for apc[0].pcv[4], expected 1, is %d",
-                  check_msg->apc[0].pcv[4]);
+                  "incorrect value for apc[0].pcv[4], expected 1, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pcv[4]);
     ck_assert_msg(check_msg->apc[0].pcv[5] == -4,
-                  "incorrect value for apc[0].pcv[5], expected -4, is %d",
-                  check_msg->apc[0].pcv[5]);
+                  "incorrect value for apc[0].pcv[5], expected -4, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pcv[5]);
     ck_assert_msg(check_msg->apc[0].pcv[6] == -8,
-                  "incorrect value for apc[0].pcv[6], expected -8, is %d",
-                  check_msg->apc[0].pcv[6]);
-    ck_assert_msg(check_msg->apc[0].pcv[7] == -10,
-                  "incorrect value for apc[0].pcv[7], expected -10, is %d",
-                  check_msg->apc[0].pcv[7]);
-    ck_assert_msg(check_msg->apc[0].pcv[8] == -10,
-                  "incorrect value for apc[0].pcv[8], expected -10, is %d",
-                  check_msg->apc[0].pcv[8]);
-    ck_assert_msg(check_msg->apc[0].pcv[9] == -10,
-                  "incorrect value for apc[0].pcv[9], expected -10, is %d",
-                  check_msg->apc[0].pcv[9]);
-    ck_assert_msg(check_msg->apc[0].pcv[10] == -7,
-                  "incorrect value for apc[0].pcv[10], expected -7, is %d",
-                  check_msg->apc[0].pcv[10]);
-    ck_assert_msg(check_msg->apc[0].pcv[11] == -4,
-                  "incorrect value for apc[0].pcv[11], expected -4, is %d",
-                  check_msg->apc[0].pcv[11]);
+                  "incorrect value for apc[0].pcv[6], expected -8, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pcv[6]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[7] == -10,
+        "incorrect value for apc[0].pcv[7], expected -10, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[7]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[8] == -10,
+        "incorrect value for apc[0].pcv[8], expected -10, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[8]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[9] == -10,
+        "incorrect value for apc[0].pcv[9], expected -10, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[9]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[10] == -7,
+        "incorrect value for apc[0].pcv[10], expected -7, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[10]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[11] == -4,
+        "incorrect value for apc[0].pcv[11], expected -4, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[11]);
     ck_assert_msg(check_msg->apc[0].pcv[12] == 0,
-                  "incorrect value for apc[0].pcv[12], expected 0, is %d",
-                  check_msg->apc[0].pcv[12]);
+                  "incorrect value for apc[0].pcv[12], expected 0, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pcv[12]);
     ck_assert_msg(check_msg->apc[0].pcv[13] == 6,
-                  "incorrect value for apc[0].pcv[13], expected 6, is %d",
-                  check_msg->apc[0].pcv[13]);
-    ck_assert_msg(check_msg->apc[0].pcv[14] == 12,
-                  "incorrect value for apc[0].pcv[14], expected 12, is %d",
-                  check_msg->apc[0].pcv[14]);
-    ck_assert_msg(check_msg->apc[0].pcv[15] == 22,
-                  "incorrect value for apc[0].pcv[15], expected 22, is %d",
-                  check_msg->apc[0].pcv[15]);
-    ck_assert_msg(check_msg->apc[0].pcv[16] == 30,
-                  "incorrect value for apc[0].pcv[16], expected 30, is %d",
-                  check_msg->apc[0].pcv[16]);
-    ck_assert_msg(check_msg->apc[0].pcv[17] == 41,
-                  "incorrect value for apc[0].pcv[17], expected 41, is %d",
-                  check_msg->apc[0].pcv[17]);
-    ck_assert_msg(check_msg->apc[0].pcv[18] == 41,
-                  "incorrect value for apc[0].pcv[18], expected 41, is %d",
-                  check_msg->apc[0].pcv[18]);
-    ck_assert_msg(check_msg->apc[0].pcv[19] == 41,
-                  "incorrect value for apc[0].pcv[19], expected 41, is %d",
-                  check_msg->apc[0].pcv[19]);
-    ck_assert_msg(check_msg->apc[0].pcv[20] == 41,
-                  "incorrect value for apc[0].pcv[20], expected 41, is %d",
-                  check_msg->apc[0].pcv[20]);
-    ck_assert_msg(check_msg->apc[0].sat_info == 4,
-                  "incorrect value for apc[0].sat_info, expected 4, is %d",
-                  check_msg->apc[0].sat_info);
-    ck_assert_msg(check_msg->apc[0].sid.code == 0,
-                  "incorrect value for apc[0].sid.code, expected 0, is %d",
-                  check_msg->apc[0].sid.code);
+                  "incorrect value for apc[0].pcv[13], expected 6, is %" PRId64,
+                  (int64_t)check_msg->apc[0].pcv[13]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[14] == 12,
+        "incorrect value for apc[0].pcv[14], expected 12, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[14]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[15] == 22,
+        "incorrect value for apc[0].pcv[15], expected 22, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[15]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[16] == 30,
+        "incorrect value for apc[0].pcv[16], expected 30, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[16]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[17] == 41,
+        "incorrect value for apc[0].pcv[17], expected 41, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[17]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[18] == 41,
+        "incorrect value for apc[0].pcv[18], expected 41, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[18]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[19] == 41,
+        "incorrect value for apc[0].pcv[19], expected 41, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[19]);
+    ck_assert_msg(
+        check_msg->apc[0].pcv[20] == 41,
+        "incorrect value for apc[0].pcv[20], expected 41, is %" PRId64,
+        (int64_t)check_msg->apc[0].pcv[20]);
+    ck_assert_msg(
+        check_msg->apc[0].sat_info == 4,
+        "incorrect value for apc[0].sat_info, expected 4, is %" PRId64,
+        (int64_t)check_msg->apc[0].sat_info);
+    ck_assert_msg(
+        check_msg->apc[0].sid.code == 0,
+        "incorrect value for apc[0].sid.code, expected 0, is %" PRId64,
+        (int64_t)check_msg->apc[0].sid.code);
     ck_assert_msg(check_msg->apc[0].sid.sat == 2,
-                  "incorrect value for apc[0].sid.sat, expected 2, is %d",
-                  check_msg->apc[0].sid.sat);
+                  "incorrect value for apc[0].sid.sat, expected 2, is %" PRId64,
+                  (int64_t)check_msg->apc[0].sid.sat);
     ck_assert_msg(check_msg->apc[0].svn == 61,
-                  "incorrect value for apc[0].svn, expected 61, is %d",
-                  check_msg->apc[0].svn);
+                  "incorrect value for apc[0].svn, expected 61, is %" PRId64,
+                  (int64_t)check_msg->apc[0].svn);
     ck_assert_msg(check_msg->iod_ssr == 3,
-                  "incorrect value for iod_ssr, expected 3, is %d",
-                  check_msg->iod_ssr);
+                  "incorrect value for iod_ssr, expected 3, is %" PRId64,
+                  (int64_t)check_msg->iod_ssr);
     ck_assert_msg(check_msg->sol_id == 2,
-                  "incorrect value for sol_id, expected 2, is %d",
-                  check_msg->sol_id);
+                  "incorrect value for sol_id, expected 2, is %" PRId64,
+                  (int64_t)check_msg->sol_id);
     ck_assert_msg(check_msg->time.tow == 604799,
-                  "incorrect value for time.tow, expected 604799, is %d",
-                  check_msg->time.tow);
+                  "incorrect value for time.tow, expected 604799, is %" PRId64,
+                  (int64_t)check_msg->time.tow);
     ck_assert_msg(check_msg->time.wn == 2222,
-                  "incorrect value for time.wn, expected 2222, is %d",
-                  check_msg->time.wn);
-    ck_assert_msg(check_msg->update_interval == 1,
-                  "incorrect value for update_interval, expected 1, is %d",
-                  check_msg->update_interval);
+                  "incorrect value for time.wn, expected 2222, is %" PRId64,
+                  (int64_t)check_msg->time.wn);
+    ck_assert_msg(
+        check_msg->update_interval == 1,
+        "incorrect value for update_interval, expected 1, is %" PRId64,
+        (int64_t)check_msg->update_interval);
   }
 }
 END_TEST

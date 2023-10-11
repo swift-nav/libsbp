@@ -1,4 +1,4 @@
-load("@rules_swiftnav//cc:defs.bzl", "UNIT", "swift_c_library", "swift_cc_test")
+load("@rules_swiftnav//cc:tgt.bzl", "UNIT", "swift_prod_portable_c_library", "swift_new_cc_test", "swift_new_c_test")
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 
 SBP_INCLUDE = glob(["include/**/*.h"])
@@ -10,7 +10,7 @@ refresh_compile_commands(
     visibility = ["//visibility:public"],
 )
 
-swift_c_library(
+swift_prod_portable_c_library(
     name = "sbp",
     srcs = [
         "src/edc.c",
@@ -56,7 +56,7 @@ swift_c_library(
     includes = [
         "include",
     ],
-    nocopts = ["-Wstack-protector"],
+    #nocopts = ["-Wstack-protector"],
     visibility = ["//visibility:public"],
 )
 
@@ -68,7 +68,7 @@ filegroup(
 
 SBP_LEGACY_C_SOURCES = glob(["test/legacy/auto*.c"])
 
-swift_cc_test(
+swift_new_c_test(
     name = "sbp-legacy-test",
     srcs = [
         "test/check_main_legacy.c",
@@ -81,6 +81,9 @@ swift_cc_test(
         "include/libsbp",
     ],
     type = UNIT,
+    nocopts = [
+      "-Warray-bounds",
+    ],
     deps = [
         ":sbp",
         "@check",
@@ -89,7 +92,7 @@ swift_cc_test(
 
 SBP_V4_C_SOURCES = glob(["test/auto*.c"])
 
-swift_cc_test(
+swift_new_c_test(
     name = "sbp-v4-test",
     srcs = [
         "test/check_main.c",
@@ -108,17 +111,20 @@ swift_cc_test(
 
 SBP_CPP_V4_C_SOURCES = glob(["test/cpp/auto*.cc"])
 
-swift_cc_test(
+swift_new_cc_test(
     name = "sbp-cpp-v4-test",
     srcs = SBP_CPP_V4_C_SOURCES,
     type = UNIT,
+    nocopts = [
+      "-Warray-bounds",
+    ],
     deps = [
         ":sbp",
         "@googletest//:gtest_main",
     ],
 )
 
-swift_cc_test(
+swift_new_cc_test(
     name = "sbp-string-test",
     srcs = [
         "test/string/test_double_null_terminated.cc",
@@ -138,7 +144,7 @@ swift_cc_test(
 
 SBP_CPP_LEGACY_SOURCES = glob(["test/legacy/cpp/auto*.cc"])
 
-swift_cc_test(
+swift_new_cc_test(
     name = "sbp-cpp-legacy-test",
     srcs = [
         "test/legacy/cpp/test_sbp_stdio.cc",
@@ -147,6 +153,13 @@ swift_cc_test(
         "test/legacy/cpp/sbp_data/gnss_data.sbp",
     ],
     type = UNIT,
+    nocopts = [
+      "-Warray-bounds",
+    ],
+    copts = [
+      "-Wno-array-bounds",
+      "-Wno-stringop-overflow",
+    ],
     deps = [
         ":sbp",
         "@googletest//:gtest_main",

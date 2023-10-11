@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -198,29 +198,32 @@ START_TEST(test_legacy_auto_check_sbp_system_MsgSensorAidEvent) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
-    ck_assert_msg(check_msg->n_accepted_meas == 0,
-                  "incorrect value for n_accepted_meas, expected 0, is %d",
-                  check_msg->n_accepted_meas);
-    ck_assert_msg(check_msg->n_attempted_meas == 0,
-                  "incorrect value for n_attempted_meas, expected 0, is %d",
-                  check_msg->n_attempted_meas);
-    ck_assert_msg(check_msg->n_available_meas == 0,
-                  "incorrect value for n_available_meas, expected 0, is %d",
-                  check_msg->n_available_meas);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
+    ck_assert_msg(
+        check_msg->n_accepted_meas == 0,
+        "incorrect value for n_accepted_meas, expected 0, is %" PRId64,
+        (int64_t)check_msg->n_accepted_meas);
+    ck_assert_msg(
+        check_msg->n_attempted_meas == 0,
+        "incorrect value for n_attempted_meas, expected 0, is %" PRId64,
+        (int64_t)check_msg->n_attempted_meas);
+    ck_assert_msg(
+        check_msg->n_available_meas == 0,
+        "incorrect value for n_available_meas, expected 0, is %" PRId64,
+        (int64_t)check_msg->n_available_meas);
     ck_assert_msg(check_msg->sensor_id == 0,
-                  "incorrect value for sensor_id, expected 0, is %d",
-                  check_msg->sensor_id);
+                  "incorrect value for sensor_id, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sensor_id);
     ck_assert_msg(check_msg->sensor_state == 0,
-                  "incorrect value for sensor_state, expected 0, is %d",
-                  check_msg->sensor_state);
+                  "incorrect value for sensor_state, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sensor_state);
     ck_assert_msg(check_msg->sensor_type == 0,
-                  "incorrect value for sensor_type, expected 0, is %d",
-                  check_msg->sensor_type);
+                  "incorrect value for sensor_type, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sensor_type);
     ck_assert_msg(check_msg->time == 326825520,
-                  "incorrect value for time, expected 326825520, is %d",
-                  check_msg->time);
+                  "incorrect value for time, expected 326825520, is %" PRId64,
+                  (int64_t)check_msg->time);
   }
 }
 END_TEST

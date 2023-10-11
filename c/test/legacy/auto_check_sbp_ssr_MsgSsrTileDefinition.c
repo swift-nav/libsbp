@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -204,48 +204,52 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition) {
         (msg_ssr_tile_definition_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->bitmask == 1234567890,
-                  "incorrect value for bitmask, expected 1234567890, is %d",
-                  check_msg->bitmask);
+    ck_assert_msg(
+        check_msg->bitmask == 1234567890,
+        "incorrect value for bitmask, expected 1234567890, is %" PRId64,
+        (int64_t)check_msg->bitmask);
     ck_assert_msg(check_msg->cols == 6,
-                  "incorrect value for cols, expected 6, is %d",
-                  check_msg->cols);
-    ck_assert_msg(check_msg->corner_nw_lat == 7354,
-                  "incorrect value for corner_nw_lat, expected 7354, is %d",
-                  check_msg->corner_nw_lat);
-    ck_assert_msg(check_msg->corner_nw_lon == -22725,
-                  "incorrect value for corner_nw_lon, expected -22725, is %d",
-                  check_msg->corner_nw_lon);
+                  "incorrect value for cols, expected 6, is %" PRId64,
+                  (int64_t)check_msg->cols);
+    ck_assert_msg(
+        check_msg->corner_nw_lat == 7354,
+        "incorrect value for corner_nw_lat, expected 7354, is %" PRId64,
+        (int64_t)check_msg->corner_nw_lat);
+    ck_assert_msg(
+        check_msg->corner_nw_lon == -22725,
+        "incorrect value for corner_nw_lon, expected -22725, is %" PRId64,
+        (int64_t)check_msg->corner_nw_lon);
     ck_assert_msg(check_msg->iod_atmo == 3,
-                  "incorrect value for iod_atmo, expected 3, is %d",
-                  check_msg->iod_atmo);
+                  "incorrect value for iod_atmo, expected 3, is %" PRId64,
+                  (int64_t)check_msg->iod_atmo);
     ck_assert_msg(check_msg->rows == 6,
-                  "incorrect value for rows, expected 6, is %d",
-                  check_msg->rows);
+                  "incorrect value for rows, expected 6, is %" PRId64,
+                  (int64_t)check_msg->rows);
     ck_assert_msg(check_msg->sol_id == 2,
-                  "incorrect value for sol_id, expected 2, is %d",
-                  check_msg->sol_id);
+                  "incorrect value for sol_id, expected 2, is %" PRId64,
+                  (int64_t)check_msg->sol_id);
     ck_assert_msg(check_msg->spacing_lat == 100,
-                  "incorrect value for spacing_lat, expected 100, is %d",
-                  check_msg->spacing_lat);
+                  "incorrect value for spacing_lat, expected 100, is %" PRId64,
+                  (int64_t)check_msg->spacing_lat);
     ck_assert_msg(check_msg->spacing_lon == 100,
-                  "incorrect value for spacing_lon, expected 100, is %d",
-                  check_msg->spacing_lon);
+                  "incorrect value for spacing_lon, expected 100, is %" PRId64,
+                  (int64_t)check_msg->spacing_lon);
     ck_assert_msg(check_msg->tile_id == 5,
-                  "incorrect value for tile_id, expected 5, is %d",
-                  check_msg->tile_id);
+                  "incorrect value for tile_id, expected 5, is %" PRId64,
+                  (int64_t)check_msg->tile_id);
     ck_assert_msg(check_msg->tile_set_id == 4,
-                  "incorrect value for tile_set_id, expected 4, is %d",
-                  check_msg->tile_set_id);
+                  "incorrect value for tile_set_id, expected 4, is %" PRId64,
+                  (int64_t)check_msg->tile_set_id);
     ck_assert_msg(check_msg->time.tow == 604799,
-                  "incorrect value for time.tow, expected 604799, is %d",
-                  check_msg->time.tow);
+                  "incorrect value for time.tow, expected 604799, is %" PRId64,
+                  (int64_t)check_msg->time.tow);
     ck_assert_msg(check_msg->time.wn == 2222,
-                  "incorrect value for time.wn, expected 2222, is %d",
-                  check_msg->time.wn);
-    ck_assert_msg(check_msg->update_interval == 1,
-                  "incorrect value for update_interval, expected 1, is %d",
-                  check_msg->update_interval);
+                  "incorrect value for time.wn, expected 2222, is %" PRId64,
+                  (int64_t)check_msg->time.wn);
+    ck_assert_msg(
+        check_msg->update_interval == 1,
+        "incorrect value for update_interval, expected 1, is %" PRId64,
+        (int64_t)check_msg->update_interval);
   }
 }
 END_TEST

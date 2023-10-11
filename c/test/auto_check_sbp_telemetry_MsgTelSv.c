@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -155,86 +155,86 @@ START_TEST(test_auto_check_sbp_telemetry_MsgTelSv) {
     ck_assert_msg(sbp_message_cmp(SbpMsgTelSv, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.tel_sv.n_obs == 16,
-        "incorrect value for last_msg.msg.tel_sv.n_obs, expected 16, is %d",
-        last_msg.msg.tel_sv.n_obs);
+    ck_assert_msg(last_msg.msg.tel_sv.n_obs == 16,
+                  "incorrect value for last_msg.msg.tel_sv.n_obs, expected 16, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.tel_sv.n_obs);
 
-    ck_assert_msg(
-        last_msg.msg.tel_sv.n_sv_tel == 1,
-        "incorrect value for last_msg.msg.tel_sv.n_sv_tel, expected 1, is %d",
-        last_msg.msg.tel_sv.n_sv_tel);
+    ck_assert_msg(last_msg.msg.tel_sv.n_sv_tel == 1,
+                  "incorrect value for last_msg.msg.tel_sv.n_sv_tel, expected "
+                  "1, is %" PRId64,
+                  (int64_t)last_msg.msg.tel_sv.n_sv_tel);
 
     ck_assert_msg(last_msg.msg.tel_sv.origin_flags == 1,
                   "incorrect value for last_msg.msg.tel_sv.origin_flags, "
-                  "expected 1, is %d",
-                  last_msg.msg.tel_sv.origin_flags);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.tel_sv.origin_flags);
 
     ck_assert_msg(
         last_msg.msg.tel_sv.sv_tel[0].availability_flags == 5,
         "incorrect value for last_msg.msg.tel_sv.sv_tel[0].availability_flags, "
-        "expected 5, is %d",
-        last_msg.msg.tel_sv.sv_tel[0].availability_flags);
+        "expected 5, is %" PRId64,
+        (int64_t)last_msg.msg.tel_sv.sv_tel[0].availability_flags);
 
     ck_assert_msg(last_msg.msg.tel_sv.sv_tel[0].az == 40,
                   "incorrect value for last_msg.msg.tel_sv.sv_tel[0].az, "
-                  "expected 40, is %d",
-                  last_msg.msg.tel_sv.sv_tel[0].az);
+                  "expected 40, is %" PRId64,
+                  (int64_t)last_msg.msg.tel_sv.sv_tel[0].az);
 
     ck_assert_msg(
         last_msg.msg.tel_sv.sv_tel[0].correction_flags == 1,
         "incorrect value for last_msg.msg.tel_sv.sv_tel[0].correction_flags, "
-        "expected 1, is %d",
-        last_msg.msg.tel_sv.sv_tel[0].correction_flags);
+        "expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.tel_sv.sv_tel[0].correction_flags);
 
     ck_assert_msg(last_msg.msg.tel_sv.sv_tel[0].el == 50,
                   "incorrect value for last_msg.msg.tel_sv.sv_tel[0].el, "
-                  "expected 50, is %d",
-                  last_msg.msg.tel_sv.sv_tel[0].el);
+                  "expected 50, is %" PRId64,
+                  (int64_t)last_msg.msg.tel_sv.sv_tel[0].el);
 
     ck_assert_msg(
         last_msg.msg.tel_sv.sv_tel[0].ephemeris_flags == 1,
         "incorrect value for last_msg.msg.tel_sv.sv_tel[0].ephemeris_flags, "
-        "expected 1, is %d",
-        last_msg.msg.tel_sv.sv_tel[0].ephemeris_flags);
+        "expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.tel_sv.sv_tel[0].ephemeris_flags);
 
     ck_assert_msg(
         last_msg.msg.tel_sv.sv_tel[0].outlier_flags == 1,
         "incorrect value for last_msg.msg.tel_sv.sv_tel[0].outlier_flags, "
-        "expected 1, is %d",
-        last_msg.msg.tel_sv.sv_tel[0].outlier_flags);
+        "expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.tel_sv.sv_tel[0].outlier_flags);
 
     ck_assert_msg(
         last_msg.msg.tel_sv.sv_tel[0].phase_residual == 1,
         "incorrect value for last_msg.msg.tel_sv.sv_tel[0].phase_residual, "
-        "expected 1, is %d",
-        last_msg.msg.tel_sv.sv_tel[0].phase_residual);
+        "expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.tel_sv.sv_tel[0].phase_residual);
 
     ck_assert_msg(last_msg.msg.tel_sv.sv_tel[0].pseudorange_residual == -30,
                   "incorrect value for "
                   "last_msg.msg.tel_sv.sv_tel[0].pseudorange_residual, "
-                  "expected -30, is %d",
-                  last_msg.msg.tel_sv.sv_tel[0].pseudorange_residual);
+                  "expected -30, is %" PRId64,
+                  (int64_t)last_msg.msg.tel_sv.sv_tel[0].pseudorange_residual);
 
     ck_assert_msg(last_msg.msg.tel_sv.sv_tel[0].sid.code == 12,
                   "incorrect value for last_msg.msg.tel_sv.sv_tel[0].sid.code, "
-                  "expected 12, is %d",
-                  last_msg.msg.tel_sv.sv_tel[0].sid.code);
+                  "expected 12, is %" PRId64,
+                  (int64_t)last_msg.msg.tel_sv.sv_tel[0].sid.code);
 
     ck_assert_msg(last_msg.msg.tel_sv.sv_tel[0].sid.sat == 33,
                   "incorrect value for last_msg.msg.tel_sv.sv_tel[0].sid.sat, "
-                  "expected 33, is %d",
-                  last_msg.msg.tel_sv.sv_tel[0].sid.sat);
+                  "expected 33, is %" PRId64,
+                  (int64_t)last_msg.msg.tel_sv.sv_tel[0].sid.sat);
 
     ck_assert_msg(last_msg.msg.tel_sv.tow == 406773200,
                   "incorrect value for last_msg.msg.tel_sv.tow, expected "
-                  "406773200, is %d",
-                  last_msg.msg.tel_sv.tow);
+                  "406773200, is %" PRId64,
+                  (int64_t)last_msg.msg.tel_sv.tow);
 
-    ck_assert_msg(
-        last_msg.msg.tel_sv.wn == 2223,
-        "incorrect value for last_msg.msg.tel_sv.wn, expected 2223, is %d",
-        last_msg.msg.tel_sv.wn);
+    ck_assert_msg(last_msg.msg.tel_sv.wn == 2223,
+                  "incorrect value for last_msg.msg.tel_sv.wn, expected 2223, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.tel_sv.wn);
   }
 }
 END_TEST

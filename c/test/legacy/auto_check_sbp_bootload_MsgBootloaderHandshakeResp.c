@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -198,8 +198,8 @@ START_TEST(test_legacy_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     {
       const char check_string[] = {(char)118, (char)49, (char)46, (char)50,
                                    (char)10};
@@ -315,17 +315,17 @@ START_TEST(test_legacy_auto_check_sbp_bootload_MsgBootloaderHandshakeResp) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->handshake[0] == 118,
-                  "incorrect value for handshake[0], expected 118, is %d",
-                  check_msg->handshake[0]);
+                  "incorrect value for handshake[0], expected 118, is %" PRId64,
+                  (int64_t)check_msg->handshake[0]);
     ck_assert_msg(check_msg->handshake[1] == 49,
-                  "incorrect value for handshake[1], expected 49, is %d",
-                  check_msg->handshake[1]);
+                  "incorrect value for handshake[1], expected 49, is %" PRId64,
+                  (int64_t)check_msg->handshake[1]);
     ck_assert_msg(check_msg->handshake[2] == 46,
-                  "incorrect value for handshake[2], expected 46, is %d",
-                  check_msg->handshake[2]);
+                  "incorrect value for handshake[2], expected 46, is %" PRId64,
+                  (int64_t)check_msg->handshake[2]);
     ck_assert_msg(check_msg->handshake[3] == 50,
-                  "incorrect value for handshake[3], expected 50, is %d",
-                  check_msg->handshake[3]);
+                  "incorrect value for handshake[3], expected 50, is %" PRId64,
+                  (int64_t)check_msg->handshake[3]);
   }
 }
 END_TEST

@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -221,13 +221,14 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgPosECEFCov) {
                   "incorrect value for cov_z_z, expected 5.0, is %f",
                   check_msg->cov_z_z);
     ck_assert_msg(check_msg->flags == 5,
-                  "incorrect value for flags, expected 5, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 5, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->n_sats == 4,
-                  "incorrect value for n_sats, expected 4, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 4, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 7,
-                  "incorrect value for tow, expected 7, is %d", check_msg->tow);
+                  "incorrect value for tow, expected 7, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg((check_msg->x * 100 - 6.0 * 100) < 0.05,
                   "incorrect value for x, expected 6.0, is %f", check_msg->x);
     ck_assert_msg((check_msg->y * 100 - 1.0 * 100) < 0.05,

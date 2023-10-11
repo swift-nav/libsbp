@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -254,93 +254,97 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrStecCorrection) {
         (msg_ssr_stec_correction_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->header.num_msgs == 1,
-                  "incorrect value for header.num_msgs, expected 1, is %d",
-                  check_msg->header.num_msgs);
+    ck_assert_msg(
+        check_msg->header.num_msgs == 1,
+        "incorrect value for header.num_msgs, expected 1, is %" PRId64,
+        (int64_t)check_msg->header.num_msgs);
     ck_assert_msg(check_msg->header.seq_num == 1,
-                  "incorrect value for header.seq_num, expected 1, is %d",
-                  check_msg->header.seq_num);
+                  "incorrect value for header.seq_num, expected 1, is %" PRId64,
+                  (int64_t)check_msg->header.seq_num);
     ck_assert_msg(check_msg->header.sol_id == 0,
-                  "incorrect value for header.sol_id, expected 0, is %d",
-                  check_msg->header.sol_id);
-    ck_assert_msg(check_msg->header.time.tow == 180,
-                  "incorrect value for header.time.tow, expected 180, is %d",
-                  check_msg->header.time.tow);
+                  "incorrect value for header.sol_id, expected 0, is %" PRId64,
+                  (int64_t)check_msg->header.sol_id);
+    ck_assert_msg(
+        check_msg->header.time.tow == 180,
+        "incorrect value for header.time.tow, expected 180, is %" PRId64,
+        (int64_t)check_msg->header.time.tow);
     ck_assert_msg(check_msg->header.time.wn == 3,
-                  "incorrect value for header.time.wn, expected 3, is %d",
-                  check_msg->header.time.wn);
+                  "incorrect value for header.time.wn, expected 3, is %" PRId64,
+                  (int64_t)check_msg->header.time.wn);
     ck_assert_msg(
         check_msg->header.update_interval == 10,
-        "incorrect value for header.update_interval, expected 10, is %d",
-        check_msg->header.update_interval);
+        "incorrect value for header.update_interval, expected 10, is %" PRId64,
+        (int64_t)check_msg->header.update_interval);
     ck_assert_msg(check_msg->n_sats == 2,
-                  "incorrect value for n_sats, expected 2, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 2, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->ssr_iod_atmo == 15,
-                  "incorrect value for ssr_iod_atmo, expected 15, is %d",
-                  check_msg->ssr_iod_atmo);
+                  "incorrect value for ssr_iod_atmo, expected 15, is %" PRId64,
+                  (int64_t)check_msg->ssr_iod_atmo);
     ck_assert_msg(check_msg->stec_sat_list[0].stec_coeff[0] == 63,
                   "incorrect value for stec_sat_list[0].stec_coeff[0], "
-                  "expected 63, is %d",
-                  check_msg->stec_sat_list[0].stec_coeff[0]);
+                  "expected 63, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].stec_coeff[0]);
     ck_assert_msg(check_msg->stec_sat_list[0].stec_coeff[1] == 62,
                   "incorrect value for stec_sat_list[0].stec_coeff[1], "
-                  "expected 62, is %d",
-                  check_msg->stec_sat_list[0].stec_coeff[1]);
+                  "expected 62, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].stec_coeff[1]);
     ck_assert_msg(check_msg->stec_sat_list[0].stec_coeff[2] == 61,
                   "incorrect value for stec_sat_list[0].stec_coeff[2], "
-                  "expected 61, is %d",
-                  check_msg->stec_sat_list[0].stec_coeff[2]);
+                  "expected 61, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].stec_coeff[2]);
     ck_assert_msg(check_msg->stec_sat_list[0].stec_coeff[3] == 60,
                   "incorrect value for stec_sat_list[0].stec_coeff[3], "
-                  "expected 60, is %d",
-                  check_msg->stec_sat_list[0].stec_coeff[3]);
-    ck_assert_msg(check_msg->stec_sat_list[0].stec_quality_indicator == 1,
-                  "incorrect value for "
-                  "stec_sat_list[0].stec_quality_indicator, expected 1, is %d",
-                  check_msg->stec_sat_list[0].stec_quality_indicator);
+                  "expected 60, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].stec_coeff[3]);
+    ck_assert_msg(
+        check_msg->stec_sat_list[0].stec_quality_indicator == 1,
+        "incorrect value for stec_sat_list[0].stec_quality_indicator, expected "
+        "1, is %" PRId64,
+        (int64_t)check_msg->stec_sat_list[0].stec_quality_indicator);
     ck_assert_msg(check_msg->stec_sat_list[0].sv_id.constellation == 1,
                   "incorrect value for stec_sat_list[0].sv_id.constellation, "
-                  "expected 1, is %d",
-                  check_msg->stec_sat_list[0].sv_id.constellation);
-    ck_assert_msg(
-        check_msg->stec_sat_list[0].sv_id.satId == 1,
-        "incorrect value for stec_sat_list[0].sv_id.satId, expected 1, is %d",
-        check_msg->stec_sat_list[0].sv_id.satId);
+                  "expected 1, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].sv_id.constellation);
+    ck_assert_msg(check_msg->stec_sat_list[0].sv_id.satId == 1,
+                  "incorrect value for stec_sat_list[0].sv_id.satId, expected "
+                  "1, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[0].sv_id.satId);
     ck_assert_msg(check_msg->stec_sat_list[1].stec_coeff[0] == 63,
                   "incorrect value for stec_sat_list[1].stec_coeff[0], "
-                  "expected 63, is %d",
-                  check_msg->stec_sat_list[1].stec_coeff[0]);
+                  "expected 63, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].stec_coeff[0]);
     ck_assert_msg(check_msg->stec_sat_list[1].stec_coeff[1] == 64,
                   "incorrect value for stec_sat_list[1].stec_coeff[1], "
-                  "expected 64, is %d",
-                  check_msg->stec_sat_list[1].stec_coeff[1]);
+                  "expected 64, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].stec_coeff[1]);
     ck_assert_msg(check_msg->stec_sat_list[1].stec_coeff[2] == 65,
                   "incorrect value for stec_sat_list[1].stec_coeff[2], "
-                  "expected 65, is %d",
-                  check_msg->stec_sat_list[1].stec_coeff[2]);
+                  "expected 65, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].stec_coeff[2]);
     ck_assert_msg(check_msg->stec_sat_list[1].stec_coeff[3] == 66,
                   "incorrect value for stec_sat_list[1].stec_coeff[3], "
-                  "expected 66, is %d",
-                  check_msg->stec_sat_list[1].stec_coeff[3]);
-    ck_assert_msg(check_msg->stec_sat_list[1].stec_quality_indicator == 5,
-                  "incorrect value for "
-                  "stec_sat_list[1].stec_quality_indicator, expected 5, is %d",
-                  check_msg->stec_sat_list[1].stec_quality_indicator);
+                  "expected 66, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].stec_coeff[3]);
+    ck_assert_msg(
+        check_msg->stec_sat_list[1].stec_quality_indicator == 5,
+        "incorrect value for stec_sat_list[1].stec_quality_indicator, expected "
+        "5, is %" PRId64,
+        (int64_t)check_msg->stec_sat_list[1].stec_quality_indicator);
     ck_assert_msg(check_msg->stec_sat_list[1].sv_id.constellation == 15,
                   "incorrect value for stec_sat_list[1].sv_id.constellation, "
-                  "expected 15, is %d",
-                  check_msg->stec_sat_list[1].sv_id.constellation);
-    ck_assert_msg(
-        check_msg->stec_sat_list[1].sv_id.satId == 31,
-        "incorrect value for stec_sat_list[1].sv_id.satId, expected 31, is %d",
-        check_msg->stec_sat_list[1].sv_id.satId);
+                  "expected 15, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].sv_id.constellation);
+    ck_assert_msg(check_msg->stec_sat_list[1].sv_id.satId == 31,
+                  "incorrect value for stec_sat_list[1].sv_id.satId, expected "
+                  "31, is %" PRId64,
+                  (int64_t)check_msg->stec_sat_list[1].sv_id.satId);
     ck_assert_msg(check_msg->tile_id == 10,
-                  "incorrect value for tile_id, expected 10, is %d",
-                  check_msg->tile_id);
+                  "incorrect value for tile_id, expected 10, is %" PRId64,
+                  (int64_t)check_msg->tile_id);
     ck_assert_msg(check_msg->tile_set_id == 1,
-                  "incorrect value for tile_set_id, expected 1, is %d",
-                  check_msg->tile_set_id);
+                  "incorrect value for tile_set_id, expected 1, is %" PRId64,
+                  (int64_t)check_msg->tile_set_id);
   }
 }
 END_TEST

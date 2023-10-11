@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -188,8 +188,8 @@ START_TEST(test_legacy_auto_check_sbp_system_MsgInsStatus) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 536870921,
-                  "incorrect value for flags, expected 536870921, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 536870921, is %" PRId64,
+                  (int64_t)check_msg->flags);
   }
 }
 END_TEST

@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -230,117 +230,119 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->const_id == 1,
-                  "incorrect value for const_id, expected 1, is %d",
-                  check_msg->const_id);
-    ck_assert_msg(check_msg->header.num_msgs == 1,
-                  "incorrect value for header.num_msgs, expected 1, is %d",
-                  check_msg->header.num_msgs);
+                  "incorrect value for const_id, expected 1, is %" PRId64,
+                  (int64_t)check_msg->const_id);
+    ck_assert_msg(
+        check_msg->header.num_msgs == 1,
+        "incorrect value for header.num_msgs, expected 1, is %" PRId64,
+        (int64_t)check_msg->header.num_msgs);
     ck_assert_msg(check_msg->header.seq_num == 2,
-                  "incorrect value for header.seq_num, expected 2, is %d",
-                  check_msg->header.seq_num);
+                  "incorrect value for header.seq_num, expected 2, is %" PRId64,
+                  (int64_t)check_msg->header.seq_num);
     ck_assert_msg(check_msg->header.sol_id == 14,
-                  "incorrect value for header.sol_id, expected 14, is %d",
-                  check_msg->header.sol_id);
-    ck_assert_msg(check_msg->header.time.tow == 180,
-                  "incorrect value for header.time.tow, expected 180, is %d",
-                  check_msg->header.time.tow);
+                  "incorrect value for header.sol_id, expected 14, is %" PRId64,
+                  (int64_t)check_msg->header.sol_id);
+    ck_assert_msg(
+        check_msg->header.time.tow == 180,
+        "incorrect value for header.time.tow, expected 180, is %" PRId64,
+        (int64_t)check_msg->header.time.tow);
     ck_assert_msg(check_msg->header.time.wn == 3,
-                  "incorrect value for header.time.wn, expected 3, is %d",
-                  check_msg->header.time.wn);
+                  "incorrect value for header.time.wn, expected 3, is %" PRId64,
+                  (int64_t)check_msg->header.time.wn);
     ck_assert_msg(
         check_msg->header.update_interval == 1,
-        "incorrect value for header.update_interval, expected 1, is %d",
-        check_msg->header.update_interval);
+        "incorrect value for header.update_interval, expected 1, is %" PRId64,
+        (int64_t)check_msg->header.update_interval);
     ck_assert_msg(check_msg->n_sats_signals == 3,
-                  "incorrect value for n_sats_signals, expected 3, is %d",
-                  check_msg->n_sats_signals);
+                  "incorrect value for n_sats_signals, expected 3, is %" PRId64,
+                  (int64_t)check_msg->n_sats_signals);
     ck_assert_msg(
         check_msg->satellites_signals[0].code_bias_bound_mu == 39,
         "incorrect value for satellites_signals[0].code_bias_bound_mu, "
-        "expected 39, is %d",
-        check_msg->satellites_signals[0].code_bias_bound_mu);
+        "expected 39, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[0].code_bias_bound_mu);
     ck_assert_msg(
         check_msg->satellites_signals[0].code_bias_bound_sig == 1,
         "incorrect value for satellites_signals[0].code_bias_bound_sig, "
-        "expected 1, is %d",
-        check_msg->satellites_signals[0].code_bias_bound_sig);
+        "expected 1, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[0].code_bias_bound_sig);
     ck_assert_msg(
         check_msg->satellites_signals[0].phase_bias_bound_mu == 39,
         "incorrect value for satellites_signals[0].phase_bias_bound_mu, "
-        "expected 39, is %d",
-        check_msg->satellites_signals[0].phase_bias_bound_mu);
+        "expected 39, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[0].phase_bias_bound_mu);
     ck_assert_msg(
         check_msg->satellites_signals[0].phase_bias_bound_sig == 1,
         "incorrect value for satellites_signals[0].phase_bias_bound_sig, "
-        "expected 1, is %d",
-        check_msg->satellites_signals[0].phase_bias_bound_sig);
-    ck_assert_msg(
-        check_msg->satellites_signals[0].sat_id == 0,
-        "incorrect value for satellites_signals[0].sat_id, expected 0, is %d",
-        check_msg->satellites_signals[0].sat_id);
+        "expected 1, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[0].phase_bias_bound_sig);
+    ck_assert_msg(check_msg->satellites_signals[0].sat_id == 0,
+                  "incorrect value for satellites_signals[0].sat_id, expected "
+                  "0, is %" PRId64,
+                  (int64_t)check_msg->satellites_signals[0].sat_id);
     ck_assert_msg(check_msg->satellites_signals[0].signal_id == 3,
                   "incorrect value for satellites_signals[0].signal_id, "
-                  "expected 3, is %d",
-                  check_msg->satellites_signals[0].signal_id);
+                  "expected 3, is %" PRId64,
+                  (int64_t)check_msg->satellites_signals[0].signal_id);
     ck_assert_msg(
         check_msg->satellites_signals[1].code_bias_bound_mu == 39,
         "incorrect value for satellites_signals[1].code_bias_bound_mu, "
-        "expected 39, is %d",
-        check_msg->satellites_signals[1].code_bias_bound_mu);
+        "expected 39, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[1].code_bias_bound_mu);
     ck_assert_msg(
         check_msg->satellites_signals[1].code_bias_bound_sig == 1,
         "incorrect value for satellites_signals[1].code_bias_bound_sig, "
-        "expected 1, is %d",
-        check_msg->satellites_signals[1].code_bias_bound_sig);
+        "expected 1, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[1].code_bias_bound_sig);
     ck_assert_msg(
         check_msg->satellites_signals[1].phase_bias_bound_mu == 39,
         "incorrect value for satellites_signals[1].phase_bias_bound_mu, "
-        "expected 39, is %d",
-        check_msg->satellites_signals[1].phase_bias_bound_mu);
+        "expected 39, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[1].phase_bias_bound_mu);
     ck_assert_msg(
         check_msg->satellites_signals[1].phase_bias_bound_sig == 1,
         "incorrect value for satellites_signals[1].phase_bias_bound_sig, "
-        "expected 1, is %d",
-        check_msg->satellites_signals[1].phase_bias_bound_sig);
-    ck_assert_msg(
-        check_msg->satellites_signals[1].sat_id == 1,
-        "incorrect value for satellites_signals[1].sat_id, expected 1, is %d",
-        check_msg->satellites_signals[1].sat_id);
+        "expected 1, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[1].phase_bias_bound_sig);
+    ck_assert_msg(check_msg->satellites_signals[1].sat_id == 1,
+                  "incorrect value for satellites_signals[1].sat_id, expected "
+                  "1, is %" PRId64,
+                  (int64_t)check_msg->satellites_signals[1].sat_id);
     ck_assert_msg(check_msg->satellites_signals[1].signal_id == 3,
                   "incorrect value for satellites_signals[1].signal_id, "
-                  "expected 3, is %d",
-                  check_msg->satellites_signals[1].signal_id);
+                  "expected 3, is %" PRId64,
+                  (int64_t)check_msg->satellites_signals[1].signal_id);
     ck_assert_msg(
         check_msg->satellites_signals[2].code_bias_bound_mu == 39,
         "incorrect value for satellites_signals[2].code_bias_bound_mu, "
-        "expected 39, is %d",
-        check_msg->satellites_signals[2].code_bias_bound_mu);
+        "expected 39, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[2].code_bias_bound_mu);
     ck_assert_msg(
         check_msg->satellites_signals[2].code_bias_bound_sig == 1,
         "incorrect value for satellites_signals[2].code_bias_bound_sig, "
-        "expected 1, is %d",
-        check_msg->satellites_signals[2].code_bias_bound_sig);
+        "expected 1, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[2].code_bias_bound_sig);
     ck_assert_msg(
         check_msg->satellites_signals[2].phase_bias_bound_mu == 39,
         "incorrect value for satellites_signals[2].phase_bias_bound_mu, "
-        "expected 39, is %d",
-        check_msg->satellites_signals[2].phase_bias_bound_mu);
+        "expected 39, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[2].phase_bias_bound_mu);
     ck_assert_msg(
         check_msg->satellites_signals[2].phase_bias_bound_sig == 1,
         "incorrect value for satellites_signals[2].phase_bias_bound_sig, "
-        "expected 1, is %d",
-        check_msg->satellites_signals[2].phase_bias_bound_sig);
-    ck_assert_msg(
-        check_msg->satellites_signals[2].sat_id == 1,
-        "incorrect value for satellites_signals[2].sat_id, expected 1, is %d",
-        check_msg->satellites_signals[2].sat_id);
+        "expected 1, is %" PRId64,
+        (int64_t)check_msg->satellites_signals[2].phase_bias_bound_sig);
+    ck_assert_msg(check_msg->satellites_signals[2].sat_id == 1,
+                  "incorrect value for satellites_signals[2].sat_id, expected "
+                  "1, is %" PRId64,
+                  (int64_t)check_msg->satellites_signals[2].sat_id);
     ck_assert_msg(check_msg->satellites_signals[2].signal_id == 1,
                   "incorrect value for satellites_signals[2].signal_id, "
-                  "expected 1, is %d",
-                  check_msg->satellites_signals[2].signal_id);
+                  "expected 1, is %" PRId64,
+                  (int64_t)check_msg->satellites_signals[2].signal_id);
     ck_assert_msg(check_msg->ssr_iod == 15,
-                  "incorrect value for ssr_iod, expected 15, is %d",
-                  check_msg->ssr_iod);
+                  "incorrect value for ssr_iod, expected 15, is %" PRId64,
+                  (int64_t)check_msg->ssr_iod);
   }
 }
 END_TEST

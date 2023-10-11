@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -188,134 +188,134 @@ START_TEST(test_auto_check_sbp_sbas_MsgSbasRaw) {
     ck_assert_msg(sbp_message_cmp(SbpMsgSbasRaw, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.sbas_raw.data[0] == 23,
-        "incorrect value for last_msg.msg.sbas_raw.data[0], expected 23, is %d",
-        last_msg.msg.sbas_raw.data[0]);
+    ck_assert_msg(last_msg.msg.sbas_raw.data[0] == 23,
+                  "incorrect value for last_msg.msg.sbas_raw.data[0], expected "
+                  "23, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[0]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[1] == 255,
                   "incorrect value for last_msg.msg.sbas_raw.data[1], expected "
-                  "255, is %d",
-                  last_msg.msg.sbas_raw.data[1]);
-    ck_assert_msg(
-        last_msg.msg.sbas_raw.data[2] == 0,
-        "incorrect value for last_msg.msg.sbas_raw.data[2], expected 0, is %d",
-        last_msg.msg.sbas_raw.data[2]);
-    ck_assert_msg(
-        last_msg.msg.sbas_raw.data[3] == 23,
-        "incorrect value for last_msg.msg.sbas_raw.data[3], expected 23, is %d",
-        last_msg.msg.sbas_raw.data[3]);
+                  "255, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[1]);
+    ck_assert_msg(last_msg.msg.sbas_raw.data[2] == 0,
+                  "incorrect value for last_msg.msg.sbas_raw.data[2], expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[2]);
+    ck_assert_msg(last_msg.msg.sbas_raw.data[3] == 23,
+                  "incorrect value for last_msg.msg.sbas_raw.data[3], expected "
+                  "23, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[3]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[4] == 255,
                   "incorrect value for last_msg.msg.sbas_raw.data[4], expected "
-                  "255, is %d",
-                  last_msg.msg.sbas_raw.data[4]);
-    ck_assert_msg(
-        last_msg.msg.sbas_raw.data[5] == 0,
-        "incorrect value for last_msg.msg.sbas_raw.data[5], expected 0, is %d",
-        last_msg.msg.sbas_raw.data[5]);
-    ck_assert_msg(
-        last_msg.msg.sbas_raw.data[6] == 23,
-        "incorrect value for last_msg.msg.sbas_raw.data[6], expected 23, is %d",
-        last_msg.msg.sbas_raw.data[6]);
+                  "255, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[4]);
+    ck_assert_msg(last_msg.msg.sbas_raw.data[5] == 0,
+                  "incorrect value for last_msg.msg.sbas_raw.data[5], expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[5]);
+    ck_assert_msg(last_msg.msg.sbas_raw.data[6] == 23,
+                  "incorrect value for last_msg.msg.sbas_raw.data[6], expected "
+                  "23, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[6]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[7] == 255,
                   "incorrect value for last_msg.msg.sbas_raw.data[7], expected "
-                  "255, is %d",
-                  last_msg.msg.sbas_raw.data[7]);
+                  "255, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[7]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[8] == 127,
                   "incorrect value for last_msg.msg.sbas_raw.data[8], expected "
-                  "127, is %d",
-                  last_msg.msg.sbas_raw.data[8]);
+                  "127, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[8]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[9] == 240,
                   "incorrect value for last_msg.msg.sbas_raw.data[9], expected "
-                  "240, is %d",
-                  last_msg.msg.sbas_raw.data[9]);
-    ck_assert_msg(
-        last_msg.msg.sbas_raw.data[10] == 2,
-        "incorrect value for last_msg.msg.sbas_raw.data[10], expected 2, is %d",
-        last_msg.msg.sbas_raw.data[10]);
+                  "240, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[9]);
+    ck_assert_msg(last_msg.msg.sbas_raw.data[10] == 2,
+                  "incorrect value for last_msg.msg.sbas_raw.data[10], "
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[10]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[11] == 255,
                   "incorrect value for last_msg.msg.sbas_raw.data[11], "
-                  "expected 255, is %d",
-                  last_msg.msg.sbas_raw.data[11]);
+                  "expected 255, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[11]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[12] == 192,
                   "incorrect value for last_msg.msg.sbas_raw.data[12], "
-                  "expected 192, is %d",
-                  last_msg.msg.sbas_raw.data[12]);
-    ck_assert_msg(
-        last_msg.msg.sbas_raw.data[13] == 3,
-        "incorrect value for last_msg.msg.sbas_raw.data[13], expected 3, is %d",
-        last_msg.msg.sbas_raw.data[13]);
+                  "expected 192, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[12]);
+    ck_assert_msg(last_msg.msg.sbas_raw.data[13] == 3,
+                  "incorrect value for last_msg.msg.sbas_raw.data[13], "
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[13]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[14] == 127,
                   "incorrect value for last_msg.msg.sbas_raw.data[14], "
-                  "expected 127, is %d",
-                  last_msg.msg.sbas_raw.data[14]);
+                  "expected 127, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[14]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[15] == 247,
                   "incorrect value for last_msg.msg.sbas_raw.data[15], "
-                  "expected 247, is %d",
-                  last_msg.msg.sbas_raw.data[15]);
+                  "expected 247, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[15]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[16] == 255,
                   "incorrect value for last_msg.msg.sbas_raw.data[16], "
-                  "expected 255, is %d",
-                  last_msg.msg.sbas_raw.data[16]);
+                  "expected 255, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[16]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[17] == 127,
                   "incorrect value for last_msg.msg.sbas_raw.data[17], "
-                  "expected 127, is %d",
-                  last_msg.msg.sbas_raw.data[17]);
+                  "expected 127, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[17]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[18] == 247,
                   "incorrect value for last_msg.msg.sbas_raw.data[18], "
-                  "expected 247, is %d",
-                  last_msg.msg.sbas_raw.data[18]);
+                  "expected 247, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[18]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[19] == 255,
                   "incorrect value for last_msg.msg.sbas_raw.data[19], "
-                  "expected 255, is %d",
-                  last_msg.msg.sbas_raw.data[19]);
+                  "expected 255, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[19]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[20] == 229,
                   "incorrect value for last_msg.msg.sbas_raw.data[20], "
-                  "expected 229, is %d",
-                  last_msg.msg.sbas_raw.data[20]);
+                  "expected 229, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[20]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[21] == 229,
                   "incorrect value for last_msg.msg.sbas_raw.data[21], "
-                  "expected 229, is %d",
-                  last_msg.msg.sbas_raw.data[21]);
+                  "expected 229, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[21]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[22] == 238,
                   "incorrect value for last_msg.msg.sbas_raw.data[22], "
-                  "expected 238, is %d",
-                  last_msg.msg.sbas_raw.data[22]);
+                  "expected 238, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[22]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[23] == 170,
                   "incorrect value for last_msg.msg.sbas_raw.data[23], "
-                  "expected 170, is %d",
-                  last_msg.msg.sbas_raw.data[23]);
+                  "expected 170, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[23]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[24] == 175,
                   "incorrect value for last_msg.msg.sbas_raw.data[24], "
-                  "expected 175, is %d",
-                  last_msg.msg.sbas_raw.data[24]);
+                  "expected 175, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[24]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[25] == 255,
                   "incorrect value for last_msg.msg.sbas_raw.data[25], "
-                  "expected 255, is %d",
-                  last_msg.msg.sbas_raw.data[25]);
+                  "expected 255, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[25]);
     ck_assert_msg(last_msg.msg.sbas_raw.data[26] == 240,
                   "incorrect value for last_msg.msg.sbas_raw.data[26], "
-                  "expected 240, is %d",
-                  last_msg.msg.sbas_raw.data[26]);
+                  "expected 240, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.data[26]);
 
     ck_assert_msg(last_msg.msg.sbas_raw.message_type == 4,
                   "incorrect value for last_msg.msg.sbas_raw.message_type, "
-                  "expected 4, is %d",
-                  last_msg.msg.sbas_raw.message_type);
+                  "expected 4, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.message_type);
 
-    ck_assert_msg(
-        last_msg.msg.sbas_raw.sid.code == 2,
-        "incorrect value for last_msg.msg.sbas_raw.sid.code, expected 2, is %d",
-        last_msg.msg.sbas_raw.sid.code);
+    ck_assert_msg(last_msg.msg.sbas_raw.sid.code == 2,
+                  "incorrect value for last_msg.msg.sbas_raw.sid.code, "
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.sid.code);
 
     ck_assert_msg(last_msg.msg.sbas_raw.sid.sat == 131,
                   "incorrect value for last_msg.msg.sbas_raw.sid.sat, expected "
-                  "131, is %d",
-                  last_msg.msg.sbas_raw.sid.sat);
+                  "131, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.sid.sat);
 
     ck_assert_msg(last_msg.msg.sbas_raw.tow == 501867721,
                   "incorrect value for last_msg.msg.sbas_raw.tow, expected "
-                  "501867721, is %d",
-                  last_msg.msg.sbas_raw.tow);
+                  "501867721, is %" PRId64,
+                  (int64_t)last_msg.msg.sbas_raw.tow);
   }
 }
 END_TEST

@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -131,8 +131,8 @@ START_TEST(test_auto_check_sbp_file_io_MsgFileioWriteResp) {
     ck_assert_msg(
         last_msg.msg.fileio_write_resp.sequence == 202,
         "incorrect value for last_msg.msg.fileio_write_resp.sequence, expected "
-        "202, is %d",
-        last_msg.msg.fileio_write_resp.sequence);
+        "202, is %" PRId64,
+        (int64_t)last_msg.msg.fileio_write_resp.sequence);
   }
 }
 END_TEST

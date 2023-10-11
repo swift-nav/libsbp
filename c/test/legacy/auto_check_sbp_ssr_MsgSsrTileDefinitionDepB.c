@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -199,36 +199,39 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinitionDepB) {
         (msg_ssr_tile_definition_dep_b_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->bitmask == 1234567890,
-                  "incorrect value for bitmask, expected 1234567890, is %d",
-                  check_msg->bitmask);
+    ck_assert_msg(
+        check_msg->bitmask == 1234567890,
+        "incorrect value for bitmask, expected 1234567890, is %" PRId64,
+        (int64_t)check_msg->bitmask);
     ck_assert_msg(check_msg->cols == 32768,
-                  "incorrect value for cols, expected 32768, is %d",
-                  check_msg->cols);
-    ck_assert_msg(check_msg->corner_nw_lat == 1024,
-                  "incorrect value for corner_nw_lat, expected 1024, is %d",
-                  check_msg->corner_nw_lat);
-    ck_assert_msg(check_msg->corner_nw_lon == 2048,
-                  "incorrect value for corner_nw_lon, expected 2048, is %d",
-                  check_msg->corner_nw_lon);
+                  "incorrect value for cols, expected 32768, is %" PRId64,
+                  (int64_t)check_msg->cols);
+    ck_assert_msg(
+        check_msg->corner_nw_lat == 1024,
+        "incorrect value for corner_nw_lat, expected 1024, is %" PRId64,
+        (int64_t)check_msg->corner_nw_lat);
+    ck_assert_msg(
+        check_msg->corner_nw_lon == 2048,
+        "incorrect value for corner_nw_lon, expected 2048, is %" PRId64,
+        (int64_t)check_msg->corner_nw_lon);
     ck_assert_msg(check_msg->rows == 16384,
-                  "incorrect value for rows, expected 16384, is %d",
-                  check_msg->rows);
+                  "incorrect value for rows, expected 16384, is %" PRId64,
+                  (int64_t)check_msg->rows);
     ck_assert_msg(check_msg->spacing_lat == 4096,
-                  "incorrect value for spacing_lat, expected 4096, is %d",
-                  check_msg->spacing_lat);
+                  "incorrect value for spacing_lat, expected 4096, is %" PRId64,
+                  (int64_t)check_msg->spacing_lat);
     ck_assert_msg(check_msg->spacing_lon == 8192,
-                  "incorrect value for spacing_lon, expected 8192, is %d",
-                  check_msg->spacing_lon);
+                  "incorrect value for spacing_lon, expected 8192, is %" PRId64,
+                  (int64_t)check_msg->spacing_lon);
     ck_assert_msg(check_msg->ssr_sol_id == 31,
-                  "incorrect value for ssr_sol_id, expected 31, is %d",
-                  check_msg->ssr_sol_id);
+                  "incorrect value for ssr_sol_id, expected 31, is %" PRId64,
+                  (int64_t)check_msg->ssr_sol_id);
     ck_assert_msg(check_msg->tile_id == 512,
-                  "incorrect value for tile_id, expected 512, is %d",
-                  check_msg->tile_id);
+                  "incorrect value for tile_id, expected 512, is %" PRId64,
+                  (int64_t)check_msg->tile_id);
     ck_assert_msg(check_msg->tile_set_id == 256,
-                  "incorrect value for tile_set_id, expected 256, is %d",
-                  check_msg->tile_set_id);
+                  "incorrect value for tile_set_id, expected 256, is %" PRId64,
+                  (int64_t)check_msg->tile_set_id);
   }
 }
 END_TEST

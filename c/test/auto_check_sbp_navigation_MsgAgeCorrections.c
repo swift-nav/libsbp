@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -132,13 +132,13 @@ START_TEST(test_auto_check_sbp_navigation_MsgAgeCorrections) {
 
     ck_assert_msg(last_msg.msg.age_corrections.age == 30,
                   "incorrect value for last_msg.msg.age_corrections.age, "
-                  "expected 30, is %d",
-                  last_msg.msg.age_corrections.age);
+                  "expected 30, is %" PRId64,
+                  (int64_t)last_msg.msg.age_corrections.age);
 
     ck_assert_msg(last_msg.msg.age_corrections.tow == 100,
                   "incorrect value for last_msg.msg.age_corrections.tow, "
-                  "expected 100, is %d",
-                  last_msg.msg.age_corrections.tow);
+                  "expected 100, is %" PRId64,
+                  (int64_t)last_msg.msg.age_corrections.tow);
   }
 }
 END_TEST

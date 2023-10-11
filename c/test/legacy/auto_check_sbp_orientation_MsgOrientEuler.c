@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -197,24 +197,26 @@ START_TEST(test_legacy_auto_check_sbp_orientation_MsgOrientEuler) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 3,
-                  "incorrect value for flags, expected 3, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 3, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->pitch == 2,
-                  "incorrect value for pitch, expected 2, is %d",
-                  check_msg->pitch);
+                  "incorrect value for pitch, expected 2, is %" PRId64,
+                  (int64_t)check_msg->pitch);
     ck_assert_msg((check_msg->pitch_accuracy * 100 - 3.0 * 100) < 0.05,
                   "incorrect value for pitch_accuracy, expected 3.0, is %f",
                   check_msg->pitch_accuracy);
     ck_assert_msg(check_msg->roll == 1,
-                  "incorrect value for roll, expected 1, is %d",
-                  check_msg->roll);
+                  "incorrect value for roll, expected 1, is %" PRId64,
+                  (int64_t)check_msg->roll);
     ck_assert_msg((check_msg->roll_accuracy * 100 - 7.0 * 100) < 0.05,
                   "incorrect value for roll_accuracy, expected 7.0, is %f",
                   check_msg->roll_accuracy);
     ck_assert_msg(check_msg->tow == 1,
-                  "incorrect value for tow, expected 1, is %d", check_msg->tow);
+                  "incorrect value for tow, expected 1, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->yaw == 8,
-                  "incorrect value for yaw, expected 8, is %d", check_msg->yaw);
+                  "incorrect value for yaw, expected 8, is %" PRId64,
+                  (int64_t)check_msg->yaw);
     ck_assert_msg((check_msg->yaw_accuracy * 100 - 7.0 * 100) < 0.05,
                   "incorrect value for yaw_accuracy, expected 7.0, is %f",
                   check_msg->yaw_accuracy);

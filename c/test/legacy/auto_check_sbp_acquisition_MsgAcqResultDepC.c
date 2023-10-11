@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -205,14 +205,14 @@ START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC) {
                   "incorrect value for cp, expected 457.192230225, is %f",
                   check_msg->cp);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 10,
-                  "incorrect value for sid.sat, expected 10, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 10, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -315,14 +315,14 @@ START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC) {
                   "incorrect value for cp, expected 865.465759277, is %f",
                   check_msg->cp);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 6,
-                  "incorrect value for sid.sat, expected 6, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 6, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -425,14 +425,14 @@ START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC) {
                   "incorrect value for cp, expected 230.356445312, is %f",
                   check_msg->cp);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 13,
-                  "incorrect value for sid.sat, expected 13, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 13, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -535,14 +535,14 @@ START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC) {
                   "incorrect value for cp, expected 252.839355469, is %f",
                   check_msg->cp);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 1,
-                  "incorrect value for sid.sat, expected 1, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 1, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -645,14 +645,14 @@ START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepC) {
                   "incorrect value for cp, expected 920.591918945, is %f",
                   check_msg->cp);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 27,
-                  "incorrect value for sid.sat, expected 27, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 27, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
   }
 }
 END_TEST

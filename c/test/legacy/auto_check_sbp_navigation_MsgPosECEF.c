@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -196,17 +196,17 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgPosECEF) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->accuracy == 0,
-                  "incorrect value for accuracy, expected 0, is %d",
-                  check_msg->accuracy);
+                  "incorrect value for accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->accuracy);
     ck_assert_msg(check_msg->flags == 2,
-                  "incorrect value for flags, expected 2, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 2, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->n_sats == 15,
-                  "incorrect value for n_sats, expected 15, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 15, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 326826000,
-                  "incorrect value for tow, expected 326826000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326826000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg((check_msg->x * 100 - -2684269.03266 * 100) < 0.05,
                   "incorrect value for x, expected -2684269.03266, is %f",
                   check_msg->x);
@@ -309,17 +309,17 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgPosECEF) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->accuracy == 0,
-                  "incorrect value for accuracy, expected 0, is %d",
-                  check_msg->accuracy);
+                  "incorrect value for accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->accuracy);
     ck_assert_msg(check_msg->flags == 2,
-                  "incorrect value for flags, expected 2, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 2, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->n_sats == 15,
-                  "incorrect value for n_sats, expected 15, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 15, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 326827000,
-                  "incorrect value for tow, expected 326827000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326827000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg((check_msg->x * 100 - -2684269.06425 * 100) < 0.05,
                   "incorrect value for x, expected -2684269.06425, is %f",
                   check_msg->x);
@@ -422,17 +422,17 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgPosECEF) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->accuracy == 0,
-                  "incorrect value for accuracy, expected 0, is %d",
-                  check_msg->accuracy);
+                  "incorrect value for accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->accuracy);
     ck_assert_msg(check_msg->flags == 2,
-                  "incorrect value for flags, expected 2, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 2, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->n_sats == 15,
-                  "incorrect value for n_sats, expected 15, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 15, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 326828000,
-                  "incorrect value for tow, expected 326828000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326828000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg((check_msg->x * 100 - -2684269.42928 * 100) < 0.05,
                   "incorrect value for x, expected -2684269.42928, is %f",
                   check_msg->x);
@@ -535,17 +535,17 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgPosECEF) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->accuracy == 0,
-                  "incorrect value for accuracy, expected 0, is %d",
-                  check_msg->accuracy);
+                  "incorrect value for accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->accuracy);
     ck_assert_msg(check_msg->flags == 2,
-                  "incorrect value for flags, expected 2, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 2, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->n_sats == 15,
-                  "incorrect value for n_sats, expected 15, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 15, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 326829000,
-                  "incorrect value for tow, expected 326829000, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326829000, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg((check_msg->x * 100 - -2684269.68374 * 100) < 0.05,
                   "incorrect value for x, expected -2684269.68374, is %f",
                   check_msg->x);

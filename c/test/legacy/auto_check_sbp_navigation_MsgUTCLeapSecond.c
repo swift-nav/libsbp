@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -197,32 +197,32 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgUTCLeapSecond) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->count_after == 9,
-                  "incorrect value for count_after, expected 9, is %d",
-                  check_msg->count_after);
+                  "incorrect value for count_after, expected 9, is %" PRId64,
+                  (int64_t)check_msg->count_after);
     ck_assert_msg(check_msg->count_before == 4,
-                  "incorrect value for count_before, expected 4, is %d",
-                  check_msg->count_before);
+                  "incorrect value for count_before, expected 4, is %" PRId64,
+                  (int64_t)check_msg->count_before);
     ck_assert_msg(check_msg->ref_dn == 8,
-                  "incorrect value for ref_dn, expected 8, is %d",
-                  check_msg->ref_dn);
+                  "incorrect value for ref_dn, expected 8, is %" PRId64,
+                  (int64_t)check_msg->ref_dn);
     ck_assert_msg(check_msg->ref_wn == 7,
-                  "incorrect value for ref_wn, expected 7, is %d",
-                  check_msg->ref_wn);
+                  "incorrect value for ref_wn, expected 7, is %" PRId64,
+                  (int64_t)check_msg->ref_wn);
     ck_assert_msg(check_msg->reserved_0 == 1,
-                  "incorrect value for reserved_0, expected 1, is %d",
-                  check_msg->reserved_0);
+                  "incorrect value for reserved_0, expected 1, is %" PRId64,
+                  (int64_t)check_msg->reserved_0);
     ck_assert_msg(check_msg->reserved_1 == 2,
-                  "incorrect value for reserved_1, expected 2, is %d",
-                  check_msg->reserved_1);
+                  "incorrect value for reserved_1, expected 2, is %" PRId64,
+                  (int64_t)check_msg->reserved_1);
     ck_assert_msg(check_msg->reserved_2 == 3,
-                  "incorrect value for reserved_2, expected 3, is %d",
-                  check_msg->reserved_2);
+                  "incorrect value for reserved_2, expected 3, is %" PRId64,
+                  (int64_t)check_msg->reserved_2);
     ck_assert_msg(check_msg->reserved_3 == 5,
-                  "incorrect value for reserved_3, expected 5, is %d",
-                  check_msg->reserved_3);
+                  "incorrect value for reserved_3, expected 5, is %" PRId64,
+                  (int64_t)check_msg->reserved_3);
     ck_assert_msg(check_msg->reserved_4 == 6,
-                  "incorrect value for reserved_4, expected 6, is %d",
-                  check_msg->reserved_4);
+                  "incorrect value for reserved_4, expected 6, is %" PRId64,
+                  (int64_t)check_msg->reserved_4);
   }
 }
 END_TEST

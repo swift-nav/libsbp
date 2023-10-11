@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -141,45 +141,45 @@ START_TEST(test_auto_check_sbp_imu_MsgImuRaw) {
     ck_assert_msg(sbp_message_cmp(SbpMsgImuRaw, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.imu_raw.acc_x == 96,
-        "incorrect value for last_msg.msg.imu_raw.acc_x, expected 96, is %d",
-        last_msg.msg.imu_raw.acc_x);
+    ck_assert_msg(last_msg.msg.imu_raw.acc_x == 96,
+                  "incorrect value for last_msg.msg.imu_raw.acc_x, expected "
+                  "96, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_raw.acc_x);
 
-    ck_assert_msg(
-        last_msg.msg.imu_raw.acc_y == -33,
-        "incorrect value for last_msg.msg.imu_raw.acc_y, expected -33, is %d",
-        last_msg.msg.imu_raw.acc_y);
+    ck_assert_msg(last_msg.msg.imu_raw.acc_y == -33,
+                  "incorrect value for last_msg.msg.imu_raw.acc_y, expected "
+                  "-33, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_raw.acc_y);
 
-    ck_assert_msg(
-        last_msg.msg.imu_raw.acc_z == 4140,
-        "incorrect value for last_msg.msg.imu_raw.acc_z, expected 4140, is %d",
-        last_msg.msg.imu_raw.acc_z);
+    ck_assert_msg(last_msg.msg.imu_raw.acc_z == 4140,
+                  "incorrect value for last_msg.msg.imu_raw.acc_z, expected "
+                  "4140, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_raw.acc_z);
 
-    ck_assert_msg(
-        last_msg.msg.imu_raw.gyr_x == 60,
-        "incorrect value for last_msg.msg.imu_raw.gyr_x, expected 60, is %d",
-        last_msg.msg.imu_raw.gyr_x);
+    ck_assert_msg(last_msg.msg.imu_raw.gyr_x == 60,
+                  "incorrect value for last_msg.msg.imu_raw.gyr_x, expected "
+                  "60, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_raw.gyr_x);
 
-    ck_assert_msg(
-        last_msg.msg.imu_raw.gyr_y == -304,
-        "incorrect value for last_msg.msg.imu_raw.gyr_y, expected -304, is %d",
-        last_msg.msg.imu_raw.gyr_y);
+    ck_assert_msg(last_msg.msg.imu_raw.gyr_y == -304,
+                  "incorrect value for last_msg.msg.imu_raw.gyr_y, expected "
+                  "-304, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_raw.gyr_y);
 
-    ck_assert_msg(
-        last_msg.msg.imu_raw.gyr_z == -18,
-        "incorrect value for last_msg.msg.imu_raw.gyr_z, expected -18, is %d",
-        last_msg.msg.imu_raw.gyr_z);
+    ck_assert_msg(last_msg.msg.imu_raw.gyr_z == -18,
+                  "incorrect value for last_msg.msg.imu_raw.gyr_z, expected "
+                  "-18, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_raw.gyr_z);
 
     ck_assert_msg(last_msg.msg.imu_raw.tow == 3221225754,
                   "incorrect value for last_msg.msg.imu_raw.tow, expected "
-                  "3221225754, is %d",
-                  last_msg.msg.imu_raw.tow);
+                  "3221225754, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_raw.tow);
 
-    ck_assert_msg(
-        last_msg.msg.imu_raw.tow_f == 206,
-        "incorrect value for last_msg.msg.imu_raw.tow_f, expected 206, is %d",
-        last_msg.msg.imu_raw.tow_f);
+    ck_assert_msg(last_msg.msg.imu_raw.tow_f == 206,
+                  "incorrect value for last_msg.msg.imu_raw.tow_f, expected "
+                  "206, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_raw.tow_f);
   }
 }
 END_TEST

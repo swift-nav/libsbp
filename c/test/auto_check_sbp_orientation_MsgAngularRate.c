@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -139,28 +139,28 @@ START_TEST(test_auto_check_sbp_orientation_MsgAngularRate) {
 
     ck_assert_msg(last_msg.msg.angular_rate.flags == 0,
                   "incorrect value for last_msg.msg.angular_rate.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.angular_rate.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.angular_rate.flags);
 
-    ck_assert_msg(
-        last_msg.msg.angular_rate.tow == 2,
-        "incorrect value for last_msg.msg.angular_rate.tow, expected 2, is %d",
-        last_msg.msg.angular_rate.tow);
+    ck_assert_msg(last_msg.msg.angular_rate.tow == 2,
+                  "incorrect value for last_msg.msg.angular_rate.tow, expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.angular_rate.tow);
 
-    ck_assert_msg(
-        last_msg.msg.angular_rate.x == 2,
-        "incorrect value for last_msg.msg.angular_rate.x, expected 2, is %d",
-        last_msg.msg.angular_rate.x);
+    ck_assert_msg(last_msg.msg.angular_rate.x == 2,
+                  "incorrect value for last_msg.msg.angular_rate.x, expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.angular_rate.x);
 
-    ck_assert_msg(
-        last_msg.msg.angular_rate.y == 5,
-        "incorrect value for last_msg.msg.angular_rate.y, expected 5, is %d",
-        last_msg.msg.angular_rate.y);
+    ck_assert_msg(last_msg.msg.angular_rate.y == 5,
+                  "incorrect value for last_msg.msg.angular_rate.y, expected "
+                  "5, is %" PRId64,
+                  (int64_t)last_msg.msg.angular_rate.y);
 
-    ck_assert_msg(
-        last_msg.msg.angular_rate.z == 2,
-        "incorrect value for last_msg.msg.angular_rate.z, expected 2, is %d",
-        last_msg.msg.angular_rate.z);
+    ck_assert_msg(last_msg.msg.angular_rate.z == 2,
+                  "incorrect value for last_msg.msg.angular_rate.z, expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.angular_rate.z);
   }
 }
 END_TEST

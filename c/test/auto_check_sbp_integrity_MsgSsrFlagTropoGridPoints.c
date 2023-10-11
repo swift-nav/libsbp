@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -155,78 +155,83 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagTropoGridPoints) {
         last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[0] == 10,
         "incorrect value for "
         "last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[0], expected "
-        "10, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[0]);
+        "10, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[0]);
     ck_assert_msg(
         last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[1] == 11,
         "incorrect value for "
         "last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[1], expected "
-        "11, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[1]);
+        "11, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[1]);
     ck_assert_msg(
         last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[2] == 12,
         "incorrect value for "
         "last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[2], expected "
-        "12, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[2]);
+        "12, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[2]);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.header.chain_id == 6,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_tropo_grid_points.header.chain_id, "
-                  "expected 6, is %d",
-                  last_msg.msg.ssr_flag_tropo_grid_points.header.chain_id);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_tropo_grid_points.header.chain_id == 6,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_tropo_grid_points.header.chain_id, expected 6, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.header.chain_id);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.header.num_msgs == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_tropo_grid_points.header.num_msgs, "
-                  "expected 1, is %d",
-                  last_msg.msg.ssr_flag_tropo_grid_points.header.num_msgs);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_tropo_grid_points.header.num_msgs == 1,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_tropo_grid_points.header.num_msgs, expected 1, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.header.num_msgs);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.tow == 180,
         "incorrect value for "
         "last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.tow, expected "
-        "180, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.tow);
+        "180, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.tow);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.wn == 3,
         "incorrect value for "
         "last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.wn, expected "
-        "3, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.wn);
+        "3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.wn);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.header.seq_num == 2,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_tropo_grid_points.header.seq_num, "
-                  "expected 2, is %d",
-                  last_msg.msg.ssr_flag_tropo_grid_points.header.seq_num);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_tropo_grid_points.header.seq_num == 2,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_tropo_grid_points.header.seq_num, expected 2, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.header.seq_num);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_tropo_grid_points.header.ssr_sol_id == 3,
         "incorrect value for "
         "last_msg.msg.ssr_flag_tropo_grid_points.header.ssr_sol_id, expected "
-        "3, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.header.ssr_sol_id);
+        "3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.header.ssr_sol_id);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.header.tile_id == 5,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_tropo_grid_points.header.tile_id, "
-                  "expected 5, is %d",
-                  last_msg.msg.ssr_flag_tropo_grid_points.header.tile_id);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_tropo_grid_points.header.tile_id == 5,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_tropo_grid_points.header.tile_id, expected 5, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.header.tile_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_tropo_grid_points.header.tile_set_id == 4,
         "incorrect value for "
         "last_msg.msg.ssr_flag_tropo_grid_points.header.tile_set_id, expected "
-        "4, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.header.tile_set_id);
+        "4, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.header.tile_set_id);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.n_faulty_points == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_tropo_grid_points.n_faulty_points, "
-                  "expected 3, is %d",
-                  last_msg.msg.ssr_flag_tropo_grid_points.n_faulty_points);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_tropo_grid_points.n_faulty_points == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_tropo_grid_points.n_faulty_points, expected 3, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_tropo_grid_points.n_faulty_points);
   }
 }
 END_TEST

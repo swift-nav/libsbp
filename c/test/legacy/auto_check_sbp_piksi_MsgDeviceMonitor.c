@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -193,21 +193,23 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor) {
         (msg_device_monitor_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->cpu_temperature == 6165,
-                  "incorrect value for cpu_temperature, expected 6165, is %d",
-                  check_msg->cpu_temperature);
+    ck_assert_msg(
+        check_msg->cpu_temperature == 6165,
+        "incorrect value for cpu_temperature, expected 6165, is %" PRId64,
+        (int64_t)check_msg->cpu_temperature);
     ck_assert_msg(check_msg->cpu_vaux == 1789,
-                  "incorrect value for cpu_vaux, expected 1789, is %d",
-                  check_msg->cpu_vaux);
+                  "incorrect value for cpu_vaux, expected 1789, is %" PRId64,
+                  (int64_t)check_msg->cpu_vaux);
     ck_assert_msg(check_msg->cpu_vint == 987,
-                  "incorrect value for cpu_vint, expected 987, is %d",
-                  check_msg->cpu_vint);
+                  "incorrect value for cpu_vint, expected 987, is %" PRId64,
+                  (int64_t)check_msg->cpu_vint);
     ck_assert_msg(check_msg->dev_vin == -9999,
-                  "incorrect value for dev_vin, expected -9999, is %d",
-                  check_msg->dev_vin);
-    ck_assert_msg(check_msg->fe_temperature == 4776,
-                  "incorrect value for fe_temperature, expected 4776, is %d",
-                  check_msg->fe_temperature);
+                  "incorrect value for dev_vin, expected -9999, is %" PRId64,
+                  (int64_t)check_msg->dev_vin);
+    ck_assert_msg(
+        check_msg->fe_temperature == 4776,
+        "incorrect value for fe_temperature, expected 4776, is %" PRId64,
+        (int64_t)check_msg->fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -298,21 +300,23 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor) {
         (msg_device_monitor_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->cpu_temperature == 6168,
-                  "incorrect value for cpu_temperature, expected 6168, is %d",
-                  check_msg->cpu_temperature);
+    ck_assert_msg(
+        check_msg->cpu_temperature == 6168,
+        "incorrect value for cpu_temperature, expected 6168, is %" PRId64,
+        (int64_t)check_msg->cpu_temperature);
     ck_assert_msg(check_msg->cpu_vaux == 1790,
-                  "incorrect value for cpu_vaux, expected 1790, is %d",
-                  check_msg->cpu_vaux);
+                  "incorrect value for cpu_vaux, expected 1790, is %" PRId64,
+                  (int64_t)check_msg->cpu_vaux);
     ck_assert_msg(check_msg->cpu_vint == 987,
-                  "incorrect value for cpu_vint, expected 987, is %d",
-                  check_msg->cpu_vint);
+                  "incorrect value for cpu_vint, expected 987, is %" PRId64,
+                  (int64_t)check_msg->cpu_vint);
     ck_assert_msg(check_msg->dev_vin == -9999,
-                  "incorrect value for dev_vin, expected -9999, is %d",
-                  check_msg->dev_vin);
-    ck_assert_msg(check_msg->fe_temperature == 4776,
-                  "incorrect value for fe_temperature, expected 4776, is %d",
-                  check_msg->fe_temperature);
+                  "incorrect value for dev_vin, expected -9999, is %" PRId64,
+                  (int64_t)check_msg->dev_vin);
+    ck_assert_msg(
+        check_msg->fe_temperature == 4776,
+        "incorrect value for fe_temperature, expected 4776, is %" PRId64,
+        (int64_t)check_msg->fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -403,21 +407,23 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor) {
         (msg_device_monitor_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->cpu_temperature == 6166,
-                  "incorrect value for cpu_temperature, expected 6166, is %d",
-                  check_msg->cpu_temperature);
+    ck_assert_msg(
+        check_msg->cpu_temperature == 6166,
+        "incorrect value for cpu_temperature, expected 6166, is %" PRId64,
+        (int64_t)check_msg->cpu_temperature);
     ck_assert_msg(check_msg->cpu_vaux == 1789,
-                  "incorrect value for cpu_vaux, expected 1789, is %d",
-                  check_msg->cpu_vaux);
+                  "incorrect value for cpu_vaux, expected 1789, is %" PRId64,
+                  (int64_t)check_msg->cpu_vaux);
     ck_assert_msg(check_msg->cpu_vint == 987,
-                  "incorrect value for cpu_vint, expected 987, is %d",
-                  check_msg->cpu_vint);
+                  "incorrect value for cpu_vint, expected 987, is %" PRId64,
+                  (int64_t)check_msg->cpu_vint);
     ck_assert_msg(check_msg->dev_vin == -9999,
-                  "incorrect value for dev_vin, expected -9999, is %d",
-                  check_msg->dev_vin);
-    ck_assert_msg(check_msg->fe_temperature == 4776,
-                  "incorrect value for fe_temperature, expected 4776, is %d",
-                  check_msg->fe_temperature);
+                  "incorrect value for dev_vin, expected -9999, is %" PRId64,
+                  (int64_t)check_msg->dev_vin);
+    ck_assert_msg(
+        check_msg->fe_temperature == 4776,
+        "incorrect value for fe_temperature, expected 4776, is %" PRId64,
+        (int64_t)check_msg->fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -508,21 +514,23 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor) {
         (msg_device_monitor_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->cpu_temperature == 6150,
-                  "incorrect value for cpu_temperature, expected 6150, is %d",
-                  check_msg->cpu_temperature);
+    ck_assert_msg(
+        check_msg->cpu_temperature == 6150,
+        "incorrect value for cpu_temperature, expected 6150, is %" PRId64,
+        (int64_t)check_msg->cpu_temperature);
     ck_assert_msg(check_msg->cpu_vaux == 1788,
-                  "incorrect value for cpu_vaux, expected 1788, is %d",
-                  check_msg->cpu_vaux);
+                  "incorrect value for cpu_vaux, expected 1788, is %" PRId64,
+                  (int64_t)check_msg->cpu_vaux);
     ck_assert_msg(check_msg->cpu_vint == 986,
-                  "incorrect value for cpu_vint, expected 986, is %d",
-                  check_msg->cpu_vint);
+                  "incorrect value for cpu_vint, expected 986, is %" PRId64,
+                  (int64_t)check_msg->cpu_vint);
     ck_assert_msg(check_msg->dev_vin == -9999,
-                  "incorrect value for dev_vin, expected -9999, is %d",
-                  check_msg->dev_vin);
-    ck_assert_msg(check_msg->fe_temperature == 4776,
-                  "incorrect value for fe_temperature, expected 4776, is %d",
-                  check_msg->fe_temperature);
+                  "incorrect value for dev_vin, expected -9999, is %" PRId64,
+                  (int64_t)check_msg->dev_vin);
+    ck_assert_msg(
+        check_msg->fe_temperature == 4776,
+        "incorrect value for fe_temperature, expected 4776, is %" PRId64,
+        (int64_t)check_msg->fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -613,21 +621,23 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor) {
         (msg_device_monitor_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->cpu_temperature == 6123,
-                  "incorrect value for cpu_temperature, expected 6123, is %d",
-                  check_msg->cpu_temperature);
+    ck_assert_msg(
+        check_msg->cpu_temperature == 6123,
+        "incorrect value for cpu_temperature, expected 6123, is %" PRId64,
+        (int64_t)check_msg->cpu_temperature);
     ck_assert_msg(check_msg->cpu_vaux == 1789,
-                  "incorrect value for cpu_vaux, expected 1789, is %d",
-                  check_msg->cpu_vaux);
+                  "incorrect value for cpu_vaux, expected 1789, is %" PRId64,
+                  (int64_t)check_msg->cpu_vaux);
     ck_assert_msg(check_msg->cpu_vint == 988,
-                  "incorrect value for cpu_vint, expected 988, is %d",
-                  check_msg->cpu_vint);
+                  "incorrect value for cpu_vint, expected 988, is %" PRId64,
+                  (int64_t)check_msg->cpu_vint);
     ck_assert_msg(check_msg->dev_vin == -9999,
-                  "incorrect value for dev_vin, expected -9999, is %d",
-                  check_msg->dev_vin);
-    ck_assert_msg(check_msg->fe_temperature == 4776,
-                  "incorrect value for fe_temperature, expected 4776, is %d",
-                  check_msg->fe_temperature);
+                  "incorrect value for dev_vin, expected -9999, is %" PRId64,
+                  (int64_t)check_msg->dev_vin);
+    ck_assert_msg(
+        check_msg->fe_temperature == 4776,
+        "incorrect value for fe_temperature, expected 4776, is %" PRId64,
+        (int64_t)check_msg->fe_temperature);
   }
 }
 END_TEST

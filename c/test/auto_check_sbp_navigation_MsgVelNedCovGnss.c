@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -156,68 +156,68 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNedCovGnss) {
     ck_assert_msg((last_msg.msg.vel_ned_cov_gnss.cov_d_d * 100 -
                    0.00788295920938 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.cov_d_d, "
-                  "expected 0.00788295920938, is %s",
+                  "expected 0.00788295920938, is %f",
                   last_msg.msg.vel_ned_cov_gnss.cov_d_d);
 
     ck_assert_msg((last_msg.msg.vel_ned_cov_gnss.cov_e_d * 100 -
                    0.000164670593222 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.cov_e_d, "
-                  "expected 0.000164670593222, is %s",
+                  "expected 0.000164670593222, is %f",
                   last_msg.msg.vel_ned_cov_gnss.cov_e_d);
 
     ck_assert_msg((last_msg.msg.vel_ned_cov_gnss.cov_e_e * 100 -
                    0.000989758758806 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.cov_e_e, "
-                  "expected 0.000989758758806, is %s",
+                  "expected 0.000989758758806, is %f",
                   last_msg.msg.vel_ned_cov_gnss.cov_e_e);
 
     ck_assert_msg((last_msg.msg.vel_ned_cov_gnss.cov_n_d * 100 -
                    0.000177165129571 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.cov_n_d, "
-                  "expected 0.000177165129571, is %s",
+                  "expected 0.000177165129571, is %f",
                   last_msg.msg.vel_ned_cov_gnss.cov_n_d);
 
     ck_assert_msg((last_msg.msg.vel_ned_cov_gnss.cov_n_e * 100 -
                    1.45761223393e-05 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.cov_n_e, "
-                  "expected 1.45761223393e-05, is %s",
+                  "expected 1.45761223393e-05, is %f",
                   last_msg.msg.vel_ned_cov_gnss.cov_n_e);
 
     ck_assert_msg((last_msg.msg.vel_ned_cov_gnss.cov_n_n * 100 -
                    0.0015810149489 * 100) < 0.05,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.cov_n_n, "
-                  "expected 0.0015810149489, is %s",
+                  "expected 0.0015810149489, is %f",
                   last_msg.msg.vel_ned_cov_gnss.cov_n_n);
 
     ck_assert_msg(last_msg.msg.vel_ned_cov_gnss.d == -10,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.d, "
-                  "expected -10, is %d",
-                  last_msg.msg.vel_ned_cov_gnss.d);
+                  "expected -10, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov_gnss.d);
 
     ck_assert_msg(last_msg.msg.vel_ned_cov_gnss.e == 0,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.e, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned_cov_gnss.e);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov_gnss.e);
 
     ck_assert_msg(last_msg.msg.vel_ned_cov_gnss.flags == 2,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.flags, "
-                  "expected 2, is %d",
-                  last_msg.msg.vel_ned_cov_gnss.flags);
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov_gnss.flags);
 
     ck_assert_msg(last_msg.msg.vel_ned_cov_gnss.n == -5,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.n, "
-                  "expected -5, is %d",
-                  last_msg.msg.vel_ned_cov_gnss.n);
+                  "expected -5, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov_gnss.n);
 
     ck_assert_msg(last_msg.msg.vel_ned_cov_gnss.n_sats == 21,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.n_sats, "
-                  "expected 21, is %d",
-                  last_msg.msg.vel_ned_cov_gnss.n_sats);
+                  "expected 21, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov_gnss.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ned_cov_gnss.tow == 501868200,
                   "incorrect value for last_msg.msg.vel_ned_cov_gnss.tow, "
-                  "expected 501868200, is %d",
-                  last_msg.msg.vel_ned_cov_gnss.tow);
+                  "expected 501868200, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_cov_gnss.tow);
   }
 }
 END_TEST

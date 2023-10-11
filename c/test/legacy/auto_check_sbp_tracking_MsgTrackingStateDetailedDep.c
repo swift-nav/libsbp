@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -217,79 +217,81 @@ START_TEST(test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->L.f == 169,
-                  "incorrect value for L.f, expected 169, is %d",
-                  check_msg->L.f);
+                  "incorrect value for L.f, expected 169, is %" PRId64,
+                  (int64_t)check_msg->L.f);
     ck_assert_msg(check_msg->L.i == 1319,
-                  "incorrect value for L.i, expected 1319, is %d",
-                  check_msg->L.i);
-    ck_assert_msg(check_msg->P == 0, "incorrect value for P, expected 0, is %d",
-                  check_msg->P);
+                  "incorrect value for L.i, expected 1319, is %" PRId64,
+                  (int64_t)check_msg->L.i);
+    ck_assert_msg(check_msg->P == 0,
+                  "incorrect value for P, expected 0, is %" PRId64,
+                  (int64_t)check_msg->P);
     ck_assert_msg(check_msg->P_std == 0,
-                  "incorrect value for P_std, expected 0, is %d",
-                  check_msg->P_std);
+                  "incorrect value for P_std, expected 0, is %" PRId64,
+                  (int64_t)check_msg->P_std);
     ck_assert_msg(check_msg->acceleration == 108,
-                  "incorrect value for acceleration, expected 108, is %d",
-                  check_msg->acceleration);
+                  "incorrect value for acceleration, expected 108, is %" PRId64,
+                  (int64_t)check_msg->acceleration);
     ck_assert_msg(check_msg->clock_drift == 0,
-                  "incorrect value for clock_drift, expected 0, is %d",
-                  check_msg->clock_drift);
+                  "incorrect value for clock_drift, expected 0, is %" PRId64,
+                  (int64_t)check_msg->clock_drift);
     ck_assert_msg(check_msg->clock_offset == 0,
-                  "incorrect value for clock_offset, expected 0, is %d",
-                  check_msg->clock_offset);
+                  "incorrect value for clock_offset, expected 0, is %" PRId64,
+                  (int64_t)check_msg->clock_offset);
     ck_assert_msg(check_msg->cn0 == 177,
-                  "incorrect value for cn0, expected 177, is %d",
-                  check_msg->cn0);
+                  "incorrect value for cn0, expected 177, is %" PRId64,
+                  (int64_t)check_msg->cn0);
     ck_assert_msg(check_msg->corr_spacing == 40,
-                  "incorrect value for corr_spacing, expected 40, is %d",
-                  check_msg->corr_spacing);
+                  "incorrect value for corr_spacing, expected 40, is %" PRId64,
+                  (int64_t)check_msg->corr_spacing);
     ck_assert_msg(check_msg->doppler == 15701,
-                  "incorrect value for doppler, expected 15701, is %d",
-                  check_msg->doppler);
+                  "incorrect value for doppler, expected 15701, is %" PRId64,
+                  (int64_t)check_msg->doppler);
     ck_assert_msg(check_msg->doppler_std == 39,
-                  "incorrect value for doppler_std, expected 39, is %d",
-                  check_msg->doppler_std);
+                  "incorrect value for doppler_std, expected 39, is %" PRId64,
+                  (int64_t)check_msg->doppler_std);
     ck_assert_msg(check_msg->lock == 14032,
-                  "incorrect value for lock, expected 14032, is %d",
-                  check_msg->lock);
+                  "incorrect value for lock, expected 14032, is %" PRId64,
+                  (int64_t)check_msg->lock);
     ck_assert_msg(check_msg->misc_flags == 9,
-                  "incorrect value for misc_flags, expected 9, is %d",
-                  check_msg->misc_flags);
+                  "incorrect value for misc_flags, expected 9, is %" PRId64,
+                  (int64_t)check_msg->misc_flags);
     ck_assert_msg(check_msg->nav_flags == 0,
-                  "incorrect value for nav_flags, expected 0, is %d",
-                  check_msg->nav_flags);
+                  "incorrect value for nav_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->nav_flags);
     ck_assert_msg(check_msg->pset_flags == 0,
-                  "incorrect value for pset_flags, expected 0, is %d",
-                  check_msg->pset_flags);
-    ck_assert_msg(check_msg->recv_time == 7909447587,
-                  "incorrect value for recv_time, expected 7909447587, is %d",
-                  check_msg->recv_time);
+                  "incorrect value for pset_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->pset_flags);
+    ck_assert_msg(
+        check_msg->recv_time == 7909447587,
+        "incorrect value for recv_time, expected 7909447587, is %" PRId64,
+        (int64_t)check_msg->recv_time);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 15,
-                  "incorrect value for sid.sat, expected 15, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 15, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg(check_msg->sync_flags == 1,
-                  "incorrect value for sync_flags, expected 1, is %d",
-                  check_msg->sync_flags);
+                  "incorrect value for sync_flags, expected 1, is %" PRId64,
+                  (int64_t)check_msg->sync_flags);
     ck_assert_msg(check_msg->tot.tow == 0,
-                  "incorrect value for tot.tow, expected 0, is %d",
-                  check_msg->tot.tow);
+                  "incorrect value for tot.tow, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tot.tow);
     ck_assert_msg(check_msg->tot.wn == 0,
-                  "incorrect value for tot.wn, expected 0, is %d",
-                  check_msg->tot.wn);
+                  "incorrect value for tot.wn, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tot.wn);
     ck_assert_msg(check_msg->tow_flags == 0,
-                  "incorrect value for tow_flags, expected 0, is %d",
-                  check_msg->tow_flags);
+                  "incorrect value for tow_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tow_flags);
     ck_assert_msg(check_msg->track_flags == 11,
-                  "incorrect value for track_flags, expected 11, is %d",
-                  check_msg->track_flags);
+                  "incorrect value for track_flags, expected 11, is %" PRId64,
+                  (int64_t)check_msg->track_flags);
     ck_assert_msg(check_msg->uptime == 1,
-                  "incorrect value for uptime, expected 1, is %d",
-                  check_msg->uptime);
+                  "incorrect value for uptime, expected 1, is %" PRId64,
+                  (int64_t)check_msg->uptime);
   }
   // Test successful parsing of a message
   {
@@ -404,79 +406,81 @@ START_TEST(test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->L.f == 14,
-                  "incorrect value for L.f, expected 14, is %d",
-                  check_msg->L.f);
+                  "incorrect value for L.f, expected 14, is %" PRId64,
+                  (int64_t)check_msg->L.f);
     ck_assert_msg(check_msg->L.i == 1810,
-                  "incorrect value for L.i, expected 1810, is %d",
-                  check_msg->L.i);
-    ck_assert_msg(check_msg->P == 0, "incorrect value for P, expected 0, is %d",
-                  check_msg->P);
+                  "incorrect value for L.i, expected 1810, is %" PRId64,
+                  (int64_t)check_msg->L.i);
+    ck_assert_msg(check_msg->P == 0,
+                  "incorrect value for P, expected 0, is %" PRId64,
+                  (int64_t)check_msg->P);
     ck_assert_msg(check_msg->P_std == 0,
-                  "incorrect value for P_std, expected 0, is %d",
-                  check_msg->P_std);
+                  "incorrect value for P_std, expected 0, is %" PRId64,
+                  (int64_t)check_msg->P_std);
     ck_assert_msg(check_msg->acceleration == -32,
-                  "incorrect value for acceleration, expected -32, is %d",
-                  check_msg->acceleration);
+                  "incorrect value for acceleration, expected -32, is %" PRId64,
+                  (int64_t)check_msg->acceleration);
     ck_assert_msg(check_msg->clock_drift == 0,
-                  "incorrect value for clock_drift, expected 0, is %d",
-                  check_msg->clock_drift);
+                  "incorrect value for clock_drift, expected 0, is %" PRId64,
+                  (int64_t)check_msg->clock_drift);
     ck_assert_msg(check_msg->clock_offset == 0,
-                  "incorrect value for clock_offset, expected 0, is %d",
-                  check_msg->clock_offset);
+                  "incorrect value for clock_offset, expected 0, is %" PRId64,
+                  (int64_t)check_msg->clock_offset);
     ck_assert_msg(check_msg->cn0 == 175,
-                  "incorrect value for cn0, expected 175, is %d",
-                  check_msg->cn0);
+                  "incorrect value for cn0, expected 175, is %" PRId64,
+                  (int64_t)check_msg->cn0);
     ck_assert_msg(check_msg->corr_spacing == 40,
-                  "incorrect value for corr_spacing, expected 40, is %d",
-                  check_msg->corr_spacing);
+                  "incorrect value for corr_spacing, expected 40, is %" PRId64,
+                  (int64_t)check_msg->corr_spacing);
     ck_assert_msg(check_msg->doppler == 15667,
-                  "incorrect value for doppler, expected 15667, is %d",
-                  check_msg->doppler);
+                  "incorrect value for doppler, expected 15667, is %" PRId64,
+                  (int64_t)check_msg->doppler);
     ck_assert_msg(check_msg->doppler_std == 30,
-                  "incorrect value for doppler_std, expected 30, is %d",
-                  check_msg->doppler_std);
+                  "incorrect value for doppler_std, expected 30, is %" PRId64,
+                  (int64_t)check_msg->doppler_std);
     ck_assert_msg(check_msg->lock == 14032,
-                  "incorrect value for lock, expected 14032, is %d",
-                  check_msg->lock);
+                  "incorrect value for lock, expected 14032, is %" PRId64,
+                  (int64_t)check_msg->lock);
     ck_assert_msg(check_msg->misc_flags == 9,
-                  "incorrect value for misc_flags, expected 9, is %d",
-                  check_msg->misc_flags);
+                  "incorrect value for misc_flags, expected 9, is %" PRId64,
+                  (int64_t)check_msg->misc_flags);
     ck_assert_msg(check_msg->nav_flags == 0,
-                  "incorrect value for nav_flags, expected 0, is %d",
-                  check_msg->nav_flags);
+                  "incorrect value for nav_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->nav_flags);
     ck_assert_msg(check_msg->pset_flags == 0,
-                  "incorrect value for pset_flags, expected 0, is %d",
-                  check_msg->pset_flags);
-    ck_assert_msg(check_msg->recv_time == 8409447265,
-                  "incorrect value for recv_time, expected 8409447265, is %d",
-                  check_msg->recv_time);
+                  "incorrect value for pset_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->pset_flags);
+    ck_assert_msg(
+        check_msg->recv_time == 8409447265,
+        "incorrect value for recv_time, expected 8409447265, is %" PRId64,
+        (int64_t)check_msg->recv_time);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 15,
-                  "incorrect value for sid.sat, expected 15, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 15, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg(check_msg->sync_flags == 1,
-                  "incorrect value for sync_flags, expected 1, is %d",
-                  check_msg->sync_flags);
+                  "incorrect value for sync_flags, expected 1, is %" PRId64,
+                  (int64_t)check_msg->sync_flags);
     ck_assert_msg(check_msg->tot.tow == 0,
-                  "incorrect value for tot.tow, expected 0, is %d",
-                  check_msg->tot.tow);
+                  "incorrect value for tot.tow, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tot.tow);
     ck_assert_msg(check_msg->tot.wn == 0,
-                  "incorrect value for tot.wn, expected 0, is %d",
-                  check_msg->tot.wn);
+                  "incorrect value for tot.wn, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tot.wn);
     ck_assert_msg(check_msg->tow_flags == 0,
-                  "incorrect value for tow_flags, expected 0, is %d",
-                  check_msg->tow_flags);
+                  "incorrect value for tow_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tow_flags);
     ck_assert_msg(check_msg->track_flags == 11,
-                  "incorrect value for track_flags, expected 11, is %d",
-                  check_msg->track_flags);
+                  "incorrect value for track_flags, expected 11, is %" PRId64,
+                  (int64_t)check_msg->track_flags);
     ck_assert_msg(check_msg->uptime == 1,
-                  "incorrect value for uptime, expected 1, is %d",
-                  check_msg->uptime);
+                  "incorrect value for uptime, expected 1, is %" PRId64,
+                  (int64_t)check_msg->uptime);
   }
   // Test successful parsing of a message
   {
@@ -591,78 +595,81 @@ START_TEST(test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->L.f == 8,
-                  "incorrect value for L.f, expected 8, is %d", check_msg->L.f);
+                  "incorrect value for L.f, expected 8, is %" PRId64,
+                  (int64_t)check_msg->L.f);
     ck_assert_msg(check_msg->L.i == 2298,
-                  "incorrect value for L.i, expected 2298, is %d",
-                  check_msg->L.i);
-    ck_assert_msg(check_msg->P == 0, "incorrect value for P, expected 0, is %d",
-                  check_msg->P);
+                  "incorrect value for L.i, expected 2298, is %" PRId64,
+                  (int64_t)check_msg->L.i);
+    ck_assert_msg(check_msg->P == 0,
+                  "incorrect value for P, expected 0, is %" PRId64,
+                  (int64_t)check_msg->P);
     ck_assert_msg(check_msg->P_std == 0,
-                  "incorrect value for P_std, expected 0, is %d",
-                  check_msg->P_std);
+                  "incorrect value for P_std, expected 0, is %" PRId64,
+                  (int64_t)check_msg->P_std);
     ck_assert_msg(check_msg->acceleration == 27,
-                  "incorrect value for acceleration, expected 27, is %d",
-                  check_msg->acceleration);
+                  "incorrect value for acceleration, expected 27, is %" PRId64,
+                  (int64_t)check_msg->acceleration);
     ck_assert_msg(check_msg->clock_drift == 0,
-                  "incorrect value for clock_drift, expected 0, is %d",
-                  check_msg->clock_drift);
+                  "incorrect value for clock_drift, expected 0, is %" PRId64,
+                  (int64_t)check_msg->clock_drift);
     ck_assert_msg(check_msg->clock_offset == 0,
-                  "incorrect value for clock_offset, expected 0, is %d",
-                  check_msg->clock_offset);
+                  "incorrect value for clock_offset, expected 0, is %" PRId64,
+                  (int64_t)check_msg->clock_offset);
     ck_assert_msg(check_msg->cn0 == 179,
-                  "incorrect value for cn0, expected 179, is %d",
-                  check_msg->cn0);
+                  "incorrect value for cn0, expected 179, is %" PRId64,
+                  (int64_t)check_msg->cn0);
     ck_assert_msg(check_msg->corr_spacing == 40,
-                  "incorrect value for corr_spacing, expected 40, is %d",
-                  check_msg->corr_spacing);
+                  "incorrect value for corr_spacing, expected 40, is %" PRId64,
+                  (int64_t)check_msg->corr_spacing);
     ck_assert_msg(check_msg->doppler == 15683,
-                  "incorrect value for doppler, expected 15683, is %d",
-                  check_msg->doppler);
+                  "incorrect value for doppler, expected 15683, is %" PRId64,
+                  (int64_t)check_msg->doppler);
     ck_assert_msg(check_msg->doppler_std == 22,
-                  "incorrect value for doppler_std, expected 22, is %d",
-                  check_msg->doppler_std);
+                  "incorrect value for doppler_std, expected 22, is %" PRId64,
+                  (int64_t)check_msg->doppler_std);
     ck_assert_msg(check_msg->lock == 14032,
-                  "incorrect value for lock, expected 14032, is %d",
-                  check_msg->lock);
+                  "incorrect value for lock, expected 14032, is %" PRId64,
+                  (int64_t)check_msg->lock);
     ck_assert_msg(check_msg->misc_flags == 9,
-                  "incorrect value for misc_flags, expected 9, is %d",
-                  check_msg->misc_flags);
+                  "incorrect value for misc_flags, expected 9, is %" PRId64,
+                  (int64_t)check_msg->misc_flags);
     ck_assert_msg(check_msg->nav_flags == 0,
-                  "incorrect value for nav_flags, expected 0, is %d",
-                  check_msg->nav_flags);
+                  "incorrect value for nav_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->nav_flags);
     ck_assert_msg(check_msg->pset_flags == 2,
-                  "incorrect value for pset_flags, expected 2, is %d",
-                  check_msg->pset_flags);
-    ck_assert_msg(check_msg->recv_time == 8907446923,
-                  "incorrect value for recv_time, expected 8907446923, is %d",
-                  check_msg->recv_time);
+                  "incorrect value for pset_flags, expected 2, is %" PRId64,
+                  (int64_t)check_msg->pset_flags);
+    ck_assert_msg(
+        check_msg->recv_time == 8907446923,
+        "incorrect value for recv_time, expected 8907446923, is %" PRId64,
+        (int64_t)check_msg->recv_time);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 15,
-                  "incorrect value for sid.sat, expected 15, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 15, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg(check_msg->sync_flags == 1,
-                  "incorrect value for sync_flags, expected 1, is %d",
-                  check_msg->sync_flags);
+                  "incorrect value for sync_flags, expected 1, is %" PRId64,
+                  (int64_t)check_msg->sync_flags);
     ck_assert_msg(check_msg->tot.tow == 0,
-                  "incorrect value for tot.tow, expected 0, is %d",
-                  check_msg->tot.tow);
+                  "incorrect value for tot.tow, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tot.tow);
     ck_assert_msg(check_msg->tot.wn == 0,
-                  "incorrect value for tot.wn, expected 0, is %d",
-                  check_msg->tot.wn);
+                  "incorrect value for tot.wn, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tot.wn);
     ck_assert_msg(check_msg->tow_flags == 0,
-                  "incorrect value for tow_flags, expected 0, is %d",
-                  check_msg->tow_flags);
+                  "incorrect value for tow_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tow_flags);
     ck_assert_msg(check_msg->track_flags == 11,
-                  "incorrect value for track_flags, expected 11, is %d",
-                  check_msg->track_flags);
+                  "incorrect value for track_flags, expected 11, is %" PRId64,
+                  (int64_t)check_msg->track_flags);
     ck_assert_msg(check_msg->uptime == 2,
-                  "incorrect value for uptime, expected 2, is %d",
-                  check_msg->uptime);
+                  "incorrect value for uptime, expected 2, is %" PRId64,
+                  (int64_t)check_msg->uptime);
   }
   // Test successful parsing of a message
   {
@@ -777,79 +784,81 @@ START_TEST(test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->L.f == 125,
-                  "incorrect value for L.f, expected 125, is %d",
-                  check_msg->L.f);
+                  "incorrect value for L.f, expected 125, is %" PRId64,
+                  (int64_t)check_msg->L.f);
     ck_assert_msg(check_msg->L.i == 2786,
-                  "incorrect value for L.i, expected 2786, is %d",
-                  check_msg->L.i);
-    ck_assert_msg(check_msg->P == 0, "incorrect value for P, expected 0, is %d",
-                  check_msg->P);
+                  "incorrect value for L.i, expected 2786, is %" PRId64,
+                  (int64_t)check_msg->L.i);
+    ck_assert_msg(check_msg->P == 0,
+                  "incorrect value for P, expected 0, is %" PRId64,
+                  (int64_t)check_msg->P);
     ck_assert_msg(check_msg->P_std == 0,
-                  "incorrect value for P_std, expected 0, is %d",
-                  check_msg->P_std);
+                  "incorrect value for P_std, expected 0, is %" PRId64,
+                  (int64_t)check_msg->P_std);
     ck_assert_msg(check_msg->acceleration == -36,
-                  "incorrect value for acceleration, expected -36, is %d",
-                  check_msg->acceleration);
+                  "incorrect value for acceleration, expected -36, is %" PRId64,
+                  (int64_t)check_msg->acceleration);
     ck_assert_msg(check_msg->clock_drift == 0,
-                  "incorrect value for clock_drift, expected 0, is %d",
-                  check_msg->clock_drift);
+                  "incorrect value for clock_drift, expected 0, is %" PRId64,
+                  (int64_t)check_msg->clock_drift);
     ck_assert_msg(check_msg->clock_offset == 0,
-                  "incorrect value for clock_offset, expected 0, is %d",
-                  check_msg->clock_offset);
+                  "incorrect value for clock_offset, expected 0, is %" PRId64,
+                  (int64_t)check_msg->clock_offset);
     ck_assert_msg(check_msg->cn0 == 181,
-                  "incorrect value for cn0, expected 181, is %d",
-                  check_msg->cn0);
+                  "incorrect value for cn0, expected 181, is %" PRId64,
+                  (int64_t)check_msg->cn0);
     ck_assert_msg(check_msg->corr_spacing == 40,
-                  "incorrect value for corr_spacing, expected 40, is %d",
-                  check_msg->corr_spacing);
+                  "incorrect value for corr_spacing, expected 40, is %" PRId64,
+                  (int64_t)check_msg->corr_spacing);
     ck_assert_msg(check_msg->doppler == 15645,
-                  "incorrect value for doppler, expected 15645, is %d",
-                  check_msg->doppler);
+                  "incorrect value for doppler, expected 15645, is %" PRId64,
+                  (int64_t)check_msg->doppler);
     ck_assert_msg(check_msg->doppler_std == 10,
-                  "incorrect value for doppler_std, expected 10, is %d",
-                  check_msg->doppler_std);
+                  "incorrect value for doppler_std, expected 10, is %" PRId64,
+                  (int64_t)check_msg->doppler_std);
     ck_assert_msg(check_msg->lock == 14032,
-                  "incorrect value for lock, expected 14032, is %d",
-                  check_msg->lock);
+                  "incorrect value for lock, expected 14032, is %" PRId64,
+                  (int64_t)check_msg->lock);
     ck_assert_msg(check_msg->misc_flags == 9,
-                  "incorrect value for misc_flags, expected 9, is %d",
-                  check_msg->misc_flags);
+                  "incorrect value for misc_flags, expected 9, is %" PRId64,
+                  (int64_t)check_msg->misc_flags);
     ck_assert_msg(check_msg->nav_flags == 0,
-                  "incorrect value for nav_flags, expected 0, is %d",
-                  check_msg->nav_flags);
+                  "incorrect value for nav_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->nav_flags);
     ck_assert_msg(check_msg->pset_flags == 3,
-                  "incorrect value for pset_flags, expected 3, is %d",
-                  check_msg->pset_flags);
-    ck_assert_msg(check_msg->recv_time == 9406446591,
-                  "incorrect value for recv_time, expected 9406446591, is %d",
-                  check_msg->recv_time);
+                  "incorrect value for pset_flags, expected 3, is %" PRId64,
+                  (int64_t)check_msg->pset_flags);
+    ck_assert_msg(
+        check_msg->recv_time == 9406446591,
+        "incorrect value for recv_time, expected 9406446591, is %" PRId64,
+        (int64_t)check_msg->recv_time);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 15,
-                  "incorrect value for sid.sat, expected 15, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 15, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg(check_msg->sync_flags == 1,
-                  "incorrect value for sync_flags, expected 1, is %d",
-                  check_msg->sync_flags);
+                  "incorrect value for sync_flags, expected 1, is %" PRId64,
+                  (int64_t)check_msg->sync_flags);
     ck_assert_msg(check_msg->tot.tow == 0,
-                  "incorrect value for tot.tow, expected 0, is %d",
-                  check_msg->tot.tow);
+                  "incorrect value for tot.tow, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tot.tow);
     ck_assert_msg(check_msg->tot.wn == 0,
-                  "incorrect value for tot.wn, expected 0, is %d",
-                  check_msg->tot.wn);
+                  "incorrect value for tot.wn, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tot.wn);
     ck_assert_msg(check_msg->tow_flags == 0,
-                  "incorrect value for tow_flags, expected 0, is %d",
-                  check_msg->tow_flags);
+                  "incorrect value for tow_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tow_flags);
     ck_assert_msg(check_msg->track_flags == 11,
-                  "incorrect value for track_flags, expected 11, is %d",
-                  check_msg->track_flags);
+                  "incorrect value for track_flags, expected 11, is %" PRId64,
+                  (int64_t)check_msg->track_flags);
     ck_assert_msg(check_msg->uptime == 2,
-                  "incorrect value for uptime, expected 2, is %d",
-                  check_msg->uptime);
+                  "incorrect value for uptime, expected 2, is %" PRId64,
+                  (int64_t)check_msg->uptime);
   }
   // Test successful parsing of a message
   {
@@ -964,79 +973,81 @@ START_TEST(test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->L.f == 64,
-                  "incorrect value for L.f, expected 64, is %d",
-                  check_msg->L.f);
+                  "incorrect value for L.f, expected 64, is %" PRId64,
+                  (int64_t)check_msg->L.f);
     ck_assert_msg(check_msg->L.i == 3275,
-                  "incorrect value for L.i, expected 3275, is %d",
-                  check_msg->L.i);
-    ck_assert_msg(check_msg->P == 0, "incorrect value for P, expected 0, is %d",
-                  check_msg->P);
+                  "incorrect value for L.i, expected 3275, is %" PRId64,
+                  (int64_t)check_msg->L.i);
+    ck_assert_msg(check_msg->P == 0,
+                  "incorrect value for P, expected 0, is %" PRId64,
+                  (int64_t)check_msg->P);
     ck_assert_msg(check_msg->P_std == 0,
-                  "incorrect value for P_std, expected 0, is %d",
-                  check_msg->P_std);
+                  "incorrect value for P_std, expected 0, is %" PRId64,
+                  (int64_t)check_msg->P_std);
     ck_assert_msg(check_msg->acceleration == 2,
-                  "incorrect value for acceleration, expected 2, is %d",
-                  check_msg->acceleration);
+                  "incorrect value for acceleration, expected 2, is %" PRId64,
+                  (int64_t)check_msg->acceleration);
     ck_assert_msg(check_msg->clock_drift == 0,
-                  "incorrect value for clock_drift, expected 0, is %d",
-                  check_msg->clock_drift);
+                  "incorrect value for clock_drift, expected 0, is %" PRId64,
+                  (int64_t)check_msg->clock_drift);
     ck_assert_msg(check_msg->clock_offset == 0,
-                  "incorrect value for clock_offset, expected 0, is %d",
-                  check_msg->clock_offset);
+                  "incorrect value for clock_offset, expected 0, is %" PRId64,
+                  (int64_t)check_msg->clock_offset);
     ck_assert_msg(check_msg->cn0 == 184,
-                  "incorrect value for cn0, expected 184, is %d",
-                  check_msg->cn0);
+                  "incorrect value for cn0, expected 184, is %" PRId64,
+                  (int64_t)check_msg->cn0);
     ck_assert_msg(check_msg->corr_spacing == 40,
-                  "incorrect value for corr_spacing, expected 40, is %d",
-                  check_msg->corr_spacing);
+                  "incorrect value for corr_spacing, expected 40, is %" PRId64,
+                  (int64_t)check_msg->corr_spacing);
     ck_assert_msg(check_msg->doppler == 15640,
-                  "incorrect value for doppler, expected 15640, is %d",
-                  check_msg->doppler);
+                  "incorrect value for doppler, expected 15640, is %" PRId64,
+                  (int64_t)check_msg->doppler);
     ck_assert_msg(check_msg->doppler_std == 4,
-                  "incorrect value for doppler_std, expected 4, is %d",
-                  check_msg->doppler_std);
+                  "incorrect value for doppler_std, expected 4, is %" PRId64,
+                  (int64_t)check_msg->doppler_std);
     ck_assert_msg(check_msg->lock == 14032,
-                  "incorrect value for lock, expected 14032, is %d",
-                  check_msg->lock);
+                  "incorrect value for lock, expected 14032, is %" PRId64,
+                  (int64_t)check_msg->lock);
     ck_assert_msg(check_msg->misc_flags == 9,
-                  "incorrect value for misc_flags, expected 9, is %d",
-                  check_msg->misc_flags);
+                  "incorrect value for misc_flags, expected 9, is %" PRId64,
+                  (int64_t)check_msg->misc_flags);
     ck_assert_msg(check_msg->nav_flags == 0,
-                  "incorrect value for nav_flags, expected 0, is %d",
-                  check_msg->nav_flags);
+                  "incorrect value for nav_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->nav_flags);
     ck_assert_msg(check_msg->pset_flags == 3,
-                  "incorrect value for pset_flags, expected 3, is %d",
-                  check_msg->pset_flags);
-    ck_assert_msg(check_msg->recv_time == 9906446269,
-                  "incorrect value for recv_time, expected 9906446269, is %d",
-                  check_msg->recv_time);
+                  "incorrect value for pset_flags, expected 3, is %" PRId64,
+                  (int64_t)check_msg->pset_flags);
+    ck_assert_msg(
+        check_msg->recv_time == 9906446269,
+        "incorrect value for recv_time, expected 9906446269, is %" PRId64,
+        (int64_t)check_msg->recv_time);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 15,
-                  "incorrect value for sid.sat, expected 15, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 15, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg(check_msg->sync_flags == 1,
-                  "incorrect value for sync_flags, expected 1, is %d",
-                  check_msg->sync_flags);
+                  "incorrect value for sync_flags, expected 1, is %" PRId64,
+                  (int64_t)check_msg->sync_flags);
     ck_assert_msg(check_msg->tot.tow == 0,
-                  "incorrect value for tot.tow, expected 0, is %d",
-                  check_msg->tot.tow);
+                  "incorrect value for tot.tow, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tot.tow);
     ck_assert_msg(check_msg->tot.wn == 0,
-                  "incorrect value for tot.wn, expected 0, is %d",
-                  check_msg->tot.wn);
+                  "incorrect value for tot.wn, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tot.wn);
     ck_assert_msg(check_msg->tow_flags == 0,
-                  "incorrect value for tow_flags, expected 0, is %d",
-                  check_msg->tow_flags);
+                  "incorrect value for tow_flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->tow_flags);
     ck_assert_msg(check_msg->track_flags == 11,
-                  "incorrect value for track_flags, expected 11, is %d",
-                  check_msg->track_flags);
+                  "incorrect value for track_flags, expected 11, is %" PRId64,
+                  (int64_t)check_msg->track_flags);
     ck_assert_msg(check_msg->uptime == 3,
-                  "incorrect value for uptime, expected 3, is %d",
-                  check_msg->uptime);
+                  "incorrect value for uptime, expected 3, is %" PRId64,
+                  (int64_t)check_msg->uptime);
   }
 }
 END_TEST

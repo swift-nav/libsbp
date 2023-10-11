@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -190,13 +190,14 @@ START_TEST(test_legacy_auto_check_sbp_vehicle_MsgOdometry) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 1,
-                  "incorrect value for flags, expected 1, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 1, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->tow == 8,
-                  "incorrect value for tow, expected 8, is %d", check_msg->tow);
+                  "incorrect value for tow, expected 8, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->velocity == 7,
-                  "incorrect value for velocity, expected 7, is %d",
-                  check_msg->velocity);
+                  "incorrect value for velocity, expected 7, is %" PRId64,
+                  (int64_t)check_msg->velocity);
   }
 }
 END_TEST

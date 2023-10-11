@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -194,64 +194,69 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                                   &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.ssr_code_phase_biases_bounds.const_id == 1,
-        "incorrect value for "
-        "last_msg.msg.ssr_code_phase_biases_bounds.const_id, expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.const_id);
+    ck_assert_msg(last_msg.msg.ssr_code_phase_biases_bounds.const_id == 1,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_code_phase_biases_bounds.const_id, "
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.const_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_code_phase_biases_bounds.header.num_msgs == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.header.num_msgs, expected "
-        "1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.header.num_msgs);
+        "1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.header.num_msgs);
 
-    ck_assert_msg(last_msg.msg.ssr_code_phase_biases_bounds.header.seq_num == 2,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_code_phase_biases_bounds.header.seq_num, "
-                  "expected 2, is %d",
-                  last_msg.msg.ssr_code_phase_biases_bounds.header.seq_num);
+    ck_assert_msg(
+        last_msg.msg.ssr_code_phase_biases_bounds.header.seq_num == 2,
+        "incorrect value for "
+        "last_msg.msg.ssr_code_phase_biases_bounds.header.seq_num, expected 2, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.header.seq_num);
 
-    ck_assert_msg(last_msg.msg.ssr_code_phase_biases_bounds.header.sol_id == 14,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_code_phase_biases_bounds.header.sol_id, "
-                  "expected 14, is %d",
-                  last_msg.msg.ssr_code_phase_biases_bounds.header.sol_id);
+    ck_assert_msg(
+        last_msg.msg.ssr_code_phase_biases_bounds.header.sol_id == 14,
+        "incorrect value for "
+        "last_msg.msg.ssr_code_phase_biases_bounds.header.sol_id, expected 14, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.header.sol_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_code_phase_biases_bounds.header.time.tow == 180,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.header.time.tow, expected "
-        "180, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.header.time.tow);
+        "180, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.header.time.tow);
 
-    ck_assert_msg(last_msg.msg.ssr_code_phase_biases_bounds.header.time.wn == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_code_phase_biases_bounds.header.time.wn, "
-                  "expected 3, is %d",
-                  last_msg.msg.ssr_code_phase_biases_bounds.header.time.wn);
+    ck_assert_msg(
+        last_msg.msg.ssr_code_phase_biases_bounds.header.time.wn == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_code_phase_biases_bounds.header.time.wn, expected 3, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.header.time.wn);
 
     ck_assert_msg(
         last_msg.msg.ssr_code_phase_biases_bounds.header.update_interval == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.header.update_interval, "
-        "expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.header.update_interval);
+        "expected 1, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_code_phase_biases_bounds.header.update_interval);
 
-    ck_assert_msg(last_msg.msg.ssr_code_phase_biases_bounds.n_sats_signals == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_code_phase_biases_bounds.n_sats_signals, "
-                  "expected 3, is %d",
-                  last_msg.msg.ssr_code_phase_biases_bounds.n_sats_signals);
+    ck_assert_msg(
+        last_msg.msg.ssr_code_phase_biases_bounds.n_sats_signals == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_code_phase_biases_bounds.n_sats_signals, expected 3, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.n_sats_signals);
 
     ck_assert_msg(
         last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
                 .code_bias_bound_mu == 39,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0].code_"
-        "bias_bound_mu, expected 39, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
+        "bias_bound_mu, expected 39, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
             .code_bias_bound_mu);
 
     ck_assert_msg(
@@ -259,8 +264,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .code_bias_bound_sig == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0].code_"
-        "bias_bound_sig, expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
+        "bias_bound_sig, expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
             .code_bias_bound_sig);
 
     ck_assert_msg(
@@ -268,8 +273,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .phase_bias_bound_mu == 39,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0].phase_"
-        "bias_bound_mu, expected 39, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
+        "bias_bound_mu, expected 39, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
             .phase_bias_bound_mu);
 
     ck_assert_msg(
@@ -277,8 +282,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .phase_bias_bound_sig == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0].phase_"
-        "bias_bound_sig, expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
+        "bias_bound_sig, expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
             .phase_bias_bound_sig);
 
     ck_assert_msg(
@@ -286,16 +291,17 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .sat_id == 0,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0].sat_"
-        "id, expected 0, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0].sat_id);
+        "id, expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
+            .sat_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
                 .signal_id == 3,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]."
-        "signal_id, expected 3, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
+        "signal_id, expected 3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[0]
             .signal_id);
 
     ck_assert_msg(
@@ -303,8 +309,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .code_bias_bound_mu == 39,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1].code_"
-        "bias_bound_mu, expected 39, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
+        "bias_bound_mu, expected 39, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
             .code_bias_bound_mu);
 
     ck_assert_msg(
@@ -312,8 +318,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .code_bias_bound_sig == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1].code_"
-        "bias_bound_sig, expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
+        "bias_bound_sig, expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
             .code_bias_bound_sig);
 
     ck_assert_msg(
@@ -321,8 +327,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .phase_bias_bound_mu == 39,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1].phase_"
-        "bias_bound_mu, expected 39, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
+        "bias_bound_mu, expected 39, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
             .phase_bias_bound_mu);
 
     ck_assert_msg(
@@ -330,8 +336,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .phase_bias_bound_sig == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1].phase_"
-        "bias_bound_sig, expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
+        "bias_bound_sig, expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
             .phase_bias_bound_sig);
 
     ck_assert_msg(
@@ -339,16 +345,17 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .sat_id == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1].sat_"
-        "id, expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1].sat_id);
+        "id, expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
+            .sat_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
                 .signal_id == 3,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]."
-        "signal_id, expected 3, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
+        "signal_id, expected 3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[1]
             .signal_id);
 
     ck_assert_msg(
@@ -356,8 +363,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .code_bias_bound_mu == 39,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2].code_"
-        "bias_bound_mu, expected 39, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
+        "bias_bound_mu, expected 39, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
             .code_bias_bound_mu);
 
     ck_assert_msg(
@@ -365,8 +372,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .code_bias_bound_sig == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2].code_"
-        "bias_bound_sig, expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
+        "bias_bound_sig, expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
             .code_bias_bound_sig);
 
     ck_assert_msg(
@@ -374,8 +381,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .phase_bias_bound_mu == 39,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2].phase_"
-        "bias_bound_mu, expected 39, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
+        "bias_bound_mu, expected 39, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
             .phase_bias_bound_mu);
 
     ck_assert_msg(
@@ -383,8 +390,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .phase_bias_bound_sig == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2].phase_"
-        "bias_bound_sig, expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
+        "bias_bound_sig, expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
             .phase_bias_bound_sig);
 
     ck_assert_msg(
@@ -392,23 +399,24 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds) {
                 .sat_id == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2].sat_"
-        "id, expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2].sat_id);
+        "id, expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
+            .sat_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
                 .signal_id == 1,
         "incorrect value for "
         "last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]."
-        "signal_id, expected 1, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
+        "signal_id, expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.satellites_signals[2]
             .signal_id);
 
-    ck_assert_msg(
-        last_msg.msg.ssr_code_phase_biases_bounds.ssr_iod == 15,
-        "incorrect value for "
-        "last_msg.msg.ssr_code_phase_biases_bounds.ssr_iod, expected 15, is %d",
-        last_msg.msg.ssr_code_phase_biases_bounds.ssr_iod);
+    ck_assert_msg(last_msg.msg.ssr_code_phase_biases_bounds.ssr_iod == 15,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_code_phase_biases_bounds.ssr_iod, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_code_phase_biases_bounds.ssr_iod);
   }
 }
 END_TEST

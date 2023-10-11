@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -194,25 +194,26 @@ START_TEST(test_legacy_auto_check_sbp_system_MsgInsUpdates) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->gnsspos == 0,
-                  "incorrect value for gnsspos, expected 0, is %d",
-                  check_msg->gnsspos);
+                  "incorrect value for gnsspos, expected 0, is %" PRId64,
+                  (int64_t)check_msg->gnsspos);
     ck_assert_msg(check_msg->gnssvel == 0,
-                  "incorrect value for gnssvel, expected 0, is %d",
-                  check_msg->gnssvel);
+                  "incorrect value for gnssvel, expected 0, is %" PRId64,
+                  (int64_t)check_msg->gnssvel);
     ck_assert_msg(check_msg->nhc == 0,
-                  "incorrect value for nhc, expected 0, is %d", check_msg->nhc);
+                  "incorrect value for nhc, expected 0, is %" PRId64,
+                  (int64_t)check_msg->nhc);
     ck_assert_msg(check_msg->speed == 0,
-                  "incorrect value for speed, expected 0, is %d",
-                  check_msg->speed);
+                  "incorrect value for speed, expected 0, is %" PRId64,
+                  (int64_t)check_msg->speed);
     ck_assert_msg(check_msg->tow == 504489300,
-                  "incorrect value for tow, expected 504489300, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 504489300, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->wheelticks == 0,
-                  "incorrect value for wheelticks, expected 0, is %d",
-                  check_msg->wheelticks);
+                  "incorrect value for wheelticks, expected 0, is %" PRId64,
+                  (int64_t)check_msg->wheelticks);
     ck_assert_msg(check_msg->zerovel == 0,
-                  "incorrect value for zerovel, expected 0, is %d",
-                  check_msg->zerovel);
+                  "incorrect value for zerovel, expected 0, is %" PRId64,
+                  (int64_t)check_msg->zerovel);
   }
 }
 END_TEST

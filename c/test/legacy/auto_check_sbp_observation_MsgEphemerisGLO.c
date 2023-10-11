@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -266,43 +266,47 @@ START_TEST(test_legacy_auto_check_sbp_observation_MsgEphemerisGLO) {
         check_msg->acc[2]);
     ck_assert_msg(
         check_msg->common.fit_interval == 2400,
-        "incorrect value for common.fit_interval, expected 2400, is %d",
-        check_msg->common.fit_interval);
-    ck_assert_msg(check_msg->common.health_bits == 0,
-                  "incorrect value for common.health_bits, expected 0, is %d",
-                  check_msg->common.health_bits);
-    ck_assert_msg(check_msg->common.sid.code == 3,
-                  "incorrect value for common.sid.code, expected 3, is %d",
-                  check_msg->common.sid.code);
+        "incorrect value for common.fit_interval, expected 2400, is %" PRId64,
+        (int64_t)check_msg->common.fit_interval);
+    ck_assert_msg(
+        check_msg->common.health_bits == 0,
+        "incorrect value for common.health_bits, expected 0, is %" PRId64,
+        (int64_t)check_msg->common.health_bits);
+    ck_assert_msg(
+        check_msg->common.sid.code == 3,
+        "incorrect value for common.sid.code, expected 3, is %" PRId64,
+        (int64_t)check_msg->common.sid.code);
     ck_assert_msg(check_msg->common.sid.sat == 4,
-                  "incorrect value for common.sid.sat, expected 4, is %d",
-                  check_msg->common.sid.sat);
-    ck_assert_msg(check_msg->common.toe.tow == 443718,
-                  "incorrect value for common.toe.tow, expected 443718, is %d",
-                  check_msg->common.toe.tow);
-    ck_assert_msg(check_msg->common.toe.wn == 2154,
-                  "incorrect value for common.toe.wn, expected 2154, is %d",
-                  check_msg->common.toe.wn);
+                  "incorrect value for common.sid.sat, expected 4, is %" PRId64,
+                  (int64_t)check_msg->common.sid.sat);
+    ck_assert_msg(
+        check_msg->common.toe.tow == 443718,
+        "incorrect value for common.toe.tow, expected 443718, is %" PRId64,
+        (int64_t)check_msg->common.toe.tow);
+    ck_assert_msg(
+        check_msg->common.toe.wn == 2154,
+        "incorrect value for common.toe.wn, expected 2154, is %" PRId64,
+        (int64_t)check_msg->common.toe.wn);
     ck_assert_msg((check_msg->common.ura * 100 - 5.0 * 100) < 0.05,
                   "incorrect value for common.ura, expected 5.0, is %f",
                   check_msg->common.ura);
     ck_assert_msg(check_msg->common.valid == 1,
-                  "incorrect value for common.valid, expected 1, is %d",
-                  check_msg->common.valid);
+                  "incorrect value for common.valid, expected 1, is %" PRId64,
+                  (int64_t)check_msg->common.valid);
     ck_assert_msg(
         (check_msg->d_tau * 100 - -2.79396772385e-09 * 100) < 0.05,
         "incorrect value for d_tau, expected -2.79396772385e-09, is %f",
         check_msg->d_tau);
     ck_assert_msg(check_msg->fcn == 14,
-                  "incorrect value for fcn, expected 14, is %d",
-                  check_msg->fcn);
+                  "incorrect value for fcn, expected 14, is %" PRId64,
+                  (int64_t)check_msg->fcn);
     ck_assert_msg(
         (check_msg->gamma * 100 - 9.09494701773e-13 * 100) < 0.05,
         "incorrect value for gamma, expected 9.09494701773e-13, is %f",
         check_msg->gamma);
     ck_assert_msg(check_msg->iod == 100,
-                  "incorrect value for iod, expected 100, is %d",
-                  check_msg->iod);
+                  "incorrect value for iod, expected 100, is %" PRId64,
+                  (int64_t)check_msg->iod);
     ck_assert_msg((check_msg->pos[0] * 100 - -12177330.0781 * 100) < 0.05,
                   "incorrect value for pos[0], expected -12177330.0781, is %f",
                   check_msg->pos[0]);

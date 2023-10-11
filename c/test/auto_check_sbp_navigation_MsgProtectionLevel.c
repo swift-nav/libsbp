@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -145,42 +145,44 @@ START_TEST(test_auto_check_sbp_navigation_MsgProtectionLevel) {
     ck_assert_msg(
         last_msg.msg.protection_level_dep_a.flags == 0,
         "incorrect value for last_msg.msg.protection_level_dep_a.flags, "
-        "expected 0, is %d",
-        last_msg.msg.protection_level_dep_a.flags);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.protection_level_dep_a.flags);
 
     ck_assert_msg(
         (last_msg.msg.protection_level_dep_a.height * 100 - 0.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.protection_level_dep_a.height, "
-        "expected 0.0, is %s",
+        "expected 0.0, is %f",
         last_msg.msg.protection_level_dep_a.height);
 
-    ck_assert_msg(last_msg.msg.protection_level_dep_a.hpl == 0,
-                  "incorrect value for "
-                  "last_msg.msg.protection_level_dep_a.hpl, expected 0, is %d",
-                  last_msg.msg.protection_level_dep_a.hpl);
+    ck_assert_msg(
+        last_msg.msg.protection_level_dep_a.hpl == 0,
+        "incorrect value for last_msg.msg.protection_level_dep_a.hpl, expected "
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.protection_level_dep_a.hpl);
 
     ck_assert_msg(
         (last_msg.msg.protection_level_dep_a.lat * 100 - 0.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.protection_level_dep_a.lat, expected "
-        "0.0, is %s",
+        "0.0, is %f",
         last_msg.msg.protection_level_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.protection_level_dep_a.lon * 100 - 0.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.protection_level_dep_a.lon, expected "
-        "0.0, is %s",
+        "0.0, is %f",
         last_msg.msg.protection_level_dep_a.lon);
 
     ck_assert_msg(
         last_msg.msg.protection_level_dep_a.tow == 501867400,
         "incorrect value for last_msg.msg.protection_level_dep_a.tow, expected "
-        "501867400, is %d",
-        last_msg.msg.protection_level_dep_a.tow);
+        "501867400, is %" PRId64,
+        (int64_t)last_msg.msg.protection_level_dep_a.tow);
 
-    ck_assert_msg(last_msg.msg.protection_level_dep_a.vpl == 0,
-                  "incorrect value for "
-                  "last_msg.msg.protection_level_dep_a.vpl, expected 0, is %d",
-                  last_msg.msg.protection_level_dep_a.vpl);
+    ck_assert_msg(
+        last_msg.msg.protection_level_dep_a.vpl == 0,
+        "incorrect value for last_msg.msg.protection_level_dep_a.vpl, expected "
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.protection_level_dep_a.vpl);
   }
 }
 END_TEST

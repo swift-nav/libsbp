@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -142,38 +142,38 @@ START_TEST(test_auto_check_sbp_system_MsgInsUpdates) {
 
     ck_assert_msg(last_msg.msg.ins_updates.gnsspos == 0,
                   "incorrect value for last_msg.msg.ins_updates.gnsspos, "
-                  "expected 0, is %d",
-                  last_msg.msg.ins_updates.gnsspos);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.ins_updates.gnsspos);
 
     ck_assert_msg(last_msg.msg.ins_updates.gnssvel == 0,
                   "incorrect value for last_msg.msg.ins_updates.gnssvel, "
-                  "expected 0, is %d",
-                  last_msg.msg.ins_updates.gnssvel);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.ins_updates.gnssvel);
 
-    ck_assert_msg(
-        last_msg.msg.ins_updates.nhc == 0,
-        "incorrect value for last_msg.msg.ins_updates.nhc, expected 0, is %d",
-        last_msg.msg.ins_updates.nhc);
+    ck_assert_msg(last_msg.msg.ins_updates.nhc == 0,
+                  "incorrect value for last_msg.msg.ins_updates.nhc, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.ins_updates.nhc);
 
-    ck_assert_msg(
-        last_msg.msg.ins_updates.speed == 0,
-        "incorrect value for last_msg.msg.ins_updates.speed, expected 0, is %d",
-        last_msg.msg.ins_updates.speed);
+    ck_assert_msg(last_msg.msg.ins_updates.speed == 0,
+                  "incorrect value for last_msg.msg.ins_updates.speed, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.ins_updates.speed);
 
     ck_assert_msg(last_msg.msg.ins_updates.tow == 504489300,
                   "incorrect value for last_msg.msg.ins_updates.tow, expected "
-                  "504489300, is %d",
-                  last_msg.msg.ins_updates.tow);
+                  "504489300, is %" PRId64,
+                  (int64_t)last_msg.msg.ins_updates.tow);
 
     ck_assert_msg(last_msg.msg.ins_updates.wheelticks == 0,
                   "incorrect value for last_msg.msg.ins_updates.wheelticks, "
-                  "expected 0, is %d",
-                  last_msg.msg.ins_updates.wheelticks);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.ins_updates.wheelticks);
 
     ck_assert_msg(last_msg.msg.ins_updates.zerovel == 0,
                   "incorrect value for last_msg.msg.ins_updates.zerovel, "
-                  "expected 0, is %d",
-                  last_msg.msg.ins_updates.zerovel);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.ins_updates.zerovel);
   }
 }
 END_TEST

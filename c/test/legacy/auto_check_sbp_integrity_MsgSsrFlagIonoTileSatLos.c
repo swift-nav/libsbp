@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -210,48 +210,55 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos) {
         (msg_ssr_flag_iono_tile_sat_los_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->faulty_los[0].constellation == 11,
+                  "incorrect value for faulty_los[0].constellation, expected "
+                  "11, is %" PRId64,
+                  (int64_t)check_msg->faulty_los[0].constellation);
     ck_assert_msg(
-        check_msg->faulty_los[0].constellation == 11,
-        "incorrect value for faulty_los[0].constellation, expected 11, is %d",
-        check_msg->faulty_los[0].constellation);
-    ck_assert_msg(check_msg->faulty_los[0].satId == 10,
-                  "incorrect value for faulty_los[0].satId, expected 10, is %d",
-                  check_msg->faulty_los[0].satId);
+        check_msg->faulty_los[0].satId == 10,
+        "incorrect value for faulty_los[0].satId, expected 10, is %" PRId64,
+        (int64_t)check_msg->faulty_los[0].satId);
+    ck_assert_msg(check_msg->faulty_los[1].constellation == 14,
+                  "incorrect value for faulty_los[1].constellation, expected "
+                  "14, is %" PRId64,
+                  (int64_t)check_msg->faulty_los[1].constellation);
     ck_assert_msg(
-        check_msg->faulty_los[1].constellation == 14,
-        "incorrect value for faulty_los[1].constellation, expected 14, is %d",
-        check_msg->faulty_los[1].constellation);
-    ck_assert_msg(check_msg->faulty_los[1].satId == 15,
-                  "incorrect value for faulty_los[1].satId, expected 15, is %d",
-                  check_msg->faulty_los[1].satId);
-    ck_assert_msg(check_msg->header.chain_id == 6,
-                  "incorrect value for header.chain_id, expected 6, is %d",
-                  check_msg->header.chain_id);
-    ck_assert_msg(check_msg->header.num_msgs == 1,
-                  "incorrect value for header.num_msgs, expected 1, is %d",
-                  check_msg->header.num_msgs);
+        check_msg->faulty_los[1].satId == 15,
+        "incorrect value for faulty_los[1].satId, expected 15, is %" PRId64,
+        (int64_t)check_msg->faulty_los[1].satId);
+    ck_assert_msg(
+        check_msg->header.chain_id == 6,
+        "incorrect value for header.chain_id, expected 6, is %" PRId64,
+        (int64_t)check_msg->header.chain_id);
+    ck_assert_msg(
+        check_msg->header.num_msgs == 1,
+        "incorrect value for header.num_msgs, expected 1, is %" PRId64,
+        (int64_t)check_msg->header.num_msgs);
     ck_assert_msg(
         check_msg->header.obs_time.tow == 180,
-        "incorrect value for header.obs_time.tow, expected 180, is %d",
-        check_msg->header.obs_time.tow);
-    ck_assert_msg(check_msg->header.obs_time.wn == 3,
-                  "incorrect value for header.obs_time.wn, expected 3, is %d",
-                  check_msg->header.obs_time.wn);
+        "incorrect value for header.obs_time.tow, expected 180, is %" PRId64,
+        (int64_t)check_msg->header.obs_time.tow);
+    ck_assert_msg(
+        check_msg->header.obs_time.wn == 3,
+        "incorrect value for header.obs_time.wn, expected 3, is %" PRId64,
+        (int64_t)check_msg->header.obs_time.wn);
     ck_assert_msg(check_msg->header.seq_num == 2,
-                  "incorrect value for header.seq_num, expected 2, is %d",
-                  check_msg->header.seq_num);
-    ck_assert_msg(check_msg->header.ssr_sol_id == 3,
-                  "incorrect value for header.ssr_sol_id, expected 3, is %d",
-                  check_msg->header.ssr_sol_id);
+                  "incorrect value for header.seq_num, expected 2, is %" PRId64,
+                  (int64_t)check_msg->header.seq_num);
+    ck_assert_msg(
+        check_msg->header.ssr_sol_id == 3,
+        "incorrect value for header.ssr_sol_id, expected 3, is %" PRId64,
+        (int64_t)check_msg->header.ssr_sol_id);
     ck_assert_msg(check_msg->header.tile_id == 5,
-                  "incorrect value for header.tile_id, expected 5, is %d",
-                  check_msg->header.tile_id);
-    ck_assert_msg(check_msg->header.tile_set_id == 4,
-                  "incorrect value for header.tile_set_id, expected 4, is %d",
-                  check_msg->header.tile_set_id);
+                  "incorrect value for header.tile_id, expected 5, is %" PRId64,
+                  (int64_t)check_msg->header.tile_id);
+    ck_assert_msg(
+        check_msg->header.tile_set_id == 4,
+        "incorrect value for header.tile_set_id, expected 4, is %" PRId64,
+        (int64_t)check_msg->header.tile_set_id);
     ck_assert_msg(check_msg->n_faulty_los == 2,
-                  "incorrect value for n_faulty_los, expected 2, is %d",
-                  check_msg->n_faulty_los);
+                  "incorrect value for n_faulty_los, expected 2, is %" PRId64,
+                  (int64_t)check_msg->n_faulty_los);
   }
 }
 END_TEST

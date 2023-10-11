@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -188,8 +188,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgIarState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->num_hyps == 1,
-                  "incorrect value for num_hyps, expected 1, is %d",
-                  check_msg->num_hyps);
+                  "incorrect value for num_hyps, expected 1, is %" PRId64,
+                  (int64_t)check_msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -275,8 +275,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgIarState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->num_hyps == 0,
-                  "incorrect value for num_hyps, expected 0, is %d",
-                  check_msg->num_hyps);
+                  "incorrect value for num_hyps, expected 0, is %" PRId64,
+                  (int64_t)check_msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -362,8 +362,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgIarState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->num_hyps == 1,
-                  "incorrect value for num_hyps, expected 1, is %d",
-                  check_msg->num_hyps);
+                  "incorrect value for num_hyps, expected 1, is %" PRId64,
+                  (int64_t)check_msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -449,8 +449,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgIarState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->num_hyps == 729,
-                  "incorrect value for num_hyps, expected 729, is %d",
-                  check_msg->num_hyps);
+                  "incorrect value for num_hyps, expected 729, is %" PRId64,
+                  (int64_t)check_msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -536,8 +536,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgIarState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->num_hyps == 728,
-                  "incorrect value for num_hyps, expected 728, is %d",
-                  check_msg->num_hyps);
+                  "incorrect value for num_hyps, expected 728, is %" PRId64,
+                  (int64_t)check_msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -623,8 +623,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgIarState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->num_hyps == 727,
-                  "incorrect value for num_hyps, expected 727, is %d",
-                  check_msg->num_hyps);
+                  "incorrect value for num_hyps, expected 727, is %" PRId64,
+                  (int64_t)check_msg->num_hyps);
   }
   // Test successful parsing of a message
   {
@@ -710,8 +710,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgIarState) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->num_hyps == 723,
-                  "incorrect value for num_hyps, expected 723, is %d",
-                  check_msg->num_hyps);
+                  "incorrect value for num_hyps, expected 723, is %" PRId64,
+                  (int64_t)check_msg->num_hyps);
   }
 }
 END_TEST

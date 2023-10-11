@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -131,20 +131,20 @@ START_TEST(test_auto_check_sbp_vehicle_MsgOdometry) {
         sbp_message_cmp(SbpMsgOdometry, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.odometry.flags == 1,
-        "incorrect value for last_msg.msg.odometry.flags, expected 1, is %d",
-        last_msg.msg.odometry.flags);
+    ck_assert_msg(last_msg.msg.odometry.flags == 1,
+                  "incorrect value for last_msg.msg.odometry.flags, expected "
+                  "1, is %" PRId64,
+                  (int64_t)last_msg.msg.odometry.flags);
 
-    ck_assert_msg(
-        last_msg.msg.odometry.tow == 8,
-        "incorrect value for last_msg.msg.odometry.tow, expected 8, is %d",
-        last_msg.msg.odometry.tow);
+    ck_assert_msg(last_msg.msg.odometry.tow == 8,
+                  "incorrect value for last_msg.msg.odometry.tow, expected 8, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.odometry.tow);
 
-    ck_assert_msg(
-        last_msg.msg.odometry.velocity == 7,
-        "incorrect value for last_msg.msg.odometry.velocity, expected 7, is %d",
-        last_msg.msg.odometry.velocity);
+    ck_assert_msg(last_msg.msg.odometry.velocity == 7,
+                  "incorrect value for last_msg.msg.odometry.velocity, "
+                  "expected 7, is %" PRId64,
+                  (int64_t)last_msg.msg.odometry.velocity);
   }
 }
 END_TEST

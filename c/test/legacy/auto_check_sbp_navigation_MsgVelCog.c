@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -197,29 +197,32 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelCog) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cog == 1000,
-                  "incorrect value for cog, expected 1000, is %d",
-                  check_msg->cog);
-    ck_assert_msg(check_msg->cog_accuracy == 4000,
-                  "incorrect value for cog_accuracy, expected 4000, is %d",
-                  check_msg->cog_accuracy);
+                  "incorrect value for cog, expected 1000, is %" PRId64,
+                  (int64_t)check_msg->cog);
+    ck_assert_msg(
+        check_msg->cog_accuracy == 4000,
+        "incorrect value for cog_accuracy, expected 4000, is %" PRId64,
+        (int64_t)check_msg->cog_accuracy);
     ck_assert_msg(check_msg->flags == 62,
-                  "incorrect value for flags, expected 62, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 62, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->sog == 2000,
-                  "incorrect value for sog, expected 2000, is %d",
-                  check_msg->sog);
-    ck_assert_msg(check_msg->sog_accuracy == 5000,
-                  "incorrect value for sog_accuracy, expected 5000, is %d",
-                  check_msg->sog_accuracy);
+                  "incorrect value for sog, expected 2000, is %" PRId64,
+                  (int64_t)check_msg->sog);
+    ck_assert_msg(
+        check_msg->sog_accuracy == 5000,
+        "incorrect value for sog_accuracy, expected 5000, is %" PRId64,
+        (int64_t)check_msg->sog_accuracy);
     ck_assert_msg(check_msg->tow == 326825520,
-                  "incorrect value for tow, expected 326825520, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326825520, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->v_up == 3000,
-                  "incorrect value for v_up, expected 3000, is %d",
-                  check_msg->v_up);
-    ck_assert_msg(check_msg->v_up_accuracy == 6000,
-                  "incorrect value for v_up_accuracy, expected 6000, is %d",
-                  check_msg->v_up_accuracy);
+                  "incorrect value for v_up, expected 3000, is %" PRId64,
+                  (int64_t)check_msg->v_up);
+    ck_assert_msg(
+        check_msg->v_up_accuracy == 6000,
+        "incorrect value for v_up_accuracy, expected 6000, is %" PRId64,
+        (int64_t)check_msg->v_up_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -314,29 +317,31 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelCog) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cog == 123,
-                  "incorrect value for cog, expected 123, is %d",
-                  check_msg->cog);
-    ck_assert_msg(check_msg->cog_accuracy == 180000000,
-                  "incorrect value for cog_accuracy, expected 180000000, is %d",
-                  check_msg->cog_accuracy);
+                  "incorrect value for cog, expected 123, is %" PRId64,
+                  (int64_t)check_msg->cog);
+    ck_assert_msg(
+        check_msg->cog_accuracy == 180000000,
+        "incorrect value for cog_accuracy, expected 180000000, is %" PRId64,
+        (int64_t)check_msg->cog_accuracy);
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->sog == 456,
-                  "incorrect value for sog, expected 456, is %d",
-                  check_msg->sog);
+                  "incorrect value for sog, expected 456, is %" PRId64,
+                  (int64_t)check_msg->sog);
     ck_assert_msg(check_msg->sog_accuracy == 100,
-                  "incorrect value for sog_accuracy, expected 100, is %d",
-                  check_msg->sog_accuracy);
+                  "incorrect value for sog_accuracy, expected 100, is %" PRId64,
+                  (int64_t)check_msg->sog_accuracy);
     ck_assert_msg(check_msg->tow == 326825520,
-                  "incorrect value for tow, expected 326825520, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326825520, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->v_up == -1000,
-                  "incorrect value for v_up, expected -1000, is %d",
-                  check_msg->v_up);
-    ck_assert_msg(check_msg->v_up_accuracy == 100,
-                  "incorrect value for v_up_accuracy, expected 100, is %d",
-                  check_msg->v_up_accuracy);
+                  "incorrect value for v_up, expected -1000, is %" PRId64,
+                  (int64_t)check_msg->v_up);
+    ck_assert_msg(
+        check_msg->v_up_accuracy == 100,
+        "incorrect value for v_up_accuracy, expected 100, is %" PRId64,
+        (int64_t)check_msg->v_up_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -430,27 +435,29 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelCog) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->cog == 0,
-                  "incorrect value for cog, expected 0, is %d", check_msg->cog);
+                  "incorrect value for cog, expected 0, is %" PRId64,
+                  (int64_t)check_msg->cog);
     ck_assert_msg(check_msg->cog_accuracy == 0,
-                  "incorrect value for cog_accuracy, expected 0, is %d",
-                  check_msg->cog_accuracy);
+                  "incorrect value for cog_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->cog_accuracy);
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->sog == 0,
-                  "incorrect value for sog, expected 0, is %d", check_msg->sog);
+                  "incorrect value for sog, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sog);
     ck_assert_msg(check_msg->sog_accuracy == 0,
-                  "incorrect value for sog_accuracy, expected 0, is %d",
-                  check_msg->sog_accuracy);
+                  "incorrect value for sog_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sog_accuracy);
     ck_assert_msg(check_msg->tow == 326825520,
-                  "incorrect value for tow, expected 326825520, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 326825520, is %" PRId64,
+                  (int64_t)check_msg->tow);
     ck_assert_msg(check_msg->v_up == 0,
-                  "incorrect value for v_up, expected 0, is %d",
-                  check_msg->v_up);
+                  "incorrect value for v_up, expected 0, is %" PRId64,
+                  (int64_t)check_msg->v_up);
     ck_assert_msg(check_msg->v_up_accuracy == 0,
-                  "incorrect value for v_up_accuracy, expected 0, is %d",
-                  check_msg->v_up_accuracy);
+                  "incorrect value for v_up_accuracy, expected 0, is %" PRId64,
+                  (int64_t)check_msg->v_up_accuracy);
   }
 }
 END_TEST

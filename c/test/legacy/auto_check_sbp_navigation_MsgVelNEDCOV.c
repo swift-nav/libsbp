@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -218,21 +218,24 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelNEDCOV) {
     ck_assert_msg((check_msg->cov_n_n * 100 - 1.0 * 100) < 0.05,
                   "incorrect value for cov_n_n, expected 1.0, is %f",
                   check_msg->cov_n_n);
-    ck_assert_msg(check_msg->d == 1, "incorrect value for d, expected 1, is %d",
-                  check_msg->d);
-    ck_assert_msg(check_msg->e == 1, "incorrect value for e, expected 1, is %d",
-                  check_msg->e);
+    ck_assert_msg(check_msg->d == 1,
+                  "incorrect value for d, expected 1, is %" PRId64,
+                  (int64_t)check_msg->d);
+    ck_assert_msg(check_msg->e == 1,
+                  "incorrect value for e, expected 1, is %" PRId64,
+                  (int64_t)check_msg->e);
     ck_assert_msg(check_msg->flags == 0,
-                  "incorrect value for flags, expected 0, is %d",
-                  check_msg->flags);
-    ck_assert_msg(check_msg->n == 1, "incorrect value for n, expected 1, is %d",
-                  check_msg->n);
+                  "incorrect value for flags, expected 0, is %" PRId64,
+                  (int64_t)check_msg->flags);
+    ck_assert_msg(check_msg->n == 1,
+                  "incorrect value for n, expected 1, is %" PRId64,
+                  (int64_t)check_msg->n);
     ck_assert_msg(check_msg->n_sats == 10,
-                  "incorrect value for n_sats, expected 10, is %d",
-                  check_msg->n_sats);
+                  "incorrect value for n_sats, expected 10, is %" PRId64,
+                  (int64_t)check_msg->n_sats);
     ck_assert_msg(check_msg->tow == 100,
-                  "incorrect value for tow, expected 100, is %d",
-                  check_msg->tow);
+                  "incorrect value for tow, expected 100, is %" PRId64,
+                  (int64_t)check_msg->tow);
   }
 }
 END_TEST

@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -238,43 +238,44 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->delta_X0 == 7,
-                  "incorrect value for delta_X0, expected 7, is %d",
-                  check_msg->delta_X0);
+                  "incorrect value for delta_X0, expected 7, is %" PRId64,
+                  (int64_t)check_msg->delta_X0);
     ck_assert_msg(check_msg->delta_Y0 == 8,
-                  "incorrect value for delta_Y0, expected 8, is %d",
-                  check_msg->delta_Y0);
+                  "incorrect value for delta_Y0, expected 8, is %" PRId64,
+                  (int64_t)check_msg->delta_Y0);
     ck_assert_msg(check_msg->delta_Z0 == 9,
-                  "incorrect value for delta_Z0, expected 9, is %d",
-                  check_msg->delta_Z0);
+                  "incorrect value for delta_Z0, expected 9, is %" PRId64,
+                  (int64_t)check_msg->delta_Z0);
     ck_assert_msg(check_msg->dot_delta_X0 == 14,
-                  "incorrect value for dot_delta_X0, expected 14, is %d",
-                  check_msg->dot_delta_X0);
+                  "incorrect value for dot_delta_X0, expected 14, is %" PRId64,
+                  (int64_t)check_msg->dot_delta_X0);
     ck_assert_msg(check_msg->dot_delta_Y0 == 15,
-                  "incorrect value for dot_delta_Y0, expected 15, is %d",
-                  check_msg->dot_delta_Y0);
+                  "incorrect value for dot_delta_Y0, expected 15, is %" PRId64,
+                  (int64_t)check_msg->dot_delta_Y0);
     ck_assert_msg(check_msg->dot_delta_Z0 == 16,
-                  "incorrect value for dot_delta_Z0, expected 16, is %d",
-                  check_msg->dot_delta_Z0);
+                  "incorrect value for dot_delta_Z0, expected 16, is %" PRId64,
+                  (int64_t)check_msg->dot_delta_Z0);
     ck_assert_msg(check_msg->dot_scale == 20,
-                  "incorrect value for dot_scale, expected 20, is %d",
-                  check_msg->dot_scale);
+                  "incorrect value for dot_scale, expected 20, is %" PRId64,
+                  (int64_t)check_msg->dot_scale);
     ck_assert_msg(check_msg->dot_theta_01 == 17,
-                  "incorrect value for dot_theta_01, expected 17, is %d",
-                  check_msg->dot_theta_01);
+                  "incorrect value for dot_theta_01, expected 17, is %" PRId64,
+                  (int64_t)check_msg->dot_theta_01);
     ck_assert_msg(check_msg->dot_theta_02 == 18,
-                  "incorrect value for dot_theta_02, expected 18, is %d",
-                  check_msg->dot_theta_02);
+                  "incorrect value for dot_theta_02, expected 18, is %" PRId64,
+                  (int64_t)check_msg->dot_theta_02);
     ck_assert_msg(check_msg->dot_theta_03 == 19,
-                  "incorrect value for dot_theta_03, expected 19, is %d",
-                  check_msg->dot_theta_03);
+                  "incorrect value for dot_theta_03, expected 19, is %" PRId64,
+                  (int64_t)check_msg->dot_theta_03);
     ck_assert_msg(check_msg->re_t0 == 6,
-                  "incorrect value for re_t0, expected 6, is %d",
-                  check_msg->re_t0);
+                  "incorrect value for re_t0, expected 6, is %" PRId64,
+                  (int64_t)check_msg->re_t0);
     ck_assert_msg(check_msg->scale == 13,
-                  "incorrect value for scale, expected 13, is %d",
-                  check_msg->scale);
+                  "incorrect value for scale, expected 13, is %" PRId64,
+                  (int64_t)check_msg->scale);
     ck_assert_msg(check_msg->sin == 4,
-                  "incorrect value for sin, expected 4, is %d", check_msg->sin);
+                  "incorrect value for sin, expected 4, is %" PRId64,
+                  (int64_t)check_msg->sin);
     {
       const char check_string[] = {
           (char)102, (char)111, (char)111, (char)0, (char)0, (char)0, (char)0,
@@ -288,17 +289,17 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           check_string, check_msg->sn);
     }
     ck_assert_msg(check_msg->ssr_iod == 1,
-                  "incorrect value for ssr_iod, expected 1, is %d",
-                  check_msg->ssr_iod);
+                  "incorrect value for ssr_iod, expected 1, is %" PRId64,
+                  (int64_t)check_msg->ssr_iod);
     ck_assert_msg(check_msg->theta_01 == 10,
-                  "incorrect value for theta_01, expected 10, is %d",
-                  check_msg->theta_01);
+                  "incorrect value for theta_01, expected 10, is %" PRId64,
+                  (int64_t)check_msg->theta_01);
     ck_assert_msg(check_msg->theta_02 == 11,
-                  "incorrect value for theta_02, expected 11, is %d",
-                  check_msg->theta_02);
+                  "incorrect value for theta_02, expected 11, is %" PRId64,
+                  (int64_t)check_msg->theta_02);
     ck_assert_msg(check_msg->theta_03 == 12,
-                  "incorrect value for theta_03, expected 12, is %d",
-                  check_msg->theta_03);
+                  "incorrect value for theta_03, expected 12, is %" PRId64,
+                  (int64_t)check_msg->theta_03);
     {
       const char check_string[] = {
           (char)98, (char)97, (char)114, (char)0, (char)0, (char)0, (char)0,
@@ -312,7 +313,8 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           check_string, check_msg->tn);
     }
     ck_assert_msg(check_msg->utn == 5,
-                  "incorrect value for utn, expected 5, is %d", check_msg->utn);
+                  "incorrect value for utn, expected 5, is %" PRId64,
+                  (int64_t)check_msg->utn);
   }
 }
 END_TEST

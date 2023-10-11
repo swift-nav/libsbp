@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -236,71 +236,73 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->chain_id == 40,
-                  "incorrect value for chain_id, expected 40, is %d",
-                  check_msg->chain_id);
-    ck_assert_msg(check_msg->corr_time.tow == 360,
-                  "incorrect value for corr_time.tow, expected 360, is %d",
-                  check_msg->corr_time.tow);
-    ck_assert_msg(check_msg->corr_time.wn == 6,
-                  "incorrect value for corr_time.wn, expected 6, is %d",
-                  check_msg->corr_time.wn);
-    ck_assert_msg(check_msg->obs_time.tow == 180,
-                  "incorrect value for obs_time.tow, expected 180, is %d",
-                  check_msg->obs_time.tow);
-    ck_assert_msg(check_msg->obs_time.wn == 3,
-                  "incorrect value for obs_time.wn, expected 3, is %d",
-                  check_msg->obs_time.wn);
-    ck_assert_msg(check_msg->reserved[0] == 0,
-                  "incorrect value for reserved[0], expected 0, is %d",
-                  check_msg->reserved[0]);
-    ck_assert_msg(check_msg->reserved[1] == 0,
-                  "incorrect value for reserved[1], expected 0, is %d",
-                  check_msg->reserved[1]);
-    ck_assert_msg(check_msg->reserved[2] == 0,
-                  "incorrect value for reserved[2], expected 0, is %d",
-                  check_msg->reserved[2]);
-    ck_assert_msg(check_msg->reserved[3] == 0,
-                  "incorrect value for reserved[3], expected 0, is %d",
-                  check_msg->reserved[3]);
-    ck_assert_msg(check_msg->reserved[4] == 0,
-                  "incorrect value for reserved[4], expected 0, is %d",
-                  check_msg->reserved[4]);
-    ck_assert_msg(check_msg->reserved[5] == 0,
-                  "incorrect value for reserved[5], expected 0, is %d",
-                  check_msg->reserved[5]);
-    ck_assert_msg(check_msg->ssr_sol_id == 10,
-                  "incorrect value for ssr_sol_id, expected 10, is %d",
-                  check_msg->ssr_sol_id);
-    ck_assert_msg(check_msg->tile_id == 30,
-                  "incorrect value for tile_id, expected 30, is %d",
-                  check_msg->tile_id);
-    ck_assert_msg(check_msg->tile_set_id == 20,
-                  "incorrect value for tile_set_id, expected 20, is %d",
-                  check_msg->tile_set_id);
-    ck_assert_msg(check_msg->use_bds_sat == 3,
-                  "incorrect value for use_bds_sat, expected 3, is %d",
-                  check_msg->use_bds_sat);
-    ck_assert_msg(check_msg->use_gal_sat == 2,
-                  "incorrect value for use_gal_sat, expected 2, is %d",
-                  check_msg->use_gal_sat);
-    ck_assert_msg(check_msg->use_gps_sat == 1,
-                  "incorrect value for use_gps_sat, expected 1, is %d",
-                  check_msg->use_gps_sat);
+                  "incorrect value for chain_id, expected 40, is %" PRId64,
+                  (int64_t)check_msg->chain_id);
     ck_assert_msg(
-        check_msg->use_iono_grid_point_sat_los == 7,
-        "incorrect value for use_iono_grid_point_sat_los, expected 7, is %d",
-        check_msg->use_iono_grid_point_sat_los);
-    ck_assert_msg(check_msg->use_iono_grid_points == 5,
-                  "incorrect value for use_iono_grid_points, expected 5, is %d",
-                  check_msg->use_iono_grid_points);
+        check_msg->corr_time.tow == 360,
+        "incorrect value for corr_time.tow, expected 360, is %" PRId64,
+        (int64_t)check_msg->corr_time.tow);
+    ck_assert_msg(check_msg->corr_time.wn == 6,
+                  "incorrect value for corr_time.wn, expected 6, is %" PRId64,
+                  (int64_t)check_msg->corr_time.wn);
+    ck_assert_msg(check_msg->obs_time.tow == 180,
+                  "incorrect value for obs_time.tow, expected 180, is %" PRId64,
+                  (int64_t)check_msg->obs_time.tow);
+    ck_assert_msg(check_msg->obs_time.wn == 3,
+                  "incorrect value for obs_time.wn, expected 3, is %" PRId64,
+                  (int64_t)check_msg->obs_time.wn);
+    ck_assert_msg(check_msg->reserved[0] == 0,
+                  "incorrect value for reserved[0], expected 0, is %" PRId64,
+                  (int64_t)check_msg->reserved[0]);
+    ck_assert_msg(check_msg->reserved[1] == 0,
+                  "incorrect value for reserved[1], expected 0, is %" PRId64,
+                  (int64_t)check_msg->reserved[1]);
+    ck_assert_msg(check_msg->reserved[2] == 0,
+                  "incorrect value for reserved[2], expected 0, is %" PRId64,
+                  (int64_t)check_msg->reserved[2]);
+    ck_assert_msg(check_msg->reserved[3] == 0,
+                  "incorrect value for reserved[3], expected 0, is %" PRId64,
+                  (int64_t)check_msg->reserved[3]);
+    ck_assert_msg(check_msg->reserved[4] == 0,
+                  "incorrect value for reserved[4], expected 0, is %" PRId64,
+                  (int64_t)check_msg->reserved[4]);
+    ck_assert_msg(check_msg->reserved[5] == 0,
+                  "incorrect value for reserved[5], expected 0, is %" PRId64,
+                  (int64_t)check_msg->reserved[5]);
+    ck_assert_msg(check_msg->ssr_sol_id == 10,
+                  "incorrect value for ssr_sol_id, expected 10, is %" PRId64,
+                  (int64_t)check_msg->ssr_sol_id);
+    ck_assert_msg(check_msg->tile_id == 30,
+                  "incorrect value for tile_id, expected 30, is %" PRId64,
+                  (int64_t)check_msg->tile_id);
+    ck_assert_msg(check_msg->tile_set_id == 20,
+                  "incorrect value for tile_set_id, expected 20, is %" PRId64,
+                  (int64_t)check_msg->tile_set_id);
+    ck_assert_msg(check_msg->use_bds_sat == 3,
+                  "incorrect value for use_bds_sat, expected 3, is %" PRId64,
+                  (int64_t)check_msg->use_bds_sat);
+    ck_assert_msg(check_msg->use_gal_sat == 2,
+                  "incorrect value for use_gal_sat, expected 2, is %" PRId64,
+                  (int64_t)check_msg->use_gal_sat);
+    ck_assert_msg(check_msg->use_gps_sat == 1,
+                  "incorrect value for use_gps_sat, expected 1, is %" PRId64,
+                  (int64_t)check_msg->use_gps_sat);
+    ck_assert_msg(check_msg->use_iono_grid_point_sat_los == 7,
+                  "incorrect value for use_iono_grid_point_sat_los, expected "
+                  "7, is %" PRId64,
+                  (int64_t)check_msg->use_iono_grid_point_sat_los);
+    ck_assert_msg(
+        check_msg->use_iono_grid_points == 5,
+        "incorrect value for use_iono_grid_points, expected 5, is %" PRId64,
+        (int64_t)check_msg->use_iono_grid_points);
     ck_assert_msg(
         check_msg->use_iono_tile_sat_los == 6,
-        "incorrect value for use_iono_tile_sat_los, expected 6, is %d",
-        check_msg->use_iono_tile_sat_los);
+        "incorrect value for use_iono_tile_sat_los, expected 6, is %" PRId64,
+        (int64_t)check_msg->use_iono_tile_sat_los);
     ck_assert_msg(
         check_msg->use_tropo_grid_points == 4,
-        "incorrect value for use_tropo_grid_points, expected 4, is %d",
-        check_msg->use_tropo_grid_points);
+        "incorrect value for use_tropo_grid_points, expected 4, is %" PRId64,
+        (int64_t)check_msg->use_tropo_grid_points);
   }
 }
 END_TEST

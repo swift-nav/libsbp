@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -130,20 +130,20 @@ START_TEST(test_auto_check_sbp_imu_MsgImuAux) {
     ck_assert_msg(sbp_message_cmp(SbpMsgImuAux, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.imu_aux.imu_conf == 66,
-        "incorrect value for last_msg.msg.imu_aux.imu_conf, expected 66, is %d",
-        last_msg.msg.imu_aux.imu_conf);
+    ck_assert_msg(last_msg.msg.imu_aux.imu_conf == 66,
+                  "incorrect value for last_msg.msg.imu_aux.imu_conf, expected "
+                  "66, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_aux.imu_conf);
 
-    ck_assert_msg(
-        last_msg.msg.imu_aux.imu_type == 1,
-        "incorrect value for last_msg.msg.imu_aux.imu_type, expected 1, is %d",
-        last_msg.msg.imu_aux.imu_type);
+    ck_assert_msg(last_msg.msg.imu_aux.imu_type == 1,
+                  "incorrect value for last_msg.msg.imu_aux.imu_type, expected "
+                  "1, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_aux.imu_type);
 
-    ck_assert_msg(
-        last_msg.msg.imu_aux.temp == 2804,
-        "incorrect value for last_msg.msg.imu_aux.temp, expected 2804, is %d",
-        last_msg.msg.imu_aux.temp);
+    ck_assert_msg(last_msg.msg.imu_aux.temp == 2804,
+                  "incorrect value for last_msg.msg.imu_aux.temp, expected "
+                  "2804, is %" PRId64,
+                  (int64_t)last_msg.msg.imu_aux.temp);
   }
 }
 END_TEST

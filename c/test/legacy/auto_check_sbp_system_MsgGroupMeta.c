@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -205,23 +205,26 @@ START_TEST(test_legacy_auto_check_sbp_system_MsgGroupMeta) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 2,
-                  "incorrect value for flags, expected 2, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 2, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->group_id == 1,
-                  "incorrect value for group_id, expected 1, is %d",
-                  check_msg->group_id);
-    ck_assert_msg(check_msg->group_msgs[0] == 65290,
-                  "incorrect value for group_msgs[0], expected 65290, is %d",
-                  check_msg->group_msgs[0]);
-    ck_assert_msg(check_msg->group_msgs[1] == 522,
-                  "incorrect value for group_msgs[1], expected 522, is %d",
-                  check_msg->group_msgs[1]);
-    ck_assert_msg(check_msg->group_msgs[2] == 65282,
-                  "incorrect value for group_msgs[2], expected 65282, is %d",
-                  check_msg->group_msgs[2]);
+                  "incorrect value for group_id, expected 1, is %" PRId64,
+                  (int64_t)check_msg->group_id);
+    ck_assert_msg(
+        check_msg->group_msgs[0] == 65290,
+        "incorrect value for group_msgs[0], expected 65290, is %" PRId64,
+        (int64_t)check_msg->group_msgs[0]);
+    ck_assert_msg(
+        check_msg->group_msgs[1] == 522,
+        "incorrect value for group_msgs[1], expected 522, is %" PRId64,
+        (int64_t)check_msg->group_msgs[1]);
+    ck_assert_msg(
+        check_msg->group_msgs[2] == 65282,
+        "incorrect value for group_msgs[2], expected 65282, is %" PRId64,
+        (int64_t)check_msg->group_msgs[2]);
     ck_assert_msg(check_msg->n_group_msgs == 3,
-                  "incorrect value for n_group_msgs, expected 3, is %d",
-                  check_msg->n_group_msgs);
+                  "incorrect value for n_group_msgs, expected 3, is %" PRId64,
+                  (int64_t)check_msg->n_group_msgs);
   }
   // Test successful parsing of a message
   {
@@ -381,56 +384,70 @@ START_TEST(test_legacy_auto_check_sbp_system_MsgGroupMeta) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 1,
-                  "incorrect value for flags, expected 1, is %d",
-                  check_msg->flags);
+                  "incorrect value for flags, expected 1, is %" PRId64,
+                  (int64_t)check_msg->flags);
     ck_assert_msg(check_msg->group_id == 1,
-                  "incorrect value for group_id, expected 1, is %d",
-                  check_msg->group_id);
-    ck_assert_msg(check_msg->group_msgs[0] == 258,
-                  "incorrect value for group_msgs[0], expected 258, is %d",
-                  check_msg->group_msgs[0]);
-    ck_assert_msg(check_msg->group_msgs[1] == 259,
-                  "incorrect value for group_msgs[1], expected 259, is %d",
-                  check_msg->group_msgs[1]);
-    ck_assert_msg(check_msg->group_msgs[2] == 522,
-                  "incorrect value for group_msgs[2], expected 522, is %d",
-                  check_msg->group_msgs[2]);
-    ck_assert_msg(check_msg->group_msgs[3] == 529,
-                  "incorrect value for group_msgs[3], expected 529, is %d",
-                  check_msg->group_msgs[3]);
-    ck_assert_msg(check_msg->group_msgs[4] == 521,
-                  "incorrect value for group_msgs[4], expected 521, is %d",
-                  check_msg->group_msgs[4]);
-    ck_assert_msg(check_msg->group_msgs[5] == 532,
-                  "incorrect value for group_msgs[5], expected 532, is %d",
-                  check_msg->group_msgs[5]);
-    ck_assert_msg(check_msg->group_msgs[6] == 526,
-                  "incorrect value for group_msgs[6], expected 526, is %d",
-                  check_msg->group_msgs[6]);
-    ck_assert_msg(check_msg->group_msgs[7] == 530,
-                  "incorrect value for group_msgs[7], expected 530, is %d",
-                  check_msg->group_msgs[7]);
-    ck_assert_msg(check_msg->group_msgs[8] == 525,
-                  "incorrect value for group_msgs[8], expected 525, is %d",
-                  check_msg->group_msgs[8]);
-    ck_assert_msg(check_msg->group_msgs[9] == 533,
-                  "incorrect value for group_msgs[9], expected 533, is %d",
-                  check_msg->group_msgs[9]);
-    ck_assert_msg(check_msg->group_msgs[10] == 545,
-                  "incorrect value for group_msgs[10], expected 545, is %d",
-                  check_msg->group_msgs[10]);
-    ck_assert_msg(check_msg->group_msgs[11] == 65283,
-                  "incorrect value for group_msgs[11], expected 65283, is %d",
-                  check_msg->group_msgs[11]);
-    ck_assert_msg(check_msg->group_msgs[12] == 65286,
-                  "incorrect value for group_msgs[12], expected 65286, is %d",
-                  check_msg->group_msgs[12]);
-    ck_assert_msg(check_msg->group_msgs[13] == 65294,
-                  "incorrect value for group_msgs[13], expected 65294, is %d",
-                  check_msg->group_msgs[13]);
+                  "incorrect value for group_id, expected 1, is %" PRId64,
+                  (int64_t)check_msg->group_id);
+    ck_assert_msg(
+        check_msg->group_msgs[0] == 258,
+        "incorrect value for group_msgs[0], expected 258, is %" PRId64,
+        (int64_t)check_msg->group_msgs[0]);
+    ck_assert_msg(
+        check_msg->group_msgs[1] == 259,
+        "incorrect value for group_msgs[1], expected 259, is %" PRId64,
+        (int64_t)check_msg->group_msgs[1]);
+    ck_assert_msg(
+        check_msg->group_msgs[2] == 522,
+        "incorrect value for group_msgs[2], expected 522, is %" PRId64,
+        (int64_t)check_msg->group_msgs[2]);
+    ck_assert_msg(
+        check_msg->group_msgs[3] == 529,
+        "incorrect value for group_msgs[3], expected 529, is %" PRId64,
+        (int64_t)check_msg->group_msgs[3]);
+    ck_assert_msg(
+        check_msg->group_msgs[4] == 521,
+        "incorrect value for group_msgs[4], expected 521, is %" PRId64,
+        (int64_t)check_msg->group_msgs[4]);
+    ck_assert_msg(
+        check_msg->group_msgs[5] == 532,
+        "incorrect value for group_msgs[5], expected 532, is %" PRId64,
+        (int64_t)check_msg->group_msgs[5]);
+    ck_assert_msg(
+        check_msg->group_msgs[6] == 526,
+        "incorrect value for group_msgs[6], expected 526, is %" PRId64,
+        (int64_t)check_msg->group_msgs[6]);
+    ck_assert_msg(
+        check_msg->group_msgs[7] == 530,
+        "incorrect value for group_msgs[7], expected 530, is %" PRId64,
+        (int64_t)check_msg->group_msgs[7]);
+    ck_assert_msg(
+        check_msg->group_msgs[8] == 525,
+        "incorrect value for group_msgs[8], expected 525, is %" PRId64,
+        (int64_t)check_msg->group_msgs[8]);
+    ck_assert_msg(
+        check_msg->group_msgs[9] == 533,
+        "incorrect value for group_msgs[9], expected 533, is %" PRId64,
+        (int64_t)check_msg->group_msgs[9]);
+    ck_assert_msg(
+        check_msg->group_msgs[10] == 545,
+        "incorrect value for group_msgs[10], expected 545, is %" PRId64,
+        (int64_t)check_msg->group_msgs[10]);
+    ck_assert_msg(
+        check_msg->group_msgs[11] == 65283,
+        "incorrect value for group_msgs[11], expected 65283, is %" PRId64,
+        (int64_t)check_msg->group_msgs[11]);
+    ck_assert_msg(
+        check_msg->group_msgs[12] == 65286,
+        "incorrect value for group_msgs[12], expected 65286, is %" PRId64,
+        (int64_t)check_msg->group_msgs[12]);
+    ck_assert_msg(
+        check_msg->group_msgs[13] == 65294,
+        "incorrect value for group_msgs[13], expected 65294, is %" PRId64,
+        (int64_t)check_msg->group_msgs[13]);
     ck_assert_msg(check_msg->n_group_msgs == 14,
-                  "incorrect value for n_group_msgs, expected 14, is %d",
-                  check_msg->n_group_msgs);
+                  "incorrect value for n_group_msgs, expected 14, is %" PRId64,
+                  (int64_t)check_msg->n_group_msgs);
   }
 }
 END_TEST

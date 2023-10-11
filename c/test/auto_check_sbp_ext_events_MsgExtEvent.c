@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -136,30 +136,30 @@ START_TEST(test_auto_check_sbp_ext_events_MsgExtEvent) {
         sbp_message_cmp(SbpMsgExtEvent, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.ext_event.flags == 3,
-        "incorrect value for last_msg.msg.ext_event.flags, expected 3, is %d",
-        last_msg.msg.ext_event.flags);
+    ck_assert_msg(last_msg.msg.ext_event.flags == 3,
+                  "incorrect value for last_msg.msg.ext_event.flags, expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.ext_event.flags);
 
     ck_assert_msg(last_msg.msg.ext_event.ns_residual == 999882,
                   "incorrect value for last_msg.msg.ext_event.ns_residual, "
-                  "expected 999882, is %d",
-                  last_msg.msg.ext_event.ns_residual);
+                  "expected 999882, is %" PRId64,
+                  (int64_t)last_msg.msg.ext_event.ns_residual);
 
-    ck_assert_msg(
-        last_msg.msg.ext_event.pin == 0,
-        "incorrect value for last_msg.msg.ext_event.pin, expected 0, is %d",
-        last_msg.msg.ext_event.pin);
+    ck_assert_msg(last_msg.msg.ext_event.pin == 0,
+                  "incorrect value for last_msg.msg.ext_event.pin, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.ext_event.pin);
 
     ck_assert_msg(last_msg.msg.ext_event.tow == 254924999,
                   "incorrect value for last_msg.msg.ext_event.tow, expected "
-                  "254924999, is %d",
-                  last_msg.msg.ext_event.tow);
+                  "254924999, is %" PRId64,
+                  (int64_t)last_msg.msg.ext_event.tow);
 
-    ck_assert_msg(
-        last_msg.msg.ext_event.wn == 1840,
-        "incorrect value for last_msg.msg.ext_event.wn, expected 1840, is %d",
-        last_msg.msg.ext_event.wn);
+    ck_assert_msg(last_msg.msg.ext_event.wn == 1840,
+                  "incorrect value for last_msg.msg.ext_event.wn, expected "
+                  "1840, is %" PRId64,
+                  (int64_t)last_msg.msg.ext_event.wn);
   }
 }
 END_TEST

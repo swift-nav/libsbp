@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -299,8 +299,8 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->interfaces[0].duration == 2159176030,
                   "incorrect value for interfaces[0].duration, expected "
-                  "2159176030, is %d",
-                  check_msg->interfaces[0].duration);
+                  "2159176030, is %" PRId64,
+                  (int64_t)check_msg->interfaces[0].duration);
     {
       const char check_string[] = {(char)99, (char)97, (char)110, (char)48,
                                    (char)0,  (char)0,  (char)0,   (char)0,
@@ -315,20 +315,20 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
     }
     ck_assert_msg(
         check_msg->interfaces[0].rx_bytes == 0,
-        "incorrect value for interfaces[0].rx_bytes, expected 0, is %d",
-        check_msg->interfaces[0].rx_bytes);
-    ck_assert_msg(
-        check_msg->interfaces[0].total_bytes == 0,
-        "incorrect value for interfaces[0].total_bytes, expected 0, is %d",
-        check_msg->interfaces[0].total_bytes);
+        "incorrect value for interfaces[0].rx_bytes, expected 0, is %" PRId64,
+        (int64_t)check_msg->interfaces[0].rx_bytes);
+    ck_assert_msg(check_msg->interfaces[0].total_bytes == 0,
+                  "incorrect value for interfaces[0].total_bytes, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->interfaces[0].total_bytes);
     ck_assert_msg(
         check_msg->interfaces[0].tx_bytes == 0,
-        "incorrect value for interfaces[0].tx_bytes, expected 0, is %d",
-        check_msg->interfaces[0].tx_bytes);
+        "incorrect value for interfaces[0].tx_bytes, expected 0, is %" PRId64,
+        (int64_t)check_msg->interfaces[0].tx_bytes);
     ck_assert_msg(check_msg->interfaces[1].duration == 2159176030,
                   "incorrect value for interfaces[1].duration, expected "
-                  "2159176030, is %d",
-                  check_msg->interfaces[1].duration);
+                  "2159176030, is %" PRId64,
+                  (int64_t)check_msg->interfaces[1].duration);
     {
       const char check_string[] = {(char)99, (char)97, (char)110, (char)49,
                                    (char)0,  (char)0,  (char)0,   (char)0,
@@ -343,20 +343,20 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
     }
     ck_assert_msg(
         check_msg->interfaces[1].rx_bytes == 0,
-        "incorrect value for interfaces[1].rx_bytes, expected 0, is %d",
-        check_msg->interfaces[1].rx_bytes);
-    ck_assert_msg(
-        check_msg->interfaces[1].total_bytes == 0,
-        "incorrect value for interfaces[1].total_bytes, expected 0, is %d",
-        check_msg->interfaces[1].total_bytes);
+        "incorrect value for interfaces[1].rx_bytes, expected 0, is %" PRId64,
+        (int64_t)check_msg->interfaces[1].rx_bytes);
+    ck_assert_msg(check_msg->interfaces[1].total_bytes == 0,
+                  "incorrect value for interfaces[1].total_bytes, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->interfaces[1].total_bytes);
     ck_assert_msg(
         check_msg->interfaces[1].tx_bytes == 0,
-        "incorrect value for interfaces[1].tx_bytes, expected 0, is %d",
-        check_msg->interfaces[1].tx_bytes);
+        "incorrect value for interfaces[1].tx_bytes, expected 0, is %" PRId64,
+        (int64_t)check_msg->interfaces[1].tx_bytes);
     ck_assert_msg(check_msg->interfaces[2].duration == 2159176030,
                   "incorrect value for interfaces[2].duration, expected "
-                  "2159176030, is %d",
-                  check_msg->interfaces[2].duration);
+                  "2159176030, is %" PRId64,
+                  (int64_t)check_msg->interfaces[2].duration);
     {
       const char check_string[] = {(char)101, (char)116, (char)104, (char)48,
                                    (char)0,   (char)0,   (char)0,   (char)0,
@@ -371,20 +371,20 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
     }
     ck_assert_msg(check_msg->interfaces[2].rx_bytes == 4036234989,
                   "incorrect value for interfaces[2].rx_bytes, expected "
-                  "4036234989, is %d",
-                  check_msg->interfaces[2].rx_bytes);
+                  "4036234989, is %" PRId64,
+                  (int64_t)check_msg->interfaces[2].rx_bytes);
     ck_assert_msg(check_msg->interfaces[2].total_bytes == 3411995557,
                   "incorrect value for interfaces[2].total_bytes, expected "
-                  "3411995557, is %d",
-                  check_msg->interfaces[2].total_bytes);
+                  "3411995557, is %" PRId64,
+                  (int64_t)check_msg->interfaces[2].total_bytes);
     ck_assert_msg(check_msg->interfaces[2].tx_bytes == 3670727864,
                   "incorrect value for interfaces[2].tx_bytes, expected "
-                  "3670727864, is %d",
-                  check_msg->interfaces[2].tx_bytes);
+                  "3670727864, is %" PRId64,
+                  (int64_t)check_msg->interfaces[2].tx_bytes);
     ck_assert_msg(check_msg->interfaces[3].duration == 2159176030,
                   "incorrect value for interfaces[3].duration, expected "
-                  "2159176030, is %d",
-                  check_msg->interfaces[3].duration);
+                  "2159176030, is %" PRId64,
+                  (int64_t)check_msg->interfaces[3].duration);
     {
       const char check_string[] = {(char)108, (char)111, (char)0, (char)0,
                                    (char)0,   (char)0,   (char)0, (char)0,
@@ -399,20 +399,20 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
     }
     ck_assert_msg(
         check_msg->interfaces[3].rx_bytes == 0,
-        "incorrect value for interfaces[3].rx_bytes, expected 0, is %d",
-        check_msg->interfaces[3].rx_bytes);
-    ck_assert_msg(
-        check_msg->interfaces[3].total_bytes == 0,
-        "incorrect value for interfaces[3].total_bytes, expected 0, is %d",
-        check_msg->interfaces[3].total_bytes);
+        "incorrect value for interfaces[3].rx_bytes, expected 0, is %" PRId64,
+        (int64_t)check_msg->interfaces[3].rx_bytes);
+    ck_assert_msg(check_msg->interfaces[3].total_bytes == 0,
+                  "incorrect value for interfaces[3].total_bytes, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->interfaces[3].total_bytes);
     ck_assert_msg(
         check_msg->interfaces[3].tx_bytes == 0,
-        "incorrect value for interfaces[3].tx_bytes, expected 0, is %d",
-        check_msg->interfaces[3].tx_bytes);
+        "incorrect value for interfaces[3].tx_bytes, expected 0, is %" PRId64,
+        (int64_t)check_msg->interfaces[3].tx_bytes);
     ck_assert_msg(check_msg->interfaces[4].duration == 2159176030,
                   "incorrect value for interfaces[4].duration, expected "
-                  "2159176030, is %d",
-                  check_msg->interfaces[4].duration);
+                  "2159176030, is %" PRId64,
+                  (int64_t)check_msg->interfaces[4].duration);
     {
       const char check_string[] = {(char)115, (char)105, (char)116, (char)48,
                                    (char)0,   (char)0,   (char)0,   (char)0,
@@ -427,16 +427,16 @@ START_TEST(test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
     }
     ck_assert_msg(
         check_msg->interfaces[4].rx_bytes == 0,
-        "incorrect value for interfaces[4].rx_bytes, expected 0, is %d",
-        check_msg->interfaces[4].rx_bytes);
-    ck_assert_msg(
-        check_msg->interfaces[4].total_bytes == 0,
-        "incorrect value for interfaces[4].total_bytes, expected 0, is %d",
-        check_msg->interfaces[4].total_bytes);
+        "incorrect value for interfaces[4].rx_bytes, expected 0, is %" PRId64,
+        (int64_t)check_msg->interfaces[4].rx_bytes);
+    ck_assert_msg(check_msg->interfaces[4].total_bytes == 0,
+                  "incorrect value for interfaces[4].total_bytes, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)check_msg->interfaces[4].total_bytes);
     ck_assert_msg(
         check_msg->interfaces[4].tx_bytes == 0,
-        "incorrect value for interfaces[4].tx_bytes, expected 0, is %d",
-        check_msg->interfaces[4].tx_bytes);
+        "incorrect value for interfaces[4].tx_bytes, expected 0, is %" PRId64,
+        (int64_t)check_msg->interfaces[4].tx_bytes);
   }
 }
 END_TEST

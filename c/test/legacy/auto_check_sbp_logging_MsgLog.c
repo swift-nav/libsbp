@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -206,8 +206,8 @@ START_TEST(test_legacy_auto_check_sbp_logging_MsgLog) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->level == 6,
-                  "incorrect value for level, expected 6, is %d",
-                  check_msg->level);
+                  "incorrect value for level, expected 6, is %" PRId64,
+                  (int64_t)check_msg->level);
     {
       const char check_string[] = {
           (char)70,  (char)105, (char)108, (char)116, (char)101, (char)114,

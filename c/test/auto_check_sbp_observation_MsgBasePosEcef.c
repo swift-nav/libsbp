@@ -28,7 +28,7 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -136,19 +136,19 @@ START_TEST(test_auto_check_sbp_observation_MsgBasePosEcef) {
     ck_assert_msg(
         (last_msg.msg.base_pos_ecef.x * 100 - -2726575.9189 * 100) < 0.05,
         "incorrect value for last_msg.msg.base_pos_ecef.x, expected "
-        "-2726575.9189, is %s",
+        "-2726575.9189, is %f",
         last_msg.msg.base_pos_ecef.x);
 
     ck_assert_msg(
         (last_msg.msg.base_pos_ecef.y * 100 - -4315267.2798 * 100) < 0.05,
         "incorrect value for last_msg.msg.base_pos_ecef.y, expected "
-        "-4315267.2798, is %s",
+        "-4315267.2798, is %f",
         last_msg.msg.base_pos_ecef.y);
 
     ck_assert_msg(
         (last_msg.msg.base_pos_ecef.z * 100 - 3811455.9642 * 100) < 0.05,
         "incorrect value for last_msg.msg.base_pos_ecef.z, expected "
-        "3811455.9642, is %s",
+        "3811455.9642, is %f",
         last_msg.msg.base_pos_ecef.z);
   }
 }

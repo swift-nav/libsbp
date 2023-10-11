@@ -39,7 +39,7 @@ static struct {
   void* context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -202,14 +202,14 @@ START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB) {
                   "incorrect value for cp, expected 322.0, is %f",
                   check_msg->cp);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 9,
-                  "incorrect value for sid.sat, expected 9, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 9, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg((check_msg->snr * 100 - 36.663608551 * 100) < 0.05,
                   "incorrect value for snr, expected 36.663608551, is %f",
                   check_msg->snr);
@@ -312,14 +312,14 @@ START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB) {
                   "incorrect value for cp, expected 843.0, is %f",
                   check_msg->cp);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 3,
-                  "incorrect value for sid.sat, expected 3, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 3, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg((check_msg->snr * 100 - 36.1687545776 * 100) < 0.05,
                   "incorrect value for snr, expected 36.1687545776, is %f",
                   check_msg->snr);
@@ -422,14 +422,14 @@ START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB) {
                   "incorrect value for cp, expected 794.0, is %f",
                   check_msg->cp);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 18,
-                  "incorrect value for sid.sat, expected 18, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 18, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg((check_msg->snr * 100 - 35.7772369385 * 100) < 0.05,
                   "incorrect value for snr, expected 35.7772369385, is %f",
                   check_msg->snr);
@@ -532,14 +532,14 @@ START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB) {
                   "incorrect value for cp, expected 258.5, is %f",
                   check_msg->cp);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 17,
-                  "incorrect value for sid.sat, expected 17, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 17, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg((check_msg->snr * 100 - 35.6945114136 * 100) < 0.05,
                   "incorrect value for snr, expected 35.6945114136, is %f",
                   check_msg->snr);
@@ -642,14 +642,14 @@ START_TEST(test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB) {
                   "incorrect value for cp, expected 522.0, is %f",
                   check_msg->cp);
     ck_assert_msg(check_msg->sid.code == 0,
-                  "incorrect value for sid.code, expected 0, is %d",
-                  check_msg->sid.code);
+                  "incorrect value for sid.code, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.code);
     ck_assert_msg(check_msg->sid.reserved == 0,
-                  "incorrect value for sid.reserved, expected 0, is %d",
-                  check_msg->sid.reserved);
+                  "incorrect value for sid.reserved, expected 0, is %" PRId64,
+                  (int64_t)check_msg->sid.reserved);
     ck_assert_msg(check_msg->sid.sat == 5,
-                  "incorrect value for sid.sat, expected 5, is %d",
-                  check_msg->sid.sat);
+                  "incorrect value for sid.sat, expected 5, is %" PRId64,
+                  (int64_t)check_msg->sid.sat);
     ck_assert_msg((check_msg->snr * 100 - 35.5241775513 * 100) < 0.05,
                   "incorrect value for snr, expected 35.5241775513, is %f",
                   check_msg->snr);

@@ -39,7 +39,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
@@ -190,8 +190,8 @@ START_TEST(test_legacy_auto_check_sbp_file_io_MsgFileioWriteResp) {
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->sequence == 202,
-                  "incorrect value for sequence, expected 202, is %d",
-                  check_msg->sequence);
+                  "incorrect value for sequence, expected 202, is %" PRId64,
+                  (int64_t)check_msg->sequence);
   }
 }
 END_TEST
