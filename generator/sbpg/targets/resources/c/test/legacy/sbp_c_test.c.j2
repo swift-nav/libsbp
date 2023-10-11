@@ -37,7 +37,7 @@ static struct {
   void *context;
 } last_frame;
 
-static u32 dummy_wr = 0;
+static size_t dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void* last_io_context;
@@ -124,7 +124,7 @@ START_TEST( test_legacy_(((s.suite_name))) )
         literal precision unchanged whether generated under Python 2.7 or 3.x. =))
     ck_assert_msg((check_msg->(((prefix)))*100 - ((("%.12g"|format(value)|float)))*100) < 0.05, "incorrect value for (((prefix))), expected ((("%.12g"|format(value)|float))), is %f", check_msg->(((prefix))));
     ((*- else *))
-    ck_assert_msg(check_msg->(((prefix))) == (((value))), "incorrect value for (((prefix))), expected (((value))), is %d", check_msg->(((prefix))));
+    ck_assert_msg(check_msg->(((prefix))) == (((value))), "incorrect value for (((prefix))), expected (((value))), is %" PRId64, (int64_t)check_msg->(((prefix))));
     ((*- endif *))
     ((*- endmacro *))
 
