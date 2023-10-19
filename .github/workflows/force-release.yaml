@@ -47,15 +47,17 @@ jobs:
         run: |
           sed -i "s/version = \".*\"/version = \"$MAJOR.$MINOR.$PATCH\"/" rust/sbp/Cargo.toml
           sed -i "s/version = \".*\"/version = \"$MAJOR.$MINOR.$PATCH-unreleased\"/" rust/sbp2json/Cargo.toml
-      - name: Update PDF
-        run: echo "TODO"
-      - name: Commit changes
-        run: |
-          # git checkout -b "force-release-v$MAJOR.$MINOR.$PATCH"
-          # git add .
-          git status
-          # git commit -m "force release v$MAJOR.$MINOR.$PATCH"
-          # git push --set-upstream origin "force-release-v$MAJOR.$MINOR.$PATCH"
+      - name: Debug
+        run: git status
+#      - name: Update PDF
+#        run: echo "TODO"
+#      - name: Commit changes
+#        run: |
+#          git checkout -b "force-release-v$MAJOR.$MINOR.$PATCH"
+#          git add .
+#          git status
+#          git commit -m "force release v$MAJOR.$MINOR.$PATCH"
+#          git push --set-upstream origin "force-release-v$MAJOR.$MINOR.$PATCH"
       - name: Create PR
         uses: peter-evans/create-pull-request@v3
         with:
