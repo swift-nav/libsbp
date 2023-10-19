@@ -15,7 +15,7 @@ env:
   MAJOR: ${{ github.event.inputs.major }}
   MINOR: ${{ github.event.inputs.minor }}
   PATCH: ${{ github.event.inputs.patch }}
-  SEMVER: $MAJOR.$MINOR.$PATCH
+  SEMVER: "$MAJOR.$MINOR.$PATCH"
 jobs:
   release:
     runs-on: ubuntu-latest
