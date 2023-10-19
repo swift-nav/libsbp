@@ -49,7 +49,7 @@ impl<T: AsRef<[u8]>> SbpString<T, Unterminated> {
 impl<T: AsRef<[u8]>> SbpString<T, NullTerminated> {
     pub fn null_terminated(data: T) -> Result<Self, NullTerminatedError> {
         match data.as_ref().last() {
-            Some(l) if l == &0 => Ok(Self::new(data)),
+            Some(&0) => Ok(Self::new(data)),
             _ => Err(NullTerminatedError),
         }
     }
@@ -79,7 +79,7 @@ impl SbpString<Vec<u8>, Multipart> {
     pub fn multipart(data: impl Into<Vec<u8>>) -> Result<Self, MultipartError> {
         let data = data.into();
         match data.last() {
-            Some(l) if l == &0 => Ok(Self::new(data)),
+            Some(&0) => Ok(Self::new(data)),
             _ => Err(MultipartError),
         }
     }
