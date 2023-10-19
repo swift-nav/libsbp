@@ -1,6 +1,5 @@
 name: Force release libsbp
 on:
-  pull_request:
   workflow_dispatch:
     inputs:
       major:
@@ -12,6 +11,10 @@ on:
       patch:
         description: 'Semver patch label'
         required: true
+env:
+  MAJOR: ${{ github.event.inputs.major }}
+  MINOR: ${{ github.event.inputs.minor }}
+  PATCH: ${{ github.event.inputs.patch }}
 jobs:
   release:
     runs-on: ubuntu-latest
