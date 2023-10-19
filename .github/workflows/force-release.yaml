@@ -51,11 +51,11 @@ jobs:
         run: echo "TODO"
       - name: Commit changes
         run: |
-#          git checkout -b "force-release-v$MAJOR.$MINOR.$PATCH"
-#          git add .
+          # git checkout -b "force-release-v$MAJOR.$MINOR.$PATCH"
+          # git add .
           git status
-#          git commit -m "force release v$MAJOR.$MINOR.$PATCH"
-#          git push --set-upstream origin "force-release-v$MAJOR.$MINOR.$PATCH"
+          # git commit -m "force release v$MAJOR.$MINOR.$PATCH"
+          # git push --set-upstream origin "force-release-v$MAJOR.$MINOR.$PATCH"
       - name: Create PR
         uses: peter-evans/create-pull-request@v3
         with:
