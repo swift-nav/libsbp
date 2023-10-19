@@ -28,25 +28,25 @@ jobs:
       - uses: actions/checkout@v2
       - name: Update C version
         run: |
-          sed -i "s/define SBP_VERSION_MAJOR .*/define SBP_VERSION_MAJOR $MAJOR/" c/include/libsbp/version.h
-          sed -i "s/define SBP_VERSION_MINOR .*/define SBP_VERSION_MINOR $MINOR/" c/include/libsbp/version.h
-          sed -i "s/define SBP_VERSION_PATCH .*/define SBP_VERSION_PATCH $PATCH/" c/include/libsbp/version.h
+          sed -i "s/define SBP_MAJOR_VERSION .*/define SBP_MAJOR_VERSION $MAJOR/" c/include/libsbp/version.h
+          sed -i "s/define SBP_MINOR_VERSION .*/define SBP_MINOR_VERSION $MINOR/" c/include/libsbp/version.h
+          sed -i "s/define SBP_PATCH_VERSION .*/define SBP_PATCH_VERSION $PATCH/" c/include/libsbp/version.h
           sed -i "s/define SBP_VERSION \".*\"/define SBP_VERSION \"$MAJOR.$MINOR.$PATCH\"/" c/include/libsbp/version.h
       - name: Update Haskell version
         run: |
-          sed -i "s/version: .*/version: $MAJOR.$MINOR.$PATCH/" haskell/sbp.cabal
+          sed -i "0,/^version:               .*/s//version:               $MAJOR.$MINOR.$PATCH/" haskell/sbp.cabal
       - name: Update Javascript version
         run: |
-          echo "$MAJOR.$MINOR.$PATCH" > javascript/sbp/RELEASE-VERSION
-          sed -i "s/\"version\": \".*\"/\"version\": \"$MAJOR.$MINOR.$PATCH\"/" package.json
-          sed -i "s/\"version\": \".*\"/\"version\": \"$MAJOR.$MINOR.$PATCH\"/" package-lock.json
+          echo -n "$MAJOR.$MINOR.$PATCH" > javascript/sbp/RELEASE-VERSION
+          jq --arg v "$MAJOR.$MINOR.$PATCH" '.version = $v' package.json > tmp1.$$.json && mv tmp1.$$.json package.json
+          jq --arg v "$MAJOR.$MINOR.$PATCH" '.version = $v | .packages[""].version = $v' package-lock.json > tmp2.$$.json && mv tmp2.$$.json package-lock.json
       - name: Update Python version
         run: |
-          echo "$MAJOR.$MINOR.$PATCH" > python/sbp/RELEASE-VERSION
+          echo -n "$MAJOR.$MINOR.$PATCH" > python/sbp/RELEASE-VERSION
       - name: Update Rust version
         run: |
-          sed -i "s/version = \".*\"/version = \"$MAJOR.$MINOR.$PATCH\"/" rust/sbp/Cargo.toml
-          sed -i "s/version = \".*\"/version = \"$MAJOR.$MINOR.$PATCH-unreleased\"/" rust/sbp2json/Cargo.toml
+          sed -i "0,/version = \".*\"/s//version = \"$MAJOR.$MINOR.$PATCH\"/" rust/sbp/Cargo.toml
+          sed -i "0,/version = \".*\"/s//version = \"$MAJOR.$MINOR.$PATCH-unreleased\"/" rust/sbp2json/Cargo.toml
       - name: Debug
         run: git status
 #      - name: Update PDF
@@ -67,6 +67,7 @@ jobs:
           body: "automated release of v${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
           branch: "force-release-v${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
           base: "master"
+          author: swiftnav-travis
           delete-branch: true
           add-paths: |
             *
