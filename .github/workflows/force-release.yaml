@@ -15,7 +15,7 @@ env:
   MAJOR: ${{ github.event.inputs.major }}
   MINOR: ${{ github.event.inputs.minor }}
   PATCH: ${{ github.event.inputs.patch }}
-  SEMVER: "$MAJOR.$MINOR.$PATCH"
+  SEMVER: "${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -70,5 +70,7 @@ jobs:
           base: "master"
           branch-suffix: "force-release-${{ env.SEMVER }}"
           delete-branch: true
+          author: swiftnav-travis
+
           add-paths: |
             *
