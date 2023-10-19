@@ -7,7 +7,7 @@
 
 [package]
 name = "sbp"
-version = "5.0.3"
+version = "1.2.3"
 description = "Rust native implementation of SBP (Swift Binary Protocol) for communicating with devices made by Swift Navigation"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 repository = "https://github.com/swift-nav/libsbp"
@@ -34,36 +34,36 @@ crc16 = "0.4"
 log = "0.4"
 
 [dependencies.swiftnav]
-version = "0.8"
+version = "1.2.3"
 optional = true
 
 [dependencies.slotmap]
-version = "1"
+version = "1.2.3"
 optional = true
 
 [dependencies.serde]
-version = "1"
+version = "1.2.3"
 features = ["derive"]
 optional = true
 
 [dependencies.serde_json]
-version = "1"
+version = "1.2.3"
 optional = true
 
 [dependencies.serde-big-array]
-version = "0.4"
+version = "1.2.3"
 optional = true
 
 [dependencies.base64]
-version = "0.13"
+version = "1.2.3"
 optional = true
 
 [dependencies.futures]
-version = "0.3"
+version = "1.2.3"
 optional = true
 
 [dependencies.dencode]
-version = "0.3"
+version = "1.2.3"
 default-features = false
 
 [dev-dependencies]

@@ -7,7 +7,7 @@
 
 [package]
 name = "sbp2json"
-version = "5.0.3-unreleased"
+version = "1.2.3-unreleased"
 repository = "https://github.com/swift-nav/libsbp"
 description = "Rust native implementation of SBP (Swift Binary Protocol) to JSON conversion tools"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
@@ -24,14 +24,14 @@ features = ["json", "float_roundtrip"]
 [dependencies]
 env_logger = "0.8"
 serde_json = "1.0.82"
-clap = { version = "3.1.15", features = ["derive"] }
-mimalloc = { version = "0.1", default-features = false }
+clap = { version = "1.2.3-unreleased"] }
+mimalloc = { version = "1.2.3-unreleased", default-features = false }
 
 [build-dependencies]
 vergen = "3"
 
 [dependencies.dencode]
-version = "0.3.0"
+version = "1.2.3-unreleased"
 default-features = false
 
 [dev-dependencies]
