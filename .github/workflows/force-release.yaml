@@ -1,6 +1,5 @@
 name: Force release libsbp
 on:
-  push:
   workflow_dispatch:
     inputs:
       major:
