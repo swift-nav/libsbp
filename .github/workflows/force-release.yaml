@@ -70,4 +70,5 @@ jobs:
           base: "master"
           branch-suffix: "force-release-v$MAJOR.$MINOR.$PATCH"
           delete-branch: true
-          add-paths: *
+          add-paths: |
+            *
