@@ -15,7 +15,6 @@ env:
   MAJOR: ${{ github.event.inputs.major }}
   MINOR: ${{ github.event.inputs.minor }}
   PATCH: ${{ github.event.inputs.patch }}
-  SEMVER: "${{ github.event.inputs.major }}.${{ github.event.inputs.minor }}.${{ github.event.inputs.patch }}"
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -32,22 +31,22 @@ jobs:
           sed -i "s/define SBP_VERSION_MAJOR .*/define SBP_VERSION_MAJOR $MAJOR/" c/include/libsbp/version.h
           sed -i "s/define SBP_VERSION_MINOR .*/define SBP_VERSION_MINOR $MINOR/" c/include/libsbp/version.h
           sed -i "s/define SBP_VERSION_PATCH .*/define SBP_VERSION_PATCH $PATCH/" c/include/libsbp/version.h
-          sed -i "s/define SBP_VERSION \".*\"/define SBP_VERSION \"$SEMVER\"/" c/include/libsbp/version.h
+          sed -i "s/define SBP_VERSION \".*\"/define SBP_VERSION \"$MAJOR.$MINOR.$PATCH\"/" c/include/libsbp/version.h
       - name: Update Haskell version
         run: |
           sed -i "s/version: .*/version: $MAJOR.$MINOR.$PATCH/" haskell/sbp.cabal
       - name: Update Javascript version
         run: |
           echo "$MAJOR.$MINOR.$PATCH" > javascript/sbp/RELEASE-VERSION
-          sed -i "s/\"version\": \".*\"/\"version\": \"$SEMVER\"/" package.json
-          sed -i "s/\"version\": \".*\"/\"version\": \"$SEMVER\"/" package-lock.json
+          sed -i "s/\"version\": \".*\"/\"version\": \"$MAJOR.$MINOR.$PATCH\"/" package.json
+          sed -i "s/\"version\": \".*\"/\"version\": \"$MAJOR.$MINOR.$PATCH\"/" package-lock.json
       - name: Update Python version
         run: |
           echo "$MAJOR.$MINOR.$PATCH" > python/sbp/RELEASE-VERSION
       - name: Update Rust version
         run: |
-          sed -i "s/version = \".*\"/version = \"$SEMVER\"/" rust/sbp/Cargo.toml
-          sed -i "s/version = \".*\"/version = \"$SEMVER-unreleased\"/" rust/sbp2json/Cargo.toml
+          sed -i "s/version = \".*\"/version = \"$MAJOR.$MINOR.$PATCH\"/" rust/sbp/Cargo.toml
+          sed -i "s/version = \".*\"/version = \"$MAJOR.$MINOR.$PATCH-unreleased\"/" rust/sbp2json/Cargo.toml
       - name: Debug
         run: git status
 #      - name: Update PDF
@@ -63,14 +62,11 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
-          commit-message: "chore: force release ${{ env.SEMVER }}"
-          title: "chore: force release ${{ env.SEMVER }}"
-          body: "chore: force release ${{ env.SEMVER }}"
-          branch: "force-release-${{ env.SEMVER }}"
+          commit-message: "chore: force release v${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
+          title: "chore: force release v${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
+          body: "automated release of v${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
+          branch: "force-release-v${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
           base: "master"
-          branch-suffix: "force-release-${{ env.SEMVER }}"
           delete-branch: true
-          author: swiftnav-travis
-
           add-paths: |
             *
