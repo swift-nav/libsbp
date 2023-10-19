@@ -67,7 +67,7 @@ jobs:
           body: "automated release of v${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
           branch: "force-release-v${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
           base: "master"
-          author: swiftnav-travis
+          author: "swiftnav-travis <swiftnav-travis@swift-nav.com>"
           delete-branch: true
           add-paths: |
             *
