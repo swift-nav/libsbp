@@ -1,5 +1,6 @@
 name: Force release libsbp
 on:
+  pull_request:
   workflow_dispatch:
     inputs:
       major:
@@ -15,6 +16,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - name: Echo inputs
+        run: |
+          echo "major: ${{ github.event.inputs.major }}"
+          echo "minor: ${{ github.event.inputs.minor }}"
+          echo "patch: ${{ github.event.inputs.patch }}"
+          echo "v$MAJOR.$MINOR.$PATCH"
       - uses: actions/checkout@v2
       - name: Update C version
         run: |
@@ -41,11 +48,11 @@ jobs:
         run: echo "TODO"
       - name: Commit changes
         run: |
-          git checkout -b force-release-v$MAJOR.$MINOR.$PATCH
+          git checkout -b "force-release-v$MAJOR.$MINOR.$PATCH"
           git add .
           git status
           git commit -m "force release v$MAJOR.$MINOR.$PATCH"
-          git push --set-upstream origin force-release-v$MAJOR.$MINOR.$PATCH
+          git push --set-upstream origin "force-release-v$MAJOR.$MINOR.$PATCH"
       - name: Create PR
         uses: peter-evans/create-pull-request@v3
         with:
