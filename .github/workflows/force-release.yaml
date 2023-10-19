@@ -11,6 +11,7 @@ on:
       patch:
         description: 'Semver patch label'
         required: true
+  pull_request:
 env:
   MAJOR: ${{ github.event.inputs.major }}
   MINOR: ${{ github.event.inputs.minor }}
