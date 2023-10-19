@@ -1,0 +1,59 @@
+name: Force release libsbp
+on:
+  workflow_dispatch:
+    inputs:
+      major:
+        description: 'Semver major label'
+        required: true
+      minor:
+        description: 'Semver minor label'
+        required: true
+      patch:
+        description: 'Semver patch label'
+        required: true
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update C version
+        run: |
+          sed -i "s/define SBP_VERSION_MAJOR .*/define SBP_VERSION_MAJOR $MAJOR/" c/include/libsbp/version.h
+          sed -i "s/define SBP_VERSION_MINOR .*/define SBP_VERSION_MINOR $MINOR/" c/include/libsbp/version.h
+          sed -i "s/define SBP_VERSION_PATCH .*/define SBP_VERSION_PATCH $PATCH/" c/include/libsbp/version.h
+          sed -i "s/define SBP_VERSION \".*\"/define SBP_VERSION \"$MAJOR.$MINOR.$PATCH\"/" c/include/libsbp/version.h
+      - name: Update Haskell version
+        run: |
+          sed -i "s/version: .*/version: $MAJOR.$MINOR.$PATCH/" haskell/sbp.cabal
+      - name: Update Javascript version
+        run: |
+          echo "$MAJOR.$MINOR.$PATCH" > javascript/sbp/RELEASE-VERSION
+          sed -i "s/\"version\": \".*\"/\"version\": \"$MAJOR.$MINOR.$PATCH\"/" package.json
+          sed -i "s/\"version\": \".*\"/\"version\": \"$MAJOR.$MINOR.$PATCH\"/" package-lock.json
+      - name: Update Python version
+        run: |
+          echo "$MAJOR.$MINOR.$PATCH" > python/sbp/RELEASE-VERSION
+      - name: Update Rust version
+        run: |
+          sed -i "s/version = \".*\"/version = \"$MAJOR.$MINOR.$PATCH\"/" rust/sbp/Cargo.toml
+          sed -i "s/version = \".*\"/version = \"$MAJOR.$MINOR.$PATCH-unreleased\"/" rust/sbp2json/Cargo.toml
+      - name: Update PDF
+        run: echo "TODO"
+      - name: Commit changes
+        run: |
+          git checkout -b force-release-v$MAJOR.$MINOR.$PATCH
+          git add .
+          git status
+          git commit -m "force release v$MAJOR.$MINOR.$PATCH"
+          git push --set-upstream origin force-release-v$MAJOR.$MINOR.$PATCH
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ env.GITHUB_TOKEN }}
+          commit-message: "chore: force release v$MAJOR.$MINOR.$PATCH"
+          title: "chore: force release v$MAJOR.$MINOR.$PATCH"
+          body: "chore: force release v$MAJOR.$MINOR.$PATCH"
+          branch: "force-release-v$MAJOR.$MINOR.$PATCH"
+          base: "master"
+          branch-suffix: "force-release-v$MAJOR.$MINOR.$PATCH"
+          delete-branch: true
