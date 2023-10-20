@@ -40,21 +40,21 @@ jobs:
           sed -i "s/define SBP_MAJOR_VERSION .*/define SBP_MAJOR_VERSION $MAJOR/" c/include/libsbp/version.h
           sed -i "s/define SBP_MINOR_VERSION .*/define SBP_MINOR_VERSION $MINOR/" c/include/libsbp/version.h
           sed -i "s/define SBP_PATCH_VERSION .*/define SBP_PATCH_VERSION $PATCH/" c/include/libsbp/version.h
-          if [ $PREP_NEXT ] then
+          if [ $PREP_NEXT ]; then
             sed -i "s/define SBP_VERSION \".*\"/define SBP_VERSION \"$MAJOR.$MINOR.$PATCH-alpha\"/" c/include/libsbp/version.h
           else
             sed -i "s/define SBP_VERSION \".*\"/define SBP_VERSION \"$MAJOR.$MINOR.$PATCH\"/" c/include/libsbp/version.h
           fi
       - name: Update Haskell version
         run: |
-          if [ $PREP_NEXT ] then
+          if [ $PREP_NEXT ]; then
             sed -i "0,/^version:               .*/s//version:               $MAJOR.$MINOR.$PATCH-alpha/" haskell/sbp.cabal
           else
             sed -i "0,/^version:               .*/s//version:               $MAJOR.$MINOR.$PATCH/" haskell/sbp.cabal
           fi
       - name: Update Javascript version
         run: |
-          if [ $PREP_NEXT ] then
+          if [ $PREP_NEXT ]; then
             echo -n "$MAJOR.$MINOR.$PATCH-alpha" > javascript/sbp/RELEASE-VERSION
             jq --arg v "$MAJOR.$MINOR.$PATCH-alpha" '.version = $v' package.json > tmp1.$$.json && mv tmp1.$$.json package.json
             jq --arg v "$MAJOR.$MINOR.$PATCH-alpha" '.version = $v | .packages[""].version = $v' package-lock.json > tmp2.$$.json && mv tmp2.$$.json package-lock.json
@@ -68,7 +68,7 @@ jobs:
           echo -n "$MAJOR.$MINOR.$PATCH" > python/sbp/RELEASE-VERSION
       - name: Update Rust version
         run: |
-          if [ $PREP_NEXT ] then
+          if [ $PREP_NEXT ]; then
             sed -i "0,/version = \".*\"/s//version = \"$MAJOR.$MINOR.$PATCH\"/" rust/sbp/Cargo.toml
             sed -i "0,/version = \".*\"/s//version = \"$MAJOR.$MINOR.$PATCH-unreleased\"/" rust/sbp2json/Cargo.toml
           else
