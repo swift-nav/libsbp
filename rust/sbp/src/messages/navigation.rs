@@ -1888,6 +1888,12 @@ pub mod msg_gps_time {
 
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            if !matches!(
+                self.time_source(),
+                Ok(TimeSource::GnssSolution) | Ok(TimeSource::Propagated)
+            ) {
+                return None;
+            }
             let tow_s = (self.tow as f64) / 1000.0;
             #[allow(clippy::useless_conversion)]
             let wn: i16 = match self.wn.try_into() {
