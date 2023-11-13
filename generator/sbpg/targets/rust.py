@@ -60,6 +60,11 @@ let gps_time = match time::GpsTime::new(0, tow_s) {
 BASE_TIME_MSGS = ["MSG_OBS", "MSG_OSR", "MSG_SSR"]
 
 CUSTOM_GPS_TIME_MSGS = {
+    "MSG_GPS_TIME": """
+if !matches!(self.time_source(), Ok(TimeSource::GnssSolution) | Ok(TimeSource::Propagated)) {
+    return None;
+}
+""".strip() + GPS_TIME,
     "MSG_IMU_RAW": """
 const IMU_RAW_TIME_STATUS_MASK: u32 = (1 << 30) | (1 << 31);
 if self.tow & IMU_RAW_TIME_STATUS_MASK != 0 {
