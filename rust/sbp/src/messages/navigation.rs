@@ -1888,6 +1888,9 @@ pub mod msg_gps_time {
 
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            if self.time_source().ok()? == TimeSource::None {
+                return None;
+            }
             let tow_s = (self.tow as f64) / 1000.0;
             #[allow(clippy::useless_conversion)]
             let wn: i16 = match self.wn.try_into() {
@@ -2194,6 +2197,9 @@ pub mod msg_gps_time_gnss {
 
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            if self.time_source().ok()? == TimeSource::None {
+                return None;
+            }
             let tow_s = (self.tow as f64) / 1000.0;
             #[allow(clippy::useless_conversion)]
             let wn: i16 = match self.wn.try_into() {
@@ -2463,6 +2469,9 @@ pub mod msg_pose_relative {
 
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            if self.time_source().ok()? == TimeSource::None {
+                return None;
+            }
             let tow_s = (self.tow as f64) / 1000.0;
             let gps_time = match time::GpsTime::new(0, tow_s) {
                 Ok(gps_time) => gps_time.tow(),
@@ -7217,6 +7226,9 @@ pub mod msg_utc_time {
 
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            if self.time_source().ok()? == TimeSource::None {
+                return None;
+            }
             let tow_s = (self.tow as f64) / 1000.0;
             let gps_time = match time::GpsTime::new(0, tow_s) {
                 Ok(gps_time) => gps_time.tow(),
@@ -7472,6 +7484,9 @@ pub mod msg_utc_time_gnss {
 
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            if self.time_source().ok()? == TimeSource::None {
+                return None;
+            }
             let tow_s = (self.tow as f64) / 1000.0;
             let gps_time = match time::GpsTime::new(0, tow_s) {
                 Ok(gps_time) => gps_time.tow(),

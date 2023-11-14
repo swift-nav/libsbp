@@ -128,6 +128,9 @@ pub mod msg_odometry {
 
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            if self.time_source().ok()? == TimeSource::None {
+                return None;
+            }
             let tow_s = (self.tow as f64) / 1000.0;
             let gps_time = match time::GpsTime::new(0, tow_s) {
                 Ok(gps_time) => gps_time.tow(),

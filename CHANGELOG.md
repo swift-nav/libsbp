@@ -1,5 +1,13 @@
 # Changelog
 
+## [v5.0.3](https://github.com/swift-nav/libsbp/tree/v5.0.3) (2023-10-19)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.2...v5.0.3)
+
+**Merged pull requests:**
+
+- handle new clippy lints [\#1364](https://github.com/swift-nav/libsbp/pull/1364) ([pcrumley](https://github.com/pcrumley))
+- Auto submodule update: cmake - Add suitesparse finder file \[OC-310\] \(\#167\) [\#1362](https://github.com/swift-nav/libsbp/pull/1362) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
 ## [v5.0.2](https://github.com/swift-nav/libsbp/tree/v5.0.2) (2023-09-07)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.1...v5.0.2)
