@@ -59,12 +59,13 @@ let gps_time = match time::GpsTime::new(0, tow_s) {
 
 BASE_TIME_MSGS = ["MSG_OBS", "MSG_OSR", "MSG_SSR"]
 
-CUSTOM_GPS_TIME_MSGS = {
-    "MSG_GPS_TIME": """
-if !matches!(self.time_source(), Ok(TimeSource::GnssSolution) | Ok(TimeSource::Propagated)) {
+CHECK_FLAGS = """
+if self.time_source().ok()? == TimeSource::None {
     return None;
 }
-""".strip() + GPS_TIME,
+"""
+
+CUSTOM_GPS_TIME_MSGS = {
     "MSG_IMU_RAW": """
 const IMU_RAW_TIME_STATUS_MASK: u32 = (1 << 30) | (1 << 31);
 if self.tow & IMU_RAW_TIME_STATUS_MASK != 0 {
@@ -223,10 +224,13 @@ def gps_time_fn(msg):
                 tow = True
             elif f.identifier == "wn":
                 wn = True
+        res = ""
+        if msg.has_timesource:
+            res = CHECK_FLAGS
         if tow and wn:
-            return GPS_TIME
+            return res + GPS_TIME
         elif tow:
-            return GPS_TIME_ONLY_TOW
+            return res + GPS_TIME_ONLY_TOW
         else:
             return None
 
@@ -361,11 +365,15 @@ class MsgItem(object):
         self.is_real_message = msg.is_real_message
         self.fields = []
         self.has_bitfield = False
+        self.has_timesource = False
         for f in msg.fields:
             field = FieldItem(msg, package_specs, f)
             self.fields.append(field)
             if len(field.bitfield) > 0:
                 self.has_bitfield = True
+                for b in field.bitfield:
+                    if b["type_name"] == "TimeSource":
+                        self.has_timesource = True
         self.gps_time_fn = gps_time_fn(self)
         self.friendly_name = msg.friendly_name
 
