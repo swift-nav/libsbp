@@ -84,7 +84,7 @@ message MsgFileioReadDirReq {
  */
 message MsgFileioReadDirResp {
     uint32 sequence = 1;
-    repeated uint32 contents = 2;
+    string contents = 2;
 }
 
 /** Delete a file from the file system (host => device)

@@ -114,8 +114,9 @@ types:
       - id: contents
         doc: |
           Contents of read directory
-        type: u1
-        repeat: eos
+        type: str
+        encoding: ascii
+        size-eos: true
   
   msg_fileio_remove:
     doc: |

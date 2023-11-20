@@ -114,7 +114,7 @@ definitions:
           type: u32
           desc: Read sequence number
       - contents:
-          type: array
+          type: string
           encoding: multipart
           fill: u8
           desc: Contents of read directory

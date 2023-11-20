@@ -154,7 +154,7 @@ MsgFileioReadDirReq.prototype.fieldSpec.push(['dirname', 'string', null]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sequence number (unsigned 32-bit int, 4 bytes) Read sequence number
- * @field contents array Contents of read directory
+ * @field contents string Contents of read directory
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -172,10 +172,10 @@ MsgFileioReadDirResp.prototype.constructor = MsgFileioReadDirResp;
 MsgFileioReadDirResp.prototype.parser = new Parser()
   .endianess('little')
   .uint32('sequence')
-  .array('contents', { type: 'uint8', readUntil: 'eof' });
+  .string('contents', { greedy: true });
 MsgFileioReadDirResp.prototype.fieldSpec = [];
 MsgFileioReadDirResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
-MsgFileioReadDirResp.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgFileioReadDirResp.prototype.fieldSpec.push(['contents', 'string', null]);
 
 /**
  * SBP class for message MSG_FILEIO_REMOVE (0x00AC).

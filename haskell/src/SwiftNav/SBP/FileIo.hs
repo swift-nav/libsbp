@@ -165,19 +165,19 @@ msgFileioReadDirResp = 0x00AA
 data MsgFileioReadDirResp = MsgFileioReadDirResp
   { _msgFileioReadDirResp_sequence :: !Word32
     -- ^ Read sequence number
-  , _msgFileioReadDirResp_contents :: ![Word8]
+  , _msgFileioReadDirResp_contents :: !Text
     -- ^ Contents of read directory
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgFileioReadDirResp where
   get = do
     _msgFileioReadDirResp_sequence <- getWord32le
-    _msgFileioReadDirResp_contents <- whileM (not <$> isEmpty) getWord8
+    _msgFileioReadDirResp_contents <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
     pure MsgFileioReadDirResp {..}
 
   put MsgFileioReadDirResp {..} = do
     putWord32le _msgFileioReadDirResp_sequence
-    mapM_ putWord8 _msgFileioReadDirResp_contents
+    putByteString $ encodeUtf8 _msgFileioReadDirResp_contents
 
 $(makeSBP 'msgFileioReadDirResp ''MsgFileioReadDirResp)
 $(makeJSON "_msgFileioReadDirResp_" ''MsgFileioReadDirResp)

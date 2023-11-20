@@ -16,7 +16,6 @@ package com.swiftnav.sbp.file_io;
 
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -37,7 +36,7 @@ public class MsgFileioReadDirResp extends SBPMessage {
     public long sequence;
 
     /** Contents of read directory */
-    public int[] contents;
+    public String contents;
 
     public MsgFileioReadDirResp(int sender) {
         super(sender, TYPE);
@@ -58,20 +57,20 @@ public class MsgFileioReadDirResp extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         sequence = parser.getU32();
-        contents = parser.getArrayofU8();
+        contents = parser.getString();
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU32(sequence);
-        builder.putArrayofU8(contents);
+        builder.putString(contents);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("sequence", sequence);
-        obj.put("contents", new JSONArray(contents));
+        obj.put("contents", contents);
         return obj;
     }
 
