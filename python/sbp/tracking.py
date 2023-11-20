@@ -887,7 +887,7 @@ class MsgTrackingIq(SBP):
   _parser = construct.Struct(
                    'channel' / construct.Int8ul,
                    'sid' / GnssSignal._parser,
-                   'corrs' / construct.Array(3, construct.Byte),)
+                   'corrs' / construct.Array(3, TrackingChannelCorrelation._parser),)
   __slots__ = [
                'channel',
                'sid',
@@ -992,7 +992,7 @@ class MsgTrackingIqDepB(SBP):
   _parser = construct.Struct(
                    'channel' / construct.Int8ul,
                    'sid' / GnssSignal._parser,
-                   'corrs' / construct.Array(3, construct.Byte),)
+                   'corrs' / construct.Array(3, TrackingChannelCorrelationDep._parser),)
   __slots__ = [
                'channel',
                'sid',
@@ -1097,7 +1097,7 @@ class MsgTrackingIqDepA(SBP):
   _parser = construct.Struct(
                    'channel' / construct.Int8ul,
                    'sid' / GnssSignalDep._parser,
-                   'corrs' / construct.Array(3, construct.Byte),)
+                   'corrs' / construct.Array(3, TrackingChannelCorrelationDep._parser),)
   __slots__ = [
                'channel',
                'sid',
