@@ -83,8 +83,10 @@ swift_cc_test(
     type = UNIT,
     deps = [
         ":sbp",
-        "@check",
-    ],
+    ] + select({
+        "@bazel_tools//src/conditions:darwin": ["@check-cmake//:check"],
+        "//conditions:default": ["@check"],
+    }),
 )
 
 SBP_V4_C_SOURCES = glob(["test/auto*.c"])
@@ -102,8 +104,10 @@ swift_cc_test(
     type = UNIT,
     deps = [
         ":sbp",
-        "@check",
-    ],
+    ] + select({
+        "@bazel_tools//src/conditions:darwin": ["@check-cmake//:check"],
+        "//conditions:default": ["@check"],
+    }),
 )
 
 SBP_CPP_V4_C_SOURCES = glob(["test/cpp/auto*.cc"])
