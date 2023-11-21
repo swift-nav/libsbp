@@ -72,7 +72,7 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     f_ = copy.copy(f)
     f_.type_id = fill
     s = f.options.get('size', None).value
-    return "'{id}' / construct.Array({size}, {type})".format(id=f.identifier, size=s, type=type_map.get(f_.type_id, 'construct.Byte'))
+    return "'{id}' / construct.Array({size}, {type})".format(id=f.identifier, size=s, type=type_map.get(f_.type_id, f'{fill}._parser'))
   elif f.type_id == 'array':
     fill = f.options['fill'].value
     if type_map.get(fill):
