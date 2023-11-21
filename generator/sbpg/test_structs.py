@@ -18,8 +18,10 @@ message tests.
 import base64
 import json
 import os.path
+import re
 
 from binascii import unhexlify
+from sbpg.targets.templating import ACRONYMS, LOWER_ACRONYMS
 
 import yaml
 
@@ -93,6 +95,18 @@ class TestSpecification(object):
     self.msg = msg
     self.sbp = sbp
     self.test_msg_data = test_msg_data
+    self.payload = base64.standard_b64decode(self.sbp['payload'])
+    self.payload_as_byte_array = list(bytearray(self.payload))
+    self.payload_len_for_encoding_buf = len(self.payload) if len(self.payload) > 0 else 1
+    msg_name = msg['name']
+    for i in range(0, len(ACRONYMS)):
+        msg_name = re.sub(ACRONYMS[i], LOWER_ACRONYMS[i], msg_name)
+    self.enum_value = "Sbp" + msg_name
+    self.msg_type_value = msg_type
+    self.struct_name = "sbp_" + re.sub(r"(?<!^)(?=[A-Z])", "_", msg_name).lower() + "_t"
+    self.name_in_sbp_msg_t = self.struct_name[8:-2]
+    self.canonical_name = "MSG_" + self.name_in_sbp_msg_t.upper()
+    self.fn_prefix = self.struct_name[:-2]
 
   @classmethod
   def from_msg(cls, msg_instance, test_msg_data):
