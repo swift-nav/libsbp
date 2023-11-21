@@ -358,7 +358,7 @@ pub mod msg_fileio_read_dir_resp {
         pub sequence: u32,
         /// Contents of read directory
         #[cfg_attr(feature = "serde", serde(rename = "contents"))]
-        pub contents: Vec<u8>,
+        pub contents: SbpString<Vec<u8>, Multipart>,
     }
 
     impl ConcreteMessage for MsgFileioReadDirResp {
@@ -407,7 +407,8 @@ pub mod msg_fileio_read_dir_resp {
     }
 
     impl WireFormat for MsgFileioReadDirResp {
-        const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN + <Vec<u8> as WireFormat>::MIN_LEN;
+        const MIN_LEN: usize =
+            <u32 as WireFormat>::MIN_LEN + <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
             WireFormat::len(&self.sequence) + WireFormat::len(&self.contents)
         }

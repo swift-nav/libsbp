@@ -384,7 +384,7 @@ class MsgFileioReadDirResp(SBP):
     SBP parent object to inherit from.
   sequence : int
     Read sequence number
-  contents : array
+  contents : string
     Contents of read directory
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -392,7 +392,7 @@ class MsgFileioReadDirResp(SBP):
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   'contents' / construct.GreedyRange(construct.Int8ul),)
+                   'contents' / construct.GreedyBytes,)
   __slots__ = [
                'sequence',
                'contents',

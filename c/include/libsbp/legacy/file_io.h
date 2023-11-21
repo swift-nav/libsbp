@@ -97,8 +97,8 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 sequence;   /**< Read sequence number */
-  u8 contents[0]; /**< Contents of read directory */
+  u32 sequence;     /**< Read sequence number */
+  char contents[0]; /**< Contents of read directory */
 } msg_fileio_read_dir_resp_t;
 
 /** Delete a file from the file system (host => device)
