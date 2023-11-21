@@ -1,8 +1,8 @@
 files:
   'docs/sbp.pdf':
-    - swiftnav-adam
+    - woodfell
   'spec/yaml/swiftnav/sbp/*.yaml':
-    - swiftnav-adam
+    - woodfell
 
 options:
   ignore_draft: true
