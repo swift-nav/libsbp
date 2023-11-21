@@ -4,6 +4,11 @@ package: sbp.ssr
 tests:
 
 - msg:
+    c_decoded_fields:
+      n_sats:
+        handle_as: vararray-len
+        relates_to: orbit_clock_bounds
+        value: 2
     fields:
       header:
         time:

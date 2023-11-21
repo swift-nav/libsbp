@@ -4,6 +4,11 @@ package: sbp.integrity
 tests:
 
 - msg:
+    c_decoded_fields:
+      n_faulty_los:
+        handle_as: vararray-len
+        relates_to: faulty_los
+        value: 2
     fields:
       header:
         obs_time:

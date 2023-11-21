@@ -4,7 +4,10 @@ package: sbp.telemetry
 tests:
 - msg:
     c_decoded_fields:
-      n_sv_tel: 1
+      n_sv_tel:
+        handle_as: vararray-len
+        relates_to: sv_tel
+        value: 1
     fields:
       n_obs: 16
       origin_flags: 1

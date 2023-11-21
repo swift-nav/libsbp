@@ -4,7 +4,10 @@ package: sbp.ssr
 tests:
 - msg:
     c_decoded_fields:
-      n_apc: 1
+      n_apc:
+        handle_as: vararray-len
+        relates_to: apc
+        value: 1
     fields:
       apc:
       - pco:

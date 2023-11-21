@@ -10,7 +10,10 @@ tests:
       protocol: 0
       source: 0
     c_decoded_fields:
-      n_fwd_payload: 16
+      n_fwd_payload:
+        handle_as: vararray-len
+        relates_to: fwd_payload
+        value: 16
     module: sbp.logging
     name: MsgFwd
   msg_type: '0x402'
