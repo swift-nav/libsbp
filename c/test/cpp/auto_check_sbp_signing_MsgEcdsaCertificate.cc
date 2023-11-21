@@ -16,66 +16,869 @@
 
 #include <gtest/gtest.h>
 #include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-#include <cstring>
-class Test_auto_check_sbp_signing_MsgEcdsaCertificate0
-    : public ::testing::Test,
-      public sbp::State,
-      public sbp::IReader,
-      public sbp::IWriter,
-      sbp::MessageHandler<sbp_msg_ecdsa_certificate_t> {
+#include <libsbp/sbp.h>
+#include <algorithm>
+
+namespace {
+
+template <typename T, typename U>
+void assign(T &dest, const U &source) {
+  dest = static_cast<T>(source);
+}
+class Testauto_check_sbp_signing_MsgEcdsaCertificate0 : public ::testing::Test {
  public:
-  Test_auto_check_sbp_signing_MsgEcdsaCertificate0()
-      : ::testing::Test(),
-        sbp::State(),
-        sbp::IReader(),
-        sbp::IWriter(),
-        sbp::MessageHandler<sbp_msg_ecdsa_certificate_t>(this),
-        last_msg_(),
-        last_msg_len_(),
-        last_sender_id_(),
-        n_callbacks_logged_(),
-        dummy_wr_(),
-        dummy_rd_(),
-        dummy_buff_() {
-    set_reader(this);
-    set_writer(this);
+  Testauto_check_sbp_signing_MsgEcdsaCertificate0() {
+    assign(test_msg_.certificate_bytes[0], 180);
+
+    assign(test_msg_.certificate_bytes[1], 160);
+
+    assign(test_msg_.certificate_bytes[2], 116);
+
+    assign(test_msg_.certificate_bytes[3], 77);
+
+    assign(test_msg_.certificate_bytes[4], 243);
+
+    assign(test_msg_.certificate_bytes[5], 28);
+
+    assign(test_msg_.certificate_bytes[6], 173);
+
+    assign(test_msg_.certificate_bytes[7], 36);
+
+    assign(test_msg_.certificate_bytes[8], 86);
+
+    assign(test_msg_.certificate_bytes[9], 33);
+
+    assign(test_msg_.certificate_bytes[10], 8);
+
+    assign(test_msg_.certificate_bytes[11], 31);
+
+    assign(test_msg_.certificate_bytes[12], 120);
+
+    assign(test_msg_.certificate_bytes[13], 73);
+
+    assign(test_msg_.certificate_bytes[14], 64);
+
+    assign(test_msg_.certificate_bytes[15], 169);
+
+    assign(test_msg_.certificate_bytes[16], 148);
+
+    assign(test_msg_.certificate_bytes[17], 224);
+
+    assign(test_msg_.certificate_bytes[18], 57);
+
+    assign(test_msg_.certificate_bytes[19], 95);
+
+    assign(test_msg_.certificate_bytes[20], 17);
+
+    assign(test_msg_.certificate_bytes[21], 40);
+
+    assign(test_msg_.certificate_bytes[22], 213);
+
+    assign(test_msg_.certificate_bytes[23], 92);
+
+    assign(test_msg_.certificate_bytes[24], 195);
+
+    assign(test_msg_.certificate_bytes[25], 146);
+
+    assign(test_msg_.certificate_bytes[26], 235);
+
+    assign(test_msg_.certificate_bytes[27], 228);
+
+    assign(test_msg_.certificate_bytes[28], 177);
+
+    assign(test_msg_.certificate_bytes[29], 101);
+
+    assign(test_msg_.certificate_bytes[30], 82);
+
+    assign(test_msg_.certificate_bytes[31], 182);
+
+    assign(test_msg_.certificate_bytes[32], 25);
+
+    assign(test_msg_.certificate_bytes[33], 172);
+
+    assign(test_msg_.certificate_bytes[34], 170);
+
+    assign(test_msg_.certificate_bytes[35], 250);
+
+    assign(test_msg_.certificate_bytes[36], 236);
+
+    assign(test_msg_.certificate_bytes[37], 7);
+
+    assign(test_msg_.certificate_bytes[38], 119);
+
+    assign(test_msg_.certificate_bytes[39], 4);
+
+    assign(test_msg_.certificate_bytes[40], 201);
+
+    assign(test_msg_.certificate_bytes[41], 10);
+
+    assign(test_msg_.certificate_bytes[42], 14);
+
+    assign(test_msg_.certificate_bytes[43], 208);
+
+    assign(test_msg_.certificate_bytes[44], 47);
+
+    assign(test_msg_.certificate_bytes[45], 126);
+
+    assign(test_msg_.certificate_bytes[46], 49);
+
+    assign(test_msg_.certificate_bytes[47], 210);
+
+    assign(test_msg_.certificate_bytes[48], 174);
+
+    assign(test_msg_.certificate_bytes[49], 75);
+
+    assign(test_msg_.certificate_bytes[50], 221);
+
+    assign(test_msg_.certificate_bytes[51], 203);
+
+    assign(test_msg_.certificate_bytes[52], 24);
+
+    assign(test_msg_.certificate_bytes[53], 66);
+
+    assign(test_msg_.certificate_bytes[54], 52);
+
+    assign(test_msg_.certificate_bytes[55], 35);
+
+    assign(test_msg_.certificate_bytes[56], 26);
+
+    assign(test_msg_.certificate_bytes[57], 30);
+
+    assign(test_msg_.certificate_bytes[58], 140);
+
+    assign(test_msg_.certificate_bytes[59], 111);
+
+    assign(test_msg_.certificate_bytes[60], 246);
+
+    assign(test_msg_.certificate_bytes[61], 39);
+
+    assign(test_msg_.certificate_bytes[62], 226);
+
+    assign(test_msg_.certificate_bytes[63], 205);
+
+    assign(test_msg_.certificate_bytes[64], 198);
+
+    assign(test_msg_.certificate_bytes[65], 178);
+
+    assign(test_msg_.certificate_bytes[66], 196);
+
+    assign(test_msg_.certificate_bytes[67], 5);
+
+    assign(test_msg_.certificate_bytes[68], 81);
+
+    assign(test_msg_.certificate_bytes[69], 9);
+
+    assign(test_msg_.certificate_bytes[70], 44);
+
+    assign(test_msg_.certificate_bytes[71], 164);
+
+    assign(test_msg_.certificate_bytes[72], 163);
+
+    assign(test_msg_.certificate_bytes[73], 214);
+
+    assign(test_msg_.certificate_bytes[74], 138);
+
+    assign(test_msg_.certificate_bytes[75], 123);
+
+    assign(test_msg_.certificate_bytes[76], 76);
+
+    assign(test_msg_.certificate_bytes[77], 74);
+
+    assign(test_msg_.certificate_bytes[78], 237);
+
+    assign(test_msg_.certificate_bytes[79], 121);
+
+    assign(test_msg_.certificate_bytes[80], 13);
+
+    assign(test_msg_.certificate_bytes[81], 137);
+
+    assign(test_msg_.certificate_bytes[82], 186);
+
+    assign(test_msg_.certificate_bytes[83], 97);
+
+    assign(test_msg_.certificate_bytes[84], 193);
+
+    assign(test_msg_.certificate_bytes[85], 189);
+
+    assign(test_msg_.certificate_bytes[86], 200);
+
+    assign(test_msg_.certificate_bytes[87], 124);
+
+    assign(test_msg_.certificate_bytes[88], 69);
+
+    assign(test_msg_.certificate_bytes[89], 115);
+
+    assign(test_msg_.certificate_bytes[90], 230);
+
+    assign(test_msg_.certificate_bytes[91], 159);
+
+    assign(test_msg_.certificate_bytes[92], 185);
+
+    assign(test_msg_.certificate_bytes[93], 158);
+
+    assign(test_msg_.certificate_bytes[94], 51);
+
+    assign(test_msg_.certificate_bytes[95], 12);
+
+    assign(test_msg_.certificate_bytes[96], 225);
+
+    assign(test_msg_.certificate_bytes[97], 65);
+
+    assign(test_msg_.certificate_bytes[98], 192);
+
+    assign(test_msg_.certificate_bytes[99], 105);
+
+    assign(test_msg_.certificate_bytes[100], 56);
+
+    assign(test_msg_.certificate_bytes[101], 41);
+
+    assign(test_msg_.certificate_bytes[102], 85);
+
+    assign(test_msg_.certificate_bytes[103], 133);
+
+    assign(test_msg_.certificate_bytes[104], 19);
+
+    assign(test_msg_.certificate_bytes[105], 217);
+
+    assign(test_msg_.certificate_bytes[106], 166);
+
+    assign(test_msg_.certificate_bytes[107], 48);
+
+    assign(test_msg_.certificate_bytes[108], 139);
+
+    assign(test_msg_.certificate_bytes[109], 131);
+
+    assign(test_msg_.certificate_bytes[110], 96);
+
+    assign(test_msg_.certificate_bytes[111], 216);
+
+    assign(test_msg_.certificate_bytes[112], 98);
+
+    assign(test_msg_.certificate_bytes[113], 147);
+
+    assign(test_msg_.certificate_bytes[114], 132);
+
+    assign(test_msg_.certificate_bytes[115], 234);
+
+    assign(test_msg_.certificate_bytes[116], 167);
+
+    assign(test_msg_.certificate_bytes[117], 248);
+
+    assign(test_msg_.certificate_bytes[118], 247);
+
+    assign(test_msg_.certificate_bytes[119], 32);
+
+    assign(test_msg_.certificate_bytes[120], 239);
+
+    assign(test_msg_.certificate_bytes[121], 194);
+
+    assign(test_msg_.certificate_bytes[122], 188);
+
+    assign(test_msg_.certificate_bytes[123], 254);
+
+    assign(test_msg_.certificate_bytes[124], 114);
+
+    assign(test_msg_.certificate_bytes[125], 117);
+
+    assign(test_msg_.certificate_bytes[126], 83);
+
+    assign(test_msg_.certificate_bytes[127], 25);
+
+    assign(test_msg_.certificate_bytes[128], 251);
+
+    assign(test_msg_.certificate_bytes[129], 191);
+
+    assign(test_msg_.certificate_bytes[130], 104);
+
+    assign(test_msg_.certificate_bytes[131], 240);
+
+    assign(test_msg_.certificate_bytes[132], 118);
+
+    assign(test_msg_.certificate_bytes[133], 68);
+
+    assign(test_msg_.certificate_bytes[134], 42);
+
+    assign(test_msg_.certificate_bytes[135], 93);
+
+    assign(test_msg_.certificate_bytes[136], 18);
+
+    assign(test_msg_.certificate_bytes[137], 16);
+
+    assign(test_msg_.certificate_bytes[138], 37);
+
+    assign(test_msg_.certificate_bytes[139], 232);
+
+    assign(test_msg_.certificate_bytes[140], 99);
+
+    assign(test_msg_.certificate_bytes[141], 179);
+
+    assign(test_msg_.certificate_bytes[142], 23);
+
+    assign(test_msg_.certificate_bytes[143], 90);
+
+    assign(test_msg_.certificate_bytes[144], 94);
+
+    assign(test_msg_.certificate_bytes[145], 136);
+
+    assign(test_msg_.certificate_bytes[146], 6);
+
+    assign(test_msg_.certificate_bytes[147], 125);
+
+    assign(test_msg_.certificate_bytes[148], 91);
+
+    assign(test_msg_.certificate_bytes[149], 255);
+
+    assign(test_msg_.certificate_bytes[150], 15);
+
+    assign(test_msg_.certificate_bytes[151], 71);
+
+    assign(test_msg_.certificate_bytes[152], 43);
+
+    assign(test_msg_.certificate_bytes[153], 46);
+
+    assign(test_msg_.certificate_bytes[154], 25);
+
+    assign(test_msg_.certificate_bytes[155], 252);
+
+    assign(test_msg_.certificate_bytes[156], 229);
+
+    assign(test_msg_.certificate_bytes[157], 80);
+
+    assign(test_msg_.certificate_bytes[158], 143);
+
+    assign(test_msg_.certificate_bytes[159], 58);
+
+    assign(test_msg_.certificate_bytes[160], 241);
+
+    assign(test_msg_.certificate_bytes[161], 11);
+
+    assign(test_msg_.certificate_bytes[162], 62);
+
+    assign(test_msg_.certificate_bytes[163], 181);
+
+    assign(test_msg_.certificate_bytes[164], 155);
+
+    assign(test_msg_.certificate_bytes[165], 53);
+
+    assign(test_msg_.certificate_bytes[166], 153);
+
+    assign(test_msg_.certificate_bytes[167], 149);
+
+    assign(test_msg_.certificate_bytes[168], 152);
+
+    assign(test_msg_.certificate_bytes[169], 227);
+
+    assign(test_msg_.certificate_bytes[170], 150);
+
+    assign(test_msg_.certificate_bytes[171], 87);
+
+    assign(test_msg_.certificate_bytes[172], 112);
+
+    assign(test_msg_.certificate_bytes[173], 165);
+
+    assign(test_msg_.certificate_bytes[174], 2);
+
+    assign(test_msg_.certificate_bytes[175], 128);
+
+    assign(test_msg_.certificate_bytes[176], 231);
+
+    assign(test_msg_.certificate_bytes[177], 25);
+
+    assign(test_msg_.certificate_bytes[178], 157);
+
+    assign(test_msg_.certificate_bytes[179], 244);
+
+    assign(test_msg_.certificate_bytes[180], 204);
+
+    assign(test_msg_.certificate_bytes[181], 108);
+
+    assign(test_msg_.certificate_bytes[182], 253);
+
+    assign(test_msg_.certificate_bytes[183], 127);
+
+    assign(test_msg_.certificate_bytes[184], 122);
+
+    assign(test_msg_.certificate_bytes[185], 145);
+
+    assign(test_msg_.certificate_bytes[186], 113);
+
+    assign(test_msg_.certificate_bytes[187], 162);
+
+    assign(test_msg_.certificate_bytes[188], 197);
+
+    assign(test_msg_.certificate_bytes[189], 171);
+
+    assign(test_msg_.certificate_bytes[190], 199);
+
+    assign(test_msg_.certificate_bytes[191], 54);
+
+    assign(test_msg_.certificate_bytes[192], 184);
+
+    assign(test_msg_.certificate_bytes[193], 222);
+
+    assign(test_msg_.certificate_bytes[194], 206);
+
+    assign(test_msg_.certificate_bytes[195], 67);
+
+    assign(test_msg_.certificate_bytes[196], 144);
+
+    assign(test_msg_.certificate_bytes[197], 78);
+
+    assign(test_msg_.certificate_bytes[198], 187);
+
+    assign(test_msg_.certificate_bytes[199], 207);
+
+    assign(test_msg_.certificate_bytes[200], 60);
+
+    assign(test_msg_.certificate_bytes[201], 211);
+
+    assign(test_msg_.certificate_bytes[202], 141);
+
+    assign(test_msg_.certificate_bytes[203], 135);
+
+    assign(test_msg_.certificate_bytes[204], 106);
+
+    assign(test_msg_.certificate_bytes[205], 220);
+
+    assign(test_msg_.certificate_bytes[206], 79);
+
+    assign(test_msg_.certificate_bytes[207], 183);
+
+    assign(test_msg_.certificate_bytes[208], 245);
+
+    assign(test_msg_.certificate_bytes[209], 21);
+
+    assign(test_msg_.certificate_bytes[210], 161);
+
+    assign(test_msg_.certificate_bytes[211], 168);
+
+    assign(test_msg_.certificate_bytes[212], 34);
+
+    assign(test_msg_.certificate_bytes[213], 129);
+
+    assign(test_msg_.certificate_bytes[214], 50);
+
+    assign(test_msg_.certificate_bytes[215], 176);
+
+    assign(test_msg_.certificate_bytes[216], 1);
+
+    assign(test_msg_.certificate_bytes[217], 218);
+
+    assign(test_msg_.certificate_bytes[218], 20);
+
+    assign(test_msg_.certificate_bytes[219], 130);
+
+    assign(test_msg_.certificate_bytes[220], 59);
+
+    assign(test_msg_.certificate_bytes[221], 249);
+
+    assign(test_msg_.certificate_bytes[222], 109);
+
+    assign(test_msg_.certificate_bytes[223], 219);
+
+    assign(test_msg_.certificate_bytes[224], 0);
+
+    assign(test_msg_.certificate_bytes[225], 100);
+
+    assign(test_msg_.certificate_bytes[226], 103);
+
+    assign(test_msg_.certificate_bytes[227], 55);
+
+    assign(test_msg_.certificate_bytes[228], 29);
+
+    assign(test_msg_.certificate_bytes[229], 242);
+
+    assign(test_msg_.certificate_bytes[230], 110);
+
+    assign(test_msg_.certificate_bytes[231], 154);
+
+    assign(test_msg_.certificate_bytes[232], 190);
+
+    assign(test_msg_.certificate_bytes[233], 233);
+
+    assign(test_msg_.certificate_bytes[234], 142);
+
+    assign(test_msg_.certificate_bytes[235], 45);
+
+    assign(test_msg_.certificate_bytes[236], 61);
+
+    assign(test_msg_.certificate_bytes[237], 215);
+
+    assign(test_msg_.certificate_bytes[238], 202);
+
+    assign(test_msg_.certificate_bytes[239], 238);
+
+    assign(test_msg_.certificate_bytes[240], 88);
+
+    assign(test_msg_.certificate_bytes[241], 209);
+
+    assign(test_msg_.certificate_bytes[242], 70);
+
+    assign(test_msg_.certificate_bytes[243], 63);
+
+    assign(test_msg_.certificate_bytes[244], 151);
+
+    assign(test_msg_.certificate_bytes[245], 27);
+
+    assign(test_msg_.certificate_bytes[246], 102);
+
+    assign(test_msg_.certificate_id[0], 10);
+
+    assign(test_msg_.certificate_id[1], 11);
+
+    assign(test_msg_.certificate_id[2], 12);
+
+    assign(test_msg_.certificate_id[3], 13);
+    assign(test_msg_.flags, 2);
+    assign(test_msg_.n_certificate_bytes, 247);
+    assign(test_msg_.n_msg, 48);
   }
 
-  s32 read(uint8_t *buf, const uint32_t n) override {
-    uint32_t real_n = n;
-    memcpy(buf, dummy_buff_ + dummy_rd_, real_n);
-    dummy_rd_ += real_n;
-    return (s32)real_n;
-  }
+  class SlowReader final : public sbp::IReader {
+   public:
+    SlowReader(const uint8_t *buf, uint32_t len)
+        : sbp::IReader(), buf_{buf}, len_{len} {}
 
-  s32 write(const uint8_t *buf, uint32_t n) override {
-    uint32_t real_n = n;
-    memcpy(dummy_buff_ + dummy_wr_, buf, real_n);
-    dummy_wr_ += real_n;
-    return (s32)real_n;
+    s32 read(uint8_t *buf, const uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      if (remaining() == 0) {
+        return -1;
+      }
+      skip_next_read = !skip_next_read;
+      if (skip_next_read) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, 1u);
+      memcpy(buf, buf_ + offset_, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return len_ - offset_; }
+
+    static s32 read_static(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<SlowReader *>(ctx)->read(buf, len);
+    }
+
+   private:
+    const uint8_t *buf_;
+    uint32_t len_;
+    uint32_t offset_{};
+    bool skip_next_read{};
+  };
+
+  class Reader final : public sbp::IReader {
+   public:
+    Reader(const uint8_t *buf, uint32_t len)
+        : sbp::IReader(), buf_{buf}, len_{len} {}
+
+    s32 read(uint8_t *buf, const uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, remaining());
+      if (real_n == 0) {
+        return -1;
+      }
+      memcpy(buf, buf_ + offset_, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return len_ - offset_; }
+
+    static s32 read_static(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<Reader *>(ctx)->read(buf, len);
+    }
+
+   private:
+    const uint8_t *buf_;
+    uint32_t len_;
+    uint32_t offset_{};
+  };
+
+  class SlowWriter final : public sbp::IWriter {
+   public:
+    explicit SlowWriter(uint32_t max_len = cMaxLen)
+        : IWriter(), max_len_{max_len} {}
+    static constexpr uint32_t cMaxLen = SBP_MAX_FRAME_LEN;
+
+    s32 write(const uint8_t *buf, uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, 1u);
+      if (real_n == 0) {
+        return -1;
+      }
+      memcpy(buf_ + offset_, buf, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return max_len_ - offset_; }
+
+    const uint8_t *data() const noexcept { return buf_; }
+
+    uint32_t len() const noexcept { return offset_; }
+
+    static s32 write_static(const uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<SlowWriter *>(ctx)->write(buf, len);
+    }
+
+    static s32 write_c(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<SlowWriter *>(ctx)->write(buf, len);
+    }
+
+   private:
+    uint8_t buf_[cMaxLen];
+    uint32_t max_len_;
+    uint32_t offset_{};
+  };
+
+  class Writer final : public sbp::IWriter {
+   public:
+    explicit Writer(uint32_t max_len = cMaxLen)
+        : IWriter(), max_len_{max_len} {}
+    static constexpr uint32_t cMaxLen = SBP_MAX_FRAME_LEN;
+
+    s32 write(const uint8_t *buf, uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, remaining());
+      if (real_n == 0) {
+        return -1;
+      }
+      memcpy(buf_ + offset_, buf, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return max_len_ - offset_; }
+
+    const uint8_t *data() const noexcept { return buf_; }
+
+    uint32_t len() const noexcept { return offset_; }
+
+    static s32 write_static(const uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<Writer *>(ctx)->write(buf, len);
+    }
+
+    static s32 write_c(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<Writer *>(ctx)->write(buf, len);
+    }
+
+   private:
+    uint8_t buf_[cMaxLen];
+    uint32_t max_len_;
+    uint32_t offset_{};
+  };
+
+  struct CppHandler final
+      : public sbp::MessageHandler<sbp_msg_ecdsa_certificate_t> {
+    using sbp::MessageHandler<sbp_msg_ecdsa_certificate_t>::MessageHandler;
+
+    struct Output final {
+      uint16_t sender_id;
+      sbp_msg_ecdsa_certificate_t msg;
+    };
+
+    std::vector<Output> outputs{};
+
+   protected:
+    void handle_sbp_msg(uint16_t sender_id,
+                        const sbp_msg_ecdsa_certificate_t &msg) override {
+      outputs.emplace_back();
+      outputs.back().sender_id = sender_id;
+      memcpy(&outputs.back().msg, &msg, sizeof(msg));
+    }
+  };
+
+  struct CHandler final {
+    explicit CHandler(sbp_state_t *state) : state_{state} {
+      sbp_callback_register(state, SbpMsgEcdsaCertificate,
+                            &CHandler::callback_static, this, &node_);
+    }
+
+    ~CHandler() { sbp_remove_callback(state_, &node_); }
+
+    struct Output final {
+      uint16_t sender_id;
+      sbp_msg_ecdsa_certificate_t msg;
+    };
+
+    std::vector<Output> outputs{};
+
+   private:
+    void callback(uint16_t sender_id, sbp_msg_type_t msg_type,
+                  const sbp_msg_t *msg) {
+      ASSERT_EQ(msg_type, SbpMsgEcdsaCertificate);
+      outputs.emplace_back();
+      outputs.back().sender_id = sender_id;
+      memcpy(&outputs.back().msg, &msg->ecdsa_certificate,
+             sizeof(msg->ecdsa_certificate));
+    }
+
+    static void callback_static(uint16_t sender_id, sbp_msg_type_t msg_type,
+                                const sbp_msg_t *msg, void *ctx) {
+      static_cast<CHandler *>(ctx)->callback(sender_id, msg_type, msg);
+    }
+
+    sbp_msg_callbacks_node_t node_{};
+    sbp_state_t *state_;
+  };
+
+  struct TestMsgInfo {
+    sbp_msg_ecdsa_certificate_t test_msg;
+    sbp_msg_t test_msg_wrapped;
+    sbp_msg_type_t msg_type;
+    uint16_t sender_id;
+    uint8_t preamble;
+    uint16_t crc;
+    const uint8_t *encoded_frame;
+    uint32_t frame_len;
+    const uint8_t *encoded_payload;
+    uint8_t payload_len;
+
+    Reader get_frame_reader() const noexcept {
+      return Reader{encoded_frame, frame_len};
+    }
+
+    Reader get_frame_reader(uint32_t max) const noexcept {
+      assert(max <= frame_len);
+      return Reader{encoded_frame, max};
+    }
+
+    SlowReader get_slow_frame_reader() const noexcept {
+      return SlowReader{encoded_frame, frame_len};
+    }
+
+    Writer get_frame_writer() const noexcept { return Writer{frame_len}; }
+
+    Writer get_frame_writer(uint32_t max) const noexcept { return Writer{max}; }
+
+    SlowWriter get_slow_frame_writer() const noexcept {
+      return SlowWriter{frame_len};
+    }
+  };
+
+  TestMsgInfo get_test_msg_info() const noexcept {
+    TestMsgInfo info;
+    memcpy(&info.test_msg, &test_msg_, sizeof(test_msg_));
+    memcpy(&info.test_msg_wrapped.ecdsa_certificate, &test_msg_,
+           sizeof(test_msg_));
+    info.msg_type = static_cast<sbp_msg_type_t>(SbpMsgEcdsaCertificate);
+    info.sender_id = 66;
+    info.preamble = 0x55;
+    info.crc = 0x1EDB;
+    info.encoded_frame = encoded_frame_;
+    info.frame_len = sizeof(encoded_frame_);
+    info.encoded_payload = encoded_payload_;
+    info.payload_len = 253;
+
+    return info;
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id,
-                      const sbp_msg_ecdsa_certificate_t &msg) override {
-    last_msg_ = msg;
-    last_sender_id_ = sender_id;
-    n_callbacks_logged_++;
+  void comparison_tests(const sbp_msg_ecdsa_certificate_t &lesser,
+                        const sbp_msg_ecdsa_certificate_t &greater) {
+    sbp_msg_t wrapped_lesser =
+        sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::to_sbp_msg(lesser);
+    sbp_msg_t wrapped_greater =
+        sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::to_sbp_msg(greater);
+
+    EXPECT_EQ(sbp_msg_ecdsa_certificate_cmp(&lesser, &lesser), 0);
+    EXPECT_EQ(sbp_msg_ecdsa_certificate_cmp(&greater, &greater), 0);
+    EXPECT_LE(sbp_msg_ecdsa_certificate_cmp(&lesser, &greater), 0);
+    EXPECT_GT(sbp_msg_ecdsa_certificate_cmp(&greater, &lesser), 0);
+
+    EXPECT_EQ(sbp_message_cmp(SbpMsgEcdsaCertificate, &wrapped_lesser,
+                              &wrapped_lesser),
+              0);
+    EXPECT_EQ(sbp_message_cmp(SbpMsgEcdsaCertificate, &wrapped_greater,
+                              &wrapped_greater),
+              0);
+    EXPECT_LE(sbp_message_cmp(SbpMsgEcdsaCertificate, &wrapped_lesser,
+                              &wrapped_greater),
+              0);
+    EXPECT_GT(sbp_message_cmp(SbpMsgEcdsaCertificate, &wrapped_greater,
+                              &wrapped_lesser),
+              0);
+
+    // lesser vs lesser
+    EXPECT_TRUE(lesser == lesser);
+    EXPECT_FALSE(lesser != lesser);
+    EXPECT_FALSE(lesser < lesser);
+    EXPECT_TRUE(lesser <= lesser);
+    EXPECT_FALSE(lesser > lesser);
+    EXPECT_TRUE(lesser >= lesser);
+
+    // greater vs greater
+    EXPECT_TRUE(greater == greater);
+    EXPECT_FALSE(greater != greater);
+    EXPECT_FALSE(greater < greater);
+    EXPECT_TRUE(greater <= greater);
+    EXPECT_FALSE(greater > greater);
+    EXPECT_TRUE(greater >= greater);
+
+    // lesser vs greater
+    EXPECT_FALSE(lesser == greater);
+    EXPECT_TRUE(lesser != greater);
+    EXPECT_TRUE(lesser < greater);
+    EXPECT_TRUE(lesser <= greater);
+    EXPECT_FALSE(lesser > greater);
+    EXPECT_FALSE(lesser >= greater);
+
+    // greater vs lesser
+    EXPECT_FALSE(greater == lesser);
+    EXPECT_TRUE(greater != lesser);
+    EXPECT_FALSE(greater < lesser);
+    EXPECT_FALSE(greater <= lesser);
+    EXPECT_TRUE(greater > lesser);
+    EXPECT_TRUE(greater >= lesser);
   }
 
-  sbp_msg_ecdsa_certificate_t last_msg_;
-  uint8_t last_msg_len_;
-  uint16_t last_sender_id_;
-  size_t n_callbacks_logged_;
-  uint32_t dummy_wr_;
-  uint32_t dummy_rd_;
-  uint8_t dummy_buff_[1024];
-};
+  template <typename T,
+            std::enable_if_t<std::is_integral<T>::value, bool> = true>
+  void make_lesser_greater(T &lesser, T &greater) {
+    if (greater == std::numeric_limits<T>::max()) {
+      lesser--;
+    } else {
+      greater++;
+    }
+  }
 
-TEST_F(Test_auto_check_sbp_signing_MsgEcdsaCertificate0, Test) {
-  uint8_t encoded_frame[] = {
+  template <typename T,
+            std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
+  void make_lesser_greater(T &lesser, T &greater) {
+    (void)lesser;
+    greater += static_cast<T>(1.0);
+  }
+
+  void make_lesser_greater(sbp_string_t &lesser, sbp_string_t &greater) {
+    if (greater.data[0] == 'z') {
+      lesser.data[0]--;
+    } else {
+      greater.data[0]++;
+    }
+  }
+
+  template <size_t N>
+  void make_lesser_greater(char (&lesser)[N], char (&greater)[N]) {
+    if (lesser[0] == 'z') {
+      lesser[0]--;
+    } else {
+      greater[0]++;
+    }
+  }
+
+ private:
+  sbp_msg_ecdsa_certificate_t test_msg_{};
+  uint8_t encoded_frame_[253 + 8] = {
       85,  4,   12,  66,  0,   253, 48,  10,  11,  12,  13,  2,   180, 160, 116,
       77,  243, 28,  173, 36,  86,  33,  8,   31,  120, 73,  64,  169, 148, 224,
       57,  95,  17,  40,  213, 92,  195, 146, 235, 228, 177, 101, 82,  182, 25,
@@ -95,1482 +898,2456 @@ TEST_F(Test_auto_check_sbp_signing_MsgEcdsaCertificate0, Test) {
       29,  242, 110, 154, 190, 233, 142, 45,  61,  215, 202, 238, 88,  209, 70,
       63,  151, 27,  102, 219, 30,
   };
-
-  sbp_msg_ecdsa_certificate_t test_msg{};
-
-  test_msg.certificate_bytes[0] = 180;
-
-  test_msg.certificate_bytes[1] = 160;
-
-  test_msg.certificate_bytes[2] = 116;
-
-  test_msg.certificate_bytes[3] = 77;
-
-  test_msg.certificate_bytes[4] = 243;
-
-  test_msg.certificate_bytes[5] = 28;
-
-  test_msg.certificate_bytes[6] = 173;
-
-  test_msg.certificate_bytes[7] = 36;
-
-  test_msg.certificate_bytes[8] = 86;
-
-  test_msg.certificate_bytes[9] = 33;
-
-  test_msg.certificate_bytes[10] = 8;
-
-  test_msg.certificate_bytes[11] = 31;
-
-  test_msg.certificate_bytes[12] = 120;
-
-  test_msg.certificate_bytes[13] = 73;
-
-  test_msg.certificate_bytes[14] = 64;
-
-  test_msg.certificate_bytes[15] = 169;
-
-  test_msg.certificate_bytes[16] = 148;
-
-  test_msg.certificate_bytes[17] = 224;
-
-  test_msg.certificate_bytes[18] = 57;
-
-  test_msg.certificate_bytes[19] = 95;
-
-  test_msg.certificate_bytes[20] = 17;
-
-  test_msg.certificate_bytes[21] = 40;
-
-  test_msg.certificate_bytes[22] = 213;
-
-  test_msg.certificate_bytes[23] = 92;
-
-  test_msg.certificate_bytes[24] = 195;
-
-  test_msg.certificate_bytes[25] = 146;
-
-  test_msg.certificate_bytes[26] = 235;
-
-  test_msg.certificate_bytes[27] = 228;
-
-  test_msg.certificate_bytes[28] = 177;
-
-  test_msg.certificate_bytes[29] = 101;
-
-  test_msg.certificate_bytes[30] = 82;
-
-  test_msg.certificate_bytes[31] = 182;
-
-  test_msg.certificate_bytes[32] = 25;
-
-  test_msg.certificate_bytes[33] = 172;
-
-  test_msg.certificate_bytes[34] = 170;
-
-  test_msg.certificate_bytes[35] = 250;
-
-  test_msg.certificate_bytes[36] = 236;
-
-  test_msg.certificate_bytes[37] = 7;
-
-  test_msg.certificate_bytes[38] = 119;
-
-  test_msg.certificate_bytes[39] = 4;
-
-  test_msg.certificate_bytes[40] = 201;
-
-  test_msg.certificate_bytes[41] = 10;
-
-  test_msg.certificate_bytes[42] = 14;
-
-  test_msg.certificate_bytes[43] = 208;
-
-  test_msg.certificate_bytes[44] = 47;
-
-  test_msg.certificate_bytes[45] = 126;
-
-  test_msg.certificate_bytes[46] = 49;
-
-  test_msg.certificate_bytes[47] = 210;
-
-  test_msg.certificate_bytes[48] = 174;
-
-  test_msg.certificate_bytes[49] = 75;
-
-  test_msg.certificate_bytes[50] = 221;
-
-  test_msg.certificate_bytes[51] = 203;
-
-  test_msg.certificate_bytes[52] = 24;
-
-  test_msg.certificate_bytes[53] = 66;
-
-  test_msg.certificate_bytes[54] = 52;
-
-  test_msg.certificate_bytes[55] = 35;
-
-  test_msg.certificate_bytes[56] = 26;
-
-  test_msg.certificate_bytes[57] = 30;
-
-  test_msg.certificate_bytes[58] = 140;
-
-  test_msg.certificate_bytes[59] = 111;
-
-  test_msg.certificate_bytes[60] = 246;
-
-  test_msg.certificate_bytes[61] = 39;
-
-  test_msg.certificate_bytes[62] = 226;
-
-  test_msg.certificate_bytes[63] = 205;
-
-  test_msg.certificate_bytes[64] = 198;
-
-  test_msg.certificate_bytes[65] = 178;
-
-  test_msg.certificate_bytes[66] = 196;
-
-  test_msg.certificate_bytes[67] = 5;
-
-  test_msg.certificate_bytes[68] = 81;
-
-  test_msg.certificate_bytes[69] = 9;
-
-  test_msg.certificate_bytes[70] = 44;
-
-  test_msg.certificate_bytes[71] = 164;
-
-  test_msg.certificate_bytes[72] = 163;
-
-  test_msg.certificate_bytes[73] = 214;
-
-  test_msg.certificate_bytes[74] = 138;
-
-  test_msg.certificate_bytes[75] = 123;
-
-  test_msg.certificate_bytes[76] = 76;
-
-  test_msg.certificate_bytes[77] = 74;
-
-  test_msg.certificate_bytes[78] = 237;
-
-  test_msg.certificate_bytes[79] = 121;
-
-  test_msg.certificate_bytes[80] = 13;
-
-  test_msg.certificate_bytes[81] = 137;
-
-  test_msg.certificate_bytes[82] = 186;
-
-  test_msg.certificate_bytes[83] = 97;
-
-  test_msg.certificate_bytes[84] = 193;
-
-  test_msg.certificate_bytes[85] = 189;
-
-  test_msg.certificate_bytes[86] = 200;
-
-  test_msg.certificate_bytes[87] = 124;
-
-  test_msg.certificate_bytes[88] = 69;
-
-  test_msg.certificate_bytes[89] = 115;
-
-  test_msg.certificate_bytes[90] = 230;
-
-  test_msg.certificate_bytes[91] = 159;
-
-  test_msg.certificate_bytes[92] = 185;
-
-  test_msg.certificate_bytes[93] = 158;
-
-  test_msg.certificate_bytes[94] = 51;
-
-  test_msg.certificate_bytes[95] = 12;
-
-  test_msg.certificate_bytes[96] = 225;
-
-  test_msg.certificate_bytes[97] = 65;
-
-  test_msg.certificate_bytes[98] = 192;
-
-  test_msg.certificate_bytes[99] = 105;
-
-  test_msg.certificate_bytes[100] = 56;
-
-  test_msg.certificate_bytes[101] = 41;
-
-  test_msg.certificate_bytes[102] = 85;
-
-  test_msg.certificate_bytes[103] = 133;
-
-  test_msg.certificate_bytes[104] = 19;
-
-  test_msg.certificate_bytes[105] = 217;
-
-  test_msg.certificate_bytes[106] = 166;
-
-  test_msg.certificate_bytes[107] = 48;
-
-  test_msg.certificate_bytes[108] = 139;
-
-  test_msg.certificate_bytes[109] = 131;
-
-  test_msg.certificate_bytes[110] = 96;
-
-  test_msg.certificate_bytes[111] = 216;
-
-  test_msg.certificate_bytes[112] = 98;
-
-  test_msg.certificate_bytes[113] = 147;
-
-  test_msg.certificate_bytes[114] = 132;
-
-  test_msg.certificate_bytes[115] = 234;
-
-  test_msg.certificate_bytes[116] = 167;
-
-  test_msg.certificate_bytes[117] = 248;
-
-  test_msg.certificate_bytes[118] = 247;
-
-  test_msg.certificate_bytes[119] = 32;
-
-  test_msg.certificate_bytes[120] = 239;
-
-  test_msg.certificate_bytes[121] = 194;
-
-  test_msg.certificate_bytes[122] = 188;
-
-  test_msg.certificate_bytes[123] = 254;
-
-  test_msg.certificate_bytes[124] = 114;
-
-  test_msg.certificate_bytes[125] = 117;
-
-  test_msg.certificate_bytes[126] = 83;
-
-  test_msg.certificate_bytes[127] = 25;
-
-  test_msg.certificate_bytes[128] = 251;
-
-  test_msg.certificate_bytes[129] = 191;
-
-  test_msg.certificate_bytes[130] = 104;
-
-  test_msg.certificate_bytes[131] = 240;
-
-  test_msg.certificate_bytes[132] = 118;
-
-  test_msg.certificate_bytes[133] = 68;
-
-  test_msg.certificate_bytes[134] = 42;
-
-  test_msg.certificate_bytes[135] = 93;
-
-  test_msg.certificate_bytes[136] = 18;
-
-  test_msg.certificate_bytes[137] = 16;
-
-  test_msg.certificate_bytes[138] = 37;
-
-  test_msg.certificate_bytes[139] = 232;
-
-  test_msg.certificate_bytes[140] = 99;
-
-  test_msg.certificate_bytes[141] = 179;
-
-  test_msg.certificate_bytes[142] = 23;
-
-  test_msg.certificate_bytes[143] = 90;
-
-  test_msg.certificate_bytes[144] = 94;
-
-  test_msg.certificate_bytes[145] = 136;
-
-  test_msg.certificate_bytes[146] = 6;
-
-  test_msg.certificate_bytes[147] = 125;
-
-  test_msg.certificate_bytes[148] = 91;
-
-  test_msg.certificate_bytes[149] = 255;
-
-  test_msg.certificate_bytes[150] = 15;
-
-  test_msg.certificate_bytes[151] = 71;
-
-  test_msg.certificate_bytes[152] = 43;
-
-  test_msg.certificate_bytes[153] = 46;
-
-  test_msg.certificate_bytes[154] = 25;
-
-  test_msg.certificate_bytes[155] = 252;
-
-  test_msg.certificate_bytes[156] = 229;
-
-  test_msg.certificate_bytes[157] = 80;
-
-  test_msg.certificate_bytes[158] = 143;
-
-  test_msg.certificate_bytes[159] = 58;
-
-  test_msg.certificate_bytes[160] = 241;
-
-  test_msg.certificate_bytes[161] = 11;
-
-  test_msg.certificate_bytes[162] = 62;
-
-  test_msg.certificate_bytes[163] = 181;
-
-  test_msg.certificate_bytes[164] = 155;
-
-  test_msg.certificate_bytes[165] = 53;
-
-  test_msg.certificate_bytes[166] = 153;
-
-  test_msg.certificate_bytes[167] = 149;
-
-  test_msg.certificate_bytes[168] = 152;
-
-  test_msg.certificate_bytes[169] = 227;
-
-  test_msg.certificate_bytes[170] = 150;
-
-  test_msg.certificate_bytes[171] = 87;
-
-  test_msg.certificate_bytes[172] = 112;
-
-  test_msg.certificate_bytes[173] = 165;
-
-  test_msg.certificate_bytes[174] = 2;
-
-  test_msg.certificate_bytes[175] = 128;
-
-  test_msg.certificate_bytes[176] = 231;
-
-  test_msg.certificate_bytes[177] = 25;
-
-  test_msg.certificate_bytes[178] = 157;
-
-  test_msg.certificate_bytes[179] = 244;
-
-  test_msg.certificate_bytes[180] = 204;
-
-  test_msg.certificate_bytes[181] = 108;
-
-  test_msg.certificate_bytes[182] = 253;
-
-  test_msg.certificate_bytes[183] = 127;
-
-  test_msg.certificate_bytes[184] = 122;
-
-  test_msg.certificate_bytes[185] = 145;
-
-  test_msg.certificate_bytes[186] = 113;
-
-  test_msg.certificate_bytes[187] = 162;
-
-  test_msg.certificate_bytes[188] = 197;
-
-  test_msg.certificate_bytes[189] = 171;
-
-  test_msg.certificate_bytes[190] = 199;
-
-  test_msg.certificate_bytes[191] = 54;
-
-  test_msg.certificate_bytes[192] = 184;
-
-  test_msg.certificate_bytes[193] = 222;
-
-  test_msg.certificate_bytes[194] = 206;
-
-  test_msg.certificate_bytes[195] = 67;
-
-  test_msg.certificate_bytes[196] = 144;
-
-  test_msg.certificate_bytes[197] = 78;
-
-  test_msg.certificate_bytes[198] = 187;
-
-  test_msg.certificate_bytes[199] = 207;
-
-  test_msg.certificate_bytes[200] = 60;
-
-  test_msg.certificate_bytes[201] = 211;
-
-  test_msg.certificate_bytes[202] = 141;
-
-  test_msg.certificate_bytes[203] = 135;
-
-  test_msg.certificate_bytes[204] = 106;
-
-  test_msg.certificate_bytes[205] = 220;
-
-  test_msg.certificate_bytes[206] = 79;
-
-  test_msg.certificate_bytes[207] = 183;
-
-  test_msg.certificate_bytes[208] = 245;
-
-  test_msg.certificate_bytes[209] = 21;
-
-  test_msg.certificate_bytes[210] = 161;
-
-  test_msg.certificate_bytes[211] = 168;
-
-  test_msg.certificate_bytes[212] = 34;
-
-  test_msg.certificate_bytes[213] = 129;
-
-  test_msg.certificate_bytes[214] = 50;
-
-  test_msg.certificate_bytes[215] = 176;
-
-  test_msg.certificate_bytes[216] = 1;
-
-  test_msg.certificate_bytes[217] = 218;
-
-  test_msg.certificate_bytes[218] = 20;
-
-  test_msg.certificate_bytes[219] = 130;
-
-  test_msg.certificate_bytes[220] = 59;
-
-  test_msg.certificate_bytes[221] = 249;
-
-  test_msg.certificate_bytes[222] = 109;
-
-  test_msg.certificate_bytes[223] = 219;
-
-  test_msg.certificate_bytes[224] = 0;
-
-  test_msg.certificate_bytes[225] = 100;
-
-  test_msg.certificate_bytes[226] = 103;
-
-  test_msg.certificate_bytes[227] = 55;
-
-  test_msg.certificate_bytes[228] = 29;
-
-  test_msg.certificate_bytes[229] = 242;
-
-  test_msg.certificate_bytes[230] = 110;
-
-  test_msg.certificate_bytes[231] = 154;
-
-  test_msg.certificate_bytes[232] = 190;
-
-  test_msg.certificate_bytes[233] = 233;
-
-  test_msg.certificate_bytes[234] = 142;
-
-  test_msg.certificate_bytes[235] = 45;
-
-  test_msg.certificate_bytes[236] = 61;
-
-  test_msg.certificate_bytes[237] = 215;
-
-  test_msg.certificate_bytes[238] = 202;
-
-  test_msg.certificate_bytes[239] = 238;
-
-  test_msg.certificate_bytes[240] = 88;
-
-  test_msg.certificate_bytes[241] = 209;
-
-  test_msg.certificate_bytes[242] = 70;
-
-  test_msg.certificate_bytes[243] = 63;
-
-  test_msg.certificate_bytes[244] = 151;
-
-  test_msg.certificate_bytes[245] = 27;
-
-  test_msg.certificate_bytes[246] = 102;
-
-  test_msg.certificate_id[0] = 10;
-
-  test_msg.certificate_id[1] = 11;
-
-  test_msg.certificate_id[2] = 12;
-
-  test_msg.certificate_id[3] = 13;
-  test_msg.flags = 2;
-  test_msg.n_certificate_bytes = 247;
-  test_msg.n_msg = 48;
-
-  EXPECT_EQ(send_message(66, test_msg), SBP_OK);
-
-  EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
-  EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
-
-  while (dummy_rd_ < dummy_wr_) {
-    process();
+  uint8_t encoded_payload_[253] = {
+      48,  10,  11,  12,  13,  2,   180, 160, 116, 77,  243, 28,  173, 36,  86,
+      33,  8,   31,  120, 73,  64,  169, 148, 224, 57,  95,  17,  40,  213, 92,
+      195, 146, 235, 228, 177, 101, 82,  182, 25,  172, 170, 250, 236, 7,   119,
+      4,   201, 10,  14,  208, 47,  126, 49,  210, 174, 75,  221, 203, 24,  66,
+      52,  35,  26,  30,  140, 111, 246, 39,  226, 205, 198, 178, 196, 5,   81,
+      9,   44,  164, 163, 214, 138, 123, 76,  74,  237, 121, 13,  137, 186, 97,
+      193, 189, 200, 124, 69,  115, 230, 159, 185, 158, 51,  12,  225, 65,  192,
+      105, 56,  41,  85,  133, 19,  217, 166, 48,  139, 131, 96,  216, 98,  147,
+      132, 234, 167, 248, 247, 32,  239, 194, 188, 254, 114, 117, 83,  25,  251,
+      191, 104, 240, 118, 68,  42,  93,  18,  16,  37,  232, 99,  179, 23,  90,
+      94,  136, 6,   125, 91,  255, 15,  71,  43,  46,  25,  252, 229, 80,  143,
+      58,  241, 11,  62,  181, 155, 53,  153, 149, 152, 227, 150, 87,  112, 165,
+      2,   128, 231, 25,  157, 244, 204, 108, 253, 127, 122, 145, 113, 162, 197,
+      171, 199, 54,  184, 222, 206, 67,  144, 78,  187, 207, 60,  211, 141, 135,
+      106, 220, 79,  183, 245, 21,  161, 168, 34,  129, 50,  176, 1,   218, 20,
+      130, 59,  249, 109, 219, 0,   100, 103, 55,  29,  242, 110, 154, 190, 233,
+      142, 45,  61,  215, 202, 238, 88,  209, 70,  63,  151, 27,  102,
+  };
+};
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, EncodedLen) {
+  auto info = get_test_msg_info();
+  EXPECT_EQ(sbp_msg_ecdsa_certificate_encoded_len(&info.test_msg),
+            info.payload_len);
+
+  EXPECT_EQ(
+      sbp_message_encoded_len(SbpMsgEcdsaCertificate, &info.test_msg_wrapped),
+      info.payload_len);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, EncodeToBuf) {
+  auto info = get_test_msg_info();
+  uint8_t buf[253];
+  uint8_t n_written;
+
+  EXPECT_EQ(sbp_msg_ecdsa_certificate_encode(&buf[0], sizeof(buf), &n_written,
+                                             &info.test_msg),
+            SBP_OK);
+  EXPECT_EQ(n_written, 253);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 253), 0);
+
+  memset(&buf[0], 0, sizeof(buf));
+  EXPECT_EQ(sbp_message_encode(&buf[0], sizeof(buf), &n_written,
+                               SbpMsgEcdsaCertificate, &info.test_msg_wrapped),
+            SBP_OK);
+  EXPECT_EQ(n_written, 253);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 253), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       EncodeToBufWithoutNwritten) {
+  auto info = get_test_msg_info();
+  uint8_t buf[253];
+
+  EXPECT_EQ(sbp_msg_ecdsa_certificate_encode(&buf[0], sizeof(buf), nullptr,
+                                             &info.test_msg),
+            SBP_OK);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 253), 0);
+}
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, EncodedToBufUnderflow) {
+  auto info = get_test_msg_info();
+  uint8_t buf[253];
+
+  for (uint8_t i = 0; i < 253; i++) {
+    EXPECT_EQ(
+        sbp_msg_ecdsa_certificate_encode(&buf[0], i, nullptr, &info.test_msg),
+        SBP_ENCODE_ERROR);
+  }
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, DecodeFromBuf) {
+  auto info = get_test_msg_info();
+  sbp_msg_ecdsa_certificate_t msg{};
+  uint8_t n_read;
+
+  EXPECT_EQ(sbp_msg_ecdsa_certificate_decode(&info.encoded_payload[0],
+                                             info.payload_len, &n_read, &msg),
+            SBP_OK);
+  EXPECT_EQ(n_read, 253);
+  EXPECT_EQ(msg, info.test_msg);
+
+  sbp_msg_t wrapped_msg{};
+  EXPECT_EQ(sbp_message_decode(&info.encoded_payload[0], info.payload_len,
+                               &n_read, SbpMsgEcdsaCertificate, &wrapped_msg),
+            SBP_OK);
+  EXPECT_EQ(n_read, 253);
+  EXPECT_EQ(msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       DecodeFromBufWithoutNread) {
+  auto info = get_test_msg_info();
+  sbp_msg_ecdsa_certificate_t msg{};
+
+  EXPECT_EQ(sbp_msg_ecdsa_certificate_decode(&info.encoded_payload[0],
+                                             info.payload_len, nullptr, &msg),
+            SBP_OK);
+  EXPECT_EQ(msg, info.test_msg);
+}
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       DecodeFromBufUnderflow) {
+  auto info = get_test_msg_info();
+  sbp_msg_ecdsa_certificate_t msg{};
+
+  for (uint8_t i = 0; i < info.payload_len; i++) {
+    int expected_return = SBP_DECODE_ERROR;
+    size_t overhead = []() -> size_t {
+      sbp_msg_ecdsa_certificate_t t{};
+      return sbp_msg_ecdsa_certificate_encoded_len(&t);
+    }();
+    size_t elem_size = []() -> size_t {
+      sbp_msg_ecdsa_certificate_t t{};
+      t.n_certificate_bytes = 1;
+      return sbp_msg_ecdsa_certificate_encoded_len(&t);
+    }() - overhead;
+
+    if (i >= overhead) {
+      if (((i - overhead) % elem_size) == 0) {
+        expected_return = SBP_OK;
+      }
+    }
+
+    EXPECT_EQ(sbp_msg_ecdsa_certificate_decode(&info.encoded_payload[0], i,
+                                               nullptr, &msg),
+              expected_return);
+  }
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       ReceiveThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto reader = info.get_frame_reader();
+  sbp_state_set_io_context(&state, &reader);
+
+  CHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    EXPECT_GE(sbp_process(&state, &Reader::read_static), SBP_OK);
   }
 
-  EXPECT_EQ(n_callbacks_logged_, 1);
-  EXPECT_EQ(last_sender_id_, 66);
-  EXPECT_EQ(last_msg_, test_msg);
-  EXPECT_EQ(last_msg_.certificate_bytes[0], 180)
-      << "incorrect value for last_msg_.certificate_bytes[0], expected 180, is "
-      << last_msg_.certificate_bytes[0];
-  EXPECT_EQ(last_msg_.certificate_bytes[1], 160)
-      << "incorrect value for last_msg_.certificate_bytes[1], expected 160, is "
-      << last_msg_.certificate_bytes[1];
-  EXPECT_EQ(last_msg_.certificate_bytes[2], 116)
-      << "incorrect value for last_msg_.certificate_bytes[2], expected 116, is "
-      << last_msg_.certificate_bytes[2];
-  EXPECT_EQ(last_msg_.certificate_bytes[3], 77)
-      << "incorrect value for last_msg_.certificate_bytes[3], expected 77, is "
-      << last_msg_.certificate_bytes[3];
-  EXPECT_EQ(last_msg_.certificate_bytes[4], 243)
-      << "incorrect value for last_msg_.certificate_bytes[4], expected 243, is "
-      << last_msg_.certificate_bytes[4];
-  EXPECT_EQ(last_msg_.certificate_bytes[5], 28)
-      << "incorrect value for last_msg_.certificate_bytes[5], expected 28, is "
-      << last_msg_.certificate_bytes[5];
-  EXPECT_EQ(last_msg_.certificate_bytes[6], 173)
-      << "incorrect value for last_msg_.certificate_bytes[6], expected 173, is "
-      << last_msg_.certificate_bytes[6];
-  EXPECT_EQ(last_msg_.certificate_bytes[7], 36)
-      << "incorrect value for last_msg_.certificate_bytes[7], expected 36, is "
-      << last_msg_.certificate_bytes[7];
-  EXPECT_EQ(last_msg_.certificate_bytes[8], 86)
-      << "incorrect value for last_msg_.certificate_bytes[8], expected 86, is "
-      << last_msg_.certificate_bytes[8];
-  EXPECT_EQ(last_msg_.certificate_bytes[9], 33)
-      << "incorrect value for last_msg_.certificate_bytes[9], expected 33, is "
-      << last_msg_.certificate_bytes[9];
-  EXPECT_EQ(last_msg_.certificate_bytes[10], 8)
-      << "incorrect value for last_msg_.certificate_bytes[10], expected 8, is "
-      << last_msg_.certificate_bytes[10];
-  EXPECT_EQ(last_msg_.certificate_bytes[11], 31)
-      << "incorrect value for last_msg_.certificate_bytes[11], expected 31, is "
-      << last_msg_.certificate_bytes[11];
-  EXPECT_EQ(last_msg_.certificate_bytes[12], 120)
-      << "incorrect value for last_msg_.certificate_bytes[12], expected 120, "
-         "is "
-      << last_msg_.certificate_bytes[12];
-  EXPECT_EQ(last_msg_.certificate_bytes[13], 73)
-      << "incorrect value for last_msg_.certificate_bytes[13], expected 73, is "
-      << last_msg_.certificate_bytes[13];
-  EXPECT_EQ(last_msg_.certificate_bytes[14], 64)
-      << "incorrect value for last_msg_.certificate_bytes[14], expected 64, is "
-      << last_msg_.certificate_bytes[14];
-  EXPECT_EQ(last_msg_.certificate_bytes[15], 169)
-      << "incorrect value for last_msg_.certificate_bytes[15], expected 169, "
-         "is "
-      << last_msg_.certificate_bytes[15];
-  EXPECT_EQ(last_msg_.certificate_bytes[16], 148)
-      << "incorrect value for last_msg_.certificate_bytes[16], expected 148, "
-         "is "
-      << last_msg_.certificate_bytes[16];
-  EXPECT_EQ(last_msg_.certificate_bytes[17], 224)
-      << "incorrect value for last_msg_.certificate_bytes[17], expected 224, "
-         "is "
-      << last_msg_.certificate_bytes[17];
-  EXPECT_EQ(last_msg_.certificate_bytes[18], 57)
-      << "incorrect value for last_msg_.certificate_bytes[18], expected 57, is "
-      << last_msg_.certificate_bytes[18];
-  EXPECT_EQ(last_msg_.certificate_bytes[19], 95)
-      << "incorrect value for last_msg_.certificate_bytes[19], expected 95, is "
-      << last_msg_.certificate_bytes[19];
-  EXPECT_EQ(last_msg_.certificate_bytes[20], 17)
-      << "incorrect value for last_msg_.certificate_bytes[20], expected 17, is "
-      << last_msg_.certificate_bytes[20];
-  EXPECT_EQ(last_msg_.certificate_bytes[21], 40)
-      << "incorrect value for last_msg_.certificate_bytes[21], expected 40, is "
-      << last_msg_.certificate_bytes[21];
-  EXPECT_EQ(last_msg_.certificate_bytes[22], 213)
-      << "incorrect value for last_msg_.certificate_bytes[22], expected 213, "
-         "is "
-      << last_msg_.certificate_bytes[22];
-  EXPECT_EQ(last_msg_.certificate_bytes[23], 92)
-      << "incorrect value for last_msg_.certificate_bytes[23], expected 92, is "
-      << last_msg_.certificate_bytes[23];
-  EXPECT_EQ(last_msg_.certificate_bytes[24], 195)
-      << "incorrect value for last_msg_.certificate_bytes[24], expected 195, "
-         "is "
-      << last_msg_.certificate_bytes[24];
-  EXPECT_EQ(last_msg_.certificate_bytes[25], 146)
-      << "incorrect value for last_msg_.certificate_bytes[25], expected 146, "
-         "is "
-      << last_msg_.certificate_bytes[25];
-  EXPECT_EQ(last_msg_.certificate_bytes[26], 235)
-      << "incorrect value for last_msg_.certificate_bytes[26], expected 235, "
-         "is "
-      << last_msg_.certificate_bytes[26];
-  EXPECT_EQ(last_msg_.certificate_bytes[27], 228)
-      << "incorrect value for last_msg_.certificate_bytes[27], expected 228, "
-         "is "
-      << last_msg_.certificate_bytes[27];
-  EXPECT_EQ(last_msg_.certificate_bytes[28], 177)
-      << "incorrect value for last_msg_.certificate_bytes[28], expected 177, "
-         "is "
-      << last_msg_.certificate_bytes[28];
-  EXPECT_EQ(last_msg_.certificate_bytes[29], 101)
-      << "incorrect value for last_msg_.certificate_bytes[29], expected 101, "
-         "is "
-      << last_msg_.certificate_bytes[29];
-  EXPECT_EQ(last_msg_.certificate_bytes[30], 82)
-      << "incorrect value for last_msg_.certificate_bytes[30], expected 82, is "
-      << last_msg_.certificate_bytes[30];
-  EXPECT_EQ(last_msg_.certificate_bytes[31], 182)
-      << "incorrect value for last_msg_.certificate_bytes[31], expected 182, "
-         "is "
-      << last_msg_.certificate_bytes[31];
-  EXPECT_EQ(last_msg_.certificate_bytes[32], 25)
-      << "incorrect value for last_msg_.certificate_bytes[32], expected 25, is "
-      << last_msg_.certificate_bytes[32];
-  EXPECT_EQ(last_msg_.certificate_bytes[33], 172)
-      << "incorrect value for last_msg_.certificate_bytes[33], expected 172, "
-         "is "
-      << last_msg_.certificate_bytes[33];
-  EXPECT_EQ(last_msg_.certificate_bytes[34], 170)
-      << "incorrect value for last_msg_.certificate_bytes[34], expected 170, "
-         "is "
-      << last_msg_.certificate_bytes[34];
-  EXPECT_EQ(last_msg_.certificate_bytes[35], 250)
-      << "incorrect value for last_msg_.certificate_bytes[35], expected 250, "
-         "is "
-      << last_msg_.certificate_bytes[35];
-  EXPECT_EQ(last_msg_.certificate_bytes[36], 236)
-      << "incorrect value for last_msg_.certificate_bytes[36], expected 236, "
-         "is "
-      << last_msg_.certificate_bytes[36];
-  EXPECT_EQ(last_msg_.certificate_bytes[37], 7)
-      << "incorrect value for last_msg_.certificate_bytes[37], expected 7, is "
-      << last_msg_.certificate_bytes[37];
-  EXPECT_EQ(last_msg_.certificate_bytes[38], 119)
-      << "incorrect value for last_msg_.certificate_bytes[38], expected 119, "
-         "is "
-      << last_msg_.certificate_bytes[38];
-  EXPECT_EQ(last_msg_.certificate_bytes[39], 4)
-      << "incorrect value for last_msg_.certificate_bytes[39], expected 4, is "
-      << last_msg_.certificate_bytes[39];
-  EXPECT_EQ(last_msg_.certificate_bytes[40], 201)
-      << "incorrect value for last_msg_.certificate_bytes[40], expected 201, "
-         "is "
-      << last_msg_.certificate_bytes[40];
-  EXPECT_EQ(last_msg_.certificate_bytes[41], 10)
-      << "incorrect value for last_msg_.certificate_bytes[41], expected 10, is "
-      << last_msg_.certificate_bytes[41];
-  EXPECT_EQ(last_msg_.certificate_bytes[42], 14)
-      << "incorrect value for last_msg_.certificate_bytes[42], expected 14, is "
-      << last_msg_.certificate_bytes[42];
-  EXPECT_EQ(last_msg_.certificate_bytes[43], 208)
-      << "incorrect value for last_msg_.certificate_bytes[43], expected 208, "
-         "is "
-      << last_msg_.certificate_bytes[43];
-  EXPECT_EQ(last_msg_.certificate_bytes[44], 47)
-      << "incorrect value for last_msg_.certificate_bytes[44], expected 47, is "
-      << last_msg_.certificate_bytes[44];
-  EXPECT_EQ(last_msg_.certificate_bytes[45], 126)
-      << "incorrect value for last_msg_.certificate_bytes[45], expected 126, "
-         "is "
-      << last_msg_.certificate_bytes[45];
-  EXPECT_EQ(last_msg_.certificate_bytes[46], 49)
-      << "incorrect value for last_msg_.certificate_bytes[46], expected 49, is "
-      << last_msg_.certificate_bytes[46];
-  EXPECT_EQ(last_msg_.certificate_bytes[47], 210)
-      << "incorrect value for last_msg_.certificate_bytes[47], expected 210, "
-         "is "
-      << last_msg_.certificate_bytes[47];
-  EXPECT_EQ(last_msg_.certificate_bytes[48], 174)
-      << "incorrect value for last_msg_.certificate_bytes[48], expected 174, "
-         "is "
-      << last_msg_.certificate_bytes[48];
-  EXPECT_EQ(last_msg_.certificate_bytes[49], 75)
-      << "incorrect value for last_msg_.certificate_bytes[49], expected 75, is "
-      << last_msg_.certificate_bytes[49];
-  EXPECT_EQ(last_msg_.certificate_bytes[50], 221)
-      << "incorrect value for last_msg_.certificate_bytes[50], expected 221, "
-         "is "
-      << last_msg_.certificate_bytes[50];
-  EXPECT_EQ(last_msg_.certificate_bytes[51], 203)
-      << "incorrect value for last_msg_.certificate_bytes[51], expected 203, "
-         "is "
-      << last_msg_.certificate_bytes[51];
-  EXPECT_EQ(last_msg_.certificate_bytes[52], 24)
-      << "incorrect value for last_msg_.certificate_bytes[52], expected 24, is "
-      << last_msg_.certificate_bytes[52];
-  EXPECT_EQ(last_msg_.certificate_bytes[53], 66)
-      << "incorrect value for last_msg_.certificate_bytes[53], expected 66, is "
-      << last_msg_.certificate_bytes[53];
-  EXPECT_EQ(last_msg_.certificate_bytes[54], 52)
-      << "incorrect value for last_msg_.certificate_bytes[54], expected 52, is "
-      << last_msg_.certificate_bytes[54];
-  EXPECT_EQ(last_msg_.certificate_bytes[55], 35)
-      << "incorrect value for last_msg_.certificate_bytes[55], expected 35, is "
-      << last_msg_.certificate_bytes[55];
-  EXPECT_EQ(last_msg_.certificate_bytes[56], 26)
-      << "incorrect value for last_msg_.certificate_bytes[56], expected 26, is "
-      << last_msg_.certificate_bytes[56];
-  EXPECT_EQ(last_msg_.certificate_bytes[57], 30)
-      << "incorrect value for last_msg_.certificate_bytes[57], expected 30, is "
-      << last_msg_.certificate_bytes[57];
-  EXPECT_EQ(last_msg_.certificate_bytes[58], 140)
-      << "incorrect value for last_msg_.certificate_bytes[58], expected 140, "
-         "is "
-      << last_msg_.certificate_bytes[58];
-  EXPECT_EQ(last_msg_.certificate_bytes[59], 111)
-      << "incorrect value for last_msg_.certificate_bytes[59], expected 111, "
-         "is "
-      << last_msg_.certificate_bytes[59];
-  EXPECT_EQ(last_msg_.certificate_bytes[60], 246)
-      << "incorrect value for last_msg_.certificate_bytes[60], expected 246, "
-         "is "
-      << last_msg_.certificate_bytes[60];
-  EXPECT_EQ(last_msg_.certificate_bytes[61], 39)
-      << "incorrect value for last_msg_.certificate_bytes[61], expected 39, is "
-      << last_msg_.certificate_bytes[61];
-  EXPECT_EQ(last_msg_.certificate_bytes[62], 226)
-      << "incorrect value for last_msg_.certificate_bytes[62], expected 226, "
-         "is "
-      << last_msg_.certificate_bytes[62];
-  EXPECT_EQ(last_msg_.certificate_bytes[63], 205)
-      << "incorrect value for last_msg_.certificate_bytes[63], expected 205, "
-         "is "
-      << last_msg_.certificate_bytes[63];
-  EXPECT_EQ(last_msg_.certificate_bytes[64], 198)
-      << "incorrect value for last_msg_.certificate_bytes[64], expected 198, "
-         "is "
-      << last_msg_.certificate_bytes[64];
-  EXPECT_EQ(last_msg_.certificate_bytes[65], 178)
-      << "incorrect value for last_msg_.certificate_bytes[65], expected 178, "
-         "is "
-      << last_msg_.certificate_bytes[65];
-  EXPECT_EQ(last_msg_.certificate_bytes[66], 196)
-      << "incorrect value for last_msg_.certificate_bytes[66], expected 196, "
-         "is "
-      << last_msg_.certificate_bytes[66];
-  EXPECT_EQ(last_msg_.certificate_bytes[67], 5)
-      << "incorrect value for last_msg_.certificate_bytes[67], expected 5, is "
-      << last_msg_.certificate_bytes[67];
-  EXPECT_EQ(last_msg_.certificate_bytes[68], 81)
-      << "incorrect value for last_msg_.certificate_bytes[68], expected 81, is "
-      << last_msg_.certificate_bytes[68];
-  EXPECT_EQ(last_msg_.certificate_bytes[69], 9)
-      << "incorrect value for last_msg_.certificate_bytes[69], expected 9, is "
-      << last_msg_.certificate_bytes[69];
-  EXPECT_EQ(last_msg_.certificate_bytes[70], 44)
-      << "incorrect value for last_msg_.certificate_bytes[70], expected 44, is "
-      << last_msg_.certificate_bytes[70];
-  EXPECT_EQ(last_msg_.certificate_bytes[71], 164)
-      << "incorrect value for last_msg_.certificate_bytes[71], expected 164, "
-         "is "
-      << last_msg_.certificate_bytes[71];
-  EXPECT_EQ(last_msg_.certificate_bytes[72], 163)
-      << "incorrect value for last_msg_.certificate_bytes[72], expected 163, "
-         "is "
-      << last_msg_.certificate_bytes[72];
-  EXPECT_EQ(last_msg_.certificate_bytes[73], 214)
-      << "incorrect value for last_msg_.certificate_bytes[73], expected 214, "
-         "is "
-      << last_msg_.certificate_bytes[73];
-  EXPECT_EQ(last_msg_.certificate_bytes[74], 138)
-      << "incorrect value for last_msg_.certificate_bytes[74], expected 138, "
-         "is "
-      << last_msg_.certificate_bytes[74];
-  EXPECT_EQ(last_msg_.certificate_bytes[75], 123)
-      << "incorrect value for last_msg_.certificate_bytes[75], expected 123, "
-         "is "
-      << last_msg_.certificate_bytes[75];
-  EXPECT_EQ(last_msg_.certificate_bytes[76], 76)
-      << "incorrect value for last_msg_.certificate_bytes[76], expected 76, is "
-      << last_msg_.certificate_bytes[76];
-  EXPECT_EQ(last_msg_.certificate_bytes[77], 74)
-      << "incorrect value for last_msg_.certificate_bytes[77], expected 74, is "
-      << last_msg_.certificate_bytes[77];
-  EXPECT_EQ(last_msg_.certificate_bytes[78], 237)
-      << "incorrect value for last_msg_.certificate_bytes[78], expected 237, "
-         "is "
-      << last_msg_.certificate_bytes[78];
-  EXPECT_EQ(last_msg_.certificate_bytes[79], 121)
-      << "incorrect value for last_msg_.certificate_bytes[79], expected 121, "
-         "is "
-      << last_msg_.certificate_bytes[79];
-  EXPECT_EQ(last_msg_.certificate_bytes[80], 13)
-      << "incorrect value for last_msg_.certificate_bytes[80], expected 13, is "
-      << last_msg_.certificate_bytes[80];
-  EXPECT_EQ(last_msg_.certificate_bytes[81], 137)
-      << "incorrect value for last_msg_.certificate_bytes[81], expected 137, "
-         "is "
-      << last_msg_.certificate_bytes[81];
-  EXPECT_EQ(last_msg_.certificate_bytes[82], 186)
-      << "incorrect value for last_msg_.certificate_bytes[82], expected 186, "
-         "is "
-      << last_msg_.certificate_bytes[82];
-  EXPECT_EQ(last_msg_.certificate_bytes[83], 97)
-      << "incorrect value for last_msg_.certificate_bytes[83], expected 97, is "
-      << last_msg_.certificate_bytes[83];
-  EXPECT_EQ(last_msg_.certificate_bytes[84], 193)
-      << "incorrect value for last_msg_.certificate_bytes[84], expected 193, "
-         "is "
-      << last_msg_.certificate_bytes[84];
-  EXPECT_EQ(last_msg_.certificate_bytes[85], 189)
-      << "incorrect value for last_msg_.certificate_bytes[85], expected 189, "
-         "is "
-      << last_msg_.certificate_bytes[85];
-  EXPECT_EQ(last_msg_.certificate_bytes[86], 200)
-      << "incorrect value for last_msg_.certificate_bytes[86], expected 200, "
-         "is "
-      << last_msg_.certificate_bytes[86];
-  EXPECT_EQ(last_msg_.certificate_bytes[87], 124)
-      << "incorrect value for last_msg_.certificate_bytes[87], expected 124, "
-         "is "
-      << last_msg_.certificate_bytes[87];
-  EXPECT_EQ(last_msg_.certificate_bytes[88], 69)
-      << "incorrect value for last_msg_.certificate_bytes[88], expected 69, is "
-      << last_msg_.certificate_bytes[88];
-  EXPECT_EQ(last_msg_.certificate_bytes[89], 115)
-      << "incorrect value for last_msg_.certificate_bytes[89], expected 115, "
-         "is "
-      << last_msg_.certificate_bytes[89];
-  EXPECT_EQ(last_msg_.certificate_bytes[90], 230)
-      << "incorrect value for last_msg_.certificate_bytes[90], expected 230, "
-         "is "
-      << last_msg_.certificate_bytes[90];
-  EXPECT_EQ(last_msg_.certificate_bytes[91], 159)
-      << "incorrect value for last_msg_.certificate_bytes[91], expected 159, "
-         "is "
-      << last_msg_.certificate_bytes[91];
-  EXPECT_EQ(last_msg_.certificate_bytes[92], 185)
-      << "incorrect value for last_msg_.certificate_bytes[92], expected 185, "
-         "is "
-      << last_msg_.certificate_bytes[92];
-  EXPECT_EQ(last_msg_.certificate_bytes[93], 158)
-      << "incorrect value for last_msg_.certificate_bytes[93], expected 158, "
-         "is "
-      << last_msg_.certificate_bytes[93];
-  EXPECT_EQ(last_msg_.certificate_bytes[94], 51)
-      << "incorrect value for last_msg_.certificate_bytes[94], expected 51, is "
-      << last_msg_.certificate_bytes[94];
-  EXPECT_EQ(last_msg_.certificate_bytes[95], 12)
-      << "incorrect value for last_msg_.certificate_bytes[95], expected 12, is "
-      << last_msg_.certificate_bytes[95];
-  EXPECT_EQ(last_msg_.certificate_bytes[96], 225)
-      << "incorrect value for last_msg_.certificate_bytes[96], expected 225, "
-         "is "
-      << last_msg_.certificate_bytes[96];
-  EXPECT_EQ(last_msg_.certificate_bytes[97], 65)
-      << "incorrect value for last_msg_.certificate_bytes[97], expected 65, is "
-      << last_msg_.certificate_bytes[97];
-  EXPECT_EQ(last_msg_.certificate_bytes[98], 192)
-      << "incorrect value for last_msg_.certificate_bytes[98], expected 192, "
-         "is "
-      << last_msg_.certificate_bytes[98];
-  EXPECT_EQ(last_msg_.certificate_bytes[99], 105)
-      << "incorrect value for last_msg_.certificate_bytes[99], expected 105, "
-         "is "
-      << last_msg_.certificate_bytes[99];
-  EXPECT_EQ(last_msg_.certificate_bytes[100], 56)
-      << "incorrect value for last_msg_.certificate_bytes[100], expected 56, "
-         "is "
-      << last_msg_.certificate_bytes[100];
-  EXPECT_EQ(last_msg_.certificate_bytes[101], 41)
-      << "incorrect value for last_msg_.certificate_bytes[101], expected 41, "
-         "is "
-      << last_msg_.certificate_bytes[101];
-  EXPECT_EQ(last_msg_.certificate_bytes[102], 85)
-      << "incorrect value for last_msg_.certificate_bytes[102], expected 85, "
-         "is "
-      << last_msg_.certificate_bytes[102];
-  EXPECT_EQ(last_msg_.certificate_bytes[103], 133)
-      << "incorrect value for last_msg_.certificate_bytes[103], expected 133, "
-         "is "
-      << last_msg_.certificate_bytes[103];
-  EXPECT_EQ(last_msg_.certificate_bytes[104], 19)
-      << "incorrect value for last_msg_.certificate_bytes[104], expected 19, "
-         "is "
-      << last_msg_.certificate_bytes[104];
-  EXPECT_EQ(last_msg_.certificate_bytes[105], 217)
-      << "incorrect value for last_msg_.certificate_bytes[105], expected 217, "
-         "is "
-      << last_msg_.certificate_bytes[105];
-  EXPECT_EQ(last_msg_.certificate_bytes[106], 166)
-      << "incorrect value for last_msg_.certificate_bytes[106], expected 166, "
-         "is "
-      << last_msg_.certificate_bytes[106];
-  EXPECT_EQ(last_msg_.certificate_bytes[107], 48)
-      << "incorrect value for last_msg_.certificate_bytes[107], expected 48, "
-         "is "
-      << last_msg_.certificate_bytes[107];
-  EXPECT_EQ(last_msg_.certificate_bytes[108], 139)
-      << "incorrect value for last_msg_.certificate_bytes[108], expected 139, "
-         "is "
-      << last_msg_.certificate_bytes[108];
-  EXPECT_EQ(last_msg_.certificate_bytes[109], 131)
-      << "incorrect value for last_msg_.certificate_bytes[109], expected 131, "
-         "is "
-      << last_msg_.certificate_bytes[109];
-  EXPECT_EQ(last_msg_.certificate_bytes[110], 96)
-      << "incorrect value for last_msg_.certificate_bytes[110], expected 96, "
-         "is "
-      << last_msg_.certificate_bytes[110];
-  EXPECT_EQ(last_msg_.certificate_bytes[111], 216)
-      << "incorrect value for last_msg_.certificate_bytes[111], expected 216, "
-         "is "
-      << last_msg_.certificate_bytes[111];
-  EXPECT_EQ(last_msg_.certificate_bytes[112], 98)
-      << "incorrect value for last_msg_.certificate_bytes[112], expected 98, "
-         "is "
-      << last_msg_.certificate_bytes[112];
-  EXPECT_EQ(last_msg_.certificate_bytes[113], 147)
-      << "incorrect value for last_msg_.certificate_bytes[113], expected 147, "
-         "is "
-      << last_msg_.certificate_bytes[113];
-  EXPECT_EQ(last_msg_.certificate_bytes[114], 132)
-      << "incorrect value for last_msg_.certificate_bytes[114], expected 132, "
-         "is "
-      << last_msg_.certificate_bytes[114];
-  EXPECT_EQ(last_msg_.certificate_bytes[115], 234)
-      << "incorrect value for last_msg_.certificate_bytes[115], expected 234, "
-         "is "
-      << last_msg_.certificate_bytes[115];
-  EXPECT_EQ(last_msg_.certificate_bytes[116], 167)
-      << "incorrect value for last_msg_.certificate_bytes[116], expected 167, "
-         "is "
-      << last_msg_.certificate_bytes[116];
-  EXPECT_EQ(last_msg_.certificate_bytes[117], 248)
-      << "incorrect value for last_msg_.certificate_bytes[117], expected 248, "
-         "is "
-      << last_msg_.certificate_bytes[117];
-  EXPECT_EQ(last_msg_.certificate_bytes[118], 247)
-      << "incorrect value for last_msg_.certificate_bytes[118], expected 247, "
-         "is "
-      << last_msg_.certificate_bytes[118];
-  EXPECT_EQ(last_msg_.certificate_bytes[119], 32)
-      << "incorrect value for last_msg_.certificate_bytes[119], expected 32, "
-         "is "
-      << last_msg_.certificate_bytes[119];
-  EXPECT_EQ(last_msg_.certificate_bytes[120], 239)
-      << "incorrect value for last_msg_.certificate_bytes[120], expected 239, "
-         "is "
-      << last_msg_.certificate_bytes[120];
-  EXPECT_EQ(last_msg_.certificate_bytes[121], 194)
-      << "incorrect value for last_msg_.certificate_bytes[121], expected 194, "
-         "is "
-      << last_msg_.certificate_bytes[121];
-  EXPECT_EQ(last_msg_.certificate_bytes[122], 188)
-      << "incorrect value for last_msg_.certificate_bytes[122], expected 188, "
-         "is "
-      << last_msg_.certificate_bytes[122];
-  EXPECT_EQ(last_msg_.certificate_bytes[123], 254)
-      << "incorrect value for last_msg_.certificate_bytes[123], expected 254, "
-         "is "
-      << last_msg_.certificate_bytes[123];
-  EXPECT_EQ(last_msg_.certificate_bytes[124], 114)
-      << "incorrect value for last_msg_.certificate_bytes[124], expected 114, "
-         "is "
-      << last_msg_.certificate_bytes[124];
-  EXPECT_EQ(last_msg_.certificate_bytes[125], 117)
-      << "incorrect value for last_msg_.certificate_bytes[125], expected 117, "
-         "is "
-      << last_msg_.certificate_bytes[125];
-  EXPECT_EQ(last_msg_.certificate_bytes[126], 83)
-      << "incorrect value for last_msg_.certificate_bytes[126], expected 83, "
-         "is "
-      << last_msg_.certificate_bytes[126];
-  EXPECT_EQ(last_msg_.certificate_bytes[127], 25)
-      << "incorrect value for last_msg_.certificate_bytes[127], expected 25, "
-         "is "
-      << last_msg_.certificate_bytes[127];
-  EXPECT_EQ(last_msg_.certificate_bytes[128], 251)
-      << "incorrect value for last_msg_.certificate_bytes[128], expected 251, "
-         "is "
-      << last_msg_.certificate_bytes[128];
-  EXPECT_EQ(last_msg_.certificate_bytes[129], 191)
-      << "incorrect value for last_msg_.certificate_bytes[129], expected 191, "
-         "is "
-      << last_msg_.certificate_bytes[129];
-  EXPECT_EQ(last_msg_.certificate_bytes[130], 104)
-      << "incorrect value for last_msg_.certificate_bytes[130], expected 104, "
-         "is "
-      << last_msg_.certificate_bytes[130];
-  EXPECT_EQ(last_msg_.certificate_bytes[131], 240)
-      << "incorrect value for last_msg_.certificate_bytes[131], expected 240, "
-         "is "
-      << last_msg_.certificate_bytes[131];
-  EXPECT_EQ(last_msg_.certificate_bytes[132], 118)
-      << "incorrect value for last_msg_.certificate_bytes[132], expected 118, "
-         "is "
-      << last_msg_.certificate_bytes[132];
-  EXPECT_EQ(last_msg_.certificate_bytes[133], 68)
-      << "incorrect value for last_msg_.certificate_bytes[133], expected 68, "
-         "is "
-      << last_msg_.certificate_bytes[133];
-  EXPECT_EQ(last_msg_.certificate_bytes[134], 42)
-      << "incorrect value for last_msg_.certificate_bytes[134], expected 42, "
-         "is "
-      << last_msg_.certificate_bytes[134];
-  EXPECT_EQ(last_msg_.certificate_bytes[135], 93)
-      << "incorrect value for last_msg_.certificate_bytes[135], expected 93, "
-         "is "
-      << last_msg_.certificate_bytes[135];
-  EXPECT_EQ(last_msg_.certificate_bytes[136], 18)
-      << "incorrect value for last_msg_.certificate_bytes[136], expected 18, "
-         "is "
-      << last_msg_.certificate_bytes[136];
-  EXPECT_EQ(last_msg_.certificate_bytes[137], 16)
-      << "incorrect value for last_msg_.certificate_bytes[137], expected 16, "
-         "is "
-      << last_msg_.certificate_bytes[137];
-  EXPECT_EQ(last_msg_.certificate_bytes[138], 37)
-      << "incorrect value for last_msg_.certificate_bytes[138], expected 37, "
-         "is "
-      << last_msg_.certificate_bytes[138];
-  EXPECT_EQ(last_msg_.certificate_bytes[139], 232)
-      << "incorrect value for last_msg_.certificate_bytes[139], expected 232, "
-         "is "
-      << last_msg_.certificate_bytes[139];
-  EXPECT_EQ(last_msg_.certificate_bytes[140], 99)
-      << "incorrect value for last_msg_.certificate_bytes[140], expected 99, "
-         "is "
-      << last_msg_.certificate_bytes[140];
-  EXPECT_EQ(last_msg_.certificate_bytes[141], 179)
-      << "incorrect value for last_msg_.certificate_bytes[141], expected 179, "
-         "is "
-      << last_msg_.certificate_bytes[141];
-  EXPECT_EQ(last_msg_.certificate_bytes[142], 23)
-      << "incorrect value for last_msg_.certificate_bytes[142], expected 23, "
-         "is "
-      << last_msg_.certificate_bytes[142];
-  EXPECT_EQ(last_msg_.certificate_bytes[143], 90)
-      << "incorrect value for last_msg_.certificate_bytes[143], expected 90, "
-         "is "
-      << last_msg_.certificate_bytes[143];
-  EXPECT_EQ(last_msg_.certificate_bytes[144], 94)
-      << "incorrect value for last_msg_.certificate_bytes[144], expected 94, "
-         "is "
-      << last_msg_.certificate_bytes[144];
-  EXPECT_EQ(last_msg_.certificate_bytes[145], 136)
-      << "incorrect value for last_msg_.certificate_bytes[145], expected 136, "
-         "is "
-      << last_msg_.certificate_bytes[145];
-  EXPECT_EQ(last_msg_.certificate_bytes[146], 6)
-      << "incorrect value for last_msg_.certificate_bytes[146], expected 6, is "
-      << last_msg_.certificate_bytes[146];
-  EXPECT_EQ(last_msg_.certificate_bytes[147], 125)
-      << "incorrect value for last_msg_.certificate_bytes[147], expected 125, "
-         "is "
-      << last_msg_.certificate_bytes[147];
-  EXPECT_EQ(last_msg_.certificate_bytes[148], 91)
-      << "incorrect value for last_msg_.certificate_bytes[148], expected 91, "
-         "is "
-      << last_msg_.certificate_bytes[148];
-  EXPECT_EQ(last_msg_.certificate_bytes[149], 255)
-      << "incorrect value for last_msg_.certificate_bytes[149], expected 255, "
-         "is "
-      << last_msg_.certificate_bytes[149];
-  EXPECT_EQ(last_msg_.certificate_bytes[150], 15)
-      << "incorrect value for last_msg_.certificate_bytes[150], expected 15, "
-         "is "
-      << last_msg_.certificate_bytes[150];
-  EXPECT_EQ(last_msg_.certificate_bytes[151], 71)
-      << "incorrect value for last_msg_.certificate_bytes[151], expected 71, "
-         "is "
-      << last_msg_.certificate_bytes[151];
-  EXPECT_EQ(last_msg_.certificate_bytes[152], 43)
-      << "incorrect value for last_msg_.certificate_bytes[152], expected 43, "
-         "is "
-      << last_msg_.certificate_bytes[152];
-  EXPECT_EQ(last_msg_.certificate_bytes[153], 46)
-      << "incorrect value for last_msg_.certificate_bytes[153], expected 46, "
-         "is "
-      << last_msg_.certificate_bytes[153];
-  EXPECT_EQ(last_msg_.certificate_bytes[154], 25)
-      << "incorrect value for last_msg_.certificate_bytes[154], expected 25, "
-         "is "
-      << last_msg_.certificate_bytes[154];
-  EXPECT_EQ(last_msg_.certificate_bytes[155], 252)
-      << "incorrect value for last_msg_.certificate_bytes[155], expected 252, "
-         "is "
-      << last_msg_.certificate_bytes[155];
-  EXPECT_EQ(last_msg_.certificate_bytes[156], 229)
-      << "incorrect value for last_msg_.certificate_bytes[156], expected 229, "
-         "is "
-      << last_msg_.certificate_bytes[156];
-  EXPECT_EQ(last_msg_.certificate_bytes[157], 80)
-      << "incorrect value for last_msg_.certificate_bytes[157], expected 80, "
-         "is "
-      << last_msg_.certificate_bytes[157];
-  EXPECT_EQ(last_msg_.certificate_bytes[158], 143)
-      << "incorrect value for last_msg_.certificate_bytes[158], expected 143, "
-         "is "
-      << last_msg_.certificate_bytes[158];
-  EXPECT_EQ(last_msg_.certificate_bytes[159], 58)
-      << "incorrect value for last_msg_.certificate_bytes[159], expected 58, "
-         "is "
-      << last_msg_.certificate_bytes[159];
-  EXPECT_EQ(last_msg_.certificate_bytes[160], 241)
-      << "incorrect value for last_msg_.certificate_bytes[160], expected 241, "
-         "is "
-      << last_msg_.certificate_bytes[160];
-  EXPECT_EQ(last_msg_.certificate_bytes[161], 11)
-      << "incorrect value for last_msg_.certificate_bytes[161], expected 11, "
-         "is "
-      << last_msg_.certificate_bytes[161];
-  EXPECT_EQ(last_msg_.certificate_bytes[162], 62)
-      << "incorrect value for last_msg_.certificate_bytes[162], expected 62, "
-         "is "
-      << last_msg_.certificate_bytes[162];
-  EXPECT_EQ(last_msg_.certificate_bytes[163], 181)
-      << "incorrect value for last_msg_.certificate_bytes[163], expected 181, "
-         "is "
-      << last_msg_.certificate_bytes[163];
-  EXPECT_EQ(last_msg_.certificate_bytes[164], 155)
-      << "incorrect value for last_msg_.certificate_bytes[164], expected 155, "
-         "is "
-      << last_msg_.certificate_bytes[164];
-  EXPECT_EQ(last_msg_.certificate_bytes[165], 53)
-      << "incorrect value for last_msg_.certificate_bytes[165], expected 53, "
-         "is "
-      << last_msg_.certificate_bytes[165];
-  EXPECT_EQ(last_msg_.certificate_bytes[166], 153)
-      << "incorrect value for last_msg_.certificate_bytes[166], expected 153, "
-         "is "
-      << last_msg_.certificate_bytes[166];
-  EXPECT_EQ(last_msg_.certificate_bytes[167], 149)
-      << "incorrect value for last_msg_.certificate_bytes[167], expected 149, "
-         "is "
-      << last_msg_.certificate_bytes[167];
-  EXPECT_EQ(last_msg_.certificate_bytes[168], 152)
-      << "incorrect value for last_msg_.certificate_bytes[168], expected 152, "
-         "is "
-      << last_msg_.certificate_bytes[168];
-  EXPECT_EQ(last_msg_.certificate_bytes[169], 227)
-      << "incorrect value for last_msg_.certificate_bytes[169], expected 227, "
-         "is "
-      << last_msg_.certificate_bytes[169];
-  EXPECT_EQ(last_msg_.certificate_bytes[170], 150)
-      << "incorrect value for last_msg_.certificate_bytes[170], expected 150, "
-         "is "
-      << last_msg_.certificate_bytes[170];
-  EXPECT_EQ(last_msg_.certificate_bytes[171], 87)
-      << "incorrect value for last_msg_.certificate_bytes[171], expected 87, "
-         "is "
-      << last_msg_.certificate_bytes[171];
-  EXPECT_EQ(last_msg_.certificate_bytes[172], 112)
-      << "incorrect value for last_msg_.certificate_bytes[172], expected 112, "
-         "is "
-      << last_msg_.certificate_bytes[172];
-  EXPECT_EQ(last_msg_.certificate_bytes[173], 165)
-      << "incorrect value for last_msg_.certificate_bytes[173], expected 165, "
-         "is "
-      << last_msg_.certificate_bytes[173];
-  EXPECT_EQ(last_msg_.certificate_bytes[174], 2)
-      << "incorrect value for last_msg_.certificate_bytes[174], expected 2, is "
-      << last_msg_.certificate_bytes[174];
-  EXPECT_EQ(last_msg_.certificate_bytes[175], 128)
-      << "incorrect value for last_msg_.certificate_bytes[175], expected 128, "
-         "is "
-      << last_msg_.certificate_bytes[175];
-  EXPECT_EQ(last_msg_.certificate_bytes[176], 231)
-      << "incorrect value for last_msg_.certificate_bytes[176], expected 231, "
-         "is "
-      << last_msg_.certificate_bytes[176];
-  EXPECT_EQ(last_msg_.certificate_bytes[177], 25)
-      << "incorrect value for last_msg_.certificate_bytes[177], expected 25, "
-         "is "
-      << last_msg_.certificate_bytes[177];
-  EXPECT_EQ(last_msg_.certificate_bytes[178], 157)
-      << "incorrect value for last_msg_.certificate_bytes[178], expected 157, "
-         "is "
-      << last_msg_.certificate_bytes[178];
-  EXPECT_EQ(last_msg_.certificate_bytes[179], 244)
-      << "incorrect value for last_msg_.certificate_bytes[179], expected 244, "
-         "is "
-      << last_msg_.certificate_bytes[179];
-  EXPECT_EQ(last_msg_.certificate_bytes[180], 204)
-      << "incorrect value for last_msg_.certificate_bytes[180], expected 204, "
-         "is "
-      << last_msg_.certificate_bytes[180];
-  EXPECT_EQ(last_msg_.certificate_bytes[181], 108)
-      << "incorrect value for last_msg_.certificate_bytes[181], expected 108, "
-         "is "
-      << last_msg_.certificate_bytes[181];
-  EXPECT_EQ(last_msg_.certificate_bytes[182], 253)
-      << "incorrect value for last_msg_.certificate_bytes[182], expected 253, "
-         "is "
-      << last_msg_.certificate_bytes[182];
-  EXPECT_EQ(last_msg_.certificate_bytes[183], 127)
-      << "incorrect value for last_msg_.certificate_bytes[183], expected 127, "
-         "is "
-      << last_msg_.certificate_bytes[183];
-  EXPECT_EQ(last_msg_.certificate_bytes[184], 122)
-      << "incorrect value for last_msg_.certificate_bytes[184], expected 122, "
-         "is "
-      << last_msg_.certificate_bytes[184];
-  EXPECT_EQ(last_msg_.certificate_bytes[185], 145)
-      << "incorrect value for last_msg_.certificate_bytes[185], expected 145, "
-         "is "
-      << last_msg_.certificate_bytes[185];
-  EXPECT_EQ(last_msg_.certificate_bytes[186], 113)
-      << "incorrect value for last_msg_.certificate_bytes[186], expected 113, "
-         "is "
-      << last_msg_.certificate_bytes[186];
-  EXPECT_EQ(last_msg_.certificate_bytes[187], 162)
-      << "incorrect value for last_msg_.certificate_bytes[187], expected 162, "
-         "is "
-      << last_msg_.certificate_bytes[187];
-  EXPECT_EQ(last_msg_.certificate_bytes[188], 197)
-      << "incorrect value for last_msg_.certificate_bytes[188], expected 197, "
-         "is "
-      << last_msg_.certificate_bytes[188];
-  EXPECT_EQ(last_msg_.certificate_bytes[189], 171)
-      << "incorrect value for last_msg_.certificate_bytes[189], expected 171, "
-         "is "
-      << last_msg_.certificate_bytes[189];
-  EXPECT_EQ(last_msg_.certificate_bytes[190], 199)
-      << "incorrect value for last_msg_.certificate_bytes[190], expected 199, "
-         "is "
-      << last_msg_.certificate_bytes[190];
-  EXPECT_EQ(last_msg_.certificate_bytes[191], 54)
-      << "incorrect value for last_msg_.certificate_bytes[191], expected 54, "
-         "is "
-      << last_msg_.certificate_bytes[191];
-  EXPECT_EQ(last_msg_.certificate_bytes[192], 184)
-      << "incorrect value for last_msg_.certificate_bytes[192], expected 184, "
-         "is "
-      << last_msg_.certificate_bytes[192];
-  EXPECT_EQ(last_msg_.certificate_bytes[193], 222)
-      << "incorrect value for last_msg_.certificate_bytes[193], expected 222, "
-         "is "
-      << last_msg_.certificate_bytes[193];
-  EXPECT_EQ(last_msg_.certificate_bytes[194], 206)
-      << "incorrect value for last_msg_.certificate_bytes[194], expected 206, "
-         "is "
-      << last_msg_.certificate_bytes[194];
-  EXPECT_EQ(last_msg_.certificate_bytes[195], 67)
-      << "incorrect value for last_msg_.certificate_bytes[195], expected 67, "
-         "is "
-      << last_msg_.certificate_bytes[195];
-  EXPECT_EQ(last_msg_.certificate_bytes[196], 144)
-      << "incorrect value for last_msg_.certificate_bytes[196], expected 144, "
-         "is "
-      << last_msg_.certificate_bytes[196];
-  EXPECT_EQ(last_msg_.certificate_bytes[197], 78)
-      << "incorrect value for last_msg_.certificate_bytes[197], expected 78, "
-         "is "
-      << last_msg_.certificate_bytes[197];
-  EXPECT_EQ(last_msg_.certificate_bytes[198], 187)
-      << "incorrect value for last_msg_.certificate_bytes[198], expected 187, "
-         "is "
-      << last_msg_.certificate_bytes[198];
-  EXPECT_EQ(last_msg_.certificate_bytes[199], 207)
-      << "incorrect value for last_msg_.certificate_bytes[199], expected 207, "
-         "is "
-      << last_msg_.certificate_bytes[199];
-  EXPECT_EQ(last_msg_.certificate_bytes[200], 60)
-      << "incorrect value for last_msg_.certificate_bytes[200], expected 60, "
-         "is "
-      << last_msg_.certificate_bytes[200];
-  EXPECT_EQ(last_msg_.certificate_bytes[201], 211)
-      << "incorrect value for last_msg_.certificate_bytes[201], expected 211, "
-         "is "
-      << last_msg_.certificate_bytes[201];
-  EXPECT_EQ(last_msg_.certificate_bytes[202], 141)
-      << "incorrect value for last_msg_.certificate_bytes[202], expected 141, "
-         "is "
-      << last_msg_.certificate_bytes[202];
-  EXPECT_EQ(last_msg_.certificate_bytes[203], 135)
-      << "incorrect value for last_msg_.certificate_bytes[203], expected 135, "
-         "is "
-      << last_msg_.certificate_bytes[203];
-  EXPECT_EQ(last_msg_.certificate_bytes[204], 106)
-      << "incorrect value for last_msg_.certificate_bytes[204], expected 106, "
-         "is "
-      << last_msg_.certificate_bytes[204];
-  EXPECT_EQ(last_msg_.certificate_bytes[205], 220)
-      << "incorrect value for last_msg_.certificate_bytes[205], expected 220, "
-         "is "
-      << last_msg_.certificate_bytes[205];
-  EXPECT_EQ(last_msg_.certificate_bytes[206], 79)
-      << "incorrect value for last_msg_.certificate_bytes[206], expected 79, "
-         "is "
-      << last_msg_.certificate_bytes[206];
-  EXPECT_EQ(last_msg_.certificate_bytes[207], 183)
-      << "incorrect value for last_msg_.certificate_bytes[207], expected 183, "
-         "is "
-      << last_msg_.certificate_bytes[207];
-  EXPECT_EQ(last_msg_.certificate_bytes[208], 245)
-      << "incorrect value for last_msg_.certificate_bytes[208], expected 245, "
-         "is "
-      << last_msg_.certificate_bytes[208];
-  EXPECT_EQ(last_msg_.certificate_bytes[209], 21)
-      << "incorrect value for last_msg_.certificate_bytes[209], expected 21, "
-         "is "
-      << last_msg_.certificate_bytes[209];
-  EXPECT_EQ(last_msg_.certificate_bytes[210], 161)
-      << "incorrect value for last_msg_.certificate_bytes[210], expected 161, "
-         "is "
-      << last_msg_.certificate_bytes[210];
-  EXPECT_EQ(last_msg_.certificate_bytes[211], 168)
-      << "incorrect value for last_msg_.certificate_bytes[211], expected 168, "
-         "is "
-      << last_msg_.certificate_bytes[211];
-  EXPECT_EQ(last_msg_.certificate_bytes[212], 34)
-      << "incorrect value for last_msg_.certificate_bytes[212], expected 34, "
-         "is "
-      << last_msg_.certificate_bytes[212];
-  EXPECT_EQ(last_msg_.certificate_bytes[213], 129)
-      << "incorrect value for last_msg_.certificate_bytes[213], expected 129, "
-         "is "
-      << last_msg_.certificate_bytes[213];
-  EXPECT_EQ(last_msg_.certificate_bytes[214], 50)
-      << "incorrect value for last_msg_.certificate_bytes[214], expected 50, "
-         "is "
-      << last_msg_.certificate_bytes[214];
-  EXPECT_EQ(last_msg_.certificate_bytes[215], 176)
-      << "incorrect value for last_msg_.certificate_bytes[215], expected 176, "
-         "is "
-      << last_msg_.certificate_bytes[215];
-  EXPECT_EQ(last_msg_.certificate_bytes[216], 1)
-      << "incorrect value for last_msg_.certificate_bytes[216], expected 1, is "
-      << last_msg_.certificate_bytes[216];
-  EXPECT_EQ(last_msg_.certificate_bytes[217], 218)
-      << "incorrect value for last_msg_.certificate_bytes[217], expected 218, "
-         "is "
-      << last_msg_.certificate_bytes[217];
-  EXPECT_EQ(last_msg_.certificate_bytes[218], 20)
-      << "incorrect value for last_msg_.certificate_bytes[218], expected 20, "
-         "is "
-      << last_msg_.certificate_bytes[218];
-  EXPECT_EQ(last_msg_.certificate_bytes[219], 130)
-      << "incorrect value for last_msg_.certificate_bytes[219], expected 130, "
-         "is "
-      << last_msg_.certificate_bytes[219];
-  EXPECT_EQ(last_msg_.certificate_bytes[220], 59)
-      << "incorrect value for last_msg_.certificate_bytes[220], expected 59, "
-         "is "
-      << last_msg_.certificate_bytes[220];
-  EXPECT_EQ(last_msg_.certificate_bytes[221], 249)
-      << "incorrect value for last_msg_.certificate_bytes[221], expected 249, "
-         "is "
-      << last_msg_.certificate_bytes[221];
-  EXPECT_EQ(last_msg_.certificate_bytes[222], 109)
-      << "incorrect value for last_msg_.certificate_bytes[222], expected 109, "
-         "is "
-      << last_msg_.certificate_bytes[222];
-  EXPECT_EQ(last_msg_.certificate_bytes[223], 219)
-      << "incorrect value for last_msg_.certificate_bytes[223], expected 219, "
-         "is "
-      << last_msg_.certificate_bytes[223];
-  EXPECT_EQ(last_msg_.certificate_bytes[224], 0)
-      << "incorrect value for last_msg_.certificate_bytes[224], expected 0, is "
-      << last_msg_.certificate_bytes[224];
-  EXPECT_EQ(last_msg_.certificate_bytes[225], 100)
-      << "incorrect value for last_msg_.certificate_bytes[225], expected 100, "
-         "is "
-      << last_msg_.certificate_bytes[225];
-  EXPECT_EQ(last_msg_.certificate_bytes[226], 103)
-      << "incorrect value for last_msg_.certificate_bytes[226], expected 103, "
-         "is "
-      << last_msg_.certificate_bytes[226];
-  EXPECT_EQ(last_msg_.certificate_bytes[227], 55)
-      << "incorrect value for last_msg_.certificate_bytes[227], expected 55, "
-         "is "
-      << last_msg_.certificate_bytes[227];
-  EXPECT_EQ(last_msg_.certificate_bytes[228], 29)
-      << "incorrect value for last_msg_.certificate_bytes[228], expected 29, "
-         "is "
-      << last_msg_.certificate_bytes[228];
-  EXPECT_EQ(last_msg_.certificate_bytes[229], 242)
-      << "incorrect value for last_msg_.certificate_bytes[229], expected 242, "
-         "is "
-      << last_msg_.certificate_bytes[229];
-  EXPECT_EQ(last_msg_.certificate_bytes[230], 110)
-      << "incorrect value for last_msg_.certificate_bytes[230], expected 110, "
-         "is "
-      << last_msg_.certificate_bytes[230];
-  EXPECT_EQ(last_msg_.certificate_bytes[231], 154)
-      << "incorrect value for last_msg_.certificate_bytes[231], expected 154, "
-         "is "
-      << last_msg_.certificate_bytes[231];
-  EXPECT_EQ(last_msg_.certificate_bytes[232], 190)
-      << "incorrect value for last_msg_.certificate_bytes[232], expected 190, "
-         "is "
-      << last_msg_.certificate_bytes[232];
-  EXPECT_EQ(last_msg_.certificate_bytes[233], 233)
-      << "incorrect value for last_msg_.certificate_bytes[233], expected 233, "
-         "is "
-      << last_msg_.certificate_bytes[233];
-  EXPECT_EQ(last_msg_.certificate_bytes[234], 142)
-      << "incorrect value for last_msg_.certificate_bytes[234], expected 142, "
-         "is "
-      << last_msg_.certificate_bytes[234];
-  EXPECT_EQ(last_msg_.certificate_bytes[235], 45)
-      << "incorrect value for last_msg_.certificate_bytes[235], expected 45, "
-         "is "
-      << last_msg_.certificate_bytes[235];
-  EXPECT_EQ(last_msg_.certificate_bytes[236], 61)
-      << "incorrect value for last_msg_.certificate_bytes[236], expected 61, "
-         "is "
-      << last_msg_.certificate_bytes[236];
-  EXPECT_EQ(last_msg_.certificate_bytes[237], 215)
-      << "incorrect value for last_msg_.certificate_bytes[237], expected 215, "
-         "is "
-      << last_msg_.certificate_bytes[237];
-  EXPECT_EQ(last_msg_.certificate_bytes[238], 202)
-      << "incorrect value for last_msg_.certificate_bytes[238], expected 202, "
-         "is "
-      << last_msg_.certificate_bytes[238];
-  EXPECT_EQ(last_msg_.certificate_bytes[239], 238)
-      << "incorrect value for last_msg_.certificate_bytes[239], expected 238, "
-         "is "
-      << last_msg_.certificate_bytes[239];
-  EXPECT_EQ(last_msg_.certificate_bytes[240], 88)
-      << "incorrect value for last_msg_.certificate_bytes[240], expected 88, "
-         "is "
-      << last_msg_.certificate_bytes[240];
-  EXPECT_EQ(last_msg_.certificate_bytes[241], 209)
-      << "incorrect value for last_msg_.certificate_bytes[241], expected 209, "
-         "is "
-      << last_msg_.certificate_bytes[241];
-  EXPECT_EQ(last_msg_.certificate_bytes[242], 70)
-      << "incorrect value for last_msg_.certificate_bytes[242], expected 70, "
-         "is "
-      << last_msg_.certificate_bytes[242];
-  EXPECT_EQ(last_msg_.certificate_bytes[243], 63)
-      << "incorrect value for last_msg_.certificate_bytes[243], expected 63, "
-         "is "
-      << last_msg_.certificate_bytes[243];
-  EXPECT_EQ(last_msg_.certificate_bytes[244], 151)
-      << "incorrect value for last_msg_.certificate_bytes[244], expected 151, "
-         "is "
-      << last_msg_.certificate_bytes[244];
-  EXPECT_EQ(last_msg_.certificate_bytes[245], 27)
-      << "incorrect value for last_msg_.certificate_bytes[245], expected 27, "
-         "is "
-      << last_msg_.certificate_bytes[245];
-  EXPECT_EQ(last_msg_.certificate_bytes[246], 102)
-      << "incorrect value for last_msg_.certificate_bytes[246], expected 102, "
-         "is "
-      << last_msg_.certificate_bytes[246];
-  EXPECT_EQ(last_msg_.certificate_id[0], 10)
-      << "incorrect value for last_msg_.certificate_id[0], expected 10, is "
-      << last_msg_.certificate_id[0];
-  EXPECT_EQ(last_msg_.certificate_id[1], 11)
-      << "incorrect value for last_msg_.certificate_id[1], expected 11, is "
-      << last_msg_.certificate_id[1];
-  EXPECT_EQ(last_msg_.certificate_id[2], 12)
-      << "incorrect value for last_msg_.certificate_id[2], expected 12, is "
-      << last_msg_.certificate_id[2];
-  EXPECT_EQ(last_msg_.certificate_id[3], 13)
-      << "incorrect value for last_msg_.certificate_id[3], expected 13, is "
-      << last_msg_.certificate_id[3];
-  EXPECT_EQ(last_msg_.flags, 2)
-      << "incorrect value for last_msg_.flags, expected 2, is "
-      << last_msg_.flags;
-  EXPECT_EQ(last_msg_.n_certificate_bytes, 247)
-      << "incorrect value for last_msg_.n_certificate_bytes, expected 247, is "
-      << last_msg_.n_certificate_bytes;
-  EXPECT_EQ(last_msg_.n_msg, 48)
-      << "incorrect value for last_msg_.n_msg, expected 48, is "
-      << last_msg_.n_msg;
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
 }
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       ReceiveThroughSbpStateUnderflow) {
+  auto info = get_test_msg_info();
+
+  for (uint32_t i = 0; i < info.frame_len; i++) {
+    sbp_state_t state;
+    sbp_state_init(&state);
+
+    auto reader = info.get_frame_reader(i);
+    sbp_state_set_io_context(&state, &reader);
+
+    CHandler handler(&state);
+
+    int most_recent_return = sbp_process(&state, &Reader::read_static);
+    while (most_recent_return == SBP_OK || reader.remaining() > 0) {
+      most_recent_return = sbp_process(&state, &Reader::read_static);
+    }
+
+    EXPECT_NE(most_recent_return, SBP_OK);
+    EXPECT_EQ(reader.remaining(), 0);
+
+    EXPECT_EQ(handler.outputs.size(), 0);
+  }
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, SlowRead) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto reader = info.get_slow_frame_reader();
+  sbp_state_set_io_context(&state, &reader);
+
+  CHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    EXPECT_GE(sbp_process(&state, &SlowReader::read_static), SBP_OK);
+  }
+
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, BadCRC) {
+  auto info = get_test_msg_info();
+  uint8_t buf[SBP_MAX_FRAME_LEN];
+  memcpy(&buf[0], info.encoded_frame, info.frame_len);
+
+  // Introduce a CRC error which should cause an error return and no callback
+  buf[info.frame_len - 1]++;
+
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  Reader reader{buf, info.frame_len};
+  sbp_state_set_io_context(&state, &reader);
+
+  CHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    int res = sbp_process(&state, &Reader::read_static);
+    EXPECT_EQ(res, reader.remaining() == 0 ? SBP_CRC_ERROR : SBP_OK);
+  }
+
+  EXPECT_EQ(handler.outputs.size(), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, SendThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp_msg_ecdsa_certificate_send(&state, info.sender_id,
+                                           &info.test_msg, &Writer::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), &info.encoded_frame[0], writer.len()), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       SendWrappedThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp_message_send(&state, SbpMsgEcdsaCertificate, info.sender_id,
+                             &info.test_msg_wrapped, &Writer::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       SendThroughSbpStateUnderflow) {
+  auto info = get_test_msg_info();
+
+  for (uint32_t i = 0; i < info.frame_len; i++) {
+    sbp_state_t state;
+    sbp_state_init(&state);
+
+    auto writer = info.get_frame_writer(i);
+    sbp_state_set_io_context(&state, &writer);
+
+    EXPECT_NE(sbp_message_send(&state, SbpMsgEcdsaCertificate, info.sender_id,
+                               &info.test_msg_wrapped, &Writer::write_c),
+              SBP_OK);
+    EXPECT_EQ(writer.len(), i);
+    EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, i), 0);
+  }
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, DISABLED_SlowWrite) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_slow_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp_message_send(&state, SbpMsgEcdsaCertificate, info.sender_id,
+                             &info.test_msg_wrapped, &SlowWriter::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, Comparison) {
+  auto info = get_test_msg_info();
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[0],
+                        greater.certificate_bytes[0]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[1],
+                        greater.certificate_bytes[1]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[2],
+                        greater.certificate_bytes[2]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[3],
+                        greater.certificate_bytes[3]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[4],
+                        greater.certificate_bytes[4]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[5],
+                        greater.certificate_bytes[5]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[6],
+                        greater.certificate_bytes[6]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[7],
+                        greater.certificate_bytes[7]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[8],
+                        greater.certificate_bytes[8]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[9],
+                        greater.certificate_bytes[9]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[10],
+                        greater.certificate_bytes[10]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[11],
+                        greater.certificate_bytes[11]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[12],
+                        greater.certificate_bytes[12]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[13],
+                        greater.certificate_bytes[13]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[14],
+                        greater.certificate_bytes[14]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[15],
+                        greater.certificate_bytes[15]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[16],
+                        greater.certificate_bytes[16]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[17],
+                        greater.certificate_bytes[17]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[18],
+                        greater.certificate_bytes[18]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[19],
+                        greater.certificate_bytes[19]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[20],
+                        greater.certificate_bytes[20]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[21],
+                        greater.certificate_bytes[21]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[22],
+                        greater.certificate_bytes[22]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[23],
+                        greater.certificate_bytes[23]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[24],
+                        greater.certificate_bytes[24]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[25],
+                        greater.certificate_bytes[25]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[26],
+                        greater.certificate_bytes[26]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[27],
+                        greater.certificate_bytes[27]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[28],
+                        greater.certificate_bytes[28]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[29],
+                        greater.certificate_bytes[29]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[30],
+                        greater.certificate_bytes[30]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[31],
+                        greater.certificate_bytes[31]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[32],
+                        greater.certificate_bytes[32]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[33],
+                        greater.certificate_bytes[33]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[34],
+                        greater.certificate_bytes[34]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[35],
+                        greater.certificate_bytes[35]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[36],
+                        greater.certificate_bytes[36]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[37],
+                        greater.certificate_bytes[37]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[38],
+                        greater.certificate_bytes[38]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[39],
+                        greater.certificate_bytes[39]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[40],
+                        greater.certificate_bytes[40]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[41],
+                        greater.certificate_bytes[41]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[42],
+                        greater.certificate_bytes[42]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[43],
+                        greater.certificate_bytes[43]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[44],
+                        greater.certificate_bytes[44]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[45],
+                        greater.certificate_bytes[45]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[46],
+                        greater.certificate_bytes[46]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[47],
+                        greater.certificate_bytes[47]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[48],
+                        greater.certificate_bytes[48]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[49],
+                        greater.certificate_bytes[49]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[50],
+                        greater.certificate_bytes[50]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[51],
+                        greater.certificate_bytes[51]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[52],
+                        greater.certificate_bytes[52]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[53],
+                        greater.certificate_bytes[53]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[54],
+                        greater.certificate_bytes[54]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[55],
+                        greater.certificate_bytes[55]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[56],
+                        greater.certificate_bytes[56]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[57],
+                        greater.certificate_bytes[57]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[58],
+                        greater.certificate_bytes[58]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[59],
+                        greater.certificate_bytes[59]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[60],
+                        greater.certificate_bytes[60]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[61],
+                        greater.certificate_bytes[61]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[62],
+                        greater.certificate_bytes[62]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[63],
+                        greater.certificate_bytes[63]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[64],
+                        greater.certificate_bytes[64]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[65],
+                        greater.certificate_bytes[65]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[66],
+                        greater.certificate_bytes[66]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[67],
+                        greater.certificate_bytes[67]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[68],
+                        greater.certificate_bytes[68]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[69],
+                        greater.certificate_bytes[69]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[70],
+                        greater.certificate_bytes[70]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[71],
+                        greater.certificate_bytes[71]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[72],
+                        greater.certificate_bytes[72]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[73],
+                        greater.certificate_bytes[73]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[74],
+                        greater.certificate_bytes[74]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[75],
+                        greater.certificate_bytes[75]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[76],
+                        greater.certificate_bytes[76]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[77],
+                        greater.certificate_bytes[77]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[78],
+                        greater.certificate_bytes[78]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[79],
+                        greater.certificate_bytes[79]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[80],
+                        greater.certificate_bytes[80]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[81],
+                        greater.certificate_bytes[81]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[82],
+                        greater.certificate_bytes[82]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[83],
+                        greater.certificate_bytes[83]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[84],
+                        greater.certificate_bytes[84]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[85],
+                        greater.certificate_bytes[85]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[86],
+                        greater.certificate_bytes[86]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[87],
+                        greater.certificate_bytes[87]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[88],
+                        greater.certificate_bytes[88]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[89],
+                        greater.certificate_bytes[89]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[90],
+                        greater.certificate_bytes[90]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[91],
+                        greater.certificate_bytes[91]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[92],
+                        greater.certificate_bytes[92]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[93],
+                        greater.certificate_bytes[93]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[94],
+                        greater.certificate_bytes[94]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[95],
+                        greater.certificate_bytes[95]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[96],
+                        greater.certificate_bytes[96]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[97],
+                        greater.certificate_bytes[97]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[98],
+                        greater.certificate_bytes[98]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[99],
+                        greater.certificate_bytes[99]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[100],
+                        greater.certificate_bytes[100]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[101],
+                        greater.certificate_bytes[101]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[102],
+                        greater.certificate_bytes[102]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[103],
+                        greater.certificate_bytes[103]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[104],
+                        greater.certificate_bytes[104]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[105],
+                        greater.certificate_bytes[105]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[106],
+                        greater.certificate_bytes[106]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[107],
+                        greater.certificate_bytes[107]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[108],
+                        greater.certificate_bytes[108]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[109],
+                        greater.certificate_bytes[109]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[110],
+                        greater.certificate_bytes[110]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[111],
+                        greater.certificate_bytes[111]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[112],
+                        greater.certificate_bytes[112]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[113],
+                        greater.certificate_bytes[113]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[114],
+                        greater.certificate_bytes[114]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[115],
+                        greater.certificate_bytes[115]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[116],
+                        greater.certificate_bytes[116]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[117],
+                        greater.certificate_bytes[117]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[118],
+                        greater.certificate_bytes[118]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[119],
+                        greater.certificate_bytes[119]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[120],
+                        greater.certificate_bytes[120]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[121],
+                        greater.certificate_bytes[121]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[122],
+                        greater.certificate_bytes[122]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[123],
+                        greater.certificate_bytes[123]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[124],
+                        greater.certificate_bytes[124]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[125],
+                        greater.certificate_bytes[125]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[126],
+                        greater.certificate_bytes[126]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[127],
+                        greater.certificate_bytes[127]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[128],
+                        greater.certificate_bytes[128]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[129],
+                        greater.certificate_bytes[129]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[130],
+                        greater.certificate_bytes[130]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[131],
+                        greater.certificate_bytes[131]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[132],
+                        greater.certificate_bytes[132]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[133],
+                        greater.certificate_bytes[133]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[134],
+                        greater.certificate_bytes[134]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[135],
+                        greater.certificate_bytes[135]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[136],
+                        greater.certificate_bytes[136]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[137],
+                        greater.certificate_bytes[137]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[138],
+                        greater.certificate_bytes[138]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[139],
+                        greater.certificate_bytes[139]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[140],
+                        greater.certificate_bytes[140]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[141],
+                        greater.certificate_bytes[141]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[142],
+                        greater.certificate_bytes[142]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[143],
+                        greater.certificate_bytes[143]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[144],
+                        greater.certificate_bytes[144]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[145],
+                        greater.certificate_bytes[145]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[146],
+                        greater.certificate_bytes[146]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[147],
+                        greater.certificate_bytes[147]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[148],
+                        greater.certificate_bytes[148]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[149],
+                        greater.certificate_bytes[149]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[150],
+                        greater.certificate_bytes[150]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[151],
+                        greater.certificate_bytes[151]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[152],
+                        greater.certificate_bytes[152]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[153],
+                        greater.certificate_bytes[153]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[154],
+                        greater.certificate_bytes[154]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[155],
+                        greater.certificate_bytes[155]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[156],
+                        greater.certificate_bytes[156]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[157],
+                        greater.certificate_bytes[157]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[158],
+                        greater.certificate_bytes[158]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[159],
+                        greater.certificate_bytes[159]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[160],
+                        greater.certificate_bytes[160]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[161],
+                        greater.certificate_bytes[161]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[162],
+                        greater.certificate_bytes[162]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[163],
+                        greater.certificate_bytes[163]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[164],
+                        greater.certificate_bytes[164]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[165],
+                        greater.certificate_bytes[165]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[166],
+                        greater.certificate_bytes[166]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[167],
+                        greater.certificate_bytes[167]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[168],
+                        greater.certificate_bytes[168]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[169],
+                        greater.certificate_bytes[169]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[170],
+                        greater.certificate_bytes[170]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[171],
+                        greater.certificate_bytes[171]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[172],
+                        greater.certificate_bytes[172]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[173],
+                        greater.certificate_bytes[173]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[174],
+                        greater.certificate_bytes[174]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[175],
+                        greater.certificate_bytes[175]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[176],
+                        greater.certificate_bytes[176]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[177],
+                        greater.certificate_bytes[177]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[178],
+                        greater.certificate_bytes[178]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[179],
+                        greater.certificate_bytes[179]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[180],
+                        greater.certificate_bytes[180]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[181],
+                        greater.certificate_bytes[181]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[182],
+                        greater.certificate_bytes[182]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[183],
+                        greater.certificate_bytes[183]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[184],
+                        greater.certificate_bytes[184]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[185],
+                        greater.certificate_bytes[185]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[186],
+                        greater.certificate_bytes[186]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[187],
+                        greater.certificate_bytes[187]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[188],
+                        greater.certificate_bytes[188]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[189],
+                        greater.certificate_bytes[189]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[190],
+                        greater.certificate_bytes[190]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[191],
+                        greater.certificate_bytes[191]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[192],
+                        greater.certificate_bytes[192]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[193],
+                        greater.certificate_bytes[193]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[194],
+                        greater.certificate_bytes[194]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[195],
+                        greater.certificate_bytes[195]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[196],
+                        greater.certificate_bytes[196]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[197],
+                        greater.certificate_bytes[197]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[198],
+                        greater.certificate_bytes[198]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[199],
+                        greater.certificate_bytes[199]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[200],
+                        greater.certificate_bytes[200]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[201],
+                        greater.certificate_bytes[201]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[202],
+                        greater.certificate_bytes[202]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[203],
+                        greater.certificate_bytes[203]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[204],
+                        greater.certificate_bytes[204]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[205],
+                        greater.certificate_bytes[205]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[206],
+                        greater.certificate_bytes[206]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[207],
+                        greater.certificate_bytes[207]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[208],
+                        greater.certificate_bytes[208]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[209],
+                        greater.certificate_bytes[209]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[210],
+                        greater.certificate_bytes[210]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[211],
+                        greater.certificate_bytes[211]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[212],
+                        greater.certificate_bytes[212]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[213],
+                        greater.certificate_bytes[213]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[214],
+                        greater.certificate_bytes[214]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[215],
+                        greater.certificate_bytes[215]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[216],
+                        greater.certificate_bytes[216]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[217],
+                        greater.certificate_bytes[217]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[218],
+                        greater.certificate_bytes[218]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[219],
+                        greater.certificate_bytes[219]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[220],
+                        greater.certificate_bytes[220]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[221],
+                        greater.certificate_bytes[221]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[222],
+                        greater.certificate_bytes[222]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[223],
+                        greater.certificate_bytes[223]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[224],
+                        greater.certificate_bytes[224]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[225],
+                        greater.certificate_bytes[225]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[226],
+                        greater.certificate_bytes[226]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[227],
+                        greater.certificate_bytes[227]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[228],
+                        greater.certificate_bytes[228]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[229],
+                        greater.certificate_bytes[229]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[230],
+                        greater.certificate_bytes[230]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[231],
+                        greater.certificate_bytes[231]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[232],
+                        greater.certificate_bytes[232]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[233],
+                        greater.certificate_bytes[233]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[234],
+                        greater.certificate_bytes[234]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[235],
+                        greater.certificate_bytes[235]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[236],
+                        greater.certificate_bytes[236]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[237],
+                        greater.certificate_bytes[237]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[238],
+                        greater.certificate_bytes[238]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[239],
+                        greater.certificate_bytes[239]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[240],
+                        greater.certificate_bytes[240]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[241],
+                        greater.certificate_bytes[241]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[242],
+                        greater.certificate_bytes[242]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[243],
+                        greater.certificate_bytes[243]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[244],
+                        greater.certificate_bytes[244]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[245],
+                        greater.certificate_bytes[245]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_bytes[246],
+                        greater.certificate_bytes[246]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_id[0], greater.certificate_id[0]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_id[1], greater.certificate_id[1]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_id[2], greater.certificate_id[2]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_id[3], greater.certificate_id[3]);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.flags, greater.flags);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.n_certificate_bytes,
+                        greater.n_certificate_bytes);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_ecdsa_certificate_t lesser = info.test_msg;
+    sbp_msg_ecdsa_certificate_t greater = info.test_msg;
+    make_lesser_greater(lesser.n_msg, greater.n_msg);
+    comparison_tests(lesser, greater);
+  }
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, CppTraitsProperties) {
+  // EXPECT_EQ(sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::id,
+  // SbpMsgEcdsaCertificate);
+  EXPECT_STREQ(sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::name,
+               "MSG_ECDSA_CERTIFICATE");
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, CppTraitsFromSbpMsgT) {
+  auto info = get_test_msg_info();
+
+  const sbp_msg_t &const_sbp_msg_t = info.test_msg_wrapped;
+  sbp_msg_t &non_const_sbp_msg_t = info.test_msg_wrapped;
+
+  const sbp_msg_ecdsa_certificate_t &const_unwrapped =
+      sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::get(const_sbp_msg_t);
+  sbp_msg_ecdsa_certificate_t &non_const_unwrapped =
+      sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::get(non_const_sbp_msg_t);
+
+  EXPECT_EQ((const void *)&const_sbp_msg_t, (const void *)&const_unwrapped);
+  EXPECT_EQ((void *)&non_const_sbp_msg_t, (void *)&non_const_unwrapped);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, CppTraitsToSbpMsgT) {
+  auto info = get_test_msg_info();
+
+  sbp_msg_t msg1 = sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::to_sbp_msg(
+      info.test_msg);
+  EXPECT_EQ(msg1.ecdsa_certificate, info.test_msg);
+
+  sbp_msg_t msg2;
+  sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::to_sbp_msg(info.test_msg,
+                                                              &msg2);
+  EXPECT_EQ(msg2.ecdsa_certificate, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, CppTraitsEncodedLen) {
+  auto info = get_test_msg_info();
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::encoded_len(
+                info.test_msg),
+            info.payload_len);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       CppTraitsSendThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::send(
+                &state, info.sender_id, info.test_msg, &Writer::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), &info.encoded_frame[0], writer.len()), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, CppTraitsEncodeToBuf) {
+  auto info = get_test_msg_info();
+  uint8_t buf[253];
+  uint8_t n_written;
+
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::encode(
+                &buf[0], sizeof(buf), &n_written, info.test_msg),
+            SBP_OK);
+  EXPECT_EQ(n_written, 253);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 253), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       CppTraitsDecodeFromBuf) {
+  auto info = get_test_msg_info();
+  sbp_msg_ecdsa_certificate_t msg{};
+  uint8_t n_read;
+
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ecdsa_certificate_t>::decode(
+                &info.encoded_payload[0], info.payload_len, &n_read, &msg),
+            SBP_OK);
+  EXPECT_EQ(n_read, 253);
+  EXPECT_EQ(msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       ReceiveThroughMessageHandler) {
+  auto info = get_test_msg_info();
+  auto reader = info.get_frame_reader();
+
+  sbp::State state{};
+  state.set_reader(&reader);
+
+  CppHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    EXPECT_GE(state.process(), SBP_OK);
+  }
+
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       ProcessSbpMsgTThroughMessageHandler) {
+  auto info = get_test_msg_info();
+  sbp::State state{};
+  CppHandler handler(&state);
+
+  state.process_message(info.sender_id, SbpMsgEcdsaCertificate,
+                        &info.test_msg_wrapped);
+
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0, SendThroughCppState) {
+  auto info = get_test_msg_info();
+  auto writer = info.get_frame_writer();
+
+  sbp::State state{};
+  state.set_writer(&writer);
+
+  EXPECT_EQ(state.send_message(info.sender_id, info.test_msg), SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaCertificate0,
+       SendWrappedSbpMsgTThroughCppState) {
+  auto info = get_test_msg_info();
+  auto writer = info.get_frame_writer();
+
+  sbp::State state{};
+  state.set_writer(&writer);
+
+  EXPECT_EQ(state.send_message(info.sender_id, SbpMsgEcdsaCertificate,
+                               info.test_msg_wrapped),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+}  // namespace

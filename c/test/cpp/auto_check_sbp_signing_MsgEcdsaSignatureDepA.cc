@@ -16,66 +16,874 @@
 
 #include <gtest/gtest.h>
 #include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-#include <cstring>
-class Test_auto_check_sbp_signing_MsgEcdsaSignatureDepA0
-    : public ::testing::Test,
-      public sbp::State,
-      public sbp::IReader,
-      public sbp::IWriter,
-      sbp::MessageHandler<sbp_msg_ecdsa_signature_dep_a_t> {
+#include <libsbp/sbp.h>
+#include <algorithm>
+
+namespace {
+
+template <typename T, typename U>
+void assign(T &dest, const U &source) {
+  dest = static_cast<T>(source);
+}
+class Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0
+    : public ::testing::Test {
  public:
-  Test_auto_check_sbp_signing_MsgEcdsaSignatureDepA0()
-      : ::testing::Test(),
-        sbp::State(),
-        sbp::IReader(),
-        sbp::IWriter(),
-        sbp::MessageHandler<sbp_msg_ecdsa_signature_dep_a_t>(this),
-        last_msg_(),
-        last_msg_len_(),
-        last_sender_id_(),
-        n_callbacks_logged_(),
-        dummy_wr_(),
-        dummy_rd_(),
-        dummy_buff_() {
-    set_reader(this);
-    set_writer(this);
+  Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0() {
+    assign(test_msg_.certificate_id[0], 1);
+
+    assign(test_msg_.certificate_id[1], 2);
+
+    assign(test_msg_.certificate_id[2], 3);
+
+    assign(test_msg_.certificate_id[3], 4);
+    assign(test_msg_.flags, 0);
+    assign(test_msg_.n_signed_messages, 184);
+    assign(test_msg_.on_demand_counter, 2);
+
+    assign(test_msg_.signature[0], 0);
+
+    assign(test_msg_.signature[1], 1);
+
+    assign(test_msg_.signature[2], 2);
+
+    assign(test_msg_.signature[3], 3);
+
+    assign(test_msg_.signature[4], 4);
+
+    assign(test_msg_.signature[5], 5);
+
+    assign(test_msg_.signature[6], 6);
+
+    assign(test_msg_.signature[7], 7);
+
+    assign(test_msg_.signature[8], 0);
+
+    assign(test_msg_.signature[9], 1);
+
+    assign(test_msg_.signature[10], 2);
+
+    assign(test_msg_.signature[11], 3);
+
+    assign(test_msg_.signature[12], 4);
+
+    assign(test_msg_.signature[13], 5);
+
+    assign(test_msg_.signature[14], 6);
+
+    assign(test_msg_.signature[15], 7);
+
+    assign(test_msg_.signature[16], 0);
+
+    assign(test_msg_.signature[17], 1);
+
+    assign(test_msg_.signature[18], 2);
+
+    assign(test_msg_.signature[19], 3);
+
+    assign(test_msg_.signature[20], 4);
+
+    assign(test_msg_.signature[21], 5);
+
+    assign(test_msg_.signature[22], 6);
+
+    assign(test_msg_.signature[23], 7);
+
+    assign(test_msg_.signature[24], 0);
+
+    assign(test_msg_.signature[25], 1);
+
+    assign(test_msg_.signature[26], 2);
+
+    assign(test_msg_.signature[27], 3);
+
+    assign(test_msg_.signature[28], 4);
+
+    assign(test_msg_.signature[29], 5);
+
+    assign(test_msg_.signature[30], 6);
+
+    assign(test_msg_.signature[31], 7);
+
+    assign(test_msg_.signature[32], 0);
+
+    assign(test_msg_.signature[33], 1);
+
+    assign(test_msg_.signature[34], 2);
+
+    assign(test_msg_.signature[35], 3);
+
+    assign(test_msg_.signature[36], 4);
+
+    assign(test_msg_.signature[37], 5);
+
+    assign(test_msg_.signature[38], 6);
+
+    assign(test_msg_.signature[39], 7);
+
+    assign(test_msg_.signature[40], 0);
+
+    assign(test_msg_.signature[41], 1);
+
+    assign(test_msg_.signature[42], 2);
+
+    assign(test_msg_.signature[43], 3);
+
+    assign(test_msg_.signature[44], 4);
+
+    assign(test_msg_.signature[45], 5);
+
+    assign(test_msg_.signature[46], 6);
+
+    assign(test_msg_.signature[47], 7);
+
+    assign(test_msg_.signature[48], 0);
+
+    assign(test_msg_.signature[49], 1);
+
+    assign(test_msg_.signature[50], 2);
+
+    assign(test_msg_.signature[51], 3);
+
+    assign(test_msg_.signature[52], 4);
+
+    assign(test_msg_.signature[53], 5);
+
+    assign(test_msg_.signature[54], 6);
+
+    assign(test_msg_.signature[55], 7);
+
+    assign(test_msg_.signature[56], 0);
+
+    assign(test_msg_.signature[57], 1);
+
+    assign(test_msg_.signature[58], 2);
+
+    assign(test_msg_.signature[59], 3);
+
+    assign(test_msg_.signature[60], 4);
+
+    assign(test_msg_.signature[61], 5);
+
+    assign(test_msg_.signature[62], 6);
+
+    assign(test_msg_.signature[63], 7);
+
+    assign(test_msg_.signed_messages[0], 10);
+
+    assign(test_msg_.signed_messages[1], 21);
+
+    assign(test_msg_.signed_messages[2], 23);
+
+    assign(test_msg_.signed_messages[3], 63);
+
+    assign(test_msg_.signed_messages[4], 140);
+
+    assign(test_msg_.signed_messages[5], 37);
+
+    assign(test_msg_.signed_messages[6], 130);
+
+    assign(test_msg_.signed_messages[7], 106);
+
+    assign(test_msg_.signed_messages[8], 28);
+
+    assign(test_msg_.signed_messages[9], 40);
+
+    assign(test_msg_.signed_messages[10], 165);
+
+    assign(test_msg_.signed_messages[11], 179);
+
+    assign(test_msg_.signed_messages[12], 73);
+
+    assign(test_msg_.signed_messages[13], 178);
+
+    assign(test_msg_.signed_messages[14], 60);
+
+    assign(test_msg_.signed_messages[15], 126);
+
+    assign(test_msg_.signed_messages[16], 114);
+
+    assign(test_msg_.signed_messages[17], 78);
+
+    assign(test_msg_.signed_messages[18], 113);
+
+    assign(test_msg_.signed_messages[19], 27);
+
+    assign(test_msg_.signed_messages[20], 95);
+
+    assign(test_msg_.signed_messages[21], 3);
+
+    assign(test_msg_.signed_messages[22], 62);
+
+    assign(test_msg_.signed_messages[23], 104);
+
+    assign(test_msg_.signed_messages[24], 145);
+
+    assign(test_msg_.signed_messages[25], 96);
+
+    assign(test_msg_.signed_messages[26], 19);
+
+    assign(test_msg_.signed_messages[27], 92);
+
+    assign(test_msg_.signed_messages[28], 123);
+
+    assign(test_msg_.signed_messages[29], 14);
+
+    assign(test_msg_.signed_messages[30], 90);
+
+    assign(test_msg_.signed_messages[31], 153);
+
+    assign(test_msg_.signed_messages[32], 183);
+
+    assign(test_msg_.signed_messages[33], 9);
+
+    assign(test_msg_.signed_messages[34], 72);
+
+    assign(test_msg_.signed_messages[35], 81);
+
+    assign(test_msg_.signed_messages[36], 118);
+
+    assign(test_msg_.signed_messages[37], 112);
+
+    assign(test_msg_.signed_messages[38], 124);
+
+    assign(test_msg_.signed_messages[39], 16);
+
+    assign(test_msg_.signed_messages[40], 182);
+
+    assign(test_msg_.signed_messages[41], 76);
+
+    assign(test_msg_.signed_messages[42], 146);
+
+    assign(test_msg_.signed_messages[43], 115);
+
+    assign(test_msg_.signed_messages[44], 58);
+
+    assign(test_msg_.signed_messages[45], 144);
+
+    assign(test_msg_.signed_messages[46], 17);
+
+    assign(test_msg_.signed_messages[47], 105);
+
+    assign(test_msg_.signed_messages[48], 66);
+
+    assign(test_msg_.signed_messages[49], 31);
+
+    assign(test_msg_.signed_messages[50], 135);
+
+    assign(test_msg_.signed_messages[51], 54);
+
+    assign(test_msg_.signed_messages[52], 100);
+
+    assign(test_msg_.signed_messages[53], 84);
+
+    assign(test_msg_.signed_messages[54], 181);
+
+    assign(test_msg_.signed_messages[55], 103);
+
+    assign(test_msg_.signed_messages[56], 11);
+
+    assign(test_msg_.signed_messages[57], 88);
+
+    assign(test_msg_.signed_messages[58], 133);
+
+    assign(test_msg_.signed_messages[59], 155);
+
+    assign(test_msg_.signed_messages[60], 167);
+
+    assign(test_msg_.signed_messages[61], 173);
+
+    assign(test_msg_.signed_messages[62], 143);
+
+    assign(test_msg_.signed_messages[63], 86);
+
+    assign(test_msg_.signed_messages[64], 158);
+
+    assign(test_msg_.signed_messages[65], 20);
+
+    assign(test_msg_.signed_messages[66], 168);
+
+    assign(test_msg_.signed_messages[67], 132);
+
+    assign(test_msg_.signed_messages[68], 141);
+
+    assign(test_msg_.signed_messages[69], 102);
+
+    assign(test_msg_.signed_messages[70], 50);
+
+    assign(test_msg_.signed_messages[71], 48);
+
+    assign(test_msg_.signed_messages[72], 71);
+
+    assign(test_msg_.signed_messages[73], 147);
+
+    assign(test_msg_.signed_messages[74], 53);
+
+    assign(test_msg_.signed_messages[75], 87);
+
+    assign(test_msg_.signed_messages[76], 1);
+
+    assign(test_msg_.signed_messages[77], 108);
+
+    assign(test_msg_.signed_messages[78], 138);
+
+    assign(test_msg_.signed_messages[79], 36);
+
+    assign(test_msg_.signed_messages[80], 134);
+
+    assign(test_msg_.signed_messages[81], 139);
+
+    assign(test_msg_.signed_messages[82], 163);
+
+    assign(test_msg_.signed_messages[83], 82);
+
+    assign(test_msg_.signed_messages[84], 43);
+
+    assign(test_msg_.signed_messages[85], 52);
+
+    assign(test_msg_.signed_messages[86], 150);
+
+    assign(test_msg_.signed_messages[87], 12);
+
+    assign(test_msg_.signed_messages[88], 30);
+
+    assign(test_msg_.signed_messages[89], 110);
+
+    assign(test_msg_.signed_messages[90], 156);
+
+    assign(test_msg_.signed_messages[91], 107);
+
+    assign(test_msg_.signed_messages[92], 120);
+
+    assign(test_msg_.signed_messages[93], 91);
+
+    assign(test_msg_.signed_messages[94], 122);
+
+    assign(test_msg_.signed_messages[95], 69);
+
+    assign(test_msg_.signed_messages[96], 164);
+
+    assign(test_msg_.signed_messages[97], 170);
+
+    assign(test_msg_.signed_messages[98], 116);
+
+    assign(test_msg_.signed_messages[99], 25);
+
+    assign(test_msg_.signed_messages[100], 94);
+
+    assign(test_msg_.signed_messages[101], 5);
+
+    assign(test_msg_.signed_messages[102], 22);
+
+    assign(test_msg_.signed_messages[103], 24);
+
+    assign(test_msg_.signed_messages[104], 162);
+
+    assign(test_msg_.signed_messages[105], 175);
+
+    assign(test_msg_.signed_messages[106], 38);
+
+    assign(test_msg_.signed_messages[107], 157);
+
+    assign(test_msg_.signed_messages[108], 98);
+
+    assign(test_msg_.signed_messages[109], 44);
+
+    assign(test_msg_.signed_messages[110], 160);
+
+    assign(test_msg_.signed_messages[111], 47);
+
+    assign(test_msg_.signed_messages[112], 97);
+
+    assign(test_msg_.signed_messages[113], 142);
+
+    assign(test_msg_.signed_messages[114], 8);
+
+    assign(test_msg_.signed_messages[115], 74);
+
+    assign(test_msg_.signed_messages[116], 13);
+
+    assign(test_msg_.signed_messages[117], 177);
+
+    assign(test_msg_.signed_messages[118], 15);
+
+    assign(test_msg_.signed_messages[119], 128);
+
+    assign(test_msg_.signed_messages[120], 26);
+
+    assign(test_msg_.signed_messages[121], 131);
+
+    assign(test_msg_.signed_messages[122], 154);
+
+    assign(test_msg_.signed_messages[123], 65);
+
+    assign(test_msg_.signed_messages[124], 169);
+
+    assign(test_msg_.signed_messages[125], 55);
+
+    assign(test_msg_.signed_messages[126], 136);
+
+    assign(test_msg_.signed_messages[127], 125);
+
+    assign(test_msg_.signed_messages[128], 171);
+
+    assign(test_msg_.signed_messages[129], 161);
+
+    assign(test_msg_.signed_messages[130], 29);
+
+    assign(test_msg_.signed_messages[131], 129);
+
+    assign(test_msg_.signed_messages[132], 151);
+
+    assign(test_msg_.signed_messages[133], 68);
+
+    assign(test_msg_.signed_messages[134], 166);
+
+    assign(test_msg_.signed_messages[135], 51);
+
+    assign(test_msg_.signed_messages[136], 70);
+
+    assign(test_msg_.signed_messages[137], 45);
+
+    assign(test_msg_.signed_messages[138], 56);
+
+    assign(test_msg_.signed_messages[139], 79);
+
+    assign(test_msg_.signed_messages[140], 149);
+
+    assign(test_msg_.signed_messages[141], 99);
+
+    assign(test_msg_.signed_messages[142], 42);
+
+    assign(test_msg_.signed_messages[143], 101);
+
+    assign(test_msg_.signed_messages[144], 152);
+
+    assign(test_msg_.signed_messages[145], 39);
+
+    assign(test_msg_.signed_messages[146], 89);
+
+    assign(test_msg_.signed_messages[147], 180);
+
+    assign(test_msg_.signed_messages[148], 64);
+
+    assign(test_msg_.signed_messages[149], 49);
+
+    assign(test_msg_.signed_messages[150], 6);
+
+    assign(test_msg_.signed_messages[151], 80);
+
+    assign(test_msg_.signed_messages[152], 172);
+
+    assign(test_msg_.signed_messages[153], 32);
+
+    assign(test_msg_.signed_messages[154], 109);
+
+    assign(test_msg_.signed_messages[155], 2);
+
+    assign(test_msg_.signed_messages[156], 119);
+
+    assign(test_msg_.signed_messages[157], 93);
+
+    assign(test_msg_.signed_messages[158], 176);
+
+    assign(test_msg_.signed_messages[159], 0);
+
+    assign(test_msg_.signed_messages[160], 33);
+
+    assign(test_msg_.signed_messages[161], 57);
+
+    assign(test_msg_.signed_messages[162], 34);
+
+    assign(test_msg_.signed_messages[163], 18);
+
+    assign(test_msg_.signed_messages[164], 85);
+
+    assign(test_msg_.signed_messages[165], 121);
+
+    assign(test_msg_.signed_messages[166], 137);
+
+    assign(test_msg_.signed_messages[167], 83);
+
+    assign(test_msg_.signed_messages[168], 111);
+
+    assign(test_msg_.signed_messages[169], 59);
+
+    assign(test_msg_.signed_messages[170], 7);
+
+    assign(test_msg_.signed_messages[171], 77);
+
+    assign(test_msg_.signed_messages[172], 4);
+
+    assign(test_msg_.signed_messages[173], 117);
+
+    assign(test_msg_.signed_messages[174], 159);
+
+    assign(test_msg_.signed_messages[175], 148);
+
+    assign(test_msg_.signed_messages[176], 35);
+
+    assign(test_msg_.signed_messages[177], 61);
+
+    assign(test_msg_.signed_messages[178], 41);
+
+    assign(test_msg_.signed_messages[179], 67);
+
+    assign(test_msg_.signed_messages[180], 46);
+
+    assign(test_msg_.signed_messages[181], 127);
+
+    assign(test_msg_.signed_messages[182], 75);
+
+    assign(test_msg_.signed_messages[183], 174);
+    assign(test_msg_.stream_counter, 1);
   }
 
-  s32 read(uint8_t *buf, const uint32_t n) override {
-    uint32_t real_n = n;
-    memcpy(buf, dummy_buff_ + dummy_rd_, real_n);
-    dummy_rd_ += real_n;
-    return (s32)real_n;
-  }
+  class SlowReader final : public sbp::IReader {
+   public:
+    SlowReader(const uint8_t *buf, uint32_t len)
+        : sbp::IReader(), buf_{buf}, len_{len} {}
 
-  s32 write(const uint8_t *buf, uint32_t n) override {
-    uint32_t real_n = n;
-    memcpy(dummy_buff_ + dummy_wr_, buf, real_n);
-    dummy_wr_ += real_n;
-    return (s32)real_n;
+    s32 read(uint8_t *buf, const uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      if (remaining() == 0) {
+        return -1;
+      }
+      skip_next_read = !skip_next_read;
+      if (skip_next_read) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, 1u);
+      memcpy(buf, buf_ + offset_, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return len_ - offset_; }
+
+    static s32 read_static(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<SlowReader *>(ctx)->read(buf, len);
+    }
+
+   private:
+    const uint8_t *buf_;
+    uint32_t len_;
+    uint32_t offset_{};
+    bool skip_next_read{};
+  };
+
+  class Reader final : public sbp::IReader {
+   public:
+    Reader(const uint8_t *buf, uint32_t len)
+        : sbp::IReader(), buf_{buf}, len_{len} {}
+
+    s32 read(uint8_t *buf, const uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, remaining());
+      if (real_n == 0) {
+        return -1;
+      }
+      memcpy(buf, buf_ + offset_, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return len_ - offset_; }
+
+    static s32 read_static(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<Reader *>(ctx)->read(buf, len);
+    }
+
+   private:
+    const uint8_t *buf_;
+    uint32_t len_;
+    uint32_t offset_{};
+  };
+
+  class SlowWriter final : public sbp::IWriter {
+   public:
+    explicit SlowWriter(uint32_t max_len = cMaxLen)
+        : IWriter(), max_len_{max_len} {}
+    static constexpr uint32_t cMaxLen = SBP_MAX_FRAME_LEN;
+
+    s32 write(const uint8_t *buf, uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, 1u);
+      if (real_n == 0) {
+        return -1;
+      }
+      memcpy(buf_ + offset_, buf, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return max_len_ - offset_; }
+
+    const uint8_t *data() const noexcept { return buf_; }
+
+    uint32_t len() const noexcept { return offset_; }
+
+    static s32 write_static(const uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<SlowWriter *>(ctx)->write(buf, len);
+    }
+
+    static s32 write_c(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<SlowWriter *>(ctx)->write(buf, len);
+    }
+
+   private:
+    uint8_t buf_[cMaxLen];
+    uint32_t max_len_;
+    uint32_t offset_{};
+  };
+
+  class Writer final : public sbp::IWriter {
+   public:
+    explicit Writer(uint32_t max_len = cMaxLen)
+        : IWriter(), max_len_{max_len} {}
+    static constexpr uint32_t cMaxLen = SBP_MAX_FRAME_LEN;
+
+    s32 write(const uint8_t *buf, uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, remaining());
+      if (real_n == 0) {
+        return -1;
+      }
+      memcpy(buf_ + offset_, buf, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return max_len_ - offset_; }
+
+    const uint8_t *data() const noexcept { return buf_; }
+
+    uint32_t len() const noexcept { return offset_; }
+
+    static s32 write_static(const uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<Writer *>(ctx)->write(buf, len);
+    }
+
+    static s32 write_c(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<Writer *>(ctx)->write(buf, len);
+    }
+
+   private:
+    uint8_t buf_[cMaxLen];
+    uint32_t max_len_;
+    uint32_t offset_{};
+  };
+
+  struct CppHandler final
+      : public sbp::MessageHandler<sbp_msg_ecdsa_signature_dep_a_t> {
+    using sbp::MessageHandler<sbp_msg_ecdsa_signature_dep_a_t>::MessageHandler;
+
+    struct Output final {
+      uint16_t sender_id;
+      sbp_msg_ecdsa_signature_dep_a_t msg;
+    };
+
+    std::vector<Output> outputs{};
+
+   protected:
+    void handle_sbp_msg(uint16_t sender_id,
+                        const sbp_msg_ecdsa_signature_dep_a_t &msg) override {
+      outputs.emplace_back();
+      outputs.back().sender_id = sender_id;
+      memcpy(&outputs.back().msg, &msg, sizeof(msg));
+    }
+  };
+
+  struct CHandler final {
+    explicit CHandler(sbp_state_t *state) : state_{state} {
+      sbp_callback_register(state, SbpMsgEcdsaSignatureDepA,
+                            &CHandler::callback_static, this, &node_);
+    }
+
+    ~CHandler() { sbp_remove_callback(state_, &node_); }
+
+    struct Output final {
+      uint16_t sender_id;
+      sbp_msg_ecdsa_signature_dep_a_t msg;
+    };
+
+    std::vector<Output> outputs{};
+
+   private:
+    void callback(uint16_t sender_id, sbp_msg_type_t msg_type,
+                  const sbp_msg_t *msg) {
+      ASSERT_EQ(msg_type, SbpMsgEcdsaSignatureDepA);
+      outputs.emplace_back();
+      outputs.back().sender_id = sender_id;
+      memcpy(&outputs.back().msg, &msg->ecdsa_signature_dep_a,
+             sizeof(msg->ecdsa_signature_dep_a));
+    }
+
+    static void callback_static(uint16_t sender_id, sbp_msg_type_t msg_type,
+                                const sbp_msg_t *msg, void *ctx) {
+      static_cast<CHandler *>(ctx)->callback(sender_id, msg_type, msg);
+    }
+
+    sbp_msg_callbacks_node_t node_{};
+    sbp_state_t *state_;
+  };
+
+  struct TestMsgInfo {
+    sbp_msg_ecdsa_signature_dep_a_t test_msg;
+    sbp_msg_t test_msg_wrapped;
+    sbp_msg_type_t msg_type;
+    uint16_t sender_id;
+    uint8_t preamble;
+    uint16_t crc;
+    const uint8_t *encoded_frame;
+    uint32_t frame_len;
+    const uint8_t *encoded_payload;
+    uint8_t payload_len;
+
+    Reader get_frame_reader() const noexcept {
+      return Reader{encoded_frame, frame_len};
+    }
+
+    Reader get_frame_reader(uint32_t max) const noexcept {
+      assert(max <= frame_len);
+      return Reader{encoded_frame, max};
+    }
+
+    SlowReader get_slow_frame_reader() const noexcept {
+      return SlowReader{encoded_frame, frame_len};
+    }
+
+    Writer get_frame_writer() const noexcept { return Writer{frame_len}; }
+
+    Writer get_frame_writer(uint32_t max) const noexcept { return Writer{max}; }
+
+    SlowWriter get_slow_frame_writer() const noexcept {
+      return SlowWriter{frame_len};
+    }
+  };
+
+  TestMsgInfo get_test_msg_info() const noexcept {
+    TestMsgInfo info;
+    memcpy(&info.test_msg, &test_msg_, sizeof(test_msg_));
+    memcpy(&info.test_msg_wrapped.ecdsa_signature_dep_a, &test_msg_,
+           sizeof(test_msg_));
+    info.msg_type = static_cast<sbp_msg_type_t>(SbpMsgEcdsaSignatureDepA);
+    info.sender_id = 66;
+    info.preamble = 0x55;
+    info.crc = 0xAC61;
+    info.encoded_frame = encoded_frame_;
+    info.frame_len = sizeof(encoded_frame_);
+    info.encoded_payload = encoded_payload_;
+    info.payload_len = 255;
+
+    return info;
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id,
-                      const sbp_msg_ecdsa_signature_dep_a_t &msg) override {
-    last_msg_ = msg;
-    last_sender_id_ = sender_id;
-    n_callbacks_logged_++;
+  void comparison_tests(const sbp_msg_ecdsa_signature_dep_a_t &lesser,
+                        const sbp_msg_ecdsa_signature_dep_a_t &greater) {
+    sbp_msg_t wrapped_lesser =
+        sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::to_sbp_msg(lesser);
+    sbp_msg_t wrapped_greater =
+        sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::to_sbp_msg(
+            greater);
+
+    EXPECT_EQ(sbp_msg_ecdsa_signature_dep_a_cmp(&lesser, &lesser), 0);
+    EXPECT_EQ(sbp_msg_ecdsa_signature_dep_a_cmp(&greater, &greater), 0);
+    EXPECT_LE(sbp_msg_ecdsa_signature_dep_a_cmp(&lesser, &greater), 0);
+    EXPECT_GT(sbp_msg_ecdsa_signature_dep_a_cmp(&greater, &lesser), 0);
+
+    EXPECT_EQ(sbp_message_cmp(SbpMsgEcdsaSignatureDepA, &wrapped_lesser,
+                              &wrapped_lesser),
+              0);
+    EXPECT_EQ(sbp_message_cmp(SbpMsgEcdsaSignatureDepA, &wrapped_greater,
+                              &wrapped_greater),
+              0);
+    EXPECT_LE(sbp_message_cmp(SbpMsgEcdsaSignatureDepA, &wrapped_lesser,
+                              &wrapped_greater),
+              0);
+    EXPECT_GT(sbp_message_cmp(SbpMsgEcdsaSignatureDepA, &wrapped_greater,
+                              &wrapped_lesser),
+              0);
+
+    // lesser vs lesser
+    EXPECT_TRUE(lesser == lesser);
+    EXPECT_FALSE(lesser != lesser);
+    EXPECT_FALSE(lesser < lesser);
+    EXPECT_TRUE(lesser <= lesser);
+    EXPECT_FALSE(lesser > lesser);
+    EXPECT_TRUE(lesser >= lesser);
+
+    // greater vs greater
+    EXPECT_TRUE(greater == greater);
+    EXPECT_FALSE(greater != greater);
+    EXPECT_FALSE(greater < greater);
+    EXPECT_TRUE(greater <= greater);
+    EXPECT_FALSE(greater > greater);
+    EXPECT_TRUE(greater >= greater);
+
+    // lesser vs greater
+    EXPECT_FALSE(lesser == greater);
+    EXPECT_TRUE(lesser != greater);
+    EXPECT_TRUE(lesser < greater);
+    EXPECT_TRUE(lesser <= greater);
+    EXPECT_FALSE(lesser > greater);
+    EXPECT_FALSE(lesser >= greater);
+
+    // greater vs lesser
+    EXPECT_FALSE(greater == lesser);
+    EXPECT_TRUE(greater != lesser);
+    EXPECT_FALSE(greater < lesser);
+    EXPECT_FALSE(greater <= lesser);
+    EXPECT_TRUE(greater > lesser);
+    EXPECT_TRUE(greater >= lesser);
   }
 
-  sbp_msg_ecdsa_signature_dep_a_t last_msg_;
-  uint8_t last_msg_len_;
-  uint16_t last_sender_id_;
-  size_t n_callbacks_logged_;
-  uint32_t dummy_wr_;
-  uint32_t dummy_rd_;
-  uint8_t dummy_buff_[1024];
-};
+  template <typename T,
+            std::enable_if_t<std::is_integral<T>::value, bool> = true>
+  void make_lesser_greater(T &lesser, T &greater) {
+    if (greater == std::numeric_limits<T>::max()) {
+      lesser--;
+    } else {
+      greater++;
+    }
+  }
 
-TEST_F(Test_auto_check_sbp_signing_MsgEcdsaSignatureDepA0, Test) {
-  uint8_t encoded_frame[] = {
+  template <typename T,
+            std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
+  void make_lesser_greater(T &lesser, T &greater) {
+    (void)lesser;
+    greater += static_cast<T>(1.0);
+  }
+
+  void make_lesser_greater(sbp_string_t &lesser, sbp_string_t &greater) {
+    if (greater.data[0] == 'z') {
+      lesser.data[0]--;
+    } else {
+      greater.data[0]++;
+    }
+  }
+
+  template <size_t N>
+  void make_lesser_greater(char (&lesser)[N], char (&greater)[N]) {
+    if (lesser[0] == 'z') {
+      lesser[0]--;
+    } else {
+      greater[0]++;
+    }
+  }
+
+ private:
+  sbp_msg_ecdsa_signature_dep_a_t test_msg_{};
+  uint8_t encoded_frame_[255 + 8] = {
       85,  6,   12,  66,  0,   255, 0,   1,   2,   1,   2,   3,   4,   0,   1,
       2,   3,   4,   5,   6,   7,   0,   1,   2,   3,   4,   5,   6,   7,   0,
       1,   2,   3,   4,   5,   6,   7,   0,   1,   2,   3,   4,   5,   6,   7,
@@ -95,1295 +903,2401 @@ TEST_F(Test_auto_check_sbp_signing_MsgEcdsaSignatureDepA0, Test) {
       18,  85,  121, 137, 83,  111, 59,  7,   77,  4,   117, 159, 148, 35,  61,
       41,  67,  46,  127, 75,  174, 97,  172,
   };
-
-  sbp_msg_ecdsa_signature_dep_a_t test_msg{};
-
-  test_msg.certificate_id[0] = 1;
-
-  test_msg.certificate_id[1] = 2;
-
-  test_msg.certificate_id[2] = 3;
-
-  test_msg.certificate_id[3] = 4;
-  test_msg.flags = 0;
-  test_msg.n_signed_messages = 184;
-  test_msg.on_demand_counter = 2;
-
-  test_msg.signature[0] = 0;
-
-  test_msg.signature[1] = 1;
-
-  test_msg.signature[2] = 2;
-
-  test_msg.signature[3] = 3;
-
-  test_msg.signature[4] = 4;
-
-  test_msg.signature[5] = 5;
-
-  test_msg.signature[6] = 6;
-
-  test_msg.signature[7] = 7;
-
-  test_msg.signature[8] = 0;
-
-  test_msg.signature[9] = 1;
-
-  test_msg.signature[10] = 2;
-
-  test_msg.signature[11] = 3;
-
-  test_msg.signature[12] = 4;
-
-  test_msg.signature[13] = 5;
-
-  test_msg.signature[14] = 6;
-
-  test_msg.signature[15] = 7;
-
-  test_msg.signature[16] = 0;
-
-  test_msg.signature[17] = 1;
-
-  test_msg.signature[18] = 2;
-
-  test_msg.signature[19] = 3;
-
-  test_msg.signature[20] = 4;
-
-  test_msg.signature[21] = 5;
-
-  test_msg.signature[22] = 6;
-
-  test_msg.signature[23] = 7;
-
-  test_msg.signature[24] = 0;
-
-  test_msg.signature[25] = 1;
-
-  test_msg.signature[26] = 2;
-
-  test_msg.signature[27] = 3;
-
-  test_msg.signature[28] = 4;
-
-  test_msg.signature[29] = 5;
-
-  test_msg.signature[30] = 6;
-
-  test_msg.signature[31] = 7;
-
-  test_msg.signature[32] = 0;
-
-  test_msg.signature[33] = 1;
-
-  test_msg.signature[34] = 2;
-
-  test_msg.signature[35] = 3;
-
-  test_msg.signature[36] = 4;
-
-  test_msg.signature[37] = 5;
-
-  test_msg.signature[38] = 6;
-
-  test_msg.signature[39] = 7;
-
-  test_msg.signature[40] = 0;
-
-  test_msg.signature[41] = 1;
-
-  test_msg.signature[42] = 2;
-
-  test_msg.signature[43] = 3;
-
-  test_msg.signature[44] = 4;
-
-  test_msg.signature[45] = 5;
-
-  test_msg.signature[46] = 6;
-
-  test_msg.signature[47] = 7;
-
-  test_msg.signature[48] = 0;
-
-  test_msg.signature[49] = 1;
-
-  test_msg.signature[50] = 2;
-
-  test_msg.signature[51] = 3;
-
-  test_msg.signature[52] = 4;
-
-  test_msg.signature[53] = 5;
-
-  test_msg.signature[54] = 6;
-
-  test_msg.signature[55] = 7;
-
-  test_msg.signature[56] = 0;
-
-  test_msg.signature[57] = 1;
-
-  test_msg.signature[58] = 2;
-
-  test_msg.signature[59] = 3;
-
-  test_msg.signature[60] = 4;
-
-  test_msg.signature[61] = 5;
-
-  test_msg.signature[62] = 6;
-
-  test_msg.signature[63] = 7;
-
-  test_msg.signed_messages[0] = 10;
-
-  test_msg.signed_messages[1] = 21;
-
-  test_msg.signed_messages[2] = 23;
-
-  test_msg.signed_messages[3] = 63;
-
-  test_msg.signed_messages[4] = 140;
-
-  test_msg.signed_messages[5] = 37;
-
-  test_msg.signed_messages[6] = 130;
-
-  test_msg.signed_messages[7] = 106;
-
-  test_msg.signed_messages[8] = 28;
-
-  test_msg.signed_messages[9] = 40;
-
-  test_msg.signed_messages[10] = 165;
-
-  test_msg.signed_messages[11] = 179;
-
-  test_msg.signed_messages[12] = 73;
-
-  test_msg.signed_messages[13] = 178;
-
-  test_msg.signed_messages[14] = 60;
-
-  test_msg.signed_messages[15] = 126;
-
-  test_msg.signed_messages[16] = 114;
-
-  test_msg.signed_messages[17] = 78;
-
-  test_msg.signed_messages[18] = 113;
-
-  test_msg.signed_messages[19] = 27;
-
-  test_msg.signed_messages[20] = 95;
-
-  test_msg.signed_messages[21] = 3;
-
-  test_msg.signed_messages[22] = 62;
-
-  test_msg.signed_messages[23] = 104;
-
-  test_msg.signed_messages[24] = 145;
-
-  test_msg.signed_messages[25] = 96;
-
-  test_msg.signed_messages[26] = 19;
-
-  test_msg.signed_messages[27] = 92;
-
-  test_msg.signed_messages[28] = 123;
-
-  test_msg.signed_messages[29] = 14;
-
-  test_msg.signed_messages[30] = 90;
-
-  test_msg.signed_messages[31] = 153;
-
-  test_msg.signed_messages[32] = 183;
-
-  test_msg.signed_messages[33] = 9;
-
-  test_msg.signed_messages[34] = 72;
-
-  test_msg.signed_messages[35] = 81;
-
-  test_msg.signed_messages[36] = 118;
-
-  test_msg.signed_messages[37] = 112;
-
-  test_msg.signed_messages[38] = 124;
-
-  test_msg.signed_messages[39] = 16;
-
-  test_msg.signed_messages[40] = 182;
-
-  test_msg.signed_messages[41] = 76;
-
-  test_msg.signed_messages[42] = 146;
-
-  test_msg.signed_messages[43] = 115;
-
-  test_msg.signed_messages[44] = 58;
-
-  test_msg.signed_messages[45] = 144;
-
-  test_msg.signed_messages[46] = 17;
-
-  test_msg.signed_messages[47] = 105;
-
-  test_msg.signed_messages[48] = 66;
-
-  test_msg.signed_messages[49] = 31;
-
-  test_msg.signed_messages[50] = 135;
-
-  test_msg.signed_messages[51] = 54;
-
-  test_msg.signed_messages[52] = 100;
-
-  test_msg.signed_messages[53] = 84;
-
-  test_msg.signed_messages[54] = 181;
-
-  test_msg.signed_messages[55] = 103;
-
-  test_msg.signed_messages[56] = 11;
-
-  test_msg.signed_messages[57] = 88;
-
-  test_msg.signed_messages[58] = 133;
-
-  test_msg.signed_messages[59] = 155;
-
-  test_msg.signed_messages[60] = 167;
-
-  test_msg.signed_messages[61] = 173;
-
-  test_msg.signed_messages[62] = 143;
-
-  test_msg.signed_messages[63] = 86;
-
-  test_msg.signed_messages[64] = 158;
-
-  test_msg.signed_messages[65] = 20;
-
-  test_msg.signed_messages[66] = 168;
-
-  test_msg.signed_messages[67] = 132;
-
-  test_msg.signed_messages[68] = 141;
-
-  test_msg.signed_messages[69] = 102;
-
-  test_msg.signed_messages[70] = 50;
-
-  test_msg.signed_messages[71] = 48;
-
-  test_msg.signed_messages[72] = 71;
-
-  test_msg.signed_messages[73] = 147;
-
-  test_msg.signed_messages[74] = 53;
-
-  test_msg.signed_messages[75] = 87;
-
-  test_msg.signed_messages[76] = 1;
-
-  test_msg.signed_messages[77] = 108;
-
-  test_msg.signed_messages[78] = 138;
-
-  test_msg.signed_messages[79] = 36;
-
-  test_msg.signed_messages[80] = 134;
-
-  test_msg.signed_messages[81] = 139;
-
-  test_msg.signed_messages[82] = 163;
-
-  test_msg.signed_messages[83] = 82;
-
-  test_msg.signed_messages[84] = 43;
-
-  test_msg.signed_messages[85] = 52;
-
-  test_msg.signed_messages[86] = 150;
-
-  test_msg.signed_messages[87] = 12;
-
-  test_msg.signed_messages[88] = 30;
-
-  test_msg.signed_messages[89] = 110;
-
-  test_msg.signed_messages[90] = 156;
-
-  test_msg.signed_messages[91] = 107;
-
-  test_msg.signed_messages[92] = 120;
-
-  test_msg.signed_messages[93] = 91;
-
-  test_msg.signed_messages[94] = 122;
-
-  test_msg.signed_messages[95] = 69;
-
-  test_msg.signed_messages[96] = 164;
-
-  test_msg.signed_messages[97] = 170;
-
-  test_msg.signed_messages[98] = 116;
-
-  test_msg.signed_messages[99] = 25;
-
-  test_msg.signed_messages[100] = 94;
-
-  test_msg.signed_messages[101] = 5;
-
-  test_msg.signed_messages[102] = 22;
-
-  test_msg.signed_messages[103] = 24;
-
-  test_msg.signed_messages[104] = 162;
-
-  test_msg.signed_messages[105] = 175;
-
-  test_msg.signed_messages[106] = 38;
-
-  test_msg.signed_messages[107] = 157;
-
-  test_msg.signed_messages[108] = 98;
-
-  test_msg.signed_messages[109] = 44;
-
-  test_msg.signed_messages[110] = 160;
-
-  test_msg.signed_messages[111] = 47;
-
-  test_msg.signed_messages[112] = 97;
-
-  test_msg.signed_messages[113] = 142;
-
-  test_msg.signed_messages[114] = 8;
-
-  test_msg.signed_messages[115] = 74;
-
-  test_msg.signed_messages[116] = 13;
-
-  test_msg.signed_messages[117] = 177;
-
-  test_msg.signed_messages[118] = 15;
-
-  test_msg.signed_messages[119] = 128;
-
-  test_msg.signed_messages[120] = 26;
-
-  test_msg.signed_messages[121] = 131;
-
-  test_msg.signed_messages[122] = 154;
-
-  test_msg.signed_messages[123] = 65;
-
-  test_msg.signed_messages[124] = 169;
-
-  test_msg.signed_messages[125] = 55;
-
-  test_msg.signed_messages[126] = 136;
-
-  test_msg.signed_messages[127] = 125;
-
-  test_msg.signed_messages[128] = 171;
-
-  test_msg.signed_messages[129] = 161;
-
-  test_msg.signed_messages[130] = 29;
-
-  test_msg.signed_messages[131] = 129;
-
-  test_msg.signed_messages[132] = 151;
-
-  test_msg.signed_messages[133] = 68;
-
-  test_msg.signed_messages[134] = 166;
-
-  test_msg.signed_messages[135] = 51;
-
-  test_msg.signed_messages[136] = 70;
-
-  test_msg.signed_messages[137] = 45;
-
-  test_msg.signed_messages[138] = 56;
-
-  test_msg.signed_messages[139] = 79;
-
-  test_msg.signed_messages[140] = 149;
-
-  test_msg.signed_messages[141] = 99;
-
-  test_msg.signed_messages[142] = 42;
-
-  test_msg.signed_messages[143] = 101;
-
-  test_msg.signed_messages[144] = 152;
-
-  test_msg.signed_messages[145] = 39;
-
-  test_msg.signed_messages[146] = 89;
-
-  test_msg.signed_messages[147] = 180;
-
-  test_msg.signed_messages[148] = 64;
-
-  test_msg.signed_messages[149] = 49;
-
-  test_msg.signed_messages[150] = 6;
-
-  test_msg.signed_messages[151] = 80;
-
-  test_msg.signed_messages[152] = 172;
-
-  test_msg.signed_messages[153] = 32;
-
-  test_msg.signed_messages[154] = 109;
-
-  test_msg.signed_messages[155] = 2;
-
-  test_msg.signed_messages[156] = 119;
-
-  test_msg.signed_messages[157] = 93;
-
-  test_msg.signed_messages[158] = 176;
-
-  test_msg.signed_messages[159] = 0;
-
-  test_msg.signed_messages[160] = 33;
-
-  test_msg.signed_messages[161] = 57;
-
-  test_msg.signed_messages[162] = 34;
-
-  test_msg.signed_messages[163] = 18;
-
-  test_msg.signed_messages[164] = 85;
-
-  test_msg.signed_messages[165] = 121;
-
-  test_msg.signed_messages[166] = 137;
-
-  test_msg.signed_messages[167] = 83;
-
-  test_msg.signed_messages[168] = 111;
-
-  test_msg.signed_messages[169] = 59;
-
-  test_msg.signed_messages[170] = 7;
-
-  test_msg.signed_messages[171] = 77;
-
-  test_msg.signed_messages[172] = 4;
-
-  test_msg.signed_messages[173] = 117;
-
-  test_msg.signed_messages[174] = 159;
-
-  test_msg.signed_messages[175] = 148;
-
-  test_msg.signed_messages[176] = 35;
-
-  test_msg.signed_messages[177] = 61;
-
-  test_msg.signed_messages[178] = 41;
-
-  test_msg.signed_messages[179] = 67;
-
-  test_msg.signed_messages[180] = 46;
-
-  test_msg.signed_messages[181] = 127;
-
-  test_msg.signed_messages[182] = 75;
-
-  test_msg.signed_messages[183] = 174;
-  test_msg.stream_counter = 1;
-
-  EXPECT_EQ(send_message(66, test_msg), SBP_OK);
-
-  EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
-  EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
-
-  while (dummy_rd_ < dummy_wr_) {
-    process();
+  uint8_t encoded_payload_[255] = {
+      0,   1,   2,   1,   2,   3,   4,   0,   1,   2,   3,   4,   5,   6,   7,
+      0,   1,   2,   3,   4,   5,   6,   7,   0,   1,   2,   3,   4,   5,   6,
+      7,   0,   1,   2,   3,   4,   5,   6,   7,   0,   1,   2,   3,   4,   5,
+      6,   7,   0,   1,   2,   3,   4,   5,   6,   7,   0,   1,   2,   3,   4,
+      5,   6,   7,   0,   1,   2,   3,   4,   5,   6,   7,   10,  21,  23,  63,
+      140, 37,  130, 106, 28,  40,  165, 179, 73,  178, 60,  126, 114, 78,  113,
+      27,  95,  3,   62,  104, 145, 96,  19,  92,  123, 14,  90,  153, 183, 9,
+      72,  81,  118, 112, 124, 16,  182, 76,  146, 115, 58,  144, 17,  105, 66,
+      31,  135, 54,  100, 84,  181, 103, 11,  88,  133, 155, 167, 173, 143, 86,
+      158, 20,  168, 132, 141, 102, 50,  48,  71,  147, 53,  87,  1,   108, 138,
+      36,  134, 139, 163, 82,  43,  52,  150, 12,  30,  110, 156, 107, 120, 91,
+      122, 69,  164, 170, 116, 25,  94,  5,   22,  24,  162, 175, 38,  157, 98,
+      44,  160, 47,  97,  142, 8,   74,  13,  177, 15,  128, 26,  131, 154, 65,
+      169, 55,  136, 125, 171, 161, 29,  129, 151, 68,  166, 51,  70,  45,  56,
+      79,  149, 99,  42,  101, 152, 39,  89,  180, 64,  49,  6,   80,  172, 32,
+      109, 2,   119, 93,  176, 0,   33,  57,  34,  18,  85,  121, 137, 83,  111,
+      59,  7,   77,  4,   117, 159, 148, 35,  61,  41,  67,  46,  127, 75,  174,
+  };
+};
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, EncodedLen) {
+  auto info = get_test_msg_info();
+  EXPECT_EQ(sbp_msg_ecdsa_signature_dep_a_encoded_len(&info.test_msg),
+            info.payload_len);
+
+  EXPECT_EQ(
+      sbp_message_encoded_len(SbpMsgEcdsaSignatureDepA, &info.test_msg_wrapped),
+      info.payload_len);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, EncodeToBuf) {
+  auto info = get_test_msg_info();
+  uint8_t buf[255];
+  uint8_t n_written;
+
+  EXPECT_EQ(sbp_msg_ecdsa_signature_dep_a_encode(&buf[0], sizeof(buf),
+                                                 &n_written, &info.test_msg),
+            SBP_OK);
+  EXPECT_EQ(n_written, 255);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 255), 0);
+
+  memset(&buf[0], 0, sizeof(buf));
+  EXPECT_EQ(
+      sbp_message_encode(&buf[0], sizeof(buf), &n_written,
+                         SbpMsgEcdsaSignatureDepA, &info.test_msg_wrapped),
+      SBP_OK);
+  EXPECT_EQ(n_written, 255);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 255), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       EncodeToBufWithoutNwritten) {
+  auto info = get_test_msg_info();
+  uint8_t buf[255];
+
+  EXPECT_EQ(sbp_msg_ecdsa_signature_dep_a_encode(&buf[0], sizeof(buf), nullptr,
+                                                 &info.test_msg),
+            SBP_OK);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 255), 0);
+}
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       EncodedToBufUnderflow) {
+  auto info = get_test_msg_info();
+  uint8_t buf[255];
+
+  for (uint8_t i = 0; i < 255; i++) {
+    EXPECT_EQ(sbp_msg_ecdsa_signature_dep_a_encode(&buf[0], i, nullptr,
+                                                   &info.test_msg),
+              SBP_ENCODE_ERROR);
+  }
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, DecodeFromBuf) {
+  auto info = get_test_msg_info();
+  sbp_msg_ecdsa_signature_dep_a_t msg{};
+  uint8_t n_read;
+
+  EXPECT_EQ(sbp_msg_ecdsa_signature_dep_a_decode(
+                &info.encoded_payload[0], info.payload_len, &n_read, &msg),
+            SBP_OK);
+  EXPECT_EQ(n_read, 255);
+  EXPECT_EQ(msg, info.test_msg);
+
+  sbp_msg_t wrapped_msg{};
+  EXPECT_EQ(sbp_message_decode(&info.encoded_payload[0], info.payload_len,
+                               &n_read, SbpMsgEcdsaSignatureDepA, &wrapped_msg),
+            SBP_OK);
+  EXPECT_EQ(n_read, 255);
+  EXPECT_EQ(msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       DecodeFromBufWithoutNread) {
+  auto info = get_test_msg_info();
+  sbp_msg_ecdsa_signature_dep_a_t msg{};
+
+  EXPECT_EQ(sbp_msg_ecdsa_signature_dep_a_decode(
+                &info.encoded_payload[0], info.payload_len, nullptr, &msg),
+            SBP_OK);
+  EXPECT_EQ(msg, info.test_msg);
+}
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       DecodeFromBufUnderflow) {
+  auto info = get_test_msg_info();
+  sbp_msg_ecdsa_signature_dep_a_t msg{};
+
+  for (uint8_t i = 0; i < info.payload_len; i++) {
+    int expected_return = SBP_DECODE_ERROR;
+    size_t overhead = []() -> size_t {
+      sbp_msg_ecdsa_signature_dep_a_t t{};
+      return sbp_msg_ecdsa_signature_dep_a_encoded_len(&t);
+    }();
+    size_t elem_size = []() -> size_t {
+      sbp_msg_ecdsa_signature_dep_a_t t{};
+      t.n_signed_messages = 1;
+      return sbp_msg_ecdsa_signature_dep_a_encoded_len(&t);
+    }() - overhead;
+
+    if (i >= overhead) {
+      if (((i - overhead) % elem_size) == 0) {
+        expected_return = SBP_OK;
+      }
+    }
+
+    EXPECT_EQ(sbp_msg_ecdsa_signature_dep_a_decode(&info.encoded_payload[0], i,
+                                                   nullptr, &msg),
+              expected_return);
+  }
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       ReceiveThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto reader = info.get_frame_reader();
+  sbp_state_set_io_context(&state, &reader);
+
+  CHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    EXPECT_GE(sbp_process(&state, &Reader::read_static), SBP_OK);
   }
 
-  EXPECT_EQ(n_callbacks_logged_, 1);
-  EXPECT_EQ(last_sender_id_, 66);
-  EXPECT_EQ(last_msg_, test_msg);
-  EXPECT_EQ(last_msg_.certificate_id[0], 1)
-      << "incorrect value for last_msg_.certificate_id[0], expected 1, is "
-      << last_msg_.certificate_id[0];
-  EXPECT_EQ(last_msg_.certificate_id[1], 2)
-      << "incorrect value for last_msg_.certificate_id[1], expected 2, is "
-      << last_msg_.certificate_id[1];
-  EXPECT_EQ(last_msg_.certificate_id[2], 3)
-      << "incorrect value for last_msg_.certificate_id[2], expected 3, is "
-      << last_msg_.certificate_id[2];
-  EXPECT_EQ(last_msg_.certificate_id[3], 4)
-      << "incorrect value for last_msg_.certificate_id[3], expected 4, is "
-      << last_msg_.certificate_id[3];
-  EXPECT_EQ(last_msg_.flags, 0)
-      << "incorrect value for last_msg_.flags, expected 0, is "
-      << last_msg_.flags;
-  EXPECT_EQ(last_msg_.n_signed_messages, 184)
-      << "incorrect value for last_msg_.n_signed_messages, expected 184, is "
-      << last_msg_.n_signed_messages;
-  EXPECT_EQ(last_msg_.on_demand_counter, 2)
-      << "incorrect value for last_msg_.on_demand_counter, expected 2, is "
-      << last_msg_.on_demand_counter;
-  EXPECT_EQ(last_msg_.signature[0], 0)
-      << "incorrect value for last_msg_.signature[0], expected 0, is "
-      << last_msg_.signature[0];
-  EXPECT_EQ(last_msg_.signature[1], 1)
-      << "incorrect value for last_msg_.signature[1], expected 1, is "
-      << last_msg_.signature[1];
-  EXPECT_EQ(last_msg_.signature[2], 2)
-      << "incorrect value for last_msg_.signature[2], expected 2, is "
-      << last_msg_.signature[2];
-  EXPECT_EQ(last_msg_.signature[3], 3)
-      << "incorrect value for last_msg_.signature[3], expected 3, is "
-      << last_msg_.signature[3];
-  EXPECT_EQ(last_msg_.signature[4], 4)
-      << "incorrect value for last_msg_.signature[4], expected 4, is "
-      << last_msg_.signature[4];
-  EXPECT_EQ(last_msg_.signature[5], 5)
-      << "incorrect value for last_msg_.signature[5], expected 5, is "
-      << last_msg_.signature[5];
-  EXPECT_EQ(last_msg_.signature[6], 6)
-      << "incorrect value for last_msg_.signature[6], expected 6, is "
-      << last_msg_.signature[6];
-  EXPECT_EQ(last_msg_.signature[7], 7)
-      << "incorrect value for last_msg_.signature[7], expected 7, is "
-      << last_msg_.signature[7];
-  EXPECT_EQ(last_msg_.signature[8], 0)
-      << "incorrect value for last_msg_.signature[8], expected 0, is "
-      << last_msg_.signature[8];
-  EXPECT_EQ(last_msg_.signature[9], 1)
-      << "incorrect value for last_msg_.signature[9], expected 1, is "
-      << last_msg_.signature[9];
-  EXPECT_EQ(last_msg_.signature[10], 2)
-      << "incorrect value for last_msg_.signature[10], expected 2, is "
-      << last_msg_.signature[10];
-  EXPECT_EQ(last_msg_.signature[11], 3)
-      << "incorrect value for last_msg_.signature[11], expected 3, is "
-      << last_msg_.signature[11];
-  EXPECT_EQ(last_msg_.signature[12], 4)
-      << "incorrect value for last_msg_.signature[12], expected 4, is "
-      << last_msg_.signature[12];
-  EXPECT_EQ(last_msg_.signature[13], 5)
-      << "incorrect value for last_msg_.signature[13], expected 5, is "
-      << last_msg_.signature[13];
-  EXPECT_EQ(last_msg_.signature[14], 6)
-      << "incorrect value for last_msg_.signature[14], expected 6, is "
-      << last_msg_.signature[14];
-  EXPECT_EQ(last_msg_.signature[15], 7)
-      << "incorrect value for last_msg_.signature[15], expected 7, is "
-      << last_msg_.signature[15];
-  EXPECT_EQ(last_msg_.signature[16], 0)
-      << "incorrect value for last_msg_.signature[16], expected 0, is "
-      << last_msg_.signature[16];
-  EXPECT_EQ(last_msg_.signature[17], 1)
-      << "incorrect value for last_msg_.signature[17], expected 1, is "
-      << last_msg_.signature[17];
-  EXPECT_EQ(last_msg_.signature[18], 2)
-      << "incorrect value for last_msg_.signature[18], expected 2, is "
-      << last_msg_.signature[18];
-  EXPECT_EQ(last_msg_.signature[19], 3)
-      << "incorrect value for last_msg_.signature[19], expected 3, is "
-      << last_msg_.signature[19];
-  EXPECT_EQ(last_msg_.signature[20], 4)
-      << "incorrect value for last_msg_.signature[20], expected 4, is "
-      << last_msg_.signature[20];
-  EXPECT_EQ(last_msg_.signature[21], 5)
-      << "incorrect value for last_msg_.signature[21], expected 5, is "
-      << last_msg_.signature[21];
-  EXPECT_EQ(last_msg_.signature[22], 6)
-      << "incorrect value for last_msg_.signature[22], expected 6, is "
-      << last_msg_.signature[22];
-  EXPECT_EQ(last_msg_.signature[23], 7)
-      << "incorrect value for last_msg_.signature[23], expected 7, is "
-      << last_msg_.signature[23];
-  EXPECT_EQ(last_msg_.signature[24], 0)
-      << "incorrect value for last_msg_.signature[24], expected 0, is "
-      << last_msg_.signature[24];
-  EXPECT_EQ(last_msg_.signature[25], 1)
-      << "incorrect value for last_msg_.signature[25], expected 1, is "
-      << last_msg_.signature[25];
-  EXPECT_EQ(last_msg_.signature[26], 2)
-      << "incorrect value for last_msg_.signature[26], expected 2, is "
-      << last_msg_.signature[26];
-  EXPECT_EQ(last_msg_.signature[27], 3)
-      << "incorrect value for last_msg_.signature[27], expected 3, is "
-      << last_msg_.signature[27];
-  EXPECT_EQ(last_msg_.signature[28], 4)
-      << "incorrect value for last_msg_.signature[28], expected 4, is "
-      << last_msg_.signature[28];
-  EXPECT_EQ(last_msg_.signature[29], 5)
-      << "incorrect value for last_msg_.signature[29], expected 5, is "
-      << last_msg_.signature[29];
-  EXPECT_EQ(last_msg_.signature[30], 6)
-      << "incorrect value for last_msg_.signature[30], expected 6, is "
-      << last_msg_.signature[30];
-  EXPECT_EQ(last_msg_.signature[31], 7)
-      << "incorrect value for last_msg_.signature[31], expected 7, is "
-      << last_msg_.signature[31];
-  EXPECT_EQ(last_msg_.signature[32], 0)
-      << "incorrect value for last_msg_.signature[32], expected 0, is "
-      << last_msg_.signature[32];
-  EXPECT_EQ(last_msg_.signature[33], 1)
-      << "incorrect value for last_msg_.signature[33], expected 1, is "
-      << last_msg_.signature[33];
-  EXPECT_EQ(last_msg_.signature[34], 2)
-      << "incorrect value for last_msg_.signature[34], expected 2, is "
-      << last_msg_.signature[34];
-  EXPECT_EQ(last_msg_.signature[35], 3)
-      << "incorrect value for last_msg_.signature[35], expected 3, is "
-      << last_msg_.signature[35];
-  EXPECT_EQ(last_msg_.signature[36], 4)
-      << "incorrect value for last_msg_.signature[36], expected 4, is "
-      << last_msg_.signature[36];
-  EXPECT_EQ(last_msg_.signature[37], 5)
-      << "incorrect value for last_msg_.signature[37], expected 5, is "
-      << last_msg_.signature[37];
-  EXPECT_EQ(last_msg_.signature[38], 6)
-      << "incorrect value for last_msg_.signature[38], expected 6, is "
-      << last_msg_.signature[38];
-  EXPECT_EQ(last_msg_.signature[39], 7)
-      << "incorrect value for last_msg_.signature[39], expected 7, is "
-      << last_msg_.signature[39];
-  EXPECT_EQ(last_msg_.signature[40], 0)
-      << "incorrect value for last_msg_.signature[40], expected 0, is "
-      << last_msg_.signature[40];
-  EXPECT_EQ(last_msg_.signature[41], 1)
-      << "incorrect value for last_msg_.signature[41], expected 1, is "
-      << last_msg_.signature[41];
-  EXPECT_EQ(last_msg_.signature[42], 2)
-      << "incorrect value for last_msg_.signature[42], expected 2, is "
-      << last_msg_.signature[42];
-  EXPECT_EQ(last_msg_.signature[43], 3)
-      << "incorrect value for last_msg_.signature[43], expected 3, is "
-      << last_msg_.signature[43];
-  EXPECT_EQ(last_msg_.signature[44], 4)
-      << "incorrect value for last_msg_.signature[44], expected 4, is "
-      << last_msg_.signature[44];
-  EXPECT_EQ(last_msg_.signature[45], 5)
-      << "incorrect value for last_msg_.signature[45], expected 5, is "
-      << last_msg_.signature[45];
-  EXPECT_EQ(last_msg_.signature[46], 6)
-      << "incorrect value for last_msg_.signature[46], expected 6, is "
-      << last_msg_.signature[46];
-  EXPECT_EQ(last_msg_.signature[47], 7)
-      << "incorrect value for last_msg_.signature[47], expected 7, is "
-      << last_msg_.signature[47];
-  EXPECT_EQ(last_msg_.signature[48], 0)
-      << "incorrect value for last_msg_.signature[48], expected 0, is "
-      << last_msg_.signature[48];
-  EXPECT_EQ(last_msg_.signature[49], 1)
-      << "incorrect value for last_msg_.signature[49], expected 1, is "
-      << last_msg_.signature[49];
-  EXPECT_EQ(last_msg_.signature[50], 2)
-      << "incorrect value for last_msg_.signature[50], expected 2, is "
-      << last_msg_.signature[50];
-  EXPECT_EQ(last_msg_.signature[51], 3)
-      << "incorrect value for last_msg_.signature[51], expected 3, is "
-      << last_msg_.signature[51];
-  EXPECT_EQ(last_msg_.signature[52], 4)
-      << "incorrect value for last_msg_.signature[52], expected 4, is "
-      << last_msg_.signature[52];
-  EXPECT_EQ(last_msg_.signature[53], 5)
-      << "incorrect value for last_msg_.signature[53], expected 5, is "
-      << last_msg_.signature[53];
-  EXPECT_EQ(last_msg_.signature[54], 6)
-      << "incorrect value for last_msg_.signature[54], expected 6, is "
-      << last_msg_.signature[54];
-  EXPECT_EQ(last_msg_.signature[55], 7)
-      << "incorrect value for last_msg_.signature[55], expected 7, is "
-      << last_msg_.signature[55];
-  EXPECT_EQ(last_msg_.signature[56], 0)
-      << "incorrect value for last_msg_.signature[56], expected 0, is "
-      << last_msg_.signature[56];
-  EXPECT_EQ(last_msg_.signature[57], 1)
-      << "incorrect value for last_msg_.signature[57], expected 1, is "
-      << last_msg_.signature[57];
-  EXPECT_EQ(last_msg_.signature[58], 2)
-      << "incorrect value for last_msg_.signature[58], expected 2, is "
-      << last_msg_.signature[58];
-  EXPECT_EQ(last_msg_.signature[59], 3)
-      << "incorrect value for last_msg_.signature[59], expected 3, is "
-      << last_msg_.signature[59];
-  EXPECT_EQ(last_msg_.signature[60], 4)
-      << "incorrect value for last_msg_.signature[60], expected 4, is "
-      << last_msg_.signature[60];
-  EXPECT_EQ(last_msg_.signature[61], 5)
-      << "incorrect value for last_msg_.signature[61], expected 5, is "
-      << last_msg_.signature[61];
-  EXPECT_EQ(last_msg_.signature[62], 6)
-      << "incorrect value for last_msg_.signature[62], expected 6, is "
-      << last_msg_.signature[62];
-  EXPECT_EQ(last_msg_.signature[63], 7)
-      << "incorrect value for last_msg_.signature[63], expected 7, is "
-      << last_msg_.signature[63];
-  EXPECT_EQ(last_msg_.signed_messages[0], 10)
-      << "incorrect value for last_msg_.signed_messages[0], expected 10, is "
-      << last_msg_.signed_messages[0];
-  EXPECT_EQ(last_msg_.signed_messages[1], 21)
-      << "incorrect value for last_msg_.signed_messages[1], expected 21, is "
-      << last_msg_.signed_messages[1];
-  EXPECT_EQ(last_msg_.signed_messages[2], 23)
-      << "incorrect value for last_msg_.signed_messages[2], expected 23, is "
-      << last_msg_.signed_messages[2];
-  EXPECT_EQ(last_msg_.signed_messages[3], 63)
-      << "incorrect value for last_msg_.signed_messages[3], expected 63, is "
-      << last_msg_.signed_messages[3];
-  EXPECT_EQ(last_msg_.signed_messages[4], 140)
-      << "incorrect value for last_msg_.signed_messages[4], expected 140, is "
-      << last_msg_.signed_messages[4];
-  EXPECT_EQ(last_msg_.signed_messages[5], 37)
-      << "incorrect value for last_msg_.signed_messages[5], expected 37, is "
-      << last_msg_.signed_messages[5];
-  EXPECT_EQ(last_msg_.signed_messages[6], 130)
-      << "incorrect value for last_msg_.signed_messages[6], expected 130, is "
-      << last_msg_.signed_messages[6];
-  EXPECT_EQ(last_msg_.signed_messages[7], 106)
-      << "incorrect value for last_msg_.signed_messages[7], expected 106, is "
-      << last_msg_.signed_messages[7];
-  EXPECT_EQ(last_msg_.signed_messages[8], 28)
-      << "incorrect value for last_msg_.signed_messages[8], expected 28, is "
-      << last_msg_.signed_messages[8];
-  EXPECT_EQ(last_msg_.signed_messages[9], 40)
-      << "incorrect value for last_msg_.signed_messages[9], expected 40, is "
-      << last_msg_.signed_messages[9];
-  EXPECT_EQ(last_msg_.signed_messages[10], 165)
-      << "incorrect value for last_msg_.signed_messages[10], expected 165, is "
-      << last_msg_.signed_messages[10];
-  EXPECT_EQ(last_msg_.signed_messages[11], 179)
-      << "incorrect value for last_msg_.signed_messages[11], expected 179, is "
-      << last_msg_.signed_messages[11];
-  EXPECT_EQ(last_msg_.signed_messages[12], 73)
-      << "incorrect value for last_msg_.signed_messages[12], expected 73, is "
-      << last_msg_.signed_messages[12];
-  EXPECT_EQ(last_msg_.signed_messages[13], 178)
-      << "incorrect value for last_msg_.signed_messages[13], expected 178, is "
-      << last_msg_.signed_messages[13];
-  EXPECT_EQ(last_msg_.signed_messages[14], 60)
-      << "incorrect value for last_msg_.signed_messages[14], expected 60, is "
-      << last_msg_.signed_messages[14];
-  EXPECT_EQ(last_msg_.signed_messages[15], 126)
-      << "incorrect value for last_msg_.signed_messages[15], expected 126, is "
-      << last_msg_.signed_messages[15];
-  EXPECT_EQ(last_msg_.signed_messages[16], 114)
-      << "incorrect value for last_msg_.signed_messages[16], expected 114, is "
-      << last_msg_.signed_messages[16];
-  EXPECT_EQ(last_msg_.signed_messages[17], 78)
-      << "incorrect value for last_msg_.signed_messages[17], expected 78, is "
-      << last_msg_.signed_messages[17];
-  EXPECT_EQ(last_msg_.signed_messages[18], 113)
-      << "incorrect value for last_msg_.signed_messages[18], expected 113, is "
-      << last_msg_.signed_messages[18];
-  EXPECT_EQ(last_msg_.signed_messages[19], 27)
-      << "incorrect value for last_msg_.signed_messages[19], expected 27, is "
-      << last_msg_.signed_messages[19];
-  EXPECT_EQ(last_msg_.signed_messages[20], 95)
-      << "incorrect value for last_msg_.signed_messages[20], expected 95, is "
-      << last_msg_.signed_messages[20];
-  EXPECT_EQ(last_msg_.signed_messages[21], 3)
-      << "incorrect value for last_msg_.signed_messages[21], expected 3, is "
-      << last_msg_.signed_messages[21];
-  EXPECT_EQ(last_msg_.signed_messages[22], 62)
-      << "incorrect value for last_msg_.signed_messages[22], expected 62, is "
-      << last_msg_.signed_messages[22];
-  EXPECT_EQ(last_msg_.signed_messages[23], 104)
-      << "incorrect value for last_msg_.signed_messages[23], expected 104, is "
-      << last_msg_.signed_messages[23];
-  EXPECT_EQ(last_msg_.signed_messages[24], 145)
-      << "incorrect value for last_msg_.signed_messages[24], expected 145, is "
-      << last_msg_.signed_messages[24];
-  EXPECT_EQ(last_msg_.signed_messages[25], 96)
-      << "incorrect value for last_msg_.signed_messages[25], expected 96, is "
-      << last_msg_.signed_messages[25];
-  EXPECT_EQ(last_msg_.signed_messages[26], 19)
-      << "incorrect value for last_msg_.signed_messages[26], expected 19, is "
-      << last_msg_.signed_messages[26];
-  EXPECT_EQ(last_msg_.signed_messages[27], 92)
-      << "incorrect value for last_msg_.signed_messages[27], expected 92, is "
-      << last_msg_.signed_messages[27];
-  EXPECT_EQ(last_msg_.signed_messages[28], 123)
-      << "incorrect value for last_msg_.signed_messages[28], expected 123, is "
-      << last_msg_.signed_messages[28];
-  EXPECT_EQ(last_msg_.signed_messages[29], 14)
-      << "incorrect value for last_msg_.signed_messages[29], expected 14, is "
-      << last_msg_.signed_messages[29];
-  EXPECT_EQ(last_msg_.signed_messages[30], 90)
-      << "incorrect value for last_msg_.signed_messages[30], expected 90, is "
-      << last_msg_.signed_messages[30];
-  EXPECT_EQ(last_msg_.signed_messages[31], 153)
-      << "incorrect value for last_msg_.signed_messages[31], expected 153, is "
-      << last_msg_.signed_messages[31];
-  EXPECT_EQ(last_msg_.signed_messages[32], 183)
-      << "incorrect value for last_msg_.signed_messages[32], expected 183, is "
-      << last_msg_.signed_messages[32];
-  EXPECT_EQ(last_msg_.signed_messages[33], 9)
-      << "incorrect value for last_msg_.signed_messages[33], expected 9, is "
-      << last_msg_.signed_messages[33];
-  EXPECT_EQ(last_msg_.signed_messages[34], 72)
-      << "incorrect value for last_msg_.signed_messages[34], expected 72, is "
-      << last_msg_.signed_messages[34];
-  EXPECT_EQ(last_msg_.signed_messages[35], 81)
-      << "incorrect value for last_msg_.signed_messages[35], expected 81, is "
-      << last_msg_.signed_messages[35];
-  EXPECT_EQ(last_msg_.signed_messages[36], 118)
-      << "incorrect value for last_msg_.signed_messages[36], expected 118, is "
-      << last_msg_.signed_messages[36];
-  EXPECT_EQ(last_msg_.signed_messages[37], 112)
-      << "incorrect value for last_msg_.signed_messages[37], expected 112, is "
-      << last_msg_.signed_messages[37];
-  EXPECT_EQ(last_msg_.signed_messages[38], 124)
-      << "incorrect value for last_msg_.signed_messages[38], expected 124, is "
-      << last_msg_.signed_messages[38];
-  EXPECT_EQ(last_msg_.signed_messages[39], 16)
-      << "incorrect value for last_msg_.signed_messages[39], expected 16, is "
-      << last_msg_.signed_messages[39];
-  EXPECT_EQ(last_msg_.signed_messages[40], 182)
-      << "incorrect value for last_msg_.signed_messages[40], expected 182, is "
-      << last_msg_.signed_messages[40];
-  EXPECT_EQ(last_msg_.signed_messages[41], 76)
-      << "incorrect value for last_msg_.signed_messages[41], expected 76, is "
-      << last_msg_.signed_messages[41];
-  EXPECT_EQ(last_msg_.signed_messages[42], 146)
-      << "incorrect value for last_msg_.signed_messages[42], expected 146, is "
-      << last_msg_.signed_messages[42];
-  EXPECT_EQ(last_msg_.signed_messages[43], 115)
-      << "incorrect value for last_msg_.signed_messages[43], expected 115, is "
-      << last_msg_.signed_messages[43];
-  EXPECT_EQ(last_msg_.signed_messages[44], 58)
-      << "incorrect value for last_msg_.signed_messages[44], expected 58, is "
-      << last_msg_.signed_messages[44];
-  EXPECT_EQ(last_msg_.signed_messages[45], 144)
-      << "incorrect value for last_msg_.signed_messages[45], expected 144, is "
-      << last_msg_.signed_messages[45];
-  EXPECT_EQ(last_msg_.signed_messages[46], 17)
-      << "incorrect value for last_msg_.signed_messages[46], expected 17, is "
-      << last_msg_.signed_messages[46];
-  EXPECT_EQ(last_msg_.signed_messages[47], 105)
-      << "incorrect value for last_msg_.signed_messages[47], expected 105, is "
-      << last_msg_.signed_messages[47];
-  EXPECT_EQ(last_msg_.signed_messages[48], 66)
-      << "incorrect value for last_msg_.signed_messages[48], expected 66, is "
-      << last_msg_.signed_messages[48];
-  EXPECT_EQ(last_msg_.signed_messages[49], 31)
-      << "incorrect value for last_msg_.signed_messages[49], expected 31, is "
-      << last_msg_.signed_messages[49];
-  EXPECT_EQ(last_msg_.signed_messages[50], 135)
-      << "incorrect value for last_msg_.signed_messages[50], expected 135, is "
-      << last_msg_.signed_messages[50];
-  EXPECT_EQ(last_msg_.signed_messages[51], 54)
-      << "incorrect value for last_msg_.signed_messages[51], expected 54, is "
-      << last_msg_.signed_messages[51];
-  EXPECT_EQ(last_msg_.signed_messages[52], 100)
-      << "incorrect value for last_msg_.signed_messages[52], expected 100, is "
-      << last_msg_.signed_messages[52];
-  EXPECT_EQ(last_msg_.signed_messages[53], 84)
-      << "incorrect value for last_msg_.signed_messages[53], expected 84, is "
-      << last_msg_.signed_messages[53];
-  EXPECT_EQ(last_msg_.signed_messages[54], 181)
-      << "incorrect value for last_msg_.signed_messages[54], expected 181, is "
-      << last_msg_.signed_messages[54];
-  EXPECT_EQ(last_msg_.signed_messages[55], 103)
-      << "incorrect value for last_msg_.signed_messages[55], expected 103, is "
-      << last_msg_.signed_messages[55];
-  EXPECT_EQ(last_msg_.signed_messages[56], 11)
-      << "incorrect value for last_msg_.signed_messages[56], expected 11, is "
-      << last_msg_.signed_messages[56];
-  EXPECT_EQ(last_msg_.signed_messages[57], 88)
-      << "incorrect value for last_msg_.signed_messages[57], expected 88, is "
-      << last_msg_.signed_messages[57];
-  EXPECT_EQ(last_msg_.signed_messages[58], 133)
-      << "incorrect value for last_msg_.signed_messages[58], expected 133, is "
-      << last_msg_.signed_messages[58];
-  EXPECT_EQ(last_msg_.signed_messages[59], 155)
-      << "incorrect value for last_msg_.signed_messages[59], expected 155, is "
-      << last_msg_.signed_messages[59];
-  EXPECT_EQ(last_msg_.signed_messages[60], 167)
-      << "incorrect value for last_msg_.signed_messages[60], expected 167, is "
-      << last_msg_.signed_messages[60];
-  EXPECT_EQ(last_msg_.signed_messages[61], 173)
-      << "incorrect value for last_msg_.signed_messages[61], expected 173, is "
-      << last_msg_.signed_messages[61];
-  EXPECT_EQ(last_msg_.signed_messages[62], 143)
-      << "incorrect value for last_msg_.signed_messages[62], expected 143, is "
-      << last_msg_.signed_messages[62];
-  EXPECT_EQ(last_msg_.signed_messages[63], 86)
-      << "incorrect value for last_msg_.signed_messages[63], expected 86, is "
-      << last_msg_.signed_messages[63];
-  EXPECT_EQ(last_msg_.signed_messages[64], 158)
-      << "incorrect value for last_msg_.signed_messages[64], expected 158, is "
-      << last_msg_.signed_messages[64];
-  EXPECT_EQ(last_msg_.signed_messages[65], 20)
-      << "incorrect value for last_msg_.signed_messages[65], expected 20, is "
-      << last_msg_.signed_messages[65];
-  EXPECT_EQ(last_msg_.signed_messages[66], 168)
-      << "incorrect value for last_msg_.signed_messages[66], expected 168, is "
-      << last_msg_.signed_messages[66];
-  EXPECT_EQ(last_msg_.signed_messages[67], 132)
-      << "incorrect value for last_msg_.signed_messages[67], expected 132, is "
-      << last_msg_.signed_messages[67];
-  EXPECT_EQ(last_msg_.signed_messages[68], 141)
-      << "incorrect value for last_msg_.signed_messages[68], expected 141, is "
-      << last_msg_.signed_messages[68];
-  EXPECT_EQ(last_msg_.signed_messages[69], 102)
-      << "incorrect value for last_msg_.signed_messages[69], expected 102, is "
-      << last_msg_.signed_messages[69];
-  EXPECT_EQ(last_msg_.signed_messages[70], 50)
-      << "incorrect value for last_msg_.signed_messages[70], expected 50, is "
-      << last_msg_.signed_messages[70];
-  EXPECT_EQ(last_msg_.signed_messages[71], 48)
-      << "incorrect value for last_msg_.signed_messages[71], expected 48, is "
-      << last_msg_.signed_messages[71];
-  EXPECT_EQ(last_msg_.signed_messages[72], 71)
-      << "incorrect value for last_msg_.signed_messages[72], expected 71, is "
-      << last_msg_.signed_messages[72];
-  EXPECT_EQ(last_msg_.signed_messages[73], 147)
-      << "incorrect value for last_msg_.signed_messages[73], expected 147, is "
-      << last_msg_.signed_messages[73];
-  EXPECT_EQ(last_msg_.signed_messages[74], 53)
-      << "incorrect value for last_msg_.signed_messages[74], expected 53, is "
-      << last_msg_.signed_messages[74];
-  EXPECT_EQ(last_msg_.signed_messages[75], 87)
-      << "incorrect value for last_msg_.signed_messages[75], expected 87, is "
-      << last_msg_.signed_messages[75];
-  EXPECT_EQ(last_msg_.signed_messages[76], 1)
-      << "incorrect value for last_msg_.signed_messages[76], expected 1, is "
-      << last_msg_.signed_messages[76];
-  EXPECT_EQ(last_msg_.signed_messages[77], 108)
-      << "incorrect value for last_msg_.signed_messages[77], expected 108, is "
-      << last_msg_.signed_messages[77];
-  EXPECT_EQ(last_msg_.signed_messages[78], 138)
-      << "incorrect value for last_msg_.signed_messages[78], expected 138, is "
-      << last_msg_.signed_messages[78];
-  EXPECT_EQ(last_msg_.signed_messages[79], 36)
-      << "incorrect value for last_msg_.signed_messages[79], expected 36, is "
-      << last_msg_.signed_messages[79];
-  EXPECT_EQ(last_msg_.signed_messages[80], 134)
-      << "incorrect value for last_msg_.signed_messages[80], expected 134, is "
-      << last_msg_.signed_messages[80];
-  EXPECT_EQ(last_msg_.signed_messages[81], 139)
-      << "incorrect value for last_msg_.signed_messages[81], expected 139, is "
-      << last_msg_.signed_messages[81];
-  EXPECT_EQ(last_msg_.signed_messages[82], 163)
-      << "incorrect value for last_msg_.signed_messages[82], expected 163, is "
-      << last_msg_.signed_messages[82];
-  EXPECT_EQ(last_msg_.signed_messages[83], 82)
-      << "incorrect value for last_msg_.signed_messages[83], expected 82, is "
-      << last_msg_.signed_messages[83];
-  EXPECT_EQ(last_msg_.signed_messages[84], 43)
-      << "incorrect value for last_msg_.signed_messages[84], expected 43, is "
-      << last_msg_.signed_messages[84];
-  EXPECT_EQ(last_msg_.signed_messages[85], 52)
-      << "incorrect value for last_msg_.signed_messages[85], expected 52, is "
-      << last_msg_.signed_messages[85];
-  EXPECT_EQ(last_msg_.signed_messages[86], 150)
-      << "incorrect value for last_msg_.signed_messages[86], expected 150, is "
-      << last_msg_.signed_messages[86];
-  EXPECT_EQ(last_msg_.signed_messages[87], 12)
-      << "incorrect value for last_msg_.signed_messages[87], expected 12, is "
-      << last_msg_.signed_messages[87];
-  EXPECT_EQ(last_msg_.signed_messages[88], 30)
-      << "incorrect value for last_msg_.signed_messages[88], expected 30, is "
-      << last_msg_.signed_messages[88];
-  EXPECT_EQ(last_msg_.signed_messages[89], 110)
-      << "incorrect value for last_msg_.signed_messages[89], expected 110, is "
-      << last_msg_.signed_messages[89];
-  EXPECT_EQ(last_msg_.signed_messages[90], 156)
-      << "incorrect value for last_msg_.signed_messages[90], expected 156, is "
-      << last_msg_.signed_messages[90];
-  EXPECT_EQ(last_msg_.signed_messages[91], 107)
-      << "incorrect value for last_msg_.signed_messages[91], expected 107, is "
-      << last_msg_.signed_messages[91];
-  EXPECT_EQ(last_msg_.signed_messages[92], 120)
-      << "incorrect value for last_msg_.signed_messages[92], expected 120, is "
-      << last_msg_.signed_messages[92];
-  EXPECT_EQ(last_msg_.signed_messages[93], 91)
-      << "incorrect value for last_msg_.signed_messages[93], expected 91, is "
-      << last_msg_.signed_messages[93];
-  EXPECT_EQ(last_msg_.signed_messages[94], 122)
-      << "incorrect value for last_msg_.signed_messages[94], expected 122, is "
-      << last_msg_.signed_messages[94];
-  EXPECT_EQ(last_msg_.signed_messages[95], 69)
-      << "incorrect value for last_msg_.signed_messages[95], expected 69, is "
-      << last_msg_.signed_messages[95];
-  EXPECT_EQ(last_msg_.signed_messages[96], 164)
-      << "incorrect value for last_msg_.signed_messages[96], expected 164, is "
-      << last_msg_.signed_messages[96];
-  EXPECT_EQ(last_msg_.signed_messages[97], 170)
-      << "incorrect value for last_msg_.signed_messages[97], expected 170, is "
-      << last_msg_.signed_messages[97];
-  EXPECT_EQ(last_msg_.signed_messages[98], 116)
-      << "incorrect value for last_msg_.signed_messages[98], expected 116, is "
-      << last_msg_.signed_messages[98];
-  EXPECT_EQ(last_msg_.signed_messages[99], 25)
-      << "incorrect value for last_msg_.signed_messages[99], expected 25, is "
-      << last_msg_.signed_messages[99];
-  EXPECT_EQ(last_msg_.signed_messages[100], 94)
-      << "incorrect value for last_msg_.signed_messages[100], expected 94, is "
-      << last_msg_.signed_messages[100];
-  EXPECT_EQ(last_msg_.signed_messages[101], 5)
-      << "incorrect value for last_msg_.signed_messages[101], expected 5, is "
-      << last_msg_.signed_messages[101];
-  EXPECT_EQ(last_msg_.signed_messages[102], 22)
-      << "incorrect value for last_msg_.signed_messages[102], expected 22, is "
-      << last_msg_.signed_messages[102];
-  EXPECT_EQ(last_msg_.signed_messages[103], 24)
-      << "incorrect value for last_msg_.signed_messages[103], expected 24, is "
-      << last_msg_.signed_messages[103];
-  EXPECT_EQ(last_msg_.signed_messages[104], 162)
-      << "incorrect value for last_msg_.signed_messages[104], expected 162, is "
-      << last_msg_.signed_messages[104];
-  EXPECT_EQ(last_msg_.signed_messages[105], 175)
-      << "incorrect value for last_msg_.signed_messages[105], expected 175, is "
-      << last_msg_.signed_messages[105];
-  EXPECT_EQ(last_msg_.signed_messages[106], 38)
-      << "incorrect value for last_msg_.signed_messages[106], expected 38, is "
-      << last_msg_.signed_messages[106];
-  EXPECT_EQ(last_msg_.signed_messages[107], 157)
-      << "incorrect value for last_msg_.signed_messages[107], expected 157, is "
-      << last_msg_.signed_messages[107];
-  EXPECT_EQ(last_msg_.signed_messages[108], 98)
-      << "incorrect value for last_msg_.signed_messages[108], expected 98, is "
-      << last_msg_.signed_messages[108];
-  EXPECT_EQ(last_msg_.signed_messages[109], 44)
-      << "incorrect value for last_msg_.signed_messages[109], expected 44, is "
-      << last_msg_.signed_messages[109];
-  EXPECT_EQ(last_msg_.signed_messages[110], 160)
-      << "incorrect value for last_msg_.signed_messages[110], expected 160, is "
-      << last_msg_.signed_messages[110];
-  EXPECT_EQ(last_msg_.signed_messages[111], 47)
-      << "incorrect value for last_msg_.signed_messages[111], expected 47, is "
-      << last_msg_.signed_messages[111];
-  EXPECT_EQ(last_msg_.signed_messages[112], 97)
-      << "incorrect value for last_msg_.signed_messages[112], expected 97, is "
-      << last_msg_.signed_messages[112];
-  EXPECT_EQ(last_msg_.signed_messages[113], 142)
-      << "incorrect value for last_msg_.signed_messages[113], expected 142, is "
-      << last_msg_.signed_messages[113];
-  EXPECT_EQ(last_msg_.signed_messages[114], 8)
-      << "incorrect value for last_msg_.signed_messages[114], expected 8, is "
-      << last_msg_.signed_messages[114];
-  EXPECT_EQ(last_msg_.signed_messages[115], 74)
-      << "incorrect value for last_msg_.signed_messages[115], expected 74, is "
-      << last_msg_.signed_messages[115];
-  EXPECT_EQ(last_msg_.signed_messages[116], 13)
-      << "incorrect value for last_msg_.signed_messages[116], expected 13, is "
-      << last_msg_.signed_messages[116];
-  EXPECT_EQ(last_msg_.signed_messages[117], 177)
-      << "incorrect value for last_msg_.signed_messages[117], expected 177, is "
-      << last_msg_.signed_messages[117];
-  EXPECT_EQ(last_msg_.signed_messages[118], 15)
-      << "incorrect value for last_msg_.signed_messages[118], expected 15, is "
-      << last_msg_.signed_messages[118];
-  EXPECT_EQ(last_msg_.signed_messages[119], 128)
-      << "incorrect value for last_msg_.signed_messages[119], expected 128, is "
-      << last_msg_.signed_messages[119];
-  EXPECT_EQ(last_msg_.signed_messages[120], 26)
-      << "incorrect value for last_msg_.signed_messages[120], expected 26, is "
-      << last_msg_.signed_messages[120];
-  EXPECT_EQ(last_msg_.signed_messages[121], 131)
-      << "incorrect value for last_msg_.signed_messages[121], expected 131, is "
-      << last_msg_.signed_messages[121];
-  EXPECT_EQ(last_msg_.signed_messages[122], 154)
-      << "incorrect value for last_msg_.signed_messages[122], expected 154, is "
-      << last_msg_.signed_messages[122];
-  EXPECT_EQ(last_msg_.signed_messages[123], 65)
-      << "incorrect value for last_msg_.signed_messages[123], expected 65, is "
-      << last_msg_.signed_messages[123];
-  EXPECT_EQ(last_msg_.signed_messages[124], 169)
-      << "incorrect value for last_msg_.signed_messages[124], expected 169, is "
-      << last_msg_.signed_messages[124];
-  EXPECT_EQ(last_msg_.signed_messages[125], 55)
-      << "incorrect value for last_msg_.signed_messages[125], expected 55, is "
-      << last_msg_.signed_messages[125];
-  EXPECT_EQ(last_msg_.signed_messages[126], 136)
-      << "incorrect value for last_msg_.signed_messages[126], expected 136, is "
-      << last_msg_.signed_messages[126];
-  EXPECT_EQ(last_msg_.signed_messages[127], 125)
-      << "incorrect value for last_msg_.signed_messages[127], expected 125, is "
-      << last_msg_.signed_messages[127];
-  EXPECT_EQ(last_msg_.signed_messages[128], 171)
-      << "incorrect value for last_msg_.signed_messages[128], expected 171, is "
-      << last_msg_.signed_messages[128];
-  EXPECT_EQ(last_msg_.signed_messages[129], 161)
-      << "incorrect value for last_msg_.signed_messages[129], expected 161, is "
-      << last_msg_.signed_messages[129];
-  EXPECT_EQ(last_msg_.signed_messages[130], 29)
-      << "incorrect value for last_msg_.signed_messages[130], expected 29, is "
-      << last_msg_.signed_messages[130];
-  EXPECT_EQ(last_msg_.signed_messages[131], 129)
-      << "incorrect value for last_msg_.signed_messages[131], expected 129, is "
-      << last_msg_.signed_messages[131];
-  EXPECT_EQ(last_msg_.signed_messages[132], 151)
-      << "incorrect value for last_msg_.signed_messages[132], expected 151, is "
-      << last_msg_.signed_messages[132];
-  EXPECT_EQ(last_msg_.signed_messages[133], 68)
-      << "incorrect value for last_msg_.signed_messages[133], expected 68, is "
-      << last_msg_.signed_messages[133];
-  EXPECT_EQ(last_msg_.signed_messages[134], 166)
-      << "incorrect value for last_msg_.signed_messages[134], expected 166, is "
-      << last_msg_.signed_messages[134];
-  EXPECT_EQ(last_msg_.signed_messages[135], 51)
-      << "incorrect value for last_msg_.signed_messages[135], expected 51, is "
-      << last_msg_.signed_messages[135];
-  EXPECT_EQ(last_msg_.signed_messages[136], 70)
-      << "incorrect value for last_msg_.signed_messages[136], expected 70, is "
-      << last_msg_.signed_messages[136];
-  EXPECT_EQ(last_msg_.signed_messages[137], 45)
-      << "incorrect value for last_msg_.signed_messages[137], expected 45, is "
-      << last_msg_.signed_messages[137];
-  EXPECT_EQ(last_msg_.signed_messages[138], 56)
-      << "incorrect value for last_msg_.signed_messages[138], expected 56, is "
-      << last_msg_.signed_messages[138];
-  EXPECT_EQ(last_msg_.signed_messages[139], 79)
-      << "incorrect value for last_msg_.signed_messages[139], expected 79, is "
-      << last_msg_.signed_messages[139];
-  EXPECT_EQ(last_msg_.signed_messages[140], 149)
-      << "incorrect value for last_msg_.signed_messages[140], expected 149, is "
-      << last_msg_.signed_messages[140];
-  EXPECT_EQ(last_msg_.signed_messages[141], 99)
-      << "incorrect value for last_msg_.signed_messages[141], expected 99, is "
-      << last_msg_.signed_messages[141];
-  EXPECT_EQ(last_msg_.signed_messages[142], 42)
-      << "incorrect value for last_msg_.signed_messages[142], expected 42, is "
-      << last_msg_.signed_messages[142];
-  EXPECT_EQ(last_msg_.signed_messages[143], 101)
-      << "incorrect value for last_msg_.signed_messages[143], expected 101, is "
-      << last_msg_.signed_messages[143];
-  EXPECT_EQ(last_msg_.signed_messages[144], 152)
-      << "incorrect value for last_msg_.signed_messages[144], expected 152, is "
-      << last_msg_.signed_messages[144];
-  EXPECT_EQ(last_msg_.signed_messages[145], 39)
-      << "incorrect value for last_msg_.signed_messages[145], expected 39, is "
-      << last_msg_.signed_messages[145];
-  EXPECT_EQ(last_msg_.signed_messages[146], 89)
-      << "incorrect value for last_msg_.signed_messages[146], expected 89, is "
-      << last_msg_.signed_messages[146];
-  EXPECT_EQ(last_msg_.signed_messages[147], 180)
-      << "incorrect value for last_msg_.signed_messages[147], expected 180, is "
-      << last_msg_.signed_messages[147];
-  EXPECT_EQ(last_msg_.signed_messages[148], 64)
-      << "incorrect value for last_msg_.signed_messages[148], expected 64, is "
-      << last_msg_.signed_messages[148];
-  EXPECT_EQ(last_msg_.signed_messages[149], 49)
-      << "incorrect value for last_msg_.signed_messages[149], expected 49, is "
-      << last_msg_.signed_messages[149];
-  EXPECT_EQ(last_msg_.signed_messages[150], 6)
-      << "incorrect value for last_msg_.signed_messages[150], expected 6, is "
-      << last_msg_.signed_messages[150];
-  EXPECT_EQ(last_msg_.signed_messages[151], 80)
-      << "incorrect value for last_msg_.signed_messages[151], expected 80, is "
-      << last_msg_.signed_messages[151];
-  EXPECT_EQ(last_msg_.signed_messages[152], 172)
-      << "incorrect value for last_msg_.signed_messages[152], expected 172, is "
-      << last_msg_.signed_messages[152];
-  EXPECT_EQ(last_msg_.signed_messages[153], 32)
-      << "incorrect value for last_msg_.signed_messages[153], expected 32, is "
-      << last_msg_.signed_messages[153];
-  EXPECT_EQ(last_msg_.signed_messages[154], 109)
-      << "incorrect value for last_msg_.signed_messages[154], expected 109, is "
-      << last_msg_.signed_messages[154];
-  EXPECT_EQ(last_msg_.signed_messages[155], 2)
-      << "incorrect value for last_msg_.signed_messages[155], expected 2, is "
-      << last_msg_.signed_messages[155];
-  EXPECT_EQ(last_msg_.signed_messages[156], 119)
-      << "incorrect value for last_msg_.signed_messages[156], expected 119, is "
-      << last_msg_.signed_messages[156];
-  EXPECT_EQ(last_msg_.signed_messages[157], 93)
-      << "incorrect value for last_msg_.signed_messages[157], expected 93, is "
-      << last_msg_.signed_messages[157];
-  EXPECT_EQ(last_msg_.signed_messages[158], 176)
-      << "incorrect value for last_msg_.signed_messages[158], expected 176, is "
-      << last_msg_.signed_messages[158];
-  EXPECT_EQ(last_msg_.signed_messages[159], 0)
-      << "incorrect value for last_msg_.signed_messages[159], expected 0, is "
-      << last_msg_.signed_messages[159];
-  EXPECT_EQ(last_msg_.signed_messages[160], 33)
-      << "incorrect value for last_msg_.signed_messages[160], expected 33, is "
-      << last_msg_.signed_messages[160];
-  EXPECT_EQ(last_msg_.signed_messages[161], 57)
-      << "incorrect value for last_msg_.signed_messages[161], expected 57, is "
-      << last_msg_.signed_messages[161];
-  EXPECT_EQ(last_msg_.signed_messages[162], 34)
-      << "incorrect value for last_msg_.signed_messages[162], expected 34, is "
-      << last_msg_.signed_messages[162];
-  EXPECT_EQ(last_msg_.signed_messages[163], 18)
-      << "incorrect value for last_msg_.signed_messages[163], expected 18, is "
-      << last_msg_.signed_messages[163];
-  EXPECT_EQ(last_msg_.signed_messages[164], 85)
-      << "incorrect value for last_msg_.signed_messages[164], expected 85, is "
-      << last_msg_.signed_messages[164];
-  EXPECT_EQ(last_msg_.signed_messages[165], 121)
-      << "incorrect value for last_msg_.signed_messages[165], expected 121, is "
-      << last_msg_.signed_messages[165];
-  EXPECT_EQ(last_msg_.signed_messages[166], 137)
-      << "incorrect value for last_msg_.signed_messages[166], expected 137, is "
-      << last_msg_.signed_messages[166];
-  EXPECT_EQ(last_msg_.signed_messages[167], 83)
-      << "incorrect value for last_msg_.signed_messages[167], expected 83, is "
-      << last_msg_.signed_messages[167];
-  EXPECT_EQ(last_msg_.signed_messages[168], 111)
-      << "incorrect value for last_msg_.signed_messages[168], expected 111, is "
-      << last_msg_.signed_messages[168];
-  EXPECT_EQ(last_msg_.signed_messages[169], 59)
-      << "incorrect value for last_msg_.signed_messages[169], expected 59, is "
-      << last_msg_.signed_messages[169];
-  EXPECT_EQ(last_msg_.signed_messages[170], 7)
-      << "incorrect value for last_msg_.signed_messages[170], expected 7, is "
-      << last_msg_.signed_messages[170];
-  EXPECT_EQ(last_msg_.signed_messages[171], 77)
-      << "incorrect value for last_msg_.signed_messages[171], expected 77, is "
-      << last_msg_.signed_messages[171];
-  EXPECT_EQ(last_msg_.signed_messages[172], 4)
-      << "incorrect value for last_msg_.signed_messages[172], expected 4, is "
-      << last_msg_.signed_messages[172];
-  EXPECT_EQ(last_msg_.signed_messages[173], 117)
-      << "incorrect value for last_msg_.signed_messages[173], expected 117, is "
-      << last_msg_.signed_messages[173];
-  EXPECT_EQ(last_msg_.signed_messages[174], 159)
-      << "incorrect value for last_msg_.signed_messages[174], expected 159, is "
-      << last_msg_.signed_messages[174];
-  EXPECT_EQ(last_msg_.signed_messages[175], 148)
-      << "incorrect value for last_msg_.signed_messages[175], expected 148, is "
-      << last_msg_.signed_messages[175];
-  EXPECT_EQ(last_msg_.signed_messages[176], 35)
-      << "incorrect value for last_msg_.signed_messages[176], expected 35, is "
-      << last_msg_.signed_messages[176];
-  EXPECT_EQ(last_msg_.signed_messages[177], 61)
-      << "incorrect value for last_msg_.signed_messages[177], expected 61, is "
-      << last_msg_.signed_messages[177];
-  EXPECT_EQ(last_msg_.signed_messages[178], 41)
-      << "incorrect value for last_msg_.signed_messages[178], expected 41, is "
-      << last_msg_.signed_messages[178];
-  EXPECT_EQ(last_msg_.signed_messages[179], 67)
-      << "incorrect value for last_msg_.signed_messages[179], expected 67, is "
-      << last_msg_.signed_messages[179];
-  EXPECT_EQ(last_msg_.signed_messages[180], 46)
-      << "incorrect value for last_msg_.signed_messages[180], expected 46, is "
-      << last_msg_.signed_messages[180];
-  EXPECT_EQ(last_msg_.signed_messages[181], 127)
-      << "incorrect value for last_msg_.signed_messages[181], expected 127, is "
-      << last_msg_.signed_messages[181];
-  EXPECT_EQ(last_msg_.signed_messages[182], 75)
-      << "incorrect value for last_msg_.signed_messages[182], expected 75, is "
-      << last_msg_.signed_messages[182];
-  EXPECT_EQ(last_msg_.signed_messages[183], 174)
-      << "incorrect value for last_msg_.signed_messages[183], expected 174, is "
-      << last_msg_.signed_messages[183];
-  EXPECT_EQ(last_msg_.stream_counter, 1)
-      << "incorrect value for last_msg_.stream_counter, expected 1, is "
-      << last_msg_.stream_counter;
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
 }
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       ReceiveThroughSbpStateUnderflow) {
+  auto info = get_test_msg_info();
+
+  for (uint32_t i = 0; i < info.frame_len; i++) {
+    sbp_state_t state;
+    sbp_state_init(&state);
+
+    auto reader = info.get_frame_reader(i);
+    sbp_state_set_io_context(&state, &reader);
+
+    CHandler handler(&state);
+
+    int most_recent_return = sbp_process(&state, &Reader::read_static);
+    while (most_recent_return == SBP_OK || reader.remaining() > 0) {
+      most_recent_return = sbp_process(&state, &Reader::read_static);
+    }
+
+    EXPECT_NE(most_recent_return, SBP_OK);
+    EXPECT_EQ(reader.remaining(), 0);
+
+    EXPECT_EQ(handler.outputs.size(), 0);
+  }
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, SlowRead) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto reader = info.get_slow_frame_reader();
+  sbp_state_set_io_context(&state, &reader);
+
+  CHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    EXPECT_GE(sbp_process(&state, &SlowReader::read_static), SBP_OK);
+  }
+
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, BadCRC) {
+  auto info = get_test_msg_info();
+  uint8_t buf[SBP_MAX_FRAME_LEN];
+  memcpy(&buf[0], info.encoded_frame, info.frame_len);
+
+  // Introduce a CRC error which should cause an error return and no callback
+  buf[info.frame_len - 1]++;
+
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  Reader reader{buf, info.frame_len};
+  sbp_state_set_io_context(&state, &reader);
+
+  CHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    int res = sbp_process(&state, &Reader::read_static);
+    EXPECT_EQ(res, reader.remaining() == 0 ? SBP_CRC_ERROR : SBP_OK);
+  }
+
+  EXPECT_EQ(handler.outputs.size(), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, SendThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp_msg_ecdsa_signature_dep_a_send(
+                &state, info.sender_id, &info.test_msg, &Writer::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), &info.encoded_frame[0], writer.len()), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       SendWrappedThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp_message_send(&state, SbpMsgEcdsaSignatureDepA, info.sender_id,
+                             &info.test_msg_wrapped, &Writer::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       SendThroughSbpStateUnderflow) {
+  auto info = get_test_msg_info();
+
+  for (uint32_t i = 0; i < info.frame_len; i++) {
+    sbp_state_t state;
+    sbp_state_init(&state);
+
+    auto writer = info.get_frame_writer(i);
+    sbp_state_set_io_context(&state, &writer);
+
+    EXPECT_NE(sbp_message_send(&state, SbpMsgEcdsaSignatureDepA, info.sender_id,
+                               &info.test_msg_wrapped, &Writer::write_c),
+              SBP_OK);
+    EXPECT_EQ(writer.len(), i);
+    EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, i), 0);
+  }
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, DISABLED_SlowWrite) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_slow_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp_message_send(&state, SbpMsgEcdsaSignatureDepA, info.sender_id,
+                             &info.test_msg_wrapped, &SlowWriter::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, Comparison) {
+  auto info = get_test_msg_info();
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_id[0], greater.certificate_id[0]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_id[1], greater.certificate_id[1]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_id[2], greater.certificate_id[2]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.certificate_id[3], greater.certificate_id[3]);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.flags, greater.flags);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.n_signed_messages, greater.n_signed_messages);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.on_demand_counter, greater.on_demand_counter);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[0], greater.signature[0]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[1], greater.signature[1]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[2], greater.signature[2]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[3], greater.signature[3]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[4], greater.signature[4]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[5], greater.signature[5]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[6], greater.signature[6]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[7], greater.signature[7]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[8], greater.signature[8]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[9], greater.signature[9]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[10], greater.signature[10]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[11], greater.signature[11]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[12], greater.signature[12]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[13], greater.signature[13]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[14], greater.signature[14]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[15], greater.signature[15]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[16], greater.signature[16]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[17], greater.signature[17]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[18], greater.signature[18]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[19], greater.signature[19]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[20], greater.signature[20]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[21], greater.signature[21]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[22], greater.signature[22]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[23], greater.signature[23]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[24], greater.signature[24]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[25], greater.signature[25]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[26], greater.signature[26]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[27], greater.signature[27]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[28], greater.signature[28]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[29], greater.signature[29]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[30], greater.signature[30]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[31], greater.signature[31]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[32], greater.signature[32]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[33], greater.signature[33]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[34], greater.signature[34]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[35], greater.signature[35]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[36], greater.signature[36]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[37], greater.signature[37]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[38], greater.signature[38]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[39], greater.signature[39]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[40], greater.signature[40]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[41], greater.signature[41]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[42], greater.signature[42]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[43], greater.signature[43]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[44], greater.signature[44]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[45], greater.signature[45]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[46], greater.signature[46]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[47], greater.signature[47]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[48], greater.signature[48]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[49], greater.signature[49]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[50], greater.signature[50]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[51], greater.signature[51]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[52], greater.signature[52]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[53], greater.signature[53]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[54], greater.signature[54]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[55], greater.signature[55]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[56], greater.signature[56]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[57], greater.signature[57]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[58], greater.signature[58]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[59], greater.signature[59]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[60], greater.signature[60]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[61], greater.signature[61]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[62], greater.signature[62]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signature[63], greater.signature[63]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[0], greater.signed_messages[0]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[1], greater.signed_messages[1]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[2], greater.signed_messages[2]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[3], greater.signed_messages[3]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[4], greater.signed_messages[4]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[5], greater.signed_messages[5]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[6], greater.signed_messages[6]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[7], greater.signed_messages[7]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[8], greater.signed_messages[8]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[9], greater.signed_messages[9]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[10],
+                        greater.signed_messages[10]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[11],
+                        greater.signed_messages[11]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[12],
+                        greater.signed_messages[12]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[13],
+                        greater.signed_messages[13]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[14],
+                        greater.signed_messages[14]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[15],
+                        greater.signed_messages[15]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[16],
+                        greater.signed_messages[16]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[17],
+                        greater.signed_messages[17]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[18],
+                        greater.signed_messages[18]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[19],
+                        greater.signed_messages[19]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[20],
+                        greater.signed_messages[20]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[21],
+                        greater.signed_messages[21]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[22],
+                        greater.signed_messages[22]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[23],
+                        greater.signed_messages[23]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[24],
+                        greater.signed_messages[24]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[25],
+                        greater.signed_messages[25]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[26],
+                        greater.signed_messages[26]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[27],
+                        greater.signed_messages[27]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[28],
+                        greater.signed_messages[28]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[29],
+                        greater.signed_messages[29]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[30],
+                        greater.signed_messages[30]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[31],
+                        greater.signed_messages[31]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[32],
+                        greater.signed_messages[32]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[33],
+                        greater.signed_messages[33]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[34],
+                        greater.signed_messages[34]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[35],
+                        greater.signed_messages[35]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[36],
+                        greater.signed_messages[36]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[37],
+                        greater.signed_messages[37]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[38],
+                        greater.signed_messages[38]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[39],
+                        greater.signed_messages[39]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[40],
+                        greater.signed_messages[40]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[41],
+                        greater.signed_messages[41]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[42],
+                        greater.signed_messages[42]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[43],
+                        greater.signed_messages[43]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[44],
+                        greater.signed_messages[44]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[45],
+                        greater.signed_messages[45]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[46],
+                        greater.signed_messages[46]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[47],
+                        greater.signed_messages[47]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[48],
+                        greater.signed_messages[48]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[49],
+                        greater.signed_messages[49]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[50],
+                        greater.signed_messages[50]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[51],
+                        greater.signed_messages[51]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[52],
+                        greater.signed_messages[52]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[53],
+                        greater.signed_messages[53]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[54],
+                        greater.signed_messages[54]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[55],
+                        greater.signed_messages[55]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[56],
+                        greater.signed_messages[56]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[57],
+                        greater.signed_messages[57]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[58],
+                        greater.signed_messages[58]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[59],
+                        greater.signed_messages[59]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[60],
+                        greater.signed_messages[60]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[61],
+                        greater.signed_messages[61]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[62],
+                        greater.signed_messages[62]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[63],
+                        greater.signed_messages[63]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[64],
+                        greater.signed_messages[64]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[65],
+                        greater.signed_messages[65]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[66],
+                        greater.signed_messages[66]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[67],
+                        greater.signed_messages[67]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[68],
+                        greater.signed_messages[68]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[69],
+                        greater.signed_messages[69]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[70],
+                        greater.signed_messages[70]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[71],
+                        greater.signed_messages[71]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[72],
+                        greater.signed_messages[72]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[73],
+                        greater.signed_messages[73]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[74],
+                        greater.signed_messages[74]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[75],
+                        greater.signed_messages[75]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[76],
+                        greater.signed_messages[76]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[77],
+                        greater.signed_messages[77]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[78],
+                        greater.signed_messages[78]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[79],
+                        greater.signed_messages[79]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[80],
+                        greater.signed_messages[80]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[81],
+                        greater.signed_messages[81]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[82],
+                        greater.signed_messages[82]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[83],
+                        greater.signed_messages[83]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[84],
+                        greater.signed_messages[84]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[85],
+                        greater.signed_messages[85]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[86],
+                        greater.signed_messages[86]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[87],
+                        greater.signed_messages[87]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[88],
+                        greater.signed_messages[88]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[89],
+                        greater.signed_messages[89]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[90],
+                        greater.signed_messages[90]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[91],
+                        greater.signed_messages[91]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[92],
+                        greater.signed_messages[92]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[93],
+                        greater.signed_messages[93]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[94],
+                        greater.signed_messages[94]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[95],
+                        greater.signed_messages[95]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[96],
+                        greater.signed_messages[96]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[97],
+                        greater.signed_messages[97]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[98],
+                        greater.signed_messages[98]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[99],
+                        greater.signed_messages[99]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[100],
+                        greater.signed_messages[100]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[101],
+                        greater.signed_messages[101]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[102],
+                        greater.signed_messages[102]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[103],
+                        greater.signed_messages[103]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[104],
+                        greater.signed_messages[104]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[105],
+                        greater.signed_messages[105]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[106],
+                        greater.signed_messages[106]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[107],
+                        greater.signed_messages[107]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[108],
+                        greater.signed_messages[108]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[109],
+                        greater.signed_messages[109]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[110],
+                        greater.signed_messages[110]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[111],
+                        greater.signed_messages[111]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[112],
+                        greater.signed_messages[112]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[113],
+                        greater.signed_messages[113]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[114],
+                        greater.signed_messages[114]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[115],
+                        greater.signed_messages[115]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[116],
+                        greater.signed_messages[116]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[117],
+                        greater.signed_messages[117]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[118],
+                        greater.signed_messages[118]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[119],
+                        greater.signed_messages[119]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[120],
+                        greater.signed_messages[120]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[121],
+                        greater.signed_messages[121]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[122],
+                        greater.signed_messages[122]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[123],
+                        greater.signed_messages[123]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[124],
+                        greater.signed_messages[124]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[125],
+                        greater.signed_messages[125]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[126],
+                        greater.signed_messages[126]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[127],
+                        greater.signed_messages[127]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[128],
+                        greater.signed_messages[128]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[129],
+                        greater.signed_messages[129]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[130],
+                        greater.signed_messages[130]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[131],
+                        greater.signed_messages[131]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[132],
+                        greater.signed_messages[132]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[133],
+                        greater.signed_messages[133]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[134],
+                        greater.signed_messages[134]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[135],
+                        greater.signed_messages[135]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[136],
+                        greater.signed_messages[136]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[137],
+                        greater.signed_messages[137]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[138],
+                        greater.signed_messages[138]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[139],
+                        greater.signed_messages[139]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[140],
+                        greater.signed_messages[140]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[141],
+                        greater.signed_messages[141]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[142],
+                        greater.signed_messages[142]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[143],
+                        greater.signed_messages[143]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[144],
+                        greater.signed_messages[144]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[145],
+                        greater.signed_messages[145]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[146],
+                        greater.signed_messages[146]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[147],
+                        greater.signed_messages[147]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[148],
+                        greater.signed_messages[148]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[149],
+                        greater.signed_messages[149]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[150],
+                        greater.signed_messages[150]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[151],
+                        greater.signed_messages[151]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[152],
+                        greater.signed_messages[152]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[153],
+                        greater.signed_messages[153]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[154],
+                        greater.signed_messages[154]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[155],
+                        greater.signed_messages[155]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[156],
+                        greater.signed_messages[156]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[157],
+                        greater.signed_messages[157]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[158],
+                        greater.signed_messages[158]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[159],
+                        greater.signed_messages[159]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[160],
+                        greater.signed_messages[160]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[161],
+                        greater.signed_messages[161]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[162],
+                        greater.signed_messages[162]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[163],
+                        greater.signed_messages[163]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[164],
+                        greater.signed_messages[164]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[165],
+                        greater.signed_messages[165]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[166],
+                        greater.signed_messages[166]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[167],
+                        greater.signed_messages[167]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[168],
+                        greater.signed_messages[168]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[169],
+                        greater.signed_messages[169]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[170],
+                        greater.signed_messages[170]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[171],
+                        greater.signed_messages[171]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[172],
+                        greater.signed_messages[172]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[173],
+                        greater.signed_messages[173]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[174],
+                        greater.signed_messages[174]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[175],
+                        greater.signed_messages[175]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[176],
+                        greater.signed_messages[176]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[177],
+                        greater.signed_messages[177]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[178],
+                        greater.signed_messages[178]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[179],
+                        greater.signed_messages[179]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[180],
+                        greater.signed_messages[180]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[181],
+                        greater.signed_messages[181]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[182],
+                        greater.signed_messages[182]);
+    comparison_tests(lesser, greater);
+  }
+
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.signed_messages[183],
+                        greater.signed_messages[183]);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_ecdsa_signature_dep_a_t lesser = info.test_msg;
+    sbp_msg_ecdsa_signature_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.stream_counter, greater.stream_counter);
+    comparison_tests(lesser, greater);
+  }
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, CppTraitsProperties) {
+  // EXPECT_EQ(sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::id,
+  // SbpMsgEcdsaSignatureDepA);
+  EXPECT_STREQ(sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::name,
+               "MSG_ECDSA_SIGNATURE_DEP_A");
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       CppTraitsFromSbpMsgT) {
+  auto info = get_test_msg_info();
+
+  const sbp_msg_t &const_sbp_msg_t = info.test_msg_wrapped;
+  sbp_msg_t &non_const_sbp_msg_t = info.test_msg_wrapped;
+
+  const sbp_msg_ecdsa_signature_dep_a_t &const_unwrapped =
+      sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::get(const_sbp_msg_t);
+  sbp_msg_ecdsa_signature_dep_a_t &non_const_unwrapped =
+      sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::get(
+          non_const_sbp_msg_t);
+
+  EXPECT_EQ((const void *)&const_sbp_msg_t, (const void *)&const_unwrapped);
+  EXPECT_EQ((void *)&non_const_sbp_msg_t, (void *)&non_const_unwrapped);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, CppTraitsToSbpMsgT) {
+  auto info = get_test_msg_info();
+
+  sbp_msg_t msg1 =
+      sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::to_sbp_msg(
+          info.test_msg);
+  EXPECT_EQ(msg1.ecdsa_signature_dep_a, info.test_msg);
+
+  sbp_msg_t msg2;
+  sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::to_sbp_msg(info.test_msg,
+                                                                  &msg2);
+  EXPECT_EQ(msg2.ecdsa_signature_dep_a, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, CppTraitsEncodedLen) {
+  auto info = get_test_msg_info();
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::encoded_len(
+                info.test_msg),
+            info.payload_len);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       CppTraitsSendThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::send(
+                &state, info.sender_id, info.test_msg, &Writer::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), &info.encoded_frame[0], writer.len()), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       CppTraitsEncodeToBuf) {
+  auto info = get_test_msg_info();
+  uint8_t buf[255];
+  uint8_t n_written;
+
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::encode(
+                &buf[0], sizeof(buf), &n_written, info.test_msg),
+            SBP_OK);
+  EXPECT_EQ(n_written, 255);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 255), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       CppTraitsDecodeFromBuf) {
+  auto info = get_test_msg_info();
+  sbp_msg_ecdsa_signature_dep_a_t msg{};
+  uint8_t n_read;
+
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ecdsa_signature_dep_a_t>::decode(
+                &info.encoded_payload[0], info.payload_len, &n_read, &msg),
+            SBP_OK);
+  EXPECT_EQ(n_read, 255);
+  EXPECT_EQ(msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       ReceiveThroughMessageHandler) {
+  auto info = get_test_msg_info();
+  auto reader = info.get_frame_reader();
+
+  sbp::State state{};
+  state.set_reader(&reader);
+
+  CppHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    EXPECT_GE(state.process(), SBP_OK);
+  }
+
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       ProcessSbpMsgTThroughMessageHandler) {
+  auto info = get_test_msg_info();
+  sbp::State state{};
+  CppHandler handler(&state);
+
+  state.process_message(info.sender_id, SbpMsgEcdsaSignatureDepA,
+                        &info.test_msg_wrapped);
+
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0, SendThroughCppState) {
+  auto info = get_test_msg_info();
+  auto writer = info.get_frame_writer();
+
+  sbp::State state{};
+  state.set_writer(&writer);
+
+  EXPECT_EQ(state.send_message(info.sender_id, info.test_msg), SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+TEST_F(Testauto_check_sbp_signing_MsgEcdsaSignatureDepA0,
+       SendWrappedSbpMsgTThroughCppState) {
+  auto info = get_test_msg_info();
+  auto writer = info.get_frame_writer();
+
+  sbp::State state{};
+  state.set_writer(&writer);
+
+  EXPECT_EQ(state.send_message(info.sender_id, SbpMsgEcdsaSignatureDepA,
+                               info.test_msg_wrapped),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+}  // namespace
