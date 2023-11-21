@@ -261,6 +261,9 @@ bool sbp_msg_ecdsa_certificate_decode_internal(
   if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U8) != 0) {
+    return false;
+  }
   msg->n_certificate_bytes =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_certificate_bytes; i++) {
@@ -699,6 +702,9 @@ bool sbp_msg_ecdsa_signature_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_ecdsa_signature_decode_internal(ctx, &msg->signature)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U8) != 0) {
+    return false;
+  }
   msg->n_signed_messages =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_signed_messages; i++) {
@@ -854,6 +860,9 @@ bool sbp_msg_ecdsa_signature_dep_b_decode_internal(
     if (!sbp_u8_decode(ctx, &msg->signature[i])) {
       return false;
     }
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U8) != 0) {
+    return false;
   }
   msg->n_signed_messages =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
@@ -1014,6 +1023,9 @@ bool sbp_msg_ecdsa_signature_dep_a_decode_internal(
       return false;
     }
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U8) != 0) {
+    return false;
+  }
   msg->n_signed_messages =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_signed_messages; i++) {
@@ -1145,6 +1157,9 @@ bool sbp_msg_ed25519_certificate_dep_decode_internal(
       return false;
     }
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U8) != 0) {
+    return false;
+  }
   msg->n_certificate_bytes =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_certificate_bytes; i++) {
@@ -1261,6 +1276,9 @@ bool sbp_msg_ed25519_signature_dep_a_decode_internal(
     if (!sbp_u8_decode(ctx, &msg->fingerprint[i])) {
       return false;
     }
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U32) != 0) {
+    return false;
   }
   msg->n_signed_messages =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U32);
@@ -1393,6 +1411,9 @@ bool sbp_msg_ed25519_signature_dep_b_decode_internal(
     if (!sbp_u8_decode(ctx, &msg->fingerprint[i])) {
       return false;
     }
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U32) != 0) {
+    return false;
   }
   msg->n_signed_messages =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U32);

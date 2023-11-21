@@ -65,6 +65,9 @@ bool sbp_msg_flash_program_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->addr_len)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U8) != 0) {
+    return false;
+  }
   msg->addr_len = (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->addr_len; i++) {
     if (!sbp_u8_decode(ctx, &msg->data[i])) {

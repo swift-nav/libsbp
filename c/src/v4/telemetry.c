@@ -212,6 +212,9 @@ bool sbp_msg_tel_sv_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->origin_flags)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_TELEMETRY_SV_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_sv_tel =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_TELEMETRY_SV_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_sv_tel; i++) {

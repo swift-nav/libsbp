@@ -442,6 +442,10 @@ bool sbp_msg_obs_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_obs_t *msg) {
   if (!sbp_observation_header_decode_internal(ctx, &msg->header)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_PACKED_OBS_CONTENT_ENCODED_LEN) !=
+      0) {
+    return false;
+  }
   msg->n_obs = (uint8_t)((ctx->buf_len - ctx->offset) /
                          SBP_PACKED_OBS_CONTENT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_obs; i++) {
@@ -6486,6 +6490,10 @@ bool sbp_msg_obs_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_observation_header_dep_decode_internal(ctx, &msg->header)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) %
+       SBP_PACKED_OBS_CONTENT_DEP_A_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_obs = (uint8_t)((ctx->buf_len - ctx->offset) /
                          SBP_PACKED_OBS_CONTENT_DEP_A_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_obs; i++) {
@@ -6577,6 +6585,10 @@ bool sbp_msg_obs_dep_b_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_observation_header_dep_decode_internal(ctx, &msg->header)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) %
+       SBP_PACKED_OBS_CONTENT_DEP_B_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_obs = (uint8_t)((ctx->buf_len - ctx->offset) /
                          SBP_PACKED_OBS_CONTENT_DEP_B_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_obs; i++) {
@@ -6666,6 +6678,10 @@ s8 sbp_msg_obs_dep_c_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 bool sbp_msg_obs_dep_c_decode_internal(sbp_decode_ctx_t *ctx,
                                        sbp_msg_obs_dep_c_t *msg) {
   if (!sbp_observation_header_dep_decode_internal(ctx, &msg->header)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) %
+       SBP_PACKED_OBS_CONTENT_DEP_C_ENCODED_LEN) != 0) {
     return false;
   }
   msg->n_obs = (uint8_t)((ctx->buf_len - ctx->offset) /
@@ -8726,6 +8742,9 @@ s8 sbp_msg_sv_az_el_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_sv_az_el_decode_internal(sbp_decode_ctx_t *ctx,
                                       sbp_msg_sv_az_el_t *msg) {
+  if (((ctx->buf_len - ctx->offset) % SBP_SV_AZ_EL_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_azel =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_SV_AZ_EL_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_azel; i++) {
@@ -8807,6 +8826,10 @@ s8 sbp_msg_osr_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_osr_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_osr_t *msg) {
   if (!sbp_observation_header_decode_internal(ctx, &msg->header)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_PACKED_OSR_CONTENT_ENCODED_LEN) !=
+      0) {
     return false;
   }
   msg->n_obs = (uint8_t)((ctx->buf_len - ctx->offset) /

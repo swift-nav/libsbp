@@ -435,6 +435,9 @@ bool sbp_msg_ssr_flag_satellites_decode_internal(
   if (!sbp_u8_decode(ctx, &msg->n_faulty_sats)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U8) != 0) {
+    return false;
+  }
   msg->n_faulty_sats =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_faulty_sats; i++) {
@@ -564,6 +567,9 @@ bool sbp_msg_ssr_flag_tropo_grid_points_decode_internal(
   if (!sbp_u8_decode(ctx, &msg->n_faulty_points)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U16) != 0) {
+    return false;
+  }
   msg->n_faulty_points =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U16);
   for (uint8_t i = 0; i < msg->n_faulty_points; i++) {
@@ -669,6 +675,9 @@ bool sbp_msg_ssr_flag_iono_grid_points_decode_internal(
   if (!sbp_u8_decode(ctx, &msg->n_faulty_points)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U16) != 0) {
+    return false;
+  }
   msg->n_faulty_points =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U16);
   for (uint8_t i = 0; i < msg->n_faulty_points; i++) {
@@ -772,6 +781,9 @@ bool sbp_msg_ssr_flag_iono_tile_sat_los_decode_internal(
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_faulty_los)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_SV_ID_ENCODED_LEN) != 0) {
     return false;
   }
   msg->n_faulty_los =
@@ -884,6 +896,9 @@ bool sbp_msg_ssr_flag_iono_grid_point_sat_los_decode_internal(
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_faulty_los)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_SV_ID_ENCODED_LEN) != 0) {
     return false;
   }
   msg->n_faulty_los =

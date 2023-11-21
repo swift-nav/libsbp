@@ -509,6 +509,9 @@ bool sbp_msg_status_report_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u32_decode(ctx, &msg->uptime)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_SUB_SYSTEM_REPORT_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_status = (uint8_t)((ctx->buf_len - ctx->offset) /
                             SBP_SUB_SYSTEM_REPORT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_status; i++) {
@@ -700,6 +703,10 @@ bool sbp_msg_status_journal_decode_internal(sbp_decode_ctx_t *ctx,
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->sequence_descriptor)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_STATUS_JOURNAL_ITEM_ENCODED_LEN) !=
+      0) {
     return false;
   }
   msg->n_journal = (uint8_t)((ctx->buf_len - ctx->offset) /
@@ -1746,6 +1753,9 @@ bool sbp_msg_group_meta_decode_internal(sbp_decode_ctx_t *ctx,
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_group_msgs)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U16) != 0) {
     return false;
   }
   msg->n_group_msgs =
