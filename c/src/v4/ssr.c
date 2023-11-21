@@ -1104,6 +1104,10 @@ bool sbp_msg_ssr_code_biases_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->iod_ssr)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_CODE_BIASES_CONTENT_ENCODED_LEN) !=
+      0) {
+    return false;
+  }
   msg->n_biases = (uint8_t)((ctx->buf_len - ctx->offset) /
                             SBP_CODE_BIASES_CONTENT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_biases; i++) {
@@ -1254,6 +1258,10 @@ bool sbp_msg_ssr_phase_biases_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_s8_decode(ctx, &msg->yaw_rate)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_PHASE_BIASES_CONTENT_ENCODED_LEN) !=
+      0) {
+    return false;
+  }
   msg->n_biases = (uint8_t)((ctx->buf_len - ctx->offset) /
                             SBP_PHASE_BIASES_CONTENT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_biases; i++) {
@@ -1380,6 +1388,9 @@ s8 sbp_msg_ssr_stec_correction_dep_encode(
 bool sbp_msg_ssr_stec_correction_dep_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_stec_correction_dep_t *msg) {
   if (!sbp_stec_header_decode_internal(ctx, &msg->header)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_STEC_SAT_ELEMENT_ENCODED_LEN) != 0) {
     return false;
   }
   msg->n_stec_sat_list = (uint8_t)((ctx->buf_len - ctx->offset) /
@@ -1601,6 +1612,9 @@ bool sbp_msg_ssr_stec_correction_decode_internal(
   if (!sbp_u8_decode(ctx, &msg->n_sats)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_STEC_SAT_ELEMENT_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_sats = (uint8_t)((ctx->buf_len - ctx->offset) /
                           SBP_STEC_SAT_ELEMENT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_sats; i++) {
@@ -1726,6 +1740,9 @@ bool sbp_msg_ssr_gridded_correction_decode_internal(
   }
   if (!sbp_tropospheric_delay_correction_decode_internal(
           ctx, &msg->tropo_delay_correction)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_STEC_RESIDUAL_ENCODED_LEN) != 0) {
     return false;
   }
   msg->n_stec_residuals =
@@ -2004,6 +2021,10 @@ bool sbp_msg_ssr_gridded_correction_bounds_decode_internal(
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_sats)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) %
+       SBP_STEC_SAT_ELEMENT_INTEGRITY_ENCODED_LEN) != 0) {
     return false;
   }
   msg->n_sats = (uint8_t)((ctx->buf_len - ctx->offset) /
@@ -2805,6 +2826,9 @@ s8 sbp_msg_ssr_satellite_apc_dep_encode(
 
 bool sbp_msg_ssr_satellite_apc_dep_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_satellite_apc_dep_t *msg) {
+  if (((ctx->buf_len - ctx->offset) % SBP_SATELLITE_APC_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_apc =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_SATELLITE_APC_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_apc; i++) {
@@ -2910,6 +2934,9 @@ bool sbp_msg_ssr_satellite_apc_decode_internal(
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->iod_ssr)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_SATELLITE_APC_ENCODED_LEN) != 0) {
     return false;
   }
   msg->n_apc =
@@ -3568,6 +3595,9 @@ bool sbp_msg_ssr_stec_correction_dep_a_decode_internal(
   if (!sbp_stec_header_dep_a_decode_internal(ctx, &msg->header)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_STEC_SAT_ELEMENT_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_stec_sat_list = (uint8_t)((ctx->buf_len - ctx->offset) /
                                    SBP_STEC_SAT_ELEMENT_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_stec_sat_list; i++) {
@@ -3676,6 +3706,10 @@ bool sbp_msg_ssr_gridded_correction_no_std_dep_a_decode_internal(
   }
   if (!sbp_tropospheric_delay_correction_no_std_decode_internal(
           ctx, &msg->tropo_delay_correction)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_STEC_RESIDUAL_NO_STD_ENCODED_LEN) !=
+      0) {
     return false;
   }
   msg->n_stec_residuals = (uint8_t)((ctx->buf_len - ctx->offset) /
@@ -3800,6 +3834,9 @@ bool sbp_msg_ssr_gridded_correction_dep_a_decode_internal(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_STEC_RESIDUAL_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_stec_residuals =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_STEC_RESIDUAL_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_stec_residuals; i++) {
@@ -3903,6 +3940,9 @@ s8 sbp_msg_ssr_grid_definition_dep_a_encode(
 bool sbp_msg_ssr_grid_definition_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_grid_definition_dep_a_t *msg) {
   if (!sbp_grid_definition_header_dep_a_decode_internal(ctx, &msg->header)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U8) != 0) {
     return false;
   }
   msg->n_rle_list =
@@ -4163,6 +4203,9 @@ bool sbp_msg_ssr_orbit_clock_bounds_decode_internal(
   if (!sbp_u8_decode(ctx, &msg->n_sats)) {
     return false;
   }
+  if (((ctx->buf_len - ctx->offset) % SBP_ORBIT_CLOCK_BOUND_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_sats = (uint8_t)((ctx->buf_len - ctx->offset) /
                           SBP_ORBIT_CLOCK_BOUND_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_sats; i++) {
@@ -4406,6 +4449,10 @@ bool sbp_msg_ssr_code_phase_biases_bounds_decode_internal(
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_sats_signals)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) %
+       SBP_CODE_PHASE_BIASES_SAT_SIG_ENCODED_LEN) != 0) {
     return false;
   }
   msg->n_sats_signals = (uint8_t)((ctx->buf_len - ctx->offset) /

@@ -43,6 +43,9 @@ s8 sbp_msg_user_data_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_user_data_decode_internal(sbp_decode_ctx_t *ctx,
                                        sbp_msg_user_data_t *msg) {
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U8) != 0) {
+    return false;
+  }
   msg->n_contents =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_contents; i++) {

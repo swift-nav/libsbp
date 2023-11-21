@@ -712,6 +712,10 @@ s8 sbp_msg_tracking_state_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_tracking_state_decode_internal(sbp_decode_ctx_t *ctx,
                                             sbp_msg_tracking_state_t *msg) {
+  if (((ctx->buf_len - ctx->offset) % SBP_TRACKING_CHANNEL_STATE_ENCODED_LEN) !=
+      0) {
+    return false;
+  }
   msg->n_states = (uint8_t)((ctx->buf_len - ctx->offset) /
                             SBP_TRACKING_CHANNEL_STATE_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_states; i++) {
@@ -862,6 +866,9 @@ s8 sbp_msg_measurement_state_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_msg_measurement_state_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_measurement_state_t *msg) {
+  if (((ctx->buf_len - ctx->offset) % SBP_MEASUREMENT_STATE_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_states = (uint8_t)((ctx->buf_len - ctx->offset) /
                             SBP_MEASUREMENT_STATE_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_states; i++) {
@@ -1478,6 +1485,10 @@ s8 sbp_msg_tracking_state_dep_a_encode(
 
 bool sbp_msg_tracking_state_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_dep_a_t *msg) {
+  if (((ctx->buf_len - ctx->offset) %
+       SBP_TRACKING_CHANNEL_STATE_DEP_A_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_states = (uint8_t)((ctx->buf_len - ctx->offset) /
                             SBP_TRACKING_CHANNEL_STATE_DEP_A_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_states; i++) {
@@ -1644,6 +1655,10 @@ s8 sbp_msg_tracking_state_dep_b_encode(
 
 bool sbp_msg_tracking_state_dep_b_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_tracking_state_dep_b_t *msg) {
+  if (((ctx->buf_len - ctx->offset) %
+       SBP_TRACKING_CHANNEL_STATE_DEP_B_ENCODED_LEN) != 0) {
+    return false;
+  }
   msg->n_states = (uint8_t)((ctx->buf_len - ctx->offset) /
                             SBP_TRACKING_CHANNEL_STATE_DEP_B_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_states; i++) {
