@@ -8,13 +8,13 @@
 #include <stdbool.h>
 
 #include <libsbp/sbp.h>
-#include <libsbp/internal/v4/common.h>
+#include <libsbp/internal/common.h>
 #include <libsbp/(((package.name))).h>
-#include <libsbp/internal/v4/(((package.name))).h>
-#include <libsbp/internal/v4/string/multipart.h>
-#include <libsbp/internal/v4/string/null_terminated.h>
-#include <libsbp/internal/v4/string/double_null_terminated.h>
-#include <libsbp/internal/v4/string/unterminated.h>
+#include <libsbp/internal/(((package.name))).h>
+#include <libsbp/internal/string/multipart.h>
+#include <libsbp/internal/string/null_terminated.h>
+#include <libsbp/internal/string/double_null_terminated.h>
+#include <libsbp/internal/string/unterminated.h>
 #include <libsbp/legacy/compat.h>
 
 ((*- for m in package.msgs *))

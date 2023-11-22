@@ -1,14 +1,39 @@
-FILE(GLOB generated_c_sources v4/*.c)
 
 set(libsbp_SRCS
   edc.c
   sbp.c
-  v4/string/sbp_string.c
-  v4/string/multipart.c
-  v4/string/unterminated.c
-  v4/string/null_terminated.c
-  v4/string/double_null_terminated.c
-  ${generated_c_sources}
+  string/sbp_string.c
+  string/multipart.c
+  string/unterminated.c
+  string/null_terminated.c
+  string/double_null_terminated.c
+  #generated files
+  acquisition.c
+  bootload.c
+  ext_events.c
+  file_io.c
+  flash.c
+  gnss.c
+  imu.c
+  integrity.c
+  linux.c
+  logging.c
+  mag.c
+  navigation.c
+  ndb.c
+  observation.c
+  orientation.c
+  piksi.c
+  sbas.c
+  settings.c
+  signing.c
+  solution_meta.c
+  ssr.c
+  system.c
+  telemetry.c
+  tracking.c
+  user.c
+  vehicle.c
   )
 
 swift_add_library(sbp

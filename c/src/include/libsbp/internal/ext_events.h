@@ -11,26 +11,21 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/(((package.filepath)))
+ * Automatically generated from yaml/swiftnav/sbp/ext_events.yaml
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_(((package.name|upper)))_H
-#define LIBSBP_INTERNAL_V4_(((package.name|upper)))_H
+#ifndef LIBSBP_INTERNAL_V4_EXT_EVENTS_H
+#define LIBSBP_INTERNAL_V4_EXT_EVENTS_H
 
 #include <stdbool.h>
 
-#include <libsbp/(((package.name))).h>
+#include <libsbp/ext_events.h>
 #include <libsbp/internal/common.h>
-((*- for i in package.includes *))
-#include <libsbp/internal/(((i))).h>
-((*- endfor *))
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
-
-((*- for m in package.msgs *))
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -39,7 +34,8 @@
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool (((m.internal_encode_fn)))(sbp_encode_ctx_t *ctx, const (((m.type_name))) *msg);
+bool sbp_msg_ext_event_encode_internal(sbp_encode_ctx_t *ctx,
+                                       const sbp_msg_ext_event_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -48,13 +44,11 @@ bool (((m.internal_encode_fn)))(sbp_encode_ctx_t *ctx, const (((m.type_name))) *
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool (((m.internal_decode_fn)))(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg);
-
-((*- endfor *))
+bool sbp_msg_ext_event_decode_internal(sbp_decode_ctx_t *ctx,
+                                       sbp_msg_ext_event_t *msg);
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_(((package.name|upper)))_H */
-
+#endif /* LIBSBP_INTERNAL_V4_EXT_EVENTS_H */
