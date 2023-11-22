@@ -29,7 +29,7 @@
 #include <libsbp/signing/ECDSASignature.h>
 #include <libsbp/signing/UtcTime.h>
 #include <libsbp/signing_macros.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {

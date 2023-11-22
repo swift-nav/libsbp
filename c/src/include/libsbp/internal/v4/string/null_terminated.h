@@ -44,7 +44,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -83,8 +83,7 @@ void sbp_null_terminated_string_init(sbp_string_t *s);
  * @param maxlen Maximum encoded length
  * @return true if valid, false otherwise
  */
-bool sbp_null_terminated_string_valid(const sbp_string_t *s,
-                                      size_t maxlen);
+bool sbp_null_terminated_string_valid(const sbp_string_t *s, size_t maxlen);
 
 /**
  * Compare two null terminated strings
@@ -100,8 +99,7 @@ bool sbp_null_terminated_string_valid(const sbp_string_t *s,
  * @return Comparison result
  */
 int sbp_null_terminated_string_strcmp(const sbp_string_t *a,
-                                      const sbp_string_t *b,
-                                      size_t maxlen);
+                                      const sbp_string_t *b, size_t maxlen);
 
 /**
  * Get encoded length of a double null terminated string
@@ -135,8 +133,7 @@ size_t sbp_null_terminated_string_space_remaining(const sbp_string_t *s,
  * @param maxlen Maximum encoded length
  * @return Length of string
  */
-size_t sbp_null_terminated_string_strlen(const sbp_string_t *s,
-                                         size_t maxlen);
+size_t sbp_null_terminated_string_strlen(const sbp_string_t *s, size_t maxlen);
 
 /**
  * Set a null terminated string from a raw buffer
@@ -160,8 +157,9 @@ size_t sbp_null_terminated_string_strlen(const sbp_string_t *s,
  * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
-                                      bool should_trunc, size_t *n_written, const char *new_buf,
-                                      size_t new_buf_len);
+                                        bool should_trunc, size_t *n_written,
+                                        const char *new_buf,
+                                        size_t new_buf_len);
 
 /**
  * Set a null terminated string
@@ -183,7 +181,8 @@ bool sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
  * @return true on success, false otherwise
  */
 bool sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
-                                      bool should_trunc, size_t *n_written, const char *new_str);
+                                    bool should_trunc, size_t *n_written,
+                                    const char *new_str);
 
 /**
  * Set a null terminated string with printf style formatting
@@ -202,7 +201,8 @@ bool sbp_null_terminated_string_set(sbp_string_t *s, size_t maxlen,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc, size_t *n_written,
+bool sbp_null_terminated_string_vprintf(sbp_string_t *s, size_t maxlen,
+                                        bool should_trunc, size_t *n_written,
                                         const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(5);
 
@@ -246,8 +246,9 @@ bool sbp_null_terminated_string_append(sbp_string_t *s, size_t maxlen,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_null_terminated_string_append_vprintf(sbp_string_t *s,
-                                               size_t maxlen, bool should_trunc, size_t *n_written,
+bool sbp_null_terminated_string_append_vprintf(sbp_string_t *s, size_t maxlen,
+                                               bool should_trunc,
+                                               size_t *n_written,
                                                const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(5);
 
@@ -274,8 +275,7 @@ const char *sbp_null_terminated_string_get(const sbp_string_t *s,
  * @param ctx Encode context
  * @return true on success, false otherwise
  */
-bool sbp_null_terminated_string_encode(const sbp_string_t *s,
-                                       size_t maxlen,
+bool sbp_null_terminated_string_encode(const sbp_string_t *s, size_t maxlen,
                                        sbp_encode_ctx_t *ctx);
 
 /**

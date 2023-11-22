@@ -26,7 +26,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 #include <libsbp/vehicle_macros.h>
 
 #ifdef __cplusplus

@@ -6,10 +6,10 @@
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/internal/v4/string/sbp_string.h>
 #include <libsbp/internal/v4/string/sbp_strnlen.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
-int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b,
-                   size_t maxlen, const sbp_string_params_t *params) {
+int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b, size_t maxlen,
+                   const sbp_string_params_t *params) {
   bool avalid = params->valid(a, maxlen);
   bool bvalid = params->valid(b, maxlen);
   if (!avalid) {
@@ -51,8 +51,8 @@ bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
   return copy_str(buf, copied, max, str, n);
 }
 
-bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max, bool should_trunc,
-                               const char *fmt, va_list ap) {
+bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max,
+                               bool should_trunc, const char *fmt, va_list ap) {
   char tmp[256];
   int n = vsnprintf(tmp, sizeof(tmp), fmt, ap);
   if (n < 0) {
@@ -83,8 +83,7 @@ bool sbp_string_encode(const sbp_string_t *s, size_t maxlen,
   return true;
 }
 
-bool sbp_string_decode(sbp_string_t *s, size_t maxlen,
-                       sbp_decode_ctx_t *ctx,
+bool sbp_string_decode(sbp_string_t *s, size_t maxlen, sbp_decode_ctx_t *ctx,
                        const sbp_string_params_t *params) {
   params->init(s);
   size_t available = ctx->buf_len - ctx->offset;

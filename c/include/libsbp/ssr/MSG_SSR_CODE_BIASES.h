@@ -30,7 +30,7 @@
 #include <libsbp/gnss/GnssSignal.h>
 #include <libsbp/ssr/CodeBiasesContent.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {

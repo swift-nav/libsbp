@@ -63,7 +63,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -127,8 +127,7 @@ int sbp_multipart_string_strcmp(const sbp_string_t *a, const sbp_string_t *b,
  * @param maxlen Maximum encoded length
  * @return Encoded length
  */
-size_t sbp_multipart_string_encoded_len(const sbp_string_t *s,
-                                        size_t maxlen);
+size_t sbp_multipart_string_encoded_len(const sbp_string_t *s, size_t maxlen);
 
 /**
  * Get available space in a multipart string
@@ -170,8 +169,7 @@ size_t sbp_multipart_string_count_sections(const sbp_string_t *s,
  * @param section Section number
  * @return Length of section
  */
-size_t sbp_multipart_string_section_strlen(const sbp_string_t *s,
-                                           size_t maxlen,
+size_t sbp_multipart_string_section_strlen(const sbp_string_t *s, size_t maxlen,
                                            size_t section);
 
 /**
@@ -209,8 +207,7 @@ bool sbp_multipart_string_add_section(sbp_string_t *s, size_t maxlen,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_add_section_vprintf(sbp_string_t *s,
-                                              size_t maxlen,
+bool sbp_multipart_string_add_section_vprintf(sbp_string_t *s, size_t maxlen,
                                               const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(3);
 
@@ -262,8 +259,7 @@ bool sbp_multipart_string_append(sbp_string_t *s, size_t maxlen,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_append_vprintf(sbp_string_t *s,
-                                         size_t maxlen,
+bool sbp_multipart_string_append_vprintf(sbp_string_t *s, size_t maxlen,
                                          const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(3);
 
@@ -283,8 +279,7 @@ bool sbp_multipart_string_append_vprintf(sbp_string_t *s,
  * @return Requested section, or NULL
  */
 const char *sbp_multipart_string_get_section(const sbp_string_t *s,
-                                             size_t maxlen,
-                                             size_t section);
+                                             size_t maxlen, size_t section);
 
 /**
  * Encode a multipart string to a buffer

@@ -19,7 +19,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,8 +74,8 @@ typedef struct {
  * @param maxlen Maximum encoded length
  * @param params string params
  */
-int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b,
-                   size_t maxlen, const sbp_string_params_t *params);
+int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b, size_t maxlen,
+                   const sbp_string_params_t *params);
 
 /**
  * Copy exactly n bytes from str to buf.
@@ -110,8 +110,9 @@ bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max, bool should_trunc,
-                               const char *fmt, va_list ap) SBP_ATTR_VFORMAT(5);
+bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max,
+                               bool should_trunc, const char *fmt, va_list ap)
+    SBP_ATTR_VFORMAT(5);
 
 /**
  * Write a string to a buffer
@@ -150,8 +151,7 @@ bool sbp_string_encode(const sbp_string_t *s, size_t maxlen,
  * @param params string params
  * @return true on success, false otherwise
  */
-bool sbp_string_decode(sbp_string_t *s, size_t maxlen,
-                       sbp_decode_ctx_t *ctx,
+bool sbp_string_decode(sbp_string_t *s, size_t maxlen, sbp_decode_ctx_t *ctx,
                        const sbp_string_params_t *params);
 
 #ifdef __cplusplus

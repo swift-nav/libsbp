@@ -26,9 +26,9 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string/sbp_string.h>
 #include <libsbp/tracking/TrackingChannelStateDepA.h>
 #include <libsbp/tracking_macros.h>
-#include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {

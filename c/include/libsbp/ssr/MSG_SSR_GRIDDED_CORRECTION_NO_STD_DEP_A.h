@@ -30,7 +30,7 @@
 #include <libsbp/ssr/STECResidualNoStd.h>
 #include <libsbp/ssr/TroposphericDelayCorrectionNoStd.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
