@@ -20,11 +20,4 @@
 
 #include <libsbp/common.h>
 
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/linux.h` instead. Access to legacy "
-    "types via `libsbp/linux.h` will be removed in version 5.")
-
-#include <libsbp/legacy/linux.h>
-
 #endif /* LIBSBP_LINUX_MESSAGES_H */
