@@ -11,15 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/orientation.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_ORIENTATION_MESSAGES_H
-#define LIBSBP_V4_ORIENTATION_MESSAGES_H
-#include <libsbp/v4/orientation/MSG_ANGULAR_RATE.h>
-#include <libsbp/v4/orientation/MSG_BASELINE_HEADING.h>
-#include <libsbp/v4/orientation/MSG_ORIENT_EULER.h>
-#include <libsbp/v4/orientation/MSG_ORIENT_QUAT.h>
+#ifndef LIBSBP_ORIENTATION_MESSAGES_H
+#define LIBSBP_ORIENTATION_MESSAGES_H
 
-#endif /* LIBSBP_V4_ORIENTATION_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/orientation.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/orientation.h>
+
+#endif /* LIBSBP_ORIENTATION_MESSAGES_H */

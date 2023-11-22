@@ -15,9 +15,22 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_SYSTEM_MESSAGES_H
-#define LIBSBP_SYSTEM_MESSAGES_H
+#ifndef LIBSBP_V4_SYSTEM_MESSAGES_H
+#define LIBSBP_V4_SYSTEM_MESSAGES_H
+#include <libsbp/system/MSG_CSAC_TELEMETRY.h>
+#include <libsbp/system/MSG_CSAC_TELEMETRY_LABELS.h>
+#include <libsbp/system/MSG_DGNSS_STATUS.h>
+#include <libsbp/system/MSG_GNSS_TIME_OFFSET.h>
+#include <libsbp/system/MSG_GROUP_META.h>
+#include <libsbp/system/MSG_HEARTBEAT.h>
+#include <libsbp/system/MSG_INS_STATUS.h>
+#include <libsbp/system/MSG_INS_UPDATES.h>
+#include <libsbp/system/MSG_PPS_TIME.h>
+#include <libsbp/system/MSG_SENSOR_AID_EVENT.h>
+#include <libsbp/system/MSG_STARTUP.h>
+#include <libsbp/system/MSG_STATUS_JOURNAL.h>
+#include <libsbp/system/MSG_STATUS_REPORT.h>
+#include <libsbp/system/StatusJournalItem.h>
+#include <libsbp/system/SubSystemReport.h>
 
-#include <libsbp/common.h>
-
-#endif /* LIBSBP_SYSTEM_MESSAGES_H */
+#endif /* LIBSBP_V4_SYSTEM_MESSAGES_H */

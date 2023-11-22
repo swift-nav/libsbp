@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <libsbp/gnss.h>
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/internal/v4/gnss.h>
 #include <libsbp/internal/v4/string/double_null_terminated.h>
@@ -14,7 +15,6 @@
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/gnss.h>
 
 bool sbp_v4_gnss_signal_encode_internal(sbp_encode_ctx_t *ctx,
                                         const sbp_v4_gnss_signal_t *msg) {

@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <libsbp/file_io.h>
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/internal/v4/file_io.h>
 #include <libsbp/internal/v4/string/double_null_terminated.h>
@@ -14,7 +15,6 @@
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/file_io.h>
 
 void sbp_msg_fileio_read_req_filename_init(sbp_msg_fileio_read_req_t *msg) {
   sbp_null_terminated_string_init(&msg->filename);

@@ -15,8 +15,8 @@
 // modify by hand!
 
 #include <check.h>
+#include <libsbp/ndb.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/ndb.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

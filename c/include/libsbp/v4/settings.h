@@ -11,21 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/settings.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SETTINGS_MESSAGES_H
-#define LIBSBP_V4_SETTINGS_MESSAGES_H
-#include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_DONE.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_REQ.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_READ_BY_INDEX_RESP.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_READ_REQ.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_READ_RESP.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_REGISTER.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_REGISTER_RESP.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_SAVE.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_WRITE.h>
-#include <libsbp/v4/settings/MSG_SETTINGS_WRITE_RESP.h>
+#ifndef LIBSBP_SETTINGS_MESSAGES_H
+#define LIBSBP_SETTINGS_MESSAGES_H
 
-#endif /* LIBSBP_V4_SETTINGS_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/settings.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/settings.h>
+
+#endif /* LIBSBP_SETTINGS_MESSAGES_H */

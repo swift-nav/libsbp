@@ -20,8 +20,8 @@
 
 #include <stdbool.h>
 
+#include <libsbp/ext_events.h>
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/ext_events.h>
 
 #ifdef __cplusplus
 extern "C" {

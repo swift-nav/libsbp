@@ -11,13 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/imu.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_IMU_MESSAGES_H
-#define LIBSBP_V4_IMU_MESSAGES_H
-#include <libsbp/v4/imu/MSG_IMU_AUX.h>
-#include <libsbp/v4/imu/MSG_IMU_RAW.h>
+#ifndef LIBSBP_IMU_MESSAGES_H
+#define LIBSBP_IMU_MESSAGES_H
 
-#endif /* LIBSBP_V4_IMU_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/imu.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/imu.h>
+
+#endif /* LIBSBP_IMU_MESSAGES_H */

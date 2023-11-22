@@ -11,12 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/mag.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_MAG_MESSAGES_H
-#define LIBSBP_V4_MAG_MESSAGES_H
-#include <libsbp/v4/mag/MSG_MAG_RAW.h>
+#ifndef LIBSBP_MAG_MESSAGES_H
+#define LIBSBP_MAG_MESSAGES_H
 
-#endif /* LIBSBP_V4_MAG_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/mag.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/mag.h>
+
+#endif /* LIBSBP_MAG_MESSAGES_H */

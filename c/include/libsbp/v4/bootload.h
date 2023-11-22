@@ -11,17 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/bootload.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_BOOTLOAD_MESSAGES_H
-#define LIBSBP_V4_BOOTLOAD_MESSAGES_H
-#include <libsbp/v4/bootload/MSG_BOOTLOADER_HANDSHAKE_DEP_A.h>
-#include <libsbp/v4/bootload/MSG_BOOTLOADER_HANDSHAKE_REQ.h>
-#include <libsbp/v4/bootload/MSG_BOOTLOADER_HANDSHAKE_RESP.h>
-#include <libsbp/v4/bootload/MSG_BOOTLOADER_JUMP_TO_APP.h>
-#include <libsbp/v4/bootload/MSG_NAP_DEVICE_DNA_REQ.h>
-#include <libsbp/v4/bootload/MSG_NAP_DEVICE_DNA_RESP.h>
+#ifndef LIBSBP_BOOTLOAD_MESSAGES_H
+#define LIBSBP_BOOTLOAD_MESSAGES_H
 
-#endif /* LIBSBP_V4_BOOTLOAD_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/bootload.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/bootload.h>
+
+#endif /* LIBSBP_BOOTLOAD_MESSAGES_H */

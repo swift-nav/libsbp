@@ -14,7 +14,7 @@
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/solution_meta.h>
+#include <libsbp/solution_meta.h>
 
 bool sbp_solution_input_type_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_solution_input_type_t *msg) {

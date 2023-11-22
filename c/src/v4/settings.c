@@ -14,7 +14,7 @@
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/settings.h>
+#include <libsbp/settings.h>
 
 bool sbp_msg_settings_save_encode_internal(sbp_encode_ctx_t *ctx,
                                            const sbp_msg_settings_save_t *msg) {

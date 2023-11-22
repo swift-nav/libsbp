@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <libsbp/integrity.h>
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/internal/v4/integrity.h>
 #include <libsbp/internal/v4/string/double_null_terminated.h>
@@ -14,7 +15,6 @@
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/integrity.h>
 
 bool sbp_integrity_ssr_header_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_integrity_ssr_header_t *msg) {

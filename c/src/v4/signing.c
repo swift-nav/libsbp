@@ -14,7 +14,7 @@
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/signing.h>
+#include <libsbp/signing.h>
 
 bool sbp_utc_time_encode_internal(sbp_encode_ctx_t *ctx,
                                   const sbp_utc_time_t *msg) {

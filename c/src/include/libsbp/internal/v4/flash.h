@@ -20,8 +20,8 @@
 
 #include <stdbool.h>
 
+#include <libsbp/flash.h>
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/flash.h>
 
 #ifdef __cplusplus
 extern "C" {

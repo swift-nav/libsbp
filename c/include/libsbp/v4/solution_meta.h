@@ -11,17 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/solution_meta.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SOLUTION_META_MESSAGES_H
-#define LIBSBP_V4_SOLUTION_META_MESSAGES_H
-#include <libsbp/v4/solution_meta/GNSSInputType.h>
-#include <libsbp/v4/solution_meta/IMUInputType.h>
-#include <libsbp/v4/solution_meta/MSG_SOLN_META.h>
-#include <libsbp/v4/solution_meta/MSG_SOLN_META_DEP_A.h>
-#include <libsbp/v4/solution_meta/OdoInputType.h>
-#include <libsbp/v4/solution_meta/SolutionInputType.h>
+#ifndef LIBSBP_SOLUTION_META_MESSAGES_H
+#define LIBSBP_SOLUTION_META_MESSAGES_H
 
-#endif /* LIBSBP_V4_SOLUTION_META_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/solution_meta.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/solution_meta.h>
+
+#endif /* LIBSBP_SOLUTION_META_MESSAGES_H */

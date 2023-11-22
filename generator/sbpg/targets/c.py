@@ -18,9 +18,10 @@ from sbpg.targets.templating import *
 from sbpg.utils import markdown_links
 from sbpg import ReleaseVersion
 
-SBP_MESSAGES_TEMPLATE_NAME = "c/include/libsbp/v4/sbp_messages_template.h"
-SBP_PACKAGE_TEMPLATE_NAME = "c/include/libsbp/v4/sbp_package_template.h"
-SBP_MSG_TEMPLATE_NAME = "c/include/libsbp/v4/sbp_msg_template.h"
+SBP_MESSAGES_TEMPLATE_NAME = "c/include/libsbp/package/sbp_messages_template.h"
+SBP_PACKAGE_TEMPLATE_NAME = "c/include/libsbp/sbp_package_template.h"
+SBP_OLD_PACKAGE_TEMPLATE_NAME = "c/include/libsbp/v4/sbp_package_template.h"
+SBP_MSG_TEMPLATE_NAME = "c/include/libsbp/sbp_msg_template.h"
 VERSION_TEMPLATE_NAME = "c/include/libsbp/sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "c/include/libsbp/cpp/message_traits_template.h"
 SBP_MESSAGES_SOURCE_TEMPLATE_NAME = "c/src/sbp_messages_template.c"
@@ -527,8 +528,8 @@ class MsgItem(object):
         self.encoded_len_value = get_encoded_len_value(self.type_name, package_specs)
 
     def render(self, output_dir):
-        # Public header for V4 API - include/libsbp/v4/<package>/<type>.h
-        destination_filename = "%s/include/libsbp/v4/%s/%s.h" % (
+        # Public header for V4 API - include/libsbp/<package>/<type>.h
+        destination_filename = "%s/include/libsbp/%s/%s.h" % (
             output_dir,
             self.package_name,
             self.name,
@@ -567,11 +568,22 @@ class PackageItem(object):
         for m in self.msgs:
             m.render(output_dir)
 
-        # Public header for the package - include/libsbp/v4/<package>.h
-        # Includes all public message headers, include/libsbp/v4/<package>/*.h
-        destination_filename = "%s/include/libsbp/v4/%s.h" % (output_dir, self.name)
+        # Public header for the package - include/libsbp/<package>.h
+        # Includes all public message headers, include/libsbp/<package>/*.h
+        destination_filename = "%s/include/libsbp/%s.h" % (output_dir, self.name)
         render_file(
             SBP_PACKAGE_TEMPLATE_NAME,
+            destination_filename,
+            {
+                "package": self,
+            },
+        )
+        #
+        # Old public header for the package - include/libsbp/v4/<package>.h
+        # Generates a compile time message and includes the real public header - include/libsbp/<package>.h
+        destination_filename = "%s/include/libsbp/v4/%s.h" % (output_dir, self.name)
+        render_file(
+            SBP_OLD_PACKAGE_TEMPLATE_NAME,
             destination_filename,
             {
                 "package": self,
@@ -649,7 +661,7 @@ def render_all(output_dir, package_specs):
         p.render(output_dir)
 
     # Render sbp_msg_t type, union of all real messages in V4 API
-    destination_filename = "%s/include/libsbp/v4/sbp_msg.h" % (output_dir)
+    destination_filename = "%s/include/libsbp/sbp_msg.h" % (output_dir)
     render_file(
         SBP_MSG_TEMPLATE_NAME,
         destination_filename,

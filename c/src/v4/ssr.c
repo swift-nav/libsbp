@@ -14,7 +14,7 @@
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/ssr.h>
+#include <libsbp/ssr.h>
 
 bool sbp_code_biases_content_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_code_biases_content_t *msg) {

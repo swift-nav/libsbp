@@ -15,9 +15,9 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_VEHICLE_MESSAGES_H
-#define LIBSBP_VEHICLE_MESSAGES_H
+#ifndef LIBSBP_V4_VEHICLE_MESSAGES_H
+#define LIBSBP_V4_VEHICLE_MESSAGES_H
+#include <libsbp/vehicle/MSG_ODOMETRY.h>
+#include <libsbp/vehicle/MSG_WHEELTICK.h>
 
-#include <libsbp/common.h>
-
-#endif /* LIBSBP_VEHICLE_MESSAGES_H */
+#endif /* LIBSBP_V4_VEHICLE_MESSAGES_H */

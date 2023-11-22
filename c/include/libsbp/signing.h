@@ -15,9 +15,18 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_SIGNING_MESSAGES_H
-#define LIBSBP_SIGNING_MESSAGES_H
+#ifndef LIBSBP_V4_SIGNING_MESSAGES_H
+#define LIBSBP_V4_SIGNING_MESSAGES_H
+#include <libsbp/signing/ECDSASignature.h>
+#include <libsbp/signing/MSG_CERTIFICATE_CHAIN.h>
+#include <libsbp/signing/MSG_CERTIFICATE_CHAIN_DEP.h>
+#include <libsbp/signing/MSG_ECDSA_CERTIFICATE.h>
+#include <libsbp/signing/MSG_ECDSA_SIGNATURE.h>
+#include <libsbp/signing/MSG_ECDSA_SIGNATURE_DEP_A.h>
+#include <libsbp/signing/MSG_ECDSA_SIGNATURE_DEP_B.h>
+#include <libsbp/signing/MSG_ED25519_CERTIFICATE_DEP.h>
+#include <libsbp/signing/MSG_ED25519_SIGNATURE_DEP_A.h>
+#include <libsbp/signing/MSG_ED25519_SIGNATURE_DEP_B.h>
+#include <libsbp/signing/UtcTime.h>
 
-#include <libsbp/common.h>
-
-#endif /* LIBSBP_SIGNING_MESSAGES_H */
+#endif /* LIBSBP_V4_SIGNING_MESSAGES_H */

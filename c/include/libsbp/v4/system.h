@@ -11,26 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/system.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SYSTEM_MESSAGES_H
-#define LIBSBP_V4_SYSTEM_MESSAGES_H
-#include <libsbp/v4/system/MSG_CSAC_TELEMETRY.h>
-#include <libsbp/v4/system/MSG_CSAC_TELEMETRY_LABELS.h>
-#include <libsbp/v4/system/MSG_DGNSS_STATUS.h>
-#include <libsbp/v4/system/MSG_GNSS_TIME_OFFSET.h>
-#include <libsbp/v4/system/MSG_GROUP_META.h>
-#include <libsbp/v4/system/MSG_HEARTBEAT.h>
-#include <libsbp/v4/system/MSG_INS_STATUS.h>
-#include <libsbp/v4/system/MSG_INS_UPDATES.h>
-#include <libsbp/v4/system/MSG_PPS_TIME.h>
-#include <libsbp/v4/system/MSG_SENSOR_AID_EVENT.h>
-#include <libsbp/v4/system/MSG_STARTUP.h>
-#include <libsbp/v4/system/MSG_STATUS_JOURNAL.h>
-#include <libsbp/v4/system/MSG_STATUS_REPORT.h>
-#include <libsbp/v4/system/StatusJournalItem.h>
-#include <libsbp/v4/system/SubSystemReport.h>
+#ifndef LIBSBP_SYSTEM_MESSAGES_H
+#define LIBSBP_SYSTEM_MESSAGES_H
 
-#endif /* LIBSBP_V4_SYSTEM_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/system.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/system.h>
+
+#endif /* LIBSBP_SYSTEM_MESSAGES_H */

@@ -11,19 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/integrity.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_INTEGRITY_MESSAGES_H
-#define LIBSBP_V4_INTEGRITY_MESSAGES_H
-#include <libsbp/v4/integrity/IntegritySSRHeader.h>
-#include <libsbp/v4/integrity/MSG_ACKNOWLEDGE.h>
-#include <libsbp/v4/integrity/MSG_SSR_FLAG_HIGH_LEVEL.h>
-#include <libsbp/v4/integrity/MSG_SSR_FLAG_IONO_GRID_POINTS.h>
-#include <libsbp/v4/integrity/MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS.h>
-#include <libsbp/v4/integrity/MSG_SSR_FLAG_IONO_TILE_SAT_LOS.h>
-#include <libsbp/v4/integrity/MSG_SSR_FLAG_SATELLITES.h>
-#include <libsbp/v4/integrity/MSG_SSR_FLAG_TROPO_GRID_POINTS.h>
+#ifndef LIBSBP_INTEGRITY_MESSAGES_H
+#define LIBSBP_INTEGRITY_MESSAGES_H
 
-#endif /* LIBSBP_V4_INTEGRITY_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/integrity.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/integrity.h>
+
+#endif /* LIBSBP_INTEGRITY_MESSAGES_H */

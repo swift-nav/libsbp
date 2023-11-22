@@ -14,7 +14,7 @@
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/internal/v4/tracking.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/tracking.h>
+#include <libsbp/tracking.h>
 
 bool sbp_msg_tracking_state_detailed_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_tracking_state_detailed_dep_a_t *msg) {

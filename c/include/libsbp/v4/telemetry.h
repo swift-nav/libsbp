@@ -11,13 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/telemetry.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_TELEMETRY_MESSAGES_H
-#define LIBSBP_V4_TELEMETRY_MESSAGES_H
-#include <libsbp/v4/telemetry/MSG_TEL_SV.h>
-#include <libsbp/v4/telemetry/TelemetrySV.h>
+#ifndef LIBSBP_TELEMETRY_MESSAGES_H
+#define LIBSBP_TELEMETRY_MESSAGES_H
 
-#endif /* LIBSBP_V4_TELEMETRY_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/telemetry.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/telemetry.h>
+
+#endif /* LIBSBP_TELEMETRY_MESSAGES_H */

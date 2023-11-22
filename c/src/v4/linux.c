@@ -13,8 +13,8 @@
 #include <libsbp/internal/v4/string/multipart.h>
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
+#include <libsbp/linux.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/linux.h>
 
 void sbp_msg_linux_cpu_state_dep_a_cmdline_init(
     sbp_msg_linux_cpu_state_dep_a_t *msg) {

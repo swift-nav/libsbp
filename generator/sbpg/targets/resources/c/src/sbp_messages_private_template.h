@@ -20,7 +20,7 @@
 
 #include <stdbool.h>
 
-#include <libsbp/v4/(((package.name))).h>
+#include <libsbp/(((package.name))).h>
 #include <libsbp/internal/v4/common.h>
 ((*- for i in package.includes *))
 #include <libsbp/internal/v4/(((i))).h>

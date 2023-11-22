@@ -15,9 +15,9 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_IMU_MESSAGES_H
-#define LIBSBP_IMU_MESSAGES_H
+#ifndef LIBSBP_V4_IMU_MESSAGES_H
+#define LIBSBP_V4_IMU_MESSAGES_H
+#include <libsbp/imu/MSG_IMU_AUX.h>
+#include <libsbp/imu/MSG_IMU_RAW.h>
 
-#include <libsbp/common.h>
-
-#endif /* LIBSBP_IMU_MESSAGES_H */
+#endif /* LIBSBP_V4_IMU_MESSAGES_H */
