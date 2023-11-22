@@ -15,6 +15,7 @@
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/double_null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
+#include <libsbp/legacy/compat.h>
 
 ((*- for m in package.msgs *))
                                                                                                               

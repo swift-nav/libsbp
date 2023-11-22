@@ -14,6 +14,7 @@
 #include <libsbp/internal/v4/string/multipart.h>
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
+#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 
 bool sbp_msg_acq_result_encode_internal(sbp_encode_ctx_t *ctx,

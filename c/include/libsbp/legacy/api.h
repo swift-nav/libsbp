@@ -14,16 +14,11 @@
 #define LIBSBP_LEGACY_API_H
 
 #include <libsbp/common.h>
+#include <libsbp/legacy/callbacks.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/** SBP callback function prototype definitions. */
-typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
-typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
-                                     u8 payload_len, u8 payload[],
-                                     u16 frame_len, u8 frame[], void *context);
 
 /** Register a payload callback for a message type.
  *

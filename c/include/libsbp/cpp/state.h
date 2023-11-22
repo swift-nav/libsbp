@@ -15,6 +15,7 @@
 
 #include <libsbp/sbp.h>
 #include <libsbp/cpp/message_traits.h>
+#include <libsbp/legacy/compat.h>
 
 namespace sbp {
 
