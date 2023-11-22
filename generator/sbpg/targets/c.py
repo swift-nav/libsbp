@@ -581,6 +581,7 @@ class PackageItem(object):
         #
         # Old public header for the package - include/libsbp/v4/<package>.h
         # Generates a compile time message and includes the real public header - include/libsbp/<package>.h
+        # To be removed in version 6
         destination_filename = "%s/include/libsbp/v4/%s.h" % (output_dir, self.name)
         render_file(
             SBP_OLD_PACKAGE_TEMPLATE_NAME,
@@ -602,9 +603,9 @@ class PackageItem(object):
             },
         )
 
-        # Internal header for the package - src/include/libsbp/internal/v4/<package>.h
+        # Internal header for the package - src/include/libsbp/internal/<package>.h
         # Declares internal encode/decode functions for all types defined in this package
-        destination_filename = "%s/src/include/libsbp/internal/v4/%s.h" % (
+        destination_filename = "%s/src/include/libsbp/internal/%s.h" % (
             output_dir,
             self.name,
         )
@@ -616,9 +617,9 @@ class PackageItem(object):
             },
         )
 
-        # Source for for the package - src/v4/<package>.h
+        # Source for for the package - src/<package>.h
         # Implements internal and public encode/decode functions for all types defined in this package
-        destination_filename = "%s/src/v4/%s.c" % (output_dir, self.name)
+        destination_filename = "%s/src/%s.c" % (output_dir, self.name)
         render_file(
             SBP_MESSAGES_SOURCE_TEMPLATE_NAME,
             destination_filename,

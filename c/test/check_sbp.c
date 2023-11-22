@@ -11,8 +11,8 @@
  */
 
 #include <check.h>
-#include <sbp.h>
 #include <libsbp/legacy/compat.h>
+#include <sbp.h>
 #include <stdio.h>
 
 int DUMMY_MEMORY_FOR_CALLBACKS = (int)0xdeadbeef;

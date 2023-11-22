@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <libsbp/internal/v4/string/null_terminated.h>
+#include <libsbp/internal/string/null_terminated.h>
 
 TEST(TestNullTerminatedString, InitialState) {
   // The string buffer is zero'd out, it should still report as valid and have a packed length of 1
