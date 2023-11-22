@@ -1,0 +1,55 @@
+description: Unit tests for swiftnav.sbp.observation MsgEphemerisGalDepA
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      af0: -1.7088896129280325e-05
+      af1: -8.185452315956353e-12
+      af2: 0.20000000298023224
+      bgd_e1e5a: 1.2000000476837158
+      bgd_e1e5b: 2.200000047683716
+      c_ic: 3.200000047683716
+      c_is: 4.199999809265137
+      c_rc: 265.4375
+      c_rs: 10.125
+      c_uc: 5.199999809265137
+      c_us: 6.199999809265137
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 14
+          sat: 27
+        toe:
+          tow: 448800
+          wn: 2154
+        ura: 7.199999809265137
+        valid: 1
+      dn: 3.2262058129932258e-09
+      ecc: 0.00017060607206076384
+      inc: 0.9777456094977858
+      inc_dot: -3.1787038343451465e-10
+      iodc: 108
+      iode: 108
+      m0: -1.8457115744155868
+      omega0: 1.16967730598334
+      omegadot: -5.757382675240872e-09
+      sqrta: 5440.602401733398
+      toc:
+        tow: 448800
+        wn: 2154
+      w: 0.12250912091662625
+    module: sbp.observation
+    name: MsgEphemerisGalDepA
+  msg_type: '0x95'
+  raw_json: '{"preamble":85,"msg_type":149,"sender":1219,"length":152,"payload":"Gw4g2QYAaghmZuZAQDgAAAEAmpmZP83MDEAAACJBALiEQ2ZmpkBmZsZAzcxMQGZmhkDZzIJpgLYrPvhqH9wIiP2/AAAAAJdcJj8AAAA3mkC1QDgmAY3/tvI/3pOIJ0+6OL5Qcsz7wVy/P+03EymxSe8/MUG98AjY9b3/////Q+vxvv///////6G9zcxMPiDZBgBqCGwAbAA=","crc":12712,"common":{"sid":{"sat":27,"code":14},"toe":{"tow":448800,"wn":2154},"ura":7.199999809265137,"fit_interval":14400,"valid":1,"health_bits":0},"bgd_e1e5a":1.2000000476837158,"bgd_e1e5b":2.200000047683716,"c_rs":10.125,"c_rc":265.4375,"c_uc":5.199999809265137,"c_us":6.199999809265137,"c_ic":3.200000047683716,"c_is":4.199999809265137,"dn":3.2262058129932258e-09,"m0":-1.8457115744155868,"ecc":0.00017060607206076384,"sqrta":5440.602401733398,"omega0":1.16967730598334,"omegadot":-5.757382675240872e-09,"w":0.12250912091662625,"inc":0.9777456094977858,"inc_dot":-3.1787038343451465e-10,"af0":-1.7088896129280325e-05,"af1":-8.185452315956353e-12,"af2":0.20000000298023224,"toc":{"tow":448800,"wn":2154},"iode":108,"iodc":108}'
+  raw_packet: VZUAwwSYGw4g2QYAaghmZuZAQDgAAAEAmpmZP83MDEAAACJBALiEQ2ZmpkBmZsZAzcxMQGZmhkDZzIJpgLYrPvhqH9wIiP2/AAAAAJdcJj8AAAA3mkC1QDgmAY3/tvI/3pOIJ0+6OL5Qcsz7wVy/P+03EymxSe8/MUG98AjY9b3/////Q+vxvv///////6G9zcxMPiDZBgBqCGwAbACoMQ==
+  sbp:
+    crc: '0x31a8'
+    length: 152
+    msg_type: '0x95'
+    payload: Gw4g2QYAaghmZuZAQDgAAAEAmpmZP83MDEAAACJBALiEQ2ZmpkBmZsZAzcxMQGZmhkDZzIJpgLYrPvhqH9wIiP2/AAAAAJdcJj8AAAA3mkC1QDgmAY3/tvI/3pOIJ0+6OL5Qcsz7wVy/P+03EymxSe8/MUG98AjY9b3/////Q+vxvv///////6G9zcxMPiDZBgBqCGwAbAA=
+    preamble: '0x55'
+    sender: '0x04c3'

@@ -1,0 +1,26 @@
+description: Unit tests for swiftnav.sbp.soln_meta free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.soln_meta
+struct_tests:
+
+  - encoded: Zu0=
+    fields:
+      sensor_type: 102
+      flags: 237
+    module: sbp.solution_meta
+    name: SolutionInputType
+  - encoded: Ng==
+    fields:
+      flags: 54
+    module: sbp.solution_meta
+    name: GnssInputType
+  - encoded: 1g==
+    fields:
+      flags: 214
+    module: sbp.solution_meta
+    name: ImuInputType
+  - encoded: 5g==
+    fields:
+      flags: 230
+    module: sbp.solution_meta
+    name: OdoInputType

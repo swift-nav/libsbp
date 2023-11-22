@@ -41,7 +41,10 @@ tests:
         prn: 6
         state: 1
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepA
   msg_type: '0x16'
@@ -99,7 +102,10 @@ tests:
         prn: 6
         state: 1
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepA
   msg_type: '0x16'
@@ -157,7 +163,10 @@ tests:
         prn: 6
         state: 1
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepA
   msg_type: '0x16'
@@ -215,7 +224,10 @@ tests:
         prn: 0
         state: 0
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepA
   msg_type: '0x16'
@@ -272,7 +284,10 @@ tests:
         prn: 0
         state: 0
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepA
   msg_type: '0x16'
@@ -329,7 +344,10 @@ tests:
         prn: 0
         state: 0
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepA
   msg_type: '0x16'

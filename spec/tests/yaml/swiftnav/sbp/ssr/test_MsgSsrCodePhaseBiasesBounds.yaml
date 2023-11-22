@@ -4,6 +4,11 @@ package: sbp.ssr
 tests:
 
   - msg:
+      c_decoded_fields:
+        n_sats_signals:
+          handle_as: vararray-len
+          relates_to: satellites_signals
+          value: 3
       fields:
         header:
           time:

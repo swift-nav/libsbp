@@ -4,7 +4,10 @@ package: sbp.signing
 tests:
 - msg:
     c_decoded_fields:
-      n_signed_messages: 25
+      n_signed_messages:
+        handle_as: vararray-len
+        relates_to: signed_messages
+        value: 25
     fields:
       fingerprint:
       - 100

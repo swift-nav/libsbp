@@ -4,7 +4,10 @@ package: sbp.system
 tests:
 - msg:
     c_decoded_fields:
-      n_journal: 3
+      n_journal:
+        handle_as: vararray-len
+        relates_to: journal
+        value: 3
     fields:
       reporting_system: 1
       sbp_version: 1025
@@ -40,7 +43,10 @@ tests:
     sender: '0x88D3'
 - msg:
     c_decoded_fields:
-      n_journal: 1
+      n_journal:
+        handle_as: vararray-len
+        relates_to: journal
+        value: 1
     fields:
       journal:
       - report:

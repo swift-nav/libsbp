@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.piksi MsgAlmanac
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      {}
+    module: sbp.piksi
+    name: MsgAlmanac
+  msg_type: '0x69'
+  raw_json: '{"crc":44025,"length":0,"msg_type":105,"payload":"","preamble":85,"sender":35436}'
+  raw_packet: VWkAbIoA+as=
+  sbp:
+    crc: '0xabf9'
+    length: 0
+    msg_type: '0x69'
+    payload: ""
+    preamble: '0x55'
+    sender: '0x8a6c'

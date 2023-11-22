@@ -1,0 +1,12 @@
+description: Unit tests for swiftnav.sbp.navigation free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.navigation
+struct_tests:
+
+- encoded: mimYRZqBukVmZrZC
+  fields:
+    semi_major: 4869.200195
+    semi_minor: 5968.200195
+    orientation: 91.199997
+  module: sbp.navigation
+  name: EstimatedHorizontalErrorEllipse

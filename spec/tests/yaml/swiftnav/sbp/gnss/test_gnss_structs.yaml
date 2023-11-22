@@ -1,0 +1,56 @@
+description: Unit tests for swiftnav.sbp.gnss free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.gnss
+
+struct_tests:
+
+  - encoded: ovQ=
+    fields:
+      sat: 162
+      code: 244
+    module: sbp.gnss
+    name: V4GnssSignal
+
+  - encoded: siw=
+    fields:
+      satId: 178
+      constellation: 44
+    module: sbp.gnss
+    name: SvId
+
+  - encoded: w0Lx9Q==
+    fields:
+      sat: 17091
+      code: 241
+      reserved: 245
+    module: sbp.gnss
+    name: GnssSignalDep
+
+  - encoded: LEa0Vndo
+    fields:
+      tow: 1454655020
+      wn: 26743
+    module: sbp.gnss
+    name: GpsTimeDep
+
+  - encoded: QOjcehbz
+    fields:
+      tow: 2061297728
+      wn: 62230
+    module: sbp.gnss
+    name: GpsTimeSec
+
+  - encoded: Hw29BR6yHRwfuA==
+    fields:
+      tow: 96275743
+      wn: 47135
+      ns_residual: 471708190
+    module: sbp.gnss
+    name: V4GpsTime
+
+  - encoded: ItSwh3o=
+    fields:
+      i: -2018454494
+      f: 122
+    module: sbp.gnss
+    name: CarrierPhase

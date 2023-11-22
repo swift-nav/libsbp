@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.telemetry free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.telemetry
+struct_tests:
+
+  - encoded: QWAXzkS6kyU0BljE
+    fields:
+      az: 65
+      el: 96
+      availability_flags: 23
+      pseudorange_residual: 17614
+      phase_residual: -27718
+      outlier_flags: 37
+      ephemeris_flags: 52
+      correction_flags: 6
+      sid:
+        sat: 88
+        code: 196
+    module: sbp.telemetry
+    name: TelemetrySv

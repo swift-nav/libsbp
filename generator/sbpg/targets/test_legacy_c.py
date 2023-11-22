@@ -38,6 +38,10 @@ def render_source(output_dir, package_spec):
   """
   Render and output to a directory given a package specification.
   """
+
+  # Test cases solely for structs are not supported in the legacy templates
+  if len(package_spec.tests) == 0:
+    return
   path, name = package_spec.filepath
   destination_filename = "%s/legacy/%s.c" % (output_dir, name)
   py_template = JENV.get_template(TEST_TEMPLATE_NAME)

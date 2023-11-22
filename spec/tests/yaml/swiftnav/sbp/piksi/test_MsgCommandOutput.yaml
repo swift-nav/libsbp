@@ -1,0 +1,27 @@
+description: Unit tests for swiftnav.sbp.piksi MsgCommandOutput
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    c_decoded_fields:
+      line:
+        handle_as: encoded-string
+        encoded_len: 16
+        fn_prefix: sbp_msg_command_output_line
+        text: Some output text
+    fields:
+      line: Some output text
+      sequence: 2507449470
+    module: sbp.piksi
+    name: MsgCommandOutput
+  msg_type: '0xbc'
+  raw_json: '{"crc":27915,"length":20,"msg_type":188,"payload":"fqR0lVNvbWUgb3V0cHV0IHRleHQ=","preamble":85,"sender":21554,"sequence":2507449470,"line":"Some output text"}'
+  raw_packet: VbwAMlQUfqR0lVNvbWUgb3V0cHV0IHRleHQLbQ==
+  sbp:
+    crc: '0x6d0b'
+    length: 20
+    msg_type: '0xbc'
+    payload: fqR0lVNvbWUgb3V0cHV0IHRleHQ=
+    preamble: '0x55'
+    sender: '0x5432'

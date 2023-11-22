@@ -1,0 +1,27 @@
+description: Unit tests for swiftnav.sbp.system MsgCsacTelemetry
+generated_on: 2023-11-15 # manually generated
+package: sbp.system
+tests:
+
+- msg:
+    c_decoded_fields:
+      telemetry:
+        handle_as: encoded-string
+        encoded_len: 9
+        text: some data
+        fn_prefix: sbp_msg_csac_telemetry_telemetry
+    fields:
+      id: 105
+      telemetry: some data
+    module: sbp.system
+    name: MsgCsacTelemetry
+  msg_type: '0xff04'
+  raw_json: '{"preamble":85,"msg_type":65284,"sender":43508,"length":10,"payload":"aXNvbWUgZGF0YQ==","crc":24293,"id":105,"telemetry":"some data"}'
+  raw_packet: VQT/9KkKaXNvbWUgZGF0YeVe
+  sbp:
+    crc: '0x5ee5'
+    length: 10
+    msg_type: '0xff04'
+    payload: aXNvbWUgZGF0YQ==
+    preamble: '0x55'
+    sender: '0xa9f4'

@@ -1,0 +1,39 @@
+description: Unit tests for swiftnav.sbp.telemetry free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.telemetry
+struct_tests:
+
+  - encoded: Hm3MF+B9/7i6rqsBr2lY6AaJU+2Rxn3rSXG2kQSg7xY4
+    fields:
+      job_type: 30
+      status: 109
+      cn0: 6092
+      int_time: 224
+      sid.sat: 125
+      sid.code: 255
+      bin_width: 47800
+      timestamp: 2936122286
+      time_spent: 115890281
+      cf_min: -1846717559
+      cf_max: 1240169926
+      cf: 76658289
+      cp: 941027232
+    module: sbp.acquisition
+    name: AcqSvProfile
+  - encoded: ZHLeDuRUTJkALZwYwezRZHIk1yLlA4s96LN/fNM3J50z3qE=
+    fields:
+      job_type: 100
+      status: 114
+      cn0: 3806
+      int_time: 228
+      sid.sat: 19540
+      sid.code: 153
+      bin_width: 39981
+      timestamp: 3521954072
+      time_spent: 3609490020
+      cf_min: -1962679006
+      cf_max: 2142496829
+      cf: 657970044
+      cp: 2715693981
+    module: sbp.acquisition
+    name: AcqSvProfileDep

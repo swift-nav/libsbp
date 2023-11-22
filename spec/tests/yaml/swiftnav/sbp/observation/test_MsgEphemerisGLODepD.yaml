@@ -1,0 +1,47 @@
+description: Unit tests for swiftnav.sbp.observation MsgEphemerisGloDepD
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      acc:
+        - 9.313225746154785e-07
+        - 9.313225746154785e-07
+        - 2.7939677238464355e-06
+      common:
+        fit_interval: 2400
+        health_bits: 0
+        sid:
+          code: 3
+          sat: 4
+        toe:
+          tow: 443718
+          wn: 2154
+        ura: 5.2
+        valid: 1
+      d_tau: -2.7939677238464355e-09
+      fcn: 14
+      gamma: 9.094947017729282e-13
+      iod: 100
+      pos:
+        - -12177330.078125
+        - 599893.06640625
+        - -22373708.49609375
+      tau: -8.36281105875969e-05
+      vel:
+        - -1726.506233215332
+        - -2542.6149368286133
+        - 869.8177337646484
+    module: sbp.observation
+    name: MsgEphemerisGloDepD
+  msg_type: '0x88'
+  raw_json: '{"preamble":85,"msg_type":136,"sender":1219,"length":120,"payload":"BANGxQYAagjNzMzMzMwUQGAJAAABAAAAAAAAAHA9AAAAADDsFb8AAAAAAAAovgAAgEL2OWfBAAAAIqpOIkEAAPDHVFZ1wQAAAGIG+prAAAAA2Trdo8AAAAC4ii6LQAAAAAAAQK8+AAAAAABArz4AAAAAAHDHPg5k","crc":16466,"common":{"sid":{"sat":4,"code":3},"toe":{"tow":443718,"wn":2154},"ura":5.2,"fit_interval":2400,"valid":1,"health_bits":0},"gamma":9.094947017729282e-13,"tau":-8.36281105875969e-05,"d_tau":-2.7939677238464355e-09,"pos":[-12177330.078125,599893.06640625,-22373708.49609375],"vel":[-1726.506233215332,-2542.6149368286133,869.8177337646484],"acc":[9.313225746154785e-07,9.313225746154785e-07,2.7939677238464355e-06],"fcn":14,"iod":100}'
+  raw_packet: VYgAwwR4BANGxQYAagjNzMzMzMwUQGAJAAABAAAAAAAAAHA9AAAAADDsFb8AAAAAAAAovgAAgEL2OWfBAAAAIqpOIkEAAPDHVFZ1wQAAAGIG+prAAAAA2Trdo8AAAAC4ii6LQAAAAAAAQK8+AAAAAABArz4AAAAAAHDHPg5kUkA=
+  sbp:
+    crc: '0x4052'
+    length: 120
+    msg_type: '0x88'
+    payload: BANGxQYAagjNzMzMzMwUQGAJAAABAAAAAAAAAHA9AAAAADDsFb8AAAAAAAAovgAAgEL2OWfBAAAAIqpOIkEAAPDHVFZ1wQAAAGIG+prAAAAA2Trdo8AAAAC4ii6LQAAAAAAAQK8+AAAAAABArz4AAAAAAHDHPg5k
+    preamble: '0x55'
+    sender: '0x04c3'

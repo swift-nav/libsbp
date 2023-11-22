@@ -1,0 +1,31 @@
+description: Unit tests for swiftnav.sbp.settings MsgSettingsReadResp
+generated_on: 2023-11-15 # manually generated
+package: sbp.settings
+tests:
+
+- msg:
+    c_decoded_fields:
+      setting:
+        handle_as: encoded-string
+        encoded_len: 66
+        min_len: 1
+        fn_prefix: sbp_msg_settings_read_resp_setting
+        sections:
+          - "section-name"
+          - "setting-name"
+          - "setting-value"
+          - "enum;value1,value2,value3"
+    fields:
+      setting: "section-name\0setting-name\0setting-value\0enum;value1,value2,value3\0"
+    module: sbp.settings
+    name: MsgSettingsReadResp
+  msg_type: '0xa5'
+  raw_json: '{"crc":51147,"length":66,"msg_type":165,"payload":"c2VjdGlvbi1uYW1lAHNldHRpbmctbmFtZQBzZXR0aW5nLXZhbHVlAGVudW07dmFsdWUxLHZhbHVlMix2YWx1ZTMA","preamble":85,"sender":61576,"setting":"section-name\u0000setting-name\u0000setting-value\u0000enum;value1,value2,value3\u0000"}'
+  raw_packet: VaUAiPBCc2VjdGlvbi1uYW1lAHNldHRpbmctbmFtZQBzZXR0aW5nLXZhbHVlAGVudW07dmFsdWUxLHZhbHVlMix2YWx1ZTMAy8c=
+  sbp:
+    crc: '0xc7cb'
+    length: 66
+    msg_type: '0xa5'
+    payload: c2VjdGlvbi1uYW1lAHNldHRpbmctbmFtZQBzZXR0aW5nLXZhbHVlAGVudW07dmFsdWUxLHZhbHVlMix2YWx1ZTMA
+    preamble: '0x55'
+    sender: '0xf088'

@@ -1,0 +1,27 @@
+description: Unit tests for swiftnav.sbp.linux MsgLinuxSysState
+generated_on: 2023-11-15 # manually generated
+package: sbp.linux
+tests:
+
+- msg:
+    fields:
+      flags: 9
+      mem_total: 53012
+      pcpu: 125
+      pid_count: 47866
+      pmem: 215
+      procs_starting: 18372
+      procs_stopping: 58785
+      time: 90840684
+    module: sbp.linux
+    name: MsgLinuxSysState
+  msg_type: '0x7f0a'
+  raw_json: '{"crc":62181,"length":15,"msg_type":32522,"payload":"FM9918RHoeX6umweagUJ","preamble":85,"sender":42837,"mem_total":53012,"pcpu":125,"pmem":215,"procs_starting":18372,"procs_stopping":58785,"pid_count":47866,"time":90840684,"flags":9}'
+  raw_packet: VQp/VacPFM9918RHoeX6umweagUJ5fI=
+  sbp:
+    crc: '0xf2e5'
+    length: 15
+    msg_type: '0x7f0a'
+    payload: FM9918RHoeX6umweagUJ
+    preamble: '0x55'
+    sender: '0xa755'

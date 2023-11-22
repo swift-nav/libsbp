@@ -1,0 +1,55 @@
+description: Unit tests for swiftnav.sbp.linux MsgLinuxSocketUsage
+generated_on: 2023-11-15 # manually generated
+package: sbp.linux
+tests:
+
+- msg:
+    fields:
+      avg_queue_depth: 2907030541
+      max_queue_depth: 3048922691
+      socket_state_counts:
+        - 39670
+        - 4603
+        - 46048
+        - 43290
+        - 23217
+        - 54677
+        - 1750
+        - 16510
+        - 47480
+        - 33620
+        - 28616
+        - 36128
+        - 53721
+        - 3636
+        - 37822
+        - 63135
+      socket_type_counts:
+        - 31373
+        - 30676
+        - 7811
+        - 12152
+        - 27929
+        - 16794
+        - 42116
+        - 7719
+        - 44830
+        - 11272
+        - 28444
+        - 61676
+        - 19120
+        - 33183
+        - 39322
+        - 58786
+    module: sbp.linux
+    name: MsgLinuxSocketUsage
+  msg_type: '0x7f05'
+  raw_json: '{"crc":39554,"length":72,"msg_type":32517,"payload":"DcRFrUPeurX2mvsR4LMaqbFaldXWBn5AeLlUg8hvII3Z0TQOvpOf9o161HeDHngvGW2aQYSkJx4erwgsHG/s8LBKn4GamaLl","preamble":85,"sender":35442,"avg_queue_depth":2907030541,"max_queue_depth":3048922691,"socket_state_counts":[39670,4603,46048,43290,23217,54677,1750,16510,47480,33620,28616,36128,53721,3636,37822,63135],"socket_type_counts":[31373,30676,7811,12152,27929,16794,42116,7719,44830,11272,28444,61676,19120,33183,39322,58786]}'
+  raw_packet: VQV/copIDcRFrUPeurX2mvsR4LMaqbFaldXWBn5AeLlUg8hvII3Z0TQOvpOf9o161HeDHngvGW2aQYSkJx4erwgsHG/s8LBKn4GamaLlgpo=
+  sbp:
+    crc: '0x9a82'
+    length: 72
+    msg_type: '0x7f05'
+    payload: DcRFrUPeurX2mvsR4LMaqbFaldXWBn5AeLlUg8hvII3Z0TQOvpOf9o161HeDHngvGW2aQYSkJx4erwgsHG/s8LBKn4GamaLl
+    preamble: '0x55'
+    sender: '0x8a72'

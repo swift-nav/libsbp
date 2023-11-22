@@ -1,0 +1,30 @@
+description: Unit tests for swiftnav.sbp.observation MsgIono
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      a0: 4.6566128730773926e-09
+      a1: 1.4901161193847656e-08
+      a2: -5.960464477539063e-08
+      a3: -5.960464477539063e-08
+      b0: 77824.0
+      b1: 49152.0
+      b2: -65536.0
+      b3: -327680.0
+      t_nmct:
+        tow: 0
+        wn: 0
+    module: sbp.observation
+    name: MsgIono
+  msg_type: '0x90'
+  raw_json: '{"crc":8037,"length":70,"msg_type":144,"payload":"AAAAAAAAAAAAAAAAND4AAAAAAABQPgAAAAAAAHC+AAAAAAAAcL4AAAAAAADzQAAAAAAAAOhAAAAAAAAA8MAAAAAAAAAUwQ==","preamble":85,"sender":123,"t_nmct":{"tow":0,"wn":0},"a0":4.6566128730773926e-09,"a1":1.4901161193847656e-08,"a2":-5.960464477539063e-08,"a3":-5.960464477539063e-08,"b0":77824,"b1":49152,"b2":-65536,"b3":-327680}'
+  raw_packet: VZAAewBGAAAAAAAAAAAAAAAAND4AAAAAAABQPgAAAAAAAHC+AAAAAAAAcL4AAAAAAADzQAAAAAAAAOhAAAAAAAAA8MAAAAAAAAAUwWUf
+  sbp:
+    crc: '0x1f65'
+    length: 70
+    msg_type: '0x90'
+    payload: AAAAAAAAAAAAAAAAND4AAAAAAABQPgAAAAAAAHC+AAAAAAAAcL4AAAAAAADzQAAAAAAAAOhAAAAAAAAA8MAAAAAAAAAUwQ==
+    preamble: '0x55'
+    sender: '0x007b'

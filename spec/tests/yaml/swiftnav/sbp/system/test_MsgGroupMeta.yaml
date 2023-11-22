@@ -5,6 +5,11 @@ package: sbp.system
 tests:
 
 - msg:
+    c_decoded_fields:
+      n_group_msgs:
+        handle_as: vararray-len
+        relates_to: group_msgs
+        value: 3  # includes group_meta itself
     fields:
       group_id: 1
       flags: 0b00000010  # gnss+ins (fuzed)
@@ -28,6 +33,11 @@ tests:
     sender: '0xEEEE'
 
 - msg:
+    c_decoded_fields:
+      n_group_msgs:
+        handle_as: vararray-len
+        relates_to: group_msgs
+        value: 14
     fields:
       group_id: 1
       flags: 1

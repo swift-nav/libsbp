@@ -1,0 +1,28 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrTileDefinitionDepA
+generated_on: 2023-11-15 # manually generated
+package: sbp.ssr
+tests:
+
+- msg:
+    fields:
+      bitmask: 11259375
+      cols: 48917
+      corner_nw_lat: -18168
+      corner_nw_lon: -19191
+      rows: 36863
+      spacing_lat: 61602
+      spacing_lon: 4929
+      tile_id: 63410
+      tile_set_id: 48697
+    module: sbp.ssr
+    name: MsgSsrTileDefinitionDepA
+  msg_type: '0x5f6'
+  raw_json: '{"crc":39489,"length":24,"msg_type":1526,"payload":"Ob6y9wi5CbWi8EET/48Vv+/NqwAAAAAA","preamble":85,"sender":34248,"tile_set_id":48697,"tile_id":63410,"corner_nw_lat":-18168,"corner_nw_lon":-19191,"spacing_lat":61602,"spacing_lon":4929,"rows":36863,"cols":48917,"bitmask":11259375}'
+  raw_packet: VfYFyIUYOb6y9wi5CbWi8EET/48Vv+/NqwAAAAAAQZo=
+  sbp:
+    crc: '0x9a41'
+    length: 24
+    msg_type: '0x5f6'
+    payload: Ob6y9wi5CbWi8EET/48Vv+/NqwAAAAAA
+    preamble: '0x55'
+    sender: '0x85c8'

@@ -4,7 +4,10 @@ package: sbp.signing
 tests:
 - msg:
     c_decoded_fields:
-      n_certificate_bytes: 85
+      n_certificate_bytes:
+        handle_as: vararray-len
+        relates_to: certificate_bytes
+        value: 85
     fields:
       certificate_bytes:
       - 0

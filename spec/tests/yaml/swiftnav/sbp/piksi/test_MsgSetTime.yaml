@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.piksi MsgSetTime
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      {}
+    module: sbp.piksi
+    name: MsgSetTime
+  msg_type: '0x68'
+  raw_json: '{"crc":16855,"length":0,"msg_type":104,"payload":"","preamble":85,"sender":43541}'
+  raw_packet: VWgAFaoA10E=
+  sbp:
+    crc: '0x41d7'
+    length: 0
+    msg_type: '0x68'
+    payload: ""
+    preamble: '0x55'
+    sender: '0xaa15'

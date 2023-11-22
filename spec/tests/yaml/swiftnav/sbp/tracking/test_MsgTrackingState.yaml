@@ -1,8 +1,343 @@
----
-description: Unit tests for swiftnav.sbp.tracking MsgTrackingState v0.51.
-generated_on: 2015-11-09 15:15:45.758477
+description: Unit tests for swiftnav.sbp.tracking MsgTrackingState
+generated_on: 2023-11-15 # manually generated
 package: sbp.tracking
 tests:
+
+- msg:
+    c_decoded_fields:
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 63
+    fields:
+      states:
+        - cn0: 102
+          fcn: 3
+          sid:
+            code: 184
+            sat: 117
+        - cn0: 141
+          fcn: 140
+          sid:
+            code: 106
+            sat: 38
+        - cn0: 195
+          fcn: 90
+          sid:
+            code: 4
+            sat: 25
+        - cn0: 82
+          fcn: 75
+          sid:
+            code: 108
+            sat: 246
+        - cn0: 163
+          fcn: 45
+          sid:
+            code: 127
+            sat: 137
+        - cn0: 93
+          fcn: 187
+          sid:
+            code: 46
+            sat: 32
+        - cn0: 147
+          fcn: 201
+          sid:
+            code: 60
+            sat: 153
+        - cn0: 208
+          fcn: 5
+          sid:
+            code: 29
+            sat: 23
+        - cn0: 69
+          fcn: 219
+          sid:
+            code: 30
+            sat: 181
+        - cn0: 121
+          fcn: 3
+          sid:
+            code: 136
+            sat: 254
+        - cn0: 215
+          fcn: 144
+          sid:
+            code: 98
+            sat: 33
+        - cn0: 56
+          fcn: 14
+          sid:
+            code: 182
+            sat: 133
+        - cn0: 62
+          fcn: 218
+          sid:
+            code: 77
+            sat: 169
+        - cn0: 249
+          fcn: 171
+          sid:
+            code: 84
+            sat: 242
+        - cn0: 130
+          fcn: 131
+          sid:
+            code: 137
+            sat: 152
+        - cn0: 68
+          fcn: 42
+          sid:
+            code: 21
+            sat: 193
+        - cn0: 227
+          fcn: 216
+          sid:
+            code: 227
+            sat: 253
+        - cn0: 179
+          fcn: 210
+          sid:
+            code: 26
+            sat: 24
+        - cn0: 255
+          fcn: 227
+          sid:
+            code: 15
+            sat: 19
+        - cn0: 200
+          fcn: 187
+          sid:
+            code: 75
+            sat: 122
+        - cn0: 122
+          fcn: 218
+          sid:
+            code: 48
+            sat: 217
+        - cn0: 149
+          fcn: 142
+          sid:
+            code: 238
+            sat: 187
+        - cn0: 212
+          fcn: 251
+          sid:
+            code: 55
+            sat: 238
+        - cn0: 104
+          fcn: 194
+          sid:
+            code: 160
+            sat: 128
+        - cn0: 62
+          fcn: 141
+          sid:
+            code: 255
+            sat: 113
+        - cn0: 39
+          fcn: 245
+          sid:
+            code: 69
+            sat: 43
+        - cn0: 56
+          fcn: 108
+          sid:
+            code: 230
+            sat: 100
+        - cn0: 143
+          fcn: 149
+          sid:
+            code: 68
+            sat: 247
+        - cn0: 70
+          fcn: 233
+          sid:
+            code: 101
+            sat: 137
+        - cn0: 110
+          fcn: 38
+          sid:
+            code: 165
+            sat: 49
+        - cn0: 213
+          fcn: 80
+          sid:
+            code: 230
+            sat: 218
+        - cn0: 128
+          fcn: 139
+          sid:
+            code: 179
+            sat: 196
+        - cn0: 171
+          fcn: 196
+          sid:
+            code: 178
+            sat: 15
+        - cn0: 194
+          fcn: 97
+          sid:
+            code: 212
+            sat: 8
+        - cn0: 99
+          fcn: 79
+          sid:
+            code: 233
+            sat: 83
+        - cn0: 180
+          fcn: 31
+          sid:
+            code: 90
+            sat: 55
+        - cn0: 186
+          fcn: 105
+          sid:
+            code: 25
+            sat: 5
+        - cn0: 111
+          fcn: 80
+          sid:
+            code: 224
+            sat: 22
+        - cn0: 166
+          fcn: 106
+          sid:
+            code: 48
+            sat: 8
+        - cn0: 49
+          fcn: 156
+          sid:
+            code: 48
+            sat: 4
+        - cn0: 146
+          fcn: 142
+          sid:
+            code: 19
+            sat: 86
+        - cn0: 64
+          fcn: 115
+          sid:
+            code: 124
+            sat: 91
+        - cn0: 178
+          fcn: 115
+          sid:
+            code: 230
+            sat: 28
+        - cn0: 242
+          fcn: 16
+          sid:
+            code: 131
+            sat: 190
+        - cn0: 113
+          fcn: 182
+          sid:
+            code: 59
+            sat: 105
+        - cn0: 179
+          fcn: 48
+          sid:
+            code: 180
+            sat: 192
+        - cn0: 211
+          fcn: 172
+          sid:
+            code: 31
+            sat: 166
+        - cn0: 49
+          fcn: 140
+          sid:
+            code: 228
+            sat: 77
+        - cn0: 194
+          fcn: 240
+          sid:
+            code: 77
+            sat: 128
+        - cn0: 58
+          fcn: 41
+          sid:
+            code: 194
+            sat: 134
+        - cn0: 55
+          fcn: 129
+          sid:
+            code: 53
+            sat: 18
+        - cn0: 92
+          fcn: 134
+          sid:
+            code: 72
+            sat: 91
+        - cn0: 56
+          fcn: 157
+          sid:
+            code: 224
+            sat: 33
+        - cn0: 174
+          fcn: 224
+          sid:
+            code: 54
+            sat: 186
+        - cn0: 190
+          fcn: 148
+          sid:
+            code: 84
+            sat: 82
+        - cn0: 67
+          fcn: 62
+          sid:
+            code: 54
+            sat: 236
+        - cn0: 254
+          fcn: 57
+          sid:
+            code: 215
+            sat: 52
+        - cn0: 174
+          fcn: 36
+          sid:
+            code: 133
+            sat: 16
+        - cn0: 17
+          fcn: 145
+          sid:
+            code: 172
+            sat: 219
+        - cn0: 97
+          fcn: 111
+          sid:
+            code: 179
+            sat: 192
+        - cn0: 134
+          fcn: 208
+          sid:
+            code: 56
+            sat: 207
+        - cn0: 226
+          fcn: 43
+          sid:
+            code: 17
+            sat: 180
+        - cn0: 113
+          fcn: 140
+          sid:
+            code: 182
+            sat: 255
+    module: sbp.tracking
+    name: MsgTrackingState
+  msg_type: '0x41'
+  raw_json: '{"crc":28557,"length":252,"msg_type":65,"payload":"dbgDZiZqjI0ZBFrD9mxLUol/LaMgLrtdmTzJkxcdBdC1HttF/ogDeSFikNeFtg44qU3aPvJUq/mYiYOCwRUqRP3j2OMYGtKzEw/j/3pLu8jZMNp6u+6Ole43+9SAoMJocf+NPitF9Sdk5mw490SVj4ll6UYxpSZu2uZQ1cSzi4APssSrCNRhwlPpT2M3Wh+0BRlpuhbgUG8IMGqmBDCcMVYTjpJbfHNAHOZzsr6DEPJpO7ZxwLQws6YfrNNN5IwxgE3wwobCKToSNYE3W0iGXCHgnTi6NuCuUlSUvuw2PkM01zn+EIUkrtuskRHAs29hzzjQhrQRK+L/toxx","preamble":85,"sender":33079,"states":[{"sid":{"sat":117,"code":184},"fcn":3,"cn0":102},{"sid":{"sat":38,"code":106},"fcn":140,"cn0":141},{"sid":{"sat":25,"code":4},"fcn":90,"cn0":195},{"sid":{"sat":246,"code":108},"fcn":75,"cn0":82},{"sid":{"sat":137,"code":127},"fcn":45,"cn0":163},{"sid":{"sat":32,"code":46},"fcn":187,"cn0":93},{"sid":{"sat":153,"code":60},"fcn":201,"cn0":147},{"sid":{"sat":23,"code":29},"fcn":5,"cn0":208},{"sid":{"sat":181,"code":30},"fcn":219,"cn0":69},{"sid":{"sat":254,"code":136},"fcn":3,"cn0":121},{"sid":{"sat":33,"code":98},"fcn":144,"cn0":215},{"sid":{"sat":133,"code":182},"fcn":14,"cn0":56},{"sid":{"sat":169,"code":77},"fcn":218,"cn0":62},{"sid":{"sat":242,"code":84},"fcn":171,"cn0":249},{"sid":{"sat":152,"code":137},"fcn":131,"cn0":130},{"sid":{"sat":193,"code":21},"fcn":42,"cn0":68},{"sid":{"sat":253,"code":227},"fcn":216,"cn0":227},{"sid":{"sat":24,"code":26},"fcn":210,"cn0":179},{"sid":{"sat":19,"code":15},"fcn":227,"cn0":255},{"sid":{"sat":122,"code":75},"fcn":187,"cn0":200},{"sid":{"sat":217,"code":48},"fcn":218,"cn0":122},{"sid":{"sat":187,"code":238},"fcn":142,"cn0":149},{"sid":{"sat":238,"code":55},"fcn":251,"cn0":212},{"sid":{"sat":128,"code":160},"fcn":194,"cn0":104},{"sid":{"sat":113,"code":255},"fcn":141,"cn0":62},{"sid":{"sat":43,"code":69},"fcn":245,"cn0":39},{"sid":{"sat":100,"code":230},"fcn":108,"cn0":56},{"sid":{"sat":247,"code":68},"fcn":149,"cn0":143},{"sid":{"sat":137,"code":101},"fcn":233,"cn0":70},{"sid":{"sat":49,"code":165},"fcn":38,"cn0":110},{"sid":{"sat":218,"code":230},"fcn":80,"cn0":213},{"sid":{"sat":196,"code":179},"fcn":139,"cn0":128},{"sid":{"sat":15,"code":178},"fcn":196,"cn0":171},{"sid":{"sat":8,"code":212},"fcn":97,"cn0":194},{"sid":{"sat":83,"code":233},"fcn":79,"cn0":99},{"sid":{"sat":55,"code":90},"fcn":31,"cn0":180},{"sid":{"sat":5,"code":25},"fcn":105,"cn0":186},{"sid":{"sat":22,"code":224},"fcn":80,"cn0":111},{"sid":{"sat":8,"code":48},"fcn":106,"cn0":166},{"sid":{"sat":4,"code":48},"fcn":156,"cn0":49},{"sid":{"sat":86,"code":19},"fcn":142,"cn0":146},{"sid":{"sat":91,"code":124},"fcn":115,"cn0":64},{"sid":{"sat":28,"code":230},"fcn":115,"cn0":178},{"sid":{"sat":190,"code":131},"fcn":16,"cn0":242},{"sid":{"sat":105,"code":59},"fcn":182,"cn0":113},{"sid":{"sat":192,"code":180},"fcn":48,"cn0":179},{"sid":{"sat":166,"code":31},"fcn":172,"cn0":211},{"sid":{"sat":77,"code":228},"fcn":140,"cn0":49},{"sid":{"sat":128,"code":77},"fcn":240,"cn0":194},{"sid":{"sat":134,"code":194},"fcn":41,"cn0":58},{"sid":{"sat":18,"code":53},"fcn":129,"cn0":55},{"sid":{"sat":91,"code":72},"fcn":134,"cn0":92},{"sid":{"sat":33,"code":224},"fcn":157,"cn0":56},{"sid":{"sat":186,"code":54},"fcn":224,"cn0":174},{"sid":{"sat":82,"code":84},"fcn":148,"cn0":190},{"sid":{"sat":236,"code":54},"fcn":62,"cn0":67},{"sid":{"sat":52,"code":215},"fcn":57,"cn0":254},{"sid":{"sat":16,"code":133},"fcn":36,"cn0":174},{"sid":{"sat":219,"code":172},"fcn":145,"cn0":17},{"sid":{"sat":192,"code":179},"fcn":111,"cn0":97},{"sid":{"sat":207,"code":56},"fcn":208,"cn0":134},{"sid":{"sat":180,"code":17},"fcn":43,"cn0":226},{"sid":{"sat":255,"code":182},"fcn":140,"cn0":113}]}'
+  raw_packet: VUEAN4H8dbgDZiZqjI0ZBFrD9mxLUol/LaMgLrtdmTzJkxcdBdC1HttF/ogDeSFikNeFtg44qU3aPvJUq/mYiYOCwRUqRP3j2OMYGtKzEw/j/3pLu8jZMNp6u+6Ole43+9SAoMJocf+NPitF9Sdk5mw490SVj4ll6UYxpSZu2uZQ1cSzi4APssSrCNRhwlPpT2M3Wh+0BRlpuhbgUG8IMGqmBDCcMVYTjpJbfHNAHOZzsr6DEPJpO7ZxwLQws6YfrNNN5IwxgE3wwobCKToSNYE3W0iGXCHgnTi6NuCuUlSUvuw2PkM01zn+EIUkrtuskRHAs29hzzjQhrQRK+L/toxxjW8=
+  sbp:
+    crc: '0x6f8d'
+    length: 252
+    msg_type: '0x41'
+    payload: dbgDZiZqjI0ZBFrD9mxLUol/LaMgLrtdmTzJkxcdBdC1HttF/ogDeSFikNeFtg44qU3aPvJUq/mYiYOCwRUqRP3j2OMYGtKzEw/j/3pLu8jZMNp6u+6Ole43+9SAoMJocf+NPitF9Sdk5mw490SVj4ll6UYxpSZu2uZQ1cSzi4APssSrCNRhwlPpT2M3Wh+0BRlpuhbgUG8IMGqmBDCcMVYTjpJbfHNAHOZzsr6DEPJpO7ZxwLQws6YfrNNN5IwxgE3wwobCKToSNYE3W0iGXCHgnTi6NuCuUlSUvuw2PkM01zn+EIUkrtuskRHAs29hzzjQhrQRK+L/toxx
+    preamble: '0x55'
+    sender: '0x8137'
 
 - msg:
     fields:
@@ -74,7 +409,10 @@ tests:
           sat: 0
         state: 0
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepB
   msg_type: '0x13'
@@ -170,7 +508,10 @@ tests:
           sat: 0
         state: 0
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepB
   msg_type: '0x13'
@@ -266,7 +607,10 @@ tests:
           sat: 0
         state: 0
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepB
   msg_type: '0x13'
@@ -362,7 +706,10 @@ tests:
           sat: 0
         state: 0
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepB
   msg_type: '0x13'
@@ -458,7 +805,10 @@ tests:
           sat: 0
         state: 0
     c_decoded_fields:
-      n_states: 11
+      n_states:
+        handle_as: vararray-len
+        relates_to: states
+        value: 11
     module: sbp.tracking
     name: MsgTrackingStateDepB
   msg_type: '0x13'

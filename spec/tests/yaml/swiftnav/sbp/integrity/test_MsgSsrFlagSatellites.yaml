@@ -4,6 +4,11 @@ package: sbp.integrity
 tests:
 
 - msg:
+    c_decoded_fields:
+      n_faulty_sats:
+        handle_as: vararray-len
+        relates_to: faulty_sats
+        value: 3
     fields:
       obs_time:
         tow: 180

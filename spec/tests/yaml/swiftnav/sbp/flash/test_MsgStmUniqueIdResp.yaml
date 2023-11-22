@@ -1,0 +1,32 @@
+description: Unit tests for swiftnav.sbp.flash MsgStmUniqueIdResp
+generated_on: 2023-11-15 # manually generated
+package: sbp.flash
+tests:
+
+- msg:
+    fields:
+      stm_id:
+        - 196
+        - 16
+        - 15
+        - 163
+        - 85
+        - 221
+        - 119
+        - 102
+        - 32
+        - 194
+        - 56
+        - 144
+    module: sbp.flash
+    name: MsgStmUniqueIdResp
+  msg_type: '0xe5'
+  raw_json: '{"crc":50397,"length":12,"msg_type":229,"payload":"xBAPo1Xdd2YgwjiQ","preamble":85,"sender":1219,"stm_id":[196,16,15,163,85,221,119,102,32,194,56,144]}'
+  raw_packet: VeUAwwQMxBAPo1Xdd2YgwjiQ3cQ=
+  sbp:
+    crc: '0xc4dd'
+    length: 12
+    msg_type: '0xe5'
+    payload: xBAPo1Xdd2YgwjiQ
+    preamble: '0x55'
+    sender: '0x04c3'

@@ -16,117 +16,820 @@
 
 #include <gtest/gtest.h>
 #include <libsbp/cpp/message_handler.h>
-#include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
-#include <cstring>
-class Test_auto_check_sbp_navigation_MsgUTCTimeGNSS0
-    : public ::testing::Test,
-      public sbp::State,
-      public sbp::IReader,
-      public sbp::IWriter,
-      sbp::MessageHandler<sbp_msg_utc_time_gnss_t> {
+#include <libsbp/sbp.h>
+#include <algorithm>
+
+namespace {
+
+template <typename T, typename U>
+void assign(T &dest, const U &source) {
+  dest = static_cast<T>(source);
+}
+class Testauto_check_sbp_navigation_MsgUTCTimeGNSS0 : public ::testing::Test {
  public:
-  Test_auto_check_sbp_navigation_MsgUTCTimeGNSS0()
-      : ::testing::Test(),
-        sbp::State(),
-        sbp::IReader(),
-        sbp::IWriter(),
-        sbp::MessageHandler<sbp_msg_utc_time_gnss_t>(this),
-        last_msg_(),
-        last_msg_len_(),
-        last_sender_id_(),
-        n_callbacks_logged_(),
-        dummy_wr_(),
-        dummy_rd_(),
-        dummy_buff_() {
-    set_reader(this);
-    set_writer(this);
+  Testauto_check_sbp_navigation_MsgUTCTimeGNSS0() {
+    assign(test_msg_.day, 9);
+    assign(test_msg_.flags, 1);
+    assign(test_msg_.hours, 19);
+    assign(test_msg_.minutes, 24);
+    assign(test_msg_.month, 4);
+    assign(test_msg_.ns, 800000000);
+    assign(test_msg_.seconds, 9);
+    assign(test_msg_.tow, 501867800);
+    assign(test_msg_.year, 2021);
   }
 
-  s32 read(uint8_t *buf, const uint32_t n) override {
-    uint32_t real_n = n;
-    memcpy(buf, dummy_buff_ + dummy_rd_, real_n);
-    dummy_rd_ += real_n;
-    return (s32)real_n;
-  }
+  class SlowReader final : public sbp::IReader {
+   public:
+    SlowReader(const uint8_t *buf, uint32_t len)
+        : sbp::IReader(), buf_{buf}, len_{len} {}
 
-  s32 write(const uint8_t *buf, uint32_t n) override {
-    uint32_t real_n = n;
-    memcpy(dummy_buff_ + dummy_wr_, buf, real_n);
-    dummy_wr_ += real_n;
-    return (s32)real_n;
+    s32 read(uint8_t *buf, const uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      if (remaining() == 0) {
+        return -1;
+      }
+      skip_next_read = !skip_next_read;
+      if (skip_next_read) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, 1u);
+      memcpy(buf, buf_ + offset_, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return len_ - offset_; }
+
+    static s32 read_static(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<SlowReader *>(ctx)->read(buf, len);
+    }
+
+   private:
+    const uint8_t *buf_;
+    uint32_t len_;
+    uint32_t offset_{};
+    bool skip_next_read{};
+  };
+
+  class Reader final : public sbp::IReader {
+   public:
+    Reader(const uint8_t *buf, uint32_t len)
+        : sbp::IReader(), buf_{buf}, len_{len} {}
+
+    s32 read(uint8_t *buf, const uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, remaining());
+      if (real_n == 0) {
+        return -1;
+      }
+      memcpy(buf, buf_ + offset_, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return len_ - offset_; }
+
+    static s32 read_static(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<Reader *>(ctx)->read(buf, len);
+    }
+
+   private:
+    const uint8_t *buf_;
+    uint32_t len_;
+    uint32_t offset_{};
+  };
+
+  class SlowWriter final : public sbp::IWriter {
+   public:
+    explicit SlowWriter(uint32_t max_len = cMaxLen)
+        : IWriter(), max_len_{max_len} {}
+    static constexpr uint32_t cMaxLen = SBP_MAX_FRAME_LEN;
+
+    s32 write(const uint8_t *buf, uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, 1u);
+      if (real_n == 0) {
+        return -1;
+      }
+      memcpy(buf_ + offset_, buf, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return max_len_ - offset_; }
+
+    const uint8_t *data() const noexcept { return buf_; }
+
+    uint32_t len() const noexcept { return offset_; }
+
+    static s32 write_static(const uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<SlowWriter *>(ctx)->write(buf, len);
+    }
+
+    static s32 write_c(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<SlowWriter *>(ctx)->write(buf, len);
+    }
+
+   private:
+    uint8_t buf_[cMaxLen];
+    uint32_t max_len_;
+    uint32_t offset_{};
+  };
+
+  class Writer final : public sbp::IWriter {
+   public:
+    explicit Writer(uint32_t max_len = cMaxLen)
+        : IWriter(), max_len_{max_len} {}
+    static constexpr uint32_t cMaxLen = SBP_MAX_FRAME_LEN;
+
+    s32 write(const uint8_t *buf, uint32_t n) override {
+      if (n == 0) {
+        return 0;
+      }
+      uint32_t real_n = std::min(n, remaining());
+      if (real_n == 0) {
+        return -1;
+      }
+      memcpy(buf_ + offset_, buf, real_n);
+      offset_ += real_n;
+      return static_cast<s32>(real_n);
+    }
+
+    uint32_t remaining() const noexcept { return max_len_ - offset_; }
+
+    const uint8_t *data() const noexcept { return buf_; }
+
+    uint32_t len() const noexcept { return offset_; }
+
+    static s32 write_static(const uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<Writer *>(ctx)->write(buf, len);
+    }
+
+    static s32 write_c(uint8_t *buf, uint32_t len, void *ctx) {
+      return static_cast<Writer *>(ctx)->write(buf, len);
+    }
+
+   private:
+    uint8_t buf_[cMaxLen];
+    uint32_t max_len_;
+    uint32_t offset_{};
+  };
+
+  struct CppHandler final
+      : public sbp::MessageHandler<sbp_msg_utc_time_gnss_t> {
+    using sbp::MessageHandler<sbp_msg_utc_time_gnss_t>::MessageHandler;
+
+    struct Output final {
+      uint16_t sender_id;
+      sbp_msg_utc_time_gnss_t msg;
+    };
+
+    std::vector<Output> outputs{};
+
+   protected:
+    void handle_sbp_msg(uint16_t sender_id,
+                        const sbp_msg_utc_time_gnss_t &msg) override {
+      outputs.emplace_back();
+      outputs.back().sender_id = sender_id;
+      memcpy(&outputs.back().msg, &msg, sizeof(msg));
+    }
+  };
+
+  struct CHandler final {
+    explicit CHandler(sbp_state_t *state) : state_{state} {
+      sbp_callback_register(state, SbpMsgUtcTimeGnss,
+                            &CHandler::callback_static, this, &node_);
+    }
+
+    ~CHandler() { sbp_remove_callback(state_, &node_); }
+
+    struct Output final {
+      uint16_t sender_id;
+      sbp_msg_utc_time_gnss_t msg;
+    };
+
+    std::vector<Output> outputs{};
+
+   private:
+    void callback(uint16_t sender_id, sbp_msg_type_t msg_type,
+                  const sbp_msg_t *msg) {
+      ASSERT_EQ(msg_type, SbpMsgUtcTimeGnss);
+      outputs.emplace_back();
+      outputs.back().sender_id = sender_id;
+      memcpy(&outputs.back().msg, &msg->utc_time_gnss,
+             sizeof(msg->utc_time_gnss));
+    }
+
+    static void callback_static(uint16_t sender_id, sbp_msg_type_t msg_type,
+                                const sbp_msg_t *msg, void *ctx) {
+      static_cast<CHandler *>(ctx)->callback(sender_id, msg_type, msg);
+    }
+
+    sbp_msg_callbacks_node_t node_{};
+    sbp_state_t *state_;
+  };
+
+  struct TestMsgInfo {
+    sbp_msg_utc_time_gnss_t test_msg;
+    sbp_msg_t test_msg_wrapped;
+    sbp_msg_type_t msg_type;
+    uint16_t sender_id;
+    uint8_t preamble;
+    uint16_t crc;
+    const uint8_t *encoded_frame;
+    uint32_t frame_len;
+    const uint8_t *encoded_payload;
+    uint8_t payload_len;
+
+    Reader get_frame_reader() const noexcept {
+      return Reader{encoded_frame, frame_len};
+    }
+
+    Reader get_frame_reader(uint32_t max) const noexcept {
+      assert(max <= frame_len);
+      return Reader{encoded_frame, max};
+    }
+
+    SlowReader get_slow_frame_reader() const noexcept {
+      return SlowReader{encoded_frame, frame_len};
+    }
+
+    Writer get_frame_writer() const noexcept { return Writer{frame_len}; }
+
+    Writer get_frame_writer(uint32_t max) const noexcept { return Writer{max}; }
+
+    SlowWriter get_slow_frame_writer() const noexcept {
+      return SlowWriter{frame_len};
+    }
+  };
+
+  TestMsgInfo get_test_msg_info() const noexcept {
+    TestMsgInfo info;
+    memcpy(&info.test_msg, &test_msg_, sizeof(test_msg_));
+    memcpy(&info.test_msg_wrapped.utc_time_gnss, &test_msg_, sizeof(test_msg_));
+    info.msg_type = static_cast<sbp_msg_type_t>(SbpMsgUtcTimeGnss);
+    info.sender_id = 789;
+    info.preamble = 0x55;
+    info.crc = 0x21b1;
+    info.encoded_frame = encoded_frame_;
+    info.frame_len = sizeof(encoded_frame_);
+    info.encoded_payload = encoded_payload_;
+    info.payload_len = 16;
+
+    return info;
   }
 
  protected:
-  void handle_sbp_msg(uint16_t sender_id,
-                      const sbp_msg_utc_time_gnss_t &msg) override {
-    last_msg_ = msg;
-    last_sender_id_ = sender_id;
-    n_callbacks_logged_++;
+  void comparison_tests(const sbp_msg_utc_time_gnss_t &lesser,
+                        const sbp_msg_utc_time_gnss_t &greater) {
+    sbp_msg_t wrapped_lesser =
+        sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::to_sbp_msg(lesser);
+    sbp_msg_t wrapped_greater =
+        sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::to_sbp_msg(greater);
+
+    EXPECT_EQ(sbp_msg_utc_time_gnss_cmp(&lesser, &lesser), 0);
+    EXPECT_EQ(sbp_msg_utc_time_gnss_cmp(&greater, &greater), 0);
+    EXPECT_LE(sbp_msg_utc_time_gnss_cmp(&lesser, &greater), 0);
+    EXPECT_GT(sbp_msg_utc_time_gnss_cmp(&greater, &lesser), 0);
+
+    EXPECT_EQ(
+        sbp_message_cmp(SbpMsgUtcTimeGnss, &wrapped_lesser, &wrapped_lesser),
+        0);
+    EXPECT_EQ(
+        sbp_message_cmp(SbpMsgUtcTimeGnss, &wrapped_greater, &wrapped_greater),
+        0);
+    EXPECT_LE(
+        sbp_message_cmp(SbpMsgUtcTimeGnss, &wrapped_lesser, &wrapped_greater),
+        0);
+    EXPECT_GT(
+        sbp_message_cmp(SbpMsgUtcTimeGnss, &wrapped_greater, &wrapped_lesser),
+        0);
+
+    // lesser vs lesser
+    EXPECT_TRUE(lesser == lesser);
+    EXPECT_FALSE(lesser != lesser);
+    EXPECT_FALSE(lesser < lesser);
+    EXPECT_TRUE(lesser <= lesser);
+    EXPECT_FALSE(lesser > lesser);
+    EXPECT_TRUE(lesser >= lesser);
+
+    // greater vs greater
+    EXPECT_TRUE(greater == greater);
+    EXPECT_FALSE(greater != greater);
+    EXPECT_FALSE(greater < greater);
+    EXPECT_TRUE(greater <= greater);
+    EXPECT_FALSE(greater > greater);
+    EXPECT_TRUE(greater >= greater);
+
+    // lesser vs greater
+    EXPECT_FALSE(lesser == greater);
+    EXPECT_TRUE(lesser != greater);
+    EXPECT_TRUE(lesser < greater);
+    EXPECT_TRUE(lesser <= greater);
+    EXPECT_FALSE(lesser > greater);
+    EXPECT_FALSE(lesser >= greater);
+
+    // greater vs lesser
+    EXPECT_FALSE(greater == lesser);
+    EXPECT_TRUE(greater != lesser);
+    EXPECT_FALSE(greater < lesser);
+    EXPECT_FALSE(greater <= lesser);
+    EXPECT_TRUE(greater > lesser);
+    EXPECT_TRUE(greater >= lesser);
   }
 
-  sbp_msg_utc_time_gnss_t last_msg_;
-  uint8_t last_msg_len_;
-  uint16_t last_sender_id_;
-  size_t n_callbacks_logged_;
-  uint32_t dummy_wr_;
-  uint32_t dummy_rd_;
-  uint8_t dummy_buff_[1024];
-};
+  template <typename T,
+            std::enable_if_t<std::is_integral<T>::value, bool> = true>
+  void make_lesser_greater(T &lesser, T &greater) {
+    if (greater == std::numeric_limits<T>::max()) {
+      lesser--;
+    } else {
+      greater++;
+    }
+  }
 
-TEST_F(Test_auto_check_sbp_navigation_MsgUTCTimeGNSS0, Test) {
-  uint8_t encoded_frame[] = {
+  template <typename T,
+            std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
+  void make_lesser_greater(T &lesser, T &greater) {
+    (void)lesser;
+    greater += static_cast<T>(1.0);
+  }
+
+  void make_lesser_greater(sbp_string_t &lesser, sbp_string_t &greater) {
+    if (greater.data[0] == 'z') {
+      lesser.data[0]--;
+    } else {
+      greater.data[0]++;
+    }
+  }
+
+  template <size_t N>
+  void make_lesser_greater(char (&lesser)[N], char (&greater)[N]) {
+    if (lesser[0] == 'z') {
+      lesser[0]--;
+    } else {
+      greater[0]++;
+    }
+  }
+
+ private:
+  sbp_msg_utc_time_gnss_t test_msg_{};
+  uint8_t encoded_frame_[16 + 8] = {
       85, 5, 1, 21, 3,  16, 1, 24, 229, 233, 29,  229,
       7,  4, 9, 19, 24, 9,  0, 8,  175, 47,  177, 33,
   };
+  uint8_t encoded_payload_[16] = {
+      1, 24, 229, 233, 29, 229, 7, 4, 9, 19, 24, 9, 0, 8, 175, 47,
+  };
+};
 
-  sbp_msg_utc_time_gnss_t test_msg{};
-  test_msg.day = 9;
-  test_msg.flags = 1;
-  test_msg.hours = 19;
-  test_msg.minutes = 24;
-  test_msg.month = 4;
-  test_msg.ns = 800000000;
-  test_msg.seconds = 9;
-  test_msg.tow = 501867800;
-  test_msg.year = 2021;
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, EncodedLen) {
+  auto info = get_test_msg_info();
+  EXPECT_EQ(sbp_msg_utc_time_gnss_encoded_len(&info.test_msg),
+            info.payload_len);
 
-  EXPECT_EQ(send_message(789, test_msg), SBP_OK);
+  EXPECT_EQ(sbp_message_encoded_len(SbpMsgUtcTimeGnss, &info.test_msg_wrapped),
+            info.payload_len);
+}
 
-  EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
-  EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, EncodeToBuf) {
+  auto info = get_test_msg_info();
+  uint8_t buf[16];
+  uint8_t n_written;
 
-  while (dummy_rd_ < dummy_wr_) {
-    process();
+  EXPECT_EQ(sbp_msg_utc_time_gnss_encode(&buf[0], sizeof(buf), &n_written,
+                                         &info.test_msg),
+            SBP_OK);
+  EXPECT_EQ(n_written, 16);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 16), 0);
+
+  memset(&buf[0], 0, sizeof(buf));
+  EXPECT_EQ(sbp_message_encode(&buf[0], sizeof(buf), &n_written,
+                               SbpMsgUtcTimeGnss, &info.test_msg_wrapped),
+            SBP_OK);
+  EXPECT_EQ(n_written, 16);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 16), 0);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0,
+       EncodeToBufWithoutNwritten) {
+  auto info = get_test_msg_info();
+  uint8_t buf[16];
+
+  EXPECT_EQ(sbp_msg_utc_time_gnss_encode(&buf[0], sizeof(buf), nullptr,
+                                         &info.test_msg),
+            SBP_OK);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 16), 0);
+}
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, EncodedToBufUnderflow) {
+  auto info = get_test_msg_info();
+  uint8_t buf[16];
+
+  for (uint8_t i = 0; i < 16; i++) {
+    EXPECT_EQ(sbp_msg_utc_time_gnss_encode(&buf[0], i, nullptr, &info.test_msg),
+              SBP_ENCODE_ERROR);
+  }
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, DecodeFromBuf) {
+  auto info = get_test_msg_info();
+  sbp_msg_utc_time_gnss_t msg{};
+  uint8_t n_read;
+
+  EXPECT_EQ(sbp_msg_utc_time_gnss_decode(&info.encoded_payload[0],
+                                         info.payload_len, &n_read, &msg),
+            SBP_OK);
+  EXPECT_EQ(n_read, 16);
+  EXPECT_EQ(msg, info.test_msg);
+
+  sbp_msg_t wrapped_msg{};
+  EXPECT_EQ(sbp_message_decode(&info.encoded_payload[0], info.payload_len,
+                               &n_read, SbpMsgUtcTimeGnss, &wrapped_msg),
+            SBP_OK);
+  EXPECT_EQ(n_read, 16);
+  EXPECT_EQ(msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0,
+       DecodeFromBufWithoutNread) {
+  auto info = get_test_msg_info();
+  sbp_msg_utc_time_gnss_t msg{};
+
+  EXPECT_EQ(sbp_msg_utc_time_gnss_decode(&info.encoded_payload[0],
+                                         info.payload_len, nullptr, &msg),
+            SBP_OK);
+  EXPECT_EQ(msg, info.test_msg);
+}
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, DecodeFromBufUnderflow) {
+  auto info = get_test_msg_info();
+  sbp_msg_utc_time_gnss_t msg{};
+
+  for (uint8_t i = 0; i < info.payload_len; i++) {
+    int expected_return = SBP_DECODE_ERROR;
+
+    EXPECT_EQ(sbp_msg_utc_time_gnss_decode(&info.encoded_payload[0], i, nullptr,
+                                           &msg),
+              expected_return);
+  }
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, ReceiveThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto reader = info.get_frame_reader();
+  sbp_state_set_io_context(&state, &reader);
+
+  CHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    EXPECT_GE(sbp_process(&state, &Reader::read_static), SBP_OK);
   }
 
-  EXPECT_EQ(n_callbacks_logged_, 1);
-  EXPECT_EQ(last_sender_id_, 789);
-  EXPECT_EQ(last_msg_, test_msg);
-  EXPECT_EQ(last_msg_.day, 9)
-      << "incorrect value for last_msg_.day, expected 9, is " << last_msg_.day;
-  EXPECT_EQ(last_msg_.flags, 1)
-      << "incorrect value for last_msg_.flags, expected 1, is "
-      << last_msg_.flags;
-  EXPECT_EQ(last_msg_.hours, 19)
-      << "incorrect value for last_msg_.hours, expected 19, is "
-      << last_msg_.hours;
-  EXPECT_EQ(last_msg_.minutes, 24)
-      << "incorrect value for last_msg_.minutes, expected 24, is "
-      << last_msg_.minutes;
-  EXPECT_EQ(last_msg_.month, 4)
-      << "incorrect value for last_msg_.month, expected 4, is "
-      << last_msg_.month;
-  EXPECT_EQ(last_msg_.ns, 800000000)
-      << "incorrect value for last_msg_.ns, expected 800000000, is "
-      << last_msg_.ns;
-  EXPECT_EQ(last_msg_.seconds, 9)
-      << "incorrect value for last_msg_.seconds, expected 9, is "
-      << last_msg_.seconds;
-  EXPECT_EQ(last_msg_.tow, 501867800)
-      << "incorrect value for last_msg_.tow, expected 501867800, is "
-      << last_msg_.tow;
-  EXPECT_EQ(last_msg_.year, 2021)
-      << "incorrect value for last_msg_.year, expected 2021, is "
-      << last_msg_.year;
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
 }
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0,
+       ReceiveThroughSbpStateUnderflow) {
+  auto info = get_test_msg_info();
+
+  for (uint32_t i = 0; i < info.frame_len; i++) {
+    sbp_state_t state;
+    sbp_state_init(&state);
+
+    auto reader = info.get_frame_reader(i);
+    sbp_state_set_io_context(&state, &reader);
+
+    CHandler handler(&state);
+
+    int most_recent_return = sbp_process(&state, &Reader::read_static);
+    while (most_recent_return == SBP_OK || reader.remaining() > 0) {
+      most_recent_return = sbp_process(&state, &Reader::read_static);
+    }
+
+    EXPECT_NE(most_recent_return, SBP_OK);
+    EXPECT_EQ(reader.remaining(), 0);
+
+    EXPECT_EQ(handler.outputs.size(), 0);
+  }
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, SlowRead) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto reader = info.get_slow_frame_reader();
+  sbp_state_set_io_context(&state, &reader);
+
+  CHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    EXPECT_GE(sbp_process(&state, &SlowReader::read_static), SBP_OK);
+  }
+
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, BadCRC) {
+  auto info = get_test_msg_info();
+  uint8_t buf[SBP_MAX_FRAME_LEN];
+  memcpy(&buf[0], info.encoded_frame, info.frame_len);
+
+  // Introduce a CRC error which should cause an error return and no callback
+  buf[info.frame_len - 1]++;
+
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  Reader reader{buf, info.frame_len};
+  sbp_state_set_io_context(&state, &reader);
+
+  CHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    int res = sbp_process(&state, &Reader::read_static);
+    EXPECT_EQ(res, reader.remaining() == 0 ? SBP_CRC_ERROR : SBP_OK);
+  }
+
+  EXPECT_EQ(handler.outputs.size(), 0);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, SendThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp_msg_utc_time_gnss_send(&state, info.sender_id, &info.test_msg,
+                                       &Writer::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), &info.encoded_frame[0], writer.len()), 0);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0,
+       SendWrappedThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp_message_send(&state, SbpMsgUtcTimeGnss, info.sender_id,
+                             &info.test_msg_wrapped, &Writer::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0,
+       SendThroughSbpStateUnderflow) {
+  auto info = get_test_msg_info();
+
+  for (uint32_t i = 0; i < info.frame_len; i++) {
+    sbp_state_t state;
+    sbp_state_init(&state);
+
+    auto writer = info.get_frame_writer(i);
+    sbp_state_set_io_context(&state, &writer);
+
+    EXPECT_NE(sbp_message_send(&state, SbpMsgUtcTimeGnss, info.sender_id,
+                               &info.test_msg_wrapped, &Writer::write_c),
+              SBP_OK);
+    EXPECT_EQ(writer.len(), i);
+    EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, i), 0);
+  }
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, DISABLED_SlowWrite) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_slow_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp_message_send(&state, SbpMsgUtcTimeGnss, info.sender_id,
+                             &info.test_msg_wrapped, &SlowWriter::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, Comparison) {
+  auto info = get_test_msg_info();
+  {
+    sbp_msg_utc_time_gnss_t lesser = info.test_msg;
+    sbp_msg_utc_time_gnss_t greater = info.test_msg;
+    make_lesser_greater(lesser.day, greater.day);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_utc_time_gnss_t lesser = info.test_msg;
+    sbp_msg_utc_time_gnss_t greater = info.test_msg;
+    make_lesser_greater(lesser.flags, greater.flags);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_utc_time_gnss_t lesser = info.test_msg;
+    sbp_msg_utc_time_gnss_t greater = info.test_msg;
+    make_lesser_greater(lesser.hours, greater.hours);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_utc_time_gnss_t lesser = info.test_msg;
+    sbp_msg_utc_time_gnss_t greater = info.test_msg;
+    make_lesser_greater(lesser.minutes, greater.minutes);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_utc_time_gnss_t lesser = info.test_msg;
+    sbp_msg_utc_time_gnss_t greater = info.test_msg;
+    make_lesser_greater(lesser.month, greater.month);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_utc_time_gnss_t lesser = info.test_msg;
+    sbp_msg_utc_time_gnss_t greater = info.test_msg;
+    make_lesser_greater(lesser.ns, greater.ns);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_utc_time_gnss_t lesser = info.test_msg;
+    sbp_msg_utc_time_gnss_t greater = info.test_msg;
+    make_lesser_greater(lesser.seconds, greater.seconds);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_utc_time_gnss_t lesser = info.test_msg;
+    sbp_msg_utc_time_gnss_t greater = info.test_msg;
+    make_lesser_greater(lesser.tow, greater.tow);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_utc_time_gnss_t lesser = info.test_msg;
+    sbp_msg_utc_time_gnss_t greater = info.test_msg;
+    make_lesser_greater(lesser.year, greater.year);
+    comparison_tests(lesser, greater);
+  }
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, CppTraitsProperties) {
+  // EXPECT_EQ(sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::id,
+  // SbpMsgUtcTimeGnss);
+  EXPECT_STREQ(sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::name,
+               "MSG_UTC_TIME_GNSS");
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, CppTraitsFromSbpMsgT) {
+  auto info = get_test_msg_info();
+
+  const sbp_msg_t &const_sbp_msg_t = info.test_msg_wrapped;
+  sbp_msg_t &non_const_sbp_msg_t = info.test_msg_wrapped;
+
+  const sbp_msg_utc_time_gnss_t &const_unwrapped =
+      sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::get(const_sbp_msg_t);
+  sbp_msg_utc_time_gnss_t &non_const_unwrapped =
+      sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::get(non_const_sbp_msg_t);
+
+  EXPECT_EQ((const void *)&const_sbp_msg_t, (const void *)&const_unwrapped);
+  EXPECT_EQ((void *)&non_const_sbp_msg_t, (void *)&non_const_unwrapped);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, CppTraitsToSbpMsgT) {
+  auto info = get_test_msg_info();
+
+  sbp_msg_t msg1 =
+      sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::to_sbp_msg(info.test_msg);
+  EXPECT_EQ(msg1.utc_time_gnss, info.test_msg);
+
+  sbp_msg_t msg2;
+  sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::to_sbp_msg(info.test_msg, &msg2);
+  EXPECT_EQ(msg2.utc_time_gnss, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, CppTraitsEncodedLen) {
+  auto info = get_test_msg_info();
+  EXPECT_EQ(
+      sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::encoded_len(info.test_msg),
+      info.payload_len);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0,
+       CppTraitsSendThroughSbpState) {
+  auto info = get_test_msg_info();
+  sbp_state_t state;
+  sbp_state_init(&state);
+
+  auto writer = info.get_frame_writer();
+  sbp_state_set_io_context(&state, &writer);
+
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::send(
+                &state, info.sender_id, info.test_msg, &Writer::write_c),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), &info.encoded_frame[0], writer.len()), 0);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, CppTraitsEncodeToBuf) {
+  auto info = get_test_msg_info();
+  uint8_t buf[16];
+  uint8_t n_written;
+
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::encode(
+                &buf[0], sizeof(buf), &n_written, info.test_msg),
+            SBP_OK);
+  EXPECT_EQ(n_written, 16);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 16), 0);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, CppTraitsDecodeFromBuf) {
+  auto info = get_test_msg_info();
+  sbp_msg_utc_time_gnss_t msg{};
+  uint8_t n_read;
+
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_utc_time_gnss_t>::decode(
+                &info.encoded_payload[0], info.payload_len, &n_read, &msg),
+            SBP_OK);
+  EXPECT_EQ(n_read, 16);
+  EXPECT_EQ(msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0,
+       ReceiveThroughMessageHandler) {
+  auto info = get_test_msg_info();
+  auto reader = info.get_frame_reader();
+
+  sbp::State state{};
+  state.set_reader(&reader);
+
+  CppHandler handler{&state};
+
+  while (reader.remaining() > 0) {
+    EXPECT_GE(state.process(), SBP_OK);
+  }
+
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0,
+       ProcessSbpMsgTThroughMessageHandler) {
+  auto info = get_test_msg_info();
+  sbp::State state{};
+  CppHandler handler(&state);
+
+  state.process_message(info.sender_id, SbpMsgUtcTimeGnss,
+                        &info.test_msg_wrapped);
+
+  EXPECT_EQ(handler.outputs.size(), 1);
+  EXPECT_EQ(handler.outputs[0].sender_id, info.sender_id);
+  EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0, SendThroughCppState) {
+  auto info = get_test_msg_info();
+  auto writer = info.get_frame_writer();
+
+  sbp::State state{};
+  state.set_writer(&writer);
+
+  EXPECT_EQ(state.send_message(info.sender_id, info.test_msg), SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+TEST_F(Testauto_check_sbp_navigation_MsgUTCTimeGNSS0,
+       SendWrappedSbpMsgTThroughCppState) {
+  auto info = get_test_msg_info();
+  auto writer = info.get_frame_writer();
+
+  sbp::State state{};
+  state.set_writer(&writer);
+
+  EXPECT_EQ(state.send_message(info.sender_id, SbpMsgUtcTimeGnss,
+                               info.test_msg_wrapped),
+            SBP_OK);
+  EXPECT_EQ(writer.len(), info.frame_len);
+  EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
+}
+
+}  // namespace

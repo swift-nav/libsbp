@@ -1,0 +1,23 @@
+description: Unit tests for swiftnav.sbp.observation MsgSvConfigurationGpsDep
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      l2c_mask: 2808462402
+      t_nmct:
+        tow: 0
+        wn: 0
+    module: sbp.observation
+    name: MsgSvConfigurationGPSDep
+  msg_type: '0x91'
+  raw_json: '{"crc":10770,"length":10,"msg_type":145,"payload":"AAAAAAAAQrxlpw==","preamble":85,"sender":123,"t_nmct":{"tow":0,"wn":0},"l2c_mask":2808462402}'
+  raw_packet: VZEAewAKAAAAAAAAQrxlpxIq
+  sbp:
+    crc: '0x2a12'
+    length: 10
+    msg_type: '0x91'
+    payload: AAAAAAAAQrxlpw==
+    preamble: '0x55'
+    sender: '0x007b'

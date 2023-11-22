@@ -1,0 +1,47 @@
+description: Unit tests for swiftnav.sbp.tracking MsgTrackingStateDetailedDepA
+generated_on: 2023-11-15 # manually generated
+package: sbp.tracking
+tests:
+
+- msg:
+    fields:
+      L:
+        f: 204
+        i: -1601767965
+      P: 1044286343
+      P_std: 21427
+      acceleration: -114
+      clock_drift: 23311
+      clock_offset: 6012
+      cn0: 78
+      corr_spacing: 30201
+      doppler: 1459556257
+      doppler_std: 63677
+      lock: 65375
+      misc_flags: 62
+      nav_flags: 25
+      pset_flags: 83
+      recv_time: 941247176494
+      sid:
+        code: 59
+        sat: 38
+      sync_flags: 90
+      tot:
+        ns_residual: -811597120
+        tow: 1581737093
+        wn: 65492
+      tow_flags: 219
+      track_flags: 67
+      uptime: 3263741727
+    module: sbp.tracking
+    name: MsgTrackingStateDetailedDepA
+  msg_type: '0x21'
+  raw_json: '{"crc":25722,"length":57,"msg_type":33,"payload":"Lh+0JtsAAACFZEdewAKgz9T/h4s+PrNT4/WGoMxOX/8mO6EP/1a9+B+/iMJ8Fw9b+XWOWttDGVM+","preamble":85,"sender":28315,"recv_time":941247176494,"tot":{"tow":1581737093,"ns_residual":-811597120,"wn":65492},"P":1044286343,"P_std":21427,"L":{"i":-1601767965,"f":204},"cn0":78,"lock":65375,"sid":{"sat":38,"code":59},"doppler":1459556257,"doppler_std":63677,"uptime":3263741727,"clock_offset":6012,"clock_drift":23311,"corr_spacing":30201,"acceleration":-114,"sync_flags":90,"tow_flags":219,"track_flags":67,"nav_flags":25,"pset_flags":83,"misc_flags":62}'
+  raw_packet: VSEAm245Lh+0JtsAAACFZEdewAKgz9T/h4s+PrNT4/WGoMxOX/8mO6EP/1a9+B+/iMJ8Fw9b+XWOWttDGVM+emQ=
+  sbp:
+    crc: '0x647a'
+    length: 57
+    msg_type: '0x21'
+    payload: Lh+0JtsAAACFZEdewAKgz9T/h4s+PrNT4/WGoMxOX/8mO6EP/1a9+B+/iMJ8Fw9b+XWOWttDGVM+
+    preamble: '0x55'
+    sender: '0x6e9b'

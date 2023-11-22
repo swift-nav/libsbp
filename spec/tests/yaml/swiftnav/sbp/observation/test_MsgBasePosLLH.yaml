@@ -1,0 +1,22 @@
+description: Unit tests for swiftnav.sbp.observation MsgBasePosLLH
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      height: 37.939512310879216
+      lat: 37.251292578377395
+      lon: -121.87505609407974
+    module: sbp.observation
+    name: MsgBasePosLLH
+  msg_type: '0x44'
+  raw_json: '{"crc":58962,"length":24,"msg_type":68,"payload":"4e3uWiqgQkA7j0brAHhewDO1fPBB+EJA","preamble":85,"sender":123,"lat":37.251292578377395,"lon":-121.87505609407974,"height":37.939512310879216}'
+  raw_packet: VUQAewAY4e3uWiqgQkA7j0brAHhewDO1fPBB+EJAUuY=
+  sbp:
+    crc: '0xe652'
+    length: 24
+    msg_type: '0x44'
+    payload: 4e3uWiqgQkA7j0brAHhewDO1fPBB+EJA
+    preamble: '0x55'
+    sender: '0x007b'

@@ -1,29 +1,40 @@
----
-description: Unit tests for swiftnav.sbp.system MsgProtectionLevel
-generated_on: 2020-04-22 00:00:00.00 # manually generated
+description: Unit tests for swiftnav.sbp.navigation MsgProtectionLevel
+generated_on: 2023-11-15 # manually generated
 package: sbp.navigation
 tests:
 
 - msg:
     fields:
-      tow: 501867400
-      vpl: 0
-      hpl: 0
-      lat: 0.0
-      lon: 0.0
-      height: 0.0
-      flags: 0
+      atpl: 10663
+      ctpl: 5433
+      flags: 555755625
+      heading: -529244741
+      height: 412.2
+      hopl: 26707
+      hpl: 41013
+      hvpl: 62681
+      lat: 5290.2
+      lon: 9904.2
+      pitch: -1598561301
+      popl: 35212
+      roll: 1018834477
+      ropl: 63066
+      tow: 4060370030
+      v_x: -584647705
+      v_y: 1353168848
+      v_z: -1537140001
+      vpl: 21593
+      vvpl: 41277
+      wn: 13102
     module: sbp.navigation
-    name: MsgProtectionLevelDepA
-  msg_type: '0x216'
-  raw_json: '{"tow":501867400,"vpl":0,"hpl":0,"lat":0.0,"lon":0.0,"height":0.0,"flags":0,"preamble":85,"msg_type":534,"sender":4096,"payload":"iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","crc":50002,"length":33}'
-  raw_packet: VRYCABAhiOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUsM=
+    name: MsgProtectionLevel
+  msg_type: '0x217'
+  raw_json: '{"preamble":85,"msg_type":535,"sender":813,"length":76,"payload":"blQE8i4zNaBZVKcpORXZ9D2hU2iMiVr2MzMzMzOqtECamZmZGVjDQDMzMzMzw3lA5/sm3dC3p1DfGmGkLS66POvjt6C7XXTgaSggIQ==","crc":48261,"tow":4060370030,"wn":13102,"hpl":41013,"vpl":21593,"atpl":10663,"ctpl":5433,"hvpl":62681,"vvpl":41277,"hopl":26707,"popl":35212,"ropl":63066,"lat":5290.2,"lon":9904.2,"height":412.2,"v_x":-584647705,"v_y":1353168848,"v_z":-1537140001,"roll":1018834477,"pitch":-1598561301,"heading":-529244741,"flags":555755625}'
+  raw_packet: VRcCLQNMblQE8i4zNaBZVKcpORXZ9D2hU2iMiVr2MzMzMzOqtECamZmZGVjDQDMzMzMzw3lA5/sm3dC3p1DfGmGkLS66POvjt6C7XXTgaSggIYW8
   sbp:
-    crc: '0xc352'
-    length: 0x21
-    payload: iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    msg_type: '0x216'
+    crc: '0xbc85'
+    length: 76
+    msg_type: '0x217'
+    payload: blQE8i4zNaBZVKcpORXZ9D2hU2iMiVr2MzMzMzOqtECamZmZGVjDQDMzMzMzw3lA5/sm3dC3p1DfGmGkLS66POvjt6C7XXTgaSggIQ==
     preamble: '0x55'
-    sender: '0x1000'
-
-
+    sender: '0x032d'

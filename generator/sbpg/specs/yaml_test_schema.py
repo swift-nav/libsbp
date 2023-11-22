@@ -29,12 +29,22 @@ test = Schema({
   'sbp': Schema({ Coerce(str): Coerce(str) }),
 })
 
+struct_test = Schema({
+    'encoded': Coerce(str),
+    'fields': Any(Schema({ Coerce(str): Coerce(str) }), IsFalse),
+    'c_decoded_fields': Any(Schema({ Coerce(str): Coerce(str) }), IsFalse),
+    'module': Coerce(str),
+    'name': Coerce(str)
+})
+
 tests = Schema([test])
+struct_tests = Schema([struct_test])
 
 test_schema = Schema({
   'package': Schema(str),
   'description': Schema(str),
   'version': Coerce(str),
   'generated_on': Coerce(str),
-  'tests': tests
+  'tests': tests,
+  'struct_tests': struct_tests
 })

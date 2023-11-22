@@ -1,0 +1,55 @@
+description: Unit tests for swiftnav.sbp.tracking free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.tracking
+struct_tests:
+
+  - encoded: "FgAKLQ=="
+    fields:
+      sid:
+        sat: 22
+        code: 0
+      fcn: 10
+      cn0: 45
+    module: sbp.tracking
+    name: TrackingChannelState
+
+  - encoded: FwEe
+    fields:
+      mesid:
+        sat: 23
+        code: 1
+      cn0: 30
+    module: sbp.tracking
+    name: MeasurementState
+
+  - encoded: 3ZFyIg==
+    fields:
+      I: 37341
+      Q: 8818
+    module: sbp.tracking
+    name: TrackingChannelCorrelation
+
+  - encoded: 49loAEB2tjA=
+    fields:
+      I: 6871523
+      Q: 817264192
+    module: sbp.tracking
+    name: TrackingChannelCorrelationDep
+
+  - encoded: E8MzEzlF
+    fields:
+      state: 19
+      prn: 195
+      cn0: 2961.199951
+    module: sbp.tracking
+    name: TrackingChannelStateDepA
+
+  - encoded: dsML7AAzUxNF
+    fields:
+      state: 118
+      sid:
+        sat: 3011
+        code: 236
+      cn0: 2357.199951
+    module: sbp.tracking
+    name: TrackingChannelStateDepB

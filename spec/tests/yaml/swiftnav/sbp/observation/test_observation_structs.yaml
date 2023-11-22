@@ -1,0 +1,205 @@
+description: Unit tests for swiftnav.sbp.observation free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+struct_tests:
+
+  - encoded: gQTKR1UxTdN6sEQ=
+    fields:
+      t:
+        wn: 45178
+        tow: 1204421761
+        ns_residual: -749915819
+      n_obs: 68
+    module: sbp.observation
+    name: ObservationHeader
+  - encoded: TyO5
+    fields:
+      i: 9039
+      f: 185
+    module: sbp.observation
+    name: Doppler
+  - encoded: 6nz480O1XpJxIUSMNrlBquY=
+    fields:
+      P: 4093148394
+      L:
+        i: -1839286973
+        f: 113
+      D:
+        i: 17441
+        f: 140
+      cn0: 54
+      lock: 185
+      flags: 65
+      sid:
+        sat: 170
+        code: 230
+    module: sbp.observation
+    name: PackedObsContent
+  - encoded: jUwU7y0trjXY5ig4vcsoC2MkCQ==
+    fields:
+      P: 4011084941
+      L:
+        i: 900607277
+        f: 216
+      lock: 230
+      flags: 40
+      sid:
+        sat: 56
+        code: 189
+      iono_std: 10443
+      tropo_std: 25355
+      range_std: 2340
+    module: sbp.observation
+    name: PackedOsrContent
+  - encoded: Rl2IxRRi+5kzE1tFW5wzP/pz
+    fields:
+      sid:
+        sat: 70
+        code: 93
+      toe:
+        wn: 39419
+        tow: 1645528456
+      ura: 3505.199951
+      fit_interval: 1060346971
+      valid: 250
+      health_bits: 115
+    module: sbp.observation
+    name: EphemerisCommonContent
+  - encoded: BaKzl/WqywEzMzMzM/i7QKnTnwtGYA==
+    fields:
+      sid:
+        sat: 5
+        code: 162
+      toe:
+        wn: 459
+        tow: 2868221875
+      ura: 7160.200000
+      fit_interval: 195023785
+      valid: 70
+      health_bits: 96
+    module: sbp.observation
+    name: EphemerisCommonContentDepB
+  - encoded: caLhAOnjpWJasWZmZmZmbKhAKTUB18dx
+    fields:
+      sid:
+        sat: 41585
+        code: 225
+      toe:
+        wn: 45402
+        tow: 1655038953
+      ura: 3126.200000
+      fit_interval: 3607180585
+      valid: 199
+      health_bits: 113
+    module: sbp.observation
+    name: EphemerisCommonContentDepA
+  - encoded: h/Bc+BA6IQ==
+    fields:
+      t:
+        tow: 4166840455
+        wn: 14864
+      n_obs: 33
+    module: sbp.observation
+    name: ObservationHeaderDep
+  - encoded: hzXfQ9k=
+    fields:
+      i: 1138701703
+      f: 217
+    module: sbp.observation
+    name: CarrierPhaseDepA
+  - encoded: FnmSV3Fs38PTr1LLkw==
+    fields:
+      P: 1469217046
+      L:
+        f: 211
+        i: -1008767887
+      cn0: 175
+      lock: 52050
+      prn: 147
+    module: sbp.observation
+    name: PackedObsContentDepA
+  - encoded: hZrvrSpkEOub355CyqZn0A==
+    fields:
+      P: 2918161029
+      L:
+        f: 155
+        i: -351247318
+      cn0: 223
+      lock: 17054
+      sid:
+        sat: 42698
+        code: 103
+        reserved: 208
+    module: sbp.observation
+    name: PackedObsContentDepB
+  - encoded: QKxwxnC9WF5OcTJoKNGgWg==
+    fields:
+      P: 3329272896
+      L:
+        f: 78
+        i: 1582873968
+      cn0: 113
+      lock: 26674
+      sid:
+        sat: 53544
+        code: 160
+        reserved: 90
+    module: sbp.observation
+    name: PackedObsContentDepC
+  - encoded: s3DhscIAAACvXrXCAgAAAClrRIVfAAAAbdan19vAvJsFKUh2DrmVm8IAAABmDsZH0QAAAEngkLf6AAAAy2h3XecAAADjxLaCzAAAALaO+E3YAAAAU+a5fcRG2CqmAAAAbnUOSBMAAAA=
+    fields:
+      gps_active: 836207997107
+      gps_l2c: 11856600751
+      gps_l5: 410257746729
+      glo_active: 3618100845
+      glo_l2of: 2612838619
+      glo_l3: 1984440581
+      sbas_active: 835833936142
+      sbas_l5: 898852327014
+      bds_active: 1076821549129
+      bds_d2nav: 993705552075
+      bds_b2: 878366344419
+      bds_b2a: 929021071030
+      qzss_active: 2109335123
+      gal_active: 713683388100
+      gal_e5: 82813285742
+    module: sbp.observation
+    name: GnssCapb
+  - encoded: o7UAQzzG3TozMzMzM2q/QPEggLlAGA==
+    fields:
+      sid:
+        sat: 163
+        code: 181
+      toa:
+        wn: 15069
+        tow: 3325838080
+      ura: 8042.200000
+      fit_interval: 3112182001
+      valid: 64
+      health_bits: 24
+    module: sbp.observation
+    name: AlmanacCommonContent
+  - encoded: nN8gCm2gIUyKCzMzMzMzWrpAFbve9DSO
+    fields:
+      sid:
+        sat: 57244
+        code: 32
+        reserved: 10
+      toa:
+        wn: 2954
+        tow: 1277272173
+      ura: 6746.200000
+      fit_interval: 4108237589
+      valid: 52
+      health_bits: 142
+    module: sbp.observation
+    name: AlmanacCommonContentDep
+  - encoded: cy5/Vw==
+    fields:
+      sid:
+        sat: 115
+        code: 46
+      az: 127
+      el: 87
+    module: sbp.observation
+    name: SvAzEl

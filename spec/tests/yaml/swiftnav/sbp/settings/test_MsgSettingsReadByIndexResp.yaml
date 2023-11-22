@@ -13,6 +13,7 @@ tests:
         handle_as: encoded-string
         fn_prefix: sbp_msg_settings_read_by_index_resp_setting
         encoded_len: 76
+        min_len: 1
         sections:
           - "telemetry_radio"
           - "configuration_string"
@@ -41,6 +42,7 @@ tests:
         handle_as: encoded-string
         fn_prefix: sbp_msg_settings_read_by_index_resp_setting
         encoded_len: 33
+        min_len: 1
         sections:
           - "uart_ftdi"
           - "mode"
@@ -70,6 +72,7 @@ tests:
         handle_as: encoded-string
         fn_prefix: sbp_msg_settings_read_by_index_resp_setting
         encoded_len: 33
+        min_len: 1
         sections:
           - "uart_ftdi"
           - "sbp_message_mask"
@@ -98,6 +101,7 @@ tests:
         handle_as: encoded-string
         fn_prefix: sbp_msg_settings_read_by_index_resp_setting
         encoded_len: 27
+        min_len: 1
         sections: 
           - "uart_ftdi"
           - "baudrate"
@@ -126,6 +130,7 @@ tests:
         handle_as: encoded-string
         fn_prefix: sbp_msg_settings_read_by_index_resp_setting
         encoded_len: 34
+        min_len: 1
         sections: 
           - "uart_uarta"
           - "mode"
