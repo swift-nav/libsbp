@@ -16,7 +16,7 @@
 
 #include <check.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/signing.h>
+#include <libsbp/signing.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

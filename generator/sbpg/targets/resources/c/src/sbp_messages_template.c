@@ -9,7 +9,7 @@
 
 #include <libsbp/sbp.h>
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/(((package.name))).h>
+#include <libsbp/(((package.name))).h>
 #include <libsbp/internal/v4/(((package.name))).h>
 #include <libsbp/internal/v4/string/multipart.h>
 #include <libsbp/internal/v4/string/null_terminated.h>

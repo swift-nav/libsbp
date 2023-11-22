@@ -20,9 +20,9 @@
 
 #include <stdbool.h>
 
+#include <libsbp/acquisition.h>
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/internal/v4/gnss.h>
-#include <libsbp/v4/acquisition.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -15,9 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_EXT_EVENTS_MESSAGES_H
-#define LIBSBP_EXT_EVENTS_MESSAGES_H
+#ifndef LIBSBP_V4_EXT_EVENTS_MESSAGES_H
+#define LIBSBP_V4_EXT_EVENTS_MESSAGES_H
+#include <libsbp/ext_events/MSG_EXT_EVENT.h>
 
-#include <libsbp/common.h>
-
-#endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */
+#endif /* LIBSBP_V4_EXT_EVENTS_MESSAGES_H */

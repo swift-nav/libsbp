@@ -14,7 +14,7 @@
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/internal/v4/user.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/user.h>
+#include <libsbp/user.h>
 
 bool sbp_msg_user_data_encode_internal(sbp_encode_ctx_t *ctx,
                                        const sbp_msg_user_data_t *msg) {

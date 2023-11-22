@@ -15,9 +15,14 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_GNSS_MESSAGES_H
-#define LIBSBP_GNSS_MESSAGES_H
+#ifndef LIBSBP_V4_GNSS_MESSAGES_H
+#define LIBSBP_V4_GNSS_MESSAGES_H
+#include <libsbp/gnss/CarrierPhase.h>
+#include <libsbp/gnss/GPSTime.h>
+#include <libsbp/gnss/GPSTimeDep.h>
+#include <libsbp/gnss/GPSTimeSec.h>
+#include <libsbp/gnss/GnssSignal.h>
+#include <libsbp/gnss/GnssSignalDep.h>
+#include <libsbp/gnss/SvId.h>
 
-#include <libsbp/common.h>
-
-#endif /* LIBSBP_GNSS_MESSAGES_H */
+#endif /* LIBSBP_V4_GNSS_MESSAGES_H */

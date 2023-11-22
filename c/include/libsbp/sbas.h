@@ -15,9 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_SBAS_MESSAGES_H
-#define LIBSBP_SBAS_MESSAGES_H
+#ifndef LIBSBP_V4_SBAS_MESSAGES_H
+#define LIBSBP_V4_SBAS_MESSAGES_H
+#include <libsbp/sbas/MSG_SBAS_RAW.h>
 
-#include <libsbp/common.h>
-
-#endif /* LIBSBP_SBAS_MESSAGES_H */
+#endif /* LIBSBP_V4_SBAS_MESSAGES_H */

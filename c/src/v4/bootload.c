@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <libsbp/bootload.h>
 #include <libsbp/internal/v4/bootload.h>
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/internal/v4/string/double_null_terminated.h>
@@ -14,7 +15,6 @@
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/bootload.h>
 
 bool sbp_msg_bootloader_handshake_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_req_t *msg) {

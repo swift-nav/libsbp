@@ -11,12 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/user.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_USER_MESSAGES_H
-#define LIBSBP_V4_USER_MESSAGES_H
-#include <libsbp/v4/user/MSG_USER_DATA.h>
+#ifndef LIBSBP_USER_MESSAGES_H
+#define LIBSBP_USER_MESSAGES_H
 
-#endif /* LIBSBP_V4_USER_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/user.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/user.h>
+
+#endif /* LIBSBP_USER_MESSAGES_H */

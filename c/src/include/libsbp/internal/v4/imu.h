@@ -20,8 +20,8 @@
 
 #include <stdbool.h>
 
+#include <libsbp/imu.h>
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/imu.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -21,7 +21,7 @@
 #include <stdbool.h>
 
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/solution_meta.h>
+#include <libsbp/solution_meta.h>
 
 #ifdef __cplusplus
 extern "C" {

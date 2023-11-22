@@ -14,7 +14,7 @@
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/internal/v4/system.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/system.h>
+#include <libsbp/system.h>
 
 bool sbp_msg_startup_encode_internal(sbp_encode_ctx_t *ctx,
                                      const sbp_msg_startup_t *msg) {

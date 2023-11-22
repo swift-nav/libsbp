@@ -13,7 +13,7 @@
 #ifndef LIBSBP_V4_API_H
 #define LIBSBP_V4_API_H
 
-#include <libsbp/v4/sbp_msg.h>
+#include <libsbp/sbp_msg.h>
 #include <libsbp/sbp_msg_type.h>
 
 #ifdef __cplusplus

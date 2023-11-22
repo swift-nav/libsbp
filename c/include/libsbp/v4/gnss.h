@@ -11,18 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/gnss.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_GNSS_MESSAGES_H
-#define LIBSBP_V4_GNSS_MESSAGES_H
-#include <libsbp/v4/gnss/CarrierPhase.h>
-#include <libsbp/v4/gnss/GPSTime.h>
-#include <libsbp/v4/gnss/GPSTimeDep.h>
-#include <libsbp/v4/gnss/GPSTimeSec.h>
-#include <libsbp/v4/gnss/GnssSignal.h>
-#include <libsbp/v4/gnss/GnssSignalDep.h>
-#include <libsbp/v4/gnss/SvId.h>
+#ifndef LIBSBP_GNSS_MESSAGES_H
+#define LIBSBP_GNSS_MESSAGES_H
 
-#endif /* LIBSBP_V4_GNSS_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/gnss.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/gnss.h>
+
+#endif /* LIBSBP_GNSS_MESSAGES_H */

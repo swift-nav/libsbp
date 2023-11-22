@@ -13,8 +13,8 @@
 #include <libsbp/internal/v4/string/multipart.h>
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
+#include <libsbp/logging.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/logging.h>
 
 void sbp_msg_log_text_init(sbp_msg_log_t *msg) {
   sbp_unterminated_string_init(&msg->text);

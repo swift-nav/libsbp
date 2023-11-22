@@ -21,7 +21,7 @@
 #include <stdbool.h>
 
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/vehicle.h>
+#include <libsbp/vehicle.h>
 
 #ifdef __cplusplus
 extern "C" {

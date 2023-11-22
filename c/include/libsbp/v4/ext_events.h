@@ -11,12 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/ext_events.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_EXT_EVENTS_MESSAGES_H
-#define LIBSBP_V4_EXT_EVENTS_MESSAGES_H
-#include <libsbp/v4/ext_events/MSG_EXT_EVENT.h>
+#ifndef LIBSBP_EXT_EVENTS_MESSAGES_H
+#define LIBSBP_EXT_EVENTS_MESSAGES_H
 
-#endif /* LIBSBP_V4_EXT_EVENTS_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/ext_events.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/ext_events.h>
+
+#endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */

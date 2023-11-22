@@ -22,7 +22,7 @@
 
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/internal/v4/gnss.h>
-#include <libsbp/v4/sbas.h>
+#include <libsbp/sbas.h>
 
 #ifdef __cplusplus
 extern "C" {

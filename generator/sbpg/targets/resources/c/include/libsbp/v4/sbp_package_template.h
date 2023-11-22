@@ -11,16 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/(((package.filepath)))
+ * Automatically generated from yaml/(((filepath)))
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_(((package.name|upper)))_MESSAGES_H
-#define LIBSBP_V4_(((package.name|upper)))_MESSAGES_H
+#ifndef LIBSBP_(((package.name|upper)))_MESSAGES_H
+#define LIBSBP_(((package.name|upper)))_MESSAGES_H
 
-((*- for m in package.msgs *))
-#include <libsbp/v4/(((package.name)))/(((m.name))).h>
-((*- endfor *))
+#include <libsbp/common.h>
 
-#endif /* LIBSBP_V4_(((package.name|upper)))_MESSAGES_H */
+SBP_MESSAGE(
+  "SBP message definitions have moved. To continue using these types include "
+  "`libsbp/(((package.name))).h instead. Access to SBP types via this header file "
+  " will be removed in version 6.")
 
+#include <libsbp/(((package.name))).h>
+
+#endif /* LIBSBP_(((package.name|upper)))_MESSAGES_H */

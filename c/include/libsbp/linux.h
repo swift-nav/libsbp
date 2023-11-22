@@ -15,9 +15,18 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_LINUX_MESSAGES_H
-#define LIBSBP_LINUX_MESSAGES_H
+#ifndef LIBSBP_V4_LINUX_MESSAGES_H
+#define LIBSBP_V4_LINUX_MESSAGES_H
+#include <libsbp/linux/MSG_LINUX_CPU_STATE.h>
+#include <libsbp/linux/MSG_LINUX_CPU_STATE_DEP_A.h>
+#include <libsbp/linux/MSG_LINUX_MEM_STATE.h>
+#include <libsbp/linux/MSG_LINUX_MEM_STATE_DEP_A.h>
+#include <libsbp/linux/MSG_LINUX_PROCESS_FD_COUNT.h>
+#include <libsbp/linux/MSG_LINUX_PROCESS_FD_SUMMARY.h>
+#include <libsbp/linux/MSG_LINUX_PROCESS_SOCKET_COUNTS.h>
+#include <libsbp/linux/MSG_LINUX_PROCESS_SOCKET_QUEUES.h>
+#include <libsbp/linux/MSG_LINUX_SOCKET_USAGE.h>
+#include <libsbp/linux/MSG_LINUX_SYS_STATE.h>
+#include <libsbp/linux/MSG_LINUX_SYS_STATE_DEP_A.h>
 
-#include <libsbp/common.h>
-
-#endif /* LIBSBP_LINUX_MESSAGES_H */
+#endif /* LIBSBP_V4_LINUX_MESSAGES_H */

@@ -13,8 +13,8 @@
 #include <libsbp/internal/v4/string/multipart.h>
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
+#include <libsbp/ndb.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/ndb.h>
 
 bool sbp_msg_ndb_event_encode_internal(sbp_encode_ctx_t *ctx,
                                        const sbp_msg_ndb_event_t *msg) {

@@ -15,8 +15,8 @@
 // modify by hand!
 
 #include <check.h>
+#include <libsbp/mag.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/mag.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

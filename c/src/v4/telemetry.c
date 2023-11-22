@@ -14,7 +14,7 @@
 #include <libsbp/internal/v4/string/unterminated.h>
 #include <libsbp/internal/v4/telemetry.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/telemetry.h>
+#include <libsbp/telemetry.h>
 
 bool sbp_telemetry_sv_encode_internal(sbp_encode_ctx_t *ctx,
                                       const sbp_telemetry_sv_t *msg) {
