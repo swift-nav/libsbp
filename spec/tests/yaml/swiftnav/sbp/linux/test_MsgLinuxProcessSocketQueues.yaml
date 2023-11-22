@@ -1,0 +1,34 @@
+description: Unit tests for swiftnav.sbp.linux MsgLinuxProcessSocketQueues
+generated_on: 2023-11-15 # manually generated
+package: sbp.linux
+tests:
+
+- msg:
+    c_decoded_fields:
+      cmdline:
+        handle_as: encoded-string
+        encoded_len: 46
+        fn_prefix: sbp_msg_linux_process_socket_queues_cmdline
+        text: /path/to/process-name arg0 arg1 arg2 arg3 arg4
+    fields:
+      address_of_largest: "address of largest\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\
+        \0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      cmdline: /path/to/process-name arg0 arg1 arg2 arg3 arg4
+      index: 181
+      pid: 19335
+      recv_queued: 54265
+      send_queued: 64547
+      socket_states: 57103
+      socket_types: 27984
+    module: sbp.linux
+    name: MsgLinuxProcessSocketQueues
+  msg_type: '0x7f04'
+  raw_json: '{"crc":63234,"length":121,"msg_type":32516,"payload":"tYdL+dMj/FBtD99hZGRyZXNzIG9mIGxhcmdlc3QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL3BhdGgvdG8vcHJvY2Vzcy1uYW1lIGFyZzAgYXJnMSBhcmcyIGFyZzMgYXJnNA==","preamble":85,"sender":59579,"index":181,"pid":19335,"recv_queued":54265,"send_queued":64547,"socket_types":27984,"socket_states":57103,"address_of_largest":"address of largest\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000","cmdline":"/path/to/process-name arg0 arg1 arg2 arg3 arg4"}'
+  raw_packet: VQR/u+h5tYdL+dMj/FBtD99hZGRyZXNzIG9mIGxhcmdlc3QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL3BhdGgvdG8vcHJvY2Vzcy1uYW1lIGFyZzAgYXJnMSBhcmcyIGFyZzMgYXJnNAL3
+  sbp:
+    crc: '0xf702'
+    length: 121
+    msg_type: '0x7f04'
+    payload: tYdL+dMj/FBtD99hZGRyZXNzIG9mIGxhcmdlc3QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL3BhdGgvdG8vcHJvY2Vzcy1uYW1lIGFyZzAgYXJnMSBhcmcyIGFyZzMgYXJnNA==
+    preamble: '0x55'
+    sender: '0xe8bb'

@@ -1,0 +1,51 @@
+description: Unit tests for swiftnav.sbp.observation MsgEphemerisDepC
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      af0: -0.0006315018981695175
+      af1: 8.981260180007666e-12
+      af2: 0.2
+      c_ic: 7.450580596923828e-09
+      c_is: -1.1548399925231934e-07
+      c_rc: 308.625
+      c_rs: -52.3125
+      c_uc: -2.7436763048171997e-06
+      c_us: 3.1366944313049316e-06
+      dn: 5.694522914022375e-09
+      ecc: 0.007072207052260637
+      healthy: 0
+      inc: 0.9341514480259797
+      inc_dot: -4.035882396415757e-11
+      iodc: 45
+      iode: 45
+      m0: -0.02200078842114688
+      omega0: -1.8731818448797617
+      omegadot: -8.903585155774196e-09
+      reserved: 0
+      sid:
+        code: 0
+        reserved: 0
+        sat: 22
+      sqrta: 5153.550029754639
+      tgd: -1.7695128917694092e-08
+      toc_tow: 446384.2
+      toc_wn: 2154
+      toe_tow: 446384.2
+      toe_wn: 2154
+      valid: 1
+      w: -0.9893036629599647
+    module: sbp.observation
+    name: MsgEphemerisDepC
+  msg_type: '0x47'
+  raw_json: '{"preamble":85,"msg_type":71,"sender":1219,"length":185,"payload":"AAAAAAAAU74AAAAAAChKwAAAAAAASnNAAAAAAAAEx74AAAAAAFDKPgAAAAAAAEA+AAAAAAAAf75y2GC0MXU4Po4pBetfh5a/AAAAIL/3fD8AAMDOjCG0QCmDs4aN+P2/44VRNsweQ77YO8cnYKjvv0cL2ZOR5O0/3S9k4P8vxr0AAAAAbLFEvwAAAAAAwKM9mpmZmZmZyT/NzMzMwD4bQWoIzczMzMA+G0FqCAEAFgAAAC0tAAAAAAA=","crc":43543,"tgd":-1.7695128917694092e-08,"c_rs":-52.3125,"c_rc":308.625,"c_uc":-2.7436763048171997e-06,"c_us":3.1366944313049316e-06,"c_ic":7.450580596923828e-09,"c_is":-1.1548399925231934e-07,"dn":5.694522914022375e-09,"m0":-0.02200078842114688,"ecc":0.007072207052260637,"sqrta":5153.550029754639,"omega0":-1.8731818448797617,"omegadot":-8.903585155774196e-09,"w":-0.9893036629599647,"inc":0.9341514480259797,"inc_dot":-4.035882396415757e-11,"af0":-0.0006315018981695175,"af1":8.981260180007666e-12,"af2":0.2,"toe_tow":446384.2,"toe_wn":2154,"toc_tow":446384.2,"toc_wn":2154,"valid":1,"healthy":0,"sid":{"sat":22,"code":0,"reserved":0},"iode":45,"iodc":45,"reserved":0}'
+  raw_packet: VUcAwwS5AAAAAAAAU74AAAAAAChKwAAAAAAASnNAAAAAAAAEx74AAAAAAFDKPgAAAAAAAEA+AAAAAAAAf75y2GC0MXU4Po4pBetfh5a/AAAAIL/3fD8AAMDOjCG0QCmDs4aN+P2/44VRNsweQ77YO8cnYKjvv0cL2ZOR5O0/3S9k4P8vxr0AAAAAbLFEvwAAAAAAwKM9mpmZmZmZyT/NzMzMwD4bQWoIzczMzMA+G0FqCAEAFgAAAC0tAAAAAAAXqg==
+  sbp:
+    crc: '0xaa17'
+    length: 185
+    msg_type: '0x47'
+    payload: AAAAAAAAU74AAAAAAChKwAAAAAAASnNAAAAAAAAEx74AAAAAAFDKPgAAAAAAAEA+AAAAAAAAf75y2GC0MXU4Po4pBetfh5a/AAAAIL/3fD8AAMDOjCG0QCmDs4aN+P2/44VRNsweQ77YO8cnYKjvv0cL2ZOR5O0/3S9k4P8vxr0AAAAAbLFEvwAAAAAAwKM9mpmZmZmZyT/NzMzMwD4bQWoIzczMzMA+G0FqCAEAFgAAAC0tAAAAAAA=
+    preamble: '0x55'
+    sender: '0x04c3'

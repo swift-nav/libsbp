@@ -1,0 +1,17 @@
+description: Unit tests for swiftnav.sbp.integrity free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.integrity
+struct_tests:
+
+  - encoded: l9k4GrSR8A1dLGE2T8g=
+    fields:
+      obs_time.wn: 37300
+      obs_time.tow: 439933335
+      num_msgs: 240
+      seq_num: 13
+      ssr_sol_id: 93
+      tile_set_id: 24876
+      tile_id: 20278
+      chain_id: 200
+    module: sbp.integrity
+    name: IntegritySsrHeader

@@ -1,0 +1,31 @@
+description: Unit tests for swiftnav.sbp.linux MsgLinuxProcessSocketCounts
+generated_on: 2023-11-15 # manually generated
+package: sbp.linux
+tests:
+
+- msg:
+    c_decoded_fields:
+      cmdline:
+        handle_as: encoded-string
+        encoded_len: 46
+        fn_prefix: sbp_msg_linux_process_socket_counts_cmdline
+        text: /path/to/process-name arg0 arg1 arg2 arg3 arg4
+    fields:
+      cmdline: /path/to/process-name arg0 arg1 arg2 arg3 arg4
+      index: 51
+      pid: 28553
+      socket_count: 30287
+      socket_states: 29554
+      socket_types: 35843
+    module: sbp.linux
+    name: MsgLinuxProcessSocketCounts
+  msg_type: '0x7f03'
+  raw_json: '{"crc":33716,"length":55,"msg_type":32515,"payload":"M4lvT3YDjHJzL3BhdGgvdG8vcHJvY2Vzcy1uYW1lIGFyZzAgYXJnMSBhcmcyIGFyZzMgYXJnNA==","preamble":85,"sender":2412,"index":51,"pid":28553,"socket_count":30287,"socket_types":35843,"socket_states":29554,"cmdline":"/path/to/process-name arg0 arg1 arg2 arg3 arg4"}'
+  raw_packet: VQN/bAk3M4lvT3YDjHJzL3BhdGgvdG8vcHJvY2Vzcy1uYW1lIGFyZzAgYXJnMSBhcmcyIGFyZzMgYXJnNLSD
+  sbp:
+    crc: '0x83b4'
+    length: 55
+    msg_type: '0x7f03'
+    payload: M4lvT3YDjHJzL3BhdGgvdG8vcHJvY2Vzcy1uYW1lIGFyZzAgYXJnMSBhcmcyIGFyZzMgYXJnNA==
+    preamble: '0x55'
+    sender: '0x096c'

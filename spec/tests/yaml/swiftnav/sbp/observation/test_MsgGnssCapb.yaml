@@ -1,0 +1,38 @@
+description: Unit tests for swiftnav.sbp.observation MsgGnssCapb
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      gc:
+        bds_active: 1929005864
+        bds_b2: 33839445
+        bds_b2a: 378107113
+        bds_d2nav: 1367053175
+        gal_active: 1392028637
+        gal_e5: 484261628
+        glo_active: 13159676
+        glo_l2of: 824073421
+        glo_l3: 404081648
+        gps_active: 1079028506
+        gps_l2c: 781233489
+        gps_l5: 1818069969
+        qzss_active: 198929863
+        sbas_active: 548822484
+        sbas_l5: 465576041
+      t_nmct:
+        tow: 446384
+        wn: 2154
+    module: sbp.observation
+    name: MsgGnssCapb
+  msg_type: '0x96'
+  raw_json: '{"crc":23203,"length":110,"msg_type":150,"payload":"sM8GAGoIGqtQQAAAAABRrZAuAAAAANGLXWwAAAAA/MzIAM1cHjHwyxUY1F22IAAAAABpIMAbAAAAAChL+nIAAAAAd5N7UQAAAABVWQQCAAAAAOl0iRYAAAAAx23bC92r+FIAAAAA/D7dHAAAAAA=","preamble":85,"sender":123,"t_nmct":{"tow":446384,"wn":2154},"gc":{"gps_active":1079028506,"gps_l2c":781233489,"gps_l5":1818069969,"glo_active":13159676,"glo_l2of":824073421,"glo_l3":404081648,"sbas_active":548822484,"sbas_l5":465576041,"bds_active":1929005864,"bds_d2nav":1367053175,"bds_b2":33839445,"bds_b2a":378107113,"qzss_active":198929863,"gal_active":1392028637,"gal_e5":484261628}}'
+  raw_packet: VZYAewBusM8GAGoIGqtQQAAAAABRrZAuAAAAANGLXWwAAAAA/MzIAM1cHjHwyxUY1F22IAAAAABpIMAbAAAAAChL+nIAAAAAd5N7UQAAAABVWQQCAAAAAOl0iRYAAAAAx23bC92r+FIAAAAA/D7dHAAAAACjWg==
+  sbp:
+    crc: '0x5aa3'
+    length: 110
+    msg_type: '0x96'
+    payload: sM8GAGoIGqtQQAAAAABRrZAuAAAAANGLXWwAAAAA/MzIAM1cHjHwyxUY1F22IAAAAABpIMAbAAAAAChL+nIAAAAAd5N7UQAAAABVWQQCAAAAAOl0iRYAAAAAx23bC92r+FIAAAAA/D7dHAAAAAA=
+    preamble: '0x55'
+    sender: '0x007b'

@@ -1,0 +1,26 @@
+description: Unit tests for swiftnav.sbp.navigation MsgProtectionLevelDepA
+generated_on: 2023-11-15 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      flags: 248
+      height: 8270.2
+      hpl: 35588
+      lat: 7924.2
+      lon: 3174.2
+      tow: 3108339252
+      vpl: 21807
+    module: sbp.navigation
+    name: MsgProtectionLevelDepA
+  msg_type: '0x216'
+  raw_json: '{"crc":26705,"length":33,"msg_type":534,"payload":"NH5FuS9VBIszMzMzM/S+QGZmZmZmzKhAmpmZmRknwED4","preamble":85,"sender":5780,"tow":3108339252,"vpl":21807,"hpl":35588,"lat":7924.2,"lon":3174.2,"height":8270.2,"flags":248}'
+  raw_packet: VRYClBYhNH5FuS9VBIszMzMzM/S+QGZmZmZmzKhAmpmZmRknwED4UWg=
+  sbp:
+    crc: '0x6851'
+    length: 33
+    msg_type: '0x216'
+    payload: NH5FuS9VBIszMzMzM/S+QGZmZmZmzKhAmpmZmRknwED4
+    preamble: '0x55'
+    sender: '0x1694'

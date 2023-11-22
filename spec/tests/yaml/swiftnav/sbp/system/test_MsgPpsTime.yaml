@@ -1,0 +1,21 @@
+description: Unit tests for swiftnav.sbp.system MsgPpsTime
+generated_on: 2023-11-15 # manually generated
+package: sbp.system
+tests:
+
+- msg:
+    fields:
+      flags: 255
+      time: 690508632716
+    module: sbp.system
+    name: MsgPpsTime
+  msg_type: '0xff08'
+  raw_json: '{"preamble":85,"msg_type":65288,"sender":53726,"length":9,"payload":"jJKFxaAAAAD/","crc":38269,"time":690508632716,"flags":255}'
+  raw_packet: VQj/3tEJjJKFxaAAAAD/fZU=
+  sbp:
+    crc: '0x957d'
+    length: 9
+    msg_type: '0xff08'
+    payload: jJKFxaAAAAD/
+    preamble: '0x55'
+    sender: '0xd1de'

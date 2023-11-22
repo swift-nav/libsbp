@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.piksi MsgNetworkStateReq
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      {}
+    module: sbp.piksi
+    name: MsgNetworkStateReq
+  msg_type: '0xba'
+  raw_json: '{"crc":18836,"length":0,"msg_type":186,"payload":"","preamble":85,"sender":15955}'
+  raw_packet: VboAUz4AlEk=
+  sbp:
+    crc: '0x4994'
+    length: 0
+    msg_type: '0xba'
+    payload: ""
+    preamble: '0x55'
+    sender: '0x3e53'

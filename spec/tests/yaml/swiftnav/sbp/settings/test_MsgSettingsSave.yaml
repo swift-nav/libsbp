@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.settings MsgSettingsSave
+generated_on: 2023-11-15 # manually generated
+package: sbp.settings
+tests:
+
+- msg:
+    fields:
+      {}
+    module: sbp.settings
+    name: MsgSettingsSave
+  msg_type: '0xa1'
+  raw_json: '{"crc":17275,"length":0,"msg_type":161,"payload":"","preamble":85,"sender":57506}'
+  raw_packet: VaEAouAAe0M=
+  sbp:
+    crc: '0x437b'
+    length: 0
+    msg_type: '0xa1'
+    payload: ""
+    preamble: '0x55'
+    sender: '0xe0a2'

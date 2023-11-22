@@ -1,0 +1,23 @@
+description: Unit tests for swiftnav.sbp.navigation MsgBaselineHeadingDepA
+generated_on: 2023-11-15 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      flags: 58
+      heading: 3411152452
+      n_sats: 186
+      tow: 2958585170
+    module: sbp.navigation
+    name: MsgBaselineHeadingDepA
+  msg_type: '0x207'
+  raw_json: '{"crc":46765,"length":10,"msg_type":519,"payload":"Um1YsEQOUsu6Og==","preamble":85,"sender":52860,"tow":2958585170,"heading":3411152452,"n_sats":186,"flags":58}'
+  raw_packet: VQcCfM4KUm1YsEQOUsu6Oq22
+  sbp:
+    crc: '0xb6ad'
+    length: 10
+    msg_type: '0x207'
+    payload: Um1YsEQOUsu6Og==
+    preamble: '0x55'
+    sender: '0xce7c'

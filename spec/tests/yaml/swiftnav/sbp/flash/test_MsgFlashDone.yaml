@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.flash MsgFlashDone
+generated_on: 2023-11-15 # manually generated
+package: sbp.flash
+tests:
+
+- msg:
+    fields:
+      response: 82
+    module: sbp.flash
+    name: MsgFlashDone
+  msg_type: '0xe0'
+  raw_json: '{"crc":13830,"length":1,"msg_type":224,"payload":"Ug==","preamble":85,"sender":1219,"response":82}'
+  raw_packet: VeAAwwQBUgY2
+  sbp:
+    crc: '0x3606'
+    length: 1
+    msg_type: '0xe0'
+    payload: Ug==
+    preamble: '0x55'
+    sender: '0x04c3'

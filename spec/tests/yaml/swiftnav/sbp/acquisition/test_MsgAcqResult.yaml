@@ -1,0 +1,25 @@
+description: Unit tests for swiftnav.sbp.acquisition MsgAcqResult
+generated_on: 2023-11-15 # manually generated
+package: sbp.acquisition
+tests:
+
+- msg:
+    fields:
+      cf: 8241.2001953125
+      cn0: 14.5
+      cp: 72.19999694824219
+      sid:
+        code: 0
+        sat: 8
+    module: sbp.acquisition
+    name: MsgAcqResult
+  msg_type: '0x2f'
+  raw_json: '{"preamble":85,"msg_type":47,"sender":1219,"length":14,"payload":"AABoQWZmkELNxABGCAA=","crc":48591,"cn0":14.5,"cp":72.19999694824219,"cf":8241.2001953125,"sid":{"sat":8,"code":0}}'
+  raw_packet: VS8AwwQOAABoQWZmkELNxABGCADPvQ==
+  sbp:
+    crc: '0xbdcf'
+    length: 14
+    msg_type: '0x2f'
+    payload: AABoQWZmkELNxABGCAA=
+    preamble: '0x55'
+    sender: '0x04c3'

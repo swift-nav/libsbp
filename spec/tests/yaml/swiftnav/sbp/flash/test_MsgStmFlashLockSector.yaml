@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.flash MsgStmFlashLockSector
+generated_on: 2023-11-15 # manually generated
+package: sbp.flash
+tests:
+
+- msg:
+    fields:
+      sector: 1137047457
+    module: sbp.flash
+    name: MsgStmFlashLockSector
+  msg_type: '0xe3'
+  raw_json: '{"crc":8421,"length":4,"msg_type":227,"payload":"offFQw==","preamble":85,"sender":1219,"sector":1137047457}'
+  raw_packet: VeMAwwQEoffFQ+Ug
+  sbp:
+    crc: '0x20e5'
+    length: 4
+    msg_type: '0xe3'
+    payload: offFQw==
+    preamble: '0x55'
+    sender: '0x04c3'

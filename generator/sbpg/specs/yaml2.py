@@ -191,6 +191,8 @@ def mk_package_test_suite(fname, contents, spec_no):
   generated_on = contents.get('generated_on', None)
   tests = contents.get('tests', [])
   resolved = [mk_test(test) for test in tests]
+  test_structs = contents.get('struct_tests', [])
+  resolved_structs = [mk_test_struct(test) for test in test_structs]
 
   # Get current directory, root directory, and then strip root directory from test suite filename
   curr_file_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -202,7 +204,8 @@ def mk_package_test_suite(fname, contents, spec_no):
                                   suite_no=spec_no,
                                   description=description,
                                   generated_on=generated_on,
-                                  tests=resolved)
+                                  tests=resolved,
+                                  test_structs=resolved_structs)
 
 def mk_test(test):
   """Instantiates a test for a particular SBP message.
@@ -214,6 +217,13 @@ def mk_test(test):
                                     raw_json=test.get('raw_json', None),
                                     msg=test.get('msg', None),
                                     sbp=test.get('sbp', None))
+
+def mk_test_struct(spec):
+    """Instantiates a test for a particular SBP struct.
+
+    """
+    assert len(spec) == 4
+    return sbp_test.TestStructSpecification(spec)
 
 def mk_package(contents):
   """Instantiates a package specification from a parsed "AST" of a

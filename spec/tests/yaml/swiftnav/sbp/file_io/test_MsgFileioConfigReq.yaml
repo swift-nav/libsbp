@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.file_io MsgFileioConfigReq
+generated_on: 2023-11-15 # manually generated
+package: sbp.file_io
+tests:
+
+- msg:
+    fields:
+      sequence: 1514527339
+    module: sbp.file_io
+    name: MsgFileioConfigReq
+  msg_type: '0x1001'
+  raw_json: '{"preamble":85,"msg_type":4097,"sender":1219,"length":4,"payload":"a9pFWg==","crc":7097,"sequence":1514527339}'
+  raw_packet: VQEQwwQEa9pFWrkb
+  sbp:
+    crc: '0x1bb9'
+    length: 4
+    msg_type: '0x1001'
+    payload: a9pFWg==
+    preamble: '0x55'
+    sender: '0x04c3'

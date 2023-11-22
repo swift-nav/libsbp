@@ -1,0 +1,31 @@
+description: Unit tests for swiftnav.sbp.tracking MsgTrackingIqDepA
+generated_on: 2023-11-15 # manually generated
+package: sbp.tracking
+tests:
+
+- msg:
+    fields:
+      channel: 139
+      corrs:
+        - I: 1621776995
+          Q: -1591641785
+        - I: 1705169716
+          Q: 1675764777
+        - I: -267498681
+          Q: 1403998854
+      sid:
+        code: 15
+        reserved: 0
+        sat: 64028
+    module: sbp.tracking
+    name: MsgTrackingIqDepA
+  msg_type: '0x1c'
+  raw_json: '{"crc":8721,"length":29,"msg_type":28,"payload":"ixz6DwBjWqpgR3khoTTTomUpJOJjR0sO8IZSr1M=","preamble":85,"sender":17336,"channel":139,"sid":{"sat":64028,"code":15,"reserved":0},"corrs":[{"I":1621776995,"Q":-1591641785},{"I":1705169716,"Q":1675764777},{"I":-267498681,"Q":1403998854}]}'
+  raw_packet: VRwAuEMdixz6DwBjWqpgR3khoTTTomUpJOJjR0sO8IZSr1MRIg==
+  sbp:
+    crc: '0x2211'
+    length: 29
+    msg_type: '0x1c'
+    payload: ixz6DwBjWqpgR3khoTTTomUpJOJjR0sO8IZSr1M=
+    preamble: '0x55'
+    sender: '0x43b8'

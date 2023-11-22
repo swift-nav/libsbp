@@ -1,0 +1,26 @@
+description: Unit tests for swiftnav.sbp.file_io MsgFileioRemove
+generated_on: 2023-11-15 # manually generated
+package: sbp.file_io
+tests:
+
+- msg:
+    c_decoded_fields:
+      filename:
+        handle_as: encoded-string
+        encoded_len: 14
+        text: "/path/to/file"
+        fn_prefix: sbp_msg_fileio_remove_filename
+    fields:
+      filename: "/path/to/file\0"
+    module: sbp.file_io
+    name: MsgFileioRemove
+  msg_type: '0xac'
+  raw_json: '{"crc":62254,"length":14,"msg_type":172,"payload":"L3BhdGgvdG8vZmlsZQA=","preamble":85,"sender":1219,"filename":"/path/to/file\u0000"}'
+  raw_packet: VawAwwQOL3BhdGgvdG8vZmlsZQAu8w==
+  sbp:
+    crc: '0xf32e'
+    length: 14
+    msg_type: '0xac'
+    payload: L3BhdGgvdG8vZmlsZQA=
+    preamble: '0x55'
+    sender: '0x04c3'

@@ -30,13 +30,27 @@ class Testauto_check_sbp_navigation_MsgProtectionLevel0
     : public ::testing::Test {
  public:
   Testauto_check_sbp_navigation_MsgProtectionLevel0() {
-    assign(test_msg_.flags, 0);
-    assign(test_msg_.height, 0.0);
-    assign(test_msg_.hpl, 0);
-    assign(test_msg_.lat, 0.0);
-    assign(test_msg_.lon, 0.0);
-    assign(test_msg_.tow, 501867400);
-    assign(test_msg_.vpl, 0);
+    assign(test_msg_.atpl, 10663);
+    assign(test_msg_.ctpl, 5433);
+    assign(test_msg_.flags, 555755625);
+    assign(test_msg_.heading, -529244741);
+    assign(test_msg_.height, 412.2);
+    assign(test_msg_.hopl, 26707);
+    assign(test_msg_.hpl, 41013);
+    assign(test_msg_.hvpl, 62681);
+    assign(test_msg_.lat, 5290.2);
+    assign(test_msg_.lon, 9904.2);
+    assign(test_msg_.pitch, -1598561301);
+    assign(test_msg_.popl, 35212);
+    assign(test_msg_.roll, 1018834477);
+    assign(test_msg_.ropl, 63066);
+    assign(test_msg_.tow, 4060370030);
+    assign(test_msg_.v_x, -584647705);
+    assign(test_msg_.v_y, 1353168848);
+    assign(test_msg_.v_z, -1537140001);
+    assign(test_msg_.vpl, 21593);
+    assign(test_msg_.vvpl, 41277);
+    assign(test_msg_.wn, 13102);
   }
 
   class SlowReader final : public sbp::IReader {
@@ -183,19 +197,19 @@ class Testauto_check_sbp_navigation_MsgProtectionLevel0
   };
 
   struct CppHandler final
-      : public sbp::MessageHandler<sbp_msg_protection_level_dep_a_t> {
-    using sbp::MessageHandler<sbp_msg_protection_level_dep_a_t>::MessageHandler;
+      : public sbp::MessageHandler<sbp_msg_protection_level_t> {
+    using sbp::MessageHandler<sbp_msg_protection_level_t>::MessageHandler;
 
     struct Output final {
       uint16_t sender_id;
-      sbp_msg_protection_level_dep_a_t msg;
+      sbp_msg_protection_level_t msg;
     };
 
     std::vector<Output> outputs{};
 
    protected:
     void handle_sbp_msg(uint16_t sender_id,
-                        const sbp_msg_protection_level_dep_a_t &msg) override {
+                        const sbp_msg_protection_level_t &msg) override {
       outputs.emplace_back();
       outputs.back().sender_id = sender_id;
       memcpy(&outputs.back().msg, &msg, sizeof(msg));
@@ -204,7 +218,7 @@ class Testauto_check_sbp_navigation_MsgProtectionLevel0
 
   struct CHandler final {
     explicit CHandler(sbp_state_t *state) : state_{state} {
-      sbp_callback_register(state, SbpMsgProtectionLevelDepA,
+      sbp_callback_register(state, SbpMsgProtectionLevel,
                             &CHandler::callback_static, this, &node_);
     }
 
@@ -212,7 +226,7 @@ class Testauto_check_sbp_navigation_MsgProtectionLevel0
 
     struct Output final {
       uint16_t sender_id;
-      sbp_msg_protection_level_dep_a_t msg;
+      sbp_msg_protection_level_t msg;
     };
 
     std::vector<Output> outputs{};
@@ -220,11 +234,11 @@ class Testauto_check_sbp_navigation_MsgProtectionLevel0
    private:
     void callback(uint16_t sender_id, sbp_msg_type_t msg_type,
                   const sbp_msg_t *msg) {
-      ASSERT_EQ(msg_type, SbpMsgProtectionLevelDepA);
+      ASSERT_EQ(msg_type, SbpMsgProtectionLevel);
       outputs.emplace_back();
       outputs.back().sender_id = sender_id;
-      memcpy(&outputs.back().msg, &msg->protection_level_dep_a,
-             sizeof(msg->protection_level_dep_a));
+      memcpy(&outputs.back().msg, &msg->protection_level,
+             sizeof(msg->protection_level));
     }
 
     static void callback_static(uint16_t sender_id, sbp_msg_type_t msg_type,
@@ -237,7 +251,7 @@ class Testauto_check_sbp_navigation_MsgProtectionLevel0
   };
 
   struct TestMsgInfo {
-    sbp_msg_protection_level_dep_a_t test_msg;
+    sbp_msg_protection_level_t test_msg;
     sbp_msg_t test_msg_wrapped;
     sbp_msg_type_t msg_type;
     uint16_t sender_id;
@@ -273,45 +287,43 @@ class Testauto_check_sbp_navigation_MsgProtectionLevel0
   TestMsgInfo get_test_msg_info() const noexcept {
     TestMsgInfo info;
     memcpy(&info.test_msg, &test_msg_, sizeof(test_msg_));
-    memcpy(&info.test_msg_wrapped.protection_level_dep_a, &test_msg_,
+    memcpy(&info.test_msg_wrapped.protection_level, &test_msg_,
            sizeof(test_msg_));
-    info.msg_type = static_cast<sbp_msg_type_t>(SbpMsgProtectionLevelDepA);
-    info.sender_id = 4096;
+    info.msg_type = static_cast<sbp_msg_type_t>(SbpMsgProtectionLevel);
+    info.sender_id = 813;
     info.preamble = 0x55;
-    info.crc = 0xc352;
+    info.crc = 0xbc85;
     info.encoded_frame = encoded_frame_;
     info.frame_len = sizeof(encoded_frame_);
     info.encoded_payload = encoded_payload_;
-    info.payload_len = 33;
+    info.payload_len = 76;
 
     return info;
   }
 
  protected:
-  void comparison_tests(const sbp_msg_protection_level_dep_a_t &lesser,
-                        const sbp_msg_protection_level_dep_a_t &greater) {
+  void comparison_tests(const sbp_msg_protection_level_t &lesser,
+                        const sbp_msg_protection_level_t &greater) {
     sbp_msg_t wrapped_lesser =
-        sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::to_sbp_msg(
-            lesser);
+        sbp::MessageTraits<sbp_msg_protection_level_t>::to_sbp_msg(lesser);
     sbp_msg_t wrapped_greater =
-        sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::to_sbp_msg(
-            greater);
+        sbp::MessageTraits<sbp_msg_protection_level_t>::to_sbp_msg(greater);
 
-    EXPECT_EQ(sbp_msg_protection_level_dep_a_cmp(&lesser, &lesser), 0);
-    EXPECT_EQ(sbp_msg_protection_level_dep_a_cmp(&greater, &greater), 0);
-    EXPECT_LE(sbp_msg_protection_level_dep_a_cmp(&lesser, &greater), 0);
-    EXPECT_GT(sbp_msg_protection_level_dep_a_cmp(&greater, &lesser), 0);
+    EXPECT_EQ(sbp_msg_protection_level_cmp(&lesser, &lesser), 0);
+    EXPECT_EQ(sbp_msg_protection_level_cmp(&greater, &greater), 0);
+    EXPECT_LE(sbp_msg_protection_level_cmp(&lesser, &greater), 0);
+    EXPECT_GT(sbp_msg_protection_level_cmp(&greater, &lesser), 0);
 
-    EXPECT_EQ(sbp_message_cmp(SbpMsgProtectionLevelDepA, &wrapped_lesser,
+    EXPECT_EQ(sbp_message_cmp(SbpMsgProtectionLevel, &wrapped_lesser,
                               &wrapped_lesser),
               0);
-    EXPECT_EQ(sbp_message_cmp(SbpMsgProtectionLevelDepA, &wrapped_greater,
+    EXPECT_EQ(sbp_message_cmp(SbpMsgProtectionLevel, &wrapped_greater,
                               &wrapped_greater),
               0);
-    EXPECT_LE(sbp_message_cmp(SbpMsgProtectionLevelDepA, &wrapped_lesser,
+    EXPECT_LE(sbp_message_cmp(SbpMsgProtectionLevel, &wrapped_lesser,
                               &wrapped_greater),
               0);
-    EXPECT_GT(sbp_message_cmp(SbpMsgProtectionLevelDepA, &wrapped_greater,
+    EXPECT_GT(sbp_message_cmp(SbpMsgProtectionLevel, &wrapped_greater,
                               &wrapped_lesser),
               0);
 
@@ -383,110 +395,115 @@ class Testauto_check_sbp_navigation_MsgProtectionLevel0
   }
 
  private:
-  sbp_msg_protection_level_dep_a_t test_msg_{};
-  uint8_t encoded_frame_[33 + 8] = {
-      85, 22, 2, 0, 16, 33, 136, 227, 233, 29, 0, 0,  0,   0,
-      0,  0,  0, 0, 0,  0,  0,   0,   0,   0,  0, 0,  0,   0,
-      0,  0,  0, 0, 0,  0,  0,   0,   0,   0,  0, 82, 195,
+  sbp_msg_protection_level_t test_msg_{};
+  uint8_t encoded_frame_[76 + 8] = {
+      85,  23,  2,   45,  3,   76, 110, 84,  4,   242, 46,  51,  53,  160,
+      89,  84,  167, 41,  57,  21, 217, 244, 61,  161, 83,  104, 140, 137,
+      90,  246, 51,  51,  51,  51, 51,  170, 180, 64,  154, 153, 153, 153,
+      25,  88,  195, 64,  51,  51, 51,  51,  51,  195, 121, 64,  231, 251,
+      38,  221, 208, 183, 167, 80, 223, 26,  97,  164, 45,  46,  186, 60,
+      235, 227, 183, 160, 187, 93, 116, 224, 105, 40,  32,  33,  133, 188,
   };
-  uint8_t encoded_payload_[33] = {
-      136, 227, 233, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0,   0,   0,   0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  uint8_t encoded_payload_[76] = {
+      110, 84,  4,   242, 46,  51,  53,  160, 89,  84,  167, 41, 57,
+      21,  217, 244, 61,  161, 83,  104, 140, 137, 90,  246, 51, 51,
+      51,  51,  51,  170, 180, 64,  154, 153, 153, 153, 25,  88, 195,
+      64,  51,  51,  51,  51,  51,  195, 121, 64,  231, 251, 38, 221,
+      208, 183, 167, 80,  223, 26,  97,  164, 45,  46,  186, 60, 235,
+      227, 183, 160, 187, 93,  116, 224, 105, 40,  32,  33,
   };
 };
 
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0, EncodedLen) {
   auto info = get_test_msg_info();
-  EXPECT_EQ(sbp_msg_protection_level_dep_a_encoded_len(&info.test_msg),
+  EXPECT_EQ(sbp_msg_protection_level_encoded_len(&info.test_msg),
             info.payload_len);
 
-  EXPECT_EQ(sbp_message_encoded_len(SbpMsgProtectionLevelDepA,
-                                    &info.test_msg_wrapped),
-            info.payload_len);
+  EXPECT_EQ(
+      sbp_message_encoded_len(SbpMsgProtectionLevel, &info.test_msg_wrapped),
+      info.payload_len);
 }
 
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0, EncodeToBuf) {
   auto info = get_test_msg_info();
-  uint8_t buf[33];
+  uint8_t buf[76];
   uint8_t n_written;
 
-  EXPECT_EQ(sbp_msg_protection_level_dep_a_encode(&buf[0], sizeof(buf),
-                                                  &n_written, &info.test_msg),
+  EXPECT_EQ(sbp_msg_protection_level_encode(&buf[0], sizeof(buf), &n_written,
+                                            &info.test_msg),
             SBP_OK);
-  EXPECT_EQ(n_written, 33);
-  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 33), 0);
+  EXPECT_EQ(n_written, 76);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 76), 0);
 
   memset(&buf[0], 0, sizeof(buf));
-  EXPECT_EQ(
-      sbp_message_encode(&buf[0], sizeof(buf), &n_written,
-                         SbpMsgProtectionLevelDepA, &info.test_msg_wrapped),
-      SBP_OK);
-  EXPECT_EQ(n_written, 33);
-  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 33), 0);
+  EXPECT_EQ(sbp_message_encode(&buf[0], sizeof(buf), &n_written,
+                               SbpMsgProtectionLevel, &info.test_msg_wrapped),
+            SBP_OK);
+  EXPECT_EQ(n_written, 76);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 76), 0);
 }
 
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
        EncodeToBufWithoutNwritten) {
   auto info = get_test_msg_info();
-  uint8_t buf[33];
+  uint8_t buf[76];
 
-  EXPECT_EQ(sbp_msg_protection_level_dep_a_encode(&buf[0], sizeof(buf), nullptr,
-                                                  &info.test_msg),
+  EXPECT_EQ(sbp_msg_protection_level_encode(&buf[0], sizeof(buf), nullptr,
+                                            &info.test_msg),
             SBP_OK);
-  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 33), 0);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 76), 0);
 }
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
        EncodedToBufUnderflow) {
   auto info = get_test_msg_info();
-  uint8_t buf[33];
+  uint8_t buf[76];
 
-  for (uint8_t i = 0; i < 33; i++) {
-    EXPECT_EQ(sbp_msg_protection_level_dep_a_encode(&buf[0], i, nullptr,
-                                                    &info.test_msg),
-              SBP_ENCODE_ERROR);
+  for (uint8_t i = 0; i < 76; i++) {
+    EXPECT_EQ(
+        sbp_msg_protection_level_encode(&buf[0], i, nullptr, &info.test_msg),
+        SBP_ENCODE_ERROR);
   }
 }
 
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0, DecodeFromBuf) {
   auto info = get_test_msg_info();
-  sbp_msg_protection_level_dep_a_t msg{};
+  sbp_msg_protection_level_t msg{};
   uint8_t n_read;
 
-  EXPECT_EQ(sbp_msg_protection_level_dep_a_decode(
-                &info.encoded_payload[0], info.payload_len, &n_read, &msg),
+  EXPECT_EQ(sbp_msg_protection_level_decode(&info.encoded_payload[0],
+                                            info.payload_len, &n_read, &msg),
             SBP_OK);
-  EXPECT_EQ(n_read, 33);
+  EXPECT_EQ(n_read, 76);
   EXPECT_EQ(msg, info.test_msg);
 
   sbp_msg_t wrapped_msg{};
-  EXPECT_EQ(
-      sbp_message_decode(&info.encoded_payload[0], info.payload_len, &n_read,
-                         SbpMsgProtectionLevelDepA, &wrapped_msg),
-      SBP_OK);
-  EXPECT_EQ(n_read, 33);
+  EXPECT_EQ(sbp_message_decode(&info.encoded_payload[0], info.payload_len,
+                               &n_read, SbpMsgProtectionLevel, &wrapped_msg),
+            SBP_OK);
+  EXPECT_EQ(n_read, 76);
   EXPECT_EQ(msg, info.test_msg);
 }
 
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
        DecodeFromBufWithoutNread) {
   auto info = get_test_msg_info();
-  sbp_msg_protection_level_dep_a_t msg{};
+  sbp_msg_protection_level_t msg{};
 
-  EXPECT_EQ(sbp_msg_protection_level_dep_a_decode(
-                &info.encoded_payload[0], info.payload_len, nullptr, &msg),
+  EXPECT_EQ(sbp_msg_protection_level_decode(&info.encoded_payload[0],
+                                            info.payload_len, nullptr, &msg),
             SBP_OK);
   EXPECT_EQ(msg, info.test_msg);
 }
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
        DecodeFromBufUnderflow) {
   auto info = get_test_msg_info();
-  sbp_msg_protection_level_dep_a_t msg{};
+  sbp_msg_protection_level_t msg{};
 
   for (uint8_t i = 0; i < info.payload_len; i++) {
     int expected_return = SBP_DECODE_ERROR;
 
-    EXPECT_EQ(sbp_msg_protection_level_dep_a_decode(&info.encoded_payload[0], i,
-                                                    nullptr, &msg),
+    EXPECT_EQ(sbp_msg_protection_level_decode(&info.encoded_payload[0], i,
+                                              nullptr, &msg),
               expected_return);
   }
 }
@@ -587,8 +604,8 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0, SendThroughSbpState) {
   auto writer = info.get_frame_writer();
   sbp_state_set_io_context(&state, &writer);
 
-  EXPECT_EQ(sbp_msg_protection_level_dep_a_send(
-                &state, info.sender_id, &info.test_msg, &Writer::write_c),
+  EXPECT_EQ(sbp_msg_protection_level_send(&state, info.sender_id,
+                                          &info.test_msg, &Writer::write_c),
             SBP_OK);
   EXPECT_EQ(writer.len(), info.frame_len);
   EXPECT_EQ(memcmp(writer.data(), &info.encoded_frame[0], writer.len()), 0);
@@ -603,7 +620,7 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
   auto writer = info.get_frame_writer();
   sbp_state_set_io_context(&state, &writer);
 
-  EXPECT_EQ(sbp_message_send(&state, SbpMsgProtectionLevelDepA, info.sender_id,
+  EXPECT_EQ(sbp_message_send(&state, SbpMsgProtectionLevel, info.sender_id,
                              &info.test_msg_wrapped, &Writer::write_c),
             SBP_OK);
   EXPECT_EQ(writer.len(), info.frame_len);
@@ -621,10 +638,9 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
     auto writer = info.get_frame_writer(i);
     sbp_state_set_io_context(&state, &writer);
 
-    EXPECT_NE(
-        sbp_message_send(&state, SbpMsgProtectionLevelDepA, info.sender_id,
-                         &info.test_msg_wrapped, &Writer::write_c),
-        SBP_OK);
+    EXPECT_NE(sbp_message_send(&state, SbpMsgProtectionLevel, info.sender_id,
+                               &info.test_msg_wrapped, &Writer::write_c),
+              SBP_OK);
     EXPECT_EQ(writer.len(), i);
     EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, i), 0);
   }
@@ -638,7 +654,7 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0, DISABLED_SlowWrite) {
   auto writer = info.get_slow_frame_writer();
   sbp_state_set_io_context(&state, &writer);
 
-  EXPECT_EQ(sbp_message_send(&state, SbpMsgProtectionLevelDepA, info.sender_id,
+  EXPECT_EQ(sbp_message_send(&state, SbpMsgProtectionLevel, info.sender_id,
                              &info.test_msg_wrapped, &SlowWriter::write_c),
             SBP_OK);
   EXPECT_EQ(writer.len(), info.frame_len);
@@ -648,54 +664,138 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0, DISABLED_SlowWrite) {
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0, Comparison) {
   auto info = get_test_msg_info();
   {
-    sbp_msg_protection_level_dep_a_t lesser = info.test_msg;
-    sbp_msg_protection_level_dep_a_t greater = info.test_msg;
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.atpl, greater.atpl);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.ctpl, greater.ctpl);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
     make_lesser_greater(lesser.flags, greater.flags);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_protection_level_dep_a_t lesser = info.test_msg;
-    sbp_msg_protection_level_dep_a_t greater = info.test_msg;
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.heading, greater.heading);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
     make_lesser_greater(lesser.height, greater.height);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_protection_level_dep_a_t lesser = info.test_msg;
-    sbp_msg_protection_level_dep_a_t greater = info.test_msg;
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.hopl, greater.hopl);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
     make_lesser_greater(lesser.hpl, greater.hpl);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_protection_level_dep_a_t lesser = info.test_msg;
-    sbp_msg_protection_level_dep_a_t greater = info.test_msg;
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.hvpl, greater.hvpl);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
     make_lesser_greater(lesser.lat, greater.lat);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_protection_level_dep_a_t lesser = info.test_msg;
-    sbp_msg_protection_level_dep_a_t greater = info.test_msg;
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
     make_lesser_greater(lesser.lon, greater.lon);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_protection_level_dep_a_t lesser = info.test_msg;
-    sbp_msg_protection_level_dep_a_t greater = info.test_msg;
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.pitch, greater.pitch);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.popl, greater.popl);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.roll, greater.roll);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.ropl, greater.ropl);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
     make_lesser_greater(lesser.tow, greater.tow);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_protection_level_dep_a_t lesser = info.test_msg;
-    sbp_msg_protection_level_dep_a_t greater = info.test_msg;
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.v_x, greater.v_x);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.v_y, greater.v_y);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.v_z, greater.v_z);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
     make_lesser_greater(lesser.vpl, greater.vpl);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.vvpl, greater.vvpl);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_protection_level_t lesser = info.test_msg;
+    sbp_msg_protection_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.wn, greater.wn);
     comparison_tests(lesser, greater);
   }
 }
 
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0, CppTraitsProperties) {
-  // EXPECT_EQ(sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::id,
-  // SbpMsgProtectionLevelDepA);
-  EXPECT_STREQ(sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::name,
-               "MSG_PROTECTION_LEVEL_DEP_A");
+  // EXPECT_EQ(sbp::MessageTraits<sbp_msg_protection_level_t>::id,
+  // SbpMsgProtectionLevel);
+  EXPECT_STREQ(sbp::MessageTraits<sbp_msg_protection_level_t>::name,
+               "MSG_PROTECTION_LEVEL");
 }
 
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
@@ -705,12 +805,10 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
   const sbp_msg_t &const_sbp_msg_t = info.test_msg_wrapped;
   sbp_msg_t &non_const_sbp_msg_t = info.test_msg_wrapped;
 
-  const sbp_msg_protection_level_dep_a_t &const_unwrapped =
-      sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::get(
-          const_sbp_msg_t);
-  sbp_msg_protection_level_dep_a_t &non_const_unwrapped =
-      sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::get(
-          non_const_sbp_msg_t);
+  const sbp_msg_protection_level_t &const_unwrapped =
+      sbp::MessageTraits<sbp_msg_protection_level_t>::get(const_sbp_msg_t);
+  sbp_msg_protection_level_t &non_const_unwrapped =
+      sbp::MessageTraits<sbp_msg_protection_level_t>::get(non_const_sbp_msg_t);
 
   EXPECT_EQ((const void *)&const_sbp_msg_t, (const void *)&const_unwrapped);
   EXPECT_EQ((void *)&non_const_sbp_msg_t, (void *)&non_const_unwrapped);
@@ -720,19 +818,18 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0, CppTraitsToSbpMsgT) {
   auto info = get_test_msg_info();
 
   sbp_msg_t msg1 =
-      sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::to_sbp_msg(
-          info.test_msg);
-  EXPECT_EQ(msg1.protection_level_dep_a, info.test_msg);
+      sbp::MessageTraits<sbp_msg_protection_level_t>::to_sbp_msg(info.test_msg);
+  EXPECT_EQ(msg1.protection_level, info.test_msg);
 
   sbp_msg_t msg2;
-  sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::to_sbp_msg(
-      info.test_msg, &msg2);
-  EXPECT_EQ(msg2.protection_level_dep_a, info.test_msg);
+  sbp::MessageTraits<sbp_msg_protection_level_t>::to_sbp_msg(info.test_msg,
+                                                             &msg2);
+  EXPECT_EQ(msg2.protection_level, info.test_msg);
 }
 
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0, CppTraitsEncodedLen) {
   auto info = get_test_msg_info();
-  EXPECT_EQ(sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::encoded_len(
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_protection_level_t>::encoded_len(
                 info.test_msg),
             info.payload_len);
 }
@@ -746,7 +843,7 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
   auto writer = info.get_frame_writer();
   sbp_state_set_io_context(&state, &writer);
 
-  EXPECT_EQ(sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::send(
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_protection_level_t>::send(
                 &state, info.sender_id, info.test_msg, &Writer::write_c),
             SBP_OK);
   EXPECT_EQ(writer.len(), info.frame_len);
@@ -756,26 +853,26 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
        CppTraitsEncodeToBuf) {
   auto info = get_test_msg_info();
-  uint8_t buf[33];
+  uint8_t buf[76];
   uint8_t n_written;
 
-  EXPECT_EQ(sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::encode(
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_protection_level_t>::encode(
                 &buf[0], sizeof(buf), &n_written, info.test_msg),
             SBP_OK);
-  EXPECT_EQ(n_written, 33);
-  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 33), 0);
+  EXPECT_EQ(n_written, 76);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 76), 0);
 }
 
 TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
        CppTraitsDecodeFromBuf) {
   auto info = get_test_msg_info();
-  sbp_msg_protection_level_dep_a_t msg{};
+  sbp_msg_protection_level_t msg{};
   uint8_t n_read;
 
-  EXPECT_EQ(sbp::MessageTraits<sbp_msg_protection_level_dep_a_t>::decode(
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_protection_level_t>::decode(
                 &info.encoded_payload[0], info.payload_len, &n_read, &msg),
             SBP_OK);
-  EXPECT_EQ(n_read, 33);
+  EXPECT_EQ(n_read, 76);
   EXPECT_EQ(msg, info.test_msg);
 }
 
@@ -804,7 +901,7 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
   sbp::State state{};
   CppHandler handler(&state);
 
-  state.process_message(info.sender_id, SbpMsgProtectionLevelDepA,
+  state.process_message(info.sender_id, SbpMsgProtectionLevel,
                         &info.test_msg_wrapped);
 
   EXPECT_EQ(handler.outputs.size(), 1);
@@ -832,7 +929,7 @@ TEST_F(Testauto_check_sbp_navigation_MsgProtectionLevel0,
   sbp::State state{};
   state.set_writer(&writer);
 
-  EXPECT_EQ(state.send_message(info.sender_id, SbpMsgProtectionLevelDepA,
+  EXPECT_EQ(state.send_message(info.sender_id, SbpMsgProtectionLevel,
                                info.test_msg_wrapped),
             SBP_OK);
   EXPECT_EQ(writer.len(), info.frame_len);

@@ -1,0 +1,37 @@
+description: Unit tests for swiftnav.sbp.observation MsgAlmanacGlo
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 0
+          sat: 22
+        toa:
+          tow: 446384
+          wn: 2154
+        ura: 2.2
+        valid: 1
+      epsilon: -0.9893036629599647
+      i: 5153.550029754639
+      lambda_na: -0.02200078842114688
+      omega: 0.9341514480259797
+      t: -1.8731818448797617
+      t_dot: -8.903585155774196e-09
+      t_lambda_na: 0.007072207052260637
+    module: sbp.observation
+    name: MsgAlmanacGlo
+  msg_type: '0x73'
+  raw_json: '{"preamble":85,"msg_type":115,"sender":1219,"length":78,"payload":"FgCwzwYAagiamZmZmZkBQEA4AAABAI4pBetfh5a/AAAAIL/3fD8AAMDOjCG0QCmDs4aN+P2/44VRNsweQ77YO8cnYKjvv0cL2ZOR5O0/","crc":22427,"common":{"sid":{"sat":22,"code":0},"toa":{"tow":446384,"wn":2154},"ura":2.2,"fit_interval":14400,"valid":1,"health_bits":0},"lambda_na":-0.02200078842114688,"t_lambda_na":0.007072207052260637,"i":5153.550029754639,"t":-1.8731818448797617,"t_dot":-8.903585155774196e-09,"epsilon":-0.9893036629599647,"omega":0.9341514480259797}'
+  raw_packet: VXMAwwROFgCwzwYAagiamZmZmZkBQEA4AAABAI4pBetfh5a/AAAAIL/3fD8AAMDOjCG0QCmDs4aN+P2/44VRNsweQ77YO8cnYKjvv0cL2ZOR5O0/m1c=
+  sbp:
+    crc: '0x579b'
+    length: 78
+    msg_type: '0x73'
+    payload: FgCwzwYAagiamZmZmZkBQEA4AAABAI4pBetfh5a/AAAAIL/3fD8AAMDOjCG0QCmDs4aN+P2/44VRNsweQ77YO8cnYKjvv0cL2ZOR5O0/
+    preamble: '0x55'
+    sender: '0x04c3'

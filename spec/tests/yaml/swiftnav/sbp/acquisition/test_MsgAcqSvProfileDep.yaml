@@ -1,0 +1,70 @@
+description: Unit tests for swiftnav.sbp.acquisition MsgAcqSvProfileDep
+generated_on: 2023-11-15 # manually generated
+package: sbp.acquisition
+tests:
+
+- msg:
+    c_decoded_fields:
+      n_acq_sv_profile:
+        handle_as: vararray-len
+        related_to: acq_sv_profile
+        value: 3
+    fields:
+      acq_sv_profile:
+        - bin_width: 187
+          cf: 60
+          cf_max: 36
+          cf_min: 132
+          cn0: 151
+          cp: 241
+          int_time: 12
+          job_type: 67
+          sid:
+            code: 0
+            reserved: 0
+            sat: 22
+          status: 103
+          time_spent: 75
+          timestamp: 91
+        - bin_width: 176
+          cf: 212
+          cf_max: 24
+          cf_min: 155
+          cn0: 111
+          cp: 247
+          int_time: 179
+          job_type: 238
+          sid:
+            code: 1
+            reserved: 0
+            sat: 23
+          status: 38
+          time_spent: 234
+          timestamp: 166
+        - bin_width: 52
+          cf: 212
+          cf_max: 248
+          cf_min: 76
+          cn0: 68
+          cp: 101
+          int_time: 53
+          job_type: 142
+          sid:
+            code: 0
+            reserved: 0
+            sat: 24
+          status: 213
+          time_spent: 245
+          timestamp: 49
+    module: sbp.acquisition
+    name: MsgAcqSvProfileDep
+  msg_type: '0x1e'
+  raw_json: '{"crc":33859,"length":105,"msg_type":30,"payload":"Q2eXAAwWAAAAuwBbAAAASwAAAIQAAAAkAAAAPAAAAPEAAADuJm8AsxcAAQCwAKYAAADqAAAAmwAAABgAAADUAAAA9wAAAI7VRAA1GAAAADQAMQAAAPUAAABMAAAA+AAAANQAAABlAAAA","preamble":85,"sender":1219,"acq_sv_profile":[{"job_type":67,"status":103,"cn0":151,"int_time":12,"sid":{"sat":22,"code":0,"reserved":0},"bin_width":187,"timestamp":91,"time_spent":75,"cf_min":132,"cf_max":36,"cf":60,"cp":241},{"job_type":238,"status":38,"cn0":111,"int_time":179,"sid":{"sat":23,"code":1,"reserved":0},"bin_width":176,"timestamp":166,"time_spent":234,"cf_min":155,"cf_max":24,"cf":212,"cp":247},{"job_type":142,"status":213,"cn0":68,"int_time":53,"sid":{"sat":24,"code":0,"reserved":0},"bin_width":52,"timestamp":49,"time_spent":245,"cf_min":76,"cf_max":248,"cf":212,"cp":101}]}'
+  raw_packet: VR4AwwRpQ2eXAAwWAAAAuwBbAAAASwAAAIQAAAAkAAAAPAAAAPEAAADuJm8AsxcAAQCwAKYAAADqAAAAmwAAABgAAADUAAAA9wAAAI7VRAA1GAAAADQAMQAAAPUAAABMAAAA+AAAANQAAABlAAAAQ4Q=
+  sbp:
+    crc: '0x8443'
+    length: 105
+    msg_type: '0x1e'
+    payload: Q2eXAAwWAAAAuwBbAAAASwAAAIQAAAAkAAAAPAAAAPEAAADuJm8AsxcAAQCwAKYAAADqAAAAmwAAABgAAADUAAAA9wAAAI7VRAA1GAAAADQAMQAAAPUAAABMAAAA+AAAANQAAABlAAAA
+    preamble: '0x55'
+    sender: '0x04c3'

@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.bootload MsgNapDeviceDnaReq
+generated_on: 2023-11-15 # manually generated
+package: sbp.bootload
+tests:
+
+- msg:
+    fields:
+      {}
+    module: sbp.bootload
+    name: MsgNapDeviceDnaReq
+  msg_type: '0xde'
+  raw_json: '{"crc":41191,"length":0,"msg_type":222,"payload":"","preamble":85,"sender":12928}'
+  raw_packet: Vd4AgDIA56A=
+  sbp:
+    crc: '0xa0e7'
+    length: 0
+    msg_type: '0xde'
+    payload: ""
+    preamble: '0x55'
+    sender: '0x3280'

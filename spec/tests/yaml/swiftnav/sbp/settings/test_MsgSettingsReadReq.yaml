@@ -1,0 +1,29 @@
+description: Unit tests for swiftnav.sbp.settings MsgSettingsReadReq
+generated_on: 2023-11-15 # manually generated
+package: sbp.settings
+tests:
+
+- msg:
+    c_decoded_fields:
+      setting:
+        handle_as: encoded-string
+        encoded_len: 26
+        min_len: 1
+        fn_prefix: sbp_msg_settings_read_req_setting
+        sections:
+          - "section-name"
+          - "setting-name"
+    fields:
+      setting: "section-name\0setting-name\0"
+    module: sbp.settings
+    name: MsgSettingsReadReq
+  msg_type: '0xa4'
+  raw_json: '{"crc":58549,"length":26,"msg_type":164,"payload":"c2VjdGlvbi1uYW1lAHNldHRpbmctbmFtZQA=","preamble":85,"sender":54936,"setting":"section-name\u0000setting-name\u0000"}'
+  raw_packet: VaQAmNYac2VjdGlvbi1uYW1lAHNldHRpbmctbmFtZQC15A==
+  sbp:
+    crc: '0xe4b5'
+    length: 26
+    msg_type: '0xa4'
+    payload: c2VjdGlvbi1uYW1lAHNldHRpbmctbmFtZQA=
+    preamble: '0x55'
+    sender: '0xd698'

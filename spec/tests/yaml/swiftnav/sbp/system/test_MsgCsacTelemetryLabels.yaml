@@ -1,0 +1,27 @@
+description: Unit tests for swiftnav.sbp.system MsgCsacTelemetryLabels
+generated_on: 2023-11-15 # manually generated
+package: sbp.system
+tests:
+
+- msg:
+    c_decoded_fields:
+      telemetry_labels:
+        handle_as: encoded-string
+        encoded_len: 11
+        fn_prefix: sbp_msg_csac_telemetry_labels_telemetry_labels
+        text: some labels
+    fields:
+      id: 186
+      telemetry_labels: some labels
+    module: sbp.system
+    name: MsgCsacTelemetryLabels
+  msg_type: '0xff05'
+  raw_json: '{"preamble":85,"msg_type":65285,"sender":51291,"length":12,"payload":"unNvbWUgbGFiZWxz","crc":60502,"id":186,"telemetry_labels":"some labels"}'
+  raw_packet: VQX/W8gMunNvbWUgbGFiZWxzVuw=
+  sbp:
+    crc: '0xec56'
+    length: 12
+    msg_type: '0xff05'
+    payload: unNvbWUgbGFiZWxz
+    preamble: '0x55'
+    sender: '0xc85b'

@@ -1,0 +1,23 @@
+description: Unit tests for swiftnav.sbp.system MsgGnssTimeOffset
+generated_on: 2023-11-15 # manually generated
+package: sbp.system
+tests:
+
+- msg:
+    fields:
+      flags: 221
+      microseconds: 9494
+      milliseconds: 1728664402
+      weeks: 14857
+    module: sbp.system
+    name: MsgGnssTimeOffset
+  msg_type: '0xff07'
+  raw_json: '{"preamble":85,"msg_type":65287,"sender":3862,"length":9,"payload":"CTpSUwlnFiXd","crc":25684,"weeks":14857,"milliseconds":1728664402,"microseconds":9494,"flags":221}'
+  raw_packet: VQf/Fg8JCTpSUwlnFiXdVGQ=
+  sbp:
+    crc: '0x6454'
+    length: 9
+    msg_type: '0xff07'
+    payload: CTpSUwlnFiXd
+    preamble: '0x55'
+    sender: '0x0f16'

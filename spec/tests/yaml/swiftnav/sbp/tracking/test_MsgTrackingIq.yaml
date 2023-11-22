@@ -1,0 +1,30 @@
+description: Unit tests for swiftnav.sbp.tracking MsgTrackingIq
+generated_on: 2023-11-15 # manually generated
+package: sbp.tracking
+tests:
+
+- msg:
+    fields:
+      channel: 145
+      corrs:
+        - I: -9937
+          Q: 14319
+        - I: 9773
+          Q: 22717
+        - I: 5023
+          Q: 3280
+      sid:
+        code: 203
+        sat: 121
+    module: sbp.tracking
+    name: MsgTrackingIq
+  msg_type: '0x2d'
+  raw_json: '{"crc":42849,"length":15,"msg_type":45,"payload":"kXnLL9nvNy0mvVifE9AM","preamble":85,"sender":20482,"channel":145,"sid":{"sat":121,"code":203},"corrs":[{"I":-9937,"Q":14319},{"I":9773,"Q":22717},{"I":5023,"Q":3280}]}'
+  raw_packet: VS0AAlAPkXnLL9nvNy0mvVifE9AMYac=
+  sbp:
+    crc: '0xa761'
+    length: 15
+    msg_type: '0x2d'
+    payload: kXnLL9nvNy0mvVifE9AM
+    preamble: '0x55'
+    sender: '0x5002'

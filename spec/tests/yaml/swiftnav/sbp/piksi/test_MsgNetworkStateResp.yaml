@@ -1,0 +1,47 @@
+description: Unit tests for swiftnav.sbp.piksi MsgNetworkStateResp
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      flags: 2471552451
+      interface_name: "if0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+      ipv4_address:
+        - 143
+        - 241
+        - 84
+        - 180
+      ipv4_mask_size: 152
+      ipv6_address:
+        - 194
+        - 137
+        - 32
+        - 44
+        - 114
+        - 147
+        - 68
+        - 222
+        - 92
+        - 192
+        - 78
+        - 235
+        - 63
+        - 208
+        - 114
+        - 53
+      ipv6_mask_size: 183
+      rx_bytes: 451408920
+      tx_bytes: 59251049
+    module: sbp.piksi
+    name: MsgNetworkStateResp
+  msg_type: '0xbb'
+  raw_json: '{"crc":49526,"length":50,"msg_type":187,"payload":"j/FUtJjCiSAscpNE3lzATus/0HI1txj05xppGYgDaWYwAAAAAAAAAAAAAAAAAMPlUJM=","preamble":85,"sender":3880,"ipv4_address":[143,241,84,180],"ipv4_mask_size":152,"ipv6_address":[194,137,32,44,114,147,68,222,92,192,78,235,63,208,114,53],"ipv6_mask_size":183,"rx_bytes":451408920,"tx_bytes":59251049,"interface_name":"if0\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000","flags":2471552451}'
+  raw_packet: VbsAKA8yj/FUtJjCiSAscpNE3lzATus/0HI1txj05xppGYgDaWYwAAAAAAAAAAAAAAAAAMPlUJN2wQ==
+  sbp:
+    crc: '0xc176'
+    length: 50
+    msg_type: '0xbb'
+    payload: j/FUtJjCiSAscpNE3lzATus/0HI1txj05xppGYgDaWYwAAAAAAAAAAAAAAAAAMPlUJM=
+    preamble: '0x55'
+    sender: '0x0f28'

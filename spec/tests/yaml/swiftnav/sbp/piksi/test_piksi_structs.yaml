@@ -1,0 +1,40 @@
+description: Unit tests for swiftnav.sbp.piksi free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+struct_tests:
+
+  - encoded: zXAZRmaGjUT8D2nRmqw=
+    fields:
+      tx_throughput: 9820.200195
+      rx_throughput: 1132.199951
+      crc_error_count: 4092
+      io_error_count: 53609
+      tx_buffer_level: 154
+      rx_buffer_level: 172
+    module: sbp.piksi
+    name: UartChannel
+  - encoded: +F+YOsDNdrYua4JBHsgz+w==
+    fields:
+      avg: 983064568
+      pmin: -1233728064
+      pmax: 1099066158
+      current: -80492514
+    module: sbp.piksi
+    name: Period
+  - encoded: JF1Lgq9uwymD5agUb3j8GA==
+    fields:
+      avg: -2108990172
+      lmin: 700673711
+      lmax: 346613123
+      current: 419199087
+    module: sbp.piksi
+    name: Latency
+  - encoded: 3ShKdx0AAAAV3T/qIgAAABjaAqY6oSxXaWYwAAAAAAAAAAAAAAAAAA==
+    fields:
+      duration: 126555400413
+      total_bytes: 149958941973
+      rx_bytes: 2785204760
+      tx_bytes: 1462542650
+      interface_name: if0
+    module: sbp.piksi
+    name: NetworkUsage

@@ -1,0 +1,274 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrGriddedCorrectionNoStdDepA
+generated_on: 2023-11-15 # manually generated
+package: sbp.ssr
+tests:
+
+- msg:
+    c_decoded_fields:
+      n_stec_residuals:
+        handle_as: vararray-len
+        relates_to: stec_residuals
+        value: 59
+    fields:
+      header:
+        iod_atmo: 236
+        num_msgs: 62837
+        seq_num: 63555
+        time:
+          tow: 2837573811
+          wn: 8940
+        tropo_quality_indicator: 230
+        update_interval: 233
+      index: 26598
+      stec_residuals:
+        - residual: -23949
+          sv_id:
+            constellation: 157
+            satId: 231
+        - residual: 27427
+          sv_id:
+            constellation: 146
+            satId: 197
+        - residual: 10548
+          sv_id:
+            constellation: 109
+            satId: 222
+        - residual: -18195
+          sv_id:
+            constellation: 12
+            satId: 86
+        - residual: -27511
+          sv_id:
+            constellation: 204
+            satId: 65
+        - residual: 11
+          sv_id:
+            constellation: 183
+            satId: 171
+        - residual: 13740
+          sv_id:
+            constellation: 203
+            satId: 180
+        - residual: 29626
+          sv_id:
+            constellation: 85
+            satId: 196
+        - residual: 7846
+          sv_id:
+            constellation: 92
+            satId: 203
+        - residual: 18376
+          sv_id:
+            constellation: 13
+            satId: 42
+        - residual: -24357
+          sv_id:
+            constellation: 137
+            satId: 98
+        - residual: -1441
+          sv_id:
+            constellation: 216
+            satId: 95
+        - residual: -10660
+          sv_id:
+            constellation: 196
+            satId: 99
+        - residual: -8509
+          sv_id:
+            constellation: 253
+            satId: 159
+        - residual: 16361
+          sv_id:
+            constellation: 146
+            satId: 233
+        - residual: 10346
+          sv_id:
+            constellation: 24
+            satId: 76
+        - residual: -18679
+          sv_id:
+            constellation: 65
+            satId: 253
+        - residual: 15292
+          sv_id:
+            constellation: 215
+            satId: 40
+        - residual: 29537
+          sv_id:
+            constellation: 69
+            satId: 117
+        - residual: -29440
+          sv_id:
+            constellation: 56
+            satId: 60
+        - residual: -24266
+          sv_id:
+            constellation: 171
+            satId: 207
+        - residual: 22272
+          sv_id:
+            constellation: 61
+            satId: 23
+        - residual: 9303
+          sv_id:
+            constellation: 123
+            satId: 230
+        - residual: -23794
+          sv_id:
+            constellation: 255
+            satId: 184
+        - residual: -26837
+          sv_id:
+            constellation: 224
+            satId: 187
+        - residual: 14631
+          sv_id:
+            constellation: 104
+            satId: 151
+        - residual: -8144
+          sv_id:
+            constellation: 54
+            satId: 5
+        - residual: 23612
+          sv_id:
+            constellation: 129
+            satId: 181
+        - residual: 28013
+          sv_id:
+            constellation: 114
+            satId: 171
+        - residual: 2166
+          sv_id:
+            constellation: 23
+            satId: 12
+        - residual: -10186
+          sv_id:
+            constellation: 159
+            satId: 64
+        - residual: 17432
+          sv_id:
+            constellation: 20
+            satId: 33
+        - residual: -8666
+          sv_id:
+            constellation: 36
+            satId: 160
+        - residual: 25436
+          sv_id:
+            constellation: 190
+            satId: 145
+        - residual: -3864
+          sv_id:
+            constellation: 159
+            satId: 108
+        - residual: 4093
+          sv_id:
+            constellation: 221
+            satId: 227
+        - residual: -18055
+          sv_id:
+            constellation: 23
+            satId: 62
+        - residual: -27900
+          sv_id:
+            constellation: 116
+            satId: 168
+        - residual: 30687
+          sv_id:
+            constellation: 72
+            satId: 123
+        - residual: -13151
+          sv_id:
+            constellation: 242
+            satId: 226
+        - residual: -22903
+          sv_id:
+            constellation: 202
+            satId: 180
+        - residual: 4988
+          sv_id:
+            constellation: 24
+            satId: 58
+        - residual: 27408
+          sv_id:
+            constellation: 188
+            satId: 181
+        - residual: 319
+          sv_id:
+            constellation: 231
+            satId: 66
+        - residual: 15987
+          sv_id:
+            constellation: 252
+            satId: 64
+        - residual: 22266
+          sv_id:
+            constellation: 97
+            satId: 233
+        - residual: -19919
+          sv_id:
+            constellation: 221
+            satId: 156
+        - residual: 17350
+          sv_id:
+            constellation: 73
+            satId: 32
+        - residual: 14410
+          sv_id:
+            constellation: 253
+            satId: 249
+        - residual: 23671
+          sv_id:
+            constellation: 165
+            satId: 38
+        - residual: -31905
+          sv_id:
+            constellation: 44
+            satId: 99
+        - residual: 14305
+          sv_id:
+            constellation: 192
+            satId: 89
+        - residual: -12968
+          sv_id:
+            constellation: 171
+            satId: 95
+        - residual: 21479
+          sv_id:
+            constellation: 116
+            satId: 21
+        - residual: 28260
+          sv_id:
+            constellation: 71
+            satId: 71
+        - residual: -11112
+          sv_id:
+            constellation: 254
+            satId: 217
+        - residual: -25304
+          sv_id:
+            constellation: 8
+            satId: 18
+        - residual: -4024
+          sv_id:
+            constellation: 54
+            satId: 244
+        - residual: -15505
+          sv_id:
+            constellation: 189
+            satId: 231
+      tropo_delay_correction:
+        hydro: 16250
+        wet: 101
+    module: sbp.ssr
+    name: MsgSsrGriddedCorrectionNoStdDepA
+  msg_type: '0x5f0'
+  raw_json: '{"crc":20941,"length":254,"msg_type":1520,"payload":"s/AhqewidfVD+Ons5uZnej9l551zosWSI2vebTQpVgztuEHMiZSrtwsAtMusNcRVunPLXKYeKg3IR2KJ26Bf2F/6Y8Rc1p/9w97pkuk/TBhqKP1BCbco17w7dUVhczw4AI3PqzahFz0AV+Z7VyS4/w6ju+Arl5doJzkFNjDgtYE8XKtybW0MF3YIQJ822CEUGESgJCbekb5cY2yf6PDj3f0PPhd5uah0BJN7SN934vKhzLTKiaY6GHwTtbwQa0LnPwFA/HM+6WH6VpzdMbIgScZD+f1KOCald1xjLF+DWcDhN1+rWM0VdOdTR0dkbtn+mNQSCCid9DZI8Oe9b8M=","preamble":85,"sender":7270,"header":{"time":{"tow":2837573811,"wn":8940},"num_msgs":62837,"seq_num":63555,"update_interval":233,"iod_atmo":236,"tropo_quality_indicator":230},"index":26598,"tropo_delay_correction":{"hydro":16250,"wet":101},"stec_residuals":[{"sv_id":{"satId":231,"constellation":157},"residual":-23949},{"sv_id":{"satId":197,"constellation":146},"residual":27427},{"sv_id":{"satId":222,"constellation":109},"residual":10548},{"sv_id":{"satId":86,"constellation":12},"residual":-18195},{"sv_id":{"satId":65,"constellation":204},"residual":-27511},{"sv_id":{"satId":171,"constellation":183},"residual":11},{"sv_id":{"satId":180,"constellation":203},"residual":13740},{"sv_id":{"satId":196,"constellation":85},"residual":29626},{"sv_id":{"satId":203,"constellation":92},"residual":7846},{"sv_id":{"satId":42,"constellation":13},"residual":18376},{"sv_id":{"satId":98,"constellation":137},"residual":-24357},{"sv_id":{"satId":95,"constellation":216},"residual":-1441},{"sv_id":{"satId":99,"constellation":196},"residual":-10660},{"sv_id":{"satId":159,"constellation":253},"residual":-8509},{"sv_id":{"satId":233,"constellation":146},"residual":16361},{"sv_id":{"satId":76,"constellation":24},"residual":10346},{"sv_id":{"satId":253,"constellation":65},"residual":-18679},{"sv_id":{"satId":40,"constellation":215},"residual":15292},{"sv_id":{"satId":117,"constellation":69},"residual":29537},{"sv_id":{"satId":60,"constellation":56},"residual":-29440},{"sv_id":{"satId":207,"constellation":171},"residual":-24266},{"sv_id":{"satId":23,"constellation":61},"residual":22272},{"sv_id":{"satId":230,"constellation":123},"residual":9303},{"sv_id":{"satId":184,"constellation":255},"residual":-23794},{"sv_id":{"satId":187,"constellation":224},"residual":-26837},{"sv_id":{"satId":151,"constellation":104},"residual":14631},{"sv_id":{"satId":5,"constellation":54},"residual":-8144},{"sv_id":{"satId":181,"constellation":129},"residual":23612},{"sv_id":{"satId":171,"constellation":114},"residual":28013},{"sv_id":{"satId":12,"constellation":23},"residual":2166},{"sv_id":{"satId":64,"constellation":159},"residual":-10186},{"sv_id":{"satId":33,"constellation":20},"residual":17432},{"sv_id":{"satId":160,"constellation":36},"residual":-8666},{"sv_id":{"satId":145,"constellation":190},"residual":25436},{"sv_id":{"satId":108,"constellation":159},"residual":-3864},{"sv_id":{"satId":227,"constellation":221},"residual":4093},{"sv_id":{"satId":62,"constellation":23},"residual":-18055},{"sv_id":{"satId":168,"constellation":116},"residual":-27900},{"sv_id":{"satId":123,"constellation":72},"residual":30687},{"sv_id":{"satId":226,"constellation":242},"residual":-13151},{"sv_id":{"satId":180,"constellation":202},"residual":-22903},{"sv_id":{"satId":58,"constellation":24},"residual":4988},{"sv_id":{"satId":181,"constellation":188},"residual":27408},{"sv_id":{"satId":66,"constellation":231},"residual":319},{"sv_id":{"satId":64,"constellation":252},"residual":15987},{"sv_id":{"satId":233,"constellation":97},"residual":22266},{"sv_id":{"satId":156,"constellation":221},"residual":-19919},{"sv_id":{"satId":32,"constellation":73},"residual":17350},{"sv_id":{"satId":249,"constellation":253},"residual":14410},{"sv_id":{"satId":38,"constellation":165},"residual":23671},{"sv_id":{"satId":99,"constellation":44},"residual":-31905},{"sv_id":{"satId":89,"constellation":192},"residual":14305},{"sv_id":{"satId":95,"constellation":171},"residual":-12968},{"sv_id":{"satId":21,"constellation":116},"residual":21479},{"sv_id":{"satId":71,"constellation":71},"residual":28260},{"sv_id":{"satId":217,"constellation":254},"residual":-11112},{"sv_id":{"satId":18,"constellation":8},"residual":-25304},{"sv_id":{"satId":244,"constellation":54},"residual":-4024},{"sv_id":{"satId":231,"constellation":189},"residual":-15505}]}'
+  raw_packet: VfAFZhz+s/AhqewidfVD+Ons5uZnej9l551zosWSI2vebTQpVgztuEHMiZSrtwsAtMusNcRVunPLXKYeKg3IR2KJ26Bf2F/6Y8Rc1p/9w97pkuk/TBhqKP1BCbco17w7dUVhczw4AI3PqzahFz0AV+Z7VyS4/w6ju+Arl5doJzkFNjDgtYE8XKtybW0MF3YIQJ822CEUGESgJCbekb5cY2yf6PDj3f0PPhd5uah0BJN7SN934vKhzLTKiaY6GHwTtbwQa0LnPwFA/HM+6WH6VpzdMbIgScZD+f1KOCald1xjLF+DWcDhN1+rWM0VdOdTR0dkbtn+mNQSCCid9DZI8Oe9b8PNUQ==
+  sbp:
+    crc: '0x51cd'
+    length: 254
+    msg_type: '0x5f0'
+    payload: s/AhqewidfVD+Ons5uZnej9l551zosWSI2vebTQpVgztuEHMiZSrtwsAtMusNcRVunPLXKYeKg3IR2KJ26Bf2F/6Y8Rc1p/9w97pkuk/TBhqKP1BCbco17w7dUVhczw4AI3PqzahFz0AV+Z7VyS4/w6ju+Arl5doJzkFNjDgtYE8XKtybW0MF3YIQJ822CEUGESgJCbekb5cY2yf6PDj3f0PPhd5uah0BJN7SN934vKhzLTKiaY6GHwTtbwQa0LnPwFA/HM+6WH6VpzdMbIgScZD+f1KOCald1xjLF+DWcDhN1+rWM0VdOdTR0dkbtn+mNQSCCid9DZI8Oe9b8M=
+    preamble: '0x55'
+    sender: '0x1c66'

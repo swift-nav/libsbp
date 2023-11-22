@@ -1,0 +1,27 @@
+description: Unit tests for swiftnav.sbp.observation MsgGroupDelayDepA
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      isc_l1ca: -91
+      isc_l2c: 6125
+      prn: 22
+      t_op:
+        tow: 446384
+        wn: 2154
+      tgd: -514
+      valid: 1
+    module: sbp.observation
+    name: MsgGroupDelayDepA
+  msg_type: '0x92'
+  raw_json: '{"crc":23458,"length":14,"msg_type":146,"payload":"sM8GAGoIFgH+/aX/7Rc=","preamble":85,"sender":123,"t_op":{"tow":446384,"wn":2154},"prn":22,"valid":1,"tgd":-514,"isc_l1ca":-91,"isc_l2c":6125}'
+  raw_packet: VZIAewAOsM8GAGoIFgH+/aX/7ReiWw==
+  sbp:
+    crc: '0x5ba2'
+    length: 14
+    msg_type: '0x92'
+    payload: sM8GAGoIFgH+/aX/7Rc=
+    preamble: '0x55'
+    sender: '0x007b'

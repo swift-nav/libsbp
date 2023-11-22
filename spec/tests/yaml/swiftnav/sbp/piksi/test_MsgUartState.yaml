@@ -1,8 +1,53 @@
----
-description: Unit tests for swiftnav.sbp.piksi MsgUartState v0.53.
-generated_on: 2015-01-15 16:50:00.0
+description: Unit tests for swiftnav.sbp.piksi MsgUartState
+generated_on: 2023-11-15 # manually generated
 package: sbp.piksi
 tests:
+
+- msg:
+    fields:
+      latency:
+        avg: 319865629
+        current: 364253831
+        lmax: -611749622
+        lmin: 289902239
+      obs_period:
+        avg: -1002717658
+        current: -2080697488
+        pmax: -1628133123
+        pmin: 1869323177
+      uart_a:
+        crc_error_count: 25177
+        io_error_count: 47183
+        rx_buffer_level: 244
+        rx_throughput: 1853.199951171875
+        tx_buffer_level: 138
+        tx_throughput: 7765.2001953125
+      uart_b:
+        crc_error_count: 4297
+        io_error_count: 63847
+        rx_buffer_level: 161
+        rx_throughput: 6760.2001953125
+        tx_buffer_level: 143
+        tx_throughput: 6441.2001953125
+      uart_ftdi:
+        crc_error_count: 38359
+        io_error_count: 6653
+        rx_buffer_level: 24
+        rx_throughput: 2173.199951171875
+        tx_buffer_level: 218
+        tx_throughput: 5954.2001953125
+    module: sbp.piksi
+    name: MsgUartState
+  msg_type: '0x1d'
+  raw_json: '{"preamble":85,"msg_type":29,"sender":57544,"length":74,"payload":"mqnyRWam50RZYk+4ivSaSclFmkHTRckQZ/mPoZoRukUz0wdF15X9GdoYHcMQE5+ORxEKcYnbhxK2FSa+O8Spm2tv/aj0nnAT+4M=","crc":57700,"uart_a":{"tx_throughput":7765.2001953125,"rx_throughput":1853.199951171875,"crc_error_count":25177,"io_error_count":47183,"tx_buffer_level":138,"rx_buffer_level":244},"uart_b":{"tx_throughput":6441.2001953125,"rx_throughput":6760.2001953125,"crc_error_count":4297,"io_error_count":63847,"tx_buffer_level":143,"rx_buffer_level":161},"uart_ftdi":{"tx_throughput":5954.2001953125,"rx_throughput":2173.199951171875,"crc_error_count":38359,"io_error_count":6653,"tx_buffer_level":218,"rx_buffer_level":24},"latency":{"avg":319865629,"lmin":289902239,"lmax":-611749622,"current":364253831},"obs_period":{"avg":-1002717658,"pmin":1869323177,"pmax":-1628133123,"current":-2080697488}}'
+  raw_packet: VR0AyOBKmqnyRWam50RZYk+4ivSaSclFmkHTRckQZ/mPoZoRukUz0wdF15X9GdoYHcMQE5+ORxEKcYnbhxK2FSa+O8Spm2tv/aj0nnAT+4Nk4Q==
+  sbp:
+    crc: '0xe164'
+    length: 74
+    msg_type: '0x1d'
+    payload: mqnyRWam50RZYk+4ivSaSclFmkHTRckQZ/mPoZoRukUz0wdF15X9GdoYHcMQE5+ORxEKcYnbhxK2FSa+O8Spm2tv/aj0nnAT+4M=
+    preamble: '0x55'
+    sender: '0xe0c8'
 
 - msg:
     fields:

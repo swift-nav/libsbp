@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.piksi MsgResetFilters
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      filter: 100
+    module: sbp.piksi
+    name: MsgResetFilters
+  msg_type: '0x22'
+  raw_json: '{"crc":11650,"length":1,"msg_type":34,"payload":"ZA==","preamble":85,"sender":51281,"filter":100}'
+  raw_packet: VSIAUcgBZIIt
+  sbp:
+    crc: '0x2d82'
+    length: 1
+    msg_type: '0x22'
+    payload: ZA==
+    preamble: '0x55'
+    sender: '0xc851'
