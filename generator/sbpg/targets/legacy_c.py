@@ -21,10 +21,10 @@ from jinja2.utils import pass_environment
 from sbpg.targets.templating import JENV, indented_wordwrap
 from sbpg import ReleaseVersion
 
-MESSAGES_TEMPLATE_NAME = "c/sbp_messages_template.h"
-LEGACY_MESSAGES_TEMPLATE_NAME = "c/legacy/sbp_messages_template.h"
-VERSION_TEMPLATE_NAME = "c/sbp_version_template.h"
-LEGACY_MESSAGE_TRAITS_TEMPLATE_NAME = "c/legacy/cpp/message_traits_template.h"
+MESSAGES_TEMPLATE_NAME = "c/include/libsbp/sbp_messages_template.h"
+LEGACY_MESSAGES_TEMPLATE_NAME = "c/include/libsbp/legacy/sbp_messages_template.h"
+VERSION_TEMPLATE_NAME = "c/include/libsbp/sbp_version_template.h"
+LEGACY_MESSAGE_TRAITS_TEMPLATE_NAME = "c/include/libsbp/legacy/cpp/message_traits_template.h"
 
 
 @pass_environment
