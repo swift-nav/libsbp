@@ -46,6 +46,8 @@ def render_source(output_dir, package_spec):
   """
   Render and output to a directory given a package specification.
   """
+  if len(package_spec.tests) == 0:
+    return
   path, name = package_spec.filepath
   destination_filename = "%s/integration/%s.rs" % (output_dir, snake_case(name))
   py_template = JENV.get_template(TEST_TEMPLATE_NAME)
@@ -59,6 +61,6 @@ def render_source(output_dir, package_spec):
 def render_main(output_dir, package_specs):
   destination_filename = "%s/integration/main.rs" % output_dir
   py_template = JENV.get_template(TEST_MAIN_TEMPLATE_NAME)
-  test_names = [snake_case(p.filepath[1]) for p in package_specs]
+  test_names = [snake_case(p.filepath[1]) for p in package_specs if len(p.tests) > 0]
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(test_names=test_names))

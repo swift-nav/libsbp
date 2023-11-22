@@ -4,15 +4,6 @@ package: sbp.settings
 tests:
 
 - msg:
-    c_decoded_fields:
-      setting:
-        handle_as: encoded-string
-        encoded_len: 40
-        fn_prefix: sbp_msg_settings_write_setting
-        sections:
-          - "section-name"
-          - "setting-name"
-          - "setting-value"
     fields:
       setting: "section-name\0setting-name\0setting-value\0"
     c_decoded_fields:
