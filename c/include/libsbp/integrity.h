@@ -20,11 +20,4 @@
 
 #include <libsbp/common.h>
 
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/integrity.h` instead. Access to legacy "
-    "types via `libsbp/integrity.h` will be removed in version 5.")
-
-#include <libsbp/legacy/integrity.h>
-
 #endif /* LIBSBP_INTEGRITY_MESSAGES_H */

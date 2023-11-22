@@ -20,11 +20,4 @@
 
 #include <libsbp/common.h>
 
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/orientation.h` instead. Access to "
-    "legacy types via `libsbp/orientation.h` will be removed in version 5.")
-
-#include <libsbp/legacy/orientation.h>
-
 #endif /* LIBSBP_ORIENTATION_MESSAGES_H */
