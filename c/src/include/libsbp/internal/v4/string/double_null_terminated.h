@@ -70,7 +70,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -153,9 +153,8 @@ size_t sbp_double_null_terminated_string_encoded_len(const sbp_string_t *s,
  * @param maxlen Maximum encoded length
  * @return Available space
  */
-size_t
-sbp_double_null_terminated_string_space_remaining(const sbp_string_t *s,
-                                                  size_t maxlen);
+size_t sbp_double_null_terminated_string_space_remaining(const sbp_string_t *s,
+                                                         size_t maxlen);
 
 /**
  * Count sections in a double null terminated string
@@ -204,8 +203,10 @@ bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_double_null_terminated_string_add_section_vprintf(
-    sbp_string_t *s, size_t maxlen, const char *fmt, va_list ap)
+bool sbp_double_null_terminated_string_add_section_vprintf(sbp_string_t *s,
+                                                           size_t maxlen,
+                                                           const char *fmt,
+                                                           va_list ap)
     SBP_ATTR_VFORMAT(3);
 
 /**
@@ -227,8 +228,7 @@ bool sbp_double_null_terminated_string_add_section_vprintf(
  * @param new_str String to append
  * @return true on success, false otherwise
  */
-bool sbp_double_null_terminated_string_append(sbp_string_t *s,
-                                              size_t maxlen,
+bool sbp_double_null_terminated_string_append(sbp_string_t *s, size_t maxlen,
                                               const char *new_str);
 
 /**
@@ -277,8 +277,9 @@ bool sbp_double_null_terminated_string_append_vprintf(sbp_string_t *s,
  * @param section Section number
  * @return Requested section, or NULL
  */
-const char *sbp_double_null_terminated_string_get_section(
-    const sbp_string_t *s, size_t maxlen, size_t section);
+const char *sbp_double_null_terminated_string_get_section(const sbp_string_t *s,
+                                                          size_t maxlen,
+                                                          size_t section);
 
 /**
  * Get length of a section in a double null terminated string
@@ -327,8 +328,7 @@ bool sbp_double_null_terminated_string_encode(const sbp_string_t *s,
  * @param ctx Decode context
  * @return true on success, false otherwise
  */
-bool sbp_double_null_terminated_string_decode(sbp_string_t *s,
-                                              size_t maxlen,
+bool sbp_double_null_terminated_string_decode(sbp_string_t *s, size_t maxlen,
                                               sbp_decode_ctx_t *ctx);
 
 #ifdef __cplusplus

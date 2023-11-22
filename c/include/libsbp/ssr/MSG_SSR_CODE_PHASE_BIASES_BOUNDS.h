@@ -29,7 +29,7 @@
 #include <libsbp/ssr/BoundsHeader.h>
 #include <libsbp/ssr/CodePhaseBiasesSatSig.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {

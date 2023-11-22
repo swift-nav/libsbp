@@ -26,7 +26,7 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 #include <libsbp/(((m.package_name)))_macros.h>
 
 ((*- for i in m.type_include *))

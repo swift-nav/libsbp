@@ -28,7 +28,7 @@
 #include <libsbp/common.h>
 #include <libsbp/navigation/EstimatedHorizontalErrorEllipse.h>
 #include <libsbp/navigation_macros.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {

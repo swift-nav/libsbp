@@ -53,7 +53,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/string/sbp_string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -96,8 +96,7 @@ void sbp_unterminated_string_init(sbp_string_t *s);
  * @param maxlen Maximum encoded length
  * @return true if valid, false otherwise
  */
-bool sbp_unterminated_string_valid(const sbp_string_t *s,
-                                   size_t maxlen);
+bool sbp_unterminated_string_valid(const sbp_string_t *s, size_t maxlen);
 
 /**
  * Compare two unterminated string
@@ -149,17 +148,18 @@ size_t sbp_unterminated_string_space_remaining(const sbp_string_t *s,
  * @param maxlen Maximum encoded length
  * @return String length
  */
-size_t sbp_unterminated_string_strlen(const sbp_string_t *s,
-                                      size_t maxlen);
+size_t sbp_unterminated_string_strlen(const sbp_string_t *s, size_t maxlen);
 
 /**
  * Set an unterminated string from a raw buffer
  *
- * If the should_trunc parameter is true, and new string contents are larger than
- * can be stored, then as much as possible will be written from new_str to s
+ * If the should_trunc parameter is true, and new string contents are larger
+ * than can be stored, then as much as possible will be written from new_str to
+ * s
  *
- * If the should_trunc parameter is false, and new string contents are larger than
- * can be stored, the string will not be modified and false will be returned
+ * If the should_trunc parameter is false, and new string contents are larger
+ * than can be stored, the string will not be modified and false will be
+ * returned
  *
  * @param s string
  * @param maxlen Maximum encoded length
@@ -167,12 +167,13 @@ size_t sbp_unterminated_string_strlen(const sbp_string_t *s,
  * @param n_written If not null, on success will be set to the number of bytes
  * written to s
  * @param new_buf New buffer contents
- * @param new_buf_len Length of the new buffer, not including NULL terminator (if present)
+ * @param new_buf_len Length of the new buffer, not including NULL terminator
+ * (if present)
  * @return Number of characters written from new_buf to s
  */
 bool sbp_unterminated_string_set_raw(sbp_string_t *s, size_t maxlen,
-                                      bool should_trunc, size_t *n_written, const char *new_buf,
-                                      size_t new_buf_len);
+                                     bool should_trunc, size_t *n_written,
+                                     const char *new_buf, size_t new_buf_len);
 
 /**
  * Set an unterminated string
@@ -194,7 +195,8 @@ bool sbp_unterminated_string_set_raw(sbp_string_t *s, size_t maxlen,
  * @return true on success, false otherwise
  */
 bool sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
-                                      bool should_trunc, size_t *n_written, const char *new_str);
+                                 bool should_trunc, size_t *n_written,
+                                 const char *new_str);
 /**
  * Set an unterminated string with printf style formatting
  *
@@ -212,7 +214,8 @@ bool sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc, size_t *n_written,
+bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t maxlen,
+                                     bool should_trunc, size_t *n_written,
                                      const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(5);
 
@@ -256,10 +259,10 @@ bool sbp_unterminated_string_append(sbp_string_t *s, size_t maxlen,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_unterminated_string_append_vprintf(sbp_string_t *s,
-                                            size_t maxlen, bool should_trunc, size_t *n_written,
-                                            const char *fmt, va_list ap)
-    SBP_ATTR_VFORMAT(5);
+bool sbp_unterminated_string_append_vprintf(sbp_string_t *s, size_t maxlen,
+                                            bool should_trunc,
+                                            size_t *n_written, const char *fmt,
+                                            va_list ap) SBP_ATTR_VFORMAT(5);
 
 /**
  * Get contents of an unterminated
@@ -270,8 +273,7 @@ bool sbp_unterminated_string_append_vprintf(sbp_string_t *s,
  * @param maxlen Maximum encoded length
  * @return String contents or NULL
  */
-const char *sbp_unterminated_string_get(const sbp_string_t *s,
-                                        size_t maxlen);
+const char *sbp_unterminated_string_get(const sbp_string_t *s, size_t maxlen);
 
 /**
  * Encode an unterminated string
@@ -284,8 +286,7 @@ const char *sbp_unterminated_string_get(const sbp_string_t *s,
  * @param ctx Encode context
  * @return true on success, false otherwise
  */
-bool sbp_unterminated_string_encode(const sbp_string_t *s,
-                                    size_t maxlen,
+bool sbp_unterminated_string_encode(const sbp_string_t *s, size_t maxlen,
                                     sbp_encode_ctx_t *ctx);
 
 /**
