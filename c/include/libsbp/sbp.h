@@ -14,8 +14,7 @@
 #define LIBSBP_SBP_H
 
 #include <libsbp/common.h>
-#include <libsbp/legacy/api.h>
-#include <libsbp/legacy/compat.h>
+#include <libsbp/legacy/callbacks.h>
 #include <libsbp/sbp_msg_type.h>
 #include <libsbp/sbp_msg.h>
 

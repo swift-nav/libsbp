@@ -14,6 +14,7 @@
 #include <libsbp/internal/v4/string/multipart.h>
 #include <libsbp/internal/v4/string/null_terminated.h>
 #include <libsbp/internal/v4/string/unterminated.h>
+#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 
 void sbp_msg_fileio_read_req_filename_init(sbp_msg_fileio_read_req_t *msg) {
