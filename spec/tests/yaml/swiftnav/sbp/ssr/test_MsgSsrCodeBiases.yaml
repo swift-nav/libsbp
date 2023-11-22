@@ -1,0 +1,195 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrCodeBiases
+generated_on: 2023-11-15 # manually generated
+package: sbp.ssr
+tests:
+
+- msg:
+    c_decoded_fields:
+      n_biases:
+        handle_as: vararray-len
+        relates_to: biases
+        value: 81
+    fields:
+      biases:
+        - code: 51
+          value: -31996
+        - code: 240
+          value: 21368
+        - code: 148
+          value: -10799
+        - code: 62
+          value: -5916
+        - code: 71
+          value: -17342
+        - code: 210
+          value: 13952
+        - code: 131
+          value: -32360
+        - code: 111
+          value: -3445
+        - code: 177
+          value: 11409
+        - code: 9
+          value: -12299
+        - code: 241
+          value: -26934
+        - code: 141
+          value: -24782
+        - code: 220
+          value: 9611
+        - code: 187
+          value: -16542
+        - code: 23
+          value: -30592
+        - code: 167
+          value: 1736
+        - code: 211
+          value: 5978
+        - code: 244
+          value: -10358
+        - code: 209
+          value: 3467
+        - code: 101
+          value: 1824
+        - code: 18
+          value: 17949
+        - code: 250
+          value: 18797
+        - code: 202
+          value: -28593
+        - code: 9
+          value: 17810
+        - code: 241
+          value: 5684
+        - code: 99
+          value: -13214
+        - code: 3
+          value: -6485
+        - code: 180
+          value: 15947
+        - code: 145
+          value: -32170
+        - code: 31
+          value: -25826
+        - code: 37
+          value: 14098
+        - code: 210
+          value: 32551
+        - code: 242
+          value: 3394
+        - code: 237
+          value: -21864
+        - code: 212
+          value: -2545
+        - code: 59
+          value: -19362
+        - code: 195
+          value: 17821
+        - code: 100
+          value: 4215
+        - code: 68
+          value: -20557
+        - code: 144
+          value: 20849
+        - code: 82
+          value: -26850
+        - code: 21
+          value: 10605
+        - code: 225
+          value: 19720
+        - code: 164
+          value: 157
+        - code: 73
+          value: 1566
+        - code: 78
+          value: -28847
+        - code: 116
+          value: -26640
+        - code: 55
+          value: -22087
+        - code: 254
+          value: 10035
+        - code: 74
+          value: -2129
+        - code: 34
+          value: 19041
+        - code: 97
+          value: 12464
+        - code: 236
+          value: 3245
+        - code: 174
+          value: -32155
+        - code: 30
+          value: -15959
+        - code: 190
+          value: -15156
+        - code: 123
+          value: 6507
+        - code: 225
+          value: 2378
+        - code: 10
+          value: 823
+        - code: 131
+          value: 25590
+        - code: 133
+          value: -7390
+        - code: 203
+          value: 4676
+        - code: 97
+          value: 23007
+        - code: 192
+          value: 13046
+        - code: 69
+          value: 2651
+        - code: 151
+          value: 30282
+        - code: 110
+          value: -22492
+        - code: 247
+          value: 19872
+        - code: 179
+          value: -19827
+        - code: 99
+          value: 30911
+        - code: 77
+          value: 23488
+        - code: 224
+          value: -7679
+        - code: 50
+          value: -28073
+        - code: 148
+          value: 25838
+        - code: 179
+          value: -7299
+        - code: 215
+          value: -18328
+        - code: 31
+          value: 23097
+        - code: 79
+          value: -25579
+        - code: 245
+          value: 15441
+        - code: 93
+          value: 15530
+        - code: 200
+          value: 3495
+      iod_ssr: 132
+      sid:
+        code: 241
+        sat: 133
+      time:
+        tow: 387144400
+        wn: 16905
+      update_interval: 254
+    module: sbp.ssr
+    name: MsgSsrCodeBiases
+  msg_type: '0x5e1'
+  raw_json: '{"crc":33917,"length":253,"msg_type":1505,"payload":"0FoTFwlChfH+hDMEg/B4U5TR1T7k6EdCvNKANoOYgW+L8rGRLAn1z/HKlo0yn9yLJbtivxeAiKfIBtNaF/SK19GLDWUgBxIdRvptScpPkAmSRfE0FmNizAOr5rRLPpFWgh8emyUSN9Inf/JCDe2YqtQP9jtetMOdRWR3EESzr5BxUVIelxVtKeEITaSdAEkeBk5Rj3Twlze5qf4zJ0qv9yJhSmGwMOytDK5lgh6pwb7MxHtrGeFKCQo3A4P2Y4Ui48tEEmHfWcD2MkVbCpdKdm4kqPegTbONsmO/eE3AW+AB4jJXkpTuZLN949douB85Wk8VnPVRPF2qPMinDQ==","preamble":85,"sender":22311,"time":{"tow":387144400,"wn":16905},"sid":{"sat":133,"code":241},"update_interval":254,"iod_ssr":132,"biases":[{"code":51,"value":-31996},{"code":240,"value":21368},{"code":148,"value":-10799},{"code":62,"value":-5916},{"code":71,"value":-17342},{"code":210,"value":13952},{"code":131,"value":-32360},{"code":111,"value":-3445},{"code":177,"value":11409},{"code":9,"value":-12299},{"code":241,"value":-26934},{"code":141,"value":-24782},{"code":220,"value":9611},{"code":187,"value":-16542},{"code":23,"value":-30592},{"code":167,"value":1736},{"code":211,"value":5978},{"code":244,"value":-10358},{"code":209,"value":3467},{"code":101,"value":1824},{"code":18,"value":17949},{"code":250,"value":18797},{"code":202,"value":-28593},{"code":9,"value":17810},{"code":241,"value":5684},{"code":99,"value":-13214},{"code":3,"value":-6485},{"code":180,"value":15947},{"code":145,"value":-32170},{"code":31,"value":-25826},{"code":37,"value":14098},{"code":210,"value":32551},{"code":242,"value":3394},{"code":237,"value":-21864},{"code":212,"value":-2545},{"code":59,"value":-19362},{"code":195,"value":17821},{"code":100,"value":4215},{"code":68,"value":-20557},{"code":144,"value":20849},{"code":82,"value":-26850},{"code":21,"value":10605},{"code":225,"value":19720},{"code":164,"value":157},{"code":73,"value":1566},{"code":78,"value":-28847},{"code":116,"value":-26640},{"code":55,"value":-22087},{"code":254,"value":10035},{"code":74,"value":-2129},{"code":34,"value":19041},{"code":97,"value":12464},{"code":236,"value":3245},{"code":174,"value":-32155},{"code":30,"value":-15959},{"code":190,"value":-15156},{"code":123,"value":6507},{"code":225,"value":2378},{"code":10,"value":823},{"code":131,"value":25590},{"code":133,"value":-7390},{"code":203,"value":4676},{"code":97,"value":23007},{"code":192,"value":13046},{"code":69,"value":2651},{"code":151,"value":30282},{"code":110,"value":-22492},{"code":247,"value":19872},{"code":179,"value":-19827},{"code":99,"value":30911},{"code":77,"value":23488},{"code":224,"value":-7679},{"code":50,"value":-28073},{"code":148,"value":25838},{"code":179,"value":-7299},{"code":215,"value":-18328},{"code":31,"value":23097},{"code":79,"value":-25579},{"code":245,"value":15441},{"code":93,"value":15530},{"code":200,"value":3495}]}'
+  raw_packet: VeEFJ1f90FoTFwlChfH+hDMEg/B4U5TR1T7k6EdCvNKANoOYgW+L8rGRLAn1z/HKlo0yn9yLJbtivxeAiKfIBtNaF/SK19GLDWUgBxIdRvptScpPkAmSRfE0FmNizAOr5rRLPpFWgh8emyUSN9Inf/JCDe2YqtQP9jtetMOdRWR3EESzr5BxUVIelxVtKeEITaSdAEkeBk5Rj3Twlze5qf4zJ0qv9yJhSmGwMOytDK5lgh6pwb7MxHtrGeFKCQo3A4P2Y4Ui48tEEmHfWcD2MkVbCpdKdm4kqPegTbONsmO/eE3AW+AB4jJXkpTuZLN949douB85Wk8VnPVRPF2qPMinDX2E
+  sbp:
+    crc: '0x847d'
+    length: 253
+    msg_type: '0x5e1'
+    payload: 0FoTFwlChfH+hDMEg/B4U5TR1T7k6EdCvNKANoOYgW+L8rGRLAn1z/HKlo0yn9yLJbtivxeAiKfIBtNaF/SK19GLDWUgBxIdRvptScpPkAmSRfE0FmNizAOr5rRLPpFWgh8emyUSN9Inf/JCDe2YqtQP9jtetMOdRWR3EESzr5BxUVIelxVtKeEITaSdAEkeBk5Rj3Twlze5qf4zJ0qv9yJhSmGwMOytDK5lgh6pwb7MxHtrGeFKCQo3A4P2Y4Ui48tEEmHfWcD2MkVbCpdKdm4kqPegTbONsmO/eE3AW+AB4jJXkpTuZLN949douB85Wk8VnPVRPF2qPMinDQ==
+    preamble: '0x55'
+    sender: '0x5727'

@@ -1,0 +1,23 @@
+description: Unit tests for swiftnav.sbp.file_io MsgFileioConfigResp
+generated_on: 2023-11-15 # manually generated
+package: sbp.file_io
+tests:
+
+- msg:
+    fields:
+      batch_size: 1040160728
+      fileio_version: 2420269324
+      sequence: 1530154154
+      window_size: 53262997
+    module: sbp.file_io
+    name: MsgFileioConfigResp
+  msg_type: '0x1002'
+  raw_json: '{"preamble":85,"msg_type":4098,"sender":1219,"length":16,"payload":"qkw0W5W6LAPYl/89DGFCkA==","crc":29679,"sequence":1530154154,"window_size":53262997,"batch_size":1040160728,"fileio_version":2420269324}'
+  raw_packet: VQIQwwQQqkw0W5W6LAPYl/89DGFCkO9z
+  sbp:
+    crc: '0x73ef'
+    length: 16
+    msg_type: '0x1002'
+    payload: qkw0W5W6LAPYl/89DGFCkA==
+    preamble: '0x55'
+    sender: '0x04c3'

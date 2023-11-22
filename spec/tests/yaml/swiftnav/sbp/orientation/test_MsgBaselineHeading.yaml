@@ -1,0 +1,23 @@
+description: Unit tests for swiftnav.sbp.orientation MsgBaselineHeading
+generated_on: 2023-11-15 # manually generated
+package: sbp.orientation
+tests:
+
+- msg:
+    fields:
+      flags: 91
+      heading: 1036342316
+      n_sats: 91
+      tow: 3289197980
+    module: sbp.orientation
+    name: MsgBaselineHeading
+  msg_type: '0x20f'
+  raw_json: '{"crc":65248,"length":10,"msg_type":527,"payload":"nC0NxCxUxT1bWw==","preamble":85,"sender":24019,"tow":3289197980,"heading":1036342316,"n_sats":91,"flags":91}'
+  raw_packet: VQ8C010KnC0NxCxUxT1bW+D+
+  sbp:
+    crc: '0xfee0'
+    length: 10
+    msg_type: '0x20f'
+    payload: nC0NxCxUxT1bWw==
+    preamble: '0x55'
+    sender: '0x5dd3'

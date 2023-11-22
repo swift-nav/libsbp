@@ -1,0 +1,23 @@
+description: Unit tests for swiftnav.sbp.vehicle MsgWheeltick
+generated_on: 2023-11-15 # manually generated
+package: sbp.vehicle
+tests:
+
+- msg:
+    fields:
+      flags: 1
+      source: 146
+      ticks: -771148831
+      time: 112414825470
+    module: sbp.vehicle
+    name: MsgWheeltick
+  msg_type: '0x904'
+  raw_json: '{"preamble":85,"msg_type":2308,"sender":17771,"length":14,"payload":"/htyLBoAAAABkuEzCdI=","crc":14372,"time":112414825470,"flags":1,"source":146,"ticks":-771148831}'
+  raw_packet: VQQJa0UO/htyLBoAAAABkuEzCdIkOA==
+  sbp:
+    crc: '0x3824'
+    length: 14
+    msg_type: '0x904'
+    payload: /htyLBoAAAABkuEzCdI=
+    preamble: '0x55'
+    sender: '0x456b'

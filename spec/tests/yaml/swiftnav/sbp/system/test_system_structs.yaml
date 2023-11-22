@@ -1,0 +1,21 @@
+description: Unit tests for swiftnav.sbp.system free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.system
+struct_tests:
+
+  - encoded: bdJRag==
+    fields:
+      component: 53869
+      generic: 81
+      specific: 106
+    module: sbp.system
+    name: SubSystemReport
+  - encoded: frKTSqWyzcs=
+    fields:
+      uptime: 1251193470
+      report:
+        specific: 203
+        generic: 205
+        component: 45733
+    module: sbp.system
+    name: StatusJournalItem

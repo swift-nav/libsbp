@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.piksi MsgCwResults
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      {}
+    module: sbp.piksi
+    name: MsgCwResults
+  msg_type: '0xc0'
+  raw_json: '{"crc":18660,"length":0,"msg_type":192,"payload":"","preamble":85,"sender":63075}'
+  raw_packet: VcAAY/YA5Eg=
+  sbp:
+    crc: '0x48e4'
+    length: 0
+    msg_type: '0xc0'
+    payload: ""
+    preamble: '0x55'
+    sender: '0xf663'

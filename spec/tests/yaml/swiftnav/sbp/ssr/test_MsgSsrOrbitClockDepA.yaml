@@ -1,0 +1,37 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrOrbitClockDepA
+generated_on: 2023-11-15 # manually generated
+package: sbp.ssr
+tests:
+
+- msg:
+    fields:
+      along: 132661048
+      c0: -970026069
+      c1: -503975083
+      c2: -759858197
+      cross: 1845577176
+      dot_along: 72905755
+      dot_cross: 311886653
+      dot_radial: -1111196507
+      iod: 193
+      iod_ssr: 211
+      radial: -24141393
+      sid:
+        code: 30
+        sat: 1
+      time:
+        tow: 3172954849
+        wn: 7723
+      update_interval: 194
+    module: sbp.ssr
+    name: MsgSsrOrbitClockDepA
+  msg_type: '0x5dc'
+  raw_json: '{"crc":64669,"length":47,"msg_type":1500,"payload":"4XIfvSseAR7C08GvoY/+OD/oB9hFAW6lfMS9G3RYBD0DlxKrky7GVfP14et7tdI=","preamble":85,"sender":42529,"time":{"tow":3172954849,"wn":7723},"sid":{"sat":1,"code":30},"update_interval":194,"iod_ssr":211,"iod":193,"radial":-24141393,"along":132661048,"cross":1845577176,"dot_radial":-1111196507,"dot_along":72905755,"dot_cross":311886653,"c0":-970026069,"c1":-503975083,"c2":-759858197}'
+  raw_packet: VdwFIaYv4XIfvSseAR7C08GvoY/+OD/oB9hFAW6lfMS9G3RYBD0DlxKrky7GVfP14et7tdKd/A==
+  sbp:
+    crc: '0xfc9d'
+    length: 47
+    msg_type: '0x5dc'
+    payload: 4XIfvSseAR7C08GvoY/+OD/oB9hFAW6lfMS9G3RYBD0DlxKrky7GVfP14et7tdI=
+    preamble: '0x55'
+    sender: '0xa621'

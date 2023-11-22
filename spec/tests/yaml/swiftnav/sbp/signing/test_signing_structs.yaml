@@ -1,0 +1,94 @@
+description: Unit tests for swiftnav.sbp.signing free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.signing
+struct_tests:
+
+  - encoded: 5ntAgjoFeYQehBQ=
+    fields:
+      year: 31718
+      month: 64
+      day: 130
+      hours: 58
+      minutes: 5
+      seconds: 121
+      ns: 344202884
+    module: sbp.signing
+    name: UtcTime
+  - encoded: pr35ptP2B1PetnkWQBK+nNQXD94pBdAxfx5S1v0El3r+Ohd1m+m0ds+gVHU5LujORJuvM7pv8CEUaz9yzHNA8ZHYoGDWNbV4hA==
+    fields:
+      len: 166
+      data:
+        - 189
+        - 249
+        - 166
+        - 211
+        - 246
+        - 7
+        - 83
+        - 222
+        - 182
+        - 121
+        -  22
+        -  64
+        -  18
+        -  190
+        -  156
+        -  212
+        -  23
+        -  15
+        -  222
+        -  41
+        -  5
+        -  208
+        -  49
+        -  127
+        -  30
+        -  82
+        -  214
+        -  253
+        -  4
+        -  151
+        -  122
+        -  254
+        -  58
+        -  23
+        -  117
+        -  155
+        -  233
+        -  180
+        -  118
+        -  207
+        -  160
+        -  84
+        -  117
+        -  57
+        -  46
+        -  232
+        -  206
+        -  68
+        -  155
+        -  175
+        -  51
+        -  186
+        -  111
+        -  240
+        -  33
+        -  20
+        -  107
+        -  63
+        -  114
+        -  204
+        -  115
+        -  64
+        -  241
+        -  145
+        -  216
+        -  160
+        -  96
+        -  214
+        -  53
+        -  181
+        -  120
+        -  132
+    module: sbp.signing
+    name: EcdsaSignature

@@ -38,13 +38,14 @@ class PackageTestSpecification(object):
 
   """
 
-  def __init__(self, src_filename=None, package="", suite_no=0, description=None, generated_on=None, tests=None):
+  def __init__(self, src_filename=None, package="", suite_no=0, description=None, generated_on=None, tests=None, test_structs=None):
     self.src_filename = src_filename
     self.package = package
     self.suite_no = suite_no
     self.description = description
     self.generated_on = generated_on
     self.tests = tests or []
+    self.test_structs = test_structs or []
     self.render_source = True
 
   def __lt__(self, other):
@@ -168,5 +169,43 @@ class TestSpecification(object):
     if 'c_decoded_fields' in self.msg:
       fields.update(self.msg['c_decoded_fields'])
     return sorted(fields)
+
+
+class TestStructSpecification(object):
+    """A message description to generate tests for.
+    """
+
+    def __init__(self, spec):
+        assert(len(spec['encoded']) > 1)
+        self.encoded_data = base64.standard_b64decode(spec['encoded'])
+        self.encoded_len = len(self.encoded_data)
+        self.encoded_len_for_buf = self.encoded_len if self.encoded_len != 0 else 1
+        self.encoded_data_as_byte_array = list(bytearray(self.encoded_data))
+        self.canonical_name = spec['name']
+        self.struct_name = "sbp_" + re.sub(r"(?<!^)(?=[A-Z])", "_", self.canonical_name).lower() + "_t"
+        self.fn_prefix = self.struct_name[:-2]
+        self.spec = spec
+
+    @property
+    def fields(self):
+        return self.spec.get('fields', None) or []
+
+    @property
+    def fieldskeys(self):
+        return sorted(self.spec.get('fields', None) or [])
+
+    @property
+    def c_decoded_fields(self):
+        fields = self.spec.get('fields', None) or {}
+        if 'c_decoded_fields' in self.spec:
+            fields.update(self.spec['c_decoded_fields'])
+        return fields
+
+    @property
+    def c_decoded_fieldskeys(self):
+        fields = self.spec.get('fields', None) or {}
+        if 'c_decoded_fields' in self.spec:
+            fields.update(self.spec['c_decoded_fields'])
+        return sorted(fields)
 
 

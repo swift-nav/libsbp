@@ -1,0 +1,29 @@
+description: Unit tests for swiftnav.sbp.file_io MsgFileioReadReq
+generated_on: 2023-11-15 # manually generated
+package: sbp.file_io
+tests:
+
+- msg:
+    c_decoded_fields:
+      filename:
+        handle_as: encoded-string
+        encoded_len: 19
+        fn_prefix: sbp_msg_fileio_read_req_filename
+        text: "/path/to/some/file"
+    fields:
+      chunk_size: 53
+      filename: "/path/to/some/file\0"
+      offset: 398373474
+      sequence: 679648290
+    module: sbp.file_io
+    name: MsgFileioReadReq
+  msg_type: '0xa8'
+  raw_json: '{"crc":25686,"length":28,"msg_type":168,"payload":"IpyCKGKyvhc1L3BhdGgvdG8vc29tZS9maWxlAA==","preamble":85,"sender":1219,"sequence":679648290,"offset":398373474,"chunk_size":53,"filename":"/path/to/some/file\u0000"}'
+  raw_packet: VagAwwQcIpyCKGKyvhc1L3BhdGgvdG8vc29tZS9maWxlAFZk
+  sbp:
+    crc: '0x6456'
+    length: 28
+    msg_type: '0xa8'
+    payload: IpyCKGKyvhc1L3BhdGgvdG8vc29tZS9maWxlAA==
+    preamble: '0x55'
+    sender: '0x04c3'

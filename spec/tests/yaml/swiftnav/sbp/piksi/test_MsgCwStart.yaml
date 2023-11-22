@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.piksi MsgCwStart
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      {}
+    module: sbp.piksi
+    name: MsgCwStart
+  msg_type: '0xc1'
+  raw_json: '{"crc":35541,"length":0,"msg_type":193,"payload":"","preamble":85,"sender":45854}'
+  raw_packet: VcEAHrMA1Yo=
+  sbp:
+    crc: '0x8ad5'
+    length: 0
+    msg_type: '0xc1'
+    payload: ""
+    preamble: '0x55'
+    sender: '0xb31e'

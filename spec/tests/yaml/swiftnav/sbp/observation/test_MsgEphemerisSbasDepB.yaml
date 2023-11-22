@@ -1,0 +1,44 @@
+description: Unit tests for swiftnav.sbp.observation MsgEphemerisSbasDepB
+generated_on: 2023-11-15 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      a_gf0: -0.0006315018981695175
+      a_gf1: 8.981260180007666e-12
+      acc:
+        - 9.313225746154785e-07
+        - 9.313225746154785e-07
+        - 2.7939677238464355e-06
+      common:
+        fit_interval: 0
+        health_bits: 0
+        sid:
+          code: 6
+          sat: 22
+        toe:
+          tow: 446384
+          wn: 2154
+        ura: 2.0
+        valid: 1
+      pos:
+        - -12177330.078125
+        - 599893.06640625
+        - -22373708.49609375
+      vel:
+        - -1726.506233215332
+        - -2542.6149368286133
+        - 869.8177337646484
+    module: sbp.observation
+    name: MsgEphemerisSbasDepB
+  msg_type: '0x84'
+  raw_json: '{"crc":26769,"length":110,"msg_type":132,"payload":"FgawzwYAaggAAAAAAAAAQAAAAAABAAAAgEL2OWfBAAAAIqpOIkEAAPDHVFZ1wQAAAGIG+prAAAAA2Trdo8AAAAC4ii6LQAAAAAAAQK8+AAAAAABArz4AAAAAAHDHPgAAAABssUS/AAAAAADAoz0=","preamble":85,"sender":123,"common":{"sid":{"sat":22,"code":6},"toe":{"tow":446384,"wn":2154},"ura":2,"fit_interval":0,"valid":1,"health_bits":0},"pos":[-12177330.078125,599893.06640625,-22373708.49609375],"vel":[-1726.506233215332,-2542.6149368286133,869.8177337646484],"acc":[9.313225746154785e-07,9.313225746154785e-07,2.7939677238464355e-06],"a_gf0":-0.0006315018981695175,"a_gf1":8.981260180007666e-12}'
+  raw_packet: VYQAewBuFgawzwYAaggAAAAAAAAAQAAAAAABAAAAgEL2OWfBAAAAIqpOIkEAAPDHVFZ1wQAAAGIG+prAAAAA2Trdo8AAAAC4ii6LQAAAAAAAQK8+AAAAAABArz4AAAAAAHDHPgAAAABssUS/AAAAAADAoz2RaA==
+  sbp:
+    crc: '0x6891'
+    length: 110
+    msg_type: '0x84'
+    payload: FgawzwYAaggAAAAAAAAAQAAAAAABAAAAgEL2OWfBAAAAIqpOIkEAAPDHVFZ1wQAAAGIG+prAAAAA2Trdo8AAAAC4ii6LQAAAAAAAQK8+AAAAAABArz4AAAAAAHDHPgAAAABssUS/AAAAAADAoz0=
+    preamble: '0x55'
+    sender: '0x007b'

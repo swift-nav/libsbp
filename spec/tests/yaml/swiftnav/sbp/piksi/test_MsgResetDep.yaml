@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.piksi MsgResetDep
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      {}
+    module: sbp.piksi
+    name: MsgResetDep
+  msg_type: '0xb2'
+  raw_json: '{"crc":44010,"length":0,"msg_type":178,"payload":"","preamble":85,"sender":2880}'
+  raw_packet: VbIAQAsA6qs=
+  sbp:
+    crc: '0xabea'
+    length: 0
+    msg_type: '0xb2'
+    payload: ""
+    preamble: '0x55'
+    sender: '0x0b40'

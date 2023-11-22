@@ -1,0 +1,32 @@
+description: Unit tests for swiftnav.sbp.linux MsgLinuxCpuState
+generated_on: 2023-11-15 # manually generated
+package: sbp.linux
+tests:
+
+- msg:
+    c_decoded_fields:
+      cmdline:
+        handle_as: encoded-string
+        encoded_len: 46
+        fn_prefix: sbp_msg_linux_cpu_state_cmdline
+        text: /path/to/process-name arg0 arg1 arg2 arg3 arg4
+    fields:
+      cmdline: /path/to/process-name arg0 arg1 arg2 arg3 arg4
+      flags: 20
+      index: 101
+      pcpu: 98
+      pid: 50042
+      time: 3948815319
+      tname: "process-name\0\0\0"
+    module: sbp.linux
+    name: MsgLinuxCpuState
+  msg_type: '0x7f08'
+  raw_json: '{"crc":58692,"length":70,"msg_type":32520,"payload":"ZXrDYtcjXusUcHJvY2Vzcy1uYW1lAAAAL3BhdGgvdG8vcHJvY2Vzcy1uYW1lIGFyZzAgYXJnMSBhcmcyIGFyZzMgYXJnNA==","preamble":85,"sender":34196,"index":101,"pid":50042,"pcpu":98,"time":3948815319,"flags":20,"tname":"process-name\u0000\u0000\u0000","cmdline":"/path/to/process-name arg0 arg1 arg2 arg3 arg4"}'
+  raw_packet: VQh/lIVGZXrDYtcjXusUcHJvY2Vzcy1uYW1lAAAAL3BhdGgvdG8vcHJvY2Vzcy1uYW1lIGFyZzAgYXJnMSBhcmcyIGFyZzMgYXJnNETl
+  sbp:
+    crc: '0xe544'
+    length: 70
+    msg_type: '0x7f08'
+    payload: ZXrDYtcjXusUcHJvY2Vzcy1uYW1lAAAAL3BhdGgvdG8vcHJvY2Vzcy1uYW1lIGFyZzAgYXJnMSBhcmcyIGFyZzMgYXJnNA==
+    preamble: '0x55'
+    sender: '0x8594'

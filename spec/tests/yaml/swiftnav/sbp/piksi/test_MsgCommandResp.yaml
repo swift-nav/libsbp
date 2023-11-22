@@ -1,0 +1,21 @@
+description: Unit tests for swiftnav.sbp.piksi MsgCommandResp
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      code: 1737912018
+      sequence: 2692994934
+    module: sbp.piksi
+    name: MsgCommandResp
+  msg_type: '0xb9'
+  raw_json: '{"crc":61604,"length":8,"msg_type":185,"payload":"dteDoNJulmc=","preamble":85,"sender":52793,"sequence":2692994934,"code":1737912018}'
+  raw_packet: VbkAOc4IdteDoNJulmek8A==
+  sbp:
+    crc: '0xf0a4'
+    length: 8
+    msg_type: '0xb9'
+    payload: dteDoNJulmc=
+    preamble: '0x55'
+    sender: '0xce39'

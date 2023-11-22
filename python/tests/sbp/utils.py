@@ -238,7 +238,12 @@ def _assert_sane_package(pkg_name, pkg):
     Parsed contents of YAML file.
 
   """
-  assert len(pkg['tests']) > 0, "Package has no tests!"
+  total_tests = 0
+  if 'tests' in pkg:
+    total_tests = total_tests + len(pkg['tests'])
+  if 'struct_tests' in pkg:
+    total_tests = total_tests + len(pkg['struct_tests'])
+  assert total_tests > 0, "Package has no tests!"
 
 def load_test_package(test_filename):
   """
@@ -266,6 +271,8 @@ def load_test_package(test_filename):
 
 def assert_package(test_filename):
     pkg = load_test_package(test_filename)
+    if 'tests' not in pkg:
+        return
     for test_case in pkg['tests']:
       sbp = SBP.unpack(base64.standard_b64decode(test_case['raw_packet']))
       _assert_sbp(sbp, test_case['sbp'])

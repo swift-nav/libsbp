@@ -1,0 +1,24 @@
+description: Unit tests for swiftnav.sbp.piksi MsgMaskSatelliteDep
+generated_on: 2023-11-15 # manually generated
+package: sbp.piksi
+tests:
+
+- msg:
+    fields:
+      mask: 33
+      sid:
+        code: 95
+        reserved: 4
+        sat: 39170
+    module: sbp.piksi
+    name: MsgMaskSatelliteDep
+  msg_type: '0x1b'
+  raw_json: '{"crc":48157,"length":5,"msg_type":27,"payload":"IQKZXwQ=","preamble":85,"sender":34491,"mask":33,"sid":{"sat":39170,"code":95,"reserved":4}}'
+  raw_packet: VRsAu4YFIQKZXwQdvA==
+  sbp:
+    crc: '0xbc1d'
+    length: 5
+    msg_type: '0x1b'
+    payload: IQKZXwQ=
+    preamble: '0x55'
+    sender: '0x86bb'

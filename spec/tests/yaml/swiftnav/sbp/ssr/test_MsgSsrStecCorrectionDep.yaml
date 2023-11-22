@@ -1,0 +1,224 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrStecCorrectionDep
+generated_on: 2023-11-15 # manually generated
+package: sbp.ssr
+tests:
+
+- msg:
+    c_decoded_fields:
+      n_stec_sat_list:
+        handle_as: vararray-len
+        relates_to: stec_sat_list
+        value: 21
+    fields:
+      header:
+        iod_atmo: 60
+        num_msgs: 157
+        seq_num: 112
+        tile_id: 30066
+        tile_set_id: 58526
+        time:
+          tow: 714907186
+          wn: 40055
+        update_interval: 47
+      stec_sat_list:
+        - stec_coeff:
+            - -5289
+            - -20141
+            - 966
+            - 2062
+          stec_quality_indicator: 70
+          sv_id:
+            constellation: 40
+            satId: 132
+        - stec_coeff:
+            - -19147
+            - -20902
+            - -26889
+            - -21446
+          stec_quality_indicator: 44
+          sv_id:
+            constellation: 12
+            satId: 70
+        - stec_coeff:
+            - 32176
+            - -20220
+            - 29157
+            - 19726
+          stec_quality_indicator: 119
+          sv_id:
+            constellation: 179
+            satId: 247
+        - stec_coeff:
+            - -8651
+            - -27973
+            - 23546
+            - -10284
+          stec_quality_indicator: 23
+          sv_id:
+            constellation: 185
+            satId: 153
+        - stec_coeff:
+            - 27486
+            - 23329
+            - 234
+            - -29739
+          stec_quality_indicator: 250
+          sv_id:
+            constellation: 107
+            satId: 14
+        - stec_coeff:
+            - 18965
+            - -22098
+            - 22077
+            - -29093
+          stec_quality_indicator: 50
+          sv_id:
+            constellation: 179
+            satId: 95
+        - stec_coeff:
+            - -7898
+            - 26002
+            - -29879
+            - 30008
+          stec_quality_indicator: 9
+          sv_id:
+            constellation: 108
+            satId: 51
+        - stec_coeff:
+            - -12948
+            - 4701
+            - -15597
+            - -13791
+          stec_quality_indicator: 213
+          sv_id:
+            constellation: 37
+            satId: 82
+        - stec_coeff:
+            - -17283
+            - 14455
+            - -27067
+            - 19606
+          stec_quality_indicator: 178
+          sv_id:
+            constellation: 206
+            satId: 87
+        - stec_coeff:
+            - -12215
+            - -6072
+            - -1528
+            - -19765
+          stec_quality_indicator: 18
+          sv_id:
+            constellation: 131
+            satId: 3
+        - stec_coeff:
+            - 12630
+            - -19721
+            - 14502
+            - 2591
+          stec_quality_indicator: 252
+          sv_id:
+            constellation: 163
+            satId: 170
+        - stec_coeff:
+            - -23340
+            - -24063
+            - 4650
+            - -22148
+          stec_quality_indicator: 241
+          sv_id:
+            constellation: 213
+            satId: 119
+        - stec_coeff:
+            - 5944
+            - 32142
+            - 30760
+            - 11587
+          stec_quality_indicator: 26
+          sv_id:
+            constellation: 158
+            satId: 121
+        - stec_coeff:
+            - 3095
+            - 22769
+            - -4283
+            - 14844
+          stec_quality_indicator: 110
+          sv_id:
+            constellation: 235
+            satId: 126
+        - stec_coeff:
+            - -21032
+            - -19726
+            - 1297
+            - -22049
+          stec_quality_indicator: 201
+          sv_id:
+            constellation: 44
+            satId: 93
+        - stec_coeff:
+            - 619
+            - -5744
+            - 22542
+            - -12000
+          stec_quality_indicator: 77
+          sv_id:
+            constellation: 3
+            satId: 192
+        - stec_coeff:
+            - 10651
+            - -2889
+            - 21150
+            - 26421
+          stec_quality_indicator: 123
+          sv_id:
+            constellation: 17
+            satId: 1
+        - stec_coeff:
+            - -19165
+            - 30229
+            - -1282
+            - -18382
+          stec_quality_indicator: 185
+          sv_id:
+            constellation: 202
+            satId: 14
+        - stec_coeff:
+            - -23752
+            - 32433
+            - 20441
+            - -4181
+          stec_quality_indicator: 45
+          sv_id:
+            constellation: 31
+            satId: 50
+        - stec_coeff:
+            - -13968
+            - -29322
+            - -23790
+            - 9063
+          stec_quality_indicator: 238
+          sv_id:
+            constellation: 188
+            satId: 237
+        - stec_coeff:
+            - 4737
+            - 21877
+            - 20414
+            - -10286
+          stec_quality_indicator: 82
+          sv_id:
+            constellation: 21
+            satId: 63
+    module: sbp.ssr
+    name: MsgSsrStecCorrectionDep
+  msg_type: '0x5fb'
+  raw_json: '{"crc":45539,"length":245,"msg_type":1531,"payload":"nuRydTKenCp3nJ1wLzyEKEZX61OxxgMOCEYMLDW1Wq73ljqs97N3sH0EseVxDk2ZuRc13ruS+lvU1w5r+l5rIVvqANWLX7MyFUquqT1WW44zbAkm4ZJlSYs4dVIl1WzNXRITwyHKV86yfbx3OEWWlkwDgxJJ0EjoCPrLsqqj/FYx97KmOB8Kd9Xx1KQBoioSfKl5nho4F459KHhDLX7rbhcM8VhF7/w5XSzJ2K3yshEF36nAA01rApDpDlgg0QERe5spt/SeUjVnDsq5I7UVdv76MrgyHy04o7F+2U+r7+287nDJdo0So2cjPxVSgRJ1Vb5P0tc=","preamble":85,"sender":38860,"header":{"tile_set_id":58526,"tile_id":30066,"time":{"tow":714907186,"wn":40055},"num_msgs":157,"seq_num":112,"update_interval":47,"iod_atmo":60},"stec_sat_list":[{"sv_id":{"satId":132,"constellation":40},"stec_quality_indicator":70,"stec_coeff":[-5289,-20141,966,2062]},{"sv_id":{"satId":70,"constellation":12},"stec_quality_indicator":44,"stec_coeff":[-19147,-20902,-26889,-21446]},{"sv_id":{"satId":247,"constellation":179},"stec_quality_indicator":119,"stec_coeff":[32176,-20220,29157,19726]},{"sv_id":{"satId":153,"constellation":185},"stec_quality_indicator":23,"stec_coeff":[-8651,-27973,23546,-10284]},{"sv_id":{"satId":14,"constellation":107},"stec_quality_indicator":250,"stec_coeff":[27486,23329,234,-29739]},{"sv_id":{"satId":95,"constellation":179},"stec_quality_indicator":50,"stec_coeff":[18965,-22098,22077,-29093]},{"sv_id":{"satId":51,"constellation":108},"stec_quality_indicator":9,"stec_coeff":[-7898,26002,-29879,30008]},{"sv_id":{"satId":82,"constellation":37},"stec_quality_indicator":213,"stec_coeff":[-12948,4701,-15597,-13791]},{"sv_id":{"satId":87,"constellation":206},"stec_quality_indicator":178,"stec_coeff":[-17283,14455,-27067,19606]},{"sv_id":{"satId":3,"constellation":131},"stec_quality_indicator":18,"stec_coeff":[-12215,-6072,-1528,-19765]},{"sv_id":{"satId":170,"constellation":163},"stec_quality_indicator":252,"stec_coeff":[12630,-19721,14502,2591]},{"sv_id":{"satId":119,"constellation":213},"stec_quality_indicator":241,"stec_coeff":[-23340,-24063,4650,-22148]},{"sv_id":{"satId":121,"constellation":158},"stec_quality_indicator":26,"stec_coeff":[5944,32142,30760,11587]},{"sv_id":{"satId":126,"constellation":235},"stec_quality_indicator":110,"stec_coeff":[3095,22769,-4283,14844]},{"sv_id":{"satId":93,"constellation":44},"stec_quality_indicator":201,"stec_coeff":[-21032,-19726,1297,-22049]},{"sv_id":{"satId":192,"constellation":3},"stec_quality_indicator":77,"stec_coeff":[619,-5744,22542,-12000]},{"sv_id":{"satId":1,"constellation":17},"stec_quality_indicator":123,"stec_coeff":[10651,-2889,21150,26421]},{"sv_id":{"satId":14,"constellation":202},"stec_quality_indicator":185,"stec_coeff":[-19165,30229,-1282,-18382]},{"sv_id":{"satId":50,"constellation":31},"stec_quality_indicator":45,"stec_coeff":[-23752,32433,20441,-4181]},{"sv_id":{"satId":237,"constellation":188},"stec_quality_indicator":238,"stec_coeff":[-13968,-29322,-23790,9063]},{"sv_id":{"satId":63,"constellation":21},"stec_quality_indicator":82,"stec_coeff":[4737,21877,20414,-10286]}]}'
+  raw_packet: VfsFzJf1nuRydTKenCp3nJ1wLzyEKEZX61OxxgMOCEYMLDW1Wq73ljqs97N3sH0EseVxDk2ZuRc13ruS+lvU1w5r+l5rIVvqANWLX7MyFUquqT1WW44zbAkm4ZJlSYs4dVIl1WzNXRITwyHKV86yfbx3OEWWlkwDgxJJ0EjoCPrLsqqj/FYx97KmOB8Kd9Xx1KQBoioSfKl5nho4F459KHhDLX7rbhcM8VhF7/w5XSzJ2K3yshEF36nAA01rApDpDlgg0QERe5spt/SeUjVnDsq5I7UVdv76MrgyHy04o7F+2U+r7+287nDJdo0So2cjPxVSgRJ1Vb5P0tfjsQ==
+  sbp:
+    crc: '0xb1e3'
+    length: 245
+    msg_type: '0x5fb'
+    payload: nuRydTKenCp3nJ1wLzyEKEZX61OxxgMOCEYMLDW1Wq73ljqs97N3sH0EseVxDk2ZuRc13ruS+lvU1w5r+l5rIVvqANWLX7MyFUquqT1WW44zbAkm4ZJlSYs4dVIl1WzNXRITwyHKV86yfbx3OEWWlkwDgxJJ0EjoCPrLsqqj/FYx97KmOB8Kd9Xx1KQBoioSfKl5nho4F459KHhDLX7rbhcM8VhF7/w5XSzJ2K3yshEF36nAA01rApDpDlgg0QERe5spt/SeUjVnDsq5I7UVdv76MrgyHy04o7F+2U+r7+287nDJdo0So2cjPxVSgRJ1Vb5P0tc=
+    preamble: '0x55'
+    sender: '0x97cc'

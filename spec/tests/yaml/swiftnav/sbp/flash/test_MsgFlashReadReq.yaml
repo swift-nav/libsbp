@@ -1,0 +1,25 @@
+description: Unit tests for swiftnav.sbp.flash MsgFlashReadReq
+generated_on: 2023-11-15 # manually generated
+package: sbp.flash
+tests:
+
+- msg:
+    fields:
+      addr_len: 71
+      addr_start:
+        - 28
+        - 75
+        - 244
+      target: 241
+    module: sbp.flash
+    name: MsgFlashReadReq
+  msg_type: '0xe7'
+  raw_json: '{"crc":14802,"length":5,"msg_type":231,"payload":"8RxL9Ec=","preamble":85,"sender":1219,"target":241,"addr_start":[28,75,244],"addr_len":71}'
+  raw_packet: VecAwwQF8RxL9EfSOQ==
+  sbp:
+    crc: '0x39d2'
+    length: 5
+    msg_type: '0xe7'
+    payload: 8RxL9Ec=
+    preamble: '0x55'
+    sender: '0x04c3'

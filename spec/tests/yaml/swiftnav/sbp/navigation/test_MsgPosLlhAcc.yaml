@@ -1,0 +1,35 @@
+description: Unit tests for swiftnav.sbp.navigation MsgPosLLHAcc
+generated_on: 2023-11-15 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      at_accuracy: 6297.2001953125
+      confidence_and_geoid: 95
+      ct_accuracy: 1948.199951171875
+      flags: 72
+      h_accuracy: 2410.199951171875
+      h_ellipse:
+        orientation: 2550.199951171875
+        semi_major: 8248.2001953125
+        semi_minor: 3202.199951171875
+      height: 4257.2
+      lat: 7563.2
+      lon: 8494.2
+      n_sats: 27
+      orthometric_height: 4965.2
+      tow: 309229607
+      v_accuracy: 5539.2001953125
+    module: sbp.navigation
+    name: MsgPosLLHAcc
+  msg_type: '0x218'
+  raw_json: '{"preamble":85,"msg_type":536,"sender":7170,"length":67,"payload":"J3huEjMzMzMzi71AmpmZmRmXwEAzMzMzM6GwQDMzMzMzZbNAM6MWRZoZrUVmhvNEmsnERc3gAEYzI0hFM2MfRV8bSA==","crc":45532,"tow":309229607,"lat":7563.2,"lon":8494.2,"height":4257.2,"orthometric_height":4965.2,"h_accuracy":2410.199951171875,"v_accuracy":5539.2001953125,"ct_accuracy":1948.199951171875,"at_accuracy":6297.2001953125,"h_ellipse":{"semi_major":8248.2001953125,"semi_minor":3202.199951171875,"orientation":2550.199951171875},"confidence_and_geoid":95,"n_sats":27,"flags":72}'
+  raw_packet: VRgCAhxDJ3huEjMzMzMzi71AmpmZmRmXwEAzMzMzM6GwQDMzMzMzZbNAM6MWRZoZrUVmhvNEmsnERc3gAEYzI0hFM2MfRV8bSNyx
+  sbp:
+    crc: '0xb1dc'
+    length: 67
+    msg_type: '0x218'
+    payload: J3huEjMzMzMzi71AmpmZmRmXwEAzMzMzM6GwQDMzMzMzZbNAM6MWRZoZrUVmhvNEmsnERc3gAEYzI0hFM2MfRV8bSA==
+    preamble: '0x55'
+    sender: '0x1c02'

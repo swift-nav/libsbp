@@ -1,0 +1,24 @@
+description: Unit tests for swiftnav.sbp.mag MsgMagRaw
+generated_on: 2023-11-15 # manually generated
+package: sbp.mag
+tests:
+
+- msg:
+    fields:
+      mag_x: 866
+      mag_y: 742
+      mag_z: -6802
+      tow: 3332301741
+      tow_f: 206
+    module: sbp.mag
+    name: MsgMagRaw
+  msg_type: '0x902'
+  raw_json: '{"preamble":85,"msg_type":2306,"sender":1219,"length":11,"payload":"reOexs5iA+YCbuU=","crc":6047,"tow":3332301741,"tow_f":206,"mag_x":866,"mag_y":742,"mag_z":-6802}'
+  raw_packet: VQIJwwQLreOexs5iA+YCbuWfFw==
+  sbp:
+    crc: '0x179f'
+    length: 11
+    msg_type: '0x902'
+    payload: reOexs5iA+YCbuU=
+    preamble: '0x55'
+    sender: '0x04c3'

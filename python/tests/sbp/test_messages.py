@@ -12,6 +12,7 @@
 from .utils import assert_package
 from sbp.table import _SBP_TABLE
 import os.path
+import yaml
 
 import pytest
 
@@ -19,7 +20,8 @@ HERE = os.path.dirname(__file__)
 PYTHON_ROOT = os.path.join(HERE, "..", "..")
 ROOTPATH = os.path.join(PYTHON_ROOT, "..", "spec", "tests", "yaml")
 
-EXPECTED_MISSING_MESSAGES = 120
+EXPECTED_MISSING_MESSAGES = 1
+MESSAGES_WITH_TEST_CASES = set()
 
 
 def process_files(path, filenames):
@@ -29,6 +31,12 @@ def process_files(path, filenames):
     for filename in filenames:
         if filename.endswith(".yaml"):
             filepath = os.path.join(path, filename)
+            with open(filepath) as stream:
+                y = yaml.safe_load(stream)
+                if 'tests' in y:
+                    print(y)
+                    for i in y['tests']:
+                        MESSAGES_WITH_TEST_CASES.add(i['msg']['name'])
             filepath = os.path.relpath(filepath, ROOTPATH)
             yield (filepath)
 
@@ -44,7 +52,7 @@ CASES = list(process_path(ROOTPATH))
 
 def test_message_case_count():
     total_messages = len(_SBP_TABLE)
-    test_count = len(CASES)
+    test_count = len(MESSAGES_WITH_TEST_CASES)
     missing_messages = total_messages - test_count
 
     assert test_count > 0, "No message definitions found in %s" % ROOTPATH

@@ -1,0 +1,217 @@
+description: Unit tests for swiftnav.sbp.ssr free structs
+generated_on: 2023-11-15 # manually generated
+package: sbp.ssr
+struct_tests:
+
+  - encoded: uSqR
+    fields:
+      code: 185
+      value: -28374
+    module: sbp.ssr
+    name: CodeBiasesContent
+  - encoded: UOYo+sI+jAs=
+    fields:
+      code: 80
+      integer_indicator: 230
+      widelane_integer_indicator: 40
+      discontinuity_counter: 250
+      bias: 193740482
+    module: sbp.ssr
+    name: PhaseBiasesContent
+  - encoded: AGWw6CuT/7VJ4AbHV8M=
+    fields:
+      tile_set_id: 25856
+      tile_id: 59568
+      time:
+        wn: 57417
+        tow: 3053425451
+      num_msgs: 6
+      seq_num: 199
+      update_interval: 87
+      iod_atmo: 195
+    module: sbp.ssr
+    name: StecHeader
+  - encoded: GaQtzqxwK/UU+cAJot2Qw3o=
+    fields:
+      tile_set_id: 42009
+      tile_id: 52781
+      time:
+        wn: 63764
+        tow: 4113264812
+      num_msgs: 2496
+      seq_num: 56738
+      update_interval: 144
+      iod_atmo: 195
+      tropo_quality_indicator: 122
+    module: sbp.ssr
+    name: GriddedCorrectionHeader
+  - encoded: YMGowa+trxOEZF4=
+    fields:
+      sv_id:
+        satId: 96
+        constellation: 193
+      stec_quality_indicator: 168
+      stec_coeff[0]: -20543
+      stec_coeff[1]: -20563
+      stec_coeff[2]: -31725
+      stec_coeff[3]: 24164
+    module: sbp.ssr
+    name: StecSatElement
+  - encoded: ezxL
+    fields:
+      hydro: 15483
+      wet: 75
+    module: sbp.ssr
+    name: TroposphericDelayCorrectionNoStd
+  - encoded: EX/wJg==
+    fields:
+      hydro: 32529
+      wet: -16
+      stddev: 38
+    module: sbp.ssr
+    name: TroposphericDelayCorrection
+  - encoded: ZWdEzw==
+    fields:
+      sv_id:
+        constellation: 103
+        satId: 101
+      residual: -12476
+    module: sbp.ssr
+    name: StecResidualNoStd
+  - encoded: qfUuZgc=
+    fields:
+      sv_id:
+        constellation: 245
+        satId: 169
+      residual: 26158
+      stddev: 7
+    module: sbp.ssr
+    name: StecResidual
+  - encoded: sCh/OXKMKM3xBw==
+    fields:
+      time:
+        wn: 35954
+        tow: 964634800
+      num_msgs: 40
+      seq_num: 205
+      update_interval: 241
+      sol_id: 7
+    module: sbp.ssr
+    name: BoundsHeader
+  - encoded: U1imUFmApzQ8
+    fields:
+      stec_residual:
+        stddev: 89
+        residual: 20646
+        sv_id:
+          satId: 83
+          constellation: 88
+      stec_bound_mu: 128
+      stec_bound_sig: 167
+      stec_bound_mu_dot: 52
+      stec_bound_sig_dot: 60
+    module: sbp.ssr
+    name: StecSatElementIntegrity
+  - encoded: zw2+pHHVIA25VRE4cSKxyu2y7r5KwO2mlL96byvd8U4=
+    fields:
+      sid:
+        sat: 207
+        code: 13
+      sat_info: 190
+      svn: 29092
+      pco:
+        - 8405
+        - -18163
+        - 4437
+      pcv:
+        - 56
+        - 113
+        - 34
+        - -79
+        - -54
+        - -19
+        - -78
+        - -18
+        - -66
+        - 74
+        - -64
+        - -19
+        - -90
+        - -108
+        - -65
+        - 122
+        - 111
+        - 43
+        - -35
+        - -15
+        - 78
+    module: sbp.ssr
+    name: SatelliteApc
+  - encoded: EeSjLFbwuaNpTA==
+    fields:
+      time:
+        wn: 61526
+        tow: 748938257
+      num_msgs: 185
+      seq_num: 163
+      update_interval: 105
+      iod_atmo: 76
+    module: sbp.ssr
+    name: StecHeaderDepA
+  - encoded: CWzfvcB7iMUlmdfHhw==
+    fields:
+      time:
+        tow: 3185536009
+        wn: 31680
+      num_msgs: 50568
+      seq_num: 39205
+      update_interval: 215
+      iod_atmo: 199
+      tropo_quality_indicator: 135
+    module: sbp.ssr
+    name: GriddedCorrectionHeaderDepA
+  - encoded: 8OafFZZjZNnH
+    fields:
+      region_size_inverse: 240
+      area_width: 40934
+      lat_nw_corner_enc: 38421
+      lon_nw_corner_enc: 25699
+      num_msgs: 217
+      seq_num: 199
+    module: sbp.ssr
+    name: GridDefinitionHeaderDepA
+  - encoded: 8zbSPec8e+vt
+    fields:
+      sat_id: 243
+      orb_radial_bound_mu: 54
+      orb_along_bound_mu: 210
+      orb_cross_bound_mu: 61
+      orb_radial_bound_sig: 231
+      orb_along_bound_sig: 60
+      orb_cross_bound_sig: 123
+      clock_bound_mu: 235
+      clock_bound_sig: 237
+    module: sbp.ssr
+    name: OrbitClockBound
+  - encoded: 6CYAVwB2
+    fields:
+      sat_id: 232
+      signal_id: 38
+      code_bias_bound_mu: 0
+      code_bias_bound_sig: 87
+      phase_bias_bound_mu: 0
+      phase_bias_bound_sig: 118
+    module: sbp.ssr
+    name: CodePhaseBiasesSatSig
+  - encoded: bHDul2NSRT8=
+    fields:
+      orb_radial_bound_mu_dot: 108
+      orb_along_bound_mu_dot: 112
+      orb_cross_bound_mu_dot: 238
+      orb_radial_bound_sig_dot: 151
+      orb_along_bound_sig_dot: 99
+      orb_cross_bound_sig_dot: 82
+      clock_bound_mu_dot: 69
+      clock_bound_sig_dot: 63
+    module: sbp.ssr
+    name: OrbitClockBoundDegradation

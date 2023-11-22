@@ -1,0 +1,21 @@
+description: Unit tests for swiftnav.sbp.flash MsgM25FlashWriteStatus
+generated_on: 2023-11-15 # manually generated
+package: sbp.flash
+tests:
+
+- msg:
+    fields:
+      status:
+        - 5
+    module: sbp.flash
+    name: MsgM25FlashWriteStatus
+  msg_type: '0xf3'
+  raw_json: '{"crc":51312,"length":1,"msg_type":243,"payload":"BQ==","preamble":85,"sender":1219,"status":[5]}'
+  raw_packet: VfMAwwQBBXDI
+  sbp:
+    crc: '0xc870'
+    length: 1
+    msg_type: '0xf3'
+    payload: BQ==
+    preamble: '0x55'
+    sender: '0x04c3'

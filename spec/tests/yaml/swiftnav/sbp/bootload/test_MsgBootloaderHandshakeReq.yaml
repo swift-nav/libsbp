@@ -1,0 +1,20 @@
+description: Unit tests for swiftnav.sbp.bootload MsgBootloaderHandshakeReq
+generated_on: 2023-11-15 # manually generated
+package: sbp.bootload
+tests:
+
+- msg:
+    fields:
+      {}
+    module: sbp.bootload
+    name: MsgBootloaderHandshakeReq
+  msg_type: '0xb3'
+  raw_json: '{"crc":55361,"length":0,"msg_type":179,"payload":"","preamble":85,"sender":63368}'
+  raw_packet: VbMAiPcAQdg=
+  sbp:
+    crc: '0xd841'
+    length: 0
+    msg_type: '0xb3'
+    payload: ""
+    preamble: '0x55'
+    sender: '0xf788'

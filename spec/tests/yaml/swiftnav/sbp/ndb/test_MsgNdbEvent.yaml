@@ -1,0 +1,31 @@
+description: Unit tests for swiftnav.sbp.ndb MsgNdbEvent
+generated_on: 2023-11-15 # manually generated
+package: sbp.ndb
+tests:
+
+- msg:
+    fields:
+      data_source: 115
+      event: 249
+      object_sid:
+        code: 74
+        sat: 238
+      object_type: 73
+      original_sender: 38070
+      recv_time: 299461164286
+      result: 205
+      src_sid:
+        code: 66
+        sat: 98
+    module: sbp.ndb
+    name: MsgNdbEvent
+  msg_type: '0x400'
+  raw_json: '{"preamble":85,"msg_type":1024,"sender":44708,"length":18,"payload":"/rxGuUUAAAD5Sc1z7kpiQraU","crc":42512,"recv_time":299461164286,"event":249,"object_type":73,"result":205,"data_source":115,"object_sid":{"sat":238,"code":74},"src_sid":{"sat":98,"code":66},"original_sender":38070}'
+  raw_packet: VQAEpK4S/rxGuUUAAAD5Sc1z7kpiQraUEKY=
+  sbp:
+    crc: '0xa610'
+    length: 18
+    msg_type: '0x400'
+    payload: /rxGuUUAAAD5Sc1z7kpiQraU
+    preamble: '0x55'
+    sender: '0xaea4'
