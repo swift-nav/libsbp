@@ -17,7 +17,6 @@
 #include <gtest/gtest.h>
 
 #include <libsbp/common.h>
-#include <libsbp/cpp/state.h>
 
 // Obviously we don't normally want to silence this message, but we also need to
 // still test the legacy implementation for as long as it exists. By silencing
@@ -26,19 +25,20 @@
 #undef SBP_MESSAGE
 #define SBP_MESSAGE(x)
 #endif
+#include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
 class Test_legacy_auto_check_sbp_navigation_MsgPosECEF0
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_pos_ecef_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgPosECEF0()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_pos_ecef_t>(this),
@@ -135,14 +135,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF0, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgPosECEF1
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_pos_ecef_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgPosECEF1()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_pos_ecef_t>(this),
@@ -239,14 +239,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF1, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgPosECEF2
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_pos_ecef_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgPosECEF2()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_pos_ecef_t>(this),
@@ -343,14 +343,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF2, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgPosECEF3
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_pos_ecef_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgPosECEF3()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_pos_ecef_t>(this),
