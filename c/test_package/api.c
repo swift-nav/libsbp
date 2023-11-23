@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/api.h>
 
 struct Context {
   FILE *input_file;

@@ -7,6 +7,7 @@
 
 #include <libsbp/sbp.h>
 #include <libsbp/legacy/system.h>
+#include <libsbp/legacy/compat.h>
 
 char *serial_port_name = NULL;
 struct sp_port *piksi_port = NULL;

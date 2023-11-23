@@ -87,17 +87,17 @@ swift_cc_test(
     ],
 )
 
-SBP_V4_C_SOURCES = glob(["test/auto*.c"])
+SBP_C_SOURCES = glob(["test/auto*.c"])
 
 swift_cc_test(
-    name = "sbp-v4-test",
+    name = "sbp-test",
     srcs = [
         "test/check_main.c",
         "test/check_edc.c",
         "test/check_sbp.c",
         "test/check_bitfield_macros.c",
         "test/check_suites.h",
-    ] + SBP_V4_C_SOURCES,
+    ] + SBP_C_SOURCES,
     includes = ["include/libsbp"],
     type = UNIT,
     deps = [
@@ -106,11 +106,11 @@ swift_cc_test(
     ],
 )
 
-SBP_CPP_V4_C_SOURCES = glob(["test/cpp/auto*.cc"])
+SBP_CPP_C_SOURCES = glob(["test/cpp/auto*.cc"])
 
 swift_cc_test(
-    name = "sbp-cpp-v4-test",
-    srcs = SBP_CPP_V4_C_SOURCES,
+    name = "sbp-cpp-test",
+    srcs = SBP_CPP_C_SOURCES,
     type = UNIT,
     deps = [
         ":sbp",

@@ -7,6 +7,7 @@
 
 #include <libsbp/sbp.h>
 #include <libsbp/legacy/system.h>
+#include <libsbp/legacy/compat.h>
 
 char *tcp_ip_addr = NULL;
 char *tcp_ip_port = NULL;
