@@ -16,6 +16,10 @@
 #include <libsbp/common.h>
 #include <libsbp/legacy/api.h>
 
+SBP_MESSAGE(
+  "The legacy libsbp API has been deprecated. This file and all symbols contained will "
+  "be removed in version 6. You should immediately switch over to the modern libsbp API.")
+
 
 #ifdef __cplusplus
 extern "C" {

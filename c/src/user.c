@@ -8,12 +8,12 @@
 #include <stdint.h>
 
 #include <libsbp/internal/common.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
 #include <libsbp/internal/user.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 #include <libsbp/user.h>
 
@@ -82,8 +82,8 @@ s8 sbp_msg_user_data_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_USER_DATA, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_USER_DATA, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_user_data_cmp(const sbp_msg_user_data_t *a,

@@ -10,11 +10,11 @@
 #include <libsbp/gnss.h>
 #include <libsbp/internal/common.h>
 #include <libsbp/internal/gnss.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 
 bool sbp_v4_gnss_signal_encode_internal(sbp_encode_ctx_t *ctx,

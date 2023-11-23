@@ -9,11 +9,11 @@
 
 #include <libsbp/internal/common.h>
 #include <libsbp/internal/mag.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/mag.h>
 #include <libsbp/sbp.h>
 
@@ -95,8 +95,8 @@ s8 sbp_msg_mag_raw_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_MAG_RAW, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_MAG_RAW, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_mag_raw_cmp(const sbp_msg_mag_raw_t *a,

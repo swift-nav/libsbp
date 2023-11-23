@@ -9,11 +9,11 @@
 
 #include <libsbp/internal/common.h>
 #include <libsbp/internal/observation.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/observation.h>
 #include <libsbp/sbp.h>
 
@@ -480,8 +480,8 @@ s8 sbp_msg_obs_send(sbp_state_t *s, u16 sender_id, const sbp_msg_obs_t *msg,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_OBS, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_OBS, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_obs_cmp(const sbp_msg_obs_t *a, const sbp_msg_obs_t *b) {
@@ -570,8 +570,8 @@ s8 sbp_msg_base_pos_llh_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_BASE_POS_LLH, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_BASE_POS_LLH, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_base_pos_llh_cmp(const sbp_msg_base_pos_llh_t *a,
@@ -663,8 +663,8 @@ s8 sbp_msg_base_pos_ecef_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_BASE_POS_ECEF, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_BASE_POS_ECEF, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_base_pos_ecef_cmp(const sbp_msg_base_pos_ecef_t *a,
@@ -1222,8 +1222,8 @@ s8 sbp_msg_ephemeris_gps_dep_e_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_GPS_DEP_E, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GPS_DEP_E, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_gps_dep_e_cmp(const sbp_msg_ephemeris_gps_dep_e_t *a,
@@ -1537,8 +1537,8 @@ s8 sbp_msg_ephemeris_gps_dep_f_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_GPS_DEP_F, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GPS_DEP_F, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_gps_dep_f_cmp(const sbp_msg_ephemeris_gps_dep_f_t *a,
@@ -1850,8 +1850,8 @@ s8 sbp_msg_ephemeris_gps_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_GPS, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GPS, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_gps_cmp(const sbp_msg_ephemeris_gps_t *a,
@@ -2164,8 +2164,8 @@ s8 sbp_msg_ephemeris_qzss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_QZSS, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_QZSS, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_qzss_cmp(const sbp_msg_ephemeris_qzss_t *a,
@@ -2483,8 +2483,8 @@ s8 sbp_msg_ephemeris_bds_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_BDS, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_BDS, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_bds_cmp(const sbp_msg_ephemeris_bds_t *a,
@@ -2809,8 +2809,8 @@ s8 sbp_msg_ephemeris_gal_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_GAL_DEP_A, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GAL_DEP_A, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_gal_dep_a_cmp(const sbp_msg_ephemeris_gal_dep_a_t *a,
@@ -3139,8 +3139,8 @@ s8 sbp_msg_ephemeris_gal_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_GAL, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GAL, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_gal_cmp(const sbp_msg_ephemeris_gal_t *a,
@@ -3374,8 +3374,8 @@ s8 sbp_msg_ephemeris_sbas_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_SBAS_DEP_A, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_SBAS_DEP_A,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_sbas_dep_a_cmp(const sbp_msg_ephemeris_sbas_dep_a_t *a,
@@ -3523,8 +3523,8 @@ s8 sbp_msg_ephemeris_glo_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_GLO_DEP_A, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GLO_DEP_A, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_glo_dep_a_cmp(const sbp_msg_ephemeris_glo_dep_a_t *a,
@@ -3672,8 +3672,8 @@ s8 sbp_msg_ephemeris_sbas_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_SBAS_DEP_B, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_SBAS_DEP_B,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_sbas_dep_b_cmp(const sbp_msg_ephemeris_sbas_dep_b_t *a,
@@ -3820,8 +3820,8 @@ s8 sbp_msg_ephemeris_sbas_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_SBAS, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_SBAS, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_sbas_cmp(const sbp_msg_ephemeris_sbas_t *a,
@@ -3966,8 +3966,8 @@ s8 sbp_msg_ephemeris_glo_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_GLO_DEP_B, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GLO_DEP_B, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_glo_dep_b_cmp(const sbp_msg_ephemeris_glo_dep_b_t *a,
@@ -4127,8 +4127,8 @@ s8 sbp_msg_ephemeris_glo_dep_c_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_GLO_DEP_C, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GLO_DEP_C, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_glo_dep_c_cmp(const sbp_msg_ephemeris_glo_dep_c_t *a,
@@ -4304,8 +4304,8 @@ s8 sbp_msg_ephemeris_glo_dep_d_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_GLO_DEP_D, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GLO_DEP_D, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_glo_dep_d_cmp(const sbp_msg_ephemeris_glo_dep_d_t *a,
@@ -4484,8 +4484,8 @@ s8 sbp_msg_ephemeris_glo_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_GLO, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GLO, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_glo_cmp(const sbp_msg_ephemeris_glo_t *a,
@@ -4770,8 +4770,8 @@ s8 sbp_msg_ephemeris_dep_d_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_DEP_D, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_DEP_D, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_dep_d_cmp(const sbp_msg_ephemeris_dep_d_t *a,
@@ -5132,8 +5132,8 @@ s8 sbp_msg_ephemeris_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_DEP_A, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_DEP_A, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_dep_a_cmp(const sbp_msg_ephemeris_dep_a_t *a,
@@ -5485,8 +5485,8 @@ s8 sbp_msg_ephemeris_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_DEP_B, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_DEP_B, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_dep_b_cmp(const sbp_msg_ephemeris_dep_b_t *a,
@@ -5855,8 +5855,8 @@ s8 sbp_msg_ephemeris_dep_c_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_EPHEMERIS_DEP_C, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_DEP_C, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_dep_c_cmp(const sbp_msg_ephemeris_dep_c_t *a,
@@ -6530,8 +6530,8 @@ s8 sbp_msg_obs_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_OBS_DEP_A, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_OBS_DEP_A, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_obs_dep_a_cmp(const sbp_msg_obs_dep_a_t *a,
@@ -6625,8 +6625,8 @@ s8 sbp_msg_obs_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_OBS_DEP_B, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_OBS_DEP_B, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_obs_dep_b_cmp(const sbp_msg_obs_dep_b_t *a,
@@ -6720,8 +6720,8 @@ s8 sbp_msg_obs_dep_c_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_OBS_DEP_C, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_OBS_DEP_C, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_obs_dep_c_cmp(const sbp_msg_obs_dep_c_t *a,
@@ -6844,8 +6844,8 @@ s8 sbp_msg_iono_send(sbp_state_t *s, u16 sender_id, const sbp_msg_iono_t *msg,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_IONO, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_IONO, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_iono_cmp(const sbp_msg_iono_t *a, const sbp_msg_iono_t *b) {
@@ -6962,8 +6962,8 @@ s8 sbp_msg_sv_configuration_gps_dep_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_SV_CONFIGURATION_GPS_DEP, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_SV_CONFIGURATION_GPS_DEP,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_sv_configuration_gps_dep_cmp(
@@ -7255,8 +7255,8 @@ s8 sbp_msg_gnss_capb_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_GNSS_CAPB, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_GNSS_CAPB, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_gnss_capb_cmp(const sbp_msg_gnss_capb_t *a,
@@ -7363,8 +7363,8 @@ s8 sbp_msg_group_delay_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_GROUP_DELAY_DEP_A, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_GROUP_DELAY_DEP_A, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_group_delay_dep_a_cmp(const sbp_msg_group_delay_dep_a_t *a,
@@ -7491,8 +7491,8 @@ s8 sbp_msg_group_delay_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_GROUP_DELAY_DEP_B, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_GROUP_DELAY_DEP_B, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_group_delay_dep_b_cmp(const sbp_msg_group_delay_dep_b_t *a,
@@ -7617,8 +7617,8 @@ s8 sbp_msg_group_delay_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_GROUP_DELAY, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_GROUP_DELAY, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_group_delay_cmp(const sbp_msg_group_delay_t *a,
@@ -7997,8 +7997,8 @@ s8 sbp_msg_almanac_gps_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ALMANAC_GPS_DEP, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ALMANAC_GPS_DEP, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_almanac_gps_dep_cmp(const sbp_msg_almanac_gps_dep_t *a,
@@ -8167,8 +8167,8 @@ s8 sbp_msg_almanac_gps_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ALMANAC_GPS, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ALMANAC_GPS, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_almanac_gps_cmp(const sbp_msg_almanac_gps_t *a,
@@ -8326,8 +8326,8 @@ s8 sbp_msg_almanac_glo_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ALMANAC_GLO_DEP, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ALMANAC_GLO_DEP, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_almanac_glo_dep_cmp(const sbp_msg_almanac_glo_dep_t *a,
@@ -8474,8 +8474,8 @@ s8 sbp_msg_almanac_glo_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ALMANAC_GLO, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ALMANAC_GLO, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_almanac_glo_cmp(const sbp_msg_almanac_glo_t *a,
@@ -8604,8 +8604,8 @@ s8 sbp_msg_glo_biases_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_GLO_BIASES, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_GLO_BIASES, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_glo_biases_cmp(const sbp_msg_glo_biases_t *a,
@@ -8779,8 +8779,8 @@ s8 sbp_msg_sv_az_el_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_SV_AZ_EL, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_SV_AZ_EL, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_sv_az_el_cmp(const sbp_msg_sv_az_el_t *a,
@@ -8866,8 +8866,8 @@ s8 sbp_msg_osr_send(sbp_state_t *s, u16 sender_id, const sbp_msg_osr_t *msg,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_OSR, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_OSR, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_osr_cmp(const sbp_msg_osr_t *a, const sbp_msg_osr_t *b) {

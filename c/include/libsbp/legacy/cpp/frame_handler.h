@@ -20,6 +20,10 @@
 #include <libsbp/cpp/state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 
+SBP_MESSAGE(
+  "The legacy libsbp API has been deprecated. This file and all symbols contained will "
+  "be removed in version 6. You should immediately switch over to the modern libsbp API.")
+
 namespace sbp {
 
 /**
@@ -92,7 +96,7 @@ inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
  * @tparam MsgTypes List of SBP message types to register callbacks for
  */
 template<typename ...MsgTypes>
-class FrameHandler {
+class SBP_DEPRECATED FrameHandler {
     static constexpr std::size_t kMsgCount = sizeof...(MsgTypes);
 
     State &state_;
@@ -165,7 +169,7 @@ class FrameHandler {
  * };
  *
  */
-class AllFrameHandler {
+class SBP_DEPRECATED AllFrameHandler {
     State &state_;
     sbp_msg_callbacks_node_t callback_node_;
 

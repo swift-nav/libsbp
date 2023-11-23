@@ -8,12 +8,12 @@
 #include <stdint.h>
 
 #include <libsbp/internal/common.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/signing.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 #include <libsbp/signing.h>
 
@@ -301,8 +301,8 @@ s8 sbp_msg_ecdsa_certificate_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ECDSA_CERTIFICATE, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ECDSA_CERTIFICATE, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ecdsa_certificate_cmp(const sbp_msg_ecdsa_certificate_t *a,
@@ -435,8 +435,8 @@ s8 sbp_msg_certificate_chain_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_CERTIFICATE_CHAIN, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_CERTIFICATE_CHAIN, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_certificate_chain_cmp(const sbp_msg_certificate_chain_t *a,
@@ -587,8 +587,8 @@ s8 sbp_msg_certificate_chain_dep_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_CERTIFICATE_CHAIN_DEP, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_CERTIFICATE_CHAIN_DEP,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_certificate_chain_dep_cmp(
@@ -742,8 +742,8 @@ s8 sbp_msg_ecdsa_signature_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ECDSA_SIGNATURE, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ECDSA_SIGNATURE, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ecdsa_signature_cmp(const sbp_msg_ecdsa_signature_t *a,
@@ -901,8 +901,8 @@ s8 sbp_msg_ecdsa_signature_dep_b_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ECDSA_SIGNATURE_DEP_B, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ECDSA_SIGNATURE_DEP_B,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ecdsa_signature_dep_b_cmp(
@@ -1063,8 +1063,8 @@ s8 sbp_msg_ecdsa_signature_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ECDSA_SIGNATURE_DEP_A, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ECDSA_SIGNATURE_DEP_A,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ecdsa_signature_dep_a_cmp(
@@ -1197,8 +1197,8 @@ s8 sbp_msg_ed25519_certificate_dep_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ED25519_CERTIFICATE_DEP, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ED25519_CERTIFICATE_DEP,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ed25519_certificate_dep_cmp(
@@ -1317,8 +1317,8 @@ s8 sbp_msg_ed25519_signature_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ED25519_SIGNATURE_DEP_A, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ED25519_SIGNATURE_DEP_A,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ed25519_signature_dep_a_cmp(
@@ -1452,8 +1452,8 @@ s8 sbp_msg_ed25519_signature_dep_b_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ED25519_SIGNATURE_DEP_B, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ED25519_SIGNATURE_DEP_B,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ed25519_signature_dep_b_cmp(

@@ -25,6 +25,10 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+  "The legacy libsbp API has been deprecated. This file and all symbols contained will "
+  "be removed in version 6. You should immediately switch over to the modern libsbp API.")
+
 #include <libsbp/(((pkg_name)))_macros.h>
 ((*- for i in include *))
 #include <libsbp/legacy/(((i)))>
@@ -41,7 +45,7 @@ SBP_PACK_START
 ((*- endif *))
 ((*- if m.fields *))
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   ((*- for f in m.fields *))
   ((*- if f.desc *))
   (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4)))) /**< ((( f.desc|commentify_field(f,m) ))) ((* if f.units *))[(((f.units)))] ((* endif *))*/

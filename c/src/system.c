@@ -8,12 +8,12 @@
 #include <stdint.h>
 
 #include <libsbp/internal/common.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
 #include <libsbp/internal/system.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 #include <libsbp/system.h>
 
@@ -83,8 +83,8 @@ s8 sbp_msg_startup_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_STARTUP, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_STARTUP, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_startup_cmp(const sbp_msg_startup_t *a,
@@ -279,8 +279,8 @@ s8 sbp_msg_dgnss_status_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_DGNSS_STATUS, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_DGNSS_STATUS, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_dgnss_status_cmp(const sbp_msg_dgnss_status_t *a,
@@ -365,8 +365,8 @@ s8 sbp_msg_heartbeat_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_HEARTBEAT, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_HEARTBEAT, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_heartbeat_cmp(const sbp_msg_heartbeat_t *a,
@@ -548,8 +548,8 @@ s8 sbp_msg_status_report_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_STATUS_REPORT, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_STATUS_REPORT, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_status_report_cmp(const sbp_msg_status_report_t *a,
@@ -746,8 +746,8 @@ s8 sbp_msg_status_journal_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_STATUS_JOURNAL, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_STATUS_JOURNAL, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_status_journal_cmp(const sbp_msg_status_journal_t *a,
@@ -840,8 +840,8 @@ s8 sbp_msg_ins_status_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_INS_STATUS, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_INS_STATUS, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ins_status_cmp(const sbp_msg_ins_status_t *a,
@@ -1020,8 +1020,8 @@ s8 sbp_msg_csac_telemetry_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_CSAC_TELEMETRY, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_CSAC_TELEMETRY, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_csac_telemetry_cmp(const sbp_msg_csac_telemetry_t *a,
@@ -1217,8 +1217,8 @@ s8 sbp_msg_csac_telemetry_labels_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_CSAC_TELEMETRY_LABELS, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_CSAC_TELEMETRY_LABELS,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_csac_telemetry_labels_cmp(
@@ -1330,8 +1330,8 @@ s8 sbp_msg_ins_updates_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_INS_UPDATES, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_INS_UPDATES, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ins_updates_cmp(const sbp_msg_ins_updates_t *a,
@@ -1451,8 +1451,8 @@ s8 sbp_msg_gnss_time_offset_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_GNSS_TIME_OFFSET, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_GNSS_TIME_OFFSET, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_gnss_time_offset_cmp(const sbp_msg_gnss_time_offset_t *a,
@@ -1541,8 +1541,8 @@ s8 sbp_msg_pps_time_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_PPS_TIME, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_PPS_TIME, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_pps_time_cmp(const sbp_msg_pps_time_t *a,
@@ -1661,8 +1661,8 @@ s8 sbp_msg_sensor_aid_event_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_SENSOR_AID_EVENT, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_SENSOR_AID_EVENT, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_sensor_aid_event_cmp(const sbp_msg_sensor_aid_event_t *a,
@@ -1794,8 +1794,8 @@ s8 sbp_msg_group_meta_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_GROUP_META, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_GROUP_META, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_group_meta_cmp(const sbp_msg_group_meta_t *a,

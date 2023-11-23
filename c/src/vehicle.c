@@ -8,12 +8,12 @@
 #include <stdint.h>
 
 #include <libsbp/internal/common.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
 #include <libsbp/internal/vehicle.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 #include <libsbp/vehicle.h>
 
@@ -83,8 +83,8 @@ s8 sbp_msg_odometry_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ODOMETRY, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ODOMETRY, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_odometry_cmp(const sbp_msg_odometry_t *a,
@@ -182,8 +182,8 @@ s8 sbp_msg_wheeltick_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_WHEELTICK, sender_id, payload_len, payload,
-                          write);
+  return sbp_internal_forward_payload(s, SBP_MSG_WHEELTICK, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_wheeltick_cmp(const sbp_msg_wheeltick_t *a,
