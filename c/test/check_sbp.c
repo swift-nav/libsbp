@@ -11,9 +11,17 @@
  */
 
 #include <check.h>
-#include <libsbp/legacy/compat.h>
 #include <sbp.h>
 #include <stdio.h>
+
+// Obviously we don't normally want to silence this message, but we also need to
+// still test the legacy implementation for as long as it exists. By silencing
+// these messages here we can get a less noisy build in libsbp
+#ifdef SBP_MESSAGE
+#undef SBP_MESSAGE
+#define SBP_MESSAGE(x)
+#endif
+#include <libsbp/legacy/compat.h>
 
 int DUMMY_MEMORY_FOR_CALLBACKS = (int)0xdeadbeef;
 int DUMMY_MEMORY_FOR_IO = (int)0xdead0000;

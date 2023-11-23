@@ -126,7 +126,7 @@ jobs:
           sudo apt-get -qq install gcc-multilib-mips-linux-gnu gcc-mips-linux-gnu qemu-user g++-mips-linux-gnu
 
       - name: Run big endian tests
-        run: make test-c-v4
+        run: make test-c
         env:
           CC: mips-linux-gnu-gcc
           CXX: mips-linux-gnu-g++
