@@ -41,6 +41,7 @@
 
 #include <libsbp/sbp.h>
 #include <libsbp/legacy/navigation.h>
+#include <libsbp/legacy/compat.h>
 
 // width and height of the plot window in pixels
 #define SIZE_PIXELS 300
