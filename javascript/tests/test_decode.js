@@ -24,45 +24,47 @@ describe('test packages based on YAML test files', function () {
   yamlTestFiles.forEach(function (filename) {
     describe(filename, function () {
       var yamlConfig = yaml.safeLoad(fs.readFileSync(filename));
-      yamlConfig.tests.map(function (testSpec, i) {
-        describe('test spec '+i, function () {
-          var msgBuffer = new Buffer(testSpec['raw_packet'], 'base64');
-          var decodeMsg = function () {
-            return decode(msgBuffer);
-          };
-          it('should parse binary sbp and payload', function () {
-            decodeMsg();
-          });
-          it('should have correct SBP fields', function () {
-            var msg = decodeMsg();
-            utils.verifyFields(testSpec.sbp, msg.sbp);
-          });
-          it('should have correct payload fields', function () {
-            var msg = decodeMsg();
-            utils.verifyFields(testSpec.msg.fields, msg.fields);
-          });
-          it('should serialize back to binary properly', function () {
-            var msg = decodeMsg();
-            assert.equal(msg.toBase64(), testSpec['raw_packet']);
-          });
-          it('should serialize back to JSON properly', function () {
-            var msg = decodeMsg();
+      if ("tests" in yamlConfig) {
+        yamlConfig.tests.map(function (testSpec, i) {
+          describe('test spec '+i, function () {
+            var msgBuffer = new Buffer(testSpec['raw_packet'], 'base64');
+            var decodeMsg = function () {
+              return decode(msgBuffer);
+            };
+            it('should parse binary sbp and payload', function () {
+              decodeMsg();
+            });
+            it('should have correct SBP fields', function () {
+              var msg = decodeMsg();
+              utils.verifyFields(testSpec.sbp, msg.sbp);
+            });
+            it('should have correct payload fields', function () {
+              var msg = decodeMsg();
+              utils.verifyFields(testSpec.msg.fields, msg.fields);
+            });
+            it('should serialize back to binary properly', function () {
+              var msg = decodeMsg();
+              assert.equal(msg.toBase64(), testSpec['raw_packet']);
+            });
+            it('should serialize back to JSON properly', function () {
+              var msg = decodeMsg();
 
-            var expected = JSON.parse(testSpec['raw_json']);
+              var expected = JSON.parse(testSpec['raw_json']);
 
-            // UInt64s are stringified as strings, not bare numbers in JSON, so...
-            var actual = JSON.parse(JSON.stringify(msg).replace(/"([0-9]+)"/, '$1'));
+              // UInt64s are stringified as strings, not bare numbers in JSON, so...
+              var actual = JSON.parse(JSON.stringify(msg).replace(/"([0-9]+)"/, '$1'));
 
-            assert.deepEqual(actual, expected);
-          });
-          it('should be identical to constructed message with identical fields', function () {
-            var msg = decodeMsg();
-            var msgTypeConstructor = messageTypesTable[msg.messageType];
-            var constructedMsg = constructMsg(msgTypeConstructor, msg.fields, msg.sbp.sender);
-            assert(msgBuffer.equals(constructedMsg.toBuffer()));
+              assert.deepEqual(actual, expected);
+            });
+            it('should be identical to constructed message with identical fields', function () {
+              var msg = decodeMsg();
+              var msgTypeConstructor = messageTypesTable[msg.messageType];
+              var constructedMsg = constructMsg(msgTypeConstructor, msg.fields, msg.sbp.sender);
+              assert(msgBuffer.equals(constructedMsg.toBuffer()));
+            });
           });
         });
-      });
+      }
     });
   });
 });
