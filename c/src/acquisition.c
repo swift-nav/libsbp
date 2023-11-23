@@ -115,9 +115,6 @@ int sbp_msg_acq_result_cmp(const sbp_msg_acq_result_t *a,
   }
 
   ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -221,9 +218,6 @@ int sbp_msg_acq_result_dep_c_cmp(const sbp_msg_acq_result_dep_c_t *a,
   }
 
   ret = sbp_gnss_signal_dep_cmp(&a->sid, &b->sid);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -327,9 +321,6 @@ int sbp_msg_acq_result_dep_b_cmp(const sbp_msg_acq_result_dep_b_t *a,
   }
 
   ret = sbp_gnss_signal_dep_cmp(&a->sid, &b->sid);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -433,9 +424,6 @@ int sbp_msg_acq_result_dep_a_cmp(const sbp_msg_acq_result_dep_a_t *a,
   }
 
   ret = sbp_u8_cmp(&a->prn, &b->prn);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -611,9 +599,6 @@ int sbp_acq_sv_profile_cmp(const sbp_acq_sv_profile_t *a,
   }
 
   ret = sbp_u32_cmp(&a->cp, &b->cp);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -790,9 +775,6 @@ int sbp_acq_sv_profile_dep_cmp(const sbp_acq_sv_profile_dep_t *a,
   }
 
   ret = sbp_u32_cmp(&a->cp, &b->cp);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -871,11 +853,14 @@ int sbp_msg_acq_sv_profile_cmp(const sbp_msg_acq_sv_profile_t *a,
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->n_acq_sv_profile, &b->n_acq_sv_profile);
-  for (uint8_t i = 0; ret == 0 && i < a->n_acq_sv_profile; i++) {
-    ret = sbp_acq_sv_profile_cmp(&a->acq_sv_profile[i], &b->acq_sv_profile[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_acq_sv_profile; i++) {
+    ret = sbp_acq_sv_profile_cmp(&a->acq_sv_profile[i], &b->acq_sv_profile[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -957,12 +942,15 @@ int sbp_msg_acq_sv_profile_dep_cmp(const sbp_msg_acq_sv_profile_dep_t *a,
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->n_acq_sv_profile, &b->n_acq_sv_profile);
-  for (uint8_t i = 0; ret == 0 && i < a->n_acq_sv_profile; i++) {
-    ret = sbp_acq_sv_profile_dep_cmp(&a->acq_sv_profile[i],
-                                     &b->acq_sv_profile[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_acq_sv_profile; i++) {
+    ret = sbp_acq_sv_profile_dep_cmp(&a->acq_sv_profile[i],
+                                     &b->acq_sv_profile[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }

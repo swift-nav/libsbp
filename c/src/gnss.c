@@ -79,9 +79,6 @@ int sbp_v4_gnss_signal_cmp(const sbp_v4_gnss_signal_t *a,
   }
 
   ret = sbp_u8_cmp(&a->code, &b->code);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -144,9 +141,6 @@ int sbp_sv_id_cmp(const sbp_sv_id_t *a, const sbp_sv_id_t *b) {
   }
 
   ret = sbp_u8_cmp(&a->constellation, &b->constellation);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -223,9 +217,6 @@ int sbp_gnss_signal_dep_cmp(const sbp_gnss_signal_dep_t *a,
   }
 
   ret = sbp_u8_cmp(&a->reserved, &b->reserved);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -291,9 +282,6 @@ int sbp_gps_time_dep_cmp(const sbp_gps_time_dep_t *a,
   }
 
   ret = sbp_u16_cmp(&a->wn, &b->wn);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -359,9 +347,6 @@ int sbp_gps_time_sec_cmp(const sbp_gps_time_sec_t *a,
   }
 
   ret = sbp_u16_cmp(&a->wn, &b->wn);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -438,9 +423,6 @@ int sbp_v4_gps_time_cmp(const sbp_v4_gps_time_t *a,
   }
 
   ret = sbp_u16_cmp(&a->wn, &b->wn);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -506,8 +488,5 @@ int sbp_carrier_phase_cmp(const sbp_carrier_phase_t *a,
   }
 
   ret = sbp_u8_cmp(&a->f, &b->f);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

@@ -226,18 +226,17 @@ int sbp_msg_linux_cpu_state_dep_a_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_LINUX_CPU_STATE_DEP_A_TNAME_MAX;
-       i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_CPU_STATE_DEP_A_TNAME_MAX; i++) {
     ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_msg_linux_cpu_state_dep_a_cmdline_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -450,18 +449,17 @@ int sbp_msg_linux_mem_state_dep_a_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_LINUX_MEM_STATE_DEP_A_TNAME_MAX;
-       i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_MEM_STATE_DEP_A_TNAME_MAX; i++) {
     ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_msg_linux_mem_state_dep_a_cmdline_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -588,9 +586,6 @@ int sbp_msg_linux_sys_state_dep_a_cmp(
   }
 
   ret = sbp_u16_cmp(&a->pid_count, &b->pid_count);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -819,9 +814,6 @@ int sbp_msg_linux_process_socket_counts_cmp(
   }
 
   ret = sbp_msg_linux_process_socket_counts_cmdline_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1073,19 +1065,17 @@ int sbp_msg_linux_process_socket_queues_cmp(
   }
 
   for (uint8_t i = 0;
-       ret == 0 &&
-       i < SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_ADDRESS_OF_LARGEST_MAX;
-       i++) {
+       i < SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_ADDRESS_OF_LARGEST_MAX; i++) {
     ret = sbp_char_cmp(&a->address_of_largest[i], &b->address_of_largest[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_msg_linux_process_socket_queues_cmdline_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1195,21 +1185,23 @@ int sbp_msg_linux_socket_usage_cmp(const sbp_msg_linux_socket_usage_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_STATE_COUNTS_MAX;
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_STATE_COUNTS_MAX;
        i++) {
     ret = sbp_u16_cmp(&a->socket_state_counts[i], &b->socket_state_counts[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_TYPE_COUNTS_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_TYPE_COUNTS_MAX;
+       i++) {
     ret = sbp_u16_cmp(&a->socket_type_counts[i], &b->socket_type_counts[i]);
-  }
-  if (ret != 0) {
-    return ret;
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1414,9 +1406,6 @@ int sbp_msg_linux_process_fd_count_cmp(
   }
 
   ret = sbp_msg_linux_process_fd_count_cmdline_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1602,9 +1591,6 @@ int sbp_msg_linux_process_fd_summary_cmp(
   }
 
   ret = sbp_msg_linux_process_fd_summary_most_opened_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1839,17 +1825,17 @@ int sbp_msg_linux_cpu_state_cmp(const sbp_msg_linux_cpu_state_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_LINUX_CPU_STATE_TNAME_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_CPU_STATE_TNAME_MAX; i++) {
     ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_msg_linux_cpu_state_cmdline_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -2084,17 +2070,17 @@ int sbp_msg_linux_mem_state_cmp(const sbp_msg_linux_mem_state_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_LINUX_MEM_STATE_TNAME_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_LINUX_MEM_STATE_TNAME_MAX; i++) {
     ret = sbp_char_cmp(&a->tname[i], &b->tname[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_msg_linux_mem_state_cmdline_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -2241,8 +2227,5 @@ int sbp_msg_linux_sys_state_cmp(const sbp_msg_linux_sys_state_t *a,
   }
 
   ret = sbp_u8_cmp(&a->flags, &b->flags);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

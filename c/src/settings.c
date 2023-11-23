@@ -239,9 +239,6 @@ int sbp_msg_settings_write_cmp(const sbp_msg_settings_write_t *a,
   int ret = 0;
 
   ret = sbp_msg_settings_write_setting_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -416,9 +413,6 @@ int sbp_msg_settings_write_resp_cmp(const sbp_msg_settings_write_resp_t *a,
   }
 
   ret = sbp_msg_settings_write_resp_setting_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -581,9 +575,6 @@ int sbp_msg_settings_read_req_cmp(const sbp_msg_settings_read_req_t *a,
   int ret = 0;
 
   ret = sbp_msg_settings_read_req_setting_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -747,9 +738,6 @@ int sbp_msg_settings_read_resp_cmp(const sbp_msg_settings_read_resp_t *a,
   int ret = 0;
 
   ret = sbp_msg_settings_read_resp_setting_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -821,9 +809,6 @@ int sbp_msg_settings_read_by_index_req_cmp(
   int ret = 0;
 
   ret = sbp_u16_cmp(&a->index, &b->index);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1002,9 +987,6 @@ int sbp_msg_settings_read_by_index_resp_cmp(
   }
 
   ret = sbp_msg_settings_read_by_index_resp_setting_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1236,9 +1218,6 @@ int sbp_msg_settings_register_cmp(const sbp_msg_settings_register_t *a,
   int ret = 0;
 
   ret = sbp_msg_settings_register_setting_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1414,8 +1393,5 @@ int sbp_msg_settings_register_resp_cmp(
   }
 
   ret = sbp_msg_settings_register_resp_setting_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

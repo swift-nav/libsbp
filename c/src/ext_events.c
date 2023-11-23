@@ -126,8 +126,5 @@ int sbp_msg_ext_event_cmp(const sbp_msg_ext_event_t *a,
   }
 
   ret = sbp_u8_cmp(&a->pin, &b->pin);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

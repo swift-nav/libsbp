@@ -165,9 +165,6 @@ int sbp_msg_log_cmp(const sbp_msg_log_t *a, const sbp_msg_log_t *b) {
   }
 
   ret = sbp_msg_log_text_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -263,11 +260,14 @@ int sbp_msg_fwd_cmp(const sbp_msg_fwd_t *a, const sbp_msg_fwd_t *b) {
   }
 
   ret = sbp_u8_cmp(&a->n_fwd_payload, &b->n_fwd_payload);
-  for (uint8_t i = 0; ret == 0 && i < a->n_fwd_payload; i++) {
-    ret = sbp_u8_cmp(&a->fwd_payload[i], &b->fwd_payload[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_fwd_payload; i++) {
+    ret = sbp_u8_cmp(&a->fwd_payload[i], &b->fwd_payload[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -419,8 +419,5 @@ int sbp_msg_print_dep_cmp(const sbp_msg_print_dep_t *a,
   int ret = 0;
 
   ret = sbp_msg_print_dep_text_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

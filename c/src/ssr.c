@@ -80,9 +80,6 @@ int sbp_code_biases_content_cmp(const sbp_code_biases_content_t *a,
   }
 
   ret = sbp_s16_cmp(&a->value, &b->value);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -184,9 +181,6 @@ int sbp_phase_biases_content_cmp(const sbp_phase_biases_content_t *a,
   }
 
   ret = sbp_s32_cmp(&a->bias, &b->bias);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -307,9 +301,6 @@ int sbp_stec_header_cmp(const sbp_stec_header_t *a,
   }
 
   ret = sbp_u8_cmp(&a->iod_atmo, &b->iod_atmo);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -444,9 +435,6 @@ int sbp_gridded_correction_header_cmp(
   }
 
   ret = sbp_u8_cmp(&a->tropo_quality_indicator, &b->tropo_quality_indicator);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -526,12 +514,11 @@ int sbp_stec_sat_element_cmp(const sbp_stec_sat_element_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_STEC_SAT_ELEMENT_STEC_COEFF_MAX;
-       i++) {
+  for (uint8_t i = 0; i < SBP_STEC_SAT_ELEMENT_STEC_COEFF_MAX; i++) {
     ret = sbp_s16_cmp(&a->stec_coeff[i], &b->stec_coeff[i]);
-  }
-  if (ret != 0) {
-    return ret;
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -602,9 +589,6 @@ int sbp_tropospheric_delay_correction_no_std_cmp(
   }
 
   ret = sbp_s8_cmp(&a->wet, &b->wet);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -684,9 +668,6 @@ int sbp_tropospheric_delay_correction_cmp(
   }
 
   ret = sbp_u8_cmp(&a->stddev, &b->stddev);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -754,9 +735,6 @@ int sbp_stec_residual_no_std_cmp(const sbp_stec_residual_no_std_t *a,
   }
 
   ret = sbp_s16_cmp(&a->residual, &b->residual);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -833,9 +811,6 @@ int sbp_stec_residual_cmp(const sbp_stec_residual_t *a,
   }
 
   ret = sbp_u8_cmp(&a->stddev, &b->stddev);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1048,9 +1023,6 @@ int sbp_msg_ssr_orbit_clock_cmp(const sbp_msg_ssr_orbit_clock_t *a,
   }
 
   ret = sbp_s32_cmp(&a->c2, &b->c2);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1174,11 +1146,14 @@ int sbp_msg_ssr_code_biases_cmp(const sbp_msg_ssr_code_biases_t *a,
   }
 
   ret = sbp_u8_cmp(&a->n_biases, &b->n_biases);
-  for (uint8_t i = 0; ret == 0 && i < a->n_biases; i++) {
-    ret = sbp_code_biases_content_cmp(&a->biases[i], &b->biases[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_biases; i++) {
+    ret = sbp_code_biases_content_cmp(&a->biases[i], &b->biases[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1348,11 +1323,14 @@ int sbp_msg_ssr_phase_biases_cmp(const sbp_msg_ssr_phase_biases_t *a,
   }
 
   ret = sbp_u8_cmp(&a->n_biases, &b->n_biases);
-  for (uint8_t i = 0; ret == 0 && i < a->n_biases; i++) {
-    ret = sbp_phase_biases_content_cmp(&a->biases[i], &b->biases[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_biases; i++) {
+    ret = sbp_phase_biases_content_cmp(&a->biases[i], &b->biases[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1445,11 +1423,14 @@ int sbp_msg_ssr_stec_correction_dep_cmp(
   }
 
   ret = sbp_u8_cmp(&a->n_stec_sat_list, &b->n_stec_sat_list);
-  for (uint8_t i = 0; ret == 0 && i < a->n_stec_sat_list; i++) {
-    ret = sbp_stec_sat_element_cmp(&a->stec_sat_list[i], &b->stec_sat_list[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_stec_sat_list; i++) {
+    ret = sbp_stec_sat_element_cmp(&a->stec_sat_list[i], &b->stec_sat_list[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1549,9 +1530,6 @@ int sbp_bounds_header_cmp(const sbp_bounds_header_t *a,
   }
 
   ret = sbp_u8_cmp(&a->sol_id, &b->sol_id);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1686,11 +1664,14 @@ int sbp_msg_ssr_stec_correction_cmp(const sbp_msg_ssr_stec_correction_t *a,
   }
 
   ret = sbp_u8_cmp(&a->n_sats, &b->n_sats);
-  for (uint8_t i = 0; ret == 0 && i < a->n_sats; i++) {
-    ret = sbp_stec_sat_element_cmp(&a->stec_sat_list[i], &b->stec_sat_list[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_sats; i++) {
+    ret = sbp_stec_sat_element_cmp(&a->stec_sat_list[i], &b->stec_sat_list[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1808,11 +1789,14 @@ int sbp_msg_ssr_gridded_correction_cmp(
   }
 
   ret = sbp_u8_cmp(&a->n_stec_residuals, &b->n_stec_residuals);
-  for (uint8_t i = 0; ret == 0 && i < a->n_stec_residuals; i++) {
-    ret = sbp_stec_residual_cmp(&a->stec_residuals[i], &b->stec_residuals[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_stec_residuals; i++) {
+    ret = sbp_stec_residual_cmp(&a->stec_residuals[i], &b->stec_residuals[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1915,9 +1899,6 @@ int sbp_stec_sat_element_integrity_cmp(
   }
 
   ret = sbp_u8_cmp(&a->stec_bound_sig_dot, &b->stec_bound_sig_dot);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -2136,12 +2117,15 @@ int sbp_msg_ssr_gridded_correction_bounds_cmp(
   }
 
   ret = sbp_u8_cmp(&a->n_sats, &b->n_sats);
-  for (uint8_t i = 0; ret == 0 && i < a->n_sats; i++) {
-    ret = sbp_stec_sat_element_integrity_cmp(&a->stec_sat_list[i],
-                                             &b->stec_sat_list[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_sats; i++) {
+    ret = sbp_stec_sat_element_integrity_cmp(&a->stec_sat_list[i],
+                                             &b->stec_sat_list[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -2302,9 +2286,6 @@ int sbp_msg_ssr_tile_definition_dep_a_cmp(
   }
 
   ret = sbp_u64_cmp(&a->bitmask, &b->bitmask);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -2475,9 +2456,6 @@ int sbp_msg_ssr_tile_definition_dep_b_cmp(
   }
 
   ret = sbp_u64_cmp(&a->bitmask, &b->bitmask);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -2680,9 +2658,6 @@ int sbp_msg_ssr_tile_definition_cmp(const sbp_msg_ssr_tile_definition_t *a,
   }
 
   ret = sbp_u64_cmp(&a->bitmask, &b->bitmask);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -2783,18 +2758,21 @@ int sbp_satellite_apc_cmp(const sbp_satellite_apc_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_SATELLITE_APC_PCO_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_SATELLITE_APC_PCO_MAX; i++) {
     ret = sbp_s16_cmp(&a->pco[i], &b->pco[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_SATELLITE_APC_PCV_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_SATELLITE_APC_PCV_MAX; i++) {
     ret = sbp_s8_cmp(&a->pcv[i], &b->pcv[i]);
-  }
-  if (ret != 0) {
-    return ret;
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -2876,11 +2854,14 @@ int sbp_msg_ssr_satellite_apc_dep_cmp(
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->n_apc, &b->n_apc);
-  for (uint8_t i = 0; ret == 0 && i < a->n_apc; i++) {
-    ret = sbp_satellite_apc_cmp(&a->apc[i], &b->apc[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_apc; i++) {
+    ret = sbp_satellite_apc_cmp(&a->apc[i], &b->apc[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -3005,11 +2986,14 @@ int sbp_msg_ssr_satellite_apc_cmp(const sbp_msg_ssr_satellite_apc_t *a,
   }
 
   ret = sbp_u8_cmp(&a->n_apc, &b->n_apc);
-  for (uint8_t i = 0; ret == 0 && i < a->n_apc; i++) {
-    ret = sbp_satellite_apc_cmp(&a->apc[i], &b->apc[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_apc; i++) {
+    ret = sbp_satellite_apc_cmp(&a->apc[i], &b->apc[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -3225,9 +3209,6 @@ int sbp_msg_ssr_orbit_clock_dep_a_cmp(
   }
 
   ret = sbp_s32_cmp(&a->c2, &b->c2);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -3326,9 +3307,6 @@ int sbp_stec_header_dep_a_cmp(const sbp_stec_header_dep_a_t *a,
   }
 
   ret = sbp_u8_cmp(&a->iod_atmo, &b->iod_atmo);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -3441,9 +3419,6 @@ int sbp_gridded_correction_header_dep_a_cmp(
   }
 
   ret = sbp_u8_cmp(&a->tropo_quality_indicator, &b->tropo_quality_indicator);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -3556,9 +3531,6 @@ int sbp_grid_definition_header_dep_a_cmp(
   }
 
   ret = sbp_u8_cmp(&a->seq_num, &b->seq_num);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -3650,11 +3622,14 @@ int sbp_msg_ssr_stec_correction_dep_a_cmp(
   }
 
   ret = sbp_u8_cmp(&a->n_stec_sat_list, &b->n_stec_sat_list);
-  for (uint8_t i = 0; ret == 0 && i < a->n_stec_sat_list; i++) {
-    ret = sbp_stec_sat_element_cmp(&a->stec_sat_list[i], &b->stec_sat_list[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_stec_sat_list; i++) {
+    ret = sbp_stec_sat_element_cmp(&a->stec_sat_list[i], &b->stec_sat_list[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -3778,12 +3753,15 @@ int sbp_msg_ssr_gridded_correction_no_std_dep_a_cmp(
   }
 
   ret = sbp_u8_cmp(&a->n_stec_residuals, &b->n_stec_residuals);
-  for (uint8_t i = 0; ret == 0 && i < a->n_stec_residuals; i++) {
-    ret = sbp_stec_residual_no_std_cmp(&a->stec_residuals[i],
-                                       &b->stec_residuals[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_stec_residuals; i++) {
+    ret = sbp_stec_residual_no_std_cmp(&a->stec_residuals[i],
+                                       &b->stec_residuals[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -3901,11 +3879,14 @@ int sbp_msg_ssr_gridded_correction_dep_a_cmp(
   }
 
   ret = sbp_u8_cmp(&a->n_stec_residuals, &b->n_stec_residuals);
-  for (uint8_t i = 0; ret == 0 && i < a->n_stec_residuals; i++) {
-    ret = sbp_stec_residual_cmp(&a->stec_residuals[i], &b->stec_residuals[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_stec_residuals; i++) {
+    ret = sbp_stec_residual_cmp(&a->stec_residuals[i], &b->stec_residuals[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -3998,11 +3979,14 @@ int sbp_msg_ssr_grid_definition_dep_a_cmp(
   }
 
   ret = sbp_u8_cmp(&a->n_rle_list, &b->n_rle_list);
-  for (uint8_t i = 0; ret == 0 && i < a->n_rle_list; i++) {
-    ret = sbp_u8_cmp(&a->rle_list[i], &b->rle_list[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_rle_list; i++) {
+    ret = sbp_u8_cmp(&a->rle_list[i], &b->rle_list[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -4146,9 +4130,6 @@ int sbp_orbit_clock_bound_cmp(const sbp_orbit_clock_bound_t *a,
   }
 
   ret = sbp_u8_cmp(&a->clock_bound_sig, &b->clock_bound_sig);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -4275,12 +4256,15 @@ int sbp_msg_ssr_orbit_clock_bounds_cmp(
   }
 
   ret = sbp_u8_cmp(&a->n_sats, &b->n_sats);
-  for (uint8_t i = 0; ret == 0 && i < a->n_sats; i++) {
-    ret = sbp_orbit_clock_bound_cmp(&a->orbit_clock_bounds[i],
-                                    &b->orbit_clock_bounds[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_sats; i++) {
+    ret = sbp_orbit_clock_bound_cmp(&a->orbit_clock_bounds[i],
+                                    &b->orbit_clock_bounds[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -4394,9 +4378,6 @@ int sbp_code_phase_biases_sat_sig_cmp(
   }
 
   ret = sbp_u8_cmp(&a->phase_bias_bound_sig, &b->phase_bias_bound_sig);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -4524,12 +4505,15 @@ int sbp_msg_ssr_code_phase_biases_bounds_cmp(
   }
 
   ret = sbp_u8_cmp(&a->n_sats_signals, &b->n_sats_signals);
-  for (uint8_t i = 0; ret == 0 && i < a->n_sats_signals; i++) {
-    ret = sbp_code_phase_biases_sat_sig_cmp(&a->satellites_signals[i],
-                                            &b->satellites_signals[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_sats_signals; i++) {
+    ret = sbp_code_phase_biases_sat_sig_cmp(&a->satellites_signals[i],
+                                            &b->satellites_signals[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -4665,9 +4649,6 @@ int sbp_orbit_clock_bound_degradation_cmp(
   }
 
   ret = sbp_u8_cmp(&a->clock_bound_sig_dot, &b->clock_bound_sig_dot);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -4789,8 +4770,5 @@ int sbp_msg_ssr_orbit_clock_bounds_degradation_cmp(
 
   ret = sbp_orbit_clock_bound_degradation_cmp(
       &a->orbit_clock_bounds_degradation, &b->orbit_clock_bounds_degradation);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

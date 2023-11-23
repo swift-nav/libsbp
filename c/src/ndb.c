@@ -159,8 +159,5 @@ int sbp_msg_ndb_event_cmp(const sbp_msg_ndb_event_t *a,
   }
 
   ret = sbp_u16_cmp(&a->original_sender, &b->original_sender);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

@@ -124,8 +124,5 @@ int sbp_msg_mag_raw_cmp(const sbp_msg_mag_raw_t *a,
   }
 
   ret = sbp_s16_cmp(&a->mag_z, &b->mag_z);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

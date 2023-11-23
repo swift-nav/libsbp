@@ -116,9 +116,11 @@ int sbp_msg_flash_program_cmp(const sbp_msg_flash_program_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_FLASH_PROGRAM_ADDR_START_MAX;
-       i++) {
+  for (uint8_t i = 0; i < SBP_MSG_FLASH_PROGRAM_ADDR_START_MAX; i++) {
     ret = sbp_u8_cmp(&a->addr_start[i], &b->addr_start[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
@@ -130,11 +132,14 @@ int sbp_msg_flash_program_cmp(const sbp_msg_flash_program_t *a,
   }
 
   ret = sbp_u8_cmp(&a->addr_len, &b->addr_len);
-  for (uint8_t i = 0; ret == 0 && i < a->addr_len; i++) {
+  if (ret != 0) {
+    return ret;
+  }
+  for (uint8_t i = 0; i < a->addr_len; i++) {
     ret = sbp_u8_cmp(&a->data[i], &b->data[i]);
-  }
-  if (ret != 0) {
-    return ret;
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -204,9 +209,6 @@ int sbp_msg_flash_done_cmp(const sbp_msg_flash_done_t *a,
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->response, &b->response);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -296,18 +298,17 @@ int sbp_msg_flash_read_req_cmp(const sbp_msg_flash_read_req_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_FLASH_READ_REQ_ADDR_START_MAX;
-       i++) {
+  for (uint8_t i = 0; i < SBP_MSG_FLASH_READ_REQ_ADDR_START_MAX; i++) {
     ret = sbp_u8_cmp(&a->addr_start[i], &b->addr_start[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_u8_cmp(&a->addr_len, &b->addr_len);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -397,18 +398,17 @@ int sbp_msg_flash_read_resp_cmp(const sbp_msg_flash_read_resp_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_FLASH_READ_RESP_ADDR_START_MAX;
-       i++) {
+  for (uint8_t i = 0; i < SBP_MSG_FLASH_READ_RESP_ADDR_START_MAX; i++) {
     ret = sbp_u8_cmp(&a->addr_start[i], &b->addr_start[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_u8_cmp(&a->addr_len, &b->addr_len);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -488,9 +488,6 @@ int sbp_msg_flash_erase_cmp(const sbp_msg_flash_erase_t *a,
   }
 
   ret = sbp_u32_cmp(&a->sector_num, &b->sector_num);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -562,9 +559,6 @@ int sbp_msg_stm_flash_lock_sector_cmp(
   int ret = 0;
 
   ret = sbp_u32_cmp(&a->sector, &b->sector);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -636,9 +630,6 @@ int sbp_msg_stm_flash_unlock_sector_cmp(
   int ret = 0;
 
   ret = sbp_u32_cmp(&a->sector, &b->sector);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -780,12 +771,11 @@ int sbp_msg_stm_unique_id_resp_cmp(const sbp_msg_stm_unique_id_resp_t *a,
                                    const sbp_msg_stm_unique_id_resp_t *b) {
   int ret = 0;
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_STM_UNIQUE_ID_RESP_STM_ID_MAX;
-       i++) {
+  for (uint8_t i = 0; i < SBP_MSG_STM_UNIQUE_ID_RESP_STM_ID_MAX; i++) {
     ret = sbp_u8_cmp(&a->stm_id[i], &b->stm_id[i]);
-  }
-  if (ret != 0) {
-    return ret;
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -861,12 +851,11 @@ int sbp_msg_m25_flash_write_status_cmp(
     const sbp_msg_m25_flash_write_status_t *b) {
   int ret = 0;
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_M25_FLASH_WRITE_STATUS_STATUS_MAX;
-       i++) {
+  for (uint8_t i = 0; i < SBP_MSG_M25_FLASH_WRITE_STATUS_STATUS_MAX; i++) {
     ret = sbp_u8_cmp(&a->status[i], &b->status[i]);
-  }
-  if (ret != 0) {
-    return ret;
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }

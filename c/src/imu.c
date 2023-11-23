@@ -157,9 +157,6 @@ int sbp_msg_imu_raw_cmp(const sbp_msg_imu_raw_t *a,
   }
 
   ret = sbp_s16_cmp(&a->gyr_z, &b->gyr_z);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -248,8 +245,5 @@ int sbp_msg_imu_aux_cmp(const sbp_msg_imu_aux_t *a,
   }
 
   ret = sbp_u8_cmp(&a->imu_conf, &b->imu_conf);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

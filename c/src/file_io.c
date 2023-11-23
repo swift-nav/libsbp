@@ -218,9 +218,6 @@ int sbp_msg_fileio_read_req_cmp(const sbp_msg_fileio_read_req_t *a,
   }
 
   ret = sbp_msg_fileio_read_req_filename_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -311,11 +308,14 @@ int sbp_msg_fileio_read_resp_cmp(const sbp_msg_fileio_read_resp_t *a,
   }
 
   ret = sbp_u8_cmp(&a->n_contents, &b->n_contents);
-  for (uint8_t i = 0; ret == 0 && i < a->n_contents; i++) {
-    ret = sbp_u8_cmp(&a->contents[i], &b->contents[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_contents; i++) {
+    ret = sbp_u8_cmp(&a->contents[i], &b->contents[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -509,9 +509,6 @@ int sbp_msg_fileio_read_dir_req_cmp(const sbp_msg_fileio_read_dir_req_t *a,
   }
 
   ret = sbp_msg_fileio_read_dir_req_dirname_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -686,9 +683,6 @@ int sbp_msg_fileio_read_dir_resp_cmp(const sbp_msg_fileio_read_dir_resp_t *a,
   }
 
   ret = sbp_msg_fileio_read_dir_resp_contents_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -859,9 +853,6 @@ int sbp_msg_fileio_remove_cmp(const sbp_msg_fileio_remove_t *a,
   int ret = 0;
 
   ret = sbp_msg_fileio_remove_filename_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1075,11 +1066,14 @@ int sbp_msg_fileio_write_req_cmp(const sbp_msg_fileio_write_req_t *a,
   }
 
   ret = sbp_u8_cmp(&a->n_data, &b->n_data);
-  for (uint8_t i = 0; ret == 0 && i < a->n_data; i++) {
-    ret = sbp_u8_cmp(&a->data[i], &b->data[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_data; i++) {
+    ret = sbp_u8_cmp(&a->data[i], &b->data[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1151,9 +1145,6 @@ int sbp_msg_fileio_write_resp_cmp(const sbp_msg_fileio_write_resp_t *a,
   int ret = 0;
 
   ret = sbp_u32_cmp(&a->sequence, &b->sequence);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1224,9 +1215,6 @@ int sbp_msg_fileio_config_req_cmp(const sbp_msg_fileio_config_req_t *a,
   int ret = 0;
 
   ret = sbp_u32_cmp(&a->sequence, &b->sequence);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -1330,8 +1318,5 @@ int sbp_msg_fileio_config_resp_cmp(const sbp_msg_fileio_config_resp_t *a,
   }
 
   ret = sbp_u32_cmp(&a->fileio_version, &b->fileio_version);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
