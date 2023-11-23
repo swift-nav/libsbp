@@ -25,6 +25,12 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "The legacy libsbp API has been deprecated. This file and all symbols "
+    "contained will "
+    "be removed in version 6. You should immediately switch over to the modern "
+    "libsbp API.")
+
 #include <libsbp/linux_macros.h>
 
 SBP_PACK_START
@@ -34,7 +40,7 @@ SBP_PACK_START
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 index;        /**< sequence of this status message, values from 0-9 */
   u16 pid;         /**< the PID of the process */
   u8 pcpu;         /**< percent of cpu used, expressed as a fraction of 256 */
@@ -48,7 +54,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 index;       /**< sequence of this status message, values from 0-9 */
   u16 pid;        /**< the PID of the process */
   u8 pmem;        /**< percent of memory used, expressed as a fraction of 256 */
@@ -62,7 +68,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 mem_total;      /**< total system memory */
   u8 pcpu;            /**< percent of total cpu currently utilized */
   u8 pmem;            /**< percent of total memory currently utilized */
@@ -78,7 +84,7 @@ typedef struct SBP_ATTR_PACKED {
  * Top 10 list of processes with high socket counts.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 index;          /**< sequence of this status message, values from 0-9 */
   u16 pid;           /**< the PID of the process in question */
   u16 socket_count;  /**< the number of sockets the process is using */
@@ -99,7 +105,7 @@ typedef struct SBP_ATTR_PACKED {
  * Top 10 list of sockets with deep queues.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 index;                    /**< sequence of this status message, values from
                                     0-9 */
   u16 pid;                     /**< the PID of the process in question */
@@ -129,7 +135,7 @@ typedef struct SBP_ATTR_PACKED {
  * Summaries the socket usage across the system.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 avg_queue_depth;         /**< average socket queue depths across all
                                     sockets on the system */
   u32 max_queue_depth;         /**< the max queue depth seen within the
@@ -149,7 +155,7 @@ typedef struct SBP_ATTR_PACKED {
  * Top 10 list of processes with a large number of open file descriptors.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 index;        /**< sequence of this status message, values from 0-9 */
   u16 pid;         /**< the PID of the process in question */
   u16 fd_count;    /**< a count of the number of file descriptors opened by
@@ -162,7 +168,7 @@ typedef struct SBP_ATTR_PACKED {
  * Summary of open file descriptors on the system.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 sys_fd_count;    /**< count of total FDs open on the system */
   char most_opened[0]; /**< A null delimited list of strings which alternates
                             between a string representation of the process
@@ -179,7 +185,7 @@ typedef struct SBP_ATTR_PACKED {
  * of CPU on the system, including a timestamp.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 index;        /**< sequence of this status message, values from 0-9 */
   u16 pid;         /**< the PID of the process */
   u8 pcpu;         /**< percent of CPU used, expressed as a fraction of 256 */
@@ -197,7 +203,7 @@ typedef struct SBP_ATTR_PACKED {
  * of memory on the system, including a timestamp.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 index;       /**< sequence of this status message, values from 0-9 */
   u16 pid;        /**< the PID of the process */
   u8 pmem;        /**< percent of memory used, expressed as a fraction of 256 */
@@ -215,7 +221,7 @@ typedef struct SBP_ATTR_PACKED {
  * timestamp.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 mem_total;      /**< total system memory, in MiB */
   u8 pcpu;            /**< percent of CPU used, expressed as a fraction of
                            256 */

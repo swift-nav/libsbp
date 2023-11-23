@@ -48,6 +48,7 @@ if (NOT CMAKE_C_COMPILER_ID STREQUAL "MSVC")
       -Wformat-y2k
     ADD
       -Wformat=0
+      -Wno-deprecated-declarations
   )
 endif()
 

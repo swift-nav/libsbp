@@ -80,6 +80,9 @@ swift_cc_test(
     includes = [
         "include/libsbp",
     ],
+    copts = [
+      "-Wno-deprecated-declarations",
+    ],
     type = UNIT,
     deps = [
         ":sbp",
@@ -145,6 +148,9 @@ swift_cc_test(
     ] + SBP_CPP_LEGACY_SOURCES,
     data = [
         "test/legacy/cpp/sbp_data/gnss_data.sbp",
+    ],
+    copts = [
+      "-Wno-deprecated-declarations",
     ],
     type = UNIT,
     deps = [

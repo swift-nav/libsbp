@@ -29,6 +29,12 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "The legacy libsbp API has been deprecated. This file and all symbols "
+    "contained will "
+    "be removed in version 6. You should immediately switch over to the modern "
+    "libsbp API.")
+
 #include <libsbp/bootload_macros.h>
 
 SBP_PACK_START
@@ -48,7 +54,7 @@ SBP_PACK_START
  * number and the SBP protocol version number.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 flags;       /**< Bootloader flags */
   char version[0]; /**< Bootloader version number */
 } msg_bootloader_handshake_resp_t;
@@ -58,7 +64,7 @@ typedef struct SBP_ATTR_PACKED {
  * The host initiates the bootloader to jump to the application.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 jump; /**< Ignored by the device */
 } msg_bootloader_jump_to_app_t;
 
@@ -82,7 +88,7 @@ typedef struct SBP_ATTR_PACKED {
  * number.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on
                   the right. */
 } msg_nap_device_dna_resp_t;
@@ -92,7 +98,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 handshake[0]; /**< Version number string (not NULL terminated) */
 } msg_bootloader_handshake_dep_a_t;
 

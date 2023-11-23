@@ -9,11 +9,11 @@
 
 #include <libsbp/internal/common.h>
 #include <libsbp/internal/orientation.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/orientation.h>
 #include <libsbp/sbp.h>
 
@@ -93,8 +93,8 @@ s8 sbp_msg_baseline_heading_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_BASELINE_HEADING, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_BASELINE_HEADING, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_baseline_heading_cmp(const sbp_msg_baseline_heading_t *a,
@@ -233,8 +233,8 @@ s8 sbp_msg_orient_quat_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ORIENT_QUAT, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ORIENT_QUAT, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_orient_quat_cmp(const sbp_msg_orient_quat_t *a,
@@ -391,8 +391,8 @@ s8 sbp_msg_orient_euler_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ORIENT_EULER, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ORIENT_EULER, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_orient_euler_cmp(const sbp_msg_orient_euler_t *a,
@@ -521,8 +521,8 @@ s8 sbp_msg_angular_rate_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ANGULAR_RATE, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ANGULAR_RATE, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_angular_rate_cmp(const sbp_msg_angular_rate_t *a,

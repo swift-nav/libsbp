@@ -14,6 +14,17 @@
 #include <libsbp/sbp.h>
 #include <libsbp/sbp_msg_type.h>
 
+// TODO(version 6)
+// Remove this undef/define
+// Obviously we don't normally want to silence this message, but we also need to provide
+// an implementation for these deprecated functions somewhere. When the legacy API is
+// removed in version 6 these few lines can be removed as well
+#ifdef SBP_MESSAGE
+#undef SBP_MESSAGE
+#define SBP_MESSAGE(x)
+#endif
+#include <libsbp/legacy/api.h>
+
 #define SBP_PREAMBLE 0x55
 
 /** \addtogroup io Input / Output
@@ -577,8 +588,9 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   return SBP_OK;
 }
 
-static s8 send_payload(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, u8 len, u8 *payload,
-                    sbp_write_fn_t write)
+s8 sbp_internal_forward_payload(sbp_state_t *s, sbp_msg_type_t msg_type,
+                                u16 sender_id, u8 len, u8 *payload,
+                                sbp_write_fn_t write)
 {
   /* Check our payload data pointer isn't NULL unless len = 0. */
   if (len != 0 && payload == 0) {
@@ -686,7 +698,7 @@ s8 sbp_message_send(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, cons
   uint8_t payload_len;
   s8 ret = sbp_message_encode(payload, sizeof(payload), &payload_len, msg_type, msg);
   if (ret != SBP_OK) { return ret; }
-  return send_payload(s, msg_type, sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, msg_type, sender_id, payload_len, payload, write);
 }
 
 s8 sbp_message_process(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
@@ -780,7 +792,7 @@ s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
 s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
                     sbp_write_fn_t write)
 {
-  return send_payload(s, (sbp_msg_type_t)msg_type, sender_id, len, payload, write);
+  return sbp_internal_forward_payload(s, (sbp_msg_type_t)msg_type, sender_id, len, payload, write);
 }
 
 /** \} */

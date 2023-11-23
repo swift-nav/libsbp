@@ -26,6 +26,12 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "The legacy libsbp API has been deprecated. This file and all symbols "
+    "contained will "
+    "be removed in version 6. You should immediately switch over to the modern "
+    "libsbp API.")
+
 #include <libsbp/solution_meta_macros.h>
 
 SBP_PACK_START
@@ -41,7 +47,7 @@ SBP_PACK_START
  * this section.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 sensor_type; /**< The type of sensor */
   u8 flags;       /**< Refer to each InputType description [(XX)InputType] */
 } solution_input_type_t;
@@ -51,7 +57,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 pdop;                        /**< Position Dilution of Precision as per
                                         last available DOPS from PVT engine
                                         (0xFFFF indicates invalid) [0.01] */
@@ -102,7 +108,7 @@ typedef struct SBP_ATTR_PACKED {
  * solution and its tow is not a TOM.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;             /**< GPS time of week rounded to the nearest
                             millisecond [ms] */
   u16 pdop;            /**< Position Dilution of Precision as per last
@@ -138,7 +144,7 @@ typedef struct SBP_ATTR_PACKED {
  * through sol_in[N].flags in a MSG_SOLN_META.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 flags; /**< flags that store all relevant info specific to this sensor
                  type. */
 } gnss_input_type_t;
@@ -151,7 +157,7 @@ typedef struct SBP_ATTR_PACKED {
  * through sol_in[N].flags in a MSG_SOLN_META.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 flags; /**< Instrument time, grade, and architecture for a sensor. */
 } imu_input_type_t;
 
@@ -163,7 +169,7 @@ typedef struct SBP_ATTR_PACKED {
  * Accessible through sol_in[N].flags in a MSG_SOLN_META.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 flags; /**< Instrument ODO rate, grade, and quality. */
 } odo_input_type_t;
 

@@ -27,6 +27,12 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "The legacy libsbp API has been deprecated. This file and all symbols "
+    "contained will "
+    "be removed in version 6. You should immediately switch over to the modern "
+    "libsbp API.")
+
 #include <libsbp/legacy/gnss.h>
 #include <libsbp/piksi_macros.h>
 
@@ -49,7 +55,7 @@ SBP_PACK_START
  * This message from the host resets the Piksi back into the bootloader.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 flags; /**< Reset flags */
 } msg_reset_t;
 
@@ -78,7 +84,7 @@ typedef struct SBP_ATTR_PACKED {
  * Resolution (IAR) process.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 filter; /**< Filter flags */
 } msg_reset_filters_t;
 
@@ -94,7 +100,7 @@ typedef struct SBP_ATTR_PACKED {
  * percentage values must be normalized.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   char name[20];  /**< Thread name (NULL terminated) */
   u16 cpu;        /**< Percentage cpu use for this thread. Values range
                        from 0 - 1000 and needs to be renormalized to 100 */
@@ -107,7 +113,7 @@ typedef struct SBP_ATTR_PACKED {
  * channel. The reported percentage values must be normalized.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   float tx_throughput; /**< UART transmit throughput [kB/s] */
   float rx_throughput; /**< UART receive throughput [kB/s] */
   u16 crc_error_count; /**< UART CRC error count */
@@ -127,7 +133,7 @@ typedef struct SBP_ATTR_PACKED {
  * Long periods can cause momentary RTK solution outages.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s32 avg;     /**< Average period [ms] */
   s32 pmin;    /**< Minimum period [ms] */
   s32 pmax;    /**< Maximum period [ms] */
@@ -142,7 +148,7 @@ typedef struct SBP_ATTR_PACKED {
  * measurement of the end-to-end communication latency in the system.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s32 avg;     /**< Average latency [ms] */
   s32 lmin;    /**< Minimum latency [ms] */
   s32 lmax;    /**< Maximum latency [ms] */
@@ -161,7 +167,7 @@ typedef struct SBP_ATTR_PACKED {
  * likelihood of transmission.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   uart_channel_t uart_a;    /**< State of UART A */
   uart_channel_t uart_b;    /**< State of UART B */
   uart_channel_t uart_ftdi; /**< State of UART FTDI (USB logger) */
@@ -174,7 +180,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   uart_channel_t uart_a;    /**< State of UART A */
   uart_channel_t uart_b;    /**< State of UART B */
   uart_channel_t uart_ftdi; /**< State of UART FTDI (USB logger) */
@@ -188,7 +194,7 @@ typedef struct SBP_ATTR_PACKED {
  * carrier-phase measurements from satellite observations.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 num_hyps; /**< Number of integer ambiguity hypotheses remaining */
 } msg_iar_state_t;
 
@@ -198,7 +204,7 @@ typedef struct SBP_ATTR_PACKED {
  * being used in various Piksi subsystems.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 mask; /**< Mask of systems that should ignore this satellite. */
   sbp_gnss_signal_t sid; /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_t;
@@ -208,7 +214,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 mask; /**< Mask of systems that should ignore this satellite. */
   gnss_signal_dep_t sid; /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_dep_t;
@@ -220,7 +226,7 @@ typedef struct SBP_ATTR_PACKED {
  * available.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s16 dev_vin;         /**< Device V_in [V / 1000] */
   s16 cpu_vint;        /**< Processor V_int [V / 1000] */
   s16 cpu_vaux;        /**< Processor V_aux [V / 1000] */
@@ -235,7 +241,7 @@ typedef struct SBP_ATTR_PACKED {
  * messages, and the exit code will be returned with MSG_COMMAND_RESP.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 sequence;    /**< Sequence number */
   char command[0]; /**< Command line to execute */
 } msg_command_req_t;
@@ -246,7 +252,7 @@ typedef struct SBP_ATTR_PACKED {
  * return code of zero indicates success.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 sequence; /**< Sequence number */
   s32 code;     /**< Exit code */
 } msg_command_resp_t;
@@ -258,7 +264,7 @@ typedef struct SBP_ATTR_PACKED {
  * the correct command.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 sequence; /**< Sequence number */
   char line[0]; /**< Line of standard output or standard error */
 } msg_command_output_t;
@@ -275,7 +281,7 @@ typedef struct SBP_ATTR_PACKED {
  * output of ifaddrs struct returned by getifaddrs in c.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 ipv4_address[4];      /**< IPv4 address (all zero when unavailable) */
   u8 ipv4_mask_size;       /**< IPv4 netmask CIDR notation */
   u8 ipv6_address[16];     /**< IPv6 address (all zero when unavailable) */
@@ -295,7 +301,7 @@ typedef struct SBP_ATTR_PACKED {
  * necessarily be populated with a value.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u64 duration;    /**< Duration over which the measurement was
                         collected [ms] */
   u64 total_bytes; /**< Number of bytes handled in total within period */
@@ -309,7 +315,7 @@ typedef struct SBP_ATTR_PACKED {
  * The bandwidth usage, a list of usage by interface.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   network_usage_t interfaces[0]; /**< Usage measurement array */
 } msg_network_bandwidth_usage_t;
 
@@ -320,7 +326,7 @@ typedef struct SBP_ATTR_PACKED {
  * parameters.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s8 signal_strength;      /**< Received cell signal strength in dBm, zero
                                 translates to unknown [dBm] */
   float signal_error_rate; /**< BER as reported by the modem, zero
@@ -333,7 +339,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 channel_tag;     /**< Channel ID */
   gps_time_dep_t t;    /**< Receiver time of this observation */
   float freq_ref;      /**< Reference frequency of this packet [MHz] */
@@ -350,7 +356,7 @@ typedef struct SBP_ATTR_PACKED {
  * Spectrum analyzer packet.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 channel_tag;     /**< Channel ID */
   sbp_gps_time_t t;    /**< Receiver time of this observation */
   float freq_ref;      /**< Reference frequency of this packet [MHz] */
@@ -373,7 +379,7 @@ typedef struct SBP_ATTR_PACKED {
  * error for the particular gain stage as reported by the frontend.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s8 rf_gain[8]; /**< RF gain for each frontend channel [percent] */
   s8 if_gain[8]; /**< Intermediate frequency gain for each frontend channel
                     [percent] */

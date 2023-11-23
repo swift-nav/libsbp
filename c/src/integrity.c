@@ -10,11 +10,11 @@
 #include <libsbp/integrity.h>
 #include <libsbp/internal/common.h>
 #include <libsbp/internal/integrity.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 
 bool sbp_integrity_ssr_header_encode_internal(
@@ -282,8 +282,8 @@ s8 sbp_msg_ssr_flag_high_level_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_SSR_FLAG_HIGH_LEVEL, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_SSR_FLAG_HIGH_LEVEL, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ssr_flag_high_level_cmp(const sbp_msg_ssr_flag_high_level_t *a,
@@ -475,8 +475,8 @@ s8 sbp_msg_ssr_flag_satellites_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_SSR_FLAG_SATELLITES, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_SSR_FLAG_SATELLITES, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ssr_flag_satellites_cmp(const sbp_msg_ssr_flag_satellites_t *a,
@@ -607,8 +607,8 @@ s8 sbp_msg_ssr_flag_tropo_grid_points_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_SSR_FLAG_TROPO_GRID_POINTS, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_SSR_FLAG_TROPO_GRID_POINTS,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ssr_flag_tropo_grid_points_cmp(
@@ -715,8 +715,8 @@ s8 sbp_msg_ssr_flag_iono_grid_points_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_SSR_FLAG_IONO_GRID_POINTS, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_SSR_FLAG_IONO_GRID_POINTS,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ssr_flag_iono_grid_points_cmp(
@@ -823,8 +823,8 @@ s8 sbp_msg_ssr_flag_iono_tile_sat_los_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_SSR_FLAG_IONO_TILE_SAT_LOS, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_SSR_FLAG_IONO_TILE_SAT_LOS,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ssr_flag_iono_tile_sat_los_cmp(
@@ -939,8 +939,9 @@ s8 sbp_msg_ssr_flag_iono_grid_point_sat_los_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS,
-                          sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s,
+                                      SBP_MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_ssr_flag_iono_grid_point_sat_los_cmp(
@@ -1059,8 +1060,8 @@ s8 sbp_msg_acknowledge_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ACKNOWLEDGE, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ACKNOWLEDGE, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_acknowledge_cmp(const sbp_msg_acknowledge_t *a,

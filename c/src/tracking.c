@@ -8,12 +8,12 @@
 #include <stdint.h>
 
 #include <libsbp/internal/common.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
 #include <libsbp/internal/tracking.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 #include <libsbp/tracking.h>
 
@@ -195,8 +195,8 @@ s8 sbp_msg_tracking_state_detailed_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_TRACKING_STATE_DETAILED_DEP_A, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_STATE_DETAILED_DEP_A,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_tracking_state_detailed_dep_a_cmp(
@@ -489,8 +489,8 @@ s8 sbp_msg_tracking_state_detailed_dep_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_TRACKING_STATE_DETAILED_DEP, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_STATE_DETAILED_DEP,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_tracking_state_detailed_dep_cmp(
@@ -753,8 +753,8 @@ s8 sbp_msg_tracking_state_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_TRACKING_STATE, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_STATE, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_tracking_state_cmp(const sbp_msg_tracking_state_t *a,
@@ -906,8 +906,8 @@ s8 sbp_msg_measurement_state_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_MEASUREMENT_STATE, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_MEASUREMENT_STATE, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_measurement_state_cmp(const sbp_msg_measurement_state_t *a,
@@ -1069,8 +1069,8 @@ s8 sbp_msg_tracking_iq_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_TRACKING_IQ, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_IQ, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_tracking_iq_cmp(const sbp_msg_tracking_iq_t *a,
@@ -1243,8 +1243,8 @@ s8 sbp_msg_tracking_iq_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_TRACKING_IQ_DEP_B, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_IQ_DEP_B, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_tracking_iq_dep_b_cmp(const sbp_msg_tracking_iq_dep_b_t *a,
@@ -1347,8 +1347,8 @@ s8 sbp_msg_tracking_iq_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_TRACKING_IQ_DEP_A, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_IQ_DEP_A, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_tracking_iq_dep_a_cmp(const sbp_msg_tracking_iq_dep_a_t *a,
@@ -1527,8 +1527,8 @@ s8 sbp_msg_tracking_state_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_TRACKING_STATE_DEP_A, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_STATE_DEP_A,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_tracking_state_dep_a_cmp(const sbp_msg_tracking_state_dep_a_t *a,
@@ -1697,8 +1697,8 @@ s8 sbp_msg_tracking_state_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_TRACKING_STATE_DEP_B, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_STATE_DEP_B,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_tracking_state_dep_b_cmp(const sbp_msg_tracking_state_dep_b_t *a,

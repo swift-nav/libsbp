@@ -10,11 +10,11 @@
 #include <libsbp/bootload.h>
 #include <libsbp/internal/bootload.h>
 #include <libsbp/internal/common.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 
 bool sbp_msg_bootloader_handshake_req_encode_internal(
@@ -73,8 +73,8 @@ s8 sbp_msg_bootloader_handshake_req_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_BOOTLOADER_HANDSHAKE_REQ, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_REQ,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_bootloader_handshake_req_cmp(
@@ -249,8 +249,8 @@ s8 sbp_msg_bootloader_handshake_resp_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_bootloader_handshake_resp_cmp(
@@ -328,8 +328,8 @@ s8 sbp_msg_bootloader_jump_to_app_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_BOOTLOADER_JUMP_TO_APP, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_BOOTLOADER_JUMP_TO_APP,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_bootloader_jump_to_app_cmp(
@@ -400,8 +400,8 @@ s8 sbp_msg_nap_device_dna_req_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_NAP_DEVICE_DNA_REQ, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_NAP_DEVICE_DNA_REQ, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_nap_device_dna_req_cmp(const sbp_msg_nap_device_dna_req_t *a,
@@ -474,8 +474,8 @@ s8 sbp_msg_nap_device_dna_resp_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_NAP_DEVICE_DNA_RESP, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_NAP_DEVICE_DNA_RESP, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_nap_device_dna_resp_cmp(const sbp_msg_nap_device_dna_resp_t *a,
@@ -652,8 +652,8 @@ s8 sbp_msg_bootloader_handshake_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A, sender_id,
-                          payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A,
+                                      sender_id, payload_len, payload, write);
 }
 
 int sbp_msg_bootloader_handshake_dep_a_cmp(

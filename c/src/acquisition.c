@@ -10,11 +10,11 @@
 #include <libsbp/acquisition.h>
 #include <libsbp/internal/acquisition.h>
 #include <libsbp/internal/common.h>
+#include <libsbp/internal/sbp_internal.h>
 #include <libsbp/internal/string/double_null_terminated.h>
 #include <libsbp/internal/string/multipart.h>
 #include <libsbp/internal/string/null_terminated.h>
 #include <libsbp/internal/string/unterminated.h>
-#include <libsbp/legacy/compat.h>
 #include <libsbp/sbp.h>
 
 bool sbp_msg_acq_result_encode_internal(sbp_encode_ctx_t *ctx,
@@ -91,8 +91,8 @@ s8 sbp_msg_acq_result_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ACQ_RESULT, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_RESULT, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_acq_result_cmp(const sbp_msg_acq_result_t *a,
@@ -197,8 +197,8 @@ s8 sbp_msg_acq_result_dep_c_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ACQ_RESULT_DEP_C, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_RESULT_DEP_C, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_acq_result_dep_c_cmp(const sbp_msg_acq_result_dep_c_t *a,
@@ -303,8 +303,8 @@ s8 sbp_msg_acq_result_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ACQ_RESULT_DEP_B, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_RESULT_DEP_B, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_acq_result_dep_b_cmp(const sbp_msg_acq_result_dep_b_t *a,
@@ -409,8 +409,8 @@ s8 sbp_msg_acq_result_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ACQ_RESULT_DEP_A, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_RESULT_DEP_A, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_acq_result_dep_a_cmp(const sbp_msg_acq_result_dep_a_t *a,
@@ -862,8 +862,8 @@ s8 sbp_msg_acq_sv_profile_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ACQ_SV_PROFILE, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_SV_PROFILE, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_acq_sv_profile_cmp(const sbp_msg_acq_sv_profile_t *a,
@@ -948,8 +948,8 @@ s8 sbp_msg_acq_sv_profile_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ACQ_SV_PROFILE_DEP, sender_id, payload_len,
-                          payload, write);
+  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_SV_PROFILE_DEP, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_acq_sv_profile_dep_cmp(const sbp_msg_acq_sv_profile_dep_t *a,
