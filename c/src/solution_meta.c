@@ -80,9 +80,6 @@ int sbp_solution_input_type_cmp(const sbp_solution_input_type_t *a,
   }
 
   ret = sbp_u8_cmp(&a->flags, &b->flags);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -250,11 +247,14 @@ int sbp_msg_soln_meta_dep_a_cmp(const sbp_msg_soln_meta_dep_a_t *a,
   }
 
   ret = sbp_u8_cmp(&a->n_sol_in, &b->n_sol_in);
-  for (uint8_t i = 0; ret == 0 && i < a->n_sol_in; i++) {
-    ret = sbp_solution_input_type_cmp(&a->sol_in[i], &b->sol_in[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_sol_in; i++) {
+    ret = sbp_solution_input_type_cmp(&a->sol_in[i], &b->sol_in[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -400,11 +400,14 @@ int sbp_msg_soln_meta_cmp(const sbp_msg_soln_meta_t *a,
   }
 
   ret = sbp_u8_cmp(&a->n_sol_in, &b->n_sol_in);
-  for (uint8_t i = 0; ret == 0 && i < a->n_sol_in; i++) {
-    ret = sbp_solution_input_type_cmp(&a->sol_in[i], &b->sol_in[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_sol_in; i++) {
+    ret = sbp_solution_input_type_cmp(&a->sol_in[i], &b->sol_in[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -460,9 +463,6 @@ int sbp_gnss_input_type_cmp(const sbp_gnss_input_type_t *a,
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->flags, &b->flags);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -517,9 +517,6 @@ int sbp_imu_input_type_cmp(const sbp_imu_input_type_t *a,
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->flags, &b->flags);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -574,8 +571,5 @@ int sbp_odo_input_type_cmp(const sbp_odo_input_type_t *a,
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->flags, &b->flags);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

@@ -117,9 +117,6 @@ int sbp_msg_baseline_heading_cmp(const sbp_msg_baseline_heading_t *a,
   }
 
   ret = sbp_u8_cmp(&a->flags, &b->flags);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -287,9 +284,6 @@ int sbp_msg_orient_quat_cmp(const sbp_msg_orient_quat_t *a,
   }
 
   ret = sbp_u8_cmp(&a->flags, &b->flags);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -435,9 +429,6 @@ int sbp_msg_orient_euler_cmp(const sbp_msg_orient_euler_t *a,
   }
 
   ret = sbp_u8_cmp(&a->flags, &b->flags);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -550,8 +541,5 @@ int sbp_msg_angular_rate_cmp(const sbp_msg_angular_rate_t *a,
   }
 
   ret = sbp_u8_cmp(&a->flags, &b->flags);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

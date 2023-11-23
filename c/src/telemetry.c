@@ -156,9 +156,6 @@ int sbp_telemetry_sv_cmp(const sbp_telemetry_sv_t *a,
   }
 
   ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -277,11 +274,14 @@ int sbp_msg_tel_sv_cmp(const sbp_msg_tel_sv_t *a, const sbp_msg_tel_sv_t *b) {
   }
 
   ret = sbp_u8_cmp(&a->n_sv_tel, &b->n_sv_tel);
-  for (uint8_t i = 0; ret == 0 && i < a->n_sv_tel; i++) {
-    ret = sbp_telemetry_sv_cmp(&a->sv_tel[i], &b->sv_tel[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_sv_tel; i++) {
+    ret = sbp_telemetry_sv_cmp(&a->sv_tel[i], &b->sv_tel[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }

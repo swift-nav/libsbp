@@ -264,9 +264,6 @@ int sbp_msg_bootloader_handshake_resp_cmp(
   }
 
   ret = sbp_msg_bootloader_handshake_resp_version_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -338,9 +335,6 @@ int sbp_msg_bootloader_jump_to_app_cmp(
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->jump, &b->jump);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -482,12 +476,11 @@ int sbp_msg_nap_device_dna_resp_cmp(const sbp_msg_nap_device_dna_resp_t *a,
                                     const sbp_msg_nap_device_dna_resp_t *b) {
   int ret = 0;
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX;
-       i++) {
+  for (uint8_t i = 0; i < SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX; i++) {
     ret = sbp_u8_cmp(&a->dna[i], &b->dna[i]);
-  }
-  if (ret != 0) {
-    return ret;
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -662,8 +655,5 @@ int sbp_msg_bootloader_handshake_dep_a_cmp(
   int ret = 0;
 
   ret = sbp_msg_bootloader_handshake_dep_a_handshake_strcmp(a, b);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

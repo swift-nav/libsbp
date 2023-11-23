@@ -102,9 +102,6 @@ int sbp_msg_odometry_cmp(const sbp_msg_odometry_t *a,
   }
 
   ret = sbp_u8_cmp(&a->flags, &b->flags);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -206,8 +203,5 @@ int sbp_msg_wheeltick_cmp(const sbp_msg_wheeltick_t *a,
   }
 
   ret = sbp_s32_cmp(&a->ticks, &b->ticks);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }

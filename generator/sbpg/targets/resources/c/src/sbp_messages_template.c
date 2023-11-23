@@ -271,18 +271,22 @@ int (((m.cmp_fn)))(const (((m.type_name))) *a, const (((m.type_name))) *b) {
   ((*- else *))
   ((*- if f.packing == "variable-array" *))
   ret = sbp_u8_cmp(&a->(((f.size_fn))), &b->(((f.size_fn))));
+  if (ret != 0) { return ret; }
   ((*- endif *))
   ((*- if f.packing == "fixed-array" *))
   ((*- set max_loop = f.max_items_macro *))
   ((*- else *))
   ((*- set max_loop = "a->" + f.size_fn *))
   ((*- endif *))
-  for (uint8_t i = 0; ret == 0 && i < (((max_loop))); i++)
+  for (uint8_t i = 0;  i < (((max_loop))); i++)
   {
     ret = (((f.cmp_fn)))(&a->(((f.name)))[i], &b->(((f.name)))[i]);
+    if (ret != 0) { return ret; }
   }
   ((*- endif *))
+  ((*- if not loop.last *))
   if (ret != 0) { return ret; }
+  ((*- endif *))
   ((*- endfor *))
   return ret;
 }

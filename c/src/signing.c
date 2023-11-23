@@ -132,9 +132,6 @@ int sbp_utc_time_cmp(const sbp_utc_time_t *a, const sbp_utc_time_t *b) {
   }
 
   ret = sbp_u32_cmp(&a->ns, &b->ns);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -203,11 +200,11 @@ int sbp_ecdsa_signature_cmp(const sbp_ecdsa_signature_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_ECDSA_SIGNATURE_DATA_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_ECDSA_SIGNATURE_DATA_MAX; i++) {
     ret = sbp_u8_cmp(&a->data[i], &b->data[i]);
-  }
-  if (ret != 0) {
-    return ret;
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -314,9 +311,11 @@ int sbp_msg_ecdsa_certificate_cmp(const sbp_msg_ecdsa_certificate_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ECDSA_CERTIFICATE_CERTIFICATE_ID_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ECDSA_CERTIFICATE_CERTIFICATE_ID_MAX; i++) {
     ret = sbp_u8_cmp(&a->certificate_id[i], &b->certificate_id[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
@@ -328,11 +327,14 @@ int sbp_msg_ecdsa_certificate_cmp(const sbp_msg_ecdsa_certificate_t *a,
   }
 
   ret = sbp_u8_cmp(&a->n_certificate_bytes, &b->n_certificate_bytes);
-  for (uint8_t i = 0; ret == 0 && i < a->n_certificate_bytes; i++) {
-    ret = sbp_u8_cmp(&a->certificate_bytes[i], &b->certificate_bytes[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_certificate_bytes; i++) {
+    ret = sbp_u8_cmp(&a->certificate_bytes[i], &b->certificate_bytes[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -443,29 +445,35 @@ int sbp_msg_certificate_chain_cmp(const sbp_msg_certificate_chain_t *a,
                                   const sbp_msg_certificate_chain_t *b) {
   int ret = 0;
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_CERTIFICATE_CHAIN_ROOT_CERTIFICATE_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_CERTIFICATE_CHAIN_ROOT_CERTIFICATE_MAX; i++) {
     ret = sbp_u8_cmp(&a->root_certificate[i], &b->root_certificate[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_CERTIFICATE_CHAIN_INTERMEDIATE_CERTIFICATE_MAX;
-       i++) {
+       i < SBP_MSG_CERTIFICATE_CHAIN_INTERMEDIATE_CERTIFICATE_MAX; i++) {
     ret = sbp_u8_cmp(&a->intermediate_certificate[i],
                      &b->intermediate_certificate[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_CERTIFICATE_CHAIN_CORRECTIONS_CERTIFICATE_MAX;
+  for (uint8_t i = 0; i < SBP_MSG_CERTIFICATE_CHAIN_CORRECTIONS_CERTIFICATE_MAX;
        i++) {
     ret = sbp_u8_cmp(&a->corrections_certificate[i],
                      &b->corrections_certificate[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
@@ -477,9 +485,6 @@ int sbp_msg_certificate_chain_cmp(const sbp_msg_certificate_chain_t *a,
   }
 
   ret = sbp_ecdsa_signature_cmp(&a->signature, &b->signature);
-  if (ret != 0) {
-    return ret;
-  }
   return ret;
 }
 
@@ -596,32 +601,36 @@ int sbp_msg_certificate_chain_dep_cmp(
     const sbp_msg_certificate_chain_dep_t *b) {
   int ret = 0;
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_CERTIFICATE_CHAIN_DEP_ROOT_CERTIFICATE_MAX;
+  for (uint8_t i = 0; i < SBP_MSG_CERTIFICATE_CHAIN_DEP_ROOT_CERTIFICATE_MAX;
        i++) {
     ret = sbp_u8_cmp(&a->root_certificate[i], &b->root_certificate[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   for (uint8_t i = 0;
-       ret == 0 &&
-       i < SBP_MSG_CERTIFICATE_CHAIN_DEP_INTERMEDIATE_CERTIFICATE_MAX;
-       i++) {
+       i < SBP_MSG_CERTIFICATE_CHAIN_DEP_INTERMEDIATE_CERTIFICATE_MAX; i++) {
     ret = sbp_u8_cmp(&a->intermediate_certificate[i],
                      &b->intermediate_certificate[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   for (uint8_t i = 0;
-       ret == 0 &&
-       i < SBP_MSG_CERTIFICATE_CHAIN_DEP_CORRECTIONS_CERTIFICATE_MAX;
-       i++) {
+       i < SBP_MSG_CERTIFICATE_CHAIN_DEP_CORRECTIONS_CERTIFICATE_MAX; i++) {
     ret = sbp_u8_cmp(&a->corrections_certificate[i],
                      &b->corrections_certificate[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
@@ -632,12 +641,11 @@ int sbp_msg_certificate_chain_dep_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_CERTIFICATE_CHAIN_DEP_SIGNATURE_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_CERTIFICATE_CHAIN_DEP_SIGNATURE_MAX; i++) {
     ret = sbp_u8_cmp(&a->signature[i], &b->signature[i]);
-  }
-  if (ret != 0) {
-    return ret;
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -765,9 +773,11 @@ int sbp_msg_ecdsa_signature_cmp(const sbp_msg_ecdsa_signature_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ECDSA_SIGNATURE_CERTIFICATE_ID_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ECDSA_SIGNATURE_CERTIFICATE_ID_MAX; i++) {
     ret = sbp_u8_cmp(&a->certificate_id[i], &b->certificate_id[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
@@ -779,11 +789,14 @@ int sbp_msg_ecdsa_signature_cmp(const sbp_msg_ecdsa_signature_t *a,
   }
 
   ret = sbp_u8_cmp(&a->n_signed_messages, &b->n_signed_messages);
-  for (uint8_t i = 0; ret == 0 && i < a->n_signed_messages; i++) {
-    ret = sbp_u8_cmp(&a->signed_messages[i], &b->signed_messages[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_signed_messages; i++) {
+    ret = sbp_u8_cmp(&a->signed_messages[i], &b->signed_messages[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -925,9 +938,12 @@ int sbp_msg_ecdsa_signature_dep_b_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ECDSA_SIGNATURE_DEP_B_CERTIFICATE_ID_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ECDSA_SIGNATURE_DEP_B_CERTIFICATE_ID_MAX;
+       i++) {
     ret = sbp_u8_cmp(&a->certificate_id[i], &b->certificate_id[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
@@ -938,20 +954,25 @@ int sbp_msg_ecdsa_signature_dep_b_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ECDSA_SIGNATURE_DEP_B_SIGNATURE_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ECDSA_SIGNATURE_DEP_B_SIGNATURE_MAX; i++) {
     ret = sbp_u8_cmp(&a->signature[i], &b->signature[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_u8_cmp(&a->n_signed_messages, &b->n_signed_messages);
-  for (uint8_t i = 0; ret == 0 && i < a->n_signed_messages; i++) {
-    ret = sbp_u8_cmp(&a->signed_messages[i], &b->signed_messages[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_signed_messages; i++) {
+    ret = sbp_u8_cmp(&a->signed_messages[i], &b->signed_messages[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1087,28 +1108,36 @@ int sbp_msg_ecdsa_signature_dep_a_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ECDSA_SIGNATURE_DEP_A_CERTIFICATE_ID_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ECDSA_SIGNATURE_DEP_A_CERTIFICATE_ID_MAX;
+       i++) {
     ret = sbp_u8_cmp(&a->certificate_id[i], &b->certificate_id[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ECDSA_SIGNATURE_DEP_A_SIGNATURE_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ECDSA_SIGNATURE_DEP_A_SIGNATURE_MAX; i++) {
     ret = sbp_u8_cmp(&a->signature[i], &b->signature[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_u8_cmp(&a->n_signed_messages, &b->n_signed_messages);
-  for (uint8_t i = 0; ret == 0 && i < a->n_signed_messages; i++) {
-    ret = sbp_u8_cmp(&a->signed_messages[i], &b->signed_messages[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_signed_messages; i++) {
+    ret = sbp_u8_cmp(&a->signed_messages[i], &b->signed_messages[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1211,20 +1240,26 @@ int sbp_msg_ed25519_certificate_dep_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ED25519_CERTIFICATE_DEP_FINGERPRINT_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ED25519_CERTIFICATE_DEP_FINGERPRINT_MAX;
+       i++) {
     ret = sbp_u8_cmp(&a->fingerprint[i], &b->fingerprint[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_u8_cmp(&a->n_certificate_bytes, &b->n_certificate_bytes);
-  for (uint8_t i = 0; ret == 0 && i < a->n_certificate_bytes; i++) {
-    ret = sbp_u8_cmp(&a->certificate_bytes[i], &b->certificate_bytes[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_certificate_bytes; i++) {
+    ret = sbp_u8_cmp(&a->certificate_bytes[i], &b->certificate_bytes[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1326,28 +1361,36 @@ int sbp_msg_ed25519_signature_dep_a_cmp(
     const sbp_msg_ed25519_signature_dep_a_t *b) {
   int ret = 0;
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ED25519_SIGNATURE_DEP_A_SIGNATURE_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ED25519_SIGNATURE_DEP_A_SIGNATURE_MAX; i++) {
     ret = sbp_u8_cmp(&a->signature[i], &b->signature[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ED25519_SIGNATURE_DEP_A_FINGERPRINT_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ED25519_SIGNATURE_DEP_A_FINGERPRINT_MAX;
+       i++) {
     ret = sbp_u8_cmp(&a->fingerprint[i], &b->fingerprint[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_u8_cmp(&a->n_signed_messages, &b->n_signed_messages);
-  for (uint8_t i = 0; ret == 0 && i < a->n_signed_messages; i++) {
-    ret = sbp_u32_cmp(&a->signed_messages[i], &b->signed_messages[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_signed_messages; i++) {
+    ret = sbp_u32_cmp(&a->signed_messages[i], &b->signed_messages[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
@@ -1471,28 +1514,36 @@ int sbp_msg_ed25519_signature_dep_b_cmp(
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ED25519_SIGNATURE_DEP_B_SIGNATURE_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ED25519_SIGNATURE_DEP_B_SIGNATURE_MAX; i++) {
     ret = sbp_u8_cmp(&a->signature[i], &b->signature[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
-  for (uint8_t i = 0;
-       ret == 0 && i < SBP_MSG_ED25519_SIGNATURE_DEP_B_FINGERPRINT_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_ED25519_SIGNATURE_DEP_B_FINGERPRINT_MAX;
+       i++) {
     ret = sbp_u8_cmp(&a->fingerprint[i], &b->fingerprint[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   if (ret != 0) {
     return ret;
   }
 
   ret = sbp_u8_cmp(&a->n_signed_messages, &b->n_signed_messages);
-  for (uint8_t i = 0; ret == 0 && i < a->n_signed_messages; i++) {
-    ret = sbp_u32_cmp(&a->signed_messages[i], &b->signed_messages[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_signed_messages; i++) {
+    ret = sbp_u32_cmp(&a->signed_messages[i], &b->signed_messages[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }

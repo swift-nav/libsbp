@@ -91,11 +91,14 @@ int sbp_msg_user_data_cmp(const sbp_msg_user_data_t *a,
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->n_contents, &b->n_contents);
-  for (uint8_t i = 0; ret == 0 && i < a->n_contents; i++) {
-    ret = sbp_u8_cmp(&a->contents[i], &b->contents[i]);
-  }
   if (ret != 0) {
     return ret;
+  }
+  for (uint8_t i = 0; i < a->n_contents; i++) {
+    ret = sbp_u8_cmp(&a->contents[i], &b->contents[i]);
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }

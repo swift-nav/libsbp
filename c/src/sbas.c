@@ -116,11 +116,11 @@ int sbp_msg_sbas_raw_cmp(const sbp_msg_sbas_raw_t *a,
     return ret;
   }
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_SBAS_RAW_DATA_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_SBAS_RAW_DATA_MAX; i++) {
     ret = sbp_u8_cmp(&a->data[i], &b->data[i]);
-  }
-  if (ret != 0) {
-    return ret;
+    if (ret != 0) {
+      return ret;
+    }
   }
   return ret;
 }
