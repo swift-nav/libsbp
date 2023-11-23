@@ -11,14 +11,14 @@
  */
 
 #include <check.h>
-#include <libsbp/legacy/imu.h>
-#include <libsbp/legacy/navigation.h>
-#include <libsbp/legacy/observation.h>
-#include <libsbp/legacy/system.h>
+#include <libsbp/imu.h>
+#include <libsbp/navigation.h>
+#include <libsbp/observation.h>
+#include <libsbp/system.h>
 #include <stdio.h>
 
 START_TEST(test_nav_bitfields) {
-  msg_gps_time_t gps_t = {.wn = 1, .tow = 100, .ns_residual = 1, .flags = 0};
+  sbp_msg_gps_time_t gps_t = {.wn = 1, .tow = 100, .ns_residual = 1, .flags = 0};
 
   SBP_GPS_TIME_TIME_SOURCE_SET(gps_t.flags, SBP_GPS_TIME_TIME_SOURCE_NONE);
   fail_unless(gps_t.flags == 0);
@@ -32,7 +32,7 @@ START_TEST(test_nav_bitfields) {
   SBP_GPS_TIME_TIME_SOURCE_SET(gps_t.flags,
                                SBP_GPS_TIME_TIME_SOURCE_PROPAGATED);
 
-  msg_pos_llh_t pos = {.flags = 0};
+  sbp_msg_pos_llh_t pos = {.flags = 0};
   uint8_t ins_mode = SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_GET(pos.flags);
   fail_unless(ins_mode == 0);
   SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_SET(
@@ -45,7 +45,7 @@ START_TEST(test_nav_bitfields) {
 END_TEST
 
 START_TEST(test_imu_bitfields) {
-  msg_imu_raw_t imu = {.tow = 100};
+  sbp_msg_imu_raw_t imu = {.tow = 100};
   SBP_IMU_RAW_TIME_STATUS_SET(
       imu.tow,
       SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_TIME_OF_SYSTEM_STARTUP);
@@ -61,7 +61,7 @@ END_TEST
 
 START_TEST(test_ins_status_bitfields) {
   // TODO(?) : This test case currently failing
-  msg_ins_status_t ins_status = {.flags = 0};
+  sbp_msg_ins_status_t ins_status = {.flags = 0};
   SBP_INS_STATUS_INS_TYPE_SET(
       ins_status.flags, SBP_INS_STATUS_INS_TYPE_SMOOTHPOSE_LOOSELY_COUPLED);
   fail_unless(ins_status.flags == 0);
