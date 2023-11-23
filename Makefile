@@ -382,7 +382,7 @@ test-c:
 	$(MAKE) do-all-tests
 	$(call announce-end,"Finished running C tests")
 
-test-c-v4:
+test-c-modern:
 	$(call announce-begin,"Running C tests")
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
