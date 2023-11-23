@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-#include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/cpp/frame_handler.h>
 
@@ -36,7 +36,7 @@ class SbpFileReader : public sbp::IReader {
 
 class ECEFHandler : private sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t> {
   public:
-    ECEFHandler(sbp::State *state) : sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
+    ECEFHandler(sbp::LegacyState *state) : sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
     }
 
     void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_gps_time_t& msg) {
@@ -55,7 +55,7 @@ class ECEFHandler : private sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t> 
 
 class LLHFrameHandler : private sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t> {
   public:
-    LLHFrameHandler(sbp::State *state) : sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t>(state) {
+    LLHFrameHandler(sbp::LegacyState *state) : sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t>(state) {
     }
 
     void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
@@ -74,7 +74,7 @@ class LLHFrameHandler : private sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t>
 
 class EverythingHandler : private sbp::AllFrameHandler {
   public:
-    EverythingHandler(sbp::State *state) : sbp::AllFrameHandler(state) {
+    EverythingHandler(sbp::LegacyState *state) : sbp::AllFrameHandler(state) {
     }
 
     void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
@@ -102,7 +102,7 @@ int main(int argc, char **argv)
     exit(EXIT_FAILURE);
   }
 
-  sbp::State s;
+  sbp::LegacyState s;
   ECEFHandler ecef_handler(&s);
   LLHFrameHandler llh_handler(&s);
   EverythingHandler everything_handler(&s);
