@@ -14,6 +14,7 @@
 #define SBP_LEGACY_CPP_LEGACY_STATE_H
 
 #include <libsbp/cpp/state.h>
+#include <libsbp/legacy/compat.h>
 
 SBP_MESSAGE(
   "The legacy libsbp API has been deprecated. This file and all symbols contained will "
