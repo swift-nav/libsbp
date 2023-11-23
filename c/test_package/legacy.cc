@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <iostream>
 
-#include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/frame_handler.h>
 
 struct FileBase {
@@ -52,7 +52,7 @@ public:
 
 class MessageHandler : public sbp::AllFrameHandler {
 public:
-  MessageHandler(sbp::State *input_state, sbp::State *output_state) : AllFrameHandler(input_state),
+  MessageHandler(sbp::LegacyState *input_state, sbp::LegacyState *output_state) : AllFrameHandler(input_state),
                                                                       output_state_(output_state) {}
 
   void handle_sbp_frame(uint16_t sender_id, uint16_t message_type, uint8_t payload_length, uint8_t *payload,
@@ -64,7 +64,7 @@ public:
   }
 
 private:
-  sbp::State *const output_state_;
+  sbp::LegacyState *const output_state_;
 };
 
 int main() {
@@ -81,8 +81,8 @@ int main() {
     return EXIT_FAILURE;
   }
 
-  sbp::State input_state(&input_file, nullptr);
-  sbp::State output_state(nullptr, &output_file);
+  sbp::LegacyState input_state(&input_file, nullptr);
+  sbp::LegacyState output_state(nullptr, &output_file);
   MessageHandler message_handler(&input_state, &output_state);
 
   s8 ret = 0;

@@ -23,6 +23,8 @@ namespace sbp {
 
 class SBP_DEPRECATED LegacyState : public State {
 public:
+  using State::State;
+
   SBP_DEPRECATED s8 send_message(u16 msg_type, u16 sender_id, u8 length, const u8 payload[]) {
     // NOLINTNEXTLINE
     return sbp_payload_send(get_state(), msg_type, sender_id, length,
