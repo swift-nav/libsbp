@@ -17,7 +17,7 @@
 #include <cassert>
 #include <cstddef>
 
-#include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 
 SBP_MESSAGE(
@@ -81,7 +81,7 @@ inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
  * @example
  * class ECEFHandler : private sbp::FrameHandler<msg_gps_time_t, msg_pos_ecef_t> {
  *   public:
- *     ECEFHandler(sbp::State *state) : sbp::FrameHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
+ *     ECEFHandler(sbp::LegacyState *state) : sbp::FrameHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
  *       // The callbacks have already been registered
  *       // Perform other initialization tasks
  *     }
@@ -99,12 +99,12 @@ template<typename ...MsgTypes>
 class SBP_DEPRECATED FrameHandler {
     static constexpr std::size_t kMsgCount = sizeof...(MsgTypes);
 
-    State &state_;
+    LegacyState &state_;
     std::array<sbp_msg_callbacks_node_t, kMsgCount> callback_nodes_;
 
   public:
 
-    explicit FrameHandler(State *state) : state_(*state), callback_nodes_() {
+    explicit FrameHandler(LegacyState *state) : state_(*state), callback_nodes_() {
         static constexpr std::array<uint16_t, kMsgCount> ids = { sbp::MessageTraits<MsgTypes>::id... };
 
         for (std::size_t i = 0; i < kMsgCount; ++i) {
@@ -156,7 +156,7 @@ class SBP_DEPRECATED FrameHandler {
  * @example
  * class EverythingHandler : private sbp::AllFrameHandler {
  *   public:
- *     EverythingHandler(sbp::State *state) : sbp::AllFrameHandler(state) {
+ *     EverythingHandler(sbp::LegacyState *state) : sbp::AllFrameHandler(state) {
  *       // The callbacks have already been registered
  *       // Perform other initialization tasks
  *     }
@@ -170,12 +170,12 @@ class SBP_DEPRECATED FrameHandler {
  *
  */
 class SBP_DEPRECATED AllFrameHandler {
-    State &state_;
+    LegacyState &state_;
     sbp_msg_callbacks_node_t callback_node_;
 
   public:
 
-    explicit AllFrameHandler(State *state) : state_(*state), callback_node_() {
+    explicit AllFrameHandler(LegacyState *state) : state_(*state), callback_node_() {
       sbp_all_payload_callback_register(state_.get_state(),
               sbp_frame_cb_passthrough<AllFrameHandler>,
               this,

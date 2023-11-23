@@ -48,6 +48,7 @@ class State {
     return instance->reader_->read(buff, n);
   }
 
+protected:
   static s32 write_func(u8 *buff, u32 n, void *ctx) {
     State *instance = static_cast<State *>(ctx);
     return instance->writer_->write(buff, n);
@@ -74,16 +75,6 @@ class State {
 
   s8 process() {
     return sbp_process(&state_, &read_func);
-  }
-
-  s8 send_message(u16 msg_type, u16 sender_id, u8 length, const u8 payload[]) {
-    // NOLINTNEXTLINE
-    return sbp_payload_send(&state_, msg_type, sender_id, length, const_cast<u8 *>(payload), &write_func);
-  }
-
-  s8 process_payload(u16 sender_id, u16 msg_type, u8 msg_length, const u8 payload[]) {
-    // NOLINTNEXTLINE
-    return sbp_payload_process(&state_, sender_id, msg_type, msg_length, const_cast<u8 *>(payload));
   }
 
   s8 process_message(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg) {

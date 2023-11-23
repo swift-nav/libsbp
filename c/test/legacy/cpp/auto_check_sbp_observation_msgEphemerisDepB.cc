@@ -17,7 +17,6 @@
 #include <gtest/gtest.h>
 
 #include <libsbp/common.h>
-#include <libsbp/cpp/state.h>
 
 // Obviously we don't normally want to silence this message, but we also need to
 // still test the legacy implementation for as long as it exists. By silencing
@@ -26,19 +25,20 @@
 #undef SBP_MESSAGE
 #define SBP_MESSAGE(x)
 #endif
+#include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/observation.h>
 class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB0
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
   Test_legacy_auto_check_sbp_observation_msgEphemerisDepB0()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
@@ -221,14 +221,14 @@ TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB0, Test) {
 }
 class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB1
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
   Test_legacy_auto_check_sbp_observation_msgEphemerisDepB1()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
@@ -412,14 +412,14 @@ TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB1, Test) {
 }
 class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB2
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
   Test_legacy_auto_check_sbp_observation_msgEphemerisDepB2()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
@@ -602,14 +602,14 @@ TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB2, Test) {
 }
 class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB3
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
   Test_legacy_auto_check_sbp_observation_msgEphemerisDepB3()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
@@ -793,14 +793,14 @@ TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB3, Test) {
 }
 class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB4
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
   Test_legacy_auto_check_sbp_observation_msgEphemerisDepB4()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),
@@ -984,14 +984,14 @@ TEST_F(Test_legacy_auto_check_sbp_observation_msgEphemerisDepB4, Test) {
 }
 class Test_legacy_auto_check_sbp_observation_msgEphemerisDepB5
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_ephemeris_dep_b_t> {
  public:
   Test_legacy_auto_check_sbp_observation_msgEphemerisDepB5()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_ephemeris_dep_b_t>(this),

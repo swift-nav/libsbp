@@ -34,7 +34,7 @@ struct SbpHeaderParams {
 
 class MsgObsHandler : private sbp::PayloadHandler<msg_obs_t> {
  public:
-  explicit MsgObsHandler(sbp::State *state)
+  explicit MsgObsHandler(sbp::LegacyState *state)
       : sbp::PayloadHandler<msg_obs_t>(state), state_(state) {}
 
   void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
@@ -57,14 +57,14 @@ class MsgObsHandler : private sbp::PayloadHandler<msg_obs_t> {
 
  private:
   SbpHeaderParams header_params_;
-  sbp::State *state_;
+  sbp::LegacyState *state_;
 };
 
 class SbpStdioTest : public ::testing::Test {
  protected:
   static int num_entries_in_file(const std::string &input_file) {
     sbp::SbpFileReader reader = sbp::SbpFileReader(input_file.data());
-    sbp::State state;
+    sbp::LegacyState state;
     state.set_reader(&reader);
     MsgObsHandler handler(&state);
 
@@ -85,7 +85,7 @@ class SbpStdioTest : public ::testing::Test {
                             const std::string &output_file) {
     sbp::SbpFileReader reader = sbp::SbpFileReader(input_file.data());
     sbp::SbpFileWriter writer = sbp::SbpFileWriter(output_file.data());
-    sbp::State state;
+    sbp::LegacyState state;
     state.set_reader(&reader);
     state.set_writer(&writer);
     MsgObsHandler handler(&state);
