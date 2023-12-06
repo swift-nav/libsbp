@@ -17,7 +17,7 @@
   "type": "object",
   "properties": {
     "sequence": {"type": "integer"},
-    "contents": {"type": "array", "items": {"type": "integer"}}
+    "contents": {"type": "string"}
   },
   "required": [
     "sequence",
