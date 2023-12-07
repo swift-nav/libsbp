@@ -1,5 +1,27 @@
 # Changelog
 
+## [v5.0.4](https://github.com/swift-nav/libsbp/tree/v5.0.4) (2023-12-07)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.3...v5.0.4)
+
+**Closed issues:**
+
+- `MsgGpsTime` implementation of `gps\_time` is not checking status flags [\#1363](https://github.com/swift-nav/libsbp/issues/1363)
+
+**Merged pull requests:**
+
+- Fix rust and js tests [\#1383](https://github.com/swift-nav/libsbp/pull/1383) ([woodfell](https://github.com/woodfell))
+- Fix decoding of truncated messages containing variable length arrays [\#1381](https://github.com/swift-nav/libsbp/pull/1381) ([woodfell](https://github.com/woodfell))
+- Replace swiftnav-adam with woodfell for additional reviewers [\#1380](https://github.com/swift-nav/libsbp/pull/1380) ([woodfell](https://github.com/woodfell))
+- Fix incorrect specification of directory contents in read dir resp [\#1379](https://github.com/swift-nav/libsbp/pull/1379) ([woodfell](https://github.com/woodfell))
+- Fix decoding fixed length arrays of struct in python sbp2json [\#1378](https://github.com/swift-nav/libsbp/pull/1378) ([woodfell](https://github.com/woodfell))
+- Increase test coverage of C code [\#1377](https://github.com/swift-nav/libsbp/pull/1377) ([woodfell](https://github.com/woodfell))
+- rust: check more messages for time validity [\#1376](https://github.com/swift-nav/libsbp/pull/1376) ([notoriaga](https://github.com/notoriaga))
+- rust: check time source for MsgGpsTime [\#1375](https://github.com/swift-nav/libsbp/pull/1375) ([notoriaga](https://github.com/notoriaga))
+- Run sonar cloud on C/C++ bindings [\#1374](https://github.com/swift-nav/libsbp/pull/1374) ([woodfell](https://github.com/woodfell))
+- ignore dependabot PRs for additional reviewers action [\#1372](https://github.com/swift-nav/libsbp/pull/1372) ([adrian-kong](https://github.com/adrian-kong))
+- Bon voyage! [\#1370](https://github.com/swift-nav/libsbp/pull/1370) ([pcrumley](https://github.com/pcrumley))
+
 ## [v5.0.3](https://github.com/swift-nav/libsbp/tree/v5.0.3) (2023-10-19)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.2...v5.0.3)
