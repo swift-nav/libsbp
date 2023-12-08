@@ -25,7 +25,7 @@
 /** Protocol minor version. */
 #define SBP_MINOR_VERSION 0
 /** Protocol patch version. */
-#define SBP_PATCH_VERSION 5
+#define SBP_PATCH_VERSION 4
 
 /** Full SBP version string. */
 #define SBP_VERSION "5.0.5-alpha"
