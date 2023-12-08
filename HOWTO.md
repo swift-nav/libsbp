@@ -324,31 +324,31 @@ cargo install cargo-release
 make dist-rust
 ```
 
-If that doesn't work (consider fixing the make target), otherwise try releasing
-`sbp` and `sbp2json` crates separately, first `sbp`, this will do a dry run
-first:
+If that doesn't work (**status** it don't work, consider fixing the make target),
+otherwise try releasing `sbp` and `sbp2json` crates separately, first `sbp`,
+this will do a dry run first:
 
 ```
-cargo release --package sbp <INCREMENTED_TAG>
+cargo release --exclude sbp2json <INCREMENTED_TAG>
 ```
 
 Then use `--execute` to actually run the release:
 
 ```
-cargo release --package sbp <INCREMENTED_TAG> --execute
+cargo release --exclude sbp2json <INCREMENTED_TAG> --execute
 ```
 
 Next, release `sbp2son`, first do a dry-run:
 
 ```
-cargo release --package sbp2json <INCREMENTED_TAG>
+cargo release --exclude sbp <INCREMENTED_TAG>
 ```
 
 Then, reset any modifications from the dry run, and then actually release `sbp2son`:
 
 ```
 git checkout .
-cargo release --package sbp2json <INCREMENTED_TAG> --execute
+cargo release --exclude sbp <INCREMENTED_TAG> --execute
 ```
 
 Then rollback any commits that are created:
