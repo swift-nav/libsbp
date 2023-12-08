@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-sed -i -e "s@^.*TODO.*replace.*sbp.*\$@version = \"$NEW_VERSION\"@" Cargo.toml
+sed -e "s@^.*TODO.*replace.*sbp.*\$@version = \"$NEW_VERSION\"@" Cargo.toml > Cargo.toml.new
+mv Cargo.toml.new Cargo.toml
