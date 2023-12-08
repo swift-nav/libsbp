@@ -209,20 +209,15 @@ inside the container (so you don't have to setup git inside the docker container
     make java jsonschema protobuf
     ```
 
-   For C, Haskell and JavaScript:
+   For C, Haskell and JavaScript (JavaScript, make needs to be run twice to update the package information):
 
     ```shell
     make c haskell javascript rust
+    make javascript
     git add c/include/libsbp/version.h haskell/sbp.cabal javascript/sbp/RELEASE-VERSION package.json package-lock.json rust/sbp/Cargo.toml
     git commit --amend -a -m 'Release <INCREMENTED_TAG>'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
-
-   JavaScript, make needs to be run twice to update the package information
-
-   ```shell
-   make javascript
-   ```
 
 4. Finally, build the docs:
 
