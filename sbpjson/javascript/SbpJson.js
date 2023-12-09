@@ -2468,7 +2468,7 @@ const typeMap = {
         { json: "sequence", js: "sequence", typ: 0 },
     ], "any"),
     "MsgFileioReadDirResp": o([
-        { json: "contents", js: "contents", typ: a(0) },
+        { json: "contents", js: "contents", typ: "" },
         { json: "sequence", js: "sequence", typ: 0 },
     ], "any"),
     "MsgFileioReadReq": o([
