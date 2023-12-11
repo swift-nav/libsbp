@@ -32,6 +32,14 @@ jobs:
           pip3 install tox-run-command
           tox -e py --notest
 
+      - name: Installing Node and Quicktype
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+        run: |
+          npm ci
+          npm install -g quicktype
+
       - uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.1.1
@@ -40,6 +48,7 @@ jobs:
         run: |
           rm c/test/auto_check_*.c c/test/cpp/auto_check_*.cc java/test/auto_check_*.java rust/sbp/tests/integration/auto_check_*.rs
           make gen-c gen-java gen-rust gen-jsonschema gen-haskell gen-python gen-javascript gen-protobuf
+          make quicktype
 
       - name: Check generated tests are up to date
         run: |

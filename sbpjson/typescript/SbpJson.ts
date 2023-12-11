@@ -885,7 +885,7 @@ export interface MsgFileioReadDirReq {
  * packet with no entries. The sequence number in the response is preserved from the request.
  */
 export interface MsgFileioReadDirResp {
-    contents: number[];
+    contents: string;
     sequence: number;
 }
 
@@ -5268,7 +5268,7 @@ const typeMap: any = {
         { json: "sequence", js: "sequence", typ: 0 },
     ], "any"),
     "MsgFileioReadDirResp": o([
-        { json: "contents", js: "contents", typ: a(0) },
+        { json: "contents", js: "contents", typ: "" },
         { json: "sequence", js: "sequence", typ: 0 },
     ], "any"),
     "MsgFileioReadReq": o([

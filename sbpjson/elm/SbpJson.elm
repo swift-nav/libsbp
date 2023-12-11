@@ -1507,7 +1507,7 @@ listing is chunked over multiple SBP packets and the end of the list is identifi
 packet with no entries. The sequence number in the response is preserved from the request.
 -}
 type alias MsgFileioReadDirResp =
-    { contents : Array Int
+    { contents : String
     , sequence : Int
     }
 
@@ -5203,13 +5203,13 @@ encodeMsgFileioReadDirReq x =
 msgFileioReadDirResp : Jdec.Decoder MsgFileioReadDirResp
 msgFileioReadDirResp =
     Jpipe.decode MsgFileioReadDirResp
-        |> Jpipe.required "contents" (Jdec.array Jdec.int)
+        |> Jpipe.required "contents" Jdec.string
         |> Jpipe.required "sequence" Jdec.int
 
 encodeMsgFileioReadDirResp : MsgFileioReadDirResp -> Jenc.Value
 encodeMsgFileioReadDirResp x =
     Jenc.object
-        [ ("contents", makeArrayEncoder Jenc.int x.contents)
+        [ ("contents", Jenc.string x.contents)
         , ("sequence", Jenc.int x.sequence)
         ]
 
