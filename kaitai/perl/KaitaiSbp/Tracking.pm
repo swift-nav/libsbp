@@ -421,7 +421,7 @@ sub _read {
     $self->{corrs} = [];
     my $n_corrs = 3;
     for (my $i = 0; $i < $n_corrs; $i++) {
-        push @{$self->{corrs}}, $self->{_io}->read_u8le();
+        push @{$self->{corrs}}, Tracking::TrackingChannelCorrelationDep->new($self->{_io}, $self, $self->{_root});
     }
 }
 
@@ -645,7 +645,7 @@ sub _read {
     $self->{corrs} = [];
     my $n_corrs = 3;
     for (my $i = 0; $i < $n_corrs; $i++) {
-        push @{$self->{corrs}}, $self->{_io}->read_u8le();
+        push @{$self->{corrs}}, Tracking::TrackingChannelCorrelation->new($self->{_io}, $self, $self->{_root});
     }
 }
 
@@ -942,7 +942,7 @@ sub _read {
     $self->{corrs} = [];
     my $n_corrs = 3;
     for (my $i = 0; $i < $n_corrs; $i++) {
-        push @{$self->{corrs}}, $self->{_io}->read_u8le();
+        push @{$self->{corrs}}, Tracking::TrackingChannelCorrelationDep->new($self->{_io}, $self, $self->{_root});
     }
 }
 

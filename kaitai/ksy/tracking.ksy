@@ -301,7 +301,7 @@ types:
       - id: corrs
         doc: |
           Early, Prompt and Late correlations
-        type: u8
+        type: tracking_channel_correlation
         repeat: expr
         repeat-expr: 3
   
@@ -333,7 +333,7 @@ types:
       - id: corrs
         doc: |
           Early, Prompt and Late correlations
-        type: u8
+        type: tracking_channel_correlation_dep
         repeat: expr
         repeat-expr: 3
   
@@ -352,7 +352,7 @@ types:
       - id: corrs
         doc: |
           Early, Prompt and Late correlations
-        type: u8
+        type: tracking_channel_correlation_dep
         repeat: expr
         repeat-expr: 3
   

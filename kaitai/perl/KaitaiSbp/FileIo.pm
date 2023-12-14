@@ -347,10 +347,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{sequence} = $self->{_io}->read_u4le();
-    $self->{contents} = [];
-    while (!$self->{_io}->is_eof()) {
-        push @{$self->{contents}}, $self->{_io}->read_u1();
-    }
+    $self->{contents} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
 }
 
 sub sequence {

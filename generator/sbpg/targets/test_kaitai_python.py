@@ -33,6 +33,8 @@ def render_source(output_dir, package_spec, jenv=JENV):
   """
   Render and output a .py file containing test cases
   """
+  if len(package_spec.tests) == 0:
+    return
   path, name = package_spec.filepath
   destination_filename = "{}/test_{}.py".format(output_dir, name)
   test_template = JENV.get_template(TEMPLATE_NAME)

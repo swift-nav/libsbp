@@ -93,7 +93,7 @@ def get_type(f, type_map=KAITAI_CODE):
       s = f.options['size'].value
       return """{}
         repeat: expr
-        repeat-expr: {}""".format(type_map.get(f_.type_id, 'u8'), s)
+        repeat-expr: {}""".format(type_map.get(f_.type_id, get_custom_type(fill)), s)
     else:
       return """{}
         repeat: eos""".format(type_map.get(fill, get_custom_type(fill)))
