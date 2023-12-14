@@ -32,10 +32,12 @@ jobs:
           pip3 install tox-run-command
           tox -e py --notest
 
-      - name: Installing Node and Quicktype
+      - name: Installing Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
+
+      - name: Installing Quicktype
         run: |
           npm ci
           npm install -g quicktype
