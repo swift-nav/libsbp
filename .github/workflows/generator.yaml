@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-20.04
     container: 
       image: swiftnav/libsbp-build:latest-master
+      options: --user 1000
       volumes:
         - ${{ github.workspace }}:/mnt/workspace
     steps:
