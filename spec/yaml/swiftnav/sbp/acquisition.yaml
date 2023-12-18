@@ -246,5 +246,3 @@ definitions:
             type: array
             fill: AcqSvProfileDep
             desc: SV profiles during acquisition time
-
-# noddy change
