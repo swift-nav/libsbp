@@ -29,39 +29,67 @@ use Test::More;
 use JSON::PP;
 use MIME::Base64;
 sub test_auto_check_sbp_navigation_msg_protection_level_1() {
-    my $buf = decode_base64("VRYCABAhiOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUsM=");
+    my $buf = decode_base64("VRcCLQNMblQE8i4zNaBZVKcpORXZ9D2hU2iMiVr2MzMzMzOqtECamZmZGVjDQDMzMzMzw3lA5/sm3dC3p1DfGmGkLS66POvjt6C7XXTgaSggIYW8");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
     my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
-    is($msg->{'crc'}, 0xc352, "crc");
+    is($msg->{'crc'}, 0xbc85, "crc");
     
-    is($msg->{'length'}, 33, "length");
+    is($msg->{'length'}, 76, "length");
     
-    is($msg->{'payload'}, "iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "payload");
+    is($msg->{'msg_type'}, 0x217, "msg_type");
     
-    is($msg->{'msg_type'}, 0x216, "msg_type");
+    is($msg->{'payload'}, "blQE8i4zNaBZVKcpORXZ9D2hU2iMiVr2MzMzMzOqtECamZmZGVjDQDMzMzMzw3lA5/sm3dC3p1DfGmGkLS66POvjt6C7XXTgaSggIQ==", "payload");
     
     is($msg->{'preamble'}, 0x55, "preamble");
     
-    is($msg->{'sender'}, 0x1000, "sender");
+    is($msg->{'sender'}, 0x032d, "sender");
 
     my $json = JSON::PP->new->convert_blessed->canonical;
     
-    is($msg->flags(), 0, "flags");
+    is($msg->atpl(), 10663, "atpl");
     
-    is($msg->height(), 0.0, "height");
+    is($msg->ctpl(), 5433, "ctpl");
     
-    is($msg->hpl(), 0, "hpl");
+    is($msg->flags(), 555755625, "flags");
     
-    is($msg->lat(), 0.0, "lat");
+    is($msg->heading(), -529244741, "heading");
     
-    is($msg->lon(), 0.0, "lon");
+    is($msg->height(), 412.2, "height");
     
-    is($msg->tow(), 501867400, "tow");
+    is($msg->hopl(), 26707, "hopl");
     
-    is($msg->vpl(), 0, "vpl");
+    is($msg->hpl(), 41013, "hpl");
+    
+    is($msg->hvpl(), 62681, "hvpl");
+    
+    is($msg->lat(), 5290.2, "lat");
+    
+    is($msg->lon(), 9904.2, "lon");
+    
+    is($msg->pitch(), -1598561301, "pitch");
+    
+    is($msg->popl(), 35212, "popl");
+    
+    is($msg->roll(), 1018834477, "roll");
+    
+    is($msg->ropl(), 63066, "ropl");
+    
+    is($msg->tow(), 4060370030, "tow");
+    
+    is($msg->v_x(), -584647705, "v_x");
+    
+    is($msg->v_y(), 1353168848, "v_y");
+    
+    is($msg->v_z(), -1537140001, "v_z");
+    
+    is($msg->vpl(), 21593, "vpl");
+    
+    is($msg->vvpl(), 41277, "vvpl");
+    
+    is($msg->wn(), 13102, "wn");
 
-    is($json->encode($msg), $json->encode($json->decode(q{{"crc":50002,"flags":0,"height":0.0,"hpl":0,"lat":0.0,"length":33,"lon":0.0,"msg_type":534,"payload":"iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","preamble":85,"sender":4096,"tow":501867400,"vpl":0}})), "raw_json");
+    is($json->encode($msg), $json->encode($json->decode(q{{"atpl":10663,"crc":48261,"ctpl":5433,"flags":555755625,"heading":-529244741,"height":412.2,"hopl":26707,"hpl":41013,"hvpl":62681,"lat":5290.2,"length":76,"lon":9904.2,"msg_type":535,"payload":"blQE8i4zNaBZVKcpORXZ9D2hU2iMiVr2MzMzMzOqtECamZmZGVjDQDMzMzMzw3lA5/sm3dC3p1DfGmGkLS66POvjt6C7XXTgaSggIQ==","pitch":-1598561301,"popl":35212,"preamble":85,"roll":1018834477,"ropl":63066,"sender":813,"tow":4060370030,"v_x":-584647705,"v_y":1353168848,"v_z":-1537140001,"vpl":21593,"vvpl":41277,"wn":13102}})), "raw_json");
 }
 test_auto_check_sbp_navigation_msg_protection_level_1();
 

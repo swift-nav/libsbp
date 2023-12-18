@@ -150,12 +150,7 @@ class FileIo(KaitaiStruct):
 
         def _read(self):
             self.sequence = self._io.read_u4le()
-            self.contents = []
-            i = 0
-            while not self._io.is_eof():
-                self.contents.append(self._io.read_u1())
-                i += 1
-
+            self.contents = (self._io.read_bytes_full()).decode(u"ascii")
 
 
     class MsgFileioReadReq(KaitaiStruct):

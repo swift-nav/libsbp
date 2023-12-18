@@ -158,7 +158,7 @@ deps-python: verify-prereq-python
 
 bundle-javascript: deps-javascript
 	$(call announce-begin,"Building Javascript bundle")
-	cd $(SWIFTNAV_ROOT); npm run webpack
+	cd $(SWIFTNAV_ROOT); NODE_OPTIONS=--openssl-legacy-provider npm run webpack
 	$(call announce-end,"Finished building JavaScript bundle")
 
 deps-javascript: verify-prereq-javascript

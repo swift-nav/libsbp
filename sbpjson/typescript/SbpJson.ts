@@ -227,6 +227,7 @@
  */
 export interface GNSSInputType {
     flags: number;
+    [property: string]: any;
 }
 
 /**
@@ -237,6 +238,7 @@ export interface GridElement {
     index:                  number;
     stec_residuals:         STECResidual[];
     tropo_delay_correction: TroposphericDelayCorrection;
+    [property: string]: any;
 }
 
 /**
@@ -246,6 +248,7 @@ export interface STECResidual {
     residual: number;
     stddev:   number;
     sv_id:    SvID;
+    [property: string]: any;
 }
 
 /**
@@ -254,6 +257,7 @@ export interface STECResidual {
 export interface SvID {
     constellation: number;
     satId:         number;
+    [property: string]: any;
 }
 
 /**
@@ -263,6 +267,7 @@ export interface TroposphericDelayCorrection {
     hydro:  number;
     stddev: number;
     wet:    number;
+    [property: string]: any;
 }
 
 /**
@@ -272,6 +277,7 @@ export interface GridElementNoStd {
     index:                  number;
     stec_residuals:         STECResidualNoStd[];
     tropo_delay_correction: TroposphericDelayCorrectionNoStd;
+    [property: string]: any;
 }
 
 /**
@@ -280,6 +286,7 @@ export interface GridElementNoStd {
 export interface STECResidualNoStd {
     residual: number;
     sv_id:    SvID;
+    [property: string]: any;
 }
 
 /**
@@ -288,6 +295,7 @@ export interface STECResidualNoStd {
 export interface TroposphericDelayCorrectionNoStd {
     hydro: number;
     wet:   number;
+    [property: string]: any;
 }
 
 /**
@@ -296,6 +304,7 @@ export interface TroposphericDelayCorrectionNoStd {
  */
 export interface IMUInputType {
     flags: number;
+    [property: string]: any;
 }
 
 export interface MsgAcknowledge {
@@ -305,6 +314,7 @@ export interface MsgAcknowledge {
     request_id:                number;
     response_code:             number;
     solution_id:               number;
+    [property: string]: any;
 }
 
 /**
@@ -317,6 +327,7 @@ export interface MsgAcqResult {
     cn0: number;
     cp:  number;
     sid: GnssSignal;
+    [property: string]: any;
 }
 
 /**
@@ -325,6 +336,7 @@ export interface MsgAcqResult {
 export interface GnssSignal {
     code: number;
     sat:  number;
+    [property: string]: any;
 }
 
 /**
@@ -333,6 +345,7 @@ export interface GnssSignal {
  */
 export interface MsgAcqSvProfile {
     acq_sv_profile: AcqSvProfile[];
+    [property: string]: any;
 }
 
 /**
@@ -352,6 +365,7 @@ export interface AcqSvProfile {
     status:     number;
     time_spent: number;
     timestamp:  number;
+    [property: string]: any;
 }
 
 /**
@@ -361,6 +375,7 @@ export interface AcqSvProfile {
 export interface MsgAgeCorrections {
     age: number;
     tow: number;
+    [property: string]: any;
 }
 
 /**
@@ -380,6 +395,7 @@ export interface MsgAlmanacGPS {
     omegadot: number;
     sqrta:    number;
     w:        number;
+    [property: string]: any;
 }
 
 export interface AlmanacCommonContent {
@@ -389,6 +405,7 @@ export interface AlmanacCommonContent {
     toa:          GpsTimeSEC;
     ura:          number;
     valid:        number;
+    [property: string]: any;
 }
 
 /**
@@ -398,6 +415,7 @@ export interface AlmanacCommonContent {
 export interface GpsTimeSEC {
     tow: number;
     wn:  number;
+    [property: string]: any;
 }
 
 /**
@@ -414,6 +432,7 @@ export interface MsgAlmanacGlo {
     t:           number;
     t_dot:       number;
     t_lambda_na: number;
+    [property: string]: any;
 }
 
 /**
@@ -432,6 +451,7 @@ export interface MsgAngularRate {
     x:     number;
     y:     number;
     z:     number;
+    [property: string]: any;
 }
 
 /**
@@ -444,6 +464,7 @@ export interface MsgBasePosECEF {
     x: number;
     y: number;
     z: number;
+    [property: string]: any;
 }
 
 /**
@@ -456,6 +477,7 @@ export interface MsgBasePosLLH {
     height: number;
     lat:    number;
     lon:    number;
+    [property: string]: any;
 }
 
 /**
@@ -474,6 +496,7 @@ export interface MsgBaselineECEF {
     x:        number;
     y:        number;
     z:        number;
+    [property: string]: any;
 }
 
 /**
@@ -487,6 +510,7 @@ export interface MsgBaselineHeading {
     heading: number;
     n_sats:  number;
     tow:     number;
+    [property: string]: any;
 }
 
 /**
@@ -507,6 +531,7 @@ export interface MsgBaselineNED {
     n_sats:     number;
     tow:        number;
     v_accuracy: number;
+    [property: string]: any;
 }
 
 /**
@@ -517,6 +542,7 @@ export interface MsgBaselineNED {
 export interface MsgBootloaderHandshakeResp {
     flags:   number;
     version: string;
+    [property: string]: any;
 }
 
 /**
@@ -524,6 +550,7 @@ export interface MsgBootloaderHandshakeResp {
  */
 export interface MsgBootloaderJumpToApp {
     jump: number;
+    [property: string]: any;
 }
 
 /**
@@ -533,6 +560,7 @@ export interface MsgBootloaderJumpToApp {
 export interface MsgCellModemStatus {
     signal_error_rate: number;
     signal_strength:   number;
+    [property: string]: any;
 }
 
 export interface MsgCertificateChain {
@@ -541,6 +569,7 @@ export interface MsgCertificateChain {
     intermediate_certificate: number[];
     root_certificate:         number[];
     signature:                ECDSASignature;
+    [property: string]: any;
 }
 
 export interface UTCTime {
@@ -551,11 +580,13 @@ export interface UTCTime {
     ns:      number;
     seconds: number;
     year:    number;
+    [property: string]: any;
 }
 
 export interface ECDSASignature {
     data: number[];
     len:  number;
+    [property: string]: any;
 }
 
 /**
@@ -566,6 +597,7 @@ export interface ECDSASignature {
 export interface MsgCommandOutput {
     line:     string;
     sequence: number;
+    [property: string]: any;
 }
 
 /**
@@ -575,6 +607,7 @@ export interface MsgCommandOutput {
 export interface MsgCommandReq {
     command:  string;
     sequence: number;
+    [property: string]: any;
 }
 
 /**
@@ -584,6 +617,7 @@ export interface MsgCommandReq {
 export interface MsgCommandResp {
     code:     number;
     sequence: number;
+    [property: string]: any;
 }
 
 /**
@@ -594,6 +628,7 @@ export interface MsgCommandResp {
 export interface MsgCsacTelemetry {
     id:        number;
     telemetry: string;
+    [property: string]: any;
 }
 
 /**
@@ -604,6 +639,7 @@ export interface MsgCsacTelemetry {
 export interface MsgCsacTelemetryLabels {
     id:               number;
     telemetry_labels: string;
+    [property: string]: any;
 }
 
 /**
@@ -616,6 +652,7 @@ export interface MsgDeviceMonitor {
     cpu_vint:        number;
     dev_vin:         number;
     fe_temperature:  number;
+    [property: string]: any;
 }
 
 /**
@@ -627,6 +664,7 @@ export interface MsgDgnssStatus {
     latency:     number;
     num_signals: number;
     source:      string;
+    [property: string]: any;
 }
 
 /**
@@ -644,6 +682,7 @@ export interface MsgDops {
     tdop:  number;
     tow:   number;
     vdop:  number;
+    [property: string]: any;
 }
 
 /**
@@ -654,6 +693,7 @@ export interface MsgEcdsaCertificate {
     certificate_id:    number[];
     flags:             number;
     n_msg:             number;
+    [property: string]: any;
 }
 
 /**
@@ -666,6 +706,7 @@ export interface MsgEcdsaSignature {
     signature:         ECDSASignature;
     signed_messages:   number[];
     stream_counter:    number;
+    [property: string]: any;
 }
 
 /**
@@ -698,6 +739,7 @@ export interface MsgEphemerisBds {
     tgd2:     number;
     toc:      GpsTimeSEC;
     w:        number;
+    [property: string]: any;
 }
 
 export interface EphemerisCommonContent {
@@ -707,6 +749,7 @@ export interface EphemerisCommonContent {
     toe:          GpsTimeSEC;
     ura:          number;
     valid:        number;
+    [property: string]: any;
 }
 
 /**
@@ -738,6 +781,7 @@ export interface MsgEphemerisGPS {
     tgd:      number;
     toc:      GpsTimeSEC;
     w:        number;
+    [property: string]: any;
 }
 
 /**
@@ -771,6 +815,7 @@ export interface MsgEphemerisGal {
     sqrta:     number;
     toc:       GpsTimeSEC;
     w:         number;
+    [property: string]: any;
 }
 
 /**
@@ -789,6 +834,7 @@ export interface MsgEphemerisGlo {
     pos:    number[];
     tau:    number;
     vel:    number[];
+    [property: string]: any;
 }
 
 /**
@@ -819,6 +865,7 @@ export interface MsgEphemerisQzss {
     tgd:      number;
     toc:      GpsTimeSEC;
     w:        number;
+    [property: string]: any;
 }
 
 export interface MsgEphemerisSbas {
@@ -828,6 +875,7 @@ export interface MsgEphemerisSbas {
     common: EphemerisCommonContent;
     pos:    number[];
     vel:    number[];
+    [property: string]: any;
 }
 
 /**
@@ -840,6 +888,7 @@ export interface MsgEXTEvent {
     pin:         number;
     tow:         number;
     wn:          number;
+    [property: string]: any;
 }
 
 /**
@@ -849,6 +898,7 @@ export interface MsgEXTEvent {
  */
 export interface MsgFileioConfigReq {
     sequence: number;
+    [property: string]: any;
 }
 
 /**
@@ -861,6 +911,7 @@ export interface MsgFileioConfigResp {
     fileio_version: number;
     sequence:       number;
     window_size:    number;
+    [property: string]: any;
 }
 
 /**
@@ -876,6 +927,7 @@ export interface MsgFileioReadDirReq {
     dirname:  string;
     offset:   number;
     sequence: number;
+    [property: string]: any;
 }
 
 /**
@@ -887,6 +939,7 @@ export interface MsgFileioReadDirReq {
 export interface MsgFileioReadDirResp {
     contents: string;
     sequence: number;
+    [property: string]: any;
 }
 
 /**
@@ -902,6 +955,7 @@ export interface MsgFileioReadReq {
     filename:   string;
     offset:     number;
     sequence:   number;
+    [property: string]: any;
 }
 
 /**
@@ -913,6 +967,7 @@ export interface MsgFileioReadReq {
 export interface MsgFileioReadResp {
     contents: number[];
     sequence: number;
+    [property: string]: any;
 }
 
 /**
@@ -922,6 +977,7 @@ export interface MsgFileioReadResp {
  */
 export interface MsgFileioRemove {
     filename: string;
+    [property: string]: any;
 }
 
 /**
@@ -937,6 +993,7 @@ export interface MsgFileioWriteReq {
     filename: string;
     offset:   number;
     sequence: number;
+    [property: string]: any;
 }
 
 /**
@@ -946,6 +1003,7 @@ export interface MsgFileioWriteReq {
  */
 export interface MsgFileioWriteResp {
     sequence: number;
+    [property: string]: any;
 }
 
 /**
@@ -955,6 +1013,7 @@ export interface MsgFileioWriteResp {
  */
 export interface MsgFlashDone {
     response: number;
+    [property: string]: any;
 }
 
 /**
@@ -966,6 +1025,7 @@ export interface MsgFlashDone {
 export interface MsgFlashErase {
     sector_num: number;
     target:     number;
+    [property: string]: any;
 }
 
 /**
@@ -979,6 +1039,7 @@ export interface MsgFlashProgram {
     addr_start: number[];
     data:       number[];
     target:     number;
+    [property: string]: any;
 }
 
 /**
@@ -992,6 +1053,7 @@ export interface MsgFlashReadReq {
     addr_len:   number;
     addr_start: number[];
     target:     number;
+    [property: string]: any;
 }
 
 /**
@@ -1005,6 +1067,7 @@ export interface MsgFlashReadResp {
     addr_len:   number;
     addr_start: number[];
     target:     number;
+    [property: string]: any;
 }
 
 /**
@@ -1018,6 +1081,7 @@ export interface MsgFlashReadResp {
 export interface MsgFrontEndGain {
     if_gain: number[];
     rf_gain: number[];
+    [property: string]: any;
 }
 
 /**
@@ -1033,6 +1097,7 @@ export interface MsgFwd {
     fwd_payload: number[];
     protocol:    number;
     source:      number;
+    [property: string]: any;
 }
 
 /**
@@ -1055,6 +1120,7 @@ export interface MsgGPSTime {
     ns_residual: number;
     tow:         number;
     wn:          number;
+    [property: string]: any;
 }
 
 /**
@@ -1077,6 +1143,7 @@ export interface MsgGPSTimeGnss {
     ns_residual: number;
     tow:         number;
     wn:          number;
+    [property: string]: any;
 }
 
 /**
@@ -1090,6 +1157,7 @@ export interface MsgGloBiases {
     l2ca_bias: number;
     l2p_bias:  number;
     mask:      number;
+    [property: string]: any;
 }
 
 /**
@@ -1099,6 +1167,7 @@ export interface MsgGloBiases {
 export interface MsgGnssCapb {
     gc:     GnssCapb;
     t_nmct: GpsTimeSEC;
+    [property: string]: any;
 }
 
 export interface GnssCapb {
@@ -1117,6 +1186,7 @@ export interface GnssCapb {
     qzss_active: number;
     sbas_active: number;
     sbas_l5:     number;
+    [property: string]: any;
 }
 
 /**
@@ -1129,6 +1199,7 @@ export interface MsgGnssTimeOffset {
     microseconds: number;
     milliseconds: number;
     weeks:        number;
+    [property: string]: any;
 }
 
 /**
@@ -1141,6 +1212,7 @@ export interface MsgGroupDelay {
     t_op:     GpsTimeSEC;
     tgd:      number;
     valid:    number;
+    [property: string]: any;
 }
 
 /**
@@ -1152,6 +1224,7 @@ export interface MsgGroupMeta {
     group_id:     number;
     group_msgs:   number[];
     n_group_msgs: number;
+    [property: string]: any;
 }
 
 /**
@@ -1165,6 +1238,7 @@ export interface MsgGroupMeta {
  */
 export interface MsgHeartbeat {
     flags: number;
+    [property: string]: any;
 }
 
 /**
@@ -1174,6 +1248,7 @@ export interface MsgHeartbeat {
  */
 export interface MsgIarState {
     num_hyps: number;
+    [property: string]: any;
 }
 
 /**
@@ -1185,6 +1260,7 @@ export interface MsgImuAux {
     imu_conf: number;
     imu_type: number;
     temp:     number;
+    [property: string]: any;
 }
 
 /**
@@ -1208,6 +1284,7 @@ export interface MsgImuRaw {
     gyr_z: number;
     tow:   number;
     tow_f: number;
+    [property: string]: any;
 }
 
 /**
@@ -1216,6 +1293,7 @@ export interface MsgImuRaw {
  */
 export interface MsgInsStatus {
     flags: number;
+    [property: string]: any;
 }
 
 /**
@@ -1231,6 +1309,7 @@ export interface MsgInsUpdates {
     tow:        number;
     wheelticks: number;
     zerovel:    number;
+    [property: string]: any;
 }
 
 /**
@@ -1248,6 +1327,7 @@ export interface MsgIono {
     b2:     number;
     b3:     number;
     t_nmct: GpsTimeSEC;
+    [property: string]: any;
 }
 
 /**
@@ -1262,6 +1342,7 @@ export interface MsgLinuxCPUState {
     pid:     number;
     time:    number;
     tname:   string;
+    [property: string]: any;
 }
 
 /**
@@ -1276,6 +1357,7 @@ export interface MsgLinuxMemState {
     pmem:    number;
     time:    number;
     tname:   string;
+    [property: string]: any;
 }
 
 /**
@@ -1286,6 +1368,7 @@ export interface MsgLinuxProcessFdCount {
     fd_count: number;
     index:    number;
     pid:      number;
+    [property: string]: any;
 }
 
 /**
@@ -1294,6 +1377,7 @@ export interface MsgLinuxProcessFdCount {
 export interface MsgLinuxProcessFdSummary {
     most_opened:  string;
     sys_fd_count: number;
+    [property: string]: any;
 }
 
 /**
@@ -1306,6 +1390,7 @@ export interface MsgLinuxProcessSocketCounts {
     socket_count:  number;
     socket_states: number;
     socket_types:  number;
+    [property: string]: any;
 }
 
 /**
@@ -1320,6 +1405,7 @@ export interface MsgLinuxProcessSocketQueues {
     send_queued:        number;
     socket_states:      number;
     socket_types:       number;
+    [property: string]: any;
 }
 
 /**
@@ -1330,6 +1416,7 @@ export interface MsgLinuxSocketUsage {
     max_queue_depth:     number;
     socket_state_counts: number[];
     socket_type_counts:  number[];
+    [property: string]: any;
 }
 
 /**
@@ -1344,6 +1431,7 @@ export interface MsgLinuxSysState {
     procs_starting: number;
     procs_stopping: number;
     time:           number;
+    [property: string]: any;
 }
 
 /**
@@ -1353,6 +1441,7 @@ export interface MsgLinuxSysState {
 export interface MsgLog {
     level: number;
     text:  string;
+    [property: string]: any;
 }
 
 /**
@@ -1361,6 +1450,7 @@ export interface MsgLog {
  */
 export interface MsgM25FlashWriteStatus {
     status: number[];
+    [property: string]: any;
 }
 
 /**
@@ -1372,6 +1462,7 @@ export interface MsgMagRaw {
     mag_z: number;
     tow:   number;
     tow_f: number;
+    [property: string]: any;
 }
 
 /**
@@ -1381,6 +1472,7 @@ export interface MsgMagRaw {
 export interface MsgMaskSatellite {
     mask: number;
     sid:  GnssSignal;
+    [property: string]: any;
 }
 
 /**
@@ -1389,6 +1481,7 @@ export interface MsgMaskSatellite {
  */
 export interface MsgMeasurementState {
     states: MeasurementState[];
+    [property: string]: any;
 }
 
 /**
@@ -1399,6 +1492,7 @@ export interface MsgMeasurementState {
 export interface MeasurementState {
     cn0:   number;
     mesid: GnssSignal;
+    [property: string]: any;
 }
 
 /**
@@ -1409,6 +1503,7 @@ export interface MeasurementState {
  */
 export interface MsgNapDeviceDnaResp {
     dna: number[];
+    [property: string]: any;
 }
 
 /**
@@ -1424,6 +1519,7 @@ export interface MsgNdbEvent {
     recv_time:       number;
     result:          number;
     src_sid:         GnssSignal;
+    [property: string]: any;
 }
 
 /**
@@ -1431,6 +1527,7 @@ export interface MsgNdbEvent {
  */
 export interface MsgNetworkBandwidthUsage {
     interfaces: NetworkUsage[];
+    [property: string]: any;
 }
 
 /**
@@ -1445,6 +1542,7 @@ export interface NetworkUsage {
     rx_bytes:       number;
     total_bytes:    number;
     tx_bytes:       number;
+    [property: string]: any;
 }
 
 /**
@@ -1460,6 +1558,7 @@ export interface MsgNetworkStateResp {
     ipv6_mask_size: number;
     rx_bytes:       number;
     tx_bytes:       number;
+    [property: string]: any;
 }
 
 /**
@@ -1472,6 +1571,7 @@ export interface MsgNetworkStateResp {
 export interface MsgObs {
     header: ObservationHeader;
     obs:    PackedObsContent[];
+    [property: string]: any;
 }
 
 /**
@@ -1480,6 +1580,7 @@ export interface MsgObs {
 export interface ObservationHeader {
     n_obs: number;
     t:     GpsTime;
+    [property: string]: any;
 }
 
 /**
@@ -1491,6 +1592,7 @@ export interface GpsTime {
     ns_residual: number;
     tow:         number;
     wn:          number;
+    [property: string]: any;
 }
 
 /**
@@ -1509,6 +1611,7 @@ export interface PackedObsContent {
     lock:  number;
     P:     number;
     sid:   GnssSignal;
+    [property: string]: any;
 }
 
 /**
@@ -1519,6 +1622,7 @@ export interface PackedObsContent {
 export interface Doppler {
     f: number;
     i: number;
+    [property: string]: any;
 }
 
 /**
@@ -1529,6 +1633,7 @@ export interface Doppler {
 export interface CarrierPhase {
     f: number;
     i: number;
+    [property: string]: any;
 }
 
 /**
@@ -1545,6 +1650,7 @@ export interface MsgOdometry {
     flags:    number;
     tow:      number;
     velocity: number;
+    [property: string]: any;
 }
 
 /**
@@ -1563,6 +1669,7 @@ export interface MsgOrientEuler {
     tow:            number;
     yaw:            number;
     yaw_accuracy:   number;
+    [property: string]: any;
 }
 
 /**
@@ -1583,6 +1690,7 @@ export interface MsgOrientQuat {
     y_accuracy: number;
     z:          number;
     z_accuracy: number;
+    [property: string]: any;
 }
 
 /**
@@ -1591,6 +1699,7 @@ export interface MsgOrientQuat {
 export interface MsgOsr {
     header: ObservationHeader;
     obs:    PackedOsrContent[];
+    [property: string]: any;
 }
 
 /**
@@ -1605,6 +1714,7 @@ export interface PackedOsrContent {
     range_std: number;
     sid:       GnssSignal;
     tropo_std: number;
+    [property: string]: any;
 }
 
 /**
@@ -1626,6 +1736,7 @@ export interface MsgPosECEF {
     x:        number;
     y:        number;
     z:        number;
+    [property: string]: any;
 }
 
 /**
@@ -1653,6 +1764,7 @@ export interface MsgPosECEFCov {
     x:       number;
     y:       number;
     z:       number;
+    [property: string]: any;
 }
 
 /**
@@ -1680,6 +1792,7 @@ export interface MsgPosECEFCovGnss {
     x:       number;
     y:       number;
     z:       number;
+    [property: string]: any;
 }
 
 /**
@@ -1701,6 +1814,7 @@ export interface MsgPosECEFGnss {
     x:        number;
     y:        number;
     z:        number;
+    [property: string]: any;
 }
 
 /**
@@ -1723,6 +1837,7 @@ export interface MsgPosLLH {
     n_sats:     number;
     tow:        number;
     v_accuracy: number;
+    [property: string]: any;
 }
 
 /**
@@ -1752,12 +1867,14 @@ export interface MsgPosLLHAcc {
     orthometric_height:   number;
     tow:                  number;
     v_accuracy:           number;
+    [property: string]: any;
 }
 
 export interface EstimatedHorizontalErrorEllipse {
     orientation: number;
     semi_major:  number;
     semi_minor:  number;
+    [property: string]: any;
 }
 
 /**
@@ -1785,6 +1902,7 @@ export interface MsgPosLLHCov {
     lon:     number;
     n_sats:  number;
     tow:     number;
+    [property: string]: any;
 }
 
 /**
@@ -1812,6 +1930,7 @@ export interface MsgPosLLHCovGnss {
     lon:     number;
     n_sats:  number;
     tow:     number;
+    [property: string]: any;
 }
 
 /**
@@ -1834,6 +1953,7 @@ export interface MsgPosLLHGnss {
     n_sats:     number;
     tow:        number;
     v_accuracy: number;
+    [property: string]: any;
 }
 
 /**
@@ -1867,6 +1987,7 @@ export interface MsgPoseRelative {
     x:           number;
     y:           number;
     z:           number;
+    [property: string]: any;
 }
 
 /**
@@ -1884,6 +2005,7 @@ export interface MsgPoseRelative {
 export interface MsgPpsTime {
     flags: number;
     time:  number;
+    [property: string]: any;
 }
 
 /**
@@ -1912,6 +2034,7 @@ export interface MsgProtectionLevel {
     vpl:     number;
     vvpl:    number;
     wn:      number;
+    [property: string]: any;
 }
 
 export interface MsgReferenceFrameParam {
@@ -1935,6 +2058,7 @@ export interface MsgReferenceFrameParam {
     theta_03:     number;
     tn:           string;
     utn:          number;
+    [property: string]: any;
 }
 
 /**
@@ -1942,6 +2066,7 @@ export interface MsgReferenceFrameParam {
  */
 export interface MsgReset {
     flags: number;
+    [property: string]: any;
 }
 
 /**
@@ -1950,6 +2075,7 @@ export interface MsgReset {
  */
 export interface MsgResetFilters {
     filter: number;
+    [property: string]: any;
 }
 
 /**
@@ -1961,6 +2087,7 @@ export interface MsgSbasRaw {
     message_type: number;
     sid:          GnssSignal;
     tow:          number;
+    [property: string]: any;
 }
 
 /**
@@ -1977,6 +2104,7 @@ export interface MsgSensorAidEvent {
     sensor_state:     number;
     sensor_type:      number;
     time:             number;
+    [property: string]: any;
 }
 
 /**
@@ -1985,6 +2113,7 @@ export interface MsgSensorAidEvent {
  */
 export interface MsgSettingsReadByIndexReq {
     index: number;
+    [property: string]: any;
 }
 
 /**
@@ -2001,6 +2130,7 @@ export interface MsgSettingsReadByIndexReq {
 export interface MsgSettingsReadByIndexResp {
     index:   number;
     setting: string;
+    [property: string]: any;
 }
 
 /**
@@ -2013,6 +2143,7 @@ export interface MsgSettingsReadByIndexResp {
  */
 export interface MsgSettingsReadReq {
     setting: string;
+    [property: string]: any;
 }
 
 /**
@@ -2024,6 +2155,7 @@ export interface MsgSettingsReadReq {
  */
 export interface MsgSettingsReadResp {
     setting: string;
+    [property: string]: any;
 }
 
 /**
@@ -2033,6 +2165,7 @@ export interface MsgSettingsReadResp {
  */
 export interface MsgSettingsRegister {
     setting: string;
+    [property: string]: any;
 }
 
 /**
@@ -2043,6 +2176,7 @@ export interface MsgSettingsRegister {
 export interface MsgSettingsRegisterResp {
     setting: string;
     status:  number;
+    [property: string]: any;
 }
 
 /**
@@ -2055,6 +2189,7 @@ export interface MsgSettingsRegisterResp {
  */
 export interface MsgSettingsWrite {
     setting: string;
+    [property: string]: any;
 }
 
 /**
@@ -2068,6 +2203,7 @@ export interface MsgSettingsWrite {
 export interface MsgSettingsWriteResp {
     setting: string;
     status:  number;
+    [property: string]: any;
 }
 
 /**
@@ -2088,6 +2224,7 @@ export interface MsgSolnMeta {
     sol_in:          SolutionInputType[];
     tow:             number;
     vdop:            number;
+    [property: string]: any;
 }
 
 /**
@@ -2100,6 +2237,7 @@ export interface MsgSolnMeta {
 export interface SolutionInputType {
     flags:       number;
     sensor_type: number;
+    [property: string]: any;
 }
 
 /**
@@ -2113,6 +2251,7 @@ export interface MsgSpecan {
     freq_ref:        number;
     freq_step:       number;
     t:               GpsTime;
+    [property: string]: any;
 }
 
 /**
@@ -2126,6 +2265,7 @@ export interface MsgSsrCodeBiases {
     sid:             GnssSignal;
     time:            GpsTimeSEC;
     update_interval: number;
+    [property: string]: any;
 }
 
 /**
@@ -2135,6 +2275,7 @@ export interface MsgSsrCodeBiases {
 export interface CodeBiasesContent {
     code:  number;
     value: number;
+    [property: string]: any;
 }
 
 export interface MsgSsrCodePhaseBiasesBounds {
@@ -2143,6 +2284,7 @@ export interface MsgSsrCodePhaseBiasesBounds {
     n_sats_signals:     number;
     satellites_signals: CodePhaseBiasesSatSig[];
     ssr_iod:            number;
+    [property: string]: any;
 }
 
 export interface BoundsHeader {
@@ -2151,6 +2293,7 @@ export interface BoundsHeader {
     sol_id:          number;
     time:            GpsTimeSEC;
     update_interval: number;
+    [property: string]: any;
 }
 
 export interface CodePhaseBiasesSatSig {
@@ -2160,6 +2303,7 @@ export interface CodePhaseBiasesSatSig {
     phase_bias_bound_sig: number;
     sat_id:               number;
     signal_id:            number;
+    [property: string]: any;
 }
 
 /**
@@ -2203,6 +2347,7 @@ export interface MsgSsrFlagHighLevel {
     use_iono_grid_points:        number;
     use_iono_tile_sat_los:       number;
     use_tropo_grid_points:       number;
+    [property: string]: any;
 }
 
 export interface MsgSsrFlagIonoGridPointSatLos {
@@ -2210,6 +2355,7 @@ export interface MsgSsrFlagIonoGridPointSatLos {
     grid_point_id: number;
     header:        IntegritySSRHeader;
     n_faulty_los:  number;
+    [property: string]: any;
 }
 
 export interface IntegritySSRHeader {
@@ -2220,18 +2366,21 @@ export interface IntegritySSRHeader {
     ssr_sol_id:  number;
     tile_id:     number;
     tile_set_id: number;
+    [property: string]: any;
 }
 
 export interface MsgSsrFlagIonoGridPoints {
     faulty_points:   number[];
     header:          IntegritySSRHeader;
     n_faulty_points: number;
+    [property: string]: any;
 }
 
 export interface MsgSsrFlagIonoTileSatLos {
     faulty_los:   SvID[];
     header:       IntegritySSRHeader;
     n_faulty_los: number;
+    [property: string]: any;
 }
 
 export interface MsgSsrFlagSatellites {
@@ -2243,12 +2392,14 @@ export interface MsgSsrFlagSatellites {
     obs_time:      GpsTimeSEC;
     seq_num:       number;
     ssr_sol_id:    number;
+    [property: string]: any;
 }
 
 export interface MsgSsrFlagTropoGridPoints {
     faulty_points:   number[];
     header:          IntegritySSRHeader;
     n_faulty_points: number;
+    [property: string]: any;
 }
 
 /**
@@ -2261,6 +2412,7 @@ export interface MsgSsrGriddedCorrection {
     index:                  number;
     stec_residuals:         STECResidual[];
     tropo_delay_correction: TroposphericDelayCorrection;
+    [property: string]: any;
 }
 
 /**
@@ -2276,6 +2428,7 @@ export interface GriddedCorrectionHeader {
     time:                    GpsTimeSEC;
     tropo_quality_indicator: number;
     update_interval:         number;
+    [property: string]: any;
 }
 
 /**
@@ -2296,6 +2449,7 @@ export interface MsgSsrGriddedCorrectionBounds {
     tropo_v_hydro_bound_sig: number;
     tropo_v_wet_bound_mu:    number;
     tropo_v_wet_bound_sig:   number;
+    [property: string]: any;
 }
 
 /**
@@ -2307,6 +2461,7 @@ export interface STECSatElementIntegrity {
     stec_bound_sig:     number;
     stec_bound_sig_dot: number;
     stec_residual:      STECResidual;
+    [property: string]: any;
 }
 
 /**
@@ -2328,6 +2483,7 @@ export interface MsgSsrOrbitClock {
     sid:             GnssSignal;
     time:            GpsTimeSEC;
     update_interval: number;
+    [property: string]: any;
 }
 
 /**
@@ -2343,6 +2499,7 @@ export interface MsgSsrOrbitClockBounds {
     n_sats:             number;
     orbit_clock_bounds: OrbitClockBound[];
     ssr_iod:            number;
+    [property: string]: any;
 }
 
 /**
@@ -2358,6 +2515,7 @@ export interface OrbitClockBound {
     orb_radial_bound_mu:  number;
     orb_radial_bound_sig: number;
     sat_id:               number;
+    [property: string]: any;
 }
 
 export interface MsgSsrOrbitClockBoundsDegradation {
@@ -2366,6 +2524,7 @@ export interface MsgSsrOrbitClockBoundsDegradation {
     orbit_clock_bounds_degradation: OrbitClockBoundDegradation;
     sat_bitmask:                    number;
     ssr_iod:                        number;
+    [property: string]: any;
 }
 
 /**
@@ -2380,6 +2539,7 @@ export interface OrbitClockBoundDegradation {
     orb_cross_bound_sig_dot:  number;
     orb_radial_bound_mu_dot:  number;
     orb_radial_bound_sig_dot: number;
+    [property: string]: any;
 }
 
 /**
@@ -2398,6 +2558,7 @@ export interface MsgSsrPhaseBiases {
     update_interval: number;
     yaw:             number;
     yaw_rate:        number;
+    [property: string]: any;
 }
 
 /**
@@ -2409,6 +2570,7 @@ export interface PhaseBiasesContent {
     discontinuity_counter:      number;
     integer_indicator:          number;
     widelane_integer_indicator: number;
+    [property: string]: any;
 }
 
 export interface MsgSsrSatelliteApc {
@@ -2417,6 +2579,7 @@ export interface MsgSsrSatelliteApc {
     sol_id:          number;
     time:            GpsTimeSEC;
     update_interval: number;
+    [property: string]: any;
 }
 
 /**
@@ -2429,6 +2592,7 @@ export interface SatelliteAPC {
     sat_info: number;
     sid:      GnssSignal;
     svn:      number;
+    [property: string]: any;
 }
 
 export interface MsgSsrStecCorrection {
@@ -2438,6 +2602,7 @@ export interface MsgSsrStecCorrection {
     stec_sat_list: STECSatElement[];
     tile_id:       number;
     tile_set_id:   number;
+    [property: string]: any;
 }
 
 /**
@@ -2447,6 +2612,7 @@ export interface STECSatElement {
     stec_coeff:             number[];
     stec_quality_indicator: number;
     sv_id:                  SvID;
+    [property: string]: any;
 }
 
 /**
@@ -2471,6 +2637,7 @@ export interface MsgSsrTileDefinition {
     tile_set_id:     number;
     time:            GpsTimeSEC;
     update_interval: number;
+    [property: string]: any;
 }
 
 /**
@@ -2481,6 +2648,7 @@ export interface MsgSsrTileDefinition {
 export interface MsgStartup {
     cause:        number;
     startup_type: number;
+    [property: string]: any;
 }
 
 /**
@@ -2493,6 +2661,7 @@ export interface MsgStatusJournal {
     sbp_version:          number;
     sequence_descriptor:  number;
     total_status_reports: number;
+    [property: string]: any;
 }
 
 /**
@@ -2502,6 +2671,7 @@ export interface MsgStatusJournal {
 export interface StatusJournalItem {
     report: SubSystemReport;
     uptime: number;
+    [property: string]: any;
 }
 
 /**
@@ -2512,6 +2682,7 @@ export interface SubSystemReport {
     component: number;
     generic:   number;
     specific:  number;
+    [property: string]: any;
 }
 
 /**
@@ -2530,6 +2701,7 @@ export interface MsgStatusReport {
     sequence:         number;
     status:           SubSystemReport[];
     uptime:           number;
+    [property: string]: any;
 }
 
 /**
@@ -2538,6 +2710,7 @@ export interface MsgStatusReport {
  */
 export interface MsgStmFlashLockSector {
     sector: number;
+    [property: string]: any;
 }
 
 /**
@@ -2546,6 +2719,7 @@ export interface MsgStmFlashLockSector {
  */
 export interface MsgStmFlashUnlockSector {
     sector: number;
+    [property: string]: any;
 }
 
 /**
@@ -2555,6 +2729,7 @@ export interface MsgStmFlashUnlockSector {
  */
 export interface MsgStmUniqueIDResp {
     stm_id: number[];
+    [property: string]: any;
 }
 
 /**
@@ -2563,6 +2738,7 @@ export interface MsgStmUniqueIDResp {
  */
 export interface MsgSvAzEl {
     azel: SvAzEl[];
+    [property: string]: any;
 }
 
 /**
@@ -2572,6 +2748,7 @@ export interface SvAzEl {
     az:  number;
     el:  number;
     sid: GnssSignal;
+    [property: string]: any;
 }
 
 /**
@@ -2583,6 +2760,7 @@ export interface MsgTelSv {
     sv_tel:       TelemetrySV[];
     tow:          number;
     wn:           number;
+    [property: string]: any;
 }
 
 export interface TelemetrySV {
@@ -2595,6 +2773,7 @@ export interface TelemetrySV {
     phase_residual:       number;
     pseudorange_residual: number;
     sid:                  GnssSignal;
+    [property: string]: any;
 }
 
 /**
@@ -2605,6 +2784,7 @@ export interface MsgThreadState {
     cpu:        number;
     name:       string;
     stack_free: number;
+    [property: string]: any;
 }
 
 /**
@@ -2614,6 +2794,7 @@ export interface MsgTrackingIq {
     channel: number;
     corrs:   TrackingChannelCorrelation[];
     sid:     GnssSignal;
+    [property: string]: any;
 }
 
 /**
@@ -2622,6 +2803,7 @@ export interface MsgTrackingIq {
 export interface TrackingChannelCorrelation {
     I: number;
     Q: number;
+    [property: string]: any;
 }
 
 /**
@@ -2630,6 +2812,7 @@ export interface TrackingChannelCorrelation {
  */
 export interface MsgTrackingState {
     states: TrackingChannelState[];
+    [property: string]: any;
 }
 
 /**
@@ -2639,6 +2822,7 @@ export interface TrackingChannelState {
     cn0: number;
     fcn: number;
     sid: GnssSignal;
+    [property: string]: any;
 }
 
 /**
@@ -2656,6 +2840,7 @@ export interface MsgUARTState {
     uart_a:     UARTChannel;
     uart_b:     UARTChannel;
     uart_ftdi:  UARTChannel;
+    [property: string]: any;
 }
 
 /**
@@ -2669,6 +2854,7 @@ export interface Latency {
     current: number;
     lmax:    number;
     lmin:    number;
+    [property: string]: any;
 }
 
 /**
@@ -2683,6 +2869,7 @@ export interface Period {
     current: number;
     pmax:    number;
     pmin:    number;
+    [property: string]: any;
 }
 
 /**
@@ -2696,6 +2883,7 @@ export interface UARTChannel {
     rx_throughput:   number;
     tx_buffer_level: number;
     tx_throughput:   number;
+    [property: string]: any;
 }
 
 /**
@@ -2704,6 +2892,7 @@ export interface UARTChannel {
  */
 export interface MsgUserData {
     contents: number[];
+    [property: string]: any;
 }
 
 /**
@@ -2715,6 +2904,7 @@ export interface MsgUTCLeapSecond {
     count_before: number;
     ref_dn:       number;
     ref_wn:       number;
+    [property: string]: any;
 }
 
 /**
@@ -2734,6 +2924,7 @@ export interface MsgUTCTime {
     seconds: number;
     tow:     number;
     year:    number;
+    [property: string]: any;
 }
 
 /**
@@ -2753,6 +2944,7 @@ export interface MsgUTCTimeGnss {
     seconds: number;
     tow:     number;
     year:    number;
+    [property: string]: any;
 }
 
 /**
@@ -2780,6 +2972,7 @@ export interface MsgVelBody {
     x:       number;
     y:       number;
     z:       number;
+    [property: string]: any;
 }
 
 /**
@@ -2804,6 +2997,7 @@ export interface MsgVelCog {
     tow:           number;
     v_up:          number;
     v_up_accuracy: number;
+    [property: string]: any;
 }
 
 /**
@@ -2822,6 +3016,7 @@ export interface MsgVelECEF {
     x:        number;
     y:        number;
     z:        number;
+    [property: string]: any;
 }
 
 /**
@@ -2845,6 +3040,7 @@ export interface MsgVelECEFCov {
     x:       number;
     y:       number;
     z:       number;
+    [property: string]: any;
 }
 
 /**
@@ -2868,6 +3064,7 @@ export interface MsgVelECEFCovGnss {
     x:       number;
     y:       number;
     z:       number;
+    [property: string]: any;
 }
 
 /**
@@ -2886,6 +3083,7 @@ export interface MsgVelECEFGnss {
     x:        number;
     y:        number;
     z:        number;
+    [property: string]: any;
 }
 
 /**
@@ -2906,6 +3104,7 @@ export interface MsgVelNED {
     n_sats:     number;
     tow:        number;
     v_accuracy: number;
+    [property: string]: any;
 }
 
 /**
@@ -2931,6 +3130,7 @@ export interface MsgVelNEDCov {
     n:       number;
     n_sats:  number;
     tow:     number;
+    [property: string]: any;
 }
 
 /**
@@ -2956,6 +3156,7 @@ export interface MsgVelNEDCovGnss {
     n:       number;
     n_sats:  number;
     tow:     number;
+    [property: string]: any;
 }
 
 /**
@@ -2976,6 +3177,7 @@ export interface MsgVelNEDGnss {
     n_sats:     number;
     tow:        number;
     v_accuracy: number;
+    [property: string]: any;
 }
 
 /**
@@ -2995,6 +3197,7 @@ export interface MsgWheeltick {
     source: number;
     ticks:  number;
     time:   number;
+    [property: string]: any;
 }
 
 /**
@@ -3003,6 +3206,7 @@ export interface MsgWheeltick {
  */
 export interface OdoInputType {
     flags: number;
+    [property: string]: any;
 }
 
 /**
@@ -3017,6 +3221,7 @@ export interface STECHeader {
     tile_set_id:     number;
     time:            GpsTimeSEC;
     update_interval: number;
+    [property: string]: any;
 }
 
 // Converts JSON strings to/from your types
@@ -4743,11 +4948,25 @@ export class Convert {
     }
 }
 
-function invalidValue(typ: any, val: any, key: any = ''): never {
-    if (key) {
-        throw Error(`Invalid value for key "${key}". Expected type ${JSON.stringify(typ)} but got ${JSON.stringify(val)}`);
+function invalidValue(typ: any, val: any, key: any, parent: any = ''): never {
+    const prettyTyp = prettyTypeName(typ);
+    const parentText = parent ? ` on ${parent}` : '';
+    const keyText = key ? ` for key "${key}"` : '';
+    throw Error(`Invalid value${keyText}${parentText}. Expected ${prettyTyp} but got ${JSON.stringify(val)}`);
+}
+
+function prettyTypeName(typ: any): string {
+    if (Array.isArray(typ)) {
+        if (typ.length === 2 && typ[0] === undefined) {
+            return `an optional ${prettyTypeName(typ[1])}`;
+        } else {
+            return `one of [${typ.map(a => { return prettyTypeName(a); }).join(", ")}]`;
+        }
+    } else if (typeof typ === "object" && typ.literal !== undefined) {
+        return typ.literal;
+    } else {
+        return typeof typ;
     }
-    throw Error(`Invalid value ${JSON.stringify(val)} for type ${JSON.stringify(typ)}`, );
 }
 
 function jsonToJSProps(typ: any): any {
@@ -4768,10 +4987,10 @@ function jsToJSONProps(typ: any): any {
     return typ.jsToJSON;
 }
 
-function transform(val: any, typ: any, getProps: any, key: any = ''): any {
+function transform(val: any, typ: any, getProps: any, key: any = '', parent: any = ''): any {
     function transformPrimitive(typ: string, val: any): any {
         if (typeof typ === typeof val) return val;
-        return invalidValue(typ, val, key);
+        return invalidValue(typ, val, key, parent);
     }
 
     function transformUnion(typs: any[], val: any): any {
@@ -4783,17 +5002,17 @@ function transform(val: any, typ: any, getProps: any, key: any = ''): any {
                 return transform(val, typ, getProps);
             } catch (_) {}
         }
-        return invalidValue(typs, val);
+        return invalidValue(typs, val, key, parent);
     }
 
     function transformEnum(cases: string[], val: any): any {
         if (cases.indexOf(val) !== -1) return val;
-        return invalidValue(cases, val);
+        return invalidValue(cases.map(a => { return l(a); }), val, key, parent);
     }
 
     function transformArray(typ: any, val: any): any {
         // val must be an array with no invalid elements
-        if (!Array.isArray(val)) return invalidValue("array", val);
+        if (!Array.isArray(val)) return invalidValue(l("array"), val, key, parent);
         return val.map(el => transform(el, typ, getProps));
     }
 
@@ -4803,24 +5022,24 @@ function transform(val: any, typ: any, getProps: any, key: any = ''): any {
         }
         const d = new Date(val);
         if (isNaN(d.valueOf())) {
-            return invalidValue("Date", val);
+            return invalidValue(l("Date"), val, key, parent);
         }
         return d;
     }
 
     function transformObject(props: { [k: string]: any }, additional: any, val: any): any {
         if (val === null || typeof val !== "object" || Array.isArray(val)) {
-            return invalidValue("object", val);
+            return invalidValue(l(ref || "object"), val, key, parent);
         }
         const result: any = {};
         Object.getOwnPropertyNames(props).forEach(key => {
             const prop = props[key];
             const v = Object.prototype.hasOwnProperty.call(val, key) ? val[key] : undefined;
-            result[prop.key] = transform(v, prop.typ, getProps, prop.key);
+            result[prop.key] = transform(v, prop.typ, getProps, key, ref);
         });
         Object.getOwnPropertyNames(val).forEach(key => {
             if (!Object.prototype.hasOwnProperty.call(props, key)) {
-                result[key] = transform(val[key], additional, getProps, key);
+                result[key] = transform(val[key], additional, getProps, key, ref);
             }
         });
         return result;
@@ -4829,10 +5048,12 @@ function transform(val: any, typ: any, getProps: any, key: any = ''): any {
     if (typ === "any") return val;
     if (typ === null) {
         if (val === null) return val;
-        return invalidValue(typ, val);
+        return invalidValue(typ, val, key, parent);
     }
-    if (typ === false) return invalidValue(typ, val);
+    if (typ === false) return invalidValue(typ, val, key, parent);
+    let ref: any = undefined;
     while (typeof typ === "object" && typ.ref !== undefined) {
+        ref = typ.ref;
         typ = typeMap[typ.ref];
     }
     if (Array.isArray(typ)) return transformEnum(typ, val);
@@ -4840,7 +5061,7 @@ function transform(val: any, typ: any, getProps: any, key: any = ''): any {
         return typ.hasOwnProperty("unionMembers") ? transformUnion(typ.unionMembers, val)
             : typ.hasOwnProperty("arrayItems")    ? transformArray(typ.arrayItems, val)
             : typ.hasOwnProperty("props")         ? transformObject(getProps(typ), typ.additional, val)
-            : invalidValue(typ, val);
+            : invalidValue(typ, val, key, parent);
     }
     // Numbers can be parsed by Date but shouldn't be.
     if (typ === Date && typeof val !== "number") return transformDate(val);
@@ -4853,6 +5074,10 @@ function cast<T>(val: any, typ: any): T {
 
 function uncast<T>(val: T, typ: any): any {
     return transform(val, typ, jsToJSONProps);
+}
+
+function l(typ: any) {
+    return { literal: typ };
 }
 
 function a(typ: any) {

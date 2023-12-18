@@ -1,0 +1,62 @@
+#!/usr/bin/perl -w
+#
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
+# Test cases automatically generated from spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrGriddedCorrectionNoStdDepA.yaml
+# with generate.py.  Do not modify by hand!
+
+use strict;
+
+BEGIN {
+    # add grandparent directory to include path
+    use Cwd qw(realpath);
+    use File::Basename;
+    unshift @INC, realpath(dirname($0))."/../../";
+}
+
+use KaitaiSbp::Sbp;
+use KaitaiSbp::ParseUtils;
+use IO::KaitaiStruct;
+use Test::More;
+use JSON::PP;
+use MIME::Base64;
+sub test_auto_check_sbp_ssr_msg_ssr_gridded_correction_no_std_dep_a_1() {
+    my $buf = decode_base64("VfAFZhz+s/AhqewidfVD+Ons5uZnej9l551zosWSI2vebTQpVgztuEHMiZSrtwsAtMusNcRVunPLXKYeKg3IR2KJ26Bf2F/6Y8Rc1p/9w97pkuk/TBhqKP1BCbco17w7dUVhczw4AI3PqzahFz0AV+Z7VyS4/w6ju+Arl5doJzkFNjDgtYE8XKtybW0MF3YIQJ822CEUGESgJCbekb5cY2yf6PDj3f0PPhd5uah0BJN7SN934vKhzLTKiaY6GHwTtbwQa0LnPwFA/HM+6WH6VpzdMbIgScZD+f1KOCald1xjLF+DWcDhN1+rWM0VdOdTR0dkbtn+mNQSCCid9DZI8Oe9b8PNUQ==");
+    my $stream = IO::KaitaiStruct::Stream->new($buf);
+    my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
+    
+    is($msg->{'crc'}, 0x51cd, "crc");
+    
+    is($msg->{'length'}, 254, "length");
+    
+    is($msg->{'msg_type'}, 0x5f0, "msg_type");
+    
+    is($msg->{'payload'}, "s/AhqewidfVD+Ons5uZnej9l551zosWSI2vebTQpVgztuEHMiZSrtwsAtMusNcRVunPLXKYeKg3IR2KJ26Bf2F/6Y8Rc1p/9w97pkuk/TBhqKP1BCbco17w7dUVhczw4AI3PqzahFz0AV+Z7VyS4/w6ju+Arl5doJzkFNjDgtYE8XKtybW0MF3YIQJ822CEUGESgJCbekb5cY2yf6PDj3f0PPhd5uah0BJN7SN934vKhzLTKiaY6GHwTtbwQa0LnPwFA/HM+6WH6VpzdMbIgScZD+f1KOCald1xjLF+DWcDhN1+rWM0VdOdTR0dkbtn+mNQSCCid9DZI8Oe9b8M=", "payload");
+    
+    is($msg->{'preamble'}, 0x55, "preamble");
+    
+    is($msg->{'sender'}, 0x1c66, "sender");
+
+    my $json = JSON::PP->new->convert_blessed->canonical;
+    
+    is($json->encode($msg->header()), $json->encode($json->decode(q{{"iod_atmo":236,"num_msgs":62837,"seq_num":63555,"time":{"tow":2837573811,"wn":8940},"tropo_quality_indicator":230,"update_interval":233}})), "header");
+    
+    is($msg->index(), 26598, "index");
+    
+    is($json->encode($msg->stec_residuals()), $json->encode($json->decode(q{[{"residual":-23949,"sv_id":{"constellation":157,"sat_id":231}},{"residual":27427,"sv_id":{"constellation":146,"sat_id":197}},{"residual":10548,"sv_id":{"constellation":109,"sat_id":222}},{"residual":-18195,"sv_id":{"constellation":12,"sat_id":86}},{"residual":-27511,"sv_id":{"constellation":204,"sat_id":65}},{"residual":11,"sv_id":{"constellation":183,"sat_id":171}},{"residual":13740,"sv_id":{"constellation":203,"sat_id":180}},{"residual":29626,"sv_id":{"constellation":85,"sat_id":196}},{"residual":7846,"sv_id":{"constellation":92,"sat_id":203}},{"residual":18376,"sv_id":{"constellation":13,"sat_id":42}},{"residual":-24357,"sv_id":{"constellation":137,"sat_id":98}},{"residual":-1441,"sv_id":{"constellation":216,"sat_id":95}},{"residual":-10660,"sv_id":{"constellation":196,"sat_id":99}},{"residual":-8509,"sv_id":{"constellation":253,"sat_id":159}},{"residual":16361,"sv_id":{"constellation":146,"sat_id":233}},{"residual":10346,"sv_id":{"constellation":24,"sat_id":76}},{"residual":-18679,"sv_id":{"constellation":65,"sat_id":253}},{"residual":15292,"sv_id":{"constellation":215,"sat_id":40}},{"residual":29537,"sv_id":{"constellation":69,"sat_id":117}},{"residual":-29440,"sv_id":{"constellation":56,"sat_id":60}},{"residual":-24266,"sv_id":{"constellation":171,"sat_id":207}},{"residual":22272,"sv_id":{"constellation":61,"sat_id":23}},{"residual":9303,"sv_id":{"constellation":123,"sat_id":230}},{"residual":-23794,"sv_id":{"constellation":255,"sat_id":184}},{"residual":-26837,"sv_id":{"constellation":224,"sat_id":187}},{"residual":14631,"sv_id":{"constellation":104,"sat_id":151}},{"residual":-8144,"sv_id":{"constellation":54,"sat_id":5}},{"residual":23612,"sv_id":{"constellation":129,"sat_id":181}},{"residual":28013,"sv_id":{"constellation":114,"sat_id":171}},{"residual":2166,"sv_id":{"constellation":23,"sat_id":12}},{"residual":-10186,"sv_id":{"constellation":159,"sat_id":64}},{"residual":17432,"sv_id":{"constellation":20,"sat_id":33}},{"residual":-8666,"sv_id":{"constellation":36,"sat_id":160}},{"residual":25436,"sv_id":{"constellation":190,"sat_id":145}},{"residual":-3864,"sv_id":{"constellation":159,"sat_id":108}},{"residual":4093,"sv_id":{"constellation":221,"sat_id":227}},{"residual":-18055,"sv_id":{"constellation":23,"sat_id":62}},{"residual":-27900,"sv_id":{"constellation":116,"sat_id":168}},{"residual":30687,"sv_id":{"constellation":72,"sat_id":123}},{"residual":-13151,"sv_id":{"constellation":242,"sat_id":226}},{"residual":-22903,"sv_id":{"constellation":202,"sat_id":180}},{"residual":4988,"sv_id":{"constellation":24,"sat_id":58}},{"residual":27408,"sv_id":{"constellation":188,"sat_id":181}},{"residual":319,"sv_id":{"constellation":231,"sat_id":66}},{"residual":15987,"sv_id":{"constellation":252,"sat_id":64}},{"residual":22266,"sv_id":{"constellation":97,"sat_id":233}},{"residual":-19919,"sv_id":{"constellation":221,"sat_id":156}},{"residual":17350,"sv_id":{"constellation":73,"sat_id":32}},{"residual":14410,"sv_id":{"constellation":253,"sat_id":249}},{"residual":23671,"sv_id":{"constellation":165,"sat_id":38}},{"residual":-31905,"sv_id":{"constellation":44,"sat_id":99}},{"residual":14305,"sv_id":{"constellation":192,"sat_id":89}},{"residual":-12968,"sv_id":{"constellation":171,"sat_id":95}},{"residual":21479,"sv_id":{"constellation":116,"sat_id":21}},{"residual":28260,"sv_id":{"constellation":71,"sat_id":71}},{"residual":-11112,"sv_id":{"constellation":254,"sat_id":217}},{"residual":-25304,"sv_id":{"constellation":8,"sat_id":18}},{"residual":-4024,"sv_id":{"constellation":54,"sat_id":244}},{"residual":-15505,"sv_id":{"constellation":189,"sat_id":231}}]})), "stec_residuals");
+    
+    is($json->encode($msg->tropo_delay_correction()), $json->encode($json->decode(q{{"hydro":16250,"wet":101}})), "tropo_delay_correction");
+
+    is($json->encode($msg), $json->encode($json->decode(q{{"crc":20941,"header":{"iod_atmo":236,"num_msgs":62837,"seq_num":63555,"time":{"tow":2837573811,"wn":8940},"tropo_quality_indicator":230,"update_interval":233},"index":26598,"length":254,"msg_type":1520,"payload":"s/AhqewidfVD+Ons5uZnej9l551zosWSI2vebTQpVgztuEHMiZSrtwsAtMusNcRVunPLXKYeKg3IR2KJ26Bf2F/6Y8Rc1p/9w97pkuk/TBhqKP1BCbco17w7dUVhczw4AI3PqzahFz0AV+Z7VyS4/w6ju+Arl5doJzkFNjDgtYE8XKtybW0MF3YIQJ822CEUGESgJCbekb5cY2yf6PDj3f0PPhd5uah0BJN7SN934vKhzLTKiaY6GHwTtbwQa0LnPwFA/HM+6WH6VpzdMbIgScZD+f1KOCald1xjLF+DWcDhN1+rWM0VdOdTR0dkbtn+mNQSCCid9DZI8Oe9b8M=","preamble":85,"sender":7270,"stec_residuals":[{"residual":-23949,"sv_id":{"constellation":157,"sat_id":231}},{"residual":27427,"sv_id":{"constellation":146,"sat_id":197}},{"residual":10548,"sv_id":{"constellation":109,"sat_id":222}},{"residual":-18195,"sv_id":{"constellation":12,"sat_id":86}},{"residual":-27511,"sv_id":{"constellation":204,"sat_id":65}},{"residual":11,"sv_id":{"constellation":183,"sat_id":171}},{"residual":13740,"sv_id":{"constellation":203,"sat_id":180}},{"residual":29626,"sv_id":{"constellation":85,"sat_id":196}},{"residual":7846,"sv_id":{"constellation":92,"sat_id":203}},{"residual":18376,"sv_id":{"constellation":13,"sat_id":42}},{"residual":-24357,"sv_id":{"constellation":137,"sat_id":98}},{"residual":-1441,"sv_id":{"constellation":216,"sat_id":95}},{"residual":-10660,"sv_id":{"constellation":196,"sat_id":99}},{"residual":-8509,"sv_id":{"constellation":253,"sat_id":159}},{"residual":16361,"sv_id":{"constellation":146,"sat_id":233}},{"residual":10346,"sv_id":{"constellation":24,"sat_id":76}},{"residual":-18679,"sv_id":{"constellation":65,"sat_id":253}},{"residual":15292,"sv_id":{"constellation":215,"sat_id":40}},{"residual":29537,"sv_id":{"constellation":69,"sat_id":117}},{"residual":-29440,"sv_id":{"constellation":56,"sat_id":60}},{"residual":-24266,"sv_id":{"constellation":171,"sat_id":207}},{"residual":22272,"sv_id":{"constellation":61,"sat_id":23}},{"residual":9303,"sv_id":{"constellation":123,"sat_id":230}},{"residual":-23794,"sv_id":{"constellation":255,"sat_id":184}},{"residual":-26837,"sv_id":{"constellation":224,"sat_id":187}},{"residual":14631,"sv_id":{"constellation":104,"sat_id":151}},{"residual":-8144,"sv_id":{"constellation":54,"sat_id":5}},{"residual":23612,"sv_id":{"constellation":129,"sat_id":181}},{"residual":28013,"sv_id":{"constellation":114,"sat_id":171}},{"residual":2166,"sv_id":{"constellation":23,"sat_id":12}},{"residual":-10186,"sv_id":{"constellation":159,"sat_id":64}},{"residual":17432,"sv_id":{"constellation":20,"sat_id":33}},{"residual":-8666,"sv_id":{"constellation":36,"sat_id":160}},{"residual":25436,"sv_id":{"constellation":190,"sat_id":145}},{"residual":-3864,"sv_id":{"constellation":159,"sat_id":108}},{"residual":4093,"sv_id":{"constellation":221,"sat_id":227}},{"residual":-18055,"sv_id":{"constellation":23,"sat_id":62}},{"residual":-27900,"sv_id":{"constellation":116,"sat_id":168}},{"residual":30687,"sv_id":{"constellation":72,"sat_id":123}},{"residual":-13151,"sv_id":{"constellation":242,"sat_id":226}},{"residual":-22903,"sv_id":{"constellation":202,"sat_id":180}},{"residual":4988,"sv_id":{"constellation":24,"sat_id":58}},{"residual":27408,"sv_id":{"constellation":188,"sat_id":181}},{"residual":319,"sv_id":{"constellation":231,"sat_id":66}},{"residual":15987,"sv_id":{"constellation":252,"sat_id":64}},{"residual":22266,"sv_id":{"constellation":97,"sat_id":233}},{"residual":-19919,"sv_id":{"constellation":221,"sat_id":156}},{"residual":17350,"sv_id":{"constellation":73,"sat_id":32}},{"residual":14410,"sv_id":{"constellation":253,"sat_id":249}},{"residual":23671,"sv_id":{"constellation":165,"sat_id":38}},{"residual":-31905,"sv_id":{"constellation":44,"sat_id":99}},{"residual":14305,"sv_id":{"constellation":192,"sat_id":89}},{"residual":-12968,"sv_id":{"constellation":171,"sat_id":95}},{"residual":21479,"sv_id":{"constellation":116,"sat_id":21}},{"residual":28260,"sv_id":{"constellation":71,"sat_id":71}},{"residual":-11112,"sv_id":{"constellation":254,"sat_id":217}},{"residual":-25304,"sv_id":{"constellation":8,"sat_id":18}},{"residual":-4024,"sv_id":{"constellation":54,"sat_id":244}},{"residual":-15505,"sv_id":{"constellation":189,"sat_id":231}}],"tropo_delay_correction":{"hydro":16250,"wet":101}}})), "raw_json");
+}
+test_auto_check_sbp_ssr_msg_ssr_gridded_correction_no_std_dep_a_1();
+
+done_testing();

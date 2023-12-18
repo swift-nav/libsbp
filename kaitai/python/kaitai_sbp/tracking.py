@@ -131,7 +131,7 @@ class Tracking(KaitaiStruct):
             self.sid = Gnss.GnssSignalDep(self._io, self, self._root)
             self.corrs = []
             for i in range(3):
-                self.corrs.append(self._io.read_u8le())
+                self.corrs.append(Tracking.TrackingChannelCorrelationDep(self._io, self, self._root))
 
 
 
@@ -216,7 +216,7 @@ class Tracking(KaitaiStruct):
             self.sid = Gnss.GnssSignal(self._io, self, self._root)
             self.corrs = []
             for i in range(3):
-                self.corrs.append(self._io.read_u8le())
+                self.corrs.append(Tracking.TrackingChannelCorrelation(self._io, self, self._root))
 
 
 
@@ -303,7 +303,7 @@ class Tracking(KaitaiStruct):
             self.sid = Gnss.GnssSignal(self._io, self, self._root)
             self.corrs = []
             for i in range(3):
-                self.corrs.append(self._io.read_u8le())
+                self.corrs.append(Tracking.TrackingChannelCorrelationDep(self._io, self, self._root))
 
 
 

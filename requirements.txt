@@ -4,4 +4,4 @@
 distro
 sphinx
 sphinxcontrib-spelling
-autoflake
+autoflake==1.7.8
