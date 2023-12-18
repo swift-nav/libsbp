@@ -30,6 +30,10 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
+      - name: Set safe git directory
+        run: |
+          git config --global --add safe.directory /__w/libsbp/libsbp
+
       - name: Generate tests
         run: |
           rm c/test/auto_check_*.c c/test/cpp/auto_check_*.cc java/test/auto_check_*.java rust/sbp/tests/integration/auto_check_*.rs
