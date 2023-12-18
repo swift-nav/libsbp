@@ -155,11 +155,11 @@ Some thoughts to consider when adding a new message:
 It's highly recommended to use the docker container to run the release process,
 the docker container can be pulled from DockerHub and launched via this command:
 
-    docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2023-12-18
+    docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2023-12-19
 
 You can invoke individual stages like so:
 
-    docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2023-12-18 \
+    docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2023-12-19 \
       /bin/bash -c "make python"
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
@@ -453,7 +453,7 @@ For more info see: <https://docs.gradle.org/current/userguide/signing_plugin.htm
 Now, invoke docker like this in order to run the `dist-java` task:
 
 ```shell
-docker run -v $HOME/Documents:/keys -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2023-12-18
+docker run -v $HOME/Documents:/keys -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2023-12-19
 ```
 
 To publish, you'll run `make dist-java` (which will run `gradle sign` and
