@@ -19,32 +19,12 @@ jobs:
   generation:
     name: Generated artifacts
     runs-on: ubuntu-20.04
+    container: swiftnav/libsbp-build:latest
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
           submodules: recursive
-
-      - name: Installing dependencies
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get install -y tox python3-sphinx clang-format-6.0 enchant
-          pip3 install tox-run-command
-          tox -e py --notest
-
-      - name: Installing Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Installing Quicktype
-        run: |
-          npm ci
-          npm install -g quicktype
-
-      - uses: gradle/gradle-build-action@v2
-        with:
-          gradle-version: 7.1.1
 
       - name: Generate tests
         run: |
@@ -58,15 +38,8 @@ jobs:
           git diff --cached --exit-code
           git diff --exit-code
 
-#      - name: Generate html for python
-#        run: make html-python  # emits python/docs/build/html, not checked in
-
       - name: Generate javadocs for java
         run: make javadocs # emits java/build/docs/javadoc, not used
-
-      - name: Installing pdf dependencies
-        run: |
-          sudo apt-get install -y texlive-latex-extra texlive-fonts-extra texlive-science graphviz
 
       - name: Generate pdf
         id: pdf
