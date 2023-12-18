@@ -20,7 +20,7 @@ jobs:
     name: Generated artifacts
     runs-on: ubuntu-20.04
     container: 
-      image: swiftnav/libsbp-build:2022-06-14
+      image: swiftnav/libsbp-build:latest-master
       options: --user root
       volumes:
         - ${{ github.workspace }}:/mnt/workspace
