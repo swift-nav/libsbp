@@ -19,7 +19,10 @@ jobs:
   generation:
     name: Generated artifacts
     runs-on: ubuntu-20.04
-    container: swiftnav/libsbp-build:latest-master
+    container: 
+      image: swiftnav/libsbp-build:latest-master
+      volumes:
+        - ${{ github.workspace }}:/mnt/workspace
     steps:
       - uses: actions/checkout@v2
         with:
