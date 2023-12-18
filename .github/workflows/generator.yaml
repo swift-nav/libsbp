@@ -19,7 +19,7 @@ jobs:
   generation:
     name: Generated artifacts
     runs-on: ubuntu-20.04
-    container: swiftnav/libsbp-build:latest
+    container: swiftnav/libsbp-build:latest-master
     steps:
       - uses: actions/checkout@v2
         with:
