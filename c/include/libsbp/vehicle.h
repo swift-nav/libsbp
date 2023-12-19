@@ -15,16 +15,9 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_VEHICLE_MESSAGES_H
-#define LIBSBP_VEHICLE_MESSAGES_H
+#ifndef LIBSBP_V4_VEHICLE_MESSAGES_H
+#define LIBSBP_V4_VEHICLE_MESSAGES_H
+#include <libsbp/vehicle/MSG_ODOMETRY.h>
+#include <libsbp/vehicle/MSG_WHEELTICK.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/vehicle.h` instead. Access to legacy "
-    "types via `libsbp/vehicle.h` will be removed in version 5.")
-
-#include <libsbp/legacy/vehicle.h>
-
-#endif /* LIBSBP_VEHICLE_MESSAGES_H */
+#endif /* LIBSBP_V4_VEHICLE_MESSAGES_H */

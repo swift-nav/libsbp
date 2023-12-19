@@ -11,49 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/ssr.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_MESSAGES_H
-#define LIBSBP_V4_SSR_MESSAGES_H
-#include <libsbp/v4/ssr/BoundsHeader.h>
-#include <libsbp/v4/ssr/CodeBiasesContent.h>
-#include <libsbp/v4/ssr/CodePhaseBiasesSatSig.h>
-#include <libsbp/v4/ssr/GridDefinitionHeaderDepA.h>
-#include <libsbp/v4/ssr/GriddedCorrectionHeader.h>
-#include <libsbp/v4/ssr/GriddedCorrectionHeaderDepA.h>
-#include <libsbp/v4/ssr/MSG_SSR_CODE_BIASES.h>
-#include <libsbp/v4/ssr/MSG_SSR_CODE_PHASE_BIASES_BOUNDS.h>
-#include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION.h>
-#include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_BOUNDS.h>
-#include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_DEP_A.h>
-#include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A.h>
-#include <libsbp/v4/ssr/MSG_SSR_GRID_DEFINITION_DEP_A.h>
-#include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK.h>
-#include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK_BOUNDS.h>
-#include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION.h>
-#include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK_DEP_A.h>
-#include <libsbp/v4/ssr/MSG_SSR_PHASE_BIASES.h>
-#include <libsbp/v4/ssr/MSG_SSR_SATELLITE_APC.h>
-#include <libsbp/v4/ssr/MSG_SSR_SATELLITE_APC_DEP.h>
-#include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION.h>
-#include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION_DEP.h>
-#include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION_DEP_A.h>
-#include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION.h>
-#include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION_DEP_A.h>
-#include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION_DEP_B.h>
-#include <libsbp/v4/ssr/OrbitClockBound.h>
-#include <libsbp/v4/ssr/OrbitClockBoundDegradation.h>
-#include <libsbp/v4/ssr/PhaseBiasesContent.h>
-#include <libsbp/v4/ssr/STECHeader.h>
-#include <libsbp/v4/ssr/STECHeaderDepA.h>
-#include <libsbp/v4/ssr/STECResidual.h>
-#include <libsbp/v4/ssr/STECResidualNoStd.h>
-#include <libsbp/v4/ssr/STECSatElement.h>
-#include <libsbp/v4/ssr/STECSatElementIntegrity.h>
-#include <libsbp/v4/ssr/SatelliteAPC.h>
-#include <libsbp/v4/ssr/TroposphericDelayCorrection.h>
-#include <libsbp/v4/ssr/TroposphericDelayCorrectionNoStd.h>
+#ifndef LIBSBP_SSR_MESSAGES_H
+#define LIBSBP_SSR_MESSAGES_H
 
-#endif /* LIBSBP_V4_SSR_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/ssr.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/ssr.h>
+
+#endif /* LIBSBP_SSR_MESSAGES_H */

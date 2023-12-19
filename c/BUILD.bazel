@@ -15,38 +15,38 @@ swift_c_library(
     srcs = [
         "src/edc.c",
         "src/sbp.c",
-        "src/v4/string/sbp_string.c",
-        "src/v4/string/multipart.c",
-        "src/v4/string/null_terminated.c",
-        "src/v4/string/double_null_terminated.c",
-        "src/v4/string/unterminated.c",
+        "src/string/sbp_string.c",
+        "src/string/multipart.c",
+        "src/string/null_terminated.c",
+        "src/string/double_null_terminated.c",
+        "src/string/unterminated.c",
         # generated files
-        "src/v4/acquisition.c",
-        "src/v4/bootload.c",
-        "src/v4/ext_events.c",
-        "src/v4/file_io.c",
-        "src/v4/flash.c",
-        "src/v4/gnss.c",
-        "src/v4/imu.c",
-        "src/v4/integrity.c",
-        "src/v4/linux.c",
-        "src/v4/logging.c",
-        "src/v4/mag.c",
-        "src/v4/navigation.c",
-        "src/v4/ndb.c",
-        "src/v4/observation.c",
-        "src/v4/orientation.c",
-        "src/v4/piksi.c",
-        "src/v4/sbas.c",
-        "src/v4/settings.c",
-        "src/v4/signing.c",
-        "src/v4/solution_meta.c",
-        "src/v4/ssr.c",
-        "src/v4/system.c",
-        "src/v4/telemetry.c",
-        "src/v4/tracking.c",
-        "src/v4/user.c",
-        "src/v4/vehicle.c",
+        "src/acquisition.c",
+        "src/bootload.c",
+        "src/ext_events.c",
+        "src/file_io.c",
+        "src/flash.c",
+        "src/gnss.c",
+        "src/imu.c",
+        "src/integrity.c",
+        "src/linux.c",
+        "src/logging.c",
+        "src/mag.c",
+        "src/navigation.c",
+        "src/ndb.c",
+        "src/observation.c",
+        "src/orientation.c",
+        "src/piksi.c",
+        "src/sbas.c",
+        "src/settings.c",
+        "src/signing.c",
+        "src/solution_meta.c",
+        "src/ssr.c",
+        "src/system.c",
+        "src/telemetry.c",
+        "src/tracking.c",
+        "src/user.c",
+        "src/vehicle.c",
     ],
     hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
     copts = [
@@ -80,6 +80,9 @@ swift_cc_test(
     includes = [
         "include/libsbp",
     ],
+    copts = [
+      "-Wno-deprecated-declarations",
+    ],
     type = UNIT,
     deps = [
         ":sbp",
@@ -87,17 +90,17 @@ swift_cc_test(
     ],
 )
 
-SBP_V4_C_SOURCES = glob(["test/auto*.c"])
+SBP_C_SOURCES = glob(["test/auto*.c"])
 
 swift_cc_test(
-    name = "sbp-v4-test",
+    name = "sbp-test",
     srcs = [
         "test/check_main.c",
         "test/check_edc.c",
         "test/check_sbp.c",
         "test/check_bitfield_macros.c",
         "test/check_suites.h",
-    ] + SBP_V4_C_SOURCES,
+    ] + SBP_C_SOURCES,
     includes = ["include/libsbp"],
     type = UNIT,
     deps = [
@@ -106,11 +109,11 @@ swift_cc_test(
     ],
 )
 
-SBP_CPP_V4_C_SOURCES = glob(["test/cpp/auto*.cc"])
+SBP_CPP_C_SOURCES = glob(["test/cpp/auto*.cc"])
 
 swift_cc_test(
-    name = "sbp-cpp-v4-test",
-    srcs = SBP_CPP_V4_C_SOURCES,
+    name = "sbp-cpp-test",
+    srcs = SBP_CPP_C_SOURCES,
     type = UNIT,
     deps = [
         ":sbp",
@@ -145,6 +148,9 @@ swift_cc_test(
     ] + SBP_CPP_LEGACY_SOURCES,
     data = [
         "test/legacy/cpp/sbp_data/gnss_data.sbp",
+    ],
+    copts = [
+      "-Wno-deprecated-declarations",
     ],
     type = UNIT,
     deps = [

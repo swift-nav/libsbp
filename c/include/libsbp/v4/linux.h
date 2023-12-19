@@ -11,22 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/linux.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_LINUX_MESSAGES_H
-#define LIBSBP_V4_LINUX_MESSAGES_H
-#include <libsbp/v4/linux/MSG_LINUX_CPU_STATE.h>
-#include <libsbp/v4/linux/MSG_LINUX_CPU_STATE_DEP_A.h>
-#include <libsbp/v4/linux/MSG_LINUX_MEM_STATE.h>
-#include <libsbp/v4/linux/MSG_LINUX_MEM_STATE_DEP_A.h>
-#include <libsbp/v4/linux/MSG_LINUX_PROCESS_FD_COUNT.h>
-#include <libsbp/v4/linux/MSG_LINUX_PROCESS_FD_SUMMARY.h>
-#include <libsbp/v4/linux/MSG_LINUX_PROCESS_SOCKET_COUNTS.h>
-#include <libsbp/v4/linux/MSG_LINUX_PROCESS_SOCKET_QUEUES.h>
-#include <libsbp/v4/linux/MSG_LINUX_SOCKET_USAGE.h>
-#include <libsbp/v4/linux/MSG_LINUX_SYS_STATE.h>
-#include <libsbp/v4/linux/MSG_LINUX_SYS_STATE_DEP_A.h>
+#ifndef LIBSBP_LINUX_MESSAGES_H
+#define LIBSBP_LINUX_MESSAGES_H
 
-#endif /* LIBSBP_V4_LINUX_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/linux.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/linux.h>
+
+#endif /* LIBSBP_LINUX_MESSAGES_H */

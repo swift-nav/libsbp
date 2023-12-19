@@ -1,6 +1,6 @@
 FILE(GLOB generated_cpp_sources auto*.cc)
 
-swift_add_test(test-libsbp-cpp-v4
+swift_add_test(test-libsbp-cpp
     UNIT_TEST
     SRCS
         ${generated_cpp_sources}
@@ -9,6 +9,6 @@ swift_add_test(test-libsbp-cpp-v4
     LINK
         sbp
         gtest_main)
-swift_set_language_standards(test-libsbp-cpp-v4)
-swift_set_compile_options(test-libsbp-cpp-v4)
+swift_set_language_standards(test-libsbp-cpp)
+swift_set_compile_options(test-libsbp-cpp)
 

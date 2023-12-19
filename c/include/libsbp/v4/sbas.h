@@ -11,12 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/sbas.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SBAS_MESSAGES_H
-#define LIBSBP_V4_SBAS_MESSAGES_H
-#include <libsbp/v4/sbas/MSG_SBAS_RAW.h>
+#ifndef LIBSBP_SBAS_MESSAGES_H
+#define LIBSBP_SBAS_MESSAGES_H
 
-#endif /* LIBSBP_V4_SBAS_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/sbas.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/sbas.h>
+
+#endif /* LIBSBP_SBAS_MESSAGES_H */

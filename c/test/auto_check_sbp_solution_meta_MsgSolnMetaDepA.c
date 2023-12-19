@@ -16,7 +16,7 @@
 
 #include <check.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/solution_meta.h>
+#include <libsbp/solution_meta.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

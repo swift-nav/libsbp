@@ -25,6 +25,12 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "The legacy libsbp API has been deprecated. This file and all symbols "
+    "contained will "
+    "be removed in version 6. You should immediately switch over to the modern "
+    "libsbp API.")
+
 #include <libsbp/legacy/gnss.h>
 #include <libsbp/ssr_macros.h>
 
@@ -36,7 +42,7 @@ SBP_PACK_START
  * RTCMv3 MT 1059 / 1065.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 code;   /**< Signal encoded following RTCM specifications (DF380,
                   DF381, DF382 and DF467). */
   s16 value; /**< Code bias value [0.01 m] */
@@ -47,7 +53,7 @@ typedef struct SBP_ATTR_PACKED {
  * Phase biases are to be added to carrier phase measurements.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 code;                       /**< Signal encoded following RTCM
                                       specifications (DF380, DF381, DF382
                                       and DF467) */
@@ -67,7 +73,7 @@ typedef struct SBP_ATTR_PACKED {
  * multiple SBP messages into a sequence.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 tile_set_id;     /**< Unique identifier of the tile set this tile
                             belongs to. */
   u16 tile_id;         /**< Unique identifier of this tile in the tile set. */
@@ -86,7 +92,7 @@ typedef struct SBP_ATTR_PACKED {
  * supported in SBP, so each grid point will be identified by the index.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 tile_set_id;            /**< Unique identifier of the tile set this
                                    tile belongs to. */
   u16 tile_id;                /**< Unique identifier of this tile in the
@@ -109,7 +115,7 @@ typedef struct SBP_ATTR_PACKED {
  * STEC polynomial for the given satellite.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   sv_id_t sv_id;             /**< Unique space vehicle identifier */
   u8 stec_quality_indicator; /**< Quality of the STEC data. Encoded
                                   following RTCM DF389 specification but in
@@ -125,7 +131,7 @@ typedef struct SBP_ATTR_PACKED {
  * Troposphere vertical delays at the grid point.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s16 hydro; /**< Hydrostatic vertical delay [4 mm (add 2.3 m to get actual
                 vertical hydro delay)] */
   s8 wet; /**< Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet
@@ -138,7 +144,7 @@ typedef struct SBP_ATTR_PACKED {
  * point.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s16 hydro; /**< Hydrostatic vertical delay. Add 2.3 m to get actual
                   value. [4 mm] */
   s8 wet;    /**< Wet vertical delay. Add 0.252 m to get actual value. [4 mm] */
@@ -151,7 +157,7 @@ typedef struct SBP_ATTR_PACKED {
  * STEC residual for the given satellite at the grid point.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   sv_id_t sv_id; /**< space vehicle identifier */
   s16 residual;  /**< STEC residual [0.04 TECU] */
 } stec_residual_no_std_t;
@@ -162,7 +168,7 @@ typedef struct SBP_ATTR_PACKED {
  * grid point.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   sv_id_t sv_id; /**< space vehicle identifier */
   s16 residual;  /**< STEC residual [0.04 TECU] */
   u8 stddev;     /**< Modified DF389. class 3 MSB, value 5 LSB. stddev =
@@ -176,7 +182,7 @@ typedef struct SBP_ATTR_PACKED {
  * RTCM message types.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t time;   /**< GNSS reference time of the
                               correction */
   sbp_gnss_signal_t sid; /**< GNSS signal identifier (16 bit) */
@@ -208,7 +214,7 @@ typedef struct SBP_ATTR_PACKED {
  * the 1059 / 1065 RTCM message types.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t time;   /**< GNSS reference time of the
                               correction */
   sbp_gnss_signal_t sid; /**< GNSS signal identifier (16 bit) */
@@ -230,7 +236,7 @@ typedef struct SBP_ATTR_PACKED {
  * RTCM message types.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t time;   /**< GNSS reference time of the
                               correction */
   sbp_gnss_signal_t sid; /**< GNSS signal identifier (16 bit) */
@@ -254,7 +260,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   stec_header_t header; /**< Header of a STEC polynomial coefficient
                              message. */
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC polynomial
@@ -262,7 +268,7 @@ typedef struct SBP_ATTR_PACKED {
                                             vehicle. */
 } msg_ssr_stec_correction_dep_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t time; /**< GNSS reference time of the bound */
   u8 num_msgs;         /**< Number of messages in the dataset */
   u8 seq_num;          /**< Position of this message in the dataset */
@@ -271,7 +277,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 sol_id;           /**< SSR Solution ID. */
 } bounds_header_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   bounds_header_t header; /**< Header of a STEC correction with
                                bounds message. */
   u8 ssr_iod_atmo;        /**< IOD of the SSR atmospheric correction */
@@ -290,7 +296,7 @@ typedef struct SBP_ATTR_PACKED {
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gridded_correction_header_t header; /**< Header of a
                                            gridded
                                            correction
@@ -311,7 +317,7 @@ typedef struct SBP_ATTR_PACKED {
  * STEC polynomial and bounds for the given satellite.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   stec_residual_t stec_residual; /**< STEC residuals (mean, stddev) */
   u8 stec_bound_mu;              /**< Error Bound Mean. See Note 1. [m] */
   u8 stec_bound_sig;             /**< Error Bound StDev. See Note 1. [m] */
@@ -326,7 +332,7 @@ typedef struct SBP_ATTR_PACKED {
  * mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   bounds_header_t header; /**< Header of a bounds message. */
   u8 ssr_iod_atmo;        /**< IOD of the correction. */
   u16 tile_set_id;        /**< Set this tile belongs to. */
@@ -358,7 +364,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 tile_set_id;   /**< Unique identifier of the tile set this tile
                           belongs to. */
   u16 tile_id;       /**< Unique identifier of this tile in the tile set.
@@ -426,7 +432,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 ssr_sol_id;     /**< SSR Solution ID. */
   u16 tile_set_id;   /**< Unique identifier of the tile set this tile
                           belongs to. */
@@ -502,7 +508,7 @@ typedef struct SBP_ATTR_PACKED {
  * correction points, not lists of points.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t time; /**< GNSS reference time of the
                             correction */
   u8 update_interval;  /**< Update interval between consecutive corrections.
@@ -574,7 +580,7 @@ typedef struct SBP_ATTR_PACKED {
  * signal on a satellite.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   sbp_gnss_signal_t sid; /**< GNSS signal identifier (16 bit) */
   u8 sat_info;           /**< Additional satellite information */
   u16 svn;    /**< Satellite Code, as defined by IGS. Typically the space
@@ -593,11 +599,11 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   satellite_apc_t apc[0]; /**< Satellite antenna phase center corrections */
 } msg_ssr_satellite_apc_dep_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t time;    /**< GNSS reference time of the
                                correction */
   u8 update_interval;     /**< Update interval between consecutive corrections.
@@ -615,7 +621,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t time;   /**< GNSS reference time of the
                               correction */
   sbp_gnss_signal_t sid; /**< GNSS signal identifier (16 bit) */
@@ -646,7 +652,7 @@ typedef struct SBP_ATTR_PACKED {
  * multiple SBP messages into a sequence.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t time; /**< GNSS reference time of the
                             correction */
   u8 num_msgs;         /**< Number of messages in the dataset */
@@ -662,7 +668,7 @@ typedef struct SBP_ATTR_PACKED {
  * supported in SBP, so each grid point will be identified by the index.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gps_time_sec_t time;        /**< GNSS reference time of the
                                    correction */
   u16 num_msgs;               /**< Number of messages in the dataset */
@@ -682,7 +688,7 @@ typedef struct SBP_ATTR_PACKED {
  * RLE encoded validity list.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 region_size_inverse; /**< region_size (deg) = 10 / region_size_inverse
                                0 is an invalid value. [inverse degrees] */
   u16 area_width;         /**< grid height (deg) = grid width (deg) =
@@ -701,7 +707,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   stec_header_dep_a_t header;          /**< Header of a STEC message */
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC information for each
                                             space vehicle */
@@ -712,7 +718,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gridded_correction_header_dep_a_t header; /**< Header of
                                                  a Gridded
                                                  Correction
@@ -733,7 +739,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   gridded_correction_header_dep_a_t header; /**< Header of
                                                  a Gridded
                                                  Correction
@@ -754,7 +760,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   grid_definition_header_dep_a_t header; /**< Header of a Gridded
                                               Correction message */
   u8 rle_list[0]; /**< Run Length Encode list of quadrants that contain valid
@@ -769,7 +775,7 @@ typedef struct SBP_ATTR_PACKED {
  * Orbit and clock bound.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 sat_id;               /**< Satellite ID. Similar to either RTCM DF068
                                 (GPS), DF252 (Galileo), or DF488 (BDS)
                                 depending on the constellation. */
@@ -794,7 +800,7 @@ typedef struct SBP_ATTR_PACKED {
  * i>230, std=5+0.5(i-230).
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   bounds_header_t header; /**< Header of a bounds message. */
   u8 ssr_iod;             /**< IOD of the SSR bound. */
   u8 const_id;            /**< Constellation ID to which the SVs belong. */
@@ -803,7 +809,7 @@ typedef struct SBP_ATTR_PACKED {
                                                   Satellite */
 } msg_ssr_orbit_clock_bounds_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 sat_id;               /**< Satellite ID. Similar to either RTCM DF068
                                 (GPS), DF252 (Galileo), or DF488 (BDS)
                                 depending on the constellation. */
@@ -819,7 +825,7 @@ typedef struct SBP_ATTR_PACKED {
                                 0-1.275 m [0.005 m] */
 } code_phase_biases_sat_sig_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   bounds_header_t header; /**< Header of a bounds message. */
   u8 ssr_iod;             /**< IOD of the SSR bound. */
   u8 const_id;            /**< Constellation ID to which the SVs belong. */
@@ -835,7 +841,7 @@ typedef struct SBP_ATTR_PACKED {
  * Orbit and clock bound degradation.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 orb_radial_bound_mu_dot;  /**< Orbit Bound Mean Radial First
                                     derivative. Range: 0-0.255 m/s [0.001 m/s] */
   u8 orb_along_bound_mu_dot;   /**< Orbit Bound Mean Along-Track First
@@ -857,7 +863,7 @@ typedef struct SBP_ATTR_PACKED {
                                     derivative. Range: 0-0.255 m/s [0.001 m/s] */
 } orbit_clock_bound_degradation_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   bounds_header_t header; /**< Header of a bounds
                                message. */
   u8 ssr_iod;             /**< IOD of the SSR bound degradation

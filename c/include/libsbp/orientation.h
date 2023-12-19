@@ -15,16 +15,11 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_ORIENTATION_MESSAGES_H
-#define LIBSBP_ORIENTATION_MESSAGES_H
+#ifndef LIBSBP_V4_ORIENTATION_MESSAGES_H
+#define LIBSBP_V4_ORIENTATION_MESSAGES_H
+#include <libsbp/orientation/MSG_ANGULAR_RATE.h>
+#include <libsbp/orientation/MSG_BASELINE_HEADING.h>
+#include <libsbp/orientation/MSG_ORIENT_EULER.h>
+#include <libsbp/orientation/MSG_ORIENT_QUAT.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/orientation.h` instead. Access to "
-    "legacy types via `libsbp/orientation.h` will be removed in version 5.")
-
-#include <libsbp/legacy/orientation.h>
-
-#endif /* LIBSBP_ORIENTATION_MESSAGES_H */
+#endif /* LIBSBP_V4_ORIENTATION_MESSAGES_H */

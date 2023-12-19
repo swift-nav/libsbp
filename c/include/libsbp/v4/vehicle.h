@@ -11,13 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/vehicle.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_VEHICLE_MESSAGES_H
-#define LIBSBP_V4_VEHICLE_MESSAGES_H
-#include <libsbp/v4/vehicle/MSG_ODOMETRY.h>
-#include <libsbp/v4/vehicle/MSG_WHEELTICK.h>
+#ifndef LIBSBP_VEHICLE_MESSAGES_H
+#define LIBSBP_VEHICLE_MESSAGES_H
 
-#endif /* LIBSBP_V4_VEHICLE_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/vehicle.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/vehicle.h>
+
+#endif /* LIBSBP_VEHICLE_MESSAGES_H */

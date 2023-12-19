@@ -16,8 +16,9 @@
 #include <cassert>
 #include <array>
 
-#include <libsbp/cpp/state.h>
+#include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
+#include <libsbp/legacy/compat.h>
 
 namespace sbp {
 
@@ -67,7 +68,7 @@ namespace details {
  * @tparam OtherTypes Other types to recursively define interfaces for
  */
 template<typename MsgType, typename... OtherTypes>
-class PayloadCallbackInterface : PayloadCallbackInterface<OtherTypes...> {
+class SBP_DEPRECATED PayloadCallbackInterface : PayloadCallbackInterface<OtherTypes...> {
  public:
   PayloadCallbackInterface() = default;
   ~PayloadCallbackInterface() override = default;
@@ -87,7 +88,7 @@ class PayloadCallbackInterface : PayloadCallbackInterface<OtherTypes...> {
 };
 
 template<typename MsgType>
-class PayloadCallbackInterface<MsgType> {
+class SBP_DEPRECATED PayloadCallbackInterface<MsgType> {
  public:
   PayloadCallbackInterface() = default;
   virtual ~PayloadCallbackInterface() = default;
@@ -126,7 +127,7 @@ class PayloadCallbackInterface<MsgType> {
  * @example
  * class ECEFHandler : private sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t> {
  *   public:
- *     ECEFHandler(sbp::State *state) : sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
+ *     ECEFHandler(sbp::LegacyState *state) : sbp::PayloadHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
  *       // The callbacks have already been registered
  *       // Perform other initialization tasks
  *     }
@@ -143,15 +144,15 @@ class PayloadCallbackInterface<MsgType> {
  * @tparam MsgTypes List of SBP message types to register callbacks for
  */
 template<typename... MsgTypes>
-class PayloadHandler : public details::PayloadCallbackInterface<MsgTypes...> {
+class SBP_DEPRECATED PayloadHandler : public details::PayloadCallbackInterface<MsgTypes...> {
     static constexpr std::size_t kMsgCount = sizeof...(MsgTypes);
 
-    State &state_;
+    LegacyState &state_;
     std::array<sbp_msg_callbacks_node_t, kMsgCount> callback_nodes_;
 
   public:
 
-    explicit PayloadHandler(State *state) : details::PayloadCallbackInterface<MsgTypes...>(), state_(*state), callback_nodes_() {
+    explicit PayloadHandler(LegacyState *state) : details::PayloadCallbackInterface<MsgTypes...>(), state_(*state), callback_nodes_() {
       details::PayloadCallbackInterface<MsgTypes...>::register_callback(state_.get_state(), callback_nodes_.data());
     }
 

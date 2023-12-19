@@ -15,19 +15,30 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/state.h>
+
+#include <libsbp/common.h>
+
+// Obviously we don't normally want to silence this message, but we also need to
+// still test the legacy implementation for as long as it exists. By silencing
+// these messages here we can get a less noisy build in libsbp
+#ifdef SBP_MESSAGE
+#undef SBP_MESSAGE
+#define SBP_MESSAGE(x)
+#endif
+#include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
+#include <libsbp/legacy/navigation.h>
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA0
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA0()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
@@ -130,14 +141,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA0, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA1
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA1()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
@@ -240,14 +251,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA1, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA2
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA2()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
@@ -350,14 +361,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA2, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA3
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA3()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
@@ -460,14 +471,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA3, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA4
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA4()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
@@ -570,14 +581,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA4, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA5
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA5()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
@@ -680,14 +691,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA5, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA6
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA6()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
@@ -790,14 +801,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA6, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA7
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA7()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
@@ -900,14 +911,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA7, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA8
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA8()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
@@ -1010,14 +1021,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA8, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA9
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA9()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),
@@ -1120,14 +1131,14 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA9, Test) {
 }
 class Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA10
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_baseline_ned_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA10()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_baseline_ned_dep_a_t>(this),

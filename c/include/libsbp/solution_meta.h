@@ -15,16 +15,13 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_SOLUTION_META_MESSAGES_H
-#define LIBSBP_SOLUTION_META_MESSAGES_H
+#ifndef LIBSBP_V4_SOLUTION_META_MESSAGES_H
+#define LIBSBP_V4_SOLUTION_META_MESSAGES_H
+#include <libsbp/solution_meta/GNSSInputType.h>
+#include <libsbp/solution_meta/IMUInputType.h>
+#include <libsbp/solution_meta/MSG_SOLN_META.h>
+#include <libsbp/solution_meta/MSG_SOLN_META_DEP_A.h>
+#include <libsbp/solution_meta/OdoInputType.h>
+#include <libsbp/solution_meta/SolutionInputType.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/solution_meta.h` instead. Access to "
-    "legacy types via `libsbp/solution_meta.h` will be removed in version 5.")
-
-#include <libsbp/legacy/solution_meta.h>
-
-#endif /* LIBSBP_SOLUTION_META_MESSAGES_H */
+#endif /* LIBSBP_V4_SOLUTION_META_MESSAGES_H */

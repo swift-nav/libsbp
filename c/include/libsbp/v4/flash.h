@@ -11,21 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/flash.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_FLASH_MESSAGES_H
-#define LIBSBP_V4_FLASH_MESSAGES_H
-#include <libsbp/v4/flash/MSG_FLASH_DONE.h>
-#include <libsbp/v4/flash/MSG_FLASH_ERASE.h>
-#include <libsbp/v4/flash/MSG_FLASH_PROGRAM.h>
-#include <libsbp/v4/flash/MSG_FLASH_READ_REQ.h>
-#include <libsbp/v4/flash/MSG_FLASH_READ_RESP.h>
-#include <libsbp/v4/flash/MSG_M25_FLASH_WRITE_STATUS.h>
-#include <libsbp/v4/flash/MSG_STM_FLASH_LOCK_SECTOR.h>
-#include <libsbp/v4/flash/MSG_STM_FLASH_UNLOCK_SECTOR.h>
-#include <libsbp/v4/flash/MSG_STM_UNIQUE_ID_REQ.h>
-#include <libsbp/v4/flash/MSG_STM_UNIQUE_ID_RESP.h>
+#ifndef LIBSBP_FLASH_MESSAGES_H
+#define LIBSBP_FLASH_MESSAGES_H
 
-#endif /* LIBSBP_V4_FLASH_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/flash.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/flash.h>
+
+#endif /* LIBSBP_FLASH_MESSAGES_H */

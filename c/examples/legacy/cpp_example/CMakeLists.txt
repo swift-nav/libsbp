@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.9)
-project(libsbp_cpp_example)
+project(libsbp_legacy_cpp_example)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -11,5 +11,5 @@ find_package(PkgConfig)
 link_directories("/usr/local/lib/")
 include_directories("/usr/local/include/")
 
-add_executable(libsbp_cpp_example cpp_example.cc)
-target_link_libraries(libsbp_cpp_example sbp)
+add_executable(libsbp_legacy_cpp_example cpp_example.cc)
+target_link_libraries(libsbp_legacy_cpp_example sbp)

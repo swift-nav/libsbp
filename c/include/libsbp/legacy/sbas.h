@@ -25,6 +25,12 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "The legacy libsbp API has been deprecated. This file and all symbols "
+    "contained will "
+    "be removed in version 6. You should immediately switch over to the modern "
+    "libsbp API.")
+
 #include <libsbp/legacy/gnss.h>
 #include <libsbp/sbas_macros.h>
 
@@ -36,7 +42,7 @@ SBP_PACK_START
  * parity of the data block and sends only blocks that pass the check.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   sbp_gnss_signal_t sid; /**< GNSS signal identifier. */
   u32 tow;         /**< GPS time-of-week at the start of the data block. [ms] */
   u8 message_type; /**< SBAS message type (0-63) */

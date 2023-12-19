@@ -15,16 +15,13 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_BOOTLOAD_MESSAGES_H
-#define LIBSBP_BOOTLOAD_MESSAGES_H
+#ifndef LIBSBP_V4_BOOTLOAD_MESSAGES_H
+#define LIBSBP_V4_BOOTLOAD_MESSAGES_H
+#include <libsbp/bootload/MSG_BOOTLOADER_HANDSHAKE_DEP_A.h>
+#include <libsbp/bootload/MSG_BOOTLOADER_HANDSHAKE_REQ.h>
+#include <libsbp/bootload/MSG_BOOTLOADER_HANDSHAKE_RESP.h>
+#include <libsbp/bootload/MSG_BOOTLOADER_JUMP_TO_APP.h>
+#include <libsbp/bootload/MSG_NAP_DEVICE_DNA_REQ.h>
+#include <libsbp/bootload/MSG_NAP_DEVICE_DNA_RESP.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/bootload.h` instead. Access to legacy "
-    "types via `libsbp/bootload.h` will be removed in version 5.")
-
-#include <libsbp/legacy/bootload.h>
-
-#endif /* LIBSBP_BOOTLOAD_MESSAGES_H */
+#endif /* LIBSBP_V4_BOOTLOAD_MESSAGES_H */

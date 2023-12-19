@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <libsbp/internal/v4/string/multipart.h>
+#include <libsbp/internal/string/multipart.h>
 
 TEST(TestMultipartString, InitialState) {
   // The string buffer is zero'd out, it should still report as valid and have a packed length according to min-sections

@@ -15,16 +15,15 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTEGRITY_MESSAGES_H
-#define LIBSBP_INTEGRITY_MESSAGES_H
+#ifndef LIBSBP_V4_INTEGRITY_MESSAGES_H
+#define LIBSBP_V4_INTEGRITY_MESSAGES_H
+#include <libsbp/integrity/IntegritySSRHeader.h>
+#include <libsbp/integrity/MSG_ACKNOWLEDGE.h>
+#include <libsbp/integrity/MSG_SSR_FLAG_HIGH_LEVEL.h>
+#include <libsbp/integrity/MSG_SSR_FLAG_IONO_GRID_POINTS.h>
+#include <libsbp/integrity/MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS.h>
+#include <libsbp/integrity/MSG_SSR_FLAG_IONO_TILE_SAT_LOS.h>
+#include <libsbp/integrity/MSG_SSR_FLAG_SATELLITES.h>
+#include <libsbp/integrity/MSG_SSR_FLAG_TROPO_GRID_POINTS.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/integrity.h` instead. Access to legacy "
-    "types via `libsbp/integrity.h` will be removed in version 5.")
-
-#include <libsbp/legacy/integrity.h>
-
-#endif /* LIBSBP_INTEGRITY_MESSAGES_H */
+#endif /* LIBSBP_V4_INTEGRITY_MESSAGES_H */

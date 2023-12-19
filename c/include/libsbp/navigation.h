@@ -15,16 +15,49 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NAVIGATION_MESSAGES_H
-#define LIBSBP_NAVIGATION_MESSAGES_H
+#ifndef LIBSBP_V4_NAVIGATION_MESSAGES_H
+#define LIBSBP_V4_NAVIGATION_MESSAGES_H
+#include <libsbp/navigation/EstimatedHorizontalErrorEllipse.h>
+#include <libsbp/navigation/MSG_AGE_CORRECTIONS.h>
+#include <libsbp/navigation/MSG_BASELINE_ECEF.h>
+#include <libsbp/navigation/MSG_BASELINE_ECEF_DEP_A.h>
+#include <libsbp/navigation/MSG_BASELINE_HEADING_DEP_A.h>
+#include <libsbp/navigation/MSG_BASELINE_NED.h>
+#include <libsbp/navigation/MSG_BASELINE_NED_DEP_A.h>
+#include <libsbp/navigation/MSG_DOPS.h>
+#include <libsbp/navigation/MSG_DOPS_DEP_A.h>
+#include <libsbp/navigation/MSG_GPS_TIME.h>
+#include <libsbp/navigation/MSG_GPS_TIME_DEP_A.h>
+#include <libsbp/navigation/MSG_GPS_TIME_GNSS.h>
+#include <libsbp/navigation/MSG_POSE_RELATIVE.h>
+#include <libsbp/navigation/MSG_POS_ECEF.h>
+#include <libsbp/navigation/MSG_POS_ECEF_COV.h>
+#include <libsbp/navigation/MSG_POS_ECEF_COV_GNSS.h>
+#include <libsbp/navigation/MSG_POS_ECEF_DEP_A.h>
+#include <libsbp/navigation/MSG_POS_ECEF_GNSS.h>
+#include <libsbp/navigation/MSG_POS_LLH.h>
+#include <libsbp/navigation/MSG_POS_LLH_ACC.h>
+#include <libsbp/navigation/MSG_POS_LLH_COV.h>
+#include <libsbp/navigation/MSG_POS_LLH_COV_GNSS.h>
+#include <libsbp/navigation/MSG_POS_LLH_DEP_A.h>
+#include <libsbp/navigation/MSG_POS_LLH_GNSS.h>
+#include <libsbp/navigation/MSG_PROTECTION_LEVEL.h>
+#include <libsbp/navigation/MSG_PROTECTION_LEVEL_DEP_A.h>
+#include <libsbp/navigation/MSG_REFERENCE_FRAME_PARAM.h>
+#include <libsbp/navigation/MSG_UTC_LEAP_SECOND.h>
+#include <libsbp/navigation/MSG_UTC_TIME.h>
+#include <libsbp/navigation/MSG_UTC_TIME_GNSS.h>
+#include <libsbp/navigation/MSG_VEL_BODY.h>
+#include <libsbp/navigation/MSG_VEL_COG.h>
+#include <libsbp/navigation/MSG_VEL_ECEF.h>
+#include <libsbp/navigation/MSG_VEL_ECEF_COV.h>
+#include <libsbp/navigation/MSG_VEL_ECEF_COV_GNSS.h>
+#include <libsbp/navigation/MSG_VEL_ECEF_DEP_A.h>
+#include <libsbp/navigation/MSG_VEL_ECEF_GNSS.h>
+#include <libsbp/navigation/MSG_VEL_NED.h>
+#include <libsbp/navigation/MSG_VEL_NED_COV.h>
+#include <libsbp/navigation/MSG_VEL_NED_COV_GNSS.h>
+#include <libsbp/navigation/MSG_VEL_NED_DEP_A.h>
+#include <libsbp/navigation/MSG_VEL_NED_GNSS.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/navigation.h` instead. Access to "
-    "legacy types via `libsbp/navigation.h` will be removed in version 5.")
-
-#include <libsbp/legacy/navigation.h>
-
-#endif /* LIBSBP_NAVIGATION_MESSAGES_H */
+#endif /* LIBSBP_V4_NAVIGATION_MESSAGES_H */

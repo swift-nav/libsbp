@@ -15,16 +15,17 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_SETTINGS_MESSAGES_H
-#define LIBSBP_SETTINGS_MESSAGES_H
+#ifndef LIBSBP_V4_SETTINGS_MESSAGES_H
+#define LIBSBP_V4_SETTINGS_MESSAGES_H
+#include <libsbp/settings/MSG_SETTINGS_READ_BY_INDEX_DONE.h>
+#include <libsbp/settings/MSG_SETTINGS_READ_BY_INDEX_REQ.h>
+#include <libsbp/settings/MSG_SETTINGS_READ_BY_INDEX_RESP.h>
+#include <libsbp/settings/MSG_SETTINGS_READ_REQ.h>
+#include <libsbp/settings/MSG_SETTINGS_READ_RESP.h>
+#include <libsbp/settings/MSG_SETTINGS_REGISTER.h>
+#include <libsbp/settings/MSG_SETTINGS_REGISTER_RESP.h>
+#include <libsbp/settings/MSG_SETTINGS_SAVE.h>
+#include <libsbp/settings/MSG_SETTINGS_WRITE.h>
+#include <libsbp/settings/MSG_SETTINGS_WRITE_RESP.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/settings.h` instead. Access to legacy "
-    "types via `libsbp/settings.h` will be removed in version 5.")
-
-#include <libsbp/legacy/settings.h>
-
-#endif /* LIBSBP_SETTINGS_MESSAGES_H */
+#endif /* LIBSBP_V4_SETTINGS_MESSAGES_H */

@@ -382,13 +382,13 @@ test-c:
 	$(MAKE) do-all-tests
 	$(call announce-end,"Finished running C tests")
 
-test-c-v4:
+test-c-modern:
 	$(call announce-begin,"Running C tests")
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake $(CMAKEFLAGS) ../; \
-	$(MAKE) -j4 test-libsbp-v4 test-libsbp-cpp-v4; \
-	$(MAKE) do-test-libsbp-v4 do-test-libsbp-cpp-v4
+	$(MAKE) -j4 test-libsbp test-libsbp-cpp; \
+	$(MAKE) do-test-libsbp do-test-libsbp-cpp
 	$(call announce-end,"Finished running C tests")
 
 test-python:

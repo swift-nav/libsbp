@@ -15,16 +15,9 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_TELEMETRY_MESSAGES_H
-#define LIBSBP_TELEMETRY_MESSAGES_H
+#ifndef LIBSBP_V4_TELEMETRY_MESSAGES_H
+#define LIBSBP_V4_TELEMETRY_MESSAGES_H
+#include <libsbp/telemetry/MSG_TEL_SV.h>
+#include <libsbp/telemetry/TelemetrySV.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/telemetry.h` instead. Access to legacy "
-    "types via `libsbp/telemetry.h` will be removed in version 5.")
-
-#include <libsbp/legacy/telemetry.h>
-
-#endif /* LIBSBP_TELEMETRY_MESSAGES_H */
+#endif /* LIBSBP_V4_TELEMETRY_MESSAGES_H */

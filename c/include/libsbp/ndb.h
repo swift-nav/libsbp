@@ -15,16 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_NDB_MESSAGES_H
-#define LIBSBP_NDB_MESSAGES_H
+#ifndef LIBSBP_V4_NDB_MESSAGES_H
+#define LIBSBP_V4_NDB_MESSAGES_H
+#include <libsbp/ndb/MSG_NDB_EVENT.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/ndb.h` instead. Access to legacy types "
-    "via `libsbp/ndb.h` will be removed in version 5.")
-
-#include <libsbp/legacy/ndb.h>
-
-#endif /* LIBSBP_NDB_MESSAGES_H */
+#endif /* LIBSBP_V4_NDB_MESSAGES_H */

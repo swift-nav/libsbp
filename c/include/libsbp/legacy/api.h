@@ -14,16 +14,15 @@
 #define LIBSBP_LEGACY_API_H
 
 #include <libsbp/common.h>
+#include <libsbp/legacy/callbacks.h>
+
+SBP_MESSAGE(
+  "The legacy libsbp API has been deprecated. This file and all symbols contained will "
+  "be removed in version 6. You should immediately switch over to the modern libsbp API.")
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/** SBP callback function prototype definitions. */
-typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
-typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
-                                     u8 payload_len, u8 payload[],
-                                     u16 frame_len, u8 frame[], void *context);
 
 /** Register a payload callback for a message type.
  *
@@ -41,7 +40,7 @@ typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
  *         `SBP_CALLBACK_ERROR` if the callback was already
  *         registered for that message type.
  */
-SBP_EXPORT s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
+SBP_EXPORT SBP_DEPRECATED s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
                          sbp_msg_callbacks_node_t *node);
 
  /** Register a frame callback for a msg_type.
@@ -56,7 +55,7 @@ SBP_EXPORT s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_ms
  *         `SBP_CALLBACK_ERROR` if the if callback was already
  *         registered for that message type.
  */
-SBP_EXPORT s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
+SBP_EXPORT SBP_DEPRECATED s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
                                sbp_frame_callback_t cb, void* context,
                                sbp_msg_callbacks_node_t *node);
 
@@ -69,7 +68,7 @@ SBP_EXPORT s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
  * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
  *         `SBP_CALLBACK_ERROR` if the node already exists
  */
-SBP_EXPORT s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
+SBP_EXPORT SBP_DEPRECATED s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
                                  void *context, sbp_msg_callbacks_node_t *node);
 
 /** Directly process an SBP frame.
@@ -92,7 +91,7 @@ SBP_EXPORT s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callba
  *          SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no
  *          associated callback.
  */
-SBP_EXPORT s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
+SBP_EXPORT SBP_DEPRECATED s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
                      u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask);
 
 /** Directly process an SBP message.
@@ -108,7 +107,7 @@ SBP_EXPORT s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
  *         `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
  *         callback.
  */
-SBP_EXPORT s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
+SBP_EXPORT SBP_DEPRECATED s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
     u8 payload[]);
 
 /** Send SBP messages.
@@ -140,7 +139,7 @@ SBP_EXPORT s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u
  * \return `SBP_OK` (0) if successful, `SBP_WRITE_ERROR` if the message could
  *         not be sent or was only partially sent.
  */
-SBP_EXPORT s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
+SBP_EXPORT SBP_DEPRECATED s8 sbp_payload_send(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
                     sbp_write_fn_t write);
 
 #ifdef __cplusplus

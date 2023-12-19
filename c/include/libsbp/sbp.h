@@ -14,10 +14,9 @@
 #define LIBSBP_SBP_H
 
 #include <libsbp/common.h>
-#include <libsbp/legacy/api.h>
-#include <libsbp/legacy/compat.h>
-#include <libsbp/v4/api.h>
+#include <libsbp/legacy/callbacks.h>
 #include <libsbp/sbp_msg_type.h>
+#include <libsbp/sbp_msg.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,6 +73,8 @@ extern "C" {
 
 /** Get message payload pointer from frame */
 #define SBP_FRAME_MSG_PAYLOAD(frame_ptr) (&((frame_ptr)[SBP_FRAME_OFFSET_MSG]))
+
+typedef void (*sbp_decoded_callback_t)(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg, void *context);
 
 /** SBP callback function prototype definitions. */
 typedef union {
@@ -148,6 +149,14 @@ SBP_EXPORT void sbp_clear_callbacks(sbp_state_t* s);
 SBP_EXPORT void sbp_state_init(sbp_state_t *s);
 SBP_EXPORT void sbp_state_set_io_context(sbp_state_t *s, void* context);
 SBP_EXPORT s8 sbp_process(sbp_state_t *s, sbp_read_fn_t read);
+
+SBP_EXPORT s8 sbp_callback_register(sbp_state_t* s, sbp_msg_type_t msg_type, sbp_decoded_callback_t cb, void* context,
+                         sbp_msg_callbacks_node_t *node);
+SBP_EXPORT s8 sbp_all_message_callback_register(sbp_state_t *s, sbp_decoded_callback_t cb, void* context,
+                                 sbp_msg_callbacks_node_t *node);
+SBP_EXPORT s8 sbp_message_process(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg);
+SBP_EXPORT s8 sbp_message_send(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, const sbp_msg_t *msg,
+                    sbp_write_fn_t write);
 
 #ifdef __cplusplus
 }

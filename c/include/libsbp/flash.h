@@ -15,16 +15,17 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_FLASH_MESSAGES_H
-#define LIBSBP_FLASH_MESSAGES_H
+#ifndef LIBSBP_V4_FLASH_MESSAGES_H
+#define LIBSBP_V4_FLASH_MESSAGES_H
+#include <libsbp/flash/MSG_FLASH_DONE.h>
+#include <libsbp/flash/MSG_FLASH_ERASE.h>
+#include <libsbp/flash/MSG_FLASH_PROGRAM.h>
+#include <libsbp/flash/MSG_FLASH_READ_REQ.h>
+#include <libsbp/flash/MSG_FLASH_READ_RESP.h>
+#include <libsbp/flash/MSG_M25_FLASH_WRITE_STATUS.h>
+#include <libsbp/flash/MSG_STM_FLASH_LOCK_SECTOR.h>
+#include <libsbp/flash/MSG_STM_FLASH_UNLOCK_SECTOR.h>
+#include <libsbp/flash/MSG_STM_UNIQUE_ID_REQ.h>
+#include <libsbp/flash/MSG_STM_UNIQUE_ID_RESP.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/flash.h` instead. Access to legacy "
-    "types via `libsbp/flash.h` will be removed in version 5.")
-
-#include <libsbp/legacy/flash.h>
-
-#endif /* LIBSBP_FLASH_MESSAGES_H */
+#endif /* LIBSBP_V4_FLASH_MESSAGES_H */

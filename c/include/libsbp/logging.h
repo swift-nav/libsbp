@@ -15,16 +15,10 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_LOGGING_MESSAGES_H
-#define LIBSBP_LOGGING_MESSAGES_H
+#ifndef LIBSBP_V4_LOGGING_MESSAGES_H
+#define LIBSBP_V4_LOGGING_MESSAGES_H
+#include <libsbp/logging/MSG_FWD.h>
+#include <libsbp/logging/MSG_LOG.h>
+#include <libsbp/logging/MSG_PRINT_DEP.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/logging.h` instead. Access to legacy "
-    "types via `libsbp/logging.h` will be removed in version 5.")
-
-#include <libsbp/legacy/logging.h>
-
-#endif /* LIBSBP_LOGGING_MESSAGES_H */
+#endif /* LIBSBP_V4_LOGGING_MESSAGES_H */

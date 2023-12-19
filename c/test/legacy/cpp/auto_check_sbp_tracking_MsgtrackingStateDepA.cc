@@ -15,19 +15,30 @@
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
-#include <libsbp/cpp/state.h>
+
+#include <libsbp/common.h>
+
+// Obviously we don't normally want to silence this message, but we also need to
+// still test the legacy implementation for as long as it exists. By silencing
+// these messages here we can get a less noisy build in libsbp
+#ifdef SBP_MESSAGE
+#undef SBP_MESSAGE
+#define SBP_MESSAGE(x)
+#endif
+#include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
+#include <libsbp/legacy/tracking.h>
 class Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA0
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_tracking_state_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA0()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_tracking_state_dep_a_t>(this),
@@ -283,14 +294,14 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA0, Test) {
 }
 class Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA1
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_tracking_state_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA1()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_tracking_state_dep_a_t>(this),
@@ -546,14 +557,14 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA1, Test) {
 }
 class Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA2
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_tracking_state_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA2()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_tracking_state_dep_a_t>(this),
@@ -809,14 +820,14 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA2, Test) {
 }
 class Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA3
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_tracking_state_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA3()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_tracking_state_dep_a_t>(this),
@@ -1072,14 +1083,14 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA3, Test) {
 }
 class Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA4
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_tracking_state_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA4()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_tracking_state_dep_a_t>(this),
@@ -1335,14 +1346,14 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA4, Test) {
 }
 class Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA5
     : public ::testing::Test,
-      public sbp::State,
+      public sbp::LegacyState,
       public sbp::IReader,
       public sbp::IWriter,
       sbp::PayloadHandler<msg_tracking_state_dep_a_t> {
  public:
   Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA5()
       : ::testing::Test(),
-        sbp::State(),
+        sbp::LegacyState(),
         sbp::IReader(),
         sbp::IWriter(),
         sbp::PayloadHandler<msg_tracking_state_dep_a_t>(this),

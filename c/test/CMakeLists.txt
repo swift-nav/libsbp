@@ -8,7 +8,7 @@ endif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 
 FILE(GLOB generated_legacy_c_sources legacy/auto*.c)
 
-FILE(GLOB generated_v4_c_sources auto*.c)
+FILE(GLOB generated_c_sources auto*.c)
 
 set(TEST_INCLUDES ${PROJECT_SOURCE_DIR}/include/libsbp)
 
@@ -48,23 +48,24 @@ if (NOT CMAKE_C_COMPILER_ID STREQUAL "MSVC")
       -Wformat-y2k
     ADD
       -Wformat=0
+      -Wno-deprecated-declarations
   )
 endif()
 
-swift_add_test(test-libsbp-v4
+swift_add_test(test-libsbp
   UNIT_TEST
   SRCS
     check_main.c
     check_edc.c
     check_sbp.c
     check_bitfield_macros.c
-    ${generated_v4_c_sources}
+    ${generated_c_sources}
   INCLUDE
     ${TEST_INCLUDES}
   LINK
     ${TEST_LIBS}
   )
-swift_set_compile_options(test-libsbp-v4
+swift_set_compile_options(test-libsbp
   REMOVE 
     -Wpointer-arith
     -Wformat

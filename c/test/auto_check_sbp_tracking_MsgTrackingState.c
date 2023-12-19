@@ -16,7 +16,7 @@
 
 #include <check.h>
 #include <libsbp/sbp.h>
-#include <libsbp/v4/tracking.h>
+#include <libsbp/tracking.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

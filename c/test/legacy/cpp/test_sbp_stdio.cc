@@ -12,6 +12,14 @@
 
 #include <gtest/gtest.h>
 
+#include <libsbp/common.h>
+// Obviously we don't normally want to silence this message, but we also need to
+// still test the legacy implementation for as long as it exists. By silencing
+// these messages here we can get a less noisy build in libsbp
+#ifdef SBP_MESSAGE
+#undef SBP_MESSAGE
+#define SBP_MESSAGE(x)
+#endif
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/cpp/sbp_stdio.h>
 
@@ -26,7 +34,7 @@ struct SbpHeaderParams {
 
 class MsgObsHandler : private sbp::PayloadHandler<msg_obs_t> {
  public:
-  explicit MsgObsHandler(sbp::State *state)
+  explicit MsgObsHandler(sbp::LegacyState *state)
       : sbp::PayloadHandler<msg_obs_t>(state), state_(state) {}
 
   void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
@@ -49,14 +57,14 @@ class MsgObsHandler : private sbp::PayloadHandler<msg_obs_t> {
 
  private:
   SbpHeaderParams header_params_;
-  sbp::State *state_;
+  sbp::LegacyState *state_;
 };
 
 class SbpStdioTest : public ::testing::Test {
  protected:
   static int num_entries_in_file(const std::string &input_file) {
     sbp::SbpFileReader reader = sbp::SbpFileReader(input_file.data());
-    sbp::State state;
+    sbp::LegacyState state;
     state.set_reader(&reader);
     MsgObsHandler handler(&state);
 
@@ -77,7 +85,7 @@ class SbpStdioTest : public ::testing::Test {
                             const std::string &output_file) {
     sbp::SbpFileReader reader = sbp::SbpFileReader(input_file.data());
     sbp::SbpFileWriter writer = sbp::SbpFileWriter(output_file.data());
-    sbp::State state;
+    sbp::LegacyState state;
     state.set_reader(&reader);
     state.set_writer(&writer);
     MsgObsHandler handler(&state);

@@ -11,20 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/file_io.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_FILE_IO_MESSAGES_H
-#define LIBSBP_V4_FILE_IO_MESSAGES_H
-#include <libsbp/v4/file_io/MSG_FILEIO_CONFIG_REQ.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_CONFIG_RESP.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_READ_DIR_REQ.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_READ_DIR_RESP.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_READ_REQ.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_READ_RESP.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_REMOVE.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_WRITE_REQ.h>
-#include <libsbp/v4/file_io/MSG_FILEIO_WRITE_RESP.h>
+#ifndef LIBSBP_FILE_IO_MESSAGES_H
+#define LIBSBP_FILE_IO_MESSAGES_H
 
-#endif /* LIBSBP_V4_FILE_IO_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/file_io.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/file_io.h>
+
+#endif /* LIBSBP_FILE_IO_MESSAGES_H */

@@ -47,6 +47,12 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "The legacy libsbp API has been deprecated. This file and all symbols "
+    "contained will "
+    "be removed in version 6. You should immediately switch over to the modern "
+    "libsbp API.")
+
 #include <libsbp/navigation_macros.h>
 
 SBP_PACK_START
@@ -70,7 +76,7 @@ SBP_PACK_START
  * MSG_GPS_TIME_GNSS.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 wn;  /**< GPS week number [weeks] */
   u32 tow; /**< GPS time of week rounded to the nearest millisecond [ms] */
   s32 ns_residual; /**< Nanosecond residual of millisecond-rounded TOW
@@ -96,7 +102,7 @@ typedef struct SBP_ATTR_PACKED {
  * fused with inertial measurements use MSG_GPS_TIME.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 wn;  /**< GPS week number [weeks] */
   u32 tow; /**< GPS time of week rounded to the nearest millisecond [ms] */
   s32 ns_residual; /**< Nanosecond residual of millisecond-rounded TOW
@@ -115,7 +121,7 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_UTC_TIME_GNSS.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 flags;   /**< Indicates source and time validity */
   u32 tow;    /**< GPS time of week rounded to the nearest millisecond [ms] */
   u16 year;   /**< Year [year] */
@@ -137,7 +143,7 @@ typedef struct SBP_ATTR_PACKED {
  * fused with inertial measurements use MSG_UTC_TIME.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 flags;   /**< Indicates source and time validity */
   u32 tow;    /**< GPS time of week rounded to the nearest millisecond [ms] */
   u16 year;   /**< Year [year] */
@@ -159,7 +165,7 @@ typedef struct SBP_ATTR_PACKED {
  * The values in this message are from GNSS measurements only.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;  /**< GPS Time of Week [ms] */
   u16 gdop; /**< Geometric Dilution of Precision [0.01] */
   u16 pdop; /**< Position Dilution of Precision [0.01] */
@@ -185,7 +191,7 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_POS_ECEF_GNSS.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;      /**< GPS Time of Week [ms] */
   double x;     /**< ECEF X coordinate [m] */
   double y;     /**< ECEF Y coordinate [m] */
@@ -211,7 +217,7 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_POS_ECEF_COV_GNSS.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   double x;      /**< ECEF X coordinate [m] */
   double y;      /**< ECEF Y coordinate [m] */
@@ -241,7 +247,7 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_POS_LLH_GNSS.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;        /**< GPS Time of Week [ms] */
   double lat;     /**< Latitude [deg] */
   double lon;     /**< Longitude [deg] */
@@ -268,7 +274,7 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_POS_LLH_COV_GNSS.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   double lat;    /**< Latitude [deg] */
   double lon;    /**< Longitude [deg] */
@@ -283,7 +289,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 flags;      /**< Status flags */
 } msg_pos_llh_cov_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   float semi_major;  /**< The semi major axis of the estimated horizontal
                           error ellipse at the user-configured confidence
                           level; zero implies invalid. [m] */
@@ -312,7 +318,7 @@ typedef struct SBP_ATTR_PACKED {
  * measurements.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;                   /**< GPS Time of Week [ms] */
   double lat;                /**< Latitude [deg] */
   double lon;                /**< Longitude [deg] */
@@ -362,7 +368,7 @@ typedef struct SBP_ATTR_PACKED {
  * The values in this message are from GNSS measurements only.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;      /**< GPS Time of Week [ms] */
   s32 x;        /**< Baseline ECEF X coordinate [mm] */
   s32 y;        /**< Baseline ECEF Y coordinate [mm] */
@@ -384,7 +390,7 @@ typedef struct SBP_ATTR_PACKED {
  * The values in this message are from GNSS measurements only.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 n;          /**< Baseline North coordinate [mm] */
   s32 e;          /**< Baseline East coordinate [mm] */
@@ -406,7 +412,7 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_VEL_ECEF_GNSS.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;      /**< GPS Time of Week [ms] */
   s32 x;        /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;        /**< Velocity ECEF Y coordinate [mm/s] */
@@ -427,7 +433,7 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_VEL_ECEF_COV_GNSS.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   s32 x;         /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;         /**< Velocity ECEF Y coordinate [mm/s] */
@@ -454,7 +460,7 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_VEL_NED_GNSS.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 n;          /**< Velocity North coordinate [mm/s] */
   s32 e;          /**< Velocity East coordinate [mm/s] */
@@ -480,7 +486,7 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_VEL_NED_COV_GNSS.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   s32 n;         /**< Velocity North coordinate [mm/s] */
   s32 e;         /**< Velocity East coordinate [mm/s] */
@@ -509,7 +515,7 @@ typedef struct SBP_ATTR_PACKED {
  * fused with inertial measurements use MSG_POS_ECEF.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;      /**< GPS Time of Week [ms] */
   double x;     /**< ECEF X coordinate [m] */
   double y;     /**< ECEF Y coordinate [m] */
@@ -534,7 +540,7 @@ typedef struct SBP_ATTR_PACKED {
  * fused with inertial measurements use MSG_POS_ECEF_COV.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   double x;      /**< ECEF X coordinate [m] */
   double y;      /**< ECEF Y coordinate [m] */
@@ -563,7 +569,7 @@ typedef struct SBP_ATTR_PACKED {
  * fused with inertial measurements use MSG_POS_LLH.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;        /**< GPS Time of Week [ms] */
   double lat;     /**< Latitude [deg] */
   double lon;     /**< Longitude [deg] */
@@ -589,7 +595,7 @@ typedef struct SBP_ATTR_PACKED {
  * fused with inertial measurements use MSG_POS_LLH_COV.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   double lat;    /**< Latitude [deg] */
   double lon;    /**< Longitude [deg] */
@@ -614,7 +620,7 @@ typedef struct SBP_ATTR_PACKED {
  * fused with inertial measurements use MSG_VEL_ECEF.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;      /**< GPS Time of Week [ms] */
   s32 x;        /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;        /**< Velocity ECEF Y coordinate [mm/s] */
@@ -634,7 +640,7 @@ typedef struct SBP_ATTR_PACKED {
  * fused with inertial measurements use MSG_VEL_ECEF_COV.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   s32 x;         /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;         /**< Velocity ECEF Y coordinate [mm/s] */
@@ -660,7 +666,7 @@ typedef struct SBP_ATTR_PACKED {
  * fused with inertial measurements use MSG_VEL_NED.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 n;          /**< Velocity North coordinate [mm/s] */
   s32 e;          /**< Velocity East coordinate [mm/s] */
@@ -685,7 +691,7 @@ typedef struct SBP_ATTR_PACKED {
  * fused with inertial measurements use MSG_VEL_NED_COV.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   s32 n;         /**< Velocity North coordinate [mm/s] */
   s32 e;         /**< Velocity East coordinate [mm/s] */
@@ -716,7 +722,7 @@ typedef struct SBP_ATTR_PACKED {
  * measurements.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   s32 x;         /**< Velocity in x direction [mm/s] */
   s32 y;         /**< Velocity in y direction [mm/s] */
@@ -749,7 +755,7 @@ typedef struct SBP_ATTR_PACKED {
  * measurements.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow; /**< GPS Time of Week [ms] */
   u32 cog; /**< Course over ground relative to north direction [microdegrees] */
   u32 sog; /**< Speed over ground (based on horizontal velocity) [mm/s] */
@@ -769,7 +775,7 @@ typedef struct SBP_ATTR_PACKED {
  * Differential solution.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow; /**< GPS Time of Week [ms] */
   u16 age; /**< Age of the corrections (0xFFFF indicates invalid) [deciseconds]
             */
@@ -780,7 +786,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u16 wn;  /**< GPS week number [weeks] */
   u32 tow; /**< GPS time of week rounded to the nearest millisecond [ms] */
   s32 ns_residual; /**< Nanosecond residual of millisecond-rounded TOW
@@ -793,7 +799,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;  /**< GPS Time of Week [ms] */
   u16 gdop; /**< Geometric Dilution of Precision [0.01] */
   u16 pdop; /**< Position Dilution of Precision [0.01] */
@@ -807,7 +813,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;      /**< GPS Time of Week [ms] */
   double x;     /**< ECEF X coordinate [m] */
   double y;     /**< ECEF Y coordinate [m] */
@@ -823,7 +829,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;        /**< GPS Time of Week [ms] */
   double lat;     /**< Latitude [deg] */
   double lon;     /**< Longitude [deg] */
@@ -841,7 +847,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;      /**< GPS Time of Week [ms] */
   s32 x;        /**< Baseline ECEF X coordinate [mm] */
   s32 y;        /**< Baseline ECEF Y coordinate [mm] */
@@ -856,7 +862,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 n;          /**< Baseline North coordinate [mm] */
   s32 e;          /**< Baseline East coordinate [mm] */
@@ -874,7 +880,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;      /**< GPS Time of Week [ms] */
   s32 x;        /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;        /**< Velocity ECEF Y coordinate [mm/s] */
@@ -890,7 +896,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 n;          /**< Velocity North coordinate [mm/s] */
   s32 e;          /**< Velocity East coordinate [mm/s] */
@@ -908,7 +914,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;     /**< GPS Time of Week [ms] */
   u32 heading; /**< Heading [mdeg] */
   u8 n_sats;   /**< Number of satellites used in solution */
@@ -920,7 +926,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   u16 vpl;       /**< Vertical protection level [cm] */
   u16 hpl;       /**< Horizontal protection level [cm] */
@@ -937,7 +943,7 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow).
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;       /**< GPS Time of Week [ms] */
   s16 wn;        /**< GPS week number [weeks] */
   u16 hpl;       /**< Horizontal protection level [cm] */
@@ -971,7 +977,7 @@ typedef struct SBP_ATTR_PACKED {
  * for announced insertions) UTC leap second insertion.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s16 reserved_0;  /**< Reserved. */
   s16 reserved_1;  /**< Reserved. */
   s8 reserved_2;   /**< Reserved. */
@@ -983,7 +989,7 @@ typedef struct SBP_ATTR_PACKED {
   s8 count_after;  /**< Leap second count after insertion. [s] */
 } msg_utc_leap_second_t;
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 ssr_iod;   /**< SSR IOD parameter. */
   char sn[32];  /**< Name of source coordinate-system. */
   char tn[32];  /**< Name of target coordinate-system. */
@@ -1025,7 +1031,7 @@ typedef struct SBP_ATTR_PACKED {
  * first keyframe.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;         /**< GPS Time of Week [ms] */
   u8 sensor_id;    /**< ID of the sensor producing this message */
   u32 timestamp_1; /**< Timestamp of first keyframe [ms] */

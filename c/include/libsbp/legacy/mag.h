@@ -25,6 +25,12 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "The legacy libsbp API has been deprecated. This file and all symbols "
+    "contained will "
+    "be removed in version 6. You should immediately switch over to the modern "
+    "libsbp API.")
+
 #include <libsbp/mag_macros.h>
 
 SBP_PACK_START
@@ -34,7 +40,7 @@ SBP_PACK_START
  * Raw data from the magnetometer.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 tow;   /**< Milliseconds since start of GPS week. If the high bit is
                   set, the time is unknown or invalid. [ms] */
   u8 tow_f;  /**< Milliseconds since start of GPS week, fractional part [ms /

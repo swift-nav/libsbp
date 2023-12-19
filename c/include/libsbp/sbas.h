@@ -15,16 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_SBAS_MESSAGES_H
-#define LIBSBP_SBAS_MESSAGES_H
+#ifndef LIBSBP_V4_SBAS_MESSAGES_H
+#define LIBSBP_V4_SBAS_MESSAGES_H
+#include <libsbp/sbas/MSG_SBAS_RAW.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/sbas.h` instead. Access to legacy "
-    "types via `libsbp/sbas.h` will be removed in version 5.")
-
-#include <libsbp/legacy/sbas.h>
-
-#endif /* LIBSBP_SBAS_MESSAGES_H */
+#endif /* LIBSBP_V4_SBAS_MESSAGES_H */

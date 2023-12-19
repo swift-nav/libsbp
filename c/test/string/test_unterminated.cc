@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <libsbp/internal/v4/string/unterminated.h>
+#include <libsbp/internal/string/unterminated.h>
 
 TEST(TestUnterminatedString, InitialState) {
   // The string buffer is zero'd out, it should still report as valid and have a packed length of 1

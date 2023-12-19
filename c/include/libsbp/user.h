@@ -15,16 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_USER_MESSAGES_H
-#define LIBSBP_USER_MESSAGES_H
+#ifndef LIBSBP_V4_USER_MESSAGES_H
+#define LIBSBP_V4_USER_MESSAGES_H
+#include <libsbp/user/MSG_USER_DATA.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/user.h` instead. Access to legacy "
-    "types via `libsbp/user.h` will be removed in version 5.")
-
-#include <libsbp/legacy/user.h>
-
-#endif /* LIBSBP_USER_MESSAGES_H */
+#endif /* LIBSBP_V4_USER_MESSAGES_H */

@@ -15,16 +15,15 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_ACQUISITION_MESSAGES_H
-#define LIBSBP_ACQUISITION_MESSAGES_H
+#ifndef LIBSBP_V4_ACQUISITION_MESSAGES_H
+#define LIBSBP_V4_ACQUISITION_MESSAGES_H
+#include <libsbp/acquisition/AcqSvProfile.h>
+#include <libsbp/acquisition/AcqSvProfileDep.h>
+#include <libsbp/acquisition/MSG_ACQ_RESULT.h>
+#include <libsbp/acquisition/MSG_ACQ_RESULT_DEP_A.h>
+#include <libsbp/acquisition/MSG_ACQ_RESULT_DEP_B.h>
+#include <libsbp/acquisition/MSG_ACQ_RESULT_DEP_C.h>
+#include <libsbp/acquisition/MSG_ACQ_SV_PROFILE.h>
+#include <libsbp/acquisition/MSG_ACQ_SV_PROFILE_DEP.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/acquisition.h` instead. Access to "
-    "legacy types via `libsbp/acquisition.h` will be removed in version 5.")
-
-#include <libsbp/legacy/acquisition.h>
-
-#endif /* LIBSBP_ACQUISITION_MESSAGES_H */
+#endif /* LIBSBP_V4_ACQUISITION_MESSAGES_H */

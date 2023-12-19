@@ -15,16 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_EXT_EVENTS_MESSAGES_H
-#define LIBSBP_EXT_EVENTS_MESSAGES_H
+#ifndef LIBSBP_V4_EXT_EVENTS_MESSAGES_H
+#define LIBSBP_V4_EXT_EVENTS_MESSAGES_H
+#include <libsbp/ext_events/MSG_EXT_EVENT.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/ext_events.h` instead. Access to "
-    "legacy types via `libsbp/ext_events.h` will be removed in version 5.")
-
-#include <libsbp/legacy/ext_events.h>
-
-#endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */
+#endif /* LIBSBP_V4_EXT_EVENTS_MESSAGES_H */

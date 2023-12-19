@@ -11,12 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/ndb.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_NDB_MESSAGES_H
-#define LIBSBP_V4_NDB_MESSAGES_H
-#include <libsbp/v4/ndb/MSG_NDB_EVENT.h>
+#ifndef LIBSBP_NDB_MESSAGES_H
+#define LIBSBP_NDB_MESSAGES_H
 
-#endif /* LIBSBP_V4_NDB_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/ndb.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/ndb.h>
+
+#endif /* LIBSBP_NDB_MESSAGES_H */

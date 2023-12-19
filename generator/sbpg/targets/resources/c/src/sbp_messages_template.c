@@ -8,13 +8,14 @@
 #include <stdbool.h>
 
 #include <libsbp/sbp.h>
-#include <libsbp/internal/v4/common.h>
-#include <libsbp/v4/(((package.name))).h>
-#include <libsbp/internal/v4/(((package.name))).h>
-#include <libsbp/internal/v4/string/multipart.h>
-#include <libsbp/internal/v4/string/null_terminated.h>
-#include <libsbp/internal/v4/string/double_null_terminated.h>
-#include <libsbp/internal/v4/string/unterminated.h>
+#include <libsbp/internal/common.h>
+#include <libsbp/(((package.name))).h>
+#include <libsbp/internal/(((package.name))).h>
+#include <libsbp/internal/string/multipart.h>
+#include <libsbp/internal/string/null_terminated.h>
+#include <libsbp/internal/string/double_null_terminated.h>
+#include <libsbp/internal/string/unterminated.h>
+#include <libsbp/internal/sbp_internal.h>
 
 ((*- for m in package.msgs *))
                                                                                                               
@@ -252,7 +253,7 @@ s8 (((m.send_fn)))(sbp_state_t *s, u16 sender_id, const (((m.type_name))) *msg, 
   uint8_t payload_len;
   s8 ret = (((m.public_encode_fn)))(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_payload_send(s, (((m.legacy_msg_type))), sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, (((m.legacy_msg_type))), sender_id, payload_len, payload, write);
 }
 ((*- endif *))
 
@@ -270,18 +271,22 @@ int (((m.cmp_fn)))(const (((m.type_name))) *a, const (((m.type_name))) *b) {
   ((*- else *))
   ((*- if f.packing == "variable-array" *))
   ret = sbp_u8_cmp(&a->(((f.size_fn))), &b->(((f.size_fn))));
+  if (ret != 0) { return ret; }
   ((*- endif *))
   ((*- if f.packing == "fixed-array" *))
   ((*- set max_loop = f.max_items_macro *))
   ((*- else *))
   ((*- set max_loop = "a->" + f.size_fn *))
   ((*- endif *))
-  for (uint8_t i = 0; ret == 0 && i < (((max_loop))); i++)
+  for (uint8_t i = 0;  i < (((max_loop))); i++)
   {
     ret = (((f.cmp_fn)))(&a->(((f.name)))[i], &b->(((f.name)))[i]);
+    if (ret != 0) { return ret; }
   }
   ((*- endif *))
+  ((*- if not loop.last *))
   if (ret != 0) { return ret; }
+  ((*- endif *))
   ((*- endfor *))
   return ret;
 }

@@ -11,22 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/signing.yaml
+ * Automatically generated from yaml/
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SIGNING_MESSAGES_H
-#define LIBSBP_V4_SIGNING_MESSAGES_H
-#include <libsbp/v4/signing/ECDSASignature.h>
-#include <libsbp/v4/signing/MSG_CERTIFICATE_CHAIN.h>
-#include <libsbp/v4/signing/MSG_CERTIFICATE_CHAIN_DEP.h>
-#include <libsbp/v4/signing/MSG_ECDSA_CERTIFICATE.h>
-#include <libsbp/v4/signing/MSG_ECDSA_SIGNATURE.h>
-#include <libsbp/v4/signing/MSG_ECDSA_SIGNATURE_DEP_A.h>
-#include <libsbp/v4/signing/MSG_ECDSA_SIGNATURE_DEP_B.h>
-#include <libsbp/v4/signing/MSG_ED25519_CERTIFICATE_DEP.h>
-#include <libsbp/v4/signing/MSG_ED25519_SIGNATURE_DEP_A.h>
-#include <libsbp/v4/signing/MSG_ED25519_SIGNATURE_DEP_B.h>
-#include <libsbp/v4/signing/UtcTime.h>
+#ifndef LIBSBP_SIGNING_MESSAGES_H
+#define LIBSBP_SIGNING_MESSAGES_H
 
-#endif /* LIBSBP_V4_SIGNING_MESSAGES_H */
+#include <libsbp/common.h>
+
+SBP_MESSAGE(
+    "SBP message definitions have moved. To continue using these types include "
+    "`libsbp/signing.h instead. Access to SBP types via this header file "
+    " will be removed in version 6.")
+
+#include <libsbp/signing.h>
+
+#endif /* LIBSBP_SIGNING_MESSAGES_H */

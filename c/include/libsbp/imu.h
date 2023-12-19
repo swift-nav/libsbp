@@ -15,16 +15,9 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_IMU_MESSAGES_H
-#define LIBSBP_IMU_MESSAGES_H
+#ifndef LIBSBP_V4_IMU_MESSAGES_H
+#define LIBSBP_V4_IMU_MESSAGES_H
+#include <libsbp/imu/MSG_IMU_AUX.h>
+#include <libsbp/imu/MSG_IMU_RAW.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/imu.h` instead. Access to legacy types "
-    "via `libsbp/imu.h` will be removed in version 5.")
-
-#include <libsbp/legacy/imu.h>
-
-#endif /* LIBSBP_IMU_MESSAGES_H */
+#endif /* LIBSBP_V4_IMU_MESSAGES_H */

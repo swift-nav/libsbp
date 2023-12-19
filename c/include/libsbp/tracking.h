@@ -15,16 +15,22 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_TRACKING_MESSAGES_H
-#define LIBSBP_TRACKING_MESSAGES_H
+#ifndef LIBSBP_V4_TRACKING_MESSAGES_H
+#define LIBSBP_V4_TRACKING_MESSAGES_H
+#include <libsbp/tracking/MSG_MEASUREMENT_STATE.h>
+#include <libsbp/tracking/MSG_TRACKING_IQ.h>
+#include <libsbp/tracking/MSG_TRACKING_IQ_DEP_A.h>
+#include <libsbp/tracking/MSG_TRACKING_IQ_DEP_B.h>
+#include <libsbp/tracking/MSG_TRACKING_STATE.h>
+#include <libsbp/tracking/MSG_TRACKING_STATE_DEP_A.h>
+#include <libsbp/tracking/MSG_TRACKING_STATE_DEP_B.h>
+#include <libsbp/tracking/MSG_TRACKING_STATE_DETAILED_DEP.h>
+#include <libsbp/tracking/MSG_TRACKING_STATE_DETAILED_DEP_A.h>
+#include <libsbp/tracking/MeasurementState.h>
+#include <libsbp/tracking/TrackingChannelCorrelation.h>
+#include <libsbp/tracking/TrackingChannelCorrelationDep.h>
+#include <libsbp/tracking/TrackingChannelState.h>
+#include <libsbp/tracking/TrackingChannelStateDepA.h>
+#include <libsbp/tracking/TrackingChannelStateDepB.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/tracking.h` instead. Access to legacy "
-    "types via `libsbp/tracking.h` will be removed in version 5.")
-
-#include <libsbp/legacy/tracking.h>
-
-#endif /* LIBSBP_TRACKING_MESSAGES_H */
+#endif /* LIBSBP_V4_TRACKING_MESSAGES_H */

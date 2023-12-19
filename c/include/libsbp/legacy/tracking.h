@@ -25,6 +25,12 @@
 
 #include <libsbp/common.h>
 
+SBP_MESSAGE(
+    "The legacy libsbp API has been deprecated. This file and all symbols "
+    "contained will "
+    "be removed in version 6. You should immediately switch over to the modern "
+    "libsbp API.")
+
 #include <libsbp/legacy/gnss.h>
 #include <libsbp/tracking_macros.h>
 
@@ -36,7 +42,7 @@ SBP_PACK_START
  * tracking channel useful for debugging issues.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u64 recv_time;         /**< Receiver clock time. [ns] */
   sbp_gps_time_t tot;    /**< Time of transmission of signal from
                               satellite. TOW only valid when TOW
@@ -82,7 +88,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u64 recv_time;         /**< Receiver clock time. [ns] */
   gps_time_dep_t tot;    /**< Time of transmission of signal from
                               satellite. TOW only valid when TOW
@@ -129,7 +135,7 @@ typedef struct SBP_ATTR_PACKED {
  * power.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   sbp_gnss_signal_t sid; /**< GNSS signal being tracked */
   u8 fcn;                /**< Frequency channel number (GLONASS only) */
   u8 cn0; /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4]
@@ -143,7 +149,7 @@ typedef struct SBP_ATTR_PACKED {
  * tracked satellites.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   tracking_channel_state_t states[0]; /**< Signal tracking channel state */
 } msg_tracking_state_t;
 
@@ -154,7 +160,7 @@ typedef struct SBP_ATTR_PACKED {
  * FCN as 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to 28).
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   sbp_gnss_signal_t mesid; /**< Measurement Engine GNSS signal being
                                 tracked (carries either Glonass FCN or
                                 SLOT) */
@@ -169,7 +175,7 @@ typedef struct SBP_ATTR_PACKED {
  * tracked satellites.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   measurement_state_t states[0]; /**< ME signal tracking channel state */
 } msg_measurement_state_t;
 
@@ -178,7 +184,7 @@ typedef struct SBP_ATTR_PACKED {
  * Structure containing in-phase and quadrature correlation components.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s16 I; /**< In-phase correlation */
   s16 Q; /**< Quadrature correlation */
 } tracking_channel_correlation_t;
@@ -189,7 +195,7 @@ typedef struct SBP_ATTR_PACKED {
  * interval.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 channel;                              /**< Tracking channel of origin */
   sbp_gnss_signal_t sid;                   /**< GNSS signal identifier */
   tracking_channel_correlation_t corrs[3]; /**< Early, Prompt and Late
@@ -201,7 +207,7 @@ typedef struct SBP_ATTR_PACKED {
  * Structure containing in-phase and quadrature correlation components.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s32 I; /**< In-phase correlation */
   s32 Q; /**< Quadrature correlation */
 } tracking_channel_correlation_dep_t;
@@ -211,7 +217,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 channel;            /**< Tracking channel of origin */
   sbp_gnss_signal_t sid; /**< GNSS signal identifier */
   tracking_channel_correlation_dep_t corrs[3]; /**< Early, Prompt and Late
@@ -223,7 +229,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 channel;            /**< Tracking channel of origin */
   gnss_signal_dep_t sid; /**< GNSS signal identifier */
   tracking_channel_correlation_dep_t corrs[3]; /**< Early, Prompt and Late
@@ -235,7 +241,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 state;  /**< Status of tracking channel */
   u8 prn;    /**< PRN-1 being tracked */
   float cn0; /**< Carrier-to-noise density [dB Hz] */
@@ -246,7 +252,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   tracking_channel_state_dep_a_t states[0]; /**< Satellite tracking channel
                                                  state */
 } msg_tracking_state_dep_a_t;
@@ -256,7 +262,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 state;              /**< Status of tracking channel */
   gnss_signal_dep_t sid; /**< GNSS signal being tracked */
   float cn0;             /**< Carrier-to-noise density [dB Hz] */
@@ -267,7 +273,7 @@ typedef struct SBP_ATTR_PACKED {
  * Deprecated.
  */
 
-typedef struct SBP_ATTR_PACKED {
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   tracking_channel_state_dep_b_t
       states[0]; /**< Signal tracking channel state */
 } msg_tracking_state_dep_b_t;

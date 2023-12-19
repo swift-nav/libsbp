@@ -15,16 +15,16 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_FILE_IO_MESSAGES_H
-#define LIBSBP_FILE_IO_MESSAGES_H
+#ifndef LIBSBP_V4_FILE_IO_MESSAGES_H
+#define LIBSBP_V4_FILE_IO_MESSAGES_H
+#include <libsbp/file_io/MSG_FILEIO_CONFIG_REQ.h>
+#include <libsbp/file_io/MSG_FILEIO_CONFIG_RESP.h>
+#include <libsbp/file_io/MSG_FILEIO_READ_DIR_REQ.h>
+#include <libsbp/file_io/MSG_FILEIO_READ_DIR_RESP.h>
+#include <libsbp/file_io/MSG_FILEIO_READ_REQ.h>
+#include <libsbp/file_io/MSG_FILEIO_READ_RESP.h>
+#include <libsbp/file_io/MSG_FILEIO_REMOVE.h>
+#include <libsbp/file_io/MSG_FILEIO_WRITE_REQ.h>
+#include <libsbp/file_io/MSG_FILEIO_WRITE_RESP.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/file_io.h` instead. Access to legacy "
-    "types via `libsbp/file_io.h` will be removed in version 5.")
-
-#include <libsbp/legacy/file_io.h>
-
-#endif /* LIBSBP_FILE_IO_MESSAGES_H */
+#endif /* LIBSBP_V4_FILE_IO_MESSAGES_H */

@@ -15,16 +15,14 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_GNSS_MESSAGES_H
-#define LIBSBP_GNSS_MESSAGES_H
+#ifndef LIBSBP_V4_GNSS_MESSAGES_H
+#define LIBSBP_V4_GNSS_MESSAGES_H
+#include <libsbp/gnss/CarrierPhase.h>
+#include <libsbp/gnss/GPSTime.h>
+#include <libsbp/gnss/GPSTimeDep.h>
+#include <libsbp/gnss/GPSTimeSec.h>
+#include <libsbp/gnss/GnssSignal.h>
+#include <libsbp/gnss/GnssSignalDep.h>
+#include <libsbp/gnss/SvId.h>
 
-#include <libsbp/common.h>
-
-SBP_MESSAGE(
-    "Legacy SBP definitions have moved. To continue using legacy message "
-    "definitions include `libsbp/legacy/gnss.h` instead. Access to legacy "
-    "types via `libsbp/gnss.h` will be removed in version 5.")
-
-#include <libsbp/legacy/gnss.h>
-
-#endif /* LIBSBP_GNSS_MESSAGES_H */
+#endif /* LIBSBP_V4_GNSS_MESSAGES_H */
