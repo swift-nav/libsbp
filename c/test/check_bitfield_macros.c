@@ -18,7 +18,8 @@
 #include <stdio.h>
 
 START_TEST(test_nav_bitfields) {
-  sbp_msg_gps_time_t gps_t = {.wn = 1, .tow = 100, .ns_residual = 1, .flags = 0};
+  sbp_msg_gps_time_t gps_t = {
+      .wn = 1, .tow = 100, .ns_residual = 1, .flags = 0};
 
   SBP_GPS_TIME_TIME_SOURCE_SET(gps_t.flags, SBP_GPS_TIME_TIME_SOURCE_NONE);
   fail_unless(gps_t.flags == 0);
