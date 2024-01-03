@@ -147,7 +147,7 @@ structs
 swiftnav
 synch
 synchronise
-syncronisation
+synchronisation
 syslog
 tcp
 tgd
