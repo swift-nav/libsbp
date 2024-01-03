@@ -45,10 +45,7 @@ extern "C" {
  * odometry reference point and the definition and origin of the user frame are
  * defined through the device settings interface. There are 4 possible
  * user-defined sources of this message which are labeled arbitrarily source 0
- * through 3. If using "processor time" time tags, the receiving end will expect
- * a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise
- * odometry measurements with GNSS. Processor time shall roll over to zero after
- * one week.
+ * through 3.
  */
 typedef struct {
   /**

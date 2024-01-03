@@ -42,7 +42,7 @@ extern "C" {
  *
  * The PPS time message contains the value of the sender's local time in
  * microseconds at the moment a pulse is detected on the PPS input. This is to
- * be used for syncronisation of sensor data sampled with a local timestamp
+ * be used for synchronisation of sensor data sampled with a local timestamp
  * (e.g. IMU or wheeltick messages) where GNSS time is unknown to the sender.
  *
  */
