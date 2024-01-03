@@ -1,5 +1,28 @@
 # Changelog
 
+## [v5.0.5](https://github.com/swift-nav/libsbp/tree/v5.0.5) (2024-01-03)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.4...v5.0.5)
+
+**Closed issues:**
+
+- `MsgUtcTime` implementation of `gps\_time` is not checking status flags [\#1385](https://github.com/swift-nav/libsbp/issues/1385)
+
+**Merged pull requests:**
+
+- Change default codeowner of /c from platform to algint [\#1398](https://github.com/swift-nav/libsbp/pull/1398) ([woodfell](https://github.com/woodfell))
+- Don't use deprecated functions in sbp impl [\#1397](https://github.com/swift-nav/libsbp/pull/1397) ([woodfell](https://github.com/woodfell))
+- Clarify timestamping descriptions  [\#1395](https://github.com/swift-nav/libsbp/pull/1395) ([reimerix](https://github.com/reimerix))
+- Parallel build all C tests from top level makefile  [\#1394](https://github.com/swift-nav/libsbp/pull/1394) ([woodfell](https://github.com/woodfell))
+- Use docker in GA  [\#1393](https://github.com/swift-nav/libsbp/pull/1393) ([woodfell](https://github.com/woodfell))
+- Bump node.js version to 18.17.0  [\#1392](https://github.com/swift-nav/libsbp/pull/1392) ([woodfell](https://github.com/woodfell))
+- update web structs [\#1391](https://github.com/swift-nav/libsbp/pull/1391) ([pcrumley](https://github.com/pcrumley))
+- update how to for new rust instruction [\#1390](https://github.com/swift-nav/libsbp/pull/1390) ([pcrumley](https://github.com/pcrumley))
+- remove -i option from sed [\#1389](https://github.com/swift-nav/libsbp/pull/1389) ([pcrumley](https://github.com/pcrumley))
+- Add missing bindings to check generated artefacts CI stage  [\#1387](https://github.com/swift-nav/libsbp/pull/1387) ([woodfell](https://github.com/woodfell))
+- reduce number of python tests to 2 [\#1386](https://github.com/swift-nav/libsbp/pull/1386) ([pcrumley](https://github.com/pcrumley))
+- Deprecate legacy API  [\#1373](https://github.com/swift-nav/libsbp/pull/1373) ([woodfell](https://github.com/woodfell))
+
 ## [v5.0.4](https://github.com/swift-nav/libsbp/tree/v5.0.4) (2023-12-07)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.3...v5.0.4)
