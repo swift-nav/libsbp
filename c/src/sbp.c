@@ -774,7 +774,10 @@ s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
 s8 sbp_all_payload_callback_register(sbp_state_t *s, sbp_frame_callback_t cb,
                                  void *context, sbp_msg_callbacks_node_t *node)
 {
-  return sbp_frame_callback_register(s, SBP_MSG_ALL, cb, context, node);
+  sbp_callback_t callback;
+  callback.frame = cb;
+  return sbp_register_callback_generic(s, SBP_MSG_ALL, callback,
+                                       SBP_FRAME_CALLBACK, context, node);
 }
 
 s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
