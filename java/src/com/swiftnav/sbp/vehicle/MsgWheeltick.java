@@ -31,9 +31,9 @@ import org.json.JSONObject;
  * source of this message is identified by the source field, which is an integer ranging from 0 to
  * 255. The timestamp associated with this message should represent the time when the accumulated
  * tick count reached the value given by the contents of this message as accurately as possible. If
- * using "local CPU time" time tags, the receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a
- * PVT fix becomes available to synchronise wheeltick measurements with GNSS. Local CPU time shall
- * roll over to zero after one week.
+ * using "local CPU time" time tags, the receiving end will also expect either
+ * `MSG_GNSS_TIME_OFFSET` or `MSG_PPS_TIME` to sync incoming wheeltick data to GNSS time. Local CPU
+ * time shall roll over to zero after one week.
  */
 public class MsgWheeltick extends SBPMessage {
     public static final int TYPE = 0x0904;
