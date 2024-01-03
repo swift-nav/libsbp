@@ -24,6 +24,7 @@ set(libsbp_SRCS
   observation.c
   orientation.c
   piksi.c
+  profiling.c
   sbas.c
   settings.c
   signing.c

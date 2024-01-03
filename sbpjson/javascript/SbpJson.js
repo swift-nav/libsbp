@@ -103,6 +103,7 @@
 //   const msgM25FlashWriteStatus = Convert.toMsgM25FlashWriteStatus(json);
 //   const msgMagRaw = Convert.toMsgMagRaw(json);
 //   const msgMaskSatellite = Convert.toMsgMaskSatellite(json);
+//   const msgMeasurementPoint = Convert.toMsgMeasurementPoint(json);
 //   const msgMeasurementState = Convert.toMsgMeasurementState(json);
 //   const msgNapDeviceDnaReq = Convert.toMsgNapDeviceDnaReq(json);
 //   const msgNapDeviceDnaResp = Convert.toMsgNapDeviceDnaResp(json);
@@ -1029,6 +1030,14 @@ function toMsgMaskSatellite(json) {
 
 function msgMaskSatelliteToJson(value) {
     return JSON.stringify(uncast(value, r("MsgMaskSatellite")), null, 2);
+}
+
+function toMsgMeasurementPoint(json) {
+    return cast(JSON.parse(json), r("MsgMeasurementPoint"));
+}
+
+function msgMeasurementPointToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgMeasurementPoint")), null, 2);
 }
 
 function toMsgMeasurementState(json) {
@@ -2729,6 +2738,17 @@ const typeMap = {
         { json: "mask", js: "mask", typ: 0 },
         { json: "sid", js: "sid", typ: r("GnssSignal") },
     ], "any"),
+    "MsgMeasurementPoint": o([
+        { json: "func", js: "func", typ: "" },
+        { json: "id", js: "id", typ: 0 },
+        { json: "line", js: "line", typ: 0 },
+        { json: "max", js: "max", typ: 0 },
+        { json: "min", js: "min", typ: 0 },
+        { json: "num_executions", js: "num_executions", typ: 0 },
+        { json: "return_addr", js: "return_addr", typ: 0 },
+        { json: "slice_time", js: "slice_time", typ: 0 },
+        { json: "total_time", js: "total_time", typ: 0 },
+    ], "any"),
     "MsgMeasurementState": o([
         { json: "states", js: "states", typ: a(r("MeasurementState")) },
     ], "any"),
@@ -3818,6 +3838,8 @@ module.exports = {
     "toMsgMagRaw": toMsgMagRaw,
     "msgMaskSatelliteToJson": msgMaskSatelliteToJson,
     "toMsgMaskSatellite": toMsgMaskSatellite,
+    "msgMeasurementPointToJson": msgMeasurementPointToJson,
+    "toMsgMeasurementPoint": toMsgMeasurementPoint,
     "msgMeasurementStateToJson": msgMeasurementStateToJson,
     "toMsgMeasurementState": toMsgMeasurementState,
     "msgNapDeviceDnaReqToJson": msgNapDeviceDnaReqToJson,

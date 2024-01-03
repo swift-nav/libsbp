@@ -15,6 +15,7 @@ from .ndb import *
 from .observation import *
 from .orientation import *
 from .piksi import *
+from .profiling import *
 from .sbas import *
 from .settings import *
 from .signing import *
@@ -255,6 +256,7 @@ class Sbp(KaitaiStruct):
         msg_linux_cpu_state = 32520
         msg_linux_mem_state = 32521
         msg_linux_sys_state = 32522
+        msg_measurement_point = 52992
         msg_startup = 65280
         msg_dgnss_status = 65282
         msg_ins_status = 65283
@@ -527,6 +529,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Ssr.MsgSsrCodePhaseBiasesBounds(_io__raw_payload, self, self._root)
+            elif _on == 52992:
+                self._raw_payload = self._io.read_bytes(self.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Profiling.MsgMeasurementPoint(_io__raw_payload, self, self._root)
             elif _on == 150:
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))

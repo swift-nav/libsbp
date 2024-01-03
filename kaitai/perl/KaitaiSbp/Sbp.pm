@@ -15,6 +15,7 @@ use KaitaiSbp::Ndb;
 use KaitaiSbp::Observation;
 use KaitaiSbp::Orientation;
 use KaitaiSbp::Piksi;
+use KaitaiSbp::Profiling;
 use KaitaiSbp::Sbas;
 use KaitaiSbp::Settings;
 use KaitaiSbp::Signing;
@@ -262,6 +263,7 @@ our $MSG_IDS_MSG_LINUX_PROCESS_FD_SUMMARY = 32519;
 our $MSG_IDS_MSG_LINUX_CPU_STATE = 32520;
 our $MSG_IDS_MSG_LINUX_MEM_STATE = 32521;
 our $MSG_IDS_MSG_LINUX_SYS_STATE = 32522;
+our $MSG_IDS_MSG_MEASUREMENT_POINT = 52992;
 our $MSG_IDS_MSG_STARTUP = 65280;
 our $MSG_IDS_MSG_DGNSS_STATUS = 65282;
 our $MSG_IDS_MSG_INS_STATUS = 65283;
@@ -624,6 +626,11 @@ sub _read {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Ssr::MsgSsrCodePhaseBiasesBounds->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 52992) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Profiling::MsgMeasurementPoint->new($io__raw_payload, $self, $self->{_root});
     }
     elsif ($_on == 150) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());

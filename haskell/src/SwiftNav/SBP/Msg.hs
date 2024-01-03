@@ -40,6 +40,7 @@ import SwiftNav.SBP.Ndb
 import SwiftNav.SBP.Observation
 import SwiftNav.SBP.Orientation
 import SwiftNav.SBP.Piksi
+import SwiftNav.SBP.Profiling
 import SwiftNav.SBP.Sbas
 import SwiftNav.SBP.Settings
 import SwiftNav.SBP.Signing
@@ -175,6 +176,7 @@ data SBPMsg =
    | SBPMsgMagRaw MsgMagRaw Msg
    | SBPMsgMaskSatellite MsgMaskSatellite Msg
    | SBPMsgMaskSatelliteDep MsgMaskSatelliteDep Msg
+   | SBPMsgMeasurementPoint MsgMeasurementPoint Msg
    | SBPMsgMeasurementState MsgMeasurementState Msg
    | SBPMsgNapDeviceDnaReq MsgNapDeviceDnaReq Msg
    | SBPMsgNapDeviceDnaResp MsgNapDeviceDnaResp Msg
@@ -421,6 +423,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgMagRaw = SBPMsgMagRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgMaskSatellite = SBPMsgMaskSatellite (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgMaskSatelliteDep = SBPMsgMaskSatelliteDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgMeasurementPoint = SBPMsgMeasurementPoint (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgMeasurementState = SBPMsgMeasurementState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -659,6 +662,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgMagRaw _ m) = put m
       encoder (SBPMsgMaskSatellite _ m) = put m
       encoder (SBPMsgMaskSatelliteDep _ m) = put m
+      encoder (SBPMsgMeasurementPoint _ m) = put m
       encoder (SBPMsgMeasurementState _ m) = put m
       encoder (SBPMsgNapDeviceDnaReq _ m) = put m
       encoder (SBPMsgNapDeviceDnaResp _ m) = put m
@@ -901,6 +905,7 @@ instance FromJSON SBPMsg where
         | msgType == msgMagRaw = SBPMsgMagRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgMaskSatellite = SBPMsgMaskSatellite <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgMaskSatelliteDep = SBPMsgMaskSatelliteDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgMeasurementPoint = SBPMsgMeasurementPoint <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgMeasurementState = SBPMsgMeasurementState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNapDeviceDnaReq = SBPMsgNapDeviceDnaReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgNapDeviceDnaResp = SBPMsgNapDeviceDnaResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1144,6 +1149,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgMagRaw n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgMaskSatellite n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgMaskSatelliteDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgMeasurementPoint n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgMeasurementState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgNapDeviceDnaReq _ m) = toJSON m
   toJSON (SBPMsgNapDeviceDnaResp n m) = toJSON n <<>> toJSON m
@@ -1381,6 +1387,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgMagRaw n m) = SBPMsgMagRaw n <$> f m
   msg f (SBPMsgMaskSatellite n m) = SBPMsgMaskSatellite n <$> f m
   msg f (SBPMsgMaskSatelliteDep n m) = SBPMsgMaskSatelliteDep n <$> f m
+  msg f (SBPMsgMeasurementPoint n m) = SBPMsgMeasurementPoint n <$> f m
   msg f (SBPMsgMeasurementState n m) = SBPMsgMeasurementState n <$> f m
   msg f (SBPMsgNapDeviceDnaReq n m) = SBPMsgNapDeviceDnaReq n <$> f m
   msg f (SBPMsgNapDeviceDnaResp n m) = SBPMsgNapDeviceDnaResp n <$> f m

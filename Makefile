@@ -96,6 +96,8 @@ quicktype-javascript: deps-quicktype-javascript gen-quicktype-javascript test-qu
 quicktype-elm:        deps-quicktype-elm        gen-quicktype-elm        test-quicktype-elm
 quicktype:            quicktype-typescript      quicktype-javascript     quicktype-elm
 
+gen-all: gen-c gen-python gen-javascript gen-java gen-haskell gen-rust gen-protobuf gen-kaitai gen-jsonschema gen-quicktype-typescript gen-quicktype-javascript gen-quicktype-elm
+
 # Prerequisite verification
 verify-prereq-generator:
 ifeq ($(OS), Windows_NT)

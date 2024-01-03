@@ -1,0 +1,39 @@
+/*
+ * Copyright (C) 2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Profiling
+ *
+ * Standardized profiling messages from Swift Navigation devices.
+ */
+
+package swiftnav.sbp.profiling;
+
+
+/** Profiling Measurement Point
+ *
+ * Tracks execution time of certain code paths in specially built products.
+ * This message should only be expected and processed on the direction of
+ * Swift's engineering teams.
+ */
+message MsgMeasurementPoint {
+    uint32 total_time = 1;
+    uint32 num_executions = 2;
+    uint32 min = 3;
+    uint32 max = 4;
+    uint64 return_addr = 5;
+    uint64 id = 6;
+    uint64 slice_time = 7;
+    uint32 line = 8;
+    string func = 9;
+}

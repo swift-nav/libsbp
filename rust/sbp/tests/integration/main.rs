@@ -175,6 +175,7 @@ mod auto_check_sbp_piksi_msg_specan_dep;
 mod auto_check_sbp_piksi_msg_thread_state;
 mod auto_check_sbp_piksi_msg_uart_state;
 mod auto_check_sbp_piksi_msg_uart_state_dep_a;
+mod auto_check_sbp_profiling_msg_measurement_point;
 mod auto_check_sbp_sbas_msg_sbas_raw;
 mod auto_check_sbp_settings_msg_settings_read_by_index_done;
 mod auto_check_sbp_settings_msg_settings_read_by_index_req;

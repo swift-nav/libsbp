@@ -38,6 +38,7 @@
 #include <libsbp/observation.h>
 #include <libsbp/orientation.h>
 #include <libsbp/piksi.h>
+#include <libsbp/profiling.h>
 #include <libsbp/sbas.h>
 #include <libsbp/sbp_msg_type.h>
 #include <libsbp/settings.h>
@@ -176,6 +177,7 @@ typedef union {
   sbp_msg_mag_raw_t mag_raw;
   sbp_msg_mask_satellite_dep_t mask_satellite_dep;
   sbp_msg_mask_satellite_t mask_satellite;
+  sbp_msg_measurement_point_t measurement_point;
   sbp_msg_measurement_state_t measurement_state;
   sbp_msg_nap_device_dna_req_t nap_device_dna_req;
   sbp_msg_nap_device_dna_resp_t nap_device_dna_resp;
@@ -635,6 +637,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgMaskSatellite:
       return sbp_msg_mask_satellite_encode(buf, len, n_written,
                                            &msg->mask_satellite);
+    case SbpMsgMeasurementPoint:
+      return sbp_msg_measurement_point_encode(buf, len, n_written,
+                                              &msg->measurement_point);
     case SbpMsgMeasurementState:
       return sbp_msg_measurement_state_encode(buf, len, n_written,
                                               &msg->measurement_state);
@@ -1290,6 +1295,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgMaskSatellite:
       return sbp_msg_mask_satellite_decode(buf, len, n_read,
                                            &msg->mask_satellite);
+    case SbpMsgMeasurementPoint:
+      return sbp_msg_measurement_point_decode(buf, len, n_read,
+                                              &msg->measurement_point);
     case SbpMsgMeasurementState:
       return sbp_msg_measurement_state_decode(buf, len, n_read,
                                               &msg->measurement_state);
@@ -1873,6 +1881,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_mask_satellite_dep_encoded_len(&msg->mask_satellite_dep);
     case SbpMsgMaskSatellite:
       return sbp_msg_mask_satellite_encoded_len(&msg->mask_satellite);
+    case SbpMsgMeasurementPoint:
+      return sbp_msg_measurement_point_encoded_len(&msg->measurement_point);
     case SbpMsgMeasurementState:
       return sbp_msg_measurement_state_encoded_len(&msg->measurement_state);
     case SbpMsgNapDeviceDnaReq:
@@ -2455,6 +2465,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
                                             &b->mask_satellite_dep);
     case SbpMsgMaskSatellite:
       return sbp_msg_mask_satellite_cmp(&a->mask_satellite, &b->mask_satellite);
+    case SbpMsgMeasurementPoint:
+      return sbp_msg_measurement_point_cmp(&a->measurement_point,
+                                           &b->measurement_point);
     case SbpMsgMeasurementState:
       return sbp_msg_measurement_state_cmp(&a->measurement_state,
                                            &b->measurement_state);

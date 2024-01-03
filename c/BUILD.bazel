@@ -37,6 +37,7 @@ swift_c_library(
         "src/observation.c",
         "src/orientation.c",
         "src/piksi.c",
+        "src/profiling.c",
         "src/sbas.c",
         "src/settings.c",
         "src/signing.c",
