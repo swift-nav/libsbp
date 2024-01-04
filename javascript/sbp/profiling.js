@@ -31,13 +31,13 @@ let UInt64 = require('cuint').UINT64;
  * engineering teams.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field total_time number (unsigned 32-bit int, 4 bytes) Total time spent in measurement point
+ * @field total_time number (unsigned 32-bit int, 4 bytes) Total time spent in measurement point (microseconds)
  * @field num_executions number (unsigned 16-bit int, 2 bytes) Number of times measurement point has executed
- * @field min number (unsigned 32-bit int, 4 bytes) Minimum execution time
- * @field max number (unsigned 32-bit int, 4 bytes) Maximum execution time
+ * @field min number (unsigned 32-bit int, 4 bytes) Minimum execution time (microseconds)
+ * @field max number (unsigned 32-bit int, 4 bytes) Maximum execution time (microseconds)
  * @field return_addr number (unsigned 64-bit int, 8 bytes) Return address
  * @field id number (unsigned 64-bit int, 8 bytes) Unique ID
- * @field slice_time number (unsigned 64-bit int, 8 bytes) CPU slice time
+ * @field slice_time number (unsigned 64-bit int, 8 bytes) CPU slice time (milliseconds)
  * @field line number (unsigned 16-bit int, 2 bytes) Line number
  * @field func string Function name
  *

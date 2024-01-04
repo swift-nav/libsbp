@@ -28,7 +28,7 @@ types:
     seq:
       - id: total_time
         doc: |
-          Total time spent in measurement point
+          Total time spent in measurement point (microseconds)
         type: u4
       - id: num_executions
         doc: |
@@ -36,11 +36,11 @@ types:
         type: u2
       - id: min
         doc: |
-          Minimum execution time
+          Minimum execution time (microseconds)
         type: u4
       - id: max
         doc: |
-          Maximum execution time
+          Maximum execution time (microseconds)
         type: u4
       - id: return_addr
         doc: |
@@ -52,7 +52,7 @@ types:
         type: u8
       - id: slice_time
         doc: |
-          CPU slice time
+          CPU slice time (milliseconds)
         type: u8
       - id: line
         doc: |

@@ -43,13 +43,14 @@ SBP_PACK_START
  */
 
 typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
-  u32 total_time;     /**< Total time spent in measurement point */
+  u32 total_time;     /**< Total time spent in measurement point
+                           (microseconds) */
   u16 num_executions; /**< Number of times measurement point has executed */
-  u32 min;            /**< Minimum execution time */
-  u32 max;            /**< Maximum execution time */
+  u32 min;            /**< Minimum execution time (microseconds) */
+  u32 max;            /**< Maximum execution time (microseconds) */
   u64 return_addr;    /**< Return address */
   u64 id;             /**< Unique ID */
-  u64 slice_time;     /**< CPU slice time */
+  u64 slice_time;     /**< CPU slice time (milliseconds) */
   u16 line;           /**< Line number */
   char func[0];       /**< Function name */
 } msg_measurement_point_t;

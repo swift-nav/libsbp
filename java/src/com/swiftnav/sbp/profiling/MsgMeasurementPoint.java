@@ -31,16 +31,16 @@ import org.json.JSONObject;
 public class MsgMeasurementPoint extends SBPMessage {
     public static final int TYPE = 0xCF00;
 
-    /** Total time spent in measurement point */
+    /** Total time spent in measurement point (microseconds) */
     public long total_time;
 
     /** Number of times measurement point has executed */
     public int num_executions;
 
-    /** Minimum execution time */
+    /** Minimum execution time (microseconds) */
     public long min;
 
-    /** Maximum execution time */
+    /** Maximum execution time (microseconds) */
     public long max;
 
     /** Return address */
@@ -49,7 +49,7 @@ public class MsgMeasurementPoint extends SBPMessage {
     /** Unique ID */
     public BigInteger id;
 
-    /** CPU slice time */
+    /** CPU slice time (milliseconds) */
     public BigInteger slice_time;
 
     /** Line number */

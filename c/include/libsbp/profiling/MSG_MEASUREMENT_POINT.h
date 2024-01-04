@@ -46,7 +46,7 @@ extern "C" {
  */
 typedef struct {
   /**
-   * Total time spent in measurement point
+   * Total time spent in measurement point (microseconds)
    */
   u32 total_time;
 
@@ -56,12 +56,12 @@ typedef struct {
   u16 num_executions;
 
   /**
-   * Minimum execution time
+   * Minimum execution time (microseconds)
    */
   u32 min;
 
   /**
-   * Maximum execution time
+   * Maximum execution time (microseconds)
    */
   u32 max;
 
@@ -76,7 +76,7 @@ typedef struct {
   u64 id;
 
   /**
-   * CPU slice time
+   * CPU slice time (milliseconds)
    */
   u64 slice_time;
 

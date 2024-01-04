@@ -43,19 +43,19 @@ class MsgMeasurementPoint(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   total_time : int
-    Total time spent in measurement point
+    Total time spent in measurement point (microseconds)
   num_executions : int
     Number of times measurement point has executed
   min : int
-    Minimum execution time
+    Minimum execution time (microseconds)
   max : int
-    Maximum execution time
+    Maximum execution time (microseconds)
   return_addr : int
     Return address
   id : int
     Unique ID
   slice_time : int
-    CPU slice time
+    CPU slice time (milliseconds)
   line : int
     Line number
   func : string

@@ -45,19 +45,19 @@ msgMeasurementPoint = 0xCF00
 -- Swift's engineering teams.
 data MsgMeasurementPoint = MsgMeasurementPoint
   { _msgMeasurementPoint_total_time   :: !Word32
-    -- ^ Total time spent in measurement point
+    -- ^ Total time spent in measurement point (microseconds)
   , _msgMeasurementPoint_num_executions :: !Word16
     -- ^ Number of times measurement point has executed
   , _msgMeasurementPoint_min          :: !Word32
-    -- ^ Minimum execution time
+    -- ^ Minimum execution time (microseconds)
   , _msgMeasurementPoint_max          :: !Word32
-    -- ^ Maximum execution time
+    -- ^ Maximum execution time (microseconds)
   , _msgMeasurementPoint_return_addr  :: !Word64
     -- ^ Return address
   , _msgMeasurementPoint_id           :: !Word64
     -- ^ Unique ID
   , _msgMeasurementPoint_slice_time   :: !Word64
-    -- ^ CPU slice time
+    -- ^ CPU slice time (milliseconds)
   , _msgMeasurementPoint_line         :: !Word16
     -- ^ Line number
   , _msgMeasurementPoint_func         :: !Text

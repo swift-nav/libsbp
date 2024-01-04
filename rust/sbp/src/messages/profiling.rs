@@ -34,16 +34,16 @@ pub mod msg_measurement_point {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        /// Total time spent in measurement point
+        /// Total time spent in measurement point (microseconds)
         #[cfg_attr(feature = "serde", serde(rename = "total_time"))]
         pub total_time: u32,
         /// Number of times measurement point has executed
         #[cfg_attr(feature = "serde", serde(rename = "num_executions"))]
         pub num_executions: u16,
-        /// Minimum execution time
+        /// Minimum execution time (microseconds)
         #[cfg_attr(feature = "serde", serde(rename = "min"))]
         pub min: u32,
-        /// Maximum execution time
+        /// Maximum execution time (microseconds)
         #[cfg_attr(feature = "serde", serde(rename = "max"))]
         pub max: u32,
         /// Return address
@@ -52,7 +52,7 @@ pub mod msg_measurement_point {
         /// Unique ID
         #[cfg_attr(feature = "serde", serde(rename = "id"))]
         pub id: u64,
-        /// CPU slice time
+        /// CPU slice time (milliseconds)
         #[cfg_attr(feature = "serde", serde(rename = "slice_time"))]
         pub slice_time: u64,
         /// Line number

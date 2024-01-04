@@ -26,16 +26,16 @@ definitions:
     fields:
       - total_time:
           type: u32
-          desc: Total time spent in measurement point
+          desc: Total time spent in measurement point (microseconds)
       - num_executions:
           type: u16
           desc: Number of times measurement point has executed
       - min:
           type: u32
-          desc: Minimum execution time
+          desc: Minimum execution time (microseconds)
       - max:
           type: u32
-          desc: Maximum execution time
+          desc: Maximum execution time (microseconds)
       - return_addr:
           type: u64
           desc: Return address
@@ -44,7 +44,7 @@ definitions:
           desc: Unique ID
       - slice_time:
           type: u64
-          desc: CPU slice time
+          desc: CPU slice time (milliseconds)
       - line:
           type: u16
           desc: Line number
