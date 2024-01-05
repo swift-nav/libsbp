@@ -1,0 +1,43 @@
+---
+description: Unit tests for swiftnav.sbp.profiling MsgMeasurementPoint
+generated_on: 2023-12-08 00:00:00.00 # manually generated
+package: sbp.profiling
+tests:
+
+
+  - msg:
+      c_decoded_fields:
+        func:
+          handle_as: encoded-string
+          text: route()
+          fn_prefix: sbp_msg_measurement_point_func
+          encoded_len: 8
+      fields:
+        total_time: 2042
+        num_executions: 180
+        min: 2
+        max: 40
+        return_addr: 93877475527042
+        id: 2496234002
+        slice_time: 261963842
+        line: 18
+        func: "route()\u0000"
+      module: sbp.profiling
+      name: MsgMeasurementPoint
+    msg_type: '0xCF00'
+    raw_json: '{"crc": 42452, "preamble": 85, "sender": 4096, "length": 48, "msg_type": 52992,
+      "total_time": 2042, "num_executions": 180, "min": 2, "max": 40,
+      "return_addr": 93877475527042, "id": 2496234002,
+      "slice_time": 261963842, "line": 18, "func": "route()\u0000",
+      "payload": "+gcAALQAAgAAACgAAACCyZSNYVUAABKCyZQAAAAAQkCdDwAAAAASAHJvdXRlKCkA"
+      }'
+
+    raw_packet: VQDPABAw+gcAALQAAgAAACgAAACCyZSNYVUAABKCyZQAAAAAQkCdDwAAAAASAHJvdXRlKCkA1KU=
+    sbp:
+      crc: '0xa5d4'
+      length: 48
+      msg_type: '0xCF00'
+      payload: +gcAALQAAgAAACgAAACCyZSNYVUAABKCyZQAAAAAQkCdDwAAAAASAHJvdXRlKCkA
+      preamble: '0x55'
+      sender: '0x1000'
+

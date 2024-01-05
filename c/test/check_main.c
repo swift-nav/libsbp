@@ -202,6 +202,7 @@ int main(void) {
   srunner_add_suite(sr, auto_check_sbp_piksi_MsgThreadState_suite());
   srunner_add_suite(sr, auto_check_sbp_piksi_MsgUartState_suite());
   srunner_add_suite(sr, auto_check_sbp_piksi_MsgUartStateDepA_suite());
+  srunner_add_suite(sr, auto_check_sbp_profiling_MsgMeasurementPoint_suite());
   srunner_add_suite(sr, auto_check_sbp_sbas_MsgSbasRaw_suite());
   srunner_add_suite(sr,
                     auto_check_sbp_settings_MsgSettingsReadByIndexDone_suite());

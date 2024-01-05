@@ -28,6 +28,7 @@ from .ndb import *
 from .observation import *
 from .orientation import *
 from .piksi import *
+from .profiling import *
 from .sbas import *
 from .settings import *
 from .signing import *
@@ -222,6 +223,8 @@ TABLE = {
     80: Piksi.MsgSpecanDep,
     81: Piksi.MsgSpecan,
     191: Piksi.MsgFrontEndGain,
+  
+    52992: Profiling.MsgMeasurementPoint,
   
     30583: Sbas.MsgSbasRaw,
   

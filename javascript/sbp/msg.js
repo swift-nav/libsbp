@@ -104,6 +104,7 @@ var sbpImports = {
   observation: require('./observation.js'),
   orientation: require('./orientation.js'),
   piksi: require('./piksi.js'),
+  profiling: require('./profiling.js'),
   sbas: require('./sbas.js'),
   settings: require('./settings.js'),
   signings: require('./signing.js'),

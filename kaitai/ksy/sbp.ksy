@@ -34,6 +34,7 @@ meta:
   - observation
   - orientation
   - piksi
+  - profiling
   - sbas
   - settings
   - signing
@@ -234,6 +235,8 @@ enums:
     80: msg_specan_dep
     81: msg_specan
     191: msg_front_end_gain
+  
+    52992: msg_measurement_point
   
     30583: msg_sbas_raw
   
@@ -511,6 +514,8 @@ types:
             80: piksi::msg_specan_dep
             81: piksi::msg_specan
             191: piksi::msg_front_end_gain
+  
+            52992: profiling::msg_measurement_point
   
             30583: sbas::msg_sbas_raw
   

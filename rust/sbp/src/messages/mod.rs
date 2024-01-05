@@ -32,6 +32,7 @@ pub mod ndb;
 pub mod observation;
 pub mod orientation;
 pub mod piksi;
+pub mod profiling;
 pub mod sbas;
 pub mod settings;
 pub mod signing;
@@ -209,6 +210,7 @@ use self::piksi::msg_specan_dep::MsgSpecanDep;
 use self::piksi::msg_thread_state::MsgThreadState;
 use self::piksi::msg_uart_state::MsgUartState;
 use self::piksi::msg_uart_state_depa::MsgUartStateDepa;
+use self::profiling::msg_measurement_point::MsgMeasurementPoint;
 use self::sbas::msg_sbas_raw::MsgSbasRaw;
 use self::settings::msg_settings_read_by_index_done::MsgSettingsReadByIndexDone;
 use self::settings::msg_settings_read_by_index_req::MsgSettingsReadByIndexReq;
@@ -820,6 +822,8 @@ pub enum Sbp {
     MsgLinuxMemState(MsgLinuxMemState),
     /// CPU, Memory and Process Starts/Stops
     MsgLinuxSysState(MsgLinuxSysState),
+    /// Profiling Measurement Point
+    MsgMeasurementPoint(MsgMeasurementPoint),
     /// System start-up message
     MsgStartup(MsgStartup),
     /// Status of received corrections
@@ -1559,6 +1563,9 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             Some(MsgLinuxSysState::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgLinuxSysState>(value).map(Sbp::MsgLinuxSysState)
             }
+            Some(MsgMeasurementPoint::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgMeasurementPoint>(value).map(Sbp::MsgMeasurementPoint)
+            }
             Some(MsgStartup::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgStartup>(value).map(Sbp::MsgStartup)
             }
@@ -2244,6 +2251,9 @@ impl Sbp {
             MsgLinuxSysState::MESSAGE_TYPE => {
                 MsgLinuxSysState::parse(&mut payload).map(Sbp::MsgLinuxSysState)
             }
+            MsgMeasurementPoint::MESSAGE_TYPE => {
+                MsgMeasurementPoint::parse(&mut payload).map(Sbp::MsgMeasurementPoint)
+            }
             MsgStartup::MESSAGE_TYPE => MsgStartup::parse(&mut payload).map(Sbp::MsgStartup),
             MsgDgnssStatus::MESSAGE_TYPE => {
                 MsgDgnssStatus::parse(&mut payload).map(Sbp::MsgDgnssStatus)
@@ -2523,6 +2533,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgLinuxCpuState(msg) => msg.message_name(),
             Sbp::MsgLinuxMemState(msg) => msg.message_name(),
             Sbp::MsgLinuxSysState(msg) => msg.message_name(),
+            Sbp::MsgMeasurementPoint(msg) => msg.message_name(),
             Sbp::MsgStartup(msg) => msg.message_name(),
             Sbp::MsgDgnssStatus(msg) => msg.message_name(),
             Sbp::MsgInsStatus(msg) => msg.message_name(),
@@ -2763,6 +2774,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgLinuxCpuState(msg) => msg.message_type(),
             Sbp::MsgLinuxMemState(msg) => msg.message_type(),
             Sbp::MsgLinuxSysState(msg) => msg.message_type(),
+            Sbp::MsgMeasurementPoint(msg) => msg.message_type(),
             Sbp::MsgStartup(msg) => msg.message_type(),
             Sbp::MsgDgnssStatus(msg) => msg.message_type(),
             Sbp::MsgInsStatus(msg) => msg.message_type(),
@@ -3003,6 +3015,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgLinuxCpuState(msg) => msg.sender_id(),
             Sbp::MsgLinuxMemState(msg) => msg.sender_id(),
             Sbp::MsgLinuxSysState(msg) => msg.sender_id(),
+            Sbp::MsgMeasurementPoint(msg) => msg.sender_id(),
             Sbp::MsgStartup(msg) => msg.sender_id(),
             Sbp::MsgDgnssStatus(msg) => msg.sender_id(),
             Sbp::MsgInsStatus(msg) => msg.sender_id(),
@@ -3243,6 +3256,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgLinuxCpuState(msg) => msg.set_sender_id(new_id),
             Sbp::MsgLinuxMemState(msg) => msg.set_sender_id(new_id),
             Sbp::MsgLinuxSysState(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgMeasurementPoint(msg) => msg.set_sender_id(new_id),
             Sbp::MsgStartup(msg) => msg.set_sender_id(new_id),
             Sbp::MsgDgnssStatus(msg) => msg.set_sender_id(new_id),
             Sbp::MsgInsStatus(msg) => msg.set_sender_id(new_id),
@@ -3483,6 +3497,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgLinuxCpuState(msg) => msg.encoded_len(),
             Sbp::MsgLinuxMemState(msg) => msg.encoded_len(),
             Sbp::MsgLinuxSysState(msg) => msg.encoded_len(),
+            Sbp::MsgMeasurementPoint(msg) => msg.encoded_len(),
             Sbp::MsgStartup(msg) => msg.encoded_len(),
             Sbp::MsgDgnssStatus(msg) => msg.encoded_len(),
             Sbp::MsgInsStatus(msg) => msg.encoded_len(),
@@ -3726,6 +3741,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgLinuxCpuState(msg) => msg.gps_time(),
             Sbp::MsgLinuxMemState(msg) => msg.gps_time(),
             Sbp::MsgLinuxSysState(msg) => msg.gps_time(),
+            Sbp::MsgMeasurementPoint(msg) => msg.gps_time(),
             Sbp::MsgStartup(msg) => msg.gps_time(),
             Sbp::MsgDgnssStatus(msg) => msg.gps_time(),
             Sbp::MsgInsStatus(msg) => msg.gps_time(),
@@ -3966,6 +3982,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgLinuxCpuState(msg) => msg.friendly_name(),
             Sbp::MsgLinuxMemState(msg) => msg.friendly_name(),
             Sbp::MsgLinuxSysState(msg) => msg.friendly_name(),
+            Sbp::MsgMeasurementPoint(msg) => msg.friendly_name(),
             Sbp::MsgStartup(msg) => msg.friendly_name(),
             Sbp::MsgDgnssStatus(msg) => msg.friendly_name(),
             Sbp::MsgInsStatus(msg) => msg.friendly_name(),
@@ -4206,6 +4223,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgLinuxCpuState(msg) => msg.is_valid(),
             Sbp::MsgLinuxMemState(msg) => msg.is_valid(),
             Sbp::MsgLinuxSysState(msg) => msg.is_valid(),
+            Sbp::MsgMeasurementPoint(msg) => msg.is_valid(),
             Sbp::MsgStartup(msg) => msg.is_valid(),
             Sbp::MsgDgnssStatus(msg) => msg.is_valid(),
             Sbp::MsgInsStatus(msg) => msg.is_valid(),
@@ -4535,6 +4553,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgLinuxCpuState(msg) => Ok(Sbp::MsgLinuxCpuState(msg.into_valid_msg()?)),
             Sbp::MsgLinuxMemState(msg) => Ok(Sbp::MsgLinuxMemState(msg.into_valid_msg()?)),
             Sbp::MsgLinuxSysState(msg) => Ok(Sbp::MsgLinuxSysState(msg.into_valid_msg()?)),
+            Sbp::MsgMeasurementPoint(msg) => Ok(Sbp::MsgMeasurementPoint(msg.into_valid_msg()?)),
             Sbp::MsgStartup(msg) => Ok(Sbp::MsgStartup(msg.into_valid_msg()?)),
             Sbp::MsgDgnssStatus(msg) => Ok(Sbp::MsgDgnssStatus(msg.into_valid_msg()?)),
             Sbp::MsgInsStatus(msg) => Ok(Sbp::MsgInsStatus(msg.into_valid_msg()?)),
@@ -4790,6 +4809,7 @@ impl WireFormat for Sbp {
             Sbp::MsgLinuxCpuState(msg) => WireFormat::write(msg, buf),
             Sbp::MsgLinuxMemState(msg) => WireFormat::write(msg, buf),
             Sbp::MsgLinuxSysState(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgMeasurementPoint(msg) => WireFormat::write(msg, buf),
             Sbp::MsgStartup(msg) => WireFormat::write(msg, buf),
             Sbp::MsgDgnssStatus(msg) => WireFormat::write(msg, buf),
             Sbp::MsgInsStatus(msg) => WireFormat::write(msg, buf),
@@ -5030,6 +5050,7 @@ impl WireFormat for Sbp {
             Sbp::MsgLinuxCpuState(msg) => WireFormat::len(msg),
             Sbp::MsgLinuxMemState(msg) => WireFormat::len(msg),
             Sbp::MsgLinuxSysState(msg) => WireFormat::len(msg),
+            Sbp::MsgMeasurementPoint(msg) => WireFormat::len(msg),
             Sbp::MsgStartup(msg) => WireFormat::len(msg),
             Sbp::MsgDgnssStatus(msg) => WireFormat::len(msg),
             Sbp::MsgInsStatus(msg) => WireFormat::len(msg),
@@ -6356,6 +6377,12 @@ impl From<MsgLinuxMemState> for Sbp {
 impl From<MsgLinuxSysState> for Sbp {
     fn from(msg: MsgLinuxSysState) -> Self {
         Sbp::MsgLinuxSysState(msg)
+    }
+}
+
+impl From<MsgMeasurementPoint> for Sbp {
+    fn from(msg: MsgMeasurementPoint) -> Self {
+        Sbp::MsgMeasurementPoint(msg)
     }
 }
 

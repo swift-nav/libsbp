@@ -32,6 +32,7 @@
 #include <libsbp/observation.h>
 #include <libsbp/orientation.h>
 #include <libsbp/piksi.h>
+#include <libsbp/profiling.h>
 #include <libsbp/sbas.h>
 #include <libsbp/sbp_msg.h>
 #include <libsbp/sbp_msg_type.h>
@@ -4238,6 +4239,42 @@ struct MessageTraits<sbp_msg_mask_satellite_t> {
   }
   static size_t encoded_len(const sbp_msg_mask_satellite_t &msg) {
     return sbp_msg_mask_satellite_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_measurement_point_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgMeasurementPoint;
+  static constexpr const char *name = "MSG_MEASUREMENT_POINT";
+  static const sbp_msg_measurement_point_t &get(const sbp_msg_t &msg) {
+    return msg.measurement_point;
+  }
+  static sbp_msg_measurement_point_t &get(sbp_msg_t &msg) {
+    return msg.measurement_point;
+  }
+  static void to_sbp_msg(const sbp_msg_measurement_point_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->measurement_point = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_measurement_point_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.measurement_point = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_measurement_point_t &msg, sbp_write_fn_t write) {
+    return sbp_msg_measurement_point_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_measurement_point_t &msg) {
+    return sbp_msg_measurement_point_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_measurement_point_t *msg) {
+    return sbp_msg_measurement_point_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_measurement_point_t &msg) {
+    return sbp_msg_measurement_point_encoded_len(&msg);
   }
 };
 

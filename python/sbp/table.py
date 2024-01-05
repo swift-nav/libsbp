@@ -40,6 +40,7 @@ from . import ssr as ssr
 from . import solution_meta as solmeta
 from . import signing as signing
 from . import telemetry as telemetry
+from . import profiling as profiling
 
 import warnings
 
@@ -68,6 +69,7 @@ _SBP_TABLE = dict(list(acq.msg_classes.items())
                   + list(solmeta.msg_classes.items())
                   + list(signing.msg_classes.items())
                   + list(telemetry.msg_classes.items())
+                  + list(profiling.msg_classes.items())
                   )
 
 class InvalidSBPMessageType(NotImplementedError):

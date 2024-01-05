@@ -30,6 +30,7 @@ use KaitaiSbp::Ndb;
 use KaitaiSbp::Observation;
 use KaitaiSbp::Orientation;
 use KaitaiSbp::Piksi;
+use KaitaiSbp::Profiling;
 use KaitaiSbp::Sbas;
 use KaitaiSbp::Settings;
 use KaitaiSbp::Signing;
@@ -228,6 +229,8 @@ our %TABLE = (
     80 => sub{Piksi::MsgSpecanDep->new(@_)},
     81 => sub{Piksi::MsgSpecan->new(@_)},
     191 => sub{Piksi::MsgFrontEndGain->new(@_)},
+  
+    52992 => sub{Profiling::MsgMeasurementPoint->new(@_)},
   
     30583 => sub{Sbas::MsgSbasRaw->new(@_)},
   

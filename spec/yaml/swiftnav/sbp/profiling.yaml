@@ -1,0 +1,54 @@
+# Copyright (C) 2015-2024 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.profiling
+description: Standardized profiling messages from Swift Navigation devices.
+stable: False
+public: False
+include:
+  - types.yaml
+definitions:
+
+ - MSG_MEASUREMENT_POINT:
+    id: 0xCF00
+    short_desc: Profiling Measurement Point
+    desc: >
+      Tracks execution time of certain code paths in specially built products.
+      This message should only be expected and processed on the direction of Swift's
+      engineering teams.
+    fields:
+      - total_time:
+          type: u32
+          desc: Total time spent in measurement point (microseconds)
+      - num_executions:
+          type: u16
+          desc: Number of times measurement point has executed
+      - min:
+          type: u32
+          desc: Minimum execution time (microseconds)
+      - max:
+          type: u32
+          desc: Maximum execution time (microseconds)
+      - return_addr:
+          type: u64
+          desc: Return address
+      - id:
+          type: u64
+          desc: Unique ID
+      - slice_time:
+          type: u64
+          desc: CPU slice time (milliseconds)
+      - line:
+          type: u16
+          desc: Line number
+      - func:
+          type: string
+          encoding: null_terminated
+          desc: Function name

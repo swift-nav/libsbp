@@ -28,6 +28,7 @@
 #include <libsbp/legacy/observation.h>
 #include <libsbp/legacy/orientation.h>
 #include <libsbp/legacy/piksi.h>
+#include <libsbp/legacy/profiling.h>
 #include <libsbp/legacy/sbas.h>
 #include <libsbp/legacy/settings.h>
 #include <libsbp/legacy/signing.h>
@@ -1296,6 +1297,12 @@ struct MessageTraits<msg_linux_mem_state_t> {
 template<>
 struct MessageTraits<msg_linux_sys_state_t> {
   static constexpr u16 id = 32522;
+};
+
+
+template<>
+struct MessageTraits<msg_measurement_point_t> {
+  static constexpr u16 id = 52992;
 };
 
 

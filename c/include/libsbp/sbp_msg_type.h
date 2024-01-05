@@ -34,6 +34,7 @@
 #include <libsbp/observation_macros.h>
 #include <libsbp/orientation_macros.h>
 #include <libsbp/piksi_macros.h>
+#include <libsbp/profiling_macros.h>
 #include <libsbp/sbas_macros.h>
 #include <libsbp/settings_macros.h>
 #include <libsbp/signing_macros.h>
@@ -170,6 +171,7 @@ typedef enum {
   SbpMsgMagRaw = SBP_MSG_MAG_RAW,
   SbpMsgMaskSatelliteDep = SBP_MSG_MASK_SATELLITE_DEP,
   SbpMsgMaskSatellite = SBP_MSG_MASK_SATELLITE,
+  SbpMsgMeasurementPoint = SBP_MSG_MEASUREMENT_POINT,
   SbpMsgMeasurementState = SBP_MSG_MEASUREMENT_STATE,
   SbpMsgNapDeviceDnaReq = SBP_MSG_NAP_DEVICE_DNA_REQ,
   SbpMsgNapDeviceDnaResp = SBP_MSG_NAP_DEVICE_DNA_RESP,
@@ -528,6 +530,8 @@ static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
       return "MSG_MASK_SATELLITE_DEP";
     case SbpMsgMaskSatellite:
       return "MSG_MASK_SATELLITE";
+    case SbpMsgMeasurementPoint:
+      return "MSG_MEASUREMENT_POINT";
     case SbpMsgMeasurementState:
       return "MSG_MEASUREMENT_STATE";
     case SbpMsgNapDeviceDnaReq:

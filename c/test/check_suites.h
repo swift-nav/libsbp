@@ -181,6 +181,7 @@ Suite* auto_check_sbp_piksi_MsgSpecanDep_suite(void);
 Suite* auto_check_sbp_piksi_MsgThreadState_suite(void);
 Suite* auto_check_sbp_piksi_MsgUartState_suite(void);
 Suite* auto_check_sbp_piksi_MsgUartStateDepA_suite(void);
+Suite* auto_check_sbp_profiling_MsgMeasurementPoint_suite(void);
 Suite* auto_check_sbp_sbas_MsgSbasRaw_suite(void);
 Suite* auto_check_sbp_settings_MsgSettingsReadByIndexDone_suite(void);
 Suite* auto_check_sbp_settings_MsgSettingsReadByIndexReq_suite(void);

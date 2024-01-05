@@ -1,0 +1,40 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgMeasurementPoint",
+  "title":"MsgMeasurementPoint",
+  "description":"Tracks execution time of certain code paths in specially built products. This message should only be expected and processed on the direction of Swift's engineering teams.\n",
+  "type": "object",
+  "properties": {
+    "total_time": {"type": "integer"},
+    "num_executions": {"type": "integer"},
+    "min": {"type": "integer"},
+    "max": {"type": "integer"},
+    "return_addr": {"type": "integer"},
+    "id": {"type": "integer"},
+    "slice_time": {"type": "integer"},
+    "line": {"type": "integer"},
+    "func": {"type": "string"}
+  },
+  "required": [
+    "total_time",
+    "num_executions",
+    "min",
+    "max",
+    "return_addr",
+    "id",
+    "slice_time",
+    "line",
+    "func"
+  ]
+}

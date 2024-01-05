@@ -167,6 +167,7 @@ utils
 uuid
 wheeltick
 wheelticks
+xCF
 xF
 xFF
 xFFFE
