@@ -15,8 +15,7 @@ import os
 TEST_DATA = os.path.join(PYTHON_ROOT, "..", "test_data", "benchmark.sbp")
 
 
-# make sure that we parse exactly 150000 SBP messages from TEST_DATA
-def test_sbp2json():
+def get_message_count(unbuffered):
     msg_count = 0
     def counter(args, res):
         nonlocal msg_count
@@ -27,9 +26,24 @@ def test_sbp2json():
     # anonymous object to emulate parsed arguments
     args = type('',(object,),{
         'file': open(TEST_DATA, "rb"),
-        'include': []
+        'include': [],
+        'unbuffered': unbuffered
     })()
 
     sbp.sbp2json.sbp_main(args)
 
+    return msg_count
+
+
+# make sure that we parse exactly 150000 SBP messages from TEST_DATA
+# when running sbp2json without the --unbuffered flag
+def test_sbp2json_buffered():
+    msg_count = get_message_count(False)
+    assert msg_count == 150000
+
+
+# make sure that we parse exactly 150000 SBP messages from TEST_DATA
+# when running sbp2json with the --unbuffered flag
+def test_sbp2json_unbuffered():
+    msg_count = get_message_count(True)
     assert msg_count == 150000
