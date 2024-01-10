@@ -39,6 +39,8 @@ def base_cl_options():
                         help="the JSON serialization library to use, default: {}".format(DEFAULT_JSON))
     parser.add_argument('--include', nargs="+", type=int, default=[],
                         help="list of SBP message IDs to include, empty means all")
+    parser.add_argument("--unbuffered", action="store_true",
+                        help="disable buffering when reading data from input (slower)")
     parser.add_argument('file', nargs='?', metavar='FILE', type=argparse.FileType('rb'),
                         default=sys.stdin, help="the input file, stdin by default")
 
@@ -61,6 +63,13 @@ def get_args():
     return args
 
 
+# return the read and expected CRCs from 'buf'
+def get_crcs(buf, payload_len):
+    crc_read, = struct.unpack("<H", buf[SBP_HEADER_LEN + payload_len:SBP_HEADER_LEN + payload_len + 2])
+    crc_expected = binascii.crc_hqx(buf[1:SBP_HEADER_LEN + payload_len], 0)
+    return crc_read, crc_expected
+
+
 def dump(args, res):
     if 'json' == args.mode:
         sys.stdout.write(json.dumps(res.to_json_dict(),
@@ -72,8 +81,54 @@ def dump(args, res):
     sys.stdout.write("\n")
 
 
-# generator to produce SBP messages from a file object
-def iter_messages(fp):
+# Generator which parses SBP messages from a file object.
+# Messages are read one at a time from the stream.
+def iter_messages_unbuffered(fp):
+    buf = b''
+
+    def read_bytes_until(target_len):
+        nonlocal buf
+        while len(buf) < target_len:
+            read_bytes = fp.read(target_len - len(buf))
+            if len(read_bytes) == 0:
+                raise IOError
+            buf += read_bytes
+
+    while True:
+        # read header
+        try:
+            read_bytes_until(SBP_HEADER_LEN)
+        except IOError:
+            return
+
+        # buf now contains at least SBP_HEADER_LEN bytes
+
+        preamble, msg_type, sender, payload_len = struct.unpack("<BHHB", buf[:SBP_HEADER_LEN])
+
+        # check preamble
+        if preamble != SBP_PREAMBLE:
+            buf = buf[1:] # drop first byte
+            continue
+
+        # read payload and CRC
+        try:
+            read_bytes_until(SBP_HEADER_LEN + payload_len + 2)
+        except IOError:
+            return
+
+        # check CRC
+        crc_read, crc_expected = get_crcs(buf, payload_len)
+        if crc_read == crc_expected:
+            yield msg_type, sender, payload_len, buf[:SBP_HEADER_LEN + payload_len + 2], crc_read
+            buf = buf[SBP_HEADER_LEN + payload_len + 3:] # drop message
+        else:
+            sys.stderr.write("CRC error: {} vs {} for msg type {}\n".format(crc_read, crc_expected, msg_type))
+            buf = buf[1:] # drop first byte
+
+
+# Generator which parses SBP messages from a file object.
+# Data is read from the stream in 4096 byte chunks.
+def iter_messages_buffered(fp):
     buf = memoryview(bytearray(4096))
     unconsumed_offset = 0
     read_offset = 0
@@ -114,8 +169,7 @@ def iter_messages(fp):
                     else:
                         # check CRC
                         b = b[:SBP_HEADER_LEN + payload_len + 2]
-                        crc_read, = struct.unpack("<H", b[SBP_HEADER_LEN + payload_len:SBP_HEADER_LEN + payload_len + 2])
-                        crc_expected = binascii.crc_hqx(b[1:SBP_HEADER_LEN + payload_len], 0)
+                        crc_read, crc_expected = get_crcs(b, payload_len)
                         if crc_read == crc_expected:
                             yield msg_type, sender, payload_len, b, crc_read
                             consumed = SBP_HEADER_LEN + payload_len + 2
@@ -132,8 +186,9 @@ def iter_messages(fp):
 def sbp_main(args):
     reader = io.open(args.file.fileno(), 'rb')
     include = set(args.include)
+    iter_fn = iter_messages_unbuffered if args.unbuffered else iter_messages_buffered
 
-    for msg_type, sender, payload_len, buf, crc_read in iter_messages(reader):
+    for msg_type, sender, payload_len, buf, crc_read in iter_fn(reader):
         msg_buf = buf[SBP_HEADER_LEN:SBP_HEADER_LEN + payload_len]
         if not include or msg_type in include:
             try:
