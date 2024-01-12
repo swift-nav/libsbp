@@ -161,7 +161,6 @@ definitions:
       - buckets:
           type: array
           fill: ResourceBucket
-          size_fn: n_buckets
           desc: List of resource buckets
           
 

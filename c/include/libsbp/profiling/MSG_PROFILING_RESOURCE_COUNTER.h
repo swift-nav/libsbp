@@ -59,6 +59,17 @@ typedef struct {
    * List of resource buckets
    */
   sbp_resource_bucket_t buckets[SBP_MSG_PROFILING_RESOURCE_COUNTER_BUCKETS_MAX];
+  /**
+   * Number of elements in buckets
+   *
+   * When sending a message fill in this field with the number elements set in
+   * buckets before calling an appropriate libsbp send function
+   *
+   * When receiving a message query this field for the number of elements in
+   * buckets. The value of any elements beyond the index specified in this field
+   * is undefined
+   */
+  u8 n_buckets;
 } sbp_msg_profiling_resource_counter_t;
 
 /**
