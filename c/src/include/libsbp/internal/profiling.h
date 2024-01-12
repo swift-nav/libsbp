@@ -47,6 +47,46 @@ bool sbp_msg_measurement_point_encode_internal(
 bool sbp_msg_measurement_point_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_measurement_point_t *msg);
 
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_profiling_system_info_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_profiling_system_info_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_profiling_system_info_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_profiling_system_info_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_profiling_thread_info_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_profiling_thread_info_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_profiling_thread_info_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_profiling_thread_info_t *msg);
+
 #ifdef __cplusplus
 }
 #endif

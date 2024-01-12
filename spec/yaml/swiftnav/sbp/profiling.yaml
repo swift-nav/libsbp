@@ -52,3 +52,60 @@ definitions:
           type: string
           encoding: null_terminated
           desc: Function name
+
+ - MSG_PROFILING_SYSTEM_INFO:
+    id: 0xCF01
+    short_desc: System Profiling Information
+    desc: >
+      Contains basic information about system resource usage.
+      System is defined in terms of the source of this message and may vary from 
+      sender to sender. Refer to product documentation to understand the exact scope
+      and meaning of this message.
+    fields:
+      - total_cpu_time:
+          type: u64
+          desc: Total cpu time in microseconds consumed by this system
+      - age:
+          type: u64
+          desc: Age of the producing system in microseconds
+      - n_threads:
+          type: u8
+          desc: Number of threads being tracked by this system
+
+ - MSG_PROFILING_THREAD_INFO:
+    id: 0xCF02
+    short_desc: Thread Profiling Information
+    desc: >
+      Contains profiling information related to a single thread being tracked by
+      the producing system. Refer to product documentation to understand the exact scope
+      and meaning of this message.
+    fields:
+      - total_cpu_time:
+          type: u64
+          desc: Total cpu time in microseconds consumed by this thread
+      - age:
+          type: u64
+          desc: Age of the thread in microseconds
+      - state:
+          type: u8
+          desc: Thread state
+          fields:
+            - 0-1:
+                desc: Thread state
+                values:
+                  - 0: External
+                  - 1: Running
+                  - 2: Stopped
+                  - 3: Reserved
+      - stack_size:
+          type: u32
+          desc: Stack size in bytes
+      - stack_usage:
+          type: u32
+          desc: Stack highwater usage in bytes
+      - name:
+          type: string
+          encoding: null_terminated
+          desc: Thread name
+    
+
