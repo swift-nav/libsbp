@@ -18,7 +18,9 @@
 #ifndef LIBSBP_V4_PROFILING_MESSAGES_H
 #define LIBSBP_V4_PROFILING_MESSAGES_H
 #include <libsbp/profiling/MSG_MEASUREMENT_POINT.h>
+#include <libsbp/profiling/MSG_PROFILING_RESOURCE_COUNTER.h>
 #include <libsbp/profiling/MSG_PROFILING_SYSTEM_INFO.h>
 #include <libsbp/profiling/MSG_PROFILING_THREAD_INFO.h>
+#include <libsbp/profiling/ResourceBucket.h>
 
 #endif /* LIBSBP_V4_PROFILING_MESSAGES_H */

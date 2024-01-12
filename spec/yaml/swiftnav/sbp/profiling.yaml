@@ -71,6 +71,9 @@ definitions:
       - n_threads:
           type: u8
           desc: Number of threads being tracked by this system
+      - heap_usage:
+          type: u32
+          desc: Number of bytes allocated on the heap
 
  - MSG_PROFILING_THREAD_INFO:
     id: 0xCF02
@@ -107,5 +110,60 @@ definitions:
           type: string
           encoding: null_terminated
           desc: Thread name
+
+ - ResourceBucket:
+    short_desc: A bucket containing various resources
+    desc: >
+      Information about allocation of various resources grouped by buckets. Refer to product
+      documentation to understand the meaning and values in this message.
+    fields:
+      - name:
+          type: string 
+          encoding: null_terminated
+          size: 21
+          desc: Bucket name
+      - thread:
+          type: u8
+          desc: Number of threads
+      - mutex:
+          type: u8
+          desc: Number of mutexes
+      - cv:
+          type: u8
+          desc: Number of condition variables
+      - io:
+          type: u8
+          desc: Number of IO handles
+      - heap:
+          type: u32
+          desc: Number of bytes allocated on the heap
+      - io_write:
+          type: u32
+          desc: Number of bytes written to IO handles
+      - io_read:
+          type: u32
+          desc: Number of bytes read from IO handles
+          
+
+ - MSG_PROFILING_RESOURCE_COUNTER:
+    id: 0xCF03
+    short_desc: Information about resource buckets
+    desc: >
+      Information about resource buckets. Refer to product documentation to understand
+      the meaning and values in this message.
+    fields:
+      - seq_no:
+          type: u8
+          desc: Message number in complete sequence
+      - seq_len:
+          type: u8
+          desc: Length of message sequence
+      - buckets:
+          type: array
+          fill: ResourceBucket
+          size_fn: n_buckets
+          desc: List of resource buckets
+          
+
     
 

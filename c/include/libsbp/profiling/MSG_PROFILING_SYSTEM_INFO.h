@@ -60,6 +60,11 @@ typedef struct {
    * Number of threads being tracked by this system
    */
   u8 n_threads;
+
+  /**
+   * Number of bytes allocated on the heap
+   */
+  u32 heap_usage;
 } sbp_msg_profiling_system_info_t;
 
 /**

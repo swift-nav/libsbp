@@ -46,7 +46,7 @@
  * Encoded length of sbp_msg_profiling_system_info_t (V4 API) and
  * msg_profiling_system_info_t (legacy API)
  */
-#define SBP_MSG_PROFILING_SYSTEM_INFO_ENCODED_LEN 17u
+#define SBP_MSG_PROFILING_SYSTEM_INFO_ENCODED_LEN 21u
 
 #define SBP_MSG_PROFILING_THREAD_INFO 0xCF02
 #define SBP_PROFILING_THREAD_INFO_THREAD_STATE_MASK (0x3u)
@@ -88,5 +88,42 @@
  * structure and its variable length component(s)
  */
 #define SBP_MSG_PROFILING_THREAD_INFO_ENCODED_OVERHEAD 25u
+
+/**
+ * The maximum number of items that can be stored in sbp_resource_bucket_t::name
+ * (V4 API) or resource_bucket_t::name (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_RESOURCE_BUCKET_NAME_MAX 21u
+
+/**
+ * Encoded length of sbp_resource_bucket_t (V4 API) and
+ * resource_bucket_t (legacy API)
+ */
+#define SBP_RESOURCE_BUCKET_ENCODED_LEN 37u
+
+#define SBP_MSG_PROFILING_RESOURCE_COUNTER 0xCF03
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_profiling_resource_counter_t::buckets (V4 API) or
+ * msg_profiling_resource_counter_t::buckets (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_PROFILING_RESOURCE_COUNTER_BUCKETS_MAX 6u
+
+/**
+ * Encoded length of sbp_msg_profiling_resource_counter_t (V4 API) and
+ * msg_profiling_resource_counter_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_profiling_resource_counter_encoded_len to determine the actual size
+ * of an instance of this message. Users of the legacy API are required to track
+ * the encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_PROFILING_RESOURCE_COUNTER_ENCODED_OVERHEAD 2u
 
 #endif /* LIBSBP_PROFILING_MACROS_H */

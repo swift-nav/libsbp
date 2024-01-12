@@ -68,6 +68,7 @@ typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
                            system */
   u64 age;            /**< Age of the producing system in microseconds */
   u8 n_threads;       /**< Number of threads being tracked by this system */
+  u32 heap_usage;     /**< Number of bytes allocated on the heap */
 } msg_profiling_system_info_t;
 
 /** Thread Profiling Information
@@ -86,6 +87,36 @@ typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u32 stack_usage;    /**< Stack highwater usage in bytes */
   char name[0];       /**< Thread name */
 } msg_profiling_thread_info_t;
+
+/** A bucket containing various resources
+ *
+ * Information about allocation of various resources grouped by buckets. Refer
+ * to product documentation to understand the meaning and values in this
+ * message.
+ */
+
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
+  char name[21]; /**< Bucket name */
+  u8 thread;     /**< Number of threads */
+  u8 mutex;      /**< Number of mutexes */
+  u8 cv;         /**< Number of condition variables */
+  u8 io;         /**< Number of IO handles */
+  u32 heap;      /**< Number of bytes allocated on the heap */
+  u32 io_write;  /**< Number of bytes written to IO handles */
+  u32 io_read;   /**< Number of bytes read from IO handles */
+} resource_bucket_t;
+
+/** Information about resource buckets
+ *
+ * Information about resource buckets. Refer to product documentation to
+ * understand the meaning and values in this message.
+ */
+
+typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
+  u8 seq_no;                    /**< Message number in complete sequence */
+  u8 seq_len;                   /**< Length of message sequence */
+  resource_bucket_t buckets[0]; /**< List of resource buckets */
+} msg_profiling_resource_counter_t;
 
 /** \} */
 
