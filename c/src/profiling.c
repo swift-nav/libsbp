@@ -624,7 +624,16 @@ bool sbp_resource_bucket_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->io)) {
     return false;
   }
-  if (!sbp_u32_encode(ctx, &msg->heap)) {
+  if (!sbp_u32_encode(ctx, &msg->heap_bytes_alloc)) {
+    return false;
+  }
+  if (!sbp_u32_encode(ctx, &msg->heap_bytes_free)) {
+    return false;
+  }
+  if (!sbp_u32_encode(ctx, &msg->heap_alloc)) {
+    return false;
+  }
+  if (!sbp_u32_encode(ctx, &msg->heap_free)) {
     return false;
   }
   if (!sbp_u32_encode(ctx, &msg->io_write)) {
@@ -670,7 +679,16 @@ bool sbp_resource_bucket_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->io)) {
     return false;
   }
-  if (!sbp_u32_decode(ctx, &msg->heap)) {
+  if (!sbp_u32_decode(ctx, &msg->heap_bytes_alloc)) {
+    return false;
+  }
+  if (!sbp_u32_decode(ctx, &msg->heap_bytes_free)) {
+    return false;
+  }
+  if (!sbp_u32_decode(ctx, &msg->heap_alloc)) {
+    return false;
+  }
+  if (!sbp_u32_decode(ctx, &msg->heap_free)) {
     return false;
   }
   if (!sbp_u32_decode(ctx, &msg->io_write)) {
@@ -731,7 +749,22 @@ int sbp_resource_bucket_cmp(const sbp_resource_bucket_t *a,
     return ret;
   }
 
-  ret = sbp_u32_cmp(&a->heap, &b->heap);
+  ret = sbp_u32_cmp(&a->heap_bytes_alloc, &b->heap_bytes_alloc);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u32_cmp(&a->heap_bytes_free, &b->heap_bytes_free);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u32_cmp(&a->heap_alloc, &b->heap_alloc);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u32_cmp(&a->heap_free, &b->heap_free);
   if (ret != 0) {
     return ret;
   }

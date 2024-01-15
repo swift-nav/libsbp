@@ -134,9 +134,18 @@ definitions:
       - io:
           type: u8
           desc: Number of IO handles
-      - heap:
+      - heap_bytes_alloc:
           type: u32
           desc: Number of bytes allocated on the heap
+      - heap_bytes_free:
+          type: u32
+          desc: Number of bytes freed on the heap
+      - heap_alloc:
+          type: u32
+          desc: Number allocations on the heap
+      - heap_free:
+          type: u32
+          desc: Number frees on the heap
       - io_write:
           type: u32
           desc: Number of bytes written to IO handles
