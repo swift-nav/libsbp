@@ -48,10 +48,6 @@ class ResourceBucket(object):
     Number of bytes allocated on the heap
   heap_bytes_free : int
     Number of bytes freed on the heap
-  heap_alloc : int
-    Number allocations on the heap
-  heap_free : int
-    Number frees on the heap
   io_write : int
     Number of bytes written to IO handles
   io_read : int
@@ -66,8 +62,6 @@ class ResourceBucket(object):
                      'io' / construct.Int8ul,
                      'heap_bytes_alloc' / construct.Int32ul,
                      'heap_bytes_free' / construct.Int32ul,
-                     'heap_alloc' / construct.Int32ul,
-                     'heap_free' / construct.Int32ul,
                      'io_write' / construct.Int32ul,
                      'io_read' / construct.Int32ul,)
   __slots__ = [
@@ -78,8 +72,6 @@ class ResourceBucket(object):
                'io',
                'heap_bytes_alloc',
                'heap_bytes_free',
-               'heap_alloc',
-               'heap_free',
                'io_write',
                'io_read',
               ]
@@ -95,8 +87,6 @@ class ResourceBucket(object):
       self.io = kwargs.pop('io')
       self.heap_bytes_alloc = kwargs.pop('heap_bytes_alloc')
       self.heap_bytes_free = kwargs.pop('heap_bytes_free')
-      self.heap_alloc = kwargs.pop('heap_alloc')
-      self.heap_free = kwargs.pop('heap_free')
       self.io_write = kwargs.pop('io_write')
       self.io_read = kwargs.pop('io_read')
 

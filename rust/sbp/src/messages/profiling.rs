@@ -577,12 +577,6 @@ pub mod resource_bucket {
         /// Number of bytes freed on the heap
         #[cfg_attr(feature = "serde", serde(rename = "heap_bytes_free"))]
         pub heap_bytes_free: u32,
-        /// Number allocations on the heap
-        #[cfg_attr(feature = "serde", serde(rename = "heap_alloc"))]
-        pub heap_alloc: u32,
-        /// Number frees on the heap
-        #[cfg_attr(feature = "serde", serde(rename = "heap_free"))]
-        pub heap_free: u32,
         /// Number of bytes written to IO handles
         #[cfg_attr(feature = "serde", serde(rename = "io_write"))]
         pub io_write: u32,
@@ -600,8 +594,6 @@ pub mod resource_bucket {
             + <u32 as WireFormat>::MIN_LEN
             + <u32 as WireFormat>::MIN_LEN
             + <u32 as WireFormat>::MIN_LEN
-            + <u32 as WireFormat>::MIN_LEN
-            + <u32 as WireFormat>::MIN_LEN
             + <u32 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
             WireFormat::len(&self.name)
@@ -611,8 +603,6 @@ pub mod resource_bucket {
                 + WireFormat::len(&self.io)
                 + WireFormat::len(&self.heap_bytes_alloc)
                 + WireFormat::len(&self.heap_bytes_free)
-                + WireFormat::len(&self.heap_alloc)
-                + WireFormat::len(&self.heap_free)
                 + WireFormat::len(&self.io_write)
                 + WireFormat::len(&self.io_read)
         }
@@ -624,8 +614,6 @@ pub mod resource_bucket {
             WireFormat::write(&self.io, buf);
             WireFormat::write(&self.heap_bytes_alloc, buf);
             WireFormat::write(&self.heap_bytes_free, buf);
-            WireFormat::write(&self.heap_alloc, buf);
-            WireFormat::write(&self.heap_free, buf);
             WireFormat::write(&self.io_write, buf);
             WireFormat::write(&self.io_read, buf);
         }
@@ -638,8 +626,6 @@ pub mod resource_bucket {
                 io: WireFormat::parse_unchecked(buf),
                 heap_bytes_alloc: WireFormat::parse_unchecked(buf),
                 heap_bytes_free: WireFormat::parse_unchecked(buf),
-                heap_alloc: WireFormat::parse_unchecked(buf),
-                heap_free: WireFormat::parse_unchecked(buf),
                 io_write: WireFormat::parse_unchecked(buf),
                 io_read: WireFormat::parse_unchecked(buf),
             }

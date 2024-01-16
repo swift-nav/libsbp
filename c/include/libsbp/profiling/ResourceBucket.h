@@ -81,16 +81,6 @@ typedef struct {
   u32 heap_bytes_free;
 
   /**
-   * Number allocations on the heap
-   */
-  u32 heap_alloc;
-
-  /**
-   * Number frees on the heap
-   */
-  u32 heap_free;
-
-  /**
    * Number of bytes written to IO handles
    */
   u32 io_write;

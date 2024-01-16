@@ -103,8 +103,6 @@ typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   u8 io;                /**< Number of IO handles */
   u32 heap_bytes_alloc; /**< Number of bytes allocated on the heap */
   u32 heap_bytes_free;  /**< Number of bytes freed on the heap */
-  u32 heap_alloc;       /**< Number allocations on the heap */
-  u32 heap_free;        /**< Number frees on the heap */
   u32 io_write;         /**< Number of bytes written to IO handles */
   u32 io_read;          /**< Number of bytes read from IO handles */
 } resource_bucket_t;

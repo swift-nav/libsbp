@@ -100,7 +100,7 @@
  * Encoded length of sbp_resource_bucket_t (V4 API) and
  * resource_bucket_t (legacy API)
  */
-#define SBP_RESOURCE_BUCKET_ENCODED_LEN 49u
+#define SBP_RESOURCE_BUCKET_ENCODED_LEN 41u
 
 #define SBP_MSG_PROFILING_RESOURCE_COUNTER 0xCF03
 /**
@@ -109,7 +109,7 @@
  * msg_profiling_resource_counter_t::buckets (legacy API) before the maximum SBP
  * message size is exceeded
  */
-#define SBP_MSG_PROFILING_RESOURCE_COUNTER_BUCKETS_MAX 5u
+#define SBP_MSG_PROFILING_RESOURCE_COUNTER_BUCKETS_MAX 6u
 
 /**
  * Encoded length of sbp_msg_profiling_resource_counter_t (V4 API) and
