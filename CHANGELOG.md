@@ -1,5 +1,16 @@
 # Changelog
 
+## v5.0.6 (2024-01-16)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.5...v5.0.6)
+
+**Merged pull requests:**
+
+- Add --unbuffered option to sbp2json.py [\#1400](https://github.com/swift-nav/libsbp/pull/1400) ([dgburr](https://github.com/dgburr))
+- Auto submodule update: cmake - ASIO C++ and ASIO Grpc libraries [\#1399](https://github.com/swift-nav/libsbp/pull/1399) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Bump docker image used for rust build to 1.65 [\#1396](https://github.com/swift-nav/libsbp/pull/1396) ([dgburr](https://github.com/dgburr))
+- Add MsgMeasurementPoint [\#1388](https://github.com/swift-nav/libsbp/pull/1388) ([woodfell](https://github.com/woodfell))
+
 ## [v5.0.5](https://github.com/swift-nav/libsbp/tree/v5.0.5) (2024-01-03)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.4...v5.0.5)
