@@ -60,7 +60,7 @@ jacocoTestReport {
     }
 }
 
-sonarqube {
+sonar {
   properties {
     property 'sonar.projectName', "libsbp-java"
     property "sonar.projectKey", "swift-nav_libsbp"
