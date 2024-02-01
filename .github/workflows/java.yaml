@@ -14,7 +14,7 @@ on:
 jobs:
   tests-java-1_8:
     name: Test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
       - uses: gradle/gradle-build-action@v2
@@ -25,7 +25,7 @@ jobs:
 
   sonarqube:
     name: SonarQube
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
         with:
