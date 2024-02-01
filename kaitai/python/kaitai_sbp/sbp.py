@@ -257,6 +257,9 @@ class Sbp(KaitaiStruct):
         msg_linux_mem_state = 32521
         msg_linux_sys_state = 32522
         msg_measurement_point = 52992
+        msg_profiling_system_info = 52993
+        msg_profiling_thread_info = 52994
+        msg_profiling_resource_counter = 52995
         msg_startup = 65280
         msg_dgnss_status = 65282
         msg_ins_status = 65283
@@ -505,6 +508,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Logging.MsgFwd(_io__raw_payload, self, self._root)
+            elif _on == 52993:
+                self._raw_payload = self._io.read_bytes(self.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Profiling.MsgProfilingSystemInfo(_io__raw_payload, self, self._root)
             elif _on == 65286:
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
@@ -817,6 +824,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Piksi.MsgDeviceMonitor(_io__raw_payload, self, self._root)
+            elif _on == 52995:
+                self._raw_payload = self._io.read_bytes(self.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Profiling.MsgProfilingResourceCounter(_io__raw_payload, self, self._root)
             elif _on == 521:
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
@@ -961,6 +972,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Navigation.MsgDopsDepA(_io__raw_payload, self, self._root)
+            elif _on == 52994:
+                self._raw_payload = self._io.read_bytes(self.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Profiling.MsgProfilingThreadInfo(_io__raw_payload, self, self._root)
             elif _on == 553:
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))

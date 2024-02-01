@@ -8,7 +8,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 #
-# Kaitai Struct definition file for Swift Binary Protocol 5.0.6-alpha
+# Kaitai Struct definition file for Swift Binary Protocol 5.0.7-alpha
 #
 # Automatically generated with generate.py.  Do not hand edit!
 
@@ -237,6 +237,9 @@ enums:
     191: msg_front_end_gain
   
     52992: msg_measurement_point
+    52993: msg_profiling_system_info
+    52994: msg_profiling_thread_info
+    52995: msg_profiling_resource_counter
   
     30583: msg_sbas_raw
   
@@ -516,6 +519,9 @@ types:
             191: piksi::msg_front_end_gain
   
             52992: profiling::msg_measurement_point
+            52993: profiling::msg_profiling_system_info
+            52994: profiling::msg_profiling_thread_info
+            52995: profiling::msg_profiling_resource_counter
   
             30583: sbas::msg_sbas_raw
   
