@@ -1,6 +1,6 @@
 plugins {
   id 'jacoco'
-  id "org.sonarqube" version "4.4.1.3373"
+  id "org.sonarqube" version "3.3"
   // spotless pre v5 used to allow gradle 4 on ubuntu-latest
   id "com.diffplug.gradle.spotless" version "4.5.1"
   id 'maven-publish'
@@ -10,7 +10,7 @@ plugins {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(11)
     }
 }
 
@@ -60,7 +60,7 @@ jacocoTestReport {
     }
 }
 
-sonar {
+sonarqube {
   properties {
     property 'sonar.projectName', "libsbp-java"
     property "sonar.projectKey", "swift-nav_libsbp"
