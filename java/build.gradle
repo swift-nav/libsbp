@@ -1,6 +1,6 @@
 plugins {
   id 'jacoco'
-  id "org.sonarqube" version "3.3"
+  id "org.sonarqube" version "4.7"
   // spotless pre v5 used to allow gradle 4 on ubuntu-latest
   id "com.diffplug.gradle.spotless" version "4.5.1"
   id 'maven-publish'
