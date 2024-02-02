@@ -23,3 +23,21 @@ jobs:
       - name: Run tests
         run: make test-java
 
+# sonarqube:
+#   name: SonarQube
+#   runs-on: ubuntu-20.04
+#   steps:
+#     - uses: actions/checkout@v2
+#       with:
+#         fetch-depth: 0
+#     - uses: gradle/gradle-build-action@v2
+#       with:
+#         gradle-version: 7.1.1
+#     - name: Run tests
+#       run: make test-java
+#
+#     - name: Run sonarqube
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#       run: (cd java && gradle sonarqube)
