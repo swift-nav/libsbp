@@ -279,7 +279,7 @@ s8 sbp_msg_ssr_flag_high_level_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SSR_FLAG_HIGH_LEVEL, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgSsrFlagHighLevel, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -471,7 +471,7 @@ s8 sbp_msg_ssr_flag_satellites_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SSR_FLAG_SATELLITES, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgSsrFlagSatellites, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -606,7 +606,7 @@ s8 sbp_msg_ssr_flag_tropo_grid_points_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SSR_FLAG_TROPO_GRID_POINTS,
+  return sbp_internal_forward_payload(s, SbpMsgSsrFlagTropoGridPoints,
                                       sender_id, payload_len, payload, write);
 }
 
@@ -717,8 +717,8 @@ s8 sbp_msg_ssr_flag_iono_grid_points_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SSR_FLAG_IONO_GRID_POINTS,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgSsrFlagIonoGridPoints, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ssr_flag_iono_grid_points_cmp(
@@ -828,8 +828,8 @@ s8 sbp_msg_ssr_flag_iono_tile_sat_los_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SSR_FLAG_IONO_TILE_SAT_LOS,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgSsrFlagIonoTileSatLos, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ssr_flag_iono_tile_sat_los_cmp(
@@ -947,8 +947,7 @@ s8 sbp_msg_ssr_flag_iono_grid_point_sat_los_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s,
-                                      SBP_MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS,
+  return sbp_internal_forward_payload(s, SbpMsgSsrFlagIonoGridPointSatLos,
                                       sender_id, payload_len, payload, write);
 }
 
@@ -1071,7 +1070,7 @@ s8 sbp_msg_acknowledge_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ACKNOWLEDGE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAcknowledge, sender_id,
                                       payload_len, payload, write);
 }
 

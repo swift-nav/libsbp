@@ -18,7 +18,6 @@
 #ifndef LIBSBP_ORIENTATION_MACROS_H
 #define LIBSBP_ORIENTATION_MACROS_H
 
-#define SBP_MSG_BASELINE_HEADING 0x020F
 #define SBP_BASELINE_HEADING_FIX_MODE_MASK (0x7u)
 #define SBP_BASELINE_HEADING_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_HEADING_FIX_MODE_GET(flags)               \
@@ -37,12 +36,10 @@
 #define SBP_BASELINE_HEADING_FIX_MODE_FLOAT_RTK (3)
 #define SBP_BASELINE_HEADING_FIX_MODE_FIXED_RTK (4)
 /**
- * Encoded length of sbp_msg_baseline_heading_t (V4 API) and
- * msg_baseline_heading_t (legacy API)
+ * Encoded length of sbp_msg_baseline_heading_t (V4 API)
  */
 #define SBP_MSG_BASELINE_HEADING_ENCODED_LEN 10u
 
-#define SBP_MSG_ORIENT_QUAT 0x0220
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK (0x7u)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_GET(flags)               \
@@ -60,12 +57,10 @@
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_VALID (1)
 /**
- * Encoded length of sbp_msg_orient_quat_t (V4 API) and
- * msg_orient_quat_t (legacy API)
+ * Encoded length of sbp_msg_orient_quat_t (V4 API)
  */
 #define SBP_MSG_ORIENT_QUAT_ENCODED_LEN 37u
 
-#define SBP_MSG_ORIENT_EULER 0x0221
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK (0x7u)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_GET(flags)               \
@@ -83,12 +78,10 @@
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_VALID (1)
 /**
- * Encoded length of sbp_msg_orient_euler_t (V4 API) and
- * msg_orient_euler_t (legacy API)
+ * Encoded length of sbp_msg_orient_euler_t (V4 API)
  */
 #define SBP_MSG_ORIENT_EULER_ENCODED_LEN 29u
 
-#define SBP_MSG_ANGULAR_RATE 0x0222
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK (0x7u)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_GET(flags)               \
@@ -106,8 +99,7 @@
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_VALID (1)
 /**
- * Encoded length of sbp_msg_angular_rate_t (V4 API) and
- * msg_angular_rate_t (legacy API)
+ * Encoded length of sbp_msg_angular_rate_t (V4 API)
  */
 #define SBP_MSG_ANGULAR_RATE_ENCODED_LEN 17u
 

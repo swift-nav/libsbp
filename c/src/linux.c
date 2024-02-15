@@ -202,8 +202,8 @@ s8 sbp_msg_linux_cpu_state_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_CPU_STATE_DEP_A,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgLinuxCpuStateDepA, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_linux_cpu_state_dep_a_cmp(
@@ -425,8 +425,8 @@ s8 sbp_msg_linux_mem_state_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_MEM_STATE_DEP_A,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgLinuxMemStateDepA, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_linux_mem_state_dep_a_cmp(
@@ -551,8 +551,8 @@ s8 sbp_msg_linux_sys_state_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_SYS_STATE_DEP_A,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgLinuxSysStateDepA, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_linux_sys_state_dep_a_cmp(
@@ -779,7 +779,7 @@ s8 sbp_msg_linux_process_socket_counts_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS,
+  return sbp_internal_forward_payload(s, SbpMsgLinuxProcessSocketCounts,
                                       sender_id, payload_len, payload, write);
 }
 
@@ -1025,7 +1025,7 @@ s8 sbp_msg_linux_process_socket_queues_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES,
+  return sbp_internal_forward_payload(s, SbpMsgLinuxProcessSocketQueues,
                                       sender_id, payload_len, payload, write);
 }
 
@@ -1167,7 +1167,7 @@ s8 sbp_msg_linux_socket_usage_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_SOCKET_USAGE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgLinuxSocketUsage, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1381,8 +1381,8 @@ s8 sbp_msg_linux_process_fd_count_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_PROCESS_FD_COUNT,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgLinuxProcessFdCount, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_linux_process_fd_count_cmp(
@@ -1576,8 +1576,8 @@ s8 sbp_msg_linux_process_fd_summary_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_PROCESS_FD_SUMMARY,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgLinuxProcessFdSummary, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_linux_process_fd_summary_cmp(
@@ -1792,7 +1792,7 @@ s8 sbp_msg_linux_cpu_state_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_CPU_STATE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgLinuxCpuState, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2037,7 +2037,7 @@ s8 sbp_msg_linux_mem_state_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_MEM_STATE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgLinuxMemState, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2183,7 +2183,7 @@ s8 sbp_msg_linux_sys_state_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LINUX_SYS_STATE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgLinuxSysState, sender_id,
                                       payload_len, payload, write);
 }
 

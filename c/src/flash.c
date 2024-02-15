@@ -103,7 +103,7 @@ s8 sbp_msg_flash_program_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FLASH_PROGRAM, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFlashProgram, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -200,7 +200,7 @@ s8 sbp_msg_flash_done_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FLASH_DONE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFlashDone, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -285,7 +285,7 @@ s8 sbp_msg_flash_read_req_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FLASH_READ_REQ, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFlashReadReq, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -385,7 +385,7 @@ s8 sbp_msg_flash_read_resp_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FLASH_READ_RESP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFlashReadResp, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -474,7 +474,7 @@ s8 sbp_msg_flash_erase_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FLASH_ERASE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFlashErase, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -549,8 +549,8 @@ s8 sbp_msg_stm_flash_lock_sector_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_STM_FLASH_LOCK_SECTOR,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgStmFlashLockSector, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_stm_flash_lock_sector_cmp(
@@ -620,8 +620,8 @@ s8 sbp_msg_stm_flash_unlock_sector_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_STM_FLASH_UNLOCK_SECTOR,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgStmFlashUnlockSector, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_stm_flash_unlock_sector_cmp(
@@ -689,7 +689,7 @@ s8 sbp_msg_stm_unique_id_req_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_STM_UNIQUE_ID_REQ, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgStmUniqueIdReq, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -763,7 +763,7 @@ s8 sbp_msg_stm_unique_id_resp_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_STM_UNIQUE_ID_RESP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgStmUniqueIdResp, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -842,8 +842,8 @@ s8 sbp_msg_m25_flash_write_status_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_M25_FLASH_WRITE_STATUS,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgM25FlashWriteStatus, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_m25_flash_write_status_cmp(

@@ -113,8 +113,8 @@ s8 sbp_msg_imu_raw_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_IMU_RAW, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgImuRaw, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_imu_raw_cmp(const sbp_msg_imu_raw_t *a,
@@ -226,8 +226,8 @@ s8 sbp_msg_imu_aux_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_IMU_AUX, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgImuAux, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_imu_aux_cmp(const sbp_msg_imu_aux_t *a,

@@ -69,8 +69,8 @@ s8 sbp_msg_almanac_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ALMANAC, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgAlmanac, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_almanac_cmp(const sbp_msg_almanac_t *a,
@@ -133,8 +133,8 @@ s8 sbp_msg_set_time_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SET_TIME, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgSetTime, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_set_time_cmp(const sbp_msg_set_time_t *a,
@@ -199,7 +199,7 @@ s8 sbp_msg_reset_send(sbp_state_t *s, u16 sender_id, const sbp_msg_reset_t *msg,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_RESET, sender_id, payload_len,
+  return sbp_internal_forward_payload(s, SbpMsgReset, sender_id, payload_len,
                                       payload, write);
 }
 
@@ -264,8 +264,8 @@ s8 sbp_msg_reset_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_RESET_DEP, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgResetDep, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_reset_dep_cmp(const sbp_msg_reset_dep_t *a,
@@ -330,7 +330,7 @@ s8 sbp_msg_cw_results_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_CW_RESULTS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgCwResults, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -394,8 +394,8 @@ s8 sbp_msg_cw_start_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_CW_START, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgCwStart, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_cw_start_cmp(const sbp_msg_cw_start_t *a,
@@ -462,7 +462,7 @@ s8 sbp_msg_reset_filters_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_RESET_FILTERS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgResetFilters, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -528,7 +528,7 @@ s8 sbp_msg_init_base_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_INIT_BASE_DEP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgInitBaseDep, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -612,7 +612,7 @@ s8 sbp_msg_thread_state_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_THREAD_STATE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgThreadState, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -998,7 +998,7 @@ s8 sbp_msg_uart_state_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_UART_STATE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgUartState, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1105,7 +1105,7 @@ s8 sbp_msg_uart_state_depa_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_UART_STATE_DEPA, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgUartStateDepa, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1188,8 +1188,8 @@ s8 sbp_msg_iar_state_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_IAR_STATE, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgIarState, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_iar_state_cmp(const sbp_msg_iar_state_t *a,
@@ -1205,7 +1205,7 @@ bool sbp_msg_mask_satellite_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->mask)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -1231,7 +1231,7 @@ bool sbp_msg_mask_satellite_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->mask)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -1263,7 +1263,7 @@ s8 sbp_msg_mask_satellite_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_MASK_SATELLITE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgMaskSatellite, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1276,7 +1276,7 @@ int sbp_msg_mask_satellite_cmp(const sbp_msg_mask_satellite_t *a,
     return ret;
   }
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   return ret;
 }
 
@@ -1344,7 +1344,7 @@ s8 sbp_msg_mask_satellite_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_MASK_SATELLITE_DEP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgMaskSatelliteDep, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1442,7 +1442,7 @@ s8 sbp_msg_device_monitor_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_DEVICE_MONITOR, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgDeviceMonitor, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1633,7 +1633,7 @@ s8 sbp_msg_command_req_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_COMMAND_REQ, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgCommandReq, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1712,7 +1712,7 @@ s8 sbp_msg_command_resp_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_COMMAND_RESP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgCommandResp, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1890,7 +1890,7 @@ s8 sbp_msg_command_output_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_COMMAND_OUTPUT, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgCommandOutput, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1963,7 +1963,7 @@ s8 sbp_msg_network_state_req_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_NETWORK_STATE_REQ, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgNetworkStateReq, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2087,7 +2087,7 @@ s8 sbp_msg_network_state_resp_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_NETWORK_STATE_RESP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgNetworkStateResp, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2323,8 +2323,8 @@ s8 sbp_msg_network_bandwidth_usage_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_NETWORK_BANDWIDTH_USAGE,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgNetworkBandwidthUsage, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_network_bandwidth_usage_cmp(
@@ -2424,7 +2424,7 @@ s8 sbp_msg_cell_modem_status_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_CELL_MODEM_STATUS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgCellModemStatus, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2556,7 +2556,7 @@ s8 sbp_msg_specan_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SPECAN_DEP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgSpecanDep, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2612,7 +2612,7 @@ bool sbp_msg_specan_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u16_encode(ctx, &msg->channel_tag)) {
     return false;
   }
-  if (!sbp_v4_gps_time_encode_internal(ctx, &msg->t)) {
+  if (!sbp_gps_time_encode_internal(ctx, &msg->t)) {
     return false;
   }
   if (!sbp_float_encode(ctx, &msg->freq_ref)) {
@@ -2655,7 +2655,7 @@ bool sbp_msg_specan_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u16_decode(ctx, &msg->channel_tag)) {
     return false;
   }
-  if (!sbp_v4_gps_time_decode_internal(ctx, &msg->t)) {
+  if (!sbp_gps_time_decode_internal(ctx, &msg->t)) {
     return false;
   }
   if (!sbp_float_decode(ctx, &msg->freq_ref)) {
@@ -2706,7 +2706,7 @@ s8 sbp_msg_specan_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SPECAN, sender_id, payload_len,
+  return sbp_internal_forward_payload(s, SbpMsgSpecan, sender_id, payload_len,
                                       payload, write);
 }
 
@@ -2718,7 +2718,7 @@ int sbp_msg_specan_cmp(const sbp_msg_specan_t *a, const sbp_msg_specan_t *b) {
     return ret;
   }
 
-  ret = sbp_v4_gps_time_cmp(&a->t, &b->t);
+  ret = sbp_gps_time_cmp(&a->t, &b->t);
   if (ret != 0) {
     return ret;
   }
@@ -2827,7 +2827,7 @@ s8 sbp_msg_front_end_gain_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FRONT_END_GAIN, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFrontEndGain, sender_id,
                                       payload_len, payload, write);
 }
 

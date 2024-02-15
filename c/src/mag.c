@@ -95,8 +95,8 @@ s8 sbp_msg_mag_raw_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_MAG_RAW, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgMagRaw, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_mag_raw_cmp(const sbp_msg_mag_raw_t *a,

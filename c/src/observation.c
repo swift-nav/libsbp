@@ -19,7 +19,7 @@
 
 bool sbp_observation_header_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_observation_header_t *msg) {
-  if (!sbp_v4_gps_time_encode_internal(ctx, &msg->t)) {
+  if (!sbp_gps_time_encode_internal(ctx, &msg->t)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->n_obs)) {
@@ -45,7 +45,7 @@ s8 sbp_observation_header_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_observation_header_decode_internal(sbp_decode_ctx_t *ctx,
                                             sbp_observation_header_t *msg) {
-  if (!sbp_v4_gps_time_decode_internal(ctx, &msg->t)) {
+  if (!sbp_gps_time_decode_internal(ctx, &msg->t)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_obs)) {
@@ -74,7 +74,7 @@ int sbp_observation_header_cmp(const sbp_observation_header_t *a,
                                const sbp_observation_header_t *b) {
   int ret = 0;
 
-  ret = sbp_v4_gps_time_cmp(&a->t, &b->t);
+  ret = sbp_gps_time_cmp(&a->t, &b->t);
   if (ret != 0) {
     return ret;
   }
@@ -166,7 +166,7 @@ bool sbp_packed_obs_content_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->flags)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -207,7 +207,7 @@ bool sbp_packed_obs_content_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -263,7 +263,7 @@ int sbp_packed_obs_content_cmp(const sbp_packed_obs_content_t *a,
     return ret;
   }
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   return ret;
 }
 
@@ -281,7 +281,7 @@ bool sbp_packed_osr_content_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->flags)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u16_encode(ctx, &msg->iono_std)) {
@@ -325,7 +325,7 @@ bool sbp_packed_osr_content_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->flags)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u16_decode(ctx, &msg->iono_std)) {
@@ -380,7 +380,7 @@ int sbp_packed_osr_content_cmp(const sbp_packed_osr_content_t *a,
     return ret;
   }
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -468,7 +468,7 @@ s8 sbp_msg_obs_send(sbp_state_t *s, u16 sender_id, const sbp_msg_obs_t *msg,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_OBS, sender_id, payload_len,
+  return sbp_internal_forward_payload(s, SbpMsgObs, sender_id, payload_len,
                                       payload, write);
 }
 
@@ -561,7 +561,7 @@ s8 sbp_msg_base_pos_llh_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BASE_POS_LLH, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgBasePosLlh, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -651,7 +651,7 @@ s8 sbp_msg_base_pos_ecef_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BASE_POS_ECEF, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgBasePosEcef, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -675,7 +675,7 @@ int sbp_msg_base_pos_ecef_cmp(const sbp_msg_base_pos_ecef_t *a,
 
 bool sbp_ephemeris_common_content_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_ephemeris_common_content_t *msg) {
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->toe)) {
@@ -714,7 +714,7 @@ s8 sbp_ephemeris_common_content_encode(
 
 bool sbp_ephemeris_common_content_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_ephemeris_common_content_t *msg) {
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->toe)) {
@@ -755,7 +755,7 @@ int sbp_ephemeris_common_content_cmp(const sbp_ephemeris_common_content_t *a,
                                      const sbp_ephemeris_common_content_t *b) {
   int ret = 0;
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -786,7 +786,7 @@ int sbp_ephemeris_common_content_cmp(const sbp_ephemeris_common_content_t *a,
 
 bool sbp_ephemeris_common_content_dep_b_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_ephemeris_common_content_dep_b_t *msg) {
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->toe)) {
@@ -825,7 +825,7 @@ s8 sbp_ephemeris_common_content_dep_b_encode(
 
 bool sbp_ephemeris_common_content_dep_b_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_ephemeris_common_content_dep_b_t *msg) {
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->toe)) {
@@ -867,7 +867,7 @@ int sbp_ephemeris_common_content_dep_b_cmp(
     const sbp_ephemeris_common_content_dep_b_t *b) {
   int ret = 0;
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -1198,7 +1198,7 @@ s8 sbp_msg_ephemeris_gps_dep_e_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GPS_DEP_E, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisGpsDepE, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1510,7 +1510,7 @@ s8 sbp_msg_ephemeris_gps_dep_f_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GPS_DEP_F, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisGpsDepF, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1820,7 +1820,7 @@ s8 sbp_msg_ephemeris_gps_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GPS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisGps, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2131,7 +2131,7 @@ s8 sbp_msg_ephemeris_qzss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_QZSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisQzss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2447,7 +2447,7 @@ s8 sbp_msg_ephemeris_bds_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_BDS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisBds, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2770,7 +2770,7 @@ s8 sbp_msg_ephemeris_gal_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GAL_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisGalDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -3097,7 +3097,7 @@ s8 sbp_msg_ephemeris_gal_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GAL, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisGal, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -3329,8 +3329,8 @@ s8 sbp_msg_ephemeris_sbas_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_SBAS_DEP_A,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisSbasDepA, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_sbas_dep_a_cmp(const sbp_msg_ephemeris_sbas_dep_a_t *a,
@@ -3481,7 +3481,7 @@ s8 sbp_msg_ephemeris_glo_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GLO_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisGloDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -3633,8 +3633,8 @@ s8 sbp_msg_ephemeris_sbas_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_SBAS_DEP_B,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisSbasDepB, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ephemeris_sbas_dep_b_cmp(const sbp_msg_ephemeris_sbas_dep_b_t *a,
@@ -3784,7 +3784,7 @@ s8 sbp_msg_ephemeris_sbas_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_SBAS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisSbas, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -3936,7 +3936,7 @@ s8 sbp_msg_ephemeris_glo_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GLO_DEP_B, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisGloDepB, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -4100,7 +4100,7 @@ s8 sbp_msg_ephemeris_glo_dep_c_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GLO_DEP_C, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisGloDepC, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -4280,7 +4280,7 @@ s8 sbp_msg_ephemeris_glo_dep_d_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GLO_DEP_D, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisGloDepD, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -4463,7 +4463,7 @@ s8 sbp_msg_ephemeris_glo_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_GLO, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisGlo, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -4755,7 +4755,7 @@ s8 sbp_msg_ephemeris_dep_d_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_DEP_D, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisDepD, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -5114,7 +5114,7 @@ s8 sbp_msg_ephemeris_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -5464,7 +5464,7 @@ s8 sbp_msg_ephemeris_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_DEP_B, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisDepB, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -5831,7 +5831,7 @@ s8 sbp_msg_ephemeris_dep_c_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_EPHEMERIS_DEP_C, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEphemerisDepC, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -6488,8 +6488,8 @@ s8 sbp_msg_obs_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_OBS_DEP_A, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgObsDepA, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_obs_dep_a_cmp(const sbp_msg_obs_dep_a_t *a,
@@ -6586,8 +6586,8 @@ s8 sbp_msg_obs_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_OBS_DEP_B, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgObsDepB, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_obs_dep_b_cmp(const sbp_msg_obs_dep_b_t *a,
@@ -6684,8 +6684,8 @@ s8 sbp_msg_obs_dep_c_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_OBS_DEP_C, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgObsDepC, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_obs_dep_c_cmp(const sbp_msg_obs_dep_c_t *a,
@@ -6811,7 +6811,7 @@ s8 sbp_msg_iono_send(sbp_state_t *s, u16 sender_id, const sbp_msg_iono_t *msg,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_IONO, sender_id, payload_len,
+  return sbp_internal_forward_payload(s, SbpMsgIono, sender_id, payload_len,
                                       payload, write);
 }
 
@@ -6926,8 +6926,8 @@ s8 sbp_msg_sv_configuration_gps_dep_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SV_CONFIGURATION_GPS_DEP,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgSvConfigurationGpsDep, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_sv_configuration_gps_dep_cmp(
@@ -7213,8 +7213,8 @@ s8 sbp_msg_gnss_capb_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_GNSS_CAPB, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgGnssCapb, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_gnss_capb_cmp(const sbp_msg_gnss_capb_t *a,
@@ -7318,7 +7318,7 @@ s8 sbp_msg_group_delay_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_GROUP_DELAY_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgGroupDelayDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -7443,7 +7443,7 @@ s8 sbp_msg_group_delay_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_GROUP_DELAY_DEP_B, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgGroupDelayDepB, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -7485,7 +7485,7 @@ bool sbp_msg_group_delay_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->t_op)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->valid)) {
@@ -7523,7 +7523,7 @@ bool sbp_msg_group_delay_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->t_op)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->valid)) {
@@ -7566,7 +7566,7 @@ s8 sbp_msg_group_delay_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_GROUP_DELAY, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgGroupDelay, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -7579,7 +7579,7 @@ int sbp_msg_group_delay_cmp(const sbp_msg_group_delay_t *a,
     return ret;
   }
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -7605,7 +7605,7 @@ int sbp_msg_group_delay_cmp(const sbp_msg_group_delay_t *a,
 
 bool sbp_almanac_common_content_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_almanac_common_content_t *msg) {
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->toa)) {
@@ -7644,7 +7644,7 @@ s8 sbp_almanac_common_content_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_almanac_common_content_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_almanac_common_content_t *msg) {
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->toa)) {
@@ -7685,7 +7685,7 @@ int sbp_almanac_common_content_cmp(const sbp_almanac_common_content_t *a,
                                    const sbp_almanac_common_content_t *b) {
   int ret = 0;
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -7937,7 +7937,7 @@ s8 sbp_msg_almanac_gps_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ALMANAC_GPS_DEP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAlmanacGpsDep, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -8104,7 +8104,7 @@ s8 sbp_msg_almanac_gps_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ALMANAC_GPS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAlmanacGps, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -8260,7 +8260,7 @@ s8 sbp_msg_almanac_glo_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ALMANAC_GLO_DEP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAlmanacGloDep, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -8405,7 +8405,7 @@ s8 sbp_msg_almanac_glo_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ALMANAC_GLO, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAlmanacGlo, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -8532,7 +8532,7 @@ s8 sbp_msg_glo_biases_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_GLO_BIASES, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgGloBiases, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -8566,7 +8566,7 @@ int sbp_msg_glo_biases_cmp(const sbp_msg_glo_biases_t *a,
 
 bool sbp_sv_az_el_encode_internal(sbp_encode_ctx_t *ctx,
                                   const sbp_sv_az_el_t *msg) {
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->az)) {
@@ -8594,7 +8594,7 @@ s8 sbp_sv_az_el_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 }
 
 bool sbp_sv_az_el_decode_internal(sbp_decode_ctx_t *ctx, sbp_sv_az_el_t *msg) {
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->az)) {
@@ -8624,7 +8624,7 @@ s8 sbp_sv_az_el_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
 int sbp_sv_az_el_cmp(const sbp_sv_az_el_t *a, const sbp_sv_az_el_t *b) {
   int ret = 0;
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -8701,8 +8701,8 @@ s8 sbp_msg_sv_az_el_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SV_AZ_EL, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgSvAzEl, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_sv_az_el_cmp(const sbp_msg_sv_az_el_t *a,
@@ -8791,7 +8791,7 @@ s8 sbp_msg_osr_send(sbp_state_t *s, u16 sender_id, const sbp_msg_osr_t *msg,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_OSR, sender_id, payload_len,
+  return sbp_internal_forward_payload(s, SbpMsgOsr, sender_id, payload_len,
                                       payload, write);
 }
 

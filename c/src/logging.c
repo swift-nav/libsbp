@@ -152,7 +152,7 @@ s8 sbp_msg_log_send(sbp_state_t *s, u16 sender_id, const sbp_msg_log_t *msg,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_LOG, sender_id, payload_len,
+  return sbp_internal_forward_payload(s, SbpMsgLog, sender_id, payload_len,
                                       payload, write);
 }
 
@@ -242,7 +242,7 @@ s8 sbp_msg_fwd_send(sbp_state_t *s, u16 sender_id, const sbp_msg_fwd_t *msg,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FWD, sender_id, payload_len,
+  return sbp_internal_forward_payload(s, SbpMsgFwd, sender_id, payload_len,
                                       payload, write);
 }
 
@@ -410,8 +410,8 @@ s8 sbp_msg_print_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_PRINT_DEP, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgPrintDep, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_print_dep_cmp(const sbp_msg_print_dep_t *a,

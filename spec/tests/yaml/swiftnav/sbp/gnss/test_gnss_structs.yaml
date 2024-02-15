@@ -9,7 +9,7 @@ struct_tests:
       sat: 162
       code: 244
     module: sbp.gnss
-    name: V4GnssSignal
+    name: GnssSignal
 
   - encoded: siw=
     fields:
@@ -46,7 +46,7 @@ struct_tests:
       wn: 47135
       ns_residual: 471708190
     module: sbp.gnss
-    name: V4GpsTime
+    name: GpsTime
 
   - encoded: ItSwh3o=
     fields:
