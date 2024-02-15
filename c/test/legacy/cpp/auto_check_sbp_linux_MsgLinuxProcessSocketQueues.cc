@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/linux.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_linux_MsgLinuxProcessSocketQueues0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -193,20 +200,32 @@ TEST_F(Test_legacy_auto_check_sbp_linux_MsgLinuxProcessSocketQueues0, Test) {
         << "incorrect value for last_msg_->cmdline, expected string '"
         << check_string << "', is '" << last_msg_->cmdline << "'";
   }
-  EXPECT_EQ(last_msg_->index, 181)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            181)
       << "incorrect value for index, expected 181, is " << last_msg_->index;
-  EXPECT_EQ(last_msg_->pid, 19335)
+  EXPECT_EQ(get_as<decltype(last_msg_->pid)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pid)),
+            19335)
       << "incorrect value for pid, expected 19335, is " << last_msg_->pid;
-  EXPECT_EQ(last_msg_->recv_queued, 54265)
+  EXPECT_EQ(get_as<decltype(last_msg_->recv_queued)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->recv_queued)),
+            54265)
       << "incorrect value for recv_queued, expected 54265, is "
       << last_msg_->recv_queued;
-  EXPECT_EQ(last_msg_->send_queued, 64547)
+  EXPECT_EQ(get_as<decltype(last_msg_->send_queued)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->send_queued)),
+            64547)
       << "incorrect value for send_queued, expected 64547, is "
       << last_msg_->send_queued;
-  EXPECT_EQ(last_msg_->socket_states, 57103)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_states)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->socket_states)),
+            57103)
       << "incorrect value for socket_states, expected 57103, is "
       << last_msg_->socket_states;
-  EXPECT_EQ(last_msg_->socket_types, 27984)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_types)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->socket_types)),
+            27984)
       << "incorrect value for socket_types, expected 27984, is "
       << last_msg_->socket_types;
 }

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/linux.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_linux_MsgLinuxMemState0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -159,15 +166,25 @@ TEST_F(Test_legacy_auto_check_sbp_linux_MsgLinuxMemState0, Test) {
         << "incorrect value for last_msg_->cmdline, expected string '"
         << check_string << "', is '" << last_msg_->cmdline << "'";
   }
-  EXPECT_EQ(last_msg_->flags, 76)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            76)
       << "incorrect value for flags, expected 76, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->index, 154)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            154)
       << "incorrect value for index, expected 154, is " << last_msg_->index;
-  EXPECT_EQ(last_msg_->pid, 57279)
+  EXPECT_EQ(get_as<decltype(last_msg_->pid)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pid)),
+            57279)
       << "incorrect value for pid, expected 57279, is " << last_msg_->pid;
-  EXPECT_EQ(last_msg_->pmem, 19)
+  EXPECT_EQ(get_as<decltype(last_msg_->pmem)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pmem)),
+            19)
       << "incorrect value for pmem, expected 19, is " << last_msg_->pmem;
-  EXPECT_EQ(last_msg_->time, 3139057143)
+  EXPECT_EQ(get_as<decltype(last_msg_->time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time)),
+            3139057143)
       << "incorrect value for time, expected 3139057143, is "
       << last_msg_->time;
   {

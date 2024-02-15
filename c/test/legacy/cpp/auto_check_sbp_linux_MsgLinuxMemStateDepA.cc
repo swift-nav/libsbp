@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/linux.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_linux_MsgLinuxMemStateDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -158,11 +165,17 @@ TEST_F(Test_legacy_auto_check_sbp_linux_MsgLinuxMemStateDepA0, Test) {
         << "incorrect value for last_msg_->cmdline, expected string '"
         << check_string << "', is '" << last_msg_->cmdline << "'";
   }
-  EXPECT_EQ(last_msg_->index, 247)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            247)
       << "incorrect value for index, expected 247, is " << last_msg_->index;
-  EXPECT_EQ(last_msg_->pid, 12381)
+  EXPECT_EQ(get_as<decltype(last_msg_->pid)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pid)),
+            12381)
       << "incorrect value for pid, expected 12381, is " << last_msg_->pid;
-  EXPECT_EQ(last_msg_->pmem, 193)
+  EXPECT_EQ(get_as<decltype(last_msg_->pmem)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pmem)),
+            193)
       << "incorrect value for pmem, expected 193, is " << last_msg_->pmem;
   {
     const char check_string[] = {(char)112, (char)114, (char)111, (char)99,

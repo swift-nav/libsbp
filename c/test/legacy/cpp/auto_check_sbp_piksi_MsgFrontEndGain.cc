@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/piksi.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_piksi_MsgFrontEndGain0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -190,52 +197,84 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgFrontEndGain0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 62895);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->if_gain[0], -10)
+  EXPECT_EQ(get_as<decltype(last_msg_->if_gain[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->if_gain[0])),
+            -10)
       << "incorrect value for if_gain[0], expected -10, is "
       << last_msg_->if_gain[0];
-  EXPECT_EQ(last_msg_->if_gain[1], -23)
+  EXPECT_EQ(get_as<decltype(last_msg_->if_gain[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->if_gain[1])),
+            -23)
       << "incorrect value for if_gain[1], expected -23, is "
       << last_msg_->if_gain[1];
-  EXPECT_EQ(last_msg_->if_gain[2], -40)
+  EXPECT_EQ(get_as<decltype(last_msg_->if_gain[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->if_gain[2])),
+            -40)
       << "incorrect value for if_gain[2], expected -40, is "
       << last_msg_->if_gain[2];
-  EXPECT_EQ(last_msg_->if_gain[3], 80)
+  EXPECT_EQ(get_as<decltype(last_msg_->if_gain[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->if_gain[3])),
+            80)
       << "incorrect value for if_gain[3], expected 80, is "
       << last_msg_->if_gain[3];
-  EXPECT_EQ(last_msg_->if_gain[4], -69)
+  EXPECT_EQ(get_as<decltype(last_msg_->if_gain[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->if_gain[4])),
+            -69)
       << "incorrect value for if_gain[4], expected -69, is "
       << last_msg_->if_gain[4];
-  EXPECT_EQ(last_msg_->if_gain[5], -43)
+  EXPECT_EQ(get_as<decltype(last_msg_->if_gain[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->if_gain[5])),
+            -43)
       << "incorrect value for if_gain[5], expected -43, is "
       << last_msg_->if_gain[5];
-  EXPECT_EQ(last_msg_->if_gain[6], 85)
+  EXPECT_EQ(get_as<decltype(last_msg_->if_gain[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->if_gain[6])),
+            85)
       << "incorrect value for if_gain[6], expected 85, is "
       << last_msg_->if_gain[6];
-  EXPECT_EQ(last_msg_->if_gain[7], 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->if_gain[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->if_gain[7])),
+            2)
       << "incorrect value for if_gain[7], expected 2, is "
       << last_msg_->if_gain[7];
-  EXPECT_EQ(last_msg_->rf_gain[0], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->rf_gain[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->rf_gain[0])),
+            41)
       << "incorrect value for rf_gain[0], expected 41, is "
       << last_msg_->rf_gain[0];
-  EXPECT_EQ(last_msg_->rf_gain[1], -123)
+  EXPECT_EQ(get_as<decltype(last_msg_->rf_gain[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->rf_gain[1])),
+            -123)
       << "incorrect value for rf_gain[1], expected -123, is "
       << last_msg_->rf_gain[1];
-  EXPECT_EQ(last_msg_->rf_gain[2], -122)
+  EXPECT_EQ(get_as<decltype(last_msg_->rf_gain[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->rf_gain[2])),
+            -122)
       << "incorrect value for rf_gain[2], expected -122, is "
       << last_msg_->rf_gain[2];
-  EXPECT_EQ(last_msg_->rf_gain[3], 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->rf_gain[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->rf_gain[3])),
+            10)
       << "incorrect value for rf_gain[3], expected 10, is "
       << last_msg_->rf_gain[3];
-  EXPECT_EQ(last_msg_->rf_gain[4], 105)
+  EXPECT_EQ(get_as<decltype(last_msg_->rf_gain[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->rf_gain[4])),
+            105)
       << "incorrect value for rf_gain[4], expected 105, is "
       << last_msg_->rf_gain[4];
-  EXPECT_EQ(last_msg_->rf_gain[5], 20)
+  EXPECT_EQ(get_as<decltype(last_msg_->rf_gain[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->rf_gain[5])),
+            20)
       << "incorrect value for rf_gain[5], expected 20, is "
       << last_msg_->rf_gain[5];
-  EXPECT_EQ(last_msg_->rf_gain[6], 38)
+  EXPECT_EQ(get_as<decltype(last_msg_->rf_gain[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->rf_gain[6])),
+            38)
       << "incorrect value for rf_gain[6], expected 38, is "
       << last_msg_->rf_gain[6];
-  EXPECT_EQ(last_msg_->rf_gain[7], 38)
+  EXPECT_EQ(get_as<decltype(last_msg_->rf_gain[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->rf_gain[7])),
+            38)
       << "incorrect value for rf_gain[7], expected 38, is "
       << last_msg_->rf_gain[7];
 }

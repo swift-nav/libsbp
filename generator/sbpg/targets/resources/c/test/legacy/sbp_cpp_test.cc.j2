@@ -28,6 +28,13 @@
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/cpp/legacy_state.h>
 
+template<typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
+
 ((*- for t in s.tests *))                                                     
 ((*- if t.fields *))
 class Test_legacy_(((s.suite_name)))(((loop.index0))) : 
@@ -111,7 +118,7 @@ TEST_F(Test_legacy_(((s.suite_name)))(((loop.index0))), Test)
         literal precision unchanged whether generated under Python 2.7 or 3.x. =))
     EXPECT_LT((last_msg_->(((prefix)))*100 - ((("%.12g"|format(value)|float)))*100), 0.05) << "incorrect value for (((prefix))), expected ((("%.12g"|format(value)|float))), is " << last_msg_->(((prefix)));
     ((*- else *))
-    EXPECT_EQ(last_msg_->(((prefix))), (((value)))) << "incorrect value for (((prefix))), expected (((value))), is " << last_msg_->(((prefix)));
+    EXPECT_EQ(get_as<decltype(last_msg_->(((prefix))))>(reinterpret_cast<const uint8_t *>(&last_msg_->(((prefix))))), (((value)))) << "incorrect value for (((prefix))), expected (((value))), is " << last_msg_->(((prefix)));
     ((*- endif *))
     ((*- endmacro *))
 

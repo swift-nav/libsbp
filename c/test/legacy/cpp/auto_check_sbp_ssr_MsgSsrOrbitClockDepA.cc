@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ssr.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ssr_MsgSsrOrbitClockDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -130,46 +137,78 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrOrbitClockDepA0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 42529);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->along, 132661048)
+  EXPECT_EQ(get_as<decltype(last_msg_->along)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->along)),
+            132661048)
       << "incorrect value for along, expected 132661048, is "
       << last_msg_->along;
-  EXPECT_EQ(last_msg_->c0, -970026069)
+  EXPECT_EQ(get_as<decltype(last_msg_->c0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->c0)),
+            -970026069)
       << "incorrect value for c0, expected -970026069, is " << last_msg_->c0;
-  EXPECT_EQ(last_msg_->c1, -503975083)
+  EXPECT_EQ(get_as<decltype(last_msg_->c1)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->c1)),
+            -503975083)
       << "incorrect value for c1, expected -503975083, is " << last_msg_->c1;
-  EXPECT_EQ(last_msg_->c2, -759858197)
+  EXPECT_EQ(get_as<decltype(last_msg_->c2)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->c2)),
+            -759858197)
       << "incorrect value for c2, expected -759858197, is " << last_msg_->c2;
-  EXPECT_EQ(last_msg_->cross, 1845577176)
+  EXPECT_EQ(get_as<decltype(last_msg_->cross)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cross)),
+            1845577176)
       << "incorrect value for cross, expected 1845577176, is "
       << last_msg_->cross;
-  EXPECT_EQ(last_msg_->dot_along, 72905755)
+  EXPECT_EQ(get_as<decltype(last_msg_->dot_along)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dot_along)),
+            72905755)
       << "incorrect value for dot_along, expected 72905755, is "
       << last_msg_->dot_along;
-  EXPECT_EQ(last_msg_->dot_cross, 311886653)
+  EXPECT_EQ(get_as<decltype(last_msg_->dot_cross)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dot_cross)),
+            311886653)
       << "incorrect value for dot_cross, expected 311886653, is "
       << last_msg_->dot_cross;
-  EXPECT_EQ(last_msg_->dot_radial, -1111196507)
+  EXPECT_EQ(get_as<decltype(last_msg_->dot_radial)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dot_radial)),
+            -1111196507)
       << "incorrect value for dot_radial, expected -1111196507, is "
       << last_msg_->dot_radial;
-  EXPECT_EQ(last_msg_->iod, 193)
+  EXPECT_EQ(get_as<decltype(last_msg_->iod)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->iod)),
+            193)
       << "incorrect value for iod, expected 193, is " << last_msg_->iod;
-  EXPECT_EQ(last_msg_->iod_ssr, 211)
+  EXPECT_EQ(get_as<decltype(last_msg_->iod_ssr)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->iod_ssr)),
+            211)
       << "incorrect value for iod_ssr, expected 211, is " << last_msg_->iod_ssr;
-  EXPECT_EQ(last_msg_->radial, -24141393)
+  EXPECT_EQ(get_as<decltype(last_msg_->radial)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->radial)),
+            -24141393)
       << "incorrect value for radial, expected -24141393, is "
       << last_msg_->radial;
-  EXPECT_EQ(last_msg_->sid.code, 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            30)
       << "incorrect value for sid.code, expected 30, is "
       << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.sat, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            1)
       << "incorrect value for sid.sat, expected 1, is " << last_msg_->sid.sat;
-  EXPECT_EQ(last_msg_->time.tow, 3172954849)
+  EXPECT_EQ(get_as<decltype(last_msg_->time.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time.tow)),
+            3172954849)
       << "incorrect value for time.tow, expected 3172954849, is "
       << last_msg_->time.tow;
-  EXPECT_EQ(last_msg_->time.wn, 7723)
+  EXPECT_EQ(get_as<decltype(last_msg_->time.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time.wn)),
+            7723)
       << "incorrect value for time.wn, expected 7723, is "
       << last_msg_->time.wn;
-  EXPECT_EQ(last_msg_->update_interval, 194)
+  EXPECT_EQ(get_as<decltype(last_msg_->update_interval)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->update_interval)),
+            194)
       << "incorrect value for update_interval, expected 194, is "
       << last_msg_->update_interval;
 }

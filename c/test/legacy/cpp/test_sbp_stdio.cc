@@ -29,7 +29,7 @@ struct SbpHeaderParams {
   uint16_t sender_id;
   uint16_t msg_type;
   uint8_t payload_len;
-  msg_obs_t payload;
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
 };
 
 class MsgObsHandler : private sbp::PayloadHandler<msg_obs_t> {
@@ -42,7 +42,7 @@ class MsgObsHandler : private sbp::PayloadHandler<msg_obs_t> {
     header_params_.sender_id = sender_id;
     header_params_.msg_type = SBP_MSG_OBS;
     header_params_.payload_len = message_length;
-    header_params_.payload = msg;
+    memcpy(&header_params_.payload[0], &msg, message_length);
   }
 
   void write_message() const {

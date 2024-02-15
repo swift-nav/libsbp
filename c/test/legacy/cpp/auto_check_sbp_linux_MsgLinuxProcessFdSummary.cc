@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/linux.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_linux_MsgLinuxProcessFdSummary0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -139,7 +146,9 @@ TEST_F(Test_legacy_auto_check_sbp_linux_MsgLinuxProcessFdSummary0, Test) {
         << "incorrect value for last_msg_->most_opened, expected string '"
         << check_string << "', is '" << last_msg_->most_opened << "'";
   }
-  EXPECT_EQ(last_msg_->sys_fd_count, 1304986387)
+  EXPECT_EQ(get_as<decltype(last_msg_->sys_fd_count)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sys_fd_count)),
+            1304986387)
       << "incorrect value for sys_fd_count, expected 1304986387, is "
       << last_msg_->sys_fd_count;
 }

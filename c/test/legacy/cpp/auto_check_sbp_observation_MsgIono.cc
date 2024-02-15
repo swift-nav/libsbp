@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/observation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_observation_MsgIono0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -143,10 +150,14 @@ TEST_F(Test_legacy_auto_check_sbp_observation_MsgIono0, Test) {
       << "incorrect value for b2, expected -65536.0, is " << last_msg_->b2;
   EXPECT_LT((last_msg_->b3 * 100 - -327680.0 * 100), 0.05)
       << "incorrect value for b3, expected -327680.0, is " << last_msg_->b3;
-  EXPECT_EQ(last_msg_->t_nmct.tow, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->t_nmct.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->t_nmct.tow)),
+            0)
       << "incorrect value for t_nmct.tow, expected 0, is "
       << last_msg_->t_nmct.tow;
-  EXPECT_EQ(last_msg_->t_nmct.wn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->t_nmct.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->t_nmct.wn)),
+            0)
       << "incorrect value for t_nmct.wn, expected 0, is "
       << last_msg_->t_nmct.wn;
 }

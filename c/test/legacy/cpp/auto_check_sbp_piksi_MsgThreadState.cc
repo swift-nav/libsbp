@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/piksi.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_piksi_MsgThreadState0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -122,7 +129,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            0)
       << "incorrect value for cpu, expected 0, is " << last_msg_->cpu;
   {
     const char check_string[] = {
@@ -133,7 +142,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState0, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 2460)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            2460)
       << "incorrect value for stack_free, expected 2460, is "
       << last_msg_->stack_free;
 }
@@ -230,7 +241,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 595)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            595)
       << "incorrect value for cpu, expected 595, is " << last_msg_->cpu;
   {
     const char check_string[] = {
@@ -241,7 +254,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState1, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 36)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            36)
       << "incorrect value for stack_free, expected 36, is "
       << last_msg_->stack_free;
 }
@@ -338,7 +353,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState2, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            14)
       << "incorrect value for cpu, expected 14, is " << last_msg_->cpu;
   {
     const char check_string[] = {
@@ -349,7 +366,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState2, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 1140)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            1140)
       << "incorrect value for stack_free, expected 1140, is "
       << last_msg_->stack_free;
 }
@@ -446,7 +465,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState3, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            1)
       << "incorrect value for cpu, expected 1, is " << last_msg_->cpu;
   {
     const char check_string[] = {
@@ -457,7 +478,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState3, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 5060)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            5060)
       << "incorrect value for stack_free, expected 5060, is "
       << last_msg_->stack_free;
 }
@@ -555,7 +578,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState4, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            7)
       << "incorrect value for cpu, expected 7, is " << last_msg_->cpu;
   {
     const char check_string[] = {(char)109, (char)97,  (char)110, (char)97,
@@ -567,7 +592,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState4, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 2324)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            2324)
       << "incorrect value for stack_free, expected 2324, is "
       << last_msg_->stack_free;
 }
@@ -664,7 +691,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState5, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            0)
       << "incorrect value for cpu, expected 0, is " << last_msg_->cpu;
   {
     const char check_string[] = {
@@ -675,7 +704,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState5, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 2452)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            2452)
       << "incorrect value for stack_free, expected 2452, is "
       << last_msg_->stack_free;
 }
@@ -772,7 +803,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState6, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 484)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            484)
       << "incorrect value for cpu, expected 484, is " << last_msg_->cpu;
   {
     const char check_string[] = {
@@ -783,7 +816,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState6, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 36)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            36)
       << "incorrect value for stack_free, expected 36, is "
       << last_msg_->stack_free;
 }
@@ -880,7 +915,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState7, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 394)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            394)
       << "incorrect value for cpu, expected 394, is " << last_msg_->cpu;
   {
     const char check_string[] = {
@@ -891,7 +928,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState7, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 1884)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            1884)
       << "incorrect value for stack_free, expected 1884, is "
       << last_msg_->stack_free;
 }
@@ -988,7 +1027,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState8, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            1)
       << "incorrect value for cpu, expected 1, is " << last_msg_->cpu;
   {
     const char check_string[] = {
@@ -999,7 +1040,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState8, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 3076)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            3076)
       << "incorrect value for stack_free, expected 3076, is "
       << last_msg_->stack_free;
 }
@@ -1097,7 +1140,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState9, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            10)
       << "incorrect value for cpu, expected 10, is " << last_msg_->cpu;
   {
     const char check_string[] = {(char)109, (char)97,  (char)110, (char)97,
@@ -1109,7 +1154,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState9, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 2428)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            2428)
       << "incorrect value for stack_free, expected 2428, is "
       << last_msg_->stack_free;
 }
@@ -1207,7 +1254,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState10, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu)),
+            0)
       << "incorrect value for cpu, expected 0, is " << last_msg_->cpu;
   {
     const char check_string[] = {(char)109, (char)97,  (char)110, (char)97,
@@ -1219,7 +1268,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgThreadState10, Test) {
         << "incorrect value for last_msg_->name, expected string '"
         << check_string << "', is '" << last_msg_->name << "'";
   }
-  EXPECT_EQ(last_msg_->stack_free, 2332)
+  EXPECT_EQ(get_as<decltype(last_msg_->stack_free)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stack_free)),
+            2332)
       << "incorrect value for stack_free, expected 2332, is "
       << last_msg_->stack_free;
 }

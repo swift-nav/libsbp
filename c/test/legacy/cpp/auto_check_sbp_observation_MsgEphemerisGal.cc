@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/observation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_observation_MsgEphemerisGal0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -182,28 +189,44 @@ TEST_F(Test_legacy_auto_check_sbp_observation_MsgEphemerisGal0, Test) {
   EXPECT_LT((last_msg_->c_us * 100 - 3.99351119995e-06 * 100), 0.05)
       << "incorrect value for c_us, expected 3.99351119995e-06, is "
       << last_msg_->c_us;
-  EXPECT_EQ(last_msg_->common.fit_interval, 14400)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->common.fit_interval)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->common.fit_interval)),
+      14400)
       << "incorrect value for common.fit_interval, expected 14400, is "
       << last_msg_->common.fit_interval;
-  EXPECT_EQ(last_msg_->common.health_bits, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->common.health_bits)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->common.health_bits)),
+      0)
       << "incorrect value for common.health_bits, expected 0, is "
       << last_msg_->common.health_bits;
-  EXPECT_EQ(last_msg_->common.sid.code, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->common.sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->common.sid.code)),
+            14)
       << "incorrect value for common.sid.code, expected 14, is "
       << last_msg_->common.sid.code;
-  EXPECT_EQ(last_msg_->common.sid.sat, 27)
+  EXPECT_EQ(get_as<decltype(last_msg_->common.sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->common.sid.sat)),
+            27)
       << "incorrect value for common.sid.sat, expected 27, is "
       << last_msg_->common.sid.sat;
-  EXPECT_EQ(last_msg_->common.toe.tow, 448800)
+  EXPECT_EQ(get_as<decltype(last_msg_->common.toe.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->common.toe.tow)),
+            448800)
       << "incorrect value for common.toe.tow, expected 448800, is "
       << last_msg_->common.toe.tow;
-  EXPECT_EQ(last_msg_->common.toe.wn, 2154)
+  EXPECT_EQ(get_as<decltype(last_msg_->common.toe.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->common.toe.wn)),
+            2154)
       << "incorrect value for common.toe.wn, expected 2154, is "
       << last_msg_->common.toe.wn;
   EXPECT_LT((last_msg_->common.ura * 100 - 3.11999988556 * 100), 0.05)
       << "incorrect value for common.ura, expected 3.11999988556, is "
       << last_msg_->common.ura;
-  EXPECT_EQ(last_msg_->common.valid, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->common.valid)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->common.valid)),
+            1)
       << "incorrect value for common.valid, expected 1, is "
       << last_msg_->common.valid;
   EXPECT_LT((last_msg_->dn * 100 - 3.22620581299e-09 * 100), 0.05)
@@ -218,9 +241,13 @@ TEST_F(Test_legacy_auto_check_sbp_observation_MsgEphemerisGal0, Test) {
   EXPECT_LT((last_msg_->inc_dot * 100 - -3.17870383435e-10 * 100), 0.05)
       << "incorrect value for inc_dot, expected -3.17870383435e-10, is "
       << last_msg_->inc_dot;
-  EXPECT_EQ(last_msg_->iodc, 108)
+  EXPECT_EQ(get_as<decltype(last_msg_->iodc)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->iodc)),
+            108)
       << "incorrect value for iodc, expected 108, is " << last_msg_->iodc;
-  EXPECT_EQ(last_msg_->iode, 108)
+  EXPECT_EQ(get_as<decltype(last_msg_->iode)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->iode)),
+            108)
       << "incorrect value for iode, expected 108, is " << last_msg_->iode;
   EXPECT_LT((last_msg_->m0 * 100 - -1.84571157442 * 100), 0.05)
       << "incorrect value for m0, expected -1.84571157442, is "
@@ -231,15 +258,21 @@ TEST_F(Test_legacy_auto_check_sbp_observation_MsgEphemerisGal0, Test) {
   EXPECT_LT((last_msg_->omegadot * 100 - -5.75738267524e-09 * 100), 0.05)
       << "incorrect value for omegadot, expected -5.75738267524e-09, is "
       << last_msg_->omegadot;
-  EXPECT_EQ(last_msg_->source, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->source)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->source)),
+            0)
       << "incorrect value for source, expected 0, is " << last_msg_->source;
   EXPECT_LT((last_msg_->sqrta * 100 - 5440.60240173 * 100), 0.05)
       << "incorrect value for sqrta, expected 5440.60240173, is "
       << last_msg_->sqrta;
-  EXPECT_EQ(last_msg_->toc.tow, 448800)
+  EXPECT_EQ(get_as<decltype(last_msg_->toc.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->toc.tow)),
+            448800)
       << "incorrect value for toc.tow, expected 448800, is "
       << last_msg_->toc.tow;
-  EXPECT_EQ(last_msg_->toc.wn, 2154)
+  EXPECT_EQ(get_as<decltype(last_msg_->toc.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->toc.wn)),
+            2154)
       << "incorrect value for toc.wn, expected 2154, is " << last_msg_->toc.wn;
   EXPECT_LT((last_msg_->w * 100 - 0.122509120917 * 100), 0.05)
       << "incorrect value for w, expected 0.122509120917, is " << last_msg_->w;

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/piksi.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_piksi_MsgIarState0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -110,7 +117,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->num_hyps, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->num_hyps)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->num_hyps)),
+            1)
       << "incorrect value for num_hyps, expected 1, is " << last_msg_->num_hyps;
 }
 class Test_legacy_auto_check_sbp_piksi_MsgIarState1
@@ -194,7 +203,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->num_hyps, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->num_hyps)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->num_hyps)),
+            0)
       << "incorrect value for num_hyps, expected 0, is " << last_msg_->num_hyps;
 }
 class Test_legacy_auto_check_sbp_piksi_MsgIarState2
@@ -278,7 +289,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState2, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->num_hyps, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->num_hyps)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->num_hyps)),
+            1)
       << "incorrect value for num_hyps, expected 1, is " << last_msg_->num_hyps;
 }
 class Test_legacy_auto_check_sbp_piksi_MsgIarState3
@@ -362,7 +375,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState3, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->num_hyps, 729)
+  EXPECT_EQ(get_as<decltype(last_msg_->num_hyps)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->num_hyps)),
+            729)
       << "incorrect value for num_hyps, expected 729, is "
       << last_msg_->num_hyps;
 }
@@ -447,7 +462,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState4, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->num_hyps, 728)
+  EXPECT_EQ(get_as<decltype(last_msg_->num_hyps)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->num_hyps)),
+            728)
       << "incorrect value for num_hyps, expected 728, is "
       << last_msg_->num_hyps;
 }
@@ -532,7 +549,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState5, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->num_hyps, 727)
+  EXPECT_EQ(get_as<decltype(last_msg_->num_hyps)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->num_hyps)),
+            727)
       << "incorrect value for num_hyps, expected 727, is "
       << last_msg_->num_hyps;
 }
@@ -617,7 +636,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgIarState6, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->num_hyps, 723)
+  EXPECT_EQ(get_as<decltype(last_msg_->num_hyps)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->num_hyps)),
+            723)
       << "incorrect value for num_hyps, expected 723, is "
       << last_msg_->num_hyps;
 }

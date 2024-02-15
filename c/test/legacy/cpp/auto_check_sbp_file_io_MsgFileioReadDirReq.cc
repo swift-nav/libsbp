@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/file_io.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_file_io_MsgFileioReadDirReq0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -134,10 +141,14 @@ TEST_F(Test_legacy_auto_check_sbp_file_io_MsgFileioReadDirReq0, Test) {
         << "incorrect value for last_msg_->dirname, expected string '"
         << check_string << "', is '" << last_msg_->dirname << "'";
   }
-  EXPECT_EQ(last_msg_->offset, 2251261636)
+  EXPECT_EQ(get_as<decltype(last_msg_->offset)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->offset)),
+            2251261636)
       << "incorrect value for offset, expected 2251261636, is "
       << last_msg_->offset;
-  EXPECT_EQ(last_msg_->sequence, 1526720386)
+  EXPECT_EQ(get_as<decltype(last_msg_->sequence)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sequence)),
+            1526720386)
       << "incorrect value for sequence, expected 1526720386, is "
       << last_msg_->sequence;
 }

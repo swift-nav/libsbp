@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/system.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_system_MsgCsacTelemetryLabels0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -123,7 +130,9 @@ TEST_F(Test_legacy_auto_check_sbp_system_MsgCsacTelemetryLabels0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 51291);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->id, 186)
+  EXPECT_EQ(get_as<decltype(last_msg_->id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->id)),
+            186)
       << "incorrect value for id, expected 186, is " << last_msg_->id;
   {
     const char check_string[] = {(char)115, (char)111, (char)109, (char)101,

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgUTCTimeGNSS0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -119,22 +126,40 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgUTCTimeGNSS0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 789);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->day, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->day)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->day)),
+            9)
       << "incorrect value for day, expected 9, is " << last_msg_->day;
-  EXPECT_EQ(last_msg_->flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            1)
       << "incorrect value for flags, expected 1, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->hours, 19)
+  EXPECT_EQ(get_as<decltype(last_msg_->hours)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hours)),
+            19)
       << "incorrect value for hours, expected 19, is " << last_msg_->hours;
-  EXPECT_EQ(last_msg_->minutes, 24)
+  EXPECT_EQ(get_as<decltype(last_msg_->minutes)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->minutes)),
+            24)
       << "incorrect value for minutes, expected 24, is " << last_msg_->minutes;
-  EXPECT_EQ(last_msg_->month, 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->month)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->month)),
+            4)
       << "incorrect value for month, expected 4, is " << last_msg_->month;
-  EXPECT_EQ(last_msg_->ns, 800000000)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns)),
+            800000000)
       << "incorrect value for ns, expected 800000000, is " << last_msg_->ns;
-  EXPECT_EQ(last_msg_->seconds, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->seconds)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->seconds)),
+            9)
       << "incorrect value for seconds, expected 9, is " << last_msg_->seconds;
-  EXPECT_EQ(last_msg_->tow, 501867800)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            501867800)
       << "incorrect value for tow, expected 501867800, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->year, 2021)
+  EXPECT_EQ(get_as<decltype(last_msg_->year)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->year)),
+            2021)
       << "incorrect value for year, expected 2021, is " << last_msg_->year;
 }

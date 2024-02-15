@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/signing.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_signing_MsgEd25519SignatureDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -693,331 +700,574 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519SignatureDepA0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->fingerprint[0], 100)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[0])),
+            100)
       << "incorrect value for fingerprint[0], expected 100, is "
       << last_msg_->fingerprint[0];
-  EXPECT_EQ(last_msg_->fingerprint[1], 101)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[1])),
+            101)
       << "incorrect value for fingerprint[1], expected 101, is "
       << last_msg_->fingerprint[1];
-  EXPECT_EQ(last_msg_->fingerprint[2], 102)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[2])),
+            102)
       << "incorrect value for fingerprint[2], expected 102, is "
       << last_msg_->fingerprint[2];
-  EXPECT_EQ(last_msg_->fingerprint[3], 103)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[3])),
+            103)
       << "incorrect value for fingerprint[3], expected 103, is "
       << last_msg_->fingerprint[3];
-  EXPECT_EQ(last_msg_->fingerprint[4], 104)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[4])),
+            104)
       << "incorrect value for fingerprint[4], expected 104, is "
       << last_msg_->fingerprint[4];
-  EXPECT_EQ(last_msg_->fingerprint[5], 105)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[5])),
+            105)
       << "incorrect value for fingerprint[5], expected 105, is "
       << last_msg_->fingerprint[5];
-  EXPECT_EQ(last_msg_->fingerprint[6], 106)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[6])),
+            106)
       << "incorrect value for fingerprint[6], expected 106, is "
       << last_msg_->fingerprint[6];
-  EXPECT_EQ(last_msg_->fingerprint[7], 107)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[7])),
+            107)
       << "incorrect value for fingerprint[7], expected 107, is "
       << last_msg_->fingerprint[7];
-  EXPECT_EQ(last_msg_->fingerprint[8], 108)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[8])),
+            108)
       << "incorrect value for fingerprint[8], expected 108, is "
       << last_msg_->fingerprint[8];
-  EXPECT_EQ(last_msg_->fingerprint[9], 109)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[9])),
+            109)
       << "incorrect value for fingerprint[9], expected 109, is "
       << last_msg_->fingerprint[9];
-  EXPECT_EQ(last_msg_->fingerprint[10], 110)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[10])),
+            110)
       << "incorrect value for fingerprint[10], expected 110, is "
       << last_msg_->fingerprint[10];
-  EXPECT_EQ(last_msg_->fingerprint[11], 111)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[11])),
+            111)
       << "incorrect value for fingerprint[11], expected 111, is "
       << last_msg_->fingerprint[11];
-  EXPECT_EQ(last_msg_->fingerprint[12], 112)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[12])),
+            112)
       << "incorrect value for fingerprint[12], expected 112, is "
       << last_msg_->fingerprint[12];
-  EXPECT_EQ(last_msg_->fingerprint[13], 113)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[13])),
+            113)
       << "incorrect value for fingerprint[13], expected 113, is "
       << last_msg_->fingerprint[13];
-  EXPECT_EQ(last_msg_->fingerprint[14], 114)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[14])),
+            114)
       << "incorrect value for fingerprint[14], expected 114, is "
       << last_msg_->fingerprint[14];
-  EXPECT_EQ(last_msg_->fingerprint[15], 115)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[15])),
+            115)
       << "incorrect value for fingerprint[15], expected 115, is "
       << last_msg_->fingerprint[15];
-  EXPECT_EQ(last_msg_->fingerprint[16], 116)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[16])),
+            116)
       << "incorrect value for fingerprint[16], expected 116, is "
       << last_msg_->fingerprint[16];
-  EXPECT_EQ(last_msg_->fingerprint[17], 117)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[17])),
+            117)
       << "incorrect value for fingerprint[17], expected 117, is "
       << last_msg_->fingerprint[17];
-  EXPECT_EQ(last_msg_->fingerprint[18], 118)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[18])),
+            118)
       << "incorrect value for fingerprint[18], expected 118, is "
       << last_msg_->fingerprint[18];
-  EXPECT_EQ(last_msg_->fingerprint[19], 119)
+  EXPECT_EQ(get_as<decltype(last_msg_->fingerprint[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fingerprint[19])),
+            119)
       << "incorrect value for fingerprint[19], expected 119, is "
       << last_msg_->fingerprint[19];
-  EXPECT_EQ(last_msg_->signature[0], 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[0])),
+            0)
       << "incorrect value for signature[0], expected 0, is "
       << last_msg_->signature[0];
-  EXPECT_EQ(last_msg_->signature[1], 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[1])),
+            1)
       << "incorrect value for signature[1], expected 1, is "
       << last_msg_->signature[1];
-  EXPECT_EQ(last_msg_->signature[2], 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[2])),
+            2)
       << "incorrect value for signature[2], expected 2, is "
       << last_msg_->signature[2];
-  EXPECT_EQ(last_msg_->signature[3], 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[3])),
+            3)
       << "incorrect value for signature[3], expected 3, is "
       << last_msg_->signature[3];
-  EXPECT_EQ(last_msg_->signature[4], 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[4])),
+            4)
       << "incorrect value for signature[4], expected 4, is "
       << last_msg_->signature[4];
-  EXPECT_EQ(last_msg_->signature[5], 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[5])),
+            5)
       << "incorrect value for signature[5], expected 5, is "
       << last_msg_->signature[5];
-  EXPECT_EQ(last_msg_->signature[6], 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[6])),
+            6)
       << "incorrect value for signature[6], expected 6, is "
       << last_msg_->signature[6];
-  EXPECT_EQ(last_msg_->signature[7], 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[7])),
+            7)
       << "incorrect value for signature[7], expected 7, is "
       << last_msg_->signature[7];
-  EXPECT_EQ(last_msg_->signature[8], 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[8])),
+            8)
       << "incorrect value for signature[8], expected 8, is "
       << last_msg_->signature[8];
-  EXPECT_EQ(last_msg_->signature[9], 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[9])),
+            9)
       << "incorrect value for signature[9], expected 9, is "
       << last_msg_->signature[9];
-  EXPECT_EQ(last_msg_->signature[10], 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[10])),
+            10)
       << "incorrect value for signature[10], expected 10, is "
       << last_msg_->signature[10];
-  EXPECT_EQ(last_msg_->signature[11], 11)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[11])),
+            11)
       << "incorrect value for signature[11], expected 11, is "
       << last_msg_->signature[11];
-  EXPECT_EQ(last_msg_->signature[12], 12)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[12])),
+            12)
       << "incorrect value for signature[12], expected 12, is "
       << last_msg_->signature[12];
-  EXPECT_EQ(last_msg_->signature[13], 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[13])),
+            13)
       << "incorrect value for signature[13], expected 13, is "
       << last_msg_->signature[13];
-  EXPECT_EQ(last_msg_->signature[14], 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[14])),
+            14)
       << "incorrect value for signature[14], expected 14, is "
       << last_msg_->signature[14];
-  EXPECT_EQ(last_msg_->signature[15], 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[15])),
+            15)
       << "incorrect value for signature[15], expected 15, is "
       << last_msg_->signature[15];
-  EXPECT_EQ(last_msg_->signature[16], 16)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[16])),
+            16)
       << "incorrect value for signature[16], expected 16, is "
       << last_msg_->signature[16];
-  EXPECT_EQ(last_msg_->signature[17], 17)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[17])),
+            17)
       << "incorrect value for signature[17], expected 17, is "
       << last_msg_->signature[17];
-  EXPECT_EQ(last_msg_->signature[18], 18)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[18])),
+            18)
       << "incorrect value for signature[18], expected 18, is "
       << last_msg_->signature[18];
-  EXPECT_EQ(last_msg_->signature[19], 19)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[19])),
+            19)
       << "incorrect value for signature[19], expected 19, is "
       << last_msg_->signature[19];
-  EXPECT_EQ(last_msg_->signature[20], 20)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[20])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[20])),
+            20)
       << "incorrect value for signature[20], expected 20, is "
       << last_msg_->signature[20];
-  EXPECT_EQ(last_msg_->signature[21], 21)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[21])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[21])),
+            21)
       << "incorrect value for signature[21], expected 21, is "
       << last_msg_->signature[21];
-  EXPECT_EQ(last_msg_->signature[22], 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[22])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[22])),
+            22)
       << "incorrect value for signature[22], expected 22, is "
       << last_msg_->signature[22];
-  EXPECT_EQ(last_msg_->signature[23], 23)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[23])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[23])),
+            23)
       << "incorrect value for signature[23], expected 23, is "
       << last_msg_->signature[23];
-  EXPECT_EQ(last_msg_->signature[24], 24)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[24])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[24])),
+            24)
       << "incorrect value for signature[24], expected 24, is "
       << last_msg_->signature[24];
-  EXPECT_EQ(last_msg_->signature[25], 25)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[25])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[25])),
+            25)
       << "incorrect value for signature[25], expected 25, is "
       << last_msg_->signature[25];
-  EXPECT_EQ(last_msg_->signature[26], 26)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[26])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[26])),
+            26)
       << "incorrect value for signature[26], expected 26, is "
       << last_msg_->signature[26];
-  EXPECT_EQ(last_msg_->signature[27], 27)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[27])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[27])),
+            27)
       << "incorrect value for signature[27], expected 27, is "
       << last_msg_->signature[27];
-  EXPECT_EQ(last_msg_->signature[28], 28)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[28])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[28])),
+            28)
       << "incorrect value for signature[28], expected 28, is "
       << last_msg_->signature[28];
-  EXPECT_EQ(last_msg_->signature[29], 29)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[29])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[29])),
+            29)
       << "incorrect value for signature[29], expected 29, is "
       << last_msg_->signature[29];
-  EXPECT_EQ(last_msg_->signature[30], 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[30])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[30])),
+            30)
       << "incorrect value for signature[30], expected 30, is "
       << last_msg_->signature[30];
-  EXPECT_EQ(last_msg_->signature[31], 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[31])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[31])),
+            31)
       << "incorrect value for signature[31], expected 31, is "
       << last_msg_->signature[31];
-  EXPECT_EQ(last_msg_->signature[32], 32)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[32])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[32])),
+            32)
       << "incorrect value for signature[32], expected 32, is "
       << last_msg_->signature[32];
-  EXPECT_EQ(last_msg_->signature[33], 33)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[33])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[33])),
+            33)
       << "incorrect value for signature[33], expected 33, is "
       << last_msg_->signature[33];
-  EXPECT_EQ(last_msg_->signature[34], 34)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[34])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[34])),
+            34)
       << "incorrect value for signature[34], expected 34, is "
       << last_msg_->signature[34];
-  EXPECT_EQ(last_msg_->signature[35], 35)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[35])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[35])),
+            35)
       << "incorrect value for signature[35], expected 35, is "
       << last_msg_->signature[35];
-  EXPECT_EQ(last_msg_->signature[36], 36)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[36])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[36])),
+            36)
       << "incorrect value for signature[36], expected 36, is "
       << last_msg_->signature[36];
-  EXPECT_EQ(last_msg_->signature[37], 37)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[37])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[37])),
+            37)
       << "incorrect value for signature[37], expected 37, is "
       << last_msg_->signature[37];
-  EXPECT_EQ(last_msg_->signature[38], 38)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[38])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[38])),
+            38)
       << "incorrect value for signature[38], expected 38, is "
       << last_msg_->signature[38];
-  EXPECT_EQ(last_msg_->signature[39], 39)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[39])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[39])),
+            39)
       << "incorrect value for signature[39], expected 39, is "
       << last_msg_->signature[39];
-  EXPECT_EQ(last_msg_->signature[40], 40)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[40])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[40])),
+            40)
       << "incorrect value for signature[40], expected 40, is "
       << last_msg_->signature[40];
-  EXPECT_EQ(last_msg_->signature[41], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[41])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[41])),
+            41)
       << "incorrect value for signature[41], expected 41, is "
       << last_msg_->signature[41];
-  EXPECT_EQ(last_msg_->signature[42], 42)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[42])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[42])),
+            42)
       << "incorrect value for signature[42], expected 42, is "
       << last_msg_->signature[42];
-  EXPECT_EQ(last_msg_->signature[43], 43)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[43])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[43])),
+            43)
       << "incorrect value for signature[43], expected 43, is "
       << last_msg_->signature[43];
-  EXPECT_EQ(last_msg_->signature[44], 44)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[44])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[44])),
+            44)
       << "incorrect value for signature[44], expected 44, is "
       << last_msg_->signature[44];
-  EXPECT_EQ(last_msg_->signature[45], 45)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[45])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[45])),
+            45)
       << "incorrect value for signature[45], expected 45, is "
       << last_msg_->signature[45];
-  EXPECT_EQ(last_msg_->signature[46], 46)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[46])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[46])),
+            46)
       << "incorrect value for signature[46], expected 46, is "
       << last_msg_->signature[46];
-  EXPECT_EQ(last_msg_->signature[47], 47)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[47])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[47])),
+            47)
       << "incorrect value for signature[47], expected 47, is "
       << last_msg_->signature[47];
-  EXPECT_EQ(last_msg_->signature[48], 48)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[48])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[48])),
+            48)
       << "incorrect value for signature[48], expected 48, is "
       << last_msg_->signature[48];
-  EXPECT_EQ(last_msg_->signature[49], 49)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[49])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[49])),
+            49)
       << "incorrect value for signature[49], expected 49, is "
       << last_msg_->signature[49];
-  EXPECT_EQ(last_msg_->signature[50], 50)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[50])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[50])),
+            50)
       << "incorrect value for signature[50], expected 50, is "
       << last_msg_->signature[50];
-  EXPECT_EQ(last_msg_->signature[51], 51)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[51])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[51])),
+            51)
       << "incorrect value for signature[51], expected 51, is "
       << last_msg_->signature[51];
-  EXPECT_EQ(last_msg_->signature[52], 52)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[52])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[52])),
+            52)
       << "incorrect value for signature[52], expected 52, is "
       << last_msg_->signature[52];
-  EXPECT_EQ(last_msg_->signature[53], 53)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[53])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[53])),
+            53)
       << "incorrect value for signature[53], expected 53, is "
       << last_msg_->signature[53];
-  EXPECT_EQ(last_msg_->signature[54], 54)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[54])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[54])),
+            54)
       << "incorrect value for signature[54], expected 54, is "
       << last_msg_->signature[54];
-  EXPECT_EQ(last_msg_->signature[55], 55)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[55])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[55])),
+            55)
       << "incorrect value for signature[55], expected 55, is "
       << last_msg_->signature[55];
-  EXPECT_EQ(last_msg_->signature[56], 56)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[56])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[56])),
+            56)
       << "incorrect value for signature[56], expected 56, is "
       << last_msg_->signature[56];
-  EXPECT_EQ(last_msg_->signature[57], 57)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[57])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[57])),
+            57)
       << "incorrect value for signature[57], expected 57, is "
       << last_msg_->signature[57];
-  EXPECT_EQ(last_msg_->signature[58], 58)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[58])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[58])),
+            58)
       << "incorrect value for signature[58], expected 58, is "
       << last_msg_->signature[58];
-  EXPECT_EQ(last_msg_->signature[59], 59)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[59])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[59])),
+            59)
       << "incorrect value for signature[59], expected 59, is "
       << last_msg_->signature[59];
-  EXPECT_EQ(last_msg_->signature[60], 60)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[60])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[60])),
+            60)
       << "incorrect value for signature[60], expected 60, is "
       << last_msg_->signature[60];
-  EXPECT_EQ(last_msg_->signature[61], 61)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[61])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[61])),
+            61)
       << "incorrect value for signature[61], expected 61, is "
       << last_msg_->signature[61];
-  EXPECT_EQ(last_msg_->signature[62], 62)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[62])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[62])),
+            62)
       << "incorrect value for signature[62], expected 62, is "
       << last_msg_->signature[62];
-  EXPECT_EQ(last_msg_->signature[63], 63)
+  EXPECT_EQ(get_as<decltype(last_msg_->signature[63])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->signature[63])),
+            63)
       << "incorrect value for signature[63], expected 63, is "
       << last_msg_->signature[63];
-  EXPECT_EQ(last_msg_->signed_messages[0], 5000)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[0])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[0])),
+      5000)
       << "incorrect value for signed_messages[0], expected 5000, is "
       << last_msg_->signed_messages[0];
-  EXPECT_EQ(last_msg_->signed_messages[1], 5234)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[1])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[1])),
+      5234)
       << "incorrect value for signed_messages[1], expected 5234, is "
       << last_msg_->signed_messages[1];
-  EXPECT_EQ(last_msg_->signed_messages[2], 5468)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[2])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[2])),
+      5468)
       << "incorrect value for signed_messages[2], expected 5468, is "
       << last_msg_->signed_messages[2];
-  EXPECT_EQ(last_msg_->signed_messages[3], 5702)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[3])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[3])),
+      5702)
       << "incorrect value for signed_messages[3], expected 5702, is "
       << last_msg_->signed_messages[3];
-  EXPECT_EQ(last_msg_->signed_messages[4], 5936)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[4])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[4])),
+      5936)
       << "incorrect value for signed_messages[4], expected 5936, is "
       << last_msg_->signed_messages[4];
-  EXPECT_EQ(last_msg_->signed_messages[5], 6170)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[5])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[5])),
+      6170)
       << "incorrect value for signed_messages[5], expected 6170, is "
       << last_msg_->signed_messages[5];
-  EXPECT_EQ(last_msg_->signed_messages[6], 6404)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[6])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[6])),
+      6404)
       << "incorrect value for signed_messages[6], expected 6404, is "
       << last_msg_->signed_messages[6];
-  EXPECT_EQ(last_msg_->signed_messages[7], 6638)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[7])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[7])),
+      6638)
       << "incorrect value for signed_messages[7], expected 6638, is "
       << last_msg_->signed_messages[7];
-  EXPECT_EQ(last_msg_->signed_messages[8], 6872)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[8])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[8])),
+      6872)
       << "incorrect value for signed_messages[8], expected 6872, is "
       << last_msg_->signed_messages[8];
-  EXPECT_EQ(last_msg_->signed_messages[9], 7106)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[9])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[9])),
+      7106)
       << "incorrect value for signed_messages[9], expected 7106, is "
       << last_msg_->signed_messages[9];
-  EXPECT_EQ(last_msg_->signed_messages[10], 7340)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[10])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[10])),
+      7340)
       << "incorrect value for signed_messages[10], expected 7340, is "
       << last_msg_->signed_messages[10];
-  EXPECT_EQ(last_msg_->signed_messages[11], 7574)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[11])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[11])),
+      7574)
       << "incorrect value for signed_messages[11], expected 7574, is "
       << last_msg_->signed_messages[11];
-  EXPECT_EQ(last_msg_->signed_messages[12], 7808)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[12])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[12])),
+      7808)
       << "incorrect value for signed_messages[12], expected 7808, is "
       << last_msg_->signed_messages[12];
-  EXPECT_EQ(last_msg_->signed_messages[13], 8042)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[13])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[13])),
+      8042)
       << "incorrect value for signed_messages[13], expected 8042, is "
       << last_msg_->signed_messages[13];
-  EXPECT_EQ(last_msg_->signed_messages[14], 8276)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[14])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[14])),
+      8276)
       << "incorrect value for signed_messages[14], expected 8276, is "
       << last_msg_->signed_messages[14];
-  EXPECT_EQ(last_msg_->signed_messages[15], 8510)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[15])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[15])),
+      8510)
       << "incorrect value for signed_messages[15], expected 8510, is "
       << last_msg_->signed_messages[15];
-  EXPECT_EQ(last_msg_->signed_messages[16], 8744)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[16])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[16])),
+      8744)
       << "incorrect value for signed_messages[16], expected 8744, is "
       << last_msg_->signed_messages[16];
-  EXPECT_EQ(last_msg_->signed_messages[17], 8978)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[17])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[17])),
+      8978)
       << "incorrect value for signed_messages[17], expected 8978, is "
       << last_msg_->signed_messages[17];
-  EXPECT_EQ(last_msg_->signed_messages[18], 9212)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[18])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[18])),
+      9212)
       << "incorrect value for signed_messages[18], expected 9212, is "
       << last_msg_->signed_messages[18];
-  EXPECT_EQ(last_msg_->signed_messages[19], 9446)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[19])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[19])),
+      9446)
       << "incorrect value for signed_messages[19], expected 9446, is "
       << last_msg_->signed_messages[19];
-  EXPECT_EQ(last_msg_->signed_messages[20], 9680)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[20])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[20])),
+      9680)
       << "incorrect value for signed_messages[20], expected 9680, is "
       << last_msg_->signed_messages[20];
-  EXPECT_EQ(last_msg_->signed_messages[21], 9914)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[21])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[21])),
+      9914)
       << "incorrect value for signed_messages[21], expected 9914, is "
       << last_msg_->signed_messages[21];
-  EXPECT_EQ(last_msg_->signed_messages[22], 10148)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[22])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[22])),
+      10148)
       << "incorrect value for signed_messages[22], expected 10148, is "
       << last_msg_->signed_messages[22];
-  EXPECT_EQ(last_msg_->signed_messages[23], 10382)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[23])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[23])),
+      10382)
       << "incorrect value for signed_messages[23], expected 10382, is "
       << last_msg_->signed_messages[23];
-  EXPECT_EQ(last_msg_->signed_messages[24], 10616)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->signed_messages[24])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->signed_messages[24])),
+      10616)
       << "incorrect value for signed_messages[24], expected 10616, is "
       << last_msg_->signed_messages[24];
 }

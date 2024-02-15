@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/system.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_system_MsgSensorAidEvent0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -120,26 +127,44 @@ TEST_F(Test_legacy_auto_check_sbp_system_MsgSensorAidEvent0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 35027);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->n_accepted_meas, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_accepted_meas)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_accepted_meas)),
+            0)
       << "incorrect value for n_accepted_meas, expected 0, is "
       << last_msg_->n_accepted_meas;
-  EXPECT_EQ(last_msg_->n_attempted_meas, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->n_attempted_meas)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->n_attempted_meas)),
+      0)
       << "incorrect value for n_attempted_meas, expected 0, is "
       << last_msg_->n_attempted_meas;
-  EXPECT_EQ(last_msg_->n_available_meas, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->n_available_meas)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->n_available_meas)),
+      0)
       << "incorrect value for n_available_meas, expected 0, is "
       << last_msg_->n_available_meas;
-  EXPECT_EQ(last_msg_->sensor_id, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sensor_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sensor_id)),
+            0)
       << "incorrect value for sensor_id, expected 0, is "
       << last_msg_->sensor_id;
-  EXPECT_EQ(last_msg_->sensor_state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sensor_state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sensor_state)),
+            0)
       << "incorrect value for sensor_state, expected 0, is "
       << last_msg_->sensor_state;
-  EXPECT_EQ(last_msg_->sensor_type, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sensor_type)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sensor_type)),
+            0)
       << "incorrect value for sensor_type, expected 0, is "
       << last_msg_->sensor_type;
-  EXPECT_EQ(last_msg_->time, 326825520)
+  EXPECT_EQ(get_as<decltype(last_msg_->time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time)),
+            326825520)
       << "incorrect value for time, expected 326825520, is " << last_msg_->time;
 }

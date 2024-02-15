@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ssr.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ssr_MsgSsrStecCorrection0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -185,78 +192,143 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrStecCorrection0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->header.num_msgs, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.num_msgs)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.num_msgs)),
+            1)
       << "incorrect value for header.num_msgs, expected 1, is "
       << last_msg_->header.num_msgs;
-  EXPECT_EQ(last_msg_->header.seq_num, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.seq_num)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.seq_num)),
+            1)
       << "incorrect value for header.seq_num, expected 1, is "
       << last_msg_->header.seq_num;
-  EXPECT_EQ(last_msg_->header.sol_id, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.sol_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.sol_id)),
+            0)
       << "incorrect value for header.sol_id, expected 0, is "
       << last_msg_->header.sol_id;
-  EXPECT_EQ(last_msg_->header.time.tow, 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.time.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.time.tow)),
+            180)
       << "incorrect value for header.time.tow, expected 180, is "
       << last_msg_->header.time.tow;
-  EXPECT_EQ(last_msg_->header.time.wn, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.time.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.time.wn)),
+            3)
       << "incorrect value for header.time.wn, expected 3, is "
       << last_msg_->header.time.wn;
-  EXPECT_EQ(last_msg_->header.update_interval, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.update_interval)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->header.update_interval)),
+            10)
       << "incorrect value for header.update_interval, expected 10, is "
       << last_msg_->header.update_interval;
-  EXPECT_EQ(last_msg_->n_sats, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats)),
+            2)
       << "incorrect value for n_sats, expected 2, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->ssr_iod_atmo, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->ssr_iod_atmo)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ssr_iod_atmo)),
+            15)
       << "incorrect value for ssr_iod_atmo, expected 15, is "
       << last_msg_->ssr_iod_atmo;
-  EXPECT_EQ(last_msg_->stec_sat_list[0].stec_coeff[0], 63)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[0].stec_coeff[0])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[0].stec_coeff[0])),
+            63)
       << "incorrect value for stec_sat_list[0].stec_coeff[0], expected 63, is "
       << last_msg_->stec_sat_list[0].stec_coeff[0];
-  EXPECT_EQ(last_msg_->stec_sat_list[0].stec_coeff[1], 62)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[0].stec_coeff[1])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[0].stec_coeff[1])),
+            62)
       << "incorrect value for stec_sat_list[0].stec_coeff[1], expected 62, is "
       << last_msg_->stec_sat_list[0].stec_coeff[1];
-  EXPECT_EQ(last_msg_->stec_sat_list[0].stec_coeff[2], 61)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[0].stec_coeff[2])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[0].stec_coeff[2])),
+            61)
       << "incorrect value for stec_sat_list[0].stec_coeff[2], expected 61, is "
       << last_msg_->stec_sat_list[0].stec_coeff[2];
-  EXPECT_EQ(last_msg_->stec_sat_list[0].stec_coeff[3], 60)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[0].stec_coeff[3])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[0].stec_coeff[3])),
+            60)
       << "incorrect value for stec_sat_list[0].stec_coeff[3], expected 60, is "
       << last_msg_->stec_sat_list[0].stec_coeff[3];
-  EXPECT_EQ(last_msg_->stec_sat_list[0].stec_quality_indicator, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->stec_sat_list[0].stec_quality_indicator)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->stec_sat_list[0].stec_quality_indicator)),
+      1)
       << "incorrect value for stec_sat_list[0].stec_quality_indicator, "
          "expected 1, is "
       << last_msg_->stec_sat_list[0].stec_quality_indicator;
-  EXPECT_EQ(last_msg_->stec_sat_list[0].sv_id.constellation, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[0].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[0].sv_id.constellation)),
+            1)
       << "incorrect value for stec_sat_list[0].sv_id.constellation, expected "
          "1, is "
       << last_msg_->stec_sat_list[0].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_sat_list[0].sv_id.satId, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[0].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[0].sv_id.satId)),
+            1)
       << "incorrect value for stec_sat_list[0].sv_id.satId, expected 1, is "
       << last_msg_->stec_sat_list[0].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_sat_list[1].stec_coeff[0], 63)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[1].stec_coeff[0])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[1].stec_coeff[0])),
+            63)
       << "incorrect value for stec_sat_list[1].stec_coeff[0], expected 63, is "
       << last_msg_->stec_sat_list[1].stec_coeff[0];
-  EXPECT_EQ(last_msg_->stec_sat_list[1].stec_coeff[1], 64)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[1].stec_coeff[1])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[1].stec_coeff[1])),
+            64)
       << "incorrect value for stec_sat_list[1].stec_coeff[1], expected 64, is "
       << last_msg_->stec_sat_list[1].stec_coeff[1];
-  EXPECT_EQ(last_msg_->stec_sat_list[1].stec_coeff[2], 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[1].stec_coeff[2])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[1].stec_coeff[2])),
+            65)
       << "incorrect value for stec_sat_list[1].stec_coeff[2], expected 65, is "
       << last_msg_->stec_sat_list[1].stec_coeff[2];
-  EXPECT_EQ(last_msg_->stec_sat_list[1].stec_coeff[3], 66)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[1].stec_coeff[3])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[1].stec_coeff[3])),
+            66)
       << "incorrect value for stec_sat_list[1].stec_coeff[3], expected 66, is "
       << last_msg_->stec_sat_list[1].stec_coeff[3];
-  EXPECT_EQ(last_msg_->stec_sat_list[1].stec_quality_indicator, 5)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->stec_sat_list[1].stec_quality_indicator)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->stec_sat_list[1].stec_quality_indicator)),
+      5)
       << "incorrect value for stec_sat_list[1].stec_quality_indicator, "
          "expected 5, is "
       << last_msg_->stec_sat_list[1].stec_quality_indicator;
-  EXPECT_EQ(last_msg_->stec_sat_list[1].sv_id.constellation, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[1].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[1].sv_id.constellation)),
+            15)
       << "incorrect value for stec_sat_list[1].sv_id.constellation, expected "
          "15, is "
       << last_msg_->stec_sat_list[1].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_sat_list[1].sv_id.satId, 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_sat_list[1].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_sat_list[1].sv_id.satId)),
+            31)
       << "incorrect value for stec_sat_list[1].sv_id.satId, expected 31, is "
       << last_msg_->stec_sat_list[1].sv_id.satId;
-  EXPECT_EQ(last_msg_->tile_id, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->tile_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tile_id)),
+            10)
       << "incorrect value for tile_id, expected 10, is " << last_msg_->tile_id;
-  EXPECT_EQ(last_msg_->tile_set_id, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->tile_set_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tile_set_id)),
+            1)
       << "incorrect value for tile_set_id, expected 1, is "
       << last_msg_->tile_set_id;
 }

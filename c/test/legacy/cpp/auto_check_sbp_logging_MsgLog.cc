@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/logging.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_logging_MsgLog0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -128,7 +135,9 @@ TEST_F(Test_legacy_auto_check_sbp_logging_MsgLog0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 2314);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->level, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->level)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->level)),
+            6)
       << "incorrect value for level, expected 6, is " << last_msg_->level;
   {
     const char check_string[] = {

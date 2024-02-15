@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgPosECEF0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -118,13 +125,21 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 35027);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->accuracy, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->accuracy)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->accuracy)),
+            0)
       << "incorrect value for accuracy, expected 0, is " << last_msg_->accuracy;
-  EXPECT_EQ(last_msg_->flags, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            2)
       << "incorrect value for flags, expected 2, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->n_sats, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats)),
+            15)
       << "incorrect value for n_sats, expected 15, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 326826000)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            326826000)
       << "incorrect value for tow, expected 326826000, is " << last_msg_->tow;
   EXPECT_LT((last_msg_->x * 100 - -2684269.03266 * 100), 0.05)
       << "incorrect value for x, expected -2684269.03266, is " << last_msg_->x;
@@ -222,13 +237,21 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 35027);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->accuracy, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->accuracy)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->accuracy)),
+            0)
       << "incorrect value for accuracy, expected 0, is " << last_msg_->accuracy;
-  EXPECT_EQ(last_msg_->flags, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            2)
       << "incorrect value for flags, expected 2, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->n_sats, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats)),
+            15)
       << "incorrect value for n_sats, expected 15, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 326827000)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            326827000)
       << "incorrect value for tow, expected 326827000, is " << last_msg_->tow;
   EXPECT_LT((last_msg_->x * 100 - -2684269.06425 * 100), 0.05)
       << "incorrect value for x, expected -2684269.06425, is " << last_msg_->x;
@@ -326,13 +349,21 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF2, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 35027);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->accuracy, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->accuracy)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->accuracy)),
+            0)
       << "incorrect value for accuracy, expected 0, is " << last_msg_->accuracy;
-  EXPECT_EQ(last_msg_->flags, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            2)
       << "incorrect value for flags, expected 2, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->n_sats, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats)),
+            15)
       << "incorrect value for n_sats, expected 15, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 326828000)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            326828000)
       << "incorrect value for tow, expected 326828000, is " << last_msg_->tow;
   EXPECT_LT((last_msg_->x * 100 - -2684269.42928 * 100), 0.05)
       << "incorrect value for x, expected -2684269.42928, is " << last_msg_->x;
@@ -430,13 +461,21 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosECEF3, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 35027);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->accuracy, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->accuracy)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->accuracy)),
+            0)
       << "incorrect value for accuracy, expected 0, is " << last_msg_->accuracy;
-  EXPECT_EQ(last_msg_->flags, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            2)
       << "incorrect value for flags, expected 2, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->n_sats, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats)),
+            15)
       << "incorrect value for n_sats, expected 15, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 326829000)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            326829000)
       << "incorrect value for tow, expected 326829000, is " << last_msg_->tow;
   EXPECT_LT((last_msg_->x * 100 - -2684269.68374 * 100), 0.05)
       << "incorrect value for x, expected -2684269.68374, is " << last_msg_->x;

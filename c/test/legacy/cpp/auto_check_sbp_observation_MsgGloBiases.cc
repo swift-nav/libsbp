@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/observation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_observation_MsgGloBiases0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -114,16 +121,26 @@ TEST_F(Test_legacy_auto_check_sbp_observation_MsgGloBiases0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 0);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->l1ca_bias, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->l1ca_bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->l1ca_bias)),
+            0)
       << "incorrect value for l1ca_bias, expected 0, is "
       << last_msg_->l1ca_bias;
-  EXPECT_EQ(last_msg_->l1p_bias, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->l1p_bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->l1p_bias)),
+            0)
       << "incorrect value for l1p_bias, expected 0, is " << last_msg_->l1p_bias;
-  EXPECT_EQ(last_msg_->l2ca_bias, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->l2ca_bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->l2ca_bias)),
+            0)
       << "incorrect value for l2ca_bias, expected 0, is "
       << last_msg_->l2ca_bias;
-  EXPECT_EQ(last_msg_->l2p_bias, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->l2p_bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->l2p_bias)),
+            0)
       << "incorrect value for l2p_bias, expected 0, is " << last_msg_->l2p_bias;
-  EXPECT_EQ(last_msg_->mask, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->mask)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->mask)),
+            0)
       << "incorrect value for mask, expected 0, is " << last_msg_->mask;
 }

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/observation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_observation_MsgGnssCapb0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -133,55 +140,89 @@ TEST_F(Test_legacy_auto_check_sbp_observation_MsgGnssCapb0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 123);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gc.bds_active, 1929005864)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.bds_active)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.bds_active)),
+            1929005864)
       << "incorrect value for gc.bds_active, expected 1929005864, is "
       << last_msg_->gc.bds_active;
-  EXPECT_EQ(last_msg_->gc.bds_b2, 33839445)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.bds_b2)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.bds_b2)),
+            33839445)
       << "incorrect value for gc.bds_b2, expected 33839445, is "
       << last_msg_->gc.bds_b2;
-  EXPECT_EQ(last_msg_->gc.bds_b2a, 378107113)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.bds_b2a)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.bds_b2a)),
+            378107113)
       << "incorrect value for gc.bds_b2a, expected 378107113, is "
       << last_msg_->gc.bds_b2a;
-  EXPECT_EQ(last_msg_->gc.bds_d2nav, 1367053175)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.bds_d2nav)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.bds_d2nav)),
+            1367053175)
       << "incorrect value for gc.bds_d2nav, expected 1367053175, is "
       << last_msg_->gc.bds_d2nav;
-  EXPECT_EQ(last_msg_->gc.gal_active, 1392028637)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.gal_active)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.gal_active)),
+            1392028637)
       << "incorrect value for gc.gal_active, expected 1392028637, is "
       << last_msg_->gc.gal_active;
-  EXPECT_EQ(last_msg_->gc.gal_e5, 484261628)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.gal_e5)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.gal_e5)),
+            484261628)
       << "incorrect value for gc.gal_e5, expected 484261628, is "
       << last_msg_->gc.gal_e5;
-  EXPECT_EQ(last_msg_->gc.glo_active, 13159676)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.glo_active)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.glo_active)),
+            13159676)
       << "incorrect value for gc.glo_active, expected 13159676, is "
       << last_msg_->gc.glo_active;
-  EXPECT_EQ(last_msg_->gc.glo_l2of, 824073421)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.glo_l2of)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.glo_l2of)),
+            824073421)
       << "incorrect value for gc.glo_l2of, expected 824073421, is "
       << last_msg_->gc.glo_l2of;
-  EXPECT_EQ(last_msg_->gc.glo_l3, 404081648)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.glo_l3)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.glo_l3)),
+            404081648)
       << "incorrect value for gc.glo_l3, expected 404081648, is "
       << last_msg_->gc.glo_l3;
-  EXPECT_EQ(last_msg_->gc.gps_active, 1079028506)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.gps_active)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.gps_active)),
+            1079028506)
       << "incorrect value for gc.gps_active, expected 1079028506, is "
       << last_msg_->gc.gps_active;
-  EXPECT_EQ(last_msg_->gc.gps_l2c, 781233489)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.gps_l2c)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.gps_l2c)),
+            781233489)
       << "incorrect value for gc.gps_l2c, expected 781233489, is "
       << last_msg_->gc.gps_l2c;
-  EXPECT_EQ(last_msg_->gc.gps_l5, 1818069969)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.gps_l5)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.gps_l5)),
+            1818069969)
       << "incorrect value for gc.gps_l5, expected 1818069969, is "
       << last_msg_->gc.gps_l5;
-  EXPECT_EQ(last_msg_->gc.qzss_active, 198929863)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.qzss_active)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.qzss_active)),
+            198929863)
       << "incorrect value for gc.qzss_active, expected 198929863, is "
       << last_msg_->gc.qzss_active;
-  EXPECT_EQ(last_msg_->gc.sbas_active, 548822484)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.sbas_active)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.sbas_active)),
+            548822484)
       << "incorrect value for gc.sbas_active, expected 548822484, is "
       << last_msg_->gc.sbas_active;
-  EXPECT_EQ(last_msg_->gc.sbas_l5, 465576041)
+  EXPECT_EQ(get_as<decltype(last_msg_->gc.sbas_l5)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gc.sbas_l5)),
+            465576041)
       << "incorrect value for gc.sbas_l5, expected 465576041, is "
       << last_msg_->gc.sbas_l5;
-  EXPECT_EQ(last_msg_->t_nmct.tow, 446384)
+  EXPECT_EQ(get_as<decltype(last_msg_->t_nmct.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->t_nmct.tow)),
+            446384)
       << "incorrect value for t_nmct.tow, expected 446384, is "
       << last_msg_->t_nmct.tow;
-  EXPECT_EQ(last_msg_->t_nmct.wn, 2154)
+  EXPECT_EQ(get_as<decltype(last_msg_->t_nmct.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->t_nmct.wn)),
+            2154)
       << "incorrect value for t_nmct.wn, expected 2154, is "
       << last_msg_->t_nmct.wn;
 }

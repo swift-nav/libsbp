@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/piksi.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -134,67 +141,111 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->latency.avg, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.avg)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.avg)),
+            -1)
       << "incorrect value for latency.avg, expected -1, is "
       << last_msg_->latency.avg;
-  EXPECT_EQ(last_msg_->latency.current, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.current)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.current)),
+            -1)
       << "incorrect value for latency.current, expected -1, is "
       << last_msg_->latency.current;
-  EXPECT_EQ(last_msg_->latency.lmax, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmax)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmax)),
+            0)
       << "incorrect value for latency.lmax, expected 0, is "
       << last_msg_->latency.lmax;
-  EXPECT_EQ(last_msg_->latency.lmin, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmin)),
+            0)
       << "incorrect value for latency.lmin, expected 0, is "
       << last_msg_->latency.lmin;
-  EXPECT_EQ(last_msg_->uart_a.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.crc_error_count)),
+            0)
       << "incorrect value for uart_a.crc_error_count, expected 0, is "
       << last_msg_->uart_a.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_a.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_a.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_a.io_error_count)),
+      0)
       << "incorrect value for uart_a.io_error_count, expected 0, is "
       << last_msg_->uart_a.io_error_count;
-  EXPECT_EQ(last_msg_->uart_a.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.rx_buffer_level)),
+            0)
       << "incorrect value for uart_a.rx_buffer_level, expected 0, is "
       << last_msg_->uart_a.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_a.rx_throughput, expected 0.0, is "
       << last_msg_->uart_a.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_a.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.tx_buffer_level)),
+            0)
       << "incorrect value for uart_a.tx_buffer_level, expected 0, is "
       << last_msg_->uart_a.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.tx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_a.tx_throughput, expected 0.0, is "
       << last_msg_->uart_a.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.crc_error_count)),
+            0)
       << "incorrect value for uart_b.crc_error_count, expected 0, is "
       << last_msg_->uart_b.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_b.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_b.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_b.io_error_count)),
+      0)
       << "incorrect value for uart_b.io_error_count, expected 0, is "
       << last_msg_->uart_b.io_error_count;
-  EXPECT_EQ(last_msg_->uart_b.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.rx_buffer_level)),
+            0)
       << "incorrect value for uart_b.rx_buffer_level, expected 0, is "
       << last_msg_->uart_b.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_b.rx_throughput, expected 0.0, is "
       << last_msg_->uart_b.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.tx_buffer_level)),
+            0)
       << "incorrect value for uart_b.tx_buffer_level, expected 0, is "
       << last_msg_->uart_b.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.tx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_b.tx_throughput, expected 0.0, is "
       << last_msg_->uart_b.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.crc_error_count)),
+            0)
       << "incorrect value for uart_ftdi.crc_error_count, expected 0, is "
       << last_msg_->uart_ftdi.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.io_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.io_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.io_error_count)),
+            0)
       << "incorrect value for uart_ftdi.io_error_count, expected 0, is "
       << last_msg_->uart_ftdi.io_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.rx_buffer_level)),
+            0)
       << "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is "
       << last_msg_->uart_ftdi.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is "
       << last_msg_->uart_ftdi.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.tx_buffer_level, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.tx_buffer_level)),
+            15)
       << "incorrect value for uart_ftdi.tx_buffer_level, expected 15, is "
       << last_msg_->uart_ftdi.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.tx_throughput * 100 - 11.6000003815 * 100),
@@ -308,67 +359,111 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->latency.avg, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.avg)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.avg)),
+            -1)
       << "incorrect value for latency.avg, expected -1, is "
       << last_msg_->latency.avg;
-  EXPECT_EQ(last_msg_->latency.current, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.current)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.current)),
+            -1)
       << "incorrect value for latency.current, expected -1, is "
       << last_msg_->latency.current;
-  EXPECT_EQ(last_msg_->latency.lmax, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmax)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmax)),
+            0)
       << "incorrect value for latency.lmax, expected 0, is "
       << last_msg_->latency.lmax;
-  EXPECT_EQ(last_msg_->latency.lmin, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmin)),
+            0)
       << "incorrect value for latency.lmin, expected 0, is "
       << last_msg_->latency.lmin;
-  EXPECT_EQ(last_msg_->uart_a.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.crc_error_count)),
+            0)
       << "incorrect value for uart_a.crc_error_count, expected 0, is "
       << last_msg_->uart_a.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_a.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_a.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_a.io_error_count)),
+      0)
       << "incorrect value for uart_a.io_error_count, expected 0, is "
       << last_msg_->uart_a.io_error_count;
-  EXPECT_EQ(last_msg_->uart_a.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.rx_buffer_level)),
+            0)
       << "incorrect value for uart_a.rx_buffer_level, expected 0, is "
       << last_msg_->uart_a.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_a.rx_throughput, expected 0.0, is "
       << last_msg_->uart_a.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_a.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.tx_buffer_level)),
+            0)
       << "incorrect value for uart_a.tx_buffer_level, expected 0, is "
       << last_msg_->uart_a.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.tx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_a.tx_throughput, expected 0.0, is "
       << last_msg_->uart_a.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.crc_error_count)),
+            0)
       << "incorrect value for uart_b.crc_error_count, expected 0, is "
       << last_msg_->uart_b.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_b.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_b.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_b.io_error_count)),
+      0)
       << "incorrect value for uart_b.io_error_count, expected 0, is "
       << last_msg_->uart_b.io_error_count;
-  EXPECT_EQ(last_msg_->uart_b.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.rx_buffer_level)),
+            0)
       << "incorrect value for uart_b.rx_buffer_level, expected 0, is "
       << last_msg_->uart_b.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_b.rx_throughput, expected 0.0, is "
       << last_msg_->uart_b.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.tx_buffer_level)),
+            0)
       << "incorrect value for uart_b.tx_buffer_level, expected 0, is "
       << last_msg_->uart_b.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.tx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_b.tx_throughput, expected 0.0, is "
       << last_msg_->uart_b.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.crc_error_count)),
+            0)
       << "incorrect value for uart_ftdi.crc_error_count, expected 0, is "
       << last_msg_->uart_ftdi.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.io_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.io_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.io_error_count)),
+            0)
       << "incorrect value for uart_ftdi.io_error_count, expected 0, is "
       << last_msg_->uart_ftdi.io_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.rx_buffer_level)),
+            0)
       << "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is "
       << last_msg_->uart_ftdi.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is "
       << last_msg_->uart_ftdi.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.tx_buffer_level)),
+            0)
       << "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is "
       << last_msg_->uart_ftdi.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.tx_throughput * 100 - 0.0659999996424 * 100),
@@ -482,67 +577,111 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA2, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->latency.avg, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.avg)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.avg)),
+            -1)
       << "incorrect value for latency.avg, expected -1, is "
       << last_msg_->latency.avg;
-  EXPECT_EQ(last_msg_->latency.current, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.current)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.current)),
+            -1)
       << "incorrect value for latency.current, expected -1, is "
       << last_msg_->latency.current;
-  EXPECT_EQ(last_msg_->latency.lmax, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmax)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmax)),
+            0)
       << "incorrect value for latency.lmax, expected 0, is "
       << last_msg_->latency.lmax;
-  EXPECT_EQ(last_msg_->latency.lmin, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmin)),
+            0)
       << "incorrect value for latency.lmin, expected 0, is "
       << last_msg_->latency.lmin;
-  EXPECT_EQ(last_msg_->uart_a.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.crc_error_count)),
+            0)
       << "incorrect value for uart_a.crc_error_count, expected 0, is "
       << last_msg_->uart_a.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_a.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_a.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_a.io_error_count)),
+      0)
       << "incorrect value for uart_a.io_error_count, expected 0, is "
       << last_msg_->uart_a.io_error_count;
-  EXPECT_EQ(last_msg_->uart_a.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.rx_buffer_level)),
+            0)
       << "incorrect value for uart_a.rx_buffer_level, expected 0, is "
       << last_msg_->uart_a.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_a.rx_throughput, expected 0.0, is "
       << last_msg_->uart_a.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_a.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.tx_buffer_level)),
+            0)
       << "incorrect value for uart_a.tx_buffer_level, expected 0, is "
       << last_msg_->uart_a.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.tx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_a.tx_throughput, expected 0.0, is "
       << last_msg_->uart_a.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.crc_error_count)),
+            0)
       << "incorrect value for uart_b.crc_error_count, expected 0, is "
       << last_msg_->uart_b.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_b.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_b.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_b.io_error_count)),
+      0)
       << "incorrect value for uart_b.io_error_count, expected 0, is "
       << last_msg_->uart_b.io_error_count;
-  EXPECT_EQ(last_msg_->uart_b.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.rx_buffer_level)),
+            0)
       << "incorrect value for uart_b.rx_buffer_level, expected 0, is "
       << last_msg_->uart_b.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_b.rx_throughput, expected 0.0, is "
       << last_msg_->uart_b.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.tx_buffer_level)),
+            0)
       << "incorrect value for uart_b.tx_buffer_level, expected 0, is "
       << last_msg_->uart_b.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.tx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_b.tx_throughput, expected 0.0, is "
       << last_msg_->uart_b.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.crc_error_count)),
+            0)
       << "incorrect value for uart_ftdi.crc_error_count, expected 0, is "
       << last_msg_->uart_ftdi.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.io_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.io_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.io_error_count)),
+            0)
       << "incorrect value for uart_ftdi.io_error_count, expected 0, is "
       << last_msg_->uart_ftdi.io_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.rx_buffer_level)),
+            0)
       << "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is "
       << last_msg_->uart_ftdi.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is "
       << last_msg_->uart_ftdi.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.tx_buffer_level, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.tx_buffer_level)),
+            10)
       << "incorrect value for uart_ftdi.tx_buffer_level, expected 10, is "
       << last_msg_->uart_ftdi.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.tx_throughput * 100 - 0.138999998569 * 100),
@@ -656,67 +795,111 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA3, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->latency.avg, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.avg)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.avg)),
+            -1)
       << "incorrect value for latency.avg, expected -1, is "
       << last_msg_->latency.avg;
-  EXPECT_EQ(last_msg_->latency.current, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.current)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.current)),
+            -1)
       << "incorrect value for latency.current, expected -1, is "
       << last_msg_->latency.current;
-  EXPECT_EQ(last_msg_->latency.lmax, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmax)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmax)),
+            0)
       << "incorrect value for latency.lmax, expected 0, is "
       << last_msg_->latency.lmax;
-  EXPECT_EQ(last_msg_->latency.lmin, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmin)),
+            0)
       << "incorrect value for latency.lmin, expected 0, is "
       << last_msg_->latency.lmin;
-  EXPECT_EQ(last_msg_->uart_a.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.crc_error_count)),
+            0)
       << "incorrect value for uart_a.crc_error_count, expected 0, is "
       << last_msg_->uart_a.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_a.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_a.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_a.io_error_count)),
+      0)
       << "incorrect value for uart_a.io_error_count, expected 0, is "
       << last_msg_->uart_a.io_error_count;
-  EXPECT_EQ(last_msg_->uart_a.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.rx_buffer_level)),
+            0)
       << "incorrect value for uart_a.rx_buffer_level, expected 0, is "
       << last_msg_->uart_a.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_a.rx_throughput, expected 0.0, is "
       << last_msg_->uart_a.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_a.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.tx_buffer_level)),
+            0)
       << "incorrect value for uart_a.tx_buffer_level, expected 0, is "
       << last_msg_->uart_a.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.tx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_a.tx_throughput, expected 0.0, is "
       << last_msg_->uart_a.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.crc_error_count)),
+            0)
       << "incorrect value for uart_b.crc_error_count, expected 0, is "
       << last_msg_->uart_b.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_b.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_b.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_b.io_error_count)),
+      0)
       << "incorrect value for uart_b.io_error_count, expected 0, is "
       << last_msg_->uart_b.io_error_count;
-  EXPECT_EQ(last_msg_->uart_b.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.rx_buffer_level)),
+            0)
       << "incorrect value for uart_b.rx_buffer_level, expected 0, is "
       << last_msg_->uart_b.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_b.rx_throughput, expected 0.0, is "
       << last_msg_->uart_b.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.tx_buffer_level)),
+            0)
       << "incorrect value for uart_b.tx_buffer_level, expected 0, is "
       << last_msg_->uart_b.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.tx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_b.tx_throughput, expected 0.0, is "
       << last_msg_->uart_b.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.crc_error_count)),
+            0)
       << "incorrect value for uart_ftdi.crc_error_count, expected 0, is "
       << last_msg_->uart_ftdi.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.io_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.io_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.io_error_count)),
+            0)
       << "incorrect value for uart_ftdi.io_error_count, expected 0, is "
       << last_msg_->uart_ftdi.io_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.rx_buffer_level)),
+            0)
       << "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is "
       << last_msg_->uart_ftdi.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is "
       << last_msg_->uart_ftdi.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.tx_buffer_level)),
+            0)
       << "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is "
       << last_msg_->uart_ftdi.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.tx_throughput * 100 - 0.0659999996424 * 100),
@@ -831,25 +1014,42 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA4, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->latency.avg, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.avg)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.avg)),
+            -1)
       << "incorrect value for latency.avg, expected -1, is "
       << last_msg_->latency.avg;
-  EXPECT_EQ(last_msg_->latency.current, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.current)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.current)),
+            -1)
       << "incorrect value for latency.current, expected -1, is "
       << last_msg_->latency.current;
-  EXPECT_EQ(last_msg_->latency.lmax, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmax)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmax)),
+            0)
       << "incorrect value for latency.lmax, expected 0, is "
       << last_msg_->latency.lmax;
-  EXPECT_EQ(last_msg_->latency.lmin, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmin)),
+            0)
       << "incorrect value for latency.lmin, expected 0, is "
       << last_msg_->latency.lmin;
-  EXPECT_EQ(last_msg_->uart_a.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.crc_error_count)),
+            0)
       << "incorrect value for uart_a.crc_error_count, expected 0, is "
       << last_msg_->uart_a.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_a.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_a.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_a.io_error_count)),
+      0)
       << "incorrect value for uart_a.io_error_count, expected 0, is "
       << last_msg_->uart_a.io_error_count;
-  EXPECT_EQ(last_msg_->uart_a.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.rx_buffer_level)),
+            0)
       << "incorrect value for uart_a.rx_buffer_level, expected 0, is "
       << last_msg_->uart_a.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.rx_throughput * 100 - 0.00819672085345 * 100),
@@ -857,25 +1057,40 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA4, Test) {
       << "incorrect value for uart_a.rx_throughput, expected 0.00819672085345, "
          "is "
       << last_msg_->uart_a.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_a.tx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.tx_buffer_level)),
+            0)
       << "incorrect value for uart_a.tx_buffer_level, expected 0, is "
       << last_msg_->uart_a.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.tx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_a.tx_throughput, expected 0.0, is "
       << last_msg_->uart_a.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.crc_error_count)),
+            0)
       << "incorrect value for uart_b.crc_error_count, expected 0, is "
       << last_msg_->uart_b.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_b.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_b.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_b.io_error_count)),
+      0)
       << "incorrect value for uart_b.io_error_count, expected 0, is "
       << last_msg_->uart_b.io_error_count;
-  EXPECT_EQ(last_msg_->uart_b.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.rx_buffer_level)),
+            0)
       << "incorrect value for uart_b.rx_buffer_level, expected 0, is "
       << last_msg_->uart_b.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_b.rx_throughput, expected 0.0, is "
       << last_msg_->uart_b.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.tx_buffer_level, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.tx_buffer_level)),
+            2)
       << "incorrect value for uart_b.tx_buffer_level, expected 2, is "
       << last_msg_->uart_b.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.tx_throughput * 100 - 0.098360657692 * 100),
@@ -883,19 +1098,31 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA4, Test) {
       << "incorrect value for uart_b.tx_throughput, expected 0.098360657692, "
          "is "
       << last_msg_->uart_b.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.crc_error_count)),
+            0)
       << "incorrect value for uart_ftdi.crc_error_count, expected 0, is "
       << last_msg_->uart_ftdi.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.io_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.io_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.io_error_count)),
+            0)
       << "incorrect value for uart_ftdi.io_error_count, expected 0, is "
       << last_msg_->uart_ftdi.io_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.rx_buffer_level)),
+            0)
       << "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is "
       << last_msg_->uart_ftdi.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is "
       << last_msg_->uart_ftdi.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.tx_buffer_level, 38)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.tx_buffer_level)),
+            38)
       << "incorrect value for uart_ftdi.tx_buffer_level, expected 38, is "
       << last_msg_->uart_ftdi.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.tx_throughput * 100 - 0.493999987841 * 100),
@@ -1010,31 +1237,51 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA5, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->latency.avg, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.avg)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.avg)),
+            -1)
       << "incorrect value for latency.avg, expected -1, is "
       << last_msg_->latency.avg;
-  EXPECT_EQ(last_msg_->latency.current, -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.current)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.current)),
+            -1)
       << "incorrect value for latency.current, expected -1, is "
       << last_msg_->latency.current;
-  EXPECT_EQ(last_msg_->latency.lmax, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmax)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmax)),
+            0)
       << "incorrect value for latency.lmax, expected 0, is "
       << last_msg_->latency.lmax;
-  EXPECT_EQ(last_msg_->latency.lmin, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency.lmin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency.lmin)),
+            0)
       << "incorrect value for latency.lmin, expected 0, is "
       << last_msg_->latency.lmin;
-  EXPECT_EQ(last_msg_->uart_a.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.crc_error_count)),
+            0)
       << "incorrect value for uart_a.crc_error_count, expected 0, is "
       << last_msg_->uart_a.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_a.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_a.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_a.io_error_count)),
+      0)
       << "incorrect value for uart_a.io_error_count, expected 0, is "
       << last_msg_->uart_a.io_error_count;
-  EXPECT_EQ(last_msg_->uart_a.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.rx_buffer_level)),
+            0)
       << "incorrect value for uart_a.rx_buffer_level, expected 0, is "
       << last_msg_->uart_a.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_a.rx_throughput, expected 0.0, is "
       << last_msg_->uart_a.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_a.tx_buffer_level, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_a.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_a.tx_buffer_level)),
+            2)
       << "incorrect value for uart_a.tx_buffer_level, expected 2, is "
       << last_msg_->uart_a.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_a.tx_throughput * 100 - 0.0120000001043 * 100),
@@ -1042,19 +1289,31 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA5, Test) {
       << "incorrect value for uart_a.tx_throughput, expected 0.0120000001043, "
          "is "
       << last_msg_->uart_a.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.crc_error_count)),
+            0)
       << "incorrect value for uart_b.crc_error_count, expected 0, is "
       << last_msg_->uart_b.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_b.io_error_count, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->uart_b.io_error_count)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->uart_b.io_error_count)),
+      0)
       << "incorrect value for uart_b.io_error_count, expected 0, is "
       << last_msg_->uart_b.io_error_count;
-  EXPECT_EQ(last_msg_->uart_b.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.rx_buffer_level)),
+            0)
       << "incorrect value for uart_b.rx_buffer_level, expected 0, is "
       << last_msg_->uart_b.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_b.rx_throughput, expected 0.0, is "
       << last_msg_->uart_b.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_b.tx_buffer_level, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_b.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_b.tx_buffer_level)),
+            2)
       << "incorrect value for uart_b.tx_buffer_level, expected 2, is "
       << last_msg_->uart_b.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_b.tx_throughput * 100 - 0.0120000001043 * 100),
@@ -1062,19 +1321,31 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgUartStateDepA5, Test) {
       << "incorrect value for uart_b.tx_throughput, expected 0.0120000001043, "
          "is "
       << last_msg_->uart_b.tx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.crc_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.crc_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.crc_error_count)),
+            0)
       << "incorrect value for uart_ftdi.crc_error_count, expected 0, is "
       << last_msg_->uart_ftdi.crc_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.io_error_count, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.io_error_count)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.io_error_count)),
+            0)
       << "incorrect value for uart_ftdi.io_error_count, expected 0, is "
       << last_msg_->uart_ftdi.io_error_count;
-  EXPECT_EQ(last_msg_->uart_ftdi.rx_buffer_level, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.rx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.rx_buffer_level)),
+            0)
       << "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is "
       << last_msg_->uart_ftdi.rx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.rx_throughput * 100 - 0.0 * 100), 0.05)
       << "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is "
       << last_msg_->uart_ftdi.rx_throughput;
-  EXPECT_EQ(last_msg_->uart_ftdi.tx_buffer_level, 50)
+  EXPECT_EQ(get_as<decltype(last_msg_->uart_ftdi.tx_buffer_level)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->uart_ftdi.tx_buffer_level)),
+            50)
       << "incorrect value for uart_ftdi.tx_buffer_level, expected 50, is "
       << last_msg_->uart_ftdi.tx_buffer_level;
   EXPECT_LT((last_msg_->uart_ftdi.tx_throughput * 100 - 1.31500005722 * 100),

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/tracking.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_tracking_MsgMeasurementState0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -680,715 +687,1347 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgMeasurementState0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 31183);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->states[0].cn0, 162)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].cn0)),
+            162)
       << "incorrect value for states[0].cn0, expected 162, is "
       << last_msg_->states[0].cn0;
-  EXPECT_EQ(last_msg_->states[0].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[0].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[0].mesid.code)),
+      0)
       << "incorrect value for states[0].mesid.code, expected 0, is "
       << last_msg_->states[0].mesid.code;
-  EXPECT_EQ(last_msg_->states[0].mesid.sat, 29)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[0].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[0].mesid.sat)),
+      29)
       << "incorrect value for states[0].mesid.sat, expected 29, is "
       << last_msg_->states[0].mesid.sat;
-  EXPECT_EQ(last_msg_->states[1].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].cn0)),
+            0)
       << "incorrect value for states[1].cn0, expected 0, is "
       << last_msg_->states[1].cn0;
-  EXPECT_EQ(last_msg_->states[1].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[1].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[1].mesid.code)),
+      0)
       << "incorrect value for states[1].mesid.code, expected 0, is "
       << last_msg_->states[1].mesid.code;
-  EXPECT_EQ(last_msg_->states[1].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[1].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[1].mesid.sat)),
+      0)
       << "incorrect value for states[1].mesid.sat, expected 0, is "
       << last_msg_->states[1].mesid.sat;
-  EXPECT_EQ(last_msg_->states[2].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].cn0)),
+            0)
       << "incorrect value for states[2].cn0, expected 0, is "
       << last_msg_->states[2].cn0;
-  EXPECT_EQ(last_msg_->states[2].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[2].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[2].mesid.code)),
+      0)
       << "incorrect value for states[2].mesid.code, expected 0, is "
       << last_msg_->states[2].mesid.code;
-  EXPECT_EQ(last_msg_->states[2].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[2].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[2].mesid.sat)),
+      0)
       << "incorrect value for states[2].mesid.sat, expected 0, is "
       << last_msg_->states[2].mesid.sat;
-  EXPECT_EQ(last_msg_->states[3].cn0, 201)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].cn0)),
+            201)
       << "incorrect value for states[3].cn0, expected 201, is "
       << last_msg_->states[3].cn0;
-  EXPECT_EQ(last_msg_->states[3].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[3].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[3].mesid.code)),
+      0)
       << "incorrect value for states[3].mesid.code, expected 0, is "
       << last_msg_->states[3].mesid.code;
-  EXPECT_EQ(last_msg_->states[3].mesid.sat, 27)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[3].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[3].mesid.sat)),
+      27)
       << "incorrect value for states[3].mesid.sat, expected 27, is "
       << last_msg_->states[3].mesid.sat;
-  EXPECT_EQ(last_msg_->states[4].cn0, 168)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].cn0)),
+            168)
       << "incorrect value for states[4].cn0, expected 168, is "
       << last_msg_->states[4].cn0;
-  EXPECT_EQ(last_msg_->states[4].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[4].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[4].mesid.code)),
+      0)
       << "incorrect value for states[4].mesid.code, expected 0, is "
       << last_msg_->states[4].mesid.code;
-  EXPECT_EQ(last_msg_->states[4].mesid.sat, 20)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[4].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[4].mesid.sat)),
+      20)
       << "incorrect value for states[4].mesid.sat, expected 20, is "
       << last_msg_->states[4].mesid.sat;
-  EXPECT_EQ(last_msg_->states[5].cn0, 184)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].cn0)),
+            184)
       << "incorrect value for states[5].cn0, expected 184, is "
       << last_msg_->states[5].cn0;
-  EXPECT_EQ(last_msg_->states[5].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[5].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[5].mesid.code)),
+      0)
       << "incorrect value for states[5].mesid.code, expected 0, is "
       << last_msg_->states[5].mesid.code;
-  EXPECT_EQ(last_msg_->states[5].mesid.sat, 32)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[5].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[5].mesid.sat)),
+      32)
       << "incorrect value for states[5].mesid.sat, expected 32, is "
       << last_msg_->states[5].mesid.sat;
-  EXPECT_EQ(last_msg_->states[6].cn0, 187)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].cn0)),
+            187)
       << "incorrect value for states[6].cn0, expected 187, is "
       << last_msg_->states[6].cn0;
-  EXPECT_EQ(last_msg_->states[6].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[6].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[6].mesid.code)),
+      0)
       << "incorrect value for states[6].mesid.code, expected 0, is "
       << last_msg_->states[6].mesid.code;
-  EXPECT_EQ(last_msg_->states[6].mesid.sat, 15)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[6].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[6].mesid.sat)),
+      15)
       << "incorrect value for states[6].mesid.sat, expected 15, is "
       << last_msg_->states[6].mesid.sat;
-  EXPECT_EQ(last_msg_->states[7].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].cn0)),
+            0)
       << "incorrect value for states[7].cn0, expected 0, is "
       << last_msg_->states[7].cn0;
-  EXPECT_EQ(last_msg_->states[7].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[7].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[7].mesid.code)),
+      0)
       << "incorrect value for states[7].mesid.code, expected 0, is "
       << last_msg_->states[7].mesid.code;
-  EXPECT_EQ(last_msg_->states[7].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[7].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[7].mesid.sat)),
+      0)
       << "incorrect value for states[7].mesid.sat, expected 0, is "
       << last_msg_->states[7].mesid.sat;
-  EXPECT_EQ(last_msg_->states[8].cn0, 210)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].cn0)),
+            210)
       << "incorrect value for states[8].cn0, expected 210, is "
       << last_msg_->states[8].cn0;
-  EXPECT_EQ(last_msg_->states[8].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[8].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[8].mesid.code)),
+      0)
       << "incorrect value for states[8].mesid.code, expected 0, is "
       << last_msg_->states[8].mesid.code;
-  EXPECT_EQ(last_msg_->states[8].mesid.sat, 18)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[8].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[8].mesid.sat)),
+      18)
       << "incorrect value for states[8].mesid.sat, expected 18, is "
       << last_msg_->states[8].mesid.sat;
-  EXPECT_EQ(last_msg_->states[9].cn0, 167)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].cn0)),
+            167)
       << "incorrect value for states[9].cn0, expected 167, is "
       << last_msg_->states[9].cn0;
-  EXPECT_EQ(last_msg_->states[9].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[9].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[9].mesid.code)),
+      0)
       << "incorrect value for states[9].mesid.code, expected 0, is "
       << last_msg_->states[9].mesid.code;
-  EXPECT_EQ(last_msg_->states[9].mesid.sat, 16)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[9].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[9].mesid.sat)),
+      16)
       << "incorrect value for states[9].mesid.sat, expected 16, is "
       << last_msg_->states[9].mesid.sat;
-  EXPECT_EQ(last_msg_->states[10].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[10].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[10].cn0)),
+            0)
       << "incorrect value for states[10].cn0, expected 0, is "
       << last_msg_->states[10].cn0;
-  EXPECT_EQ(last_msg_->states[10].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].mesid.code)),
+      0)
       << "incorrect value for states[10].mesid.code, expected 0, is "
       << last_msg_->states[10].mesid.code;
-  EXPECT_EQ(last_msg_->states[10].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].mesid.sat)),
+      0)
       << "incorrect value for states[10].mesid.sat, expected 0, is "
       << last_msg_->states[10].mesid.sat;
-  EXPECT_EQ(last_msg_->states[11].cn0, 213)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[11].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[11].cn0)),
+            213)
       << "incorrect value for states[11].cn0, expected 213, is "
       << last_msg_->states[11].cn0;
-  EXPECT_EQ(last_msg_->states[11].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[11].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[11].mesid.code)),
+      0)
       << "incorrect value for states[11].mesid.code, expected 0, is "
       << last_msg_->states[11].mesid.code;
-  EXPECT_EQ(last_msg_->states[11].mesid.sat, 23)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[11].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[11].mesid.sat)),
+      23)
       << "incorrect value for states[11].mesid.sat, expected 23, is "
       << last_msg_->states[11].mesid.sat;
-  EXPECT_EQ(last_msg_->states[12].cn0, 223)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[12].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[12].cn0)),
+            223)
       << "incorrect value for states[12].cn0, expected 223, is "
       << last_msg_->states[12].cn0;
-  EXPECT_EQ(last_msg_->states[12].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[12].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[12].mesid.code)),
+      0)
       << "incorrect value for states[12].mesid.code, expected 0, is "
       << last_msg_->states[12].mesid.code;
-  EXPECT_EQ(last_msg_->states[12].mesid.sat, 10)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[12].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[12].mesid.sat)),
+      10)
       << "incorrect value for states[12].mesid.sat, expected 10, is "
       << last_msg_->states[12].mesid.sat;
-  EXPECT_EQ(last_msg_->states[13].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[13].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[13].cn0)),
+            0)
       << "incorrect value for states[13].cn0, expected 0, is "
       << last_msg_->states[13].cn0;
-  EXPECT_EQ(last_msg_->states[13].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[13].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[13].mesid.code)),
+      0)
       << "incorrect value for states[13].mesid.code, expected 0, is "
       << last_msg_->states[13].mesid.code;
-  EXPECT_EQ(last_msg_->states[13].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[13].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[13].mesid.sat)),
+      0)
       << "incorrect value for states[13].mesid.sat, expected 0, is "
       << last_msg_->states[13].mesid.sat;
-  EXPECT_EQ(last_msg_->states[14].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[14].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[14].cn0)),
+            0)
       << "incorrect value for states[14].cn0, expected 0, is "
       << last_msg_->states[14].cn0;
-  EXPECT_EQ(last_msg_->states[14].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[14].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[14].mesid.code)),
+      0)
       << "incorrect value for states[14].mesid.code, expected 0, is "
       << last_msg_->states[14].mesid.code;
-  EXPECT_EQ(last_msg_->states[14].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[14].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[14].mesid.sat)),
+      0)
       << "incorrect value for states[14].mesid.sat, expected 0, is "
       << last_msg_->states[14].mesid.sat;
-  EXPECT_EQ(last_msg_->states[15].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[15].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[15].cn0)),
+            0)
       << "incorrect value for states[15].cn0, expected 0, is "
       << last_msg_->states[15].cn0;
-  EXPECT_EQ(last_msg_->states[15].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[15].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[15].mesid.code)),
+      0)
       << "incorrect value for states[15].mesid.code, expected 0, is "
       << last_msg_->states[15].mesid.code;
-  EXPECT_EQ(last_msg_->states[15].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[15].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[15].mesid.sat)),
+      0)
       << "incorrect value for states[15].mesid.sat, expected 0, is "
       << last_msg_->states[15].mesid.sat;
-  EXPECT_EQ(last_msg_->states[16].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[16].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[16].cn0)),
+            0)
       << "incorrect value for states[16].cn0, expected 0, is "
       << last_msg_->states[16].cn0;
-  EXPECT_EQ(last_msg_->states[16].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[16].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[16].mesid.code)),
+      0)
       << "incorrect value for states[16].mesid.code, expected 0, is "
       << last_msg_->states[16].mesid.code;
-  EXPECT_EQ(last_msg_->states[16].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[16].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[16].mesid.sat)),
+      0)
       << "incorrect value for states[16].mesid.sat, expected 0, is "
       << last_msg_->states[16].mesid.sat;
-  EXPECT_EQ(last_msg_->states[17].cn0, 202)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[17].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[17].cn0)),
+            202)
       << "incorrect value for states[17].cn0, expected 202, is "
       << last_msg_->states[17].cn0;
-  EXPECT_EQ(last_msg_->states[17].mesid.code, 2)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[17].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[17].mesid.code)),
+      2)
       << "incorrect value for states[17].mesid.code, expected 2, is "
       << last_msg_->states[17].mesid.code;
-  EXPECT_EQ(last_msg_->states[17].mesid.sat, 131)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[17].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[17].mesid.sat)),
+      131)
       << "incorrect value for states[17].mesid.sat, expected 131, is "
       << last_msg_->states[17].mesid.sat;
-  EXPECT_EQ(last_msg_->states[18].cn0, 192)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[18].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[18].cn0)),
+            192)
       << "incorrect value for states[18].cn0, expected 192, is "
       << last_msg_->states[18].cn0;
-  EXPECT_EQ(last_msg_->states[18].mesid.code, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[18].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[18].mesid.code)),
+      1)
       << "incorrect value for states[18].mesid.code, expected 1, is "
       << last_msg_->states[18].mesid.code;
-  EXPECT_EQ(last_msg_->states[18].mesid.sat, 27)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[18].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[18].mesid.sat)),
+      27)
       << "incorrect value for states[18].mesid.sat, expected 27, is "
       << last_msg_->states[18].mesid.sat;
-  EXPECT_EQ(last_msg_->states[19].cn0, 165)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[19].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[19].cn0)),
+            165)
       << "incorrect value for states[19].cn0, expected 165, is "
       << last_msg_->states[19].cn0;
-  EXPECT_EQ(last_msg_->states[19].mesid.code, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[19].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[19].mesid.code)),
+      1)
       << "incorrect value for states[19].mesid.code, expected 1, is "
       << last_msg_->states[19].mesid.code;
-  EXPECT_EQ(last_msg_->states[19].mesid.sat, 15)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[19].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[19].mesid.sat)),
+      15)
       << "incorrect value for states[19].mesid.sat, expected 15, is "
       << last_msg_->states[19].mesid.sat;
-  EXPECT_EQ(last_msg_->states[20].cn0, 146)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[20].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[20].cn0)),
+            146)
       << "incorrect value for states[20].cn0, expected 146, is "
       << last_msg_->states[20].cn0;
-  EXPECT_EQ(last_msg_->states[20].mesid.code, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[20].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[20].mesid.code)),
+      1)
       << "incorrect value for states[20].mesid.code, expected 1, is "
       << last_msg_->states[20].mesid.code;
-  EXPECT_EQ(last_msg_->states[20].mesid.sat, 29)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[20].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[20].mesid.sat)),
+      29)
       << "incorrect value for states[20].mesid.sat, expected 29, is "
       << last_msg_->states[20].mesid.sat;
-  EXPECT_EQ(last_msg_->states[21].cn0, 170)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[21].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[21].cn0)),
+            170)
       << "incorrect value for states[21].cn0, expected 170, is "
       << last_msg_->states[21].cn0;
-  EXPECT_EQ(last_msg_->states[21].mesid.code, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[21].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[21].mesid.code)),
+      1)
       << "incorrect value for states[21].mesid.code, expected 1, is "
       << last_msg_->states[21].mesid.code;
-  EXPECT_EQ(last_msg_->states[21].mesid.sat, 32)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[21].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[21].mesid.sat)),
+      32)
       << "incorrect value for states[21].mesid.sat, expected 32, is "
       << last_msg_->states[21].mesid.sat;
-  EXPECT_EQ(last_msg_->states[22].cn0, 201)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[22].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[22].cn0)),
+            201)
       << "incorrect value for states[22].cn0, expected 201, is "
       << last_msg_->states[22].cn0;
-  EXPECT_EQ(last_msg_->states[22].mesid.code, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[22].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[22].mesid.code)),
+      1)
       << "incorrect value for states[22].mesid.code, expected 1, is "
       << last_msg_->states[22].mesid.code;
-  EXPECT_EQ(last_msg_->states[22].mesid.sat, 18)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[22].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[22].mesid.sat)),
+      18)
       << "incorrect value for states[22].mesid.sat, expected 18, is "
       << last_msg_->states[22].mesid.sat;
-  EXPECT_EQ(last_msg_->states[23].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[23].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[23].cn0)),
+            0)
       << "incorrect value for states[23].cn0, expected 0, is "
       << last_msg_->states[23].cn0;
-  EXPECT_EQ(last_msg_->states[23].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[23].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[23].mesid.code)),
+      0)
       << "incorrect value for states[23].mesid.code, expected 0, is "
       << last_msg_->states[23].mesid.code;
-  EXPECT_EQ(last_msg_->states[23].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[23].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[23].mesid.sat)),
+      0)
       << "incorrect value for states[23].mesid.sat, expected 0, is "
       << last_msg_->states[23].mesid.sat;
-  EXPECT_EQ(last_msg_->states[24].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[24].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[24].cn0)),
+            0)
       << "incorrect value for states[24].cn0, expected 0, is "
       << last_msg_->states[24].cn0;
-  EXPECT_EQ(last_msg_->states[24].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[24].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[24].mesid.code)),
+      0)
       << "incorrect value for states[24].mesid.code, expected 0, is "
       << last_msg_->states[24].mesid.code;
-  EXPECT_EQ(last_msg_->states[24].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[24].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[24].mesid.sat)),
+      0)
       << "incorrect value for states[24].mesid.sat, expected 0, is "
       << last_msg_->states[24].mesid.sat;
-  EXPECT_EQ(last_msg_->states[25].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[25].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[25].cn0)),
+            0)
       << "incorrect value for states[25].cn0, expected 0, is "
       << last_msg_->states[25].cn0;
-  EXPECT_EQ(last_msg_->states[25].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[25].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[25].mesid.code)),
+      0)
       << "incorrect value for states[25].mesid.code, expected 0, is "
       << last_msg_->states[25].mesid.code;
-  EXPECT_EQ(last_msg_->states[25].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[25].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[25].mesid.sat)),
+      0)
       << "incorrect value for states[25].mesid.sat, expected 0, is "
       << last_msg_->states[25].mesid.sat;
-  EXPECT_EQ(last_msg_->states[26].cn0, 212)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[26].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[26].cn0)),
+            212)
       << "incorrect value for states[26].cn0, expected 212, is "
       << last_msg_->states[26].cn0;
-  EXPECT_EQ(last_msg_->states[26].mesid.code, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[26].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[26].mesid.code)),
+      1)
       << "incorrect value for states[26].mesid.code, expected 1, is "
       << last_msg_->states[26].mesid.code;
-  EXPECT_EQ(last_msg_->states[26].mesid.sat, 23)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[26].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[26].mesid.sat)),
+      23)
       << "incorrect value for states[26].mesid.sat, expected 23, is "
       << last_msg_->states[26].mesid.sat;
-  EXPECT_EQ(last_msg_->states[27].cn0, 205)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[27].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[27].cn0)),
+            205)
       << "incorrect value for states[27].cn0, expected 205, is "
       << last_msg_->states[27].cn0;
-  EXPECT_EQ(last_msg_->states[27].mesid.code, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[27].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[27].mesid.code)),
+      1)
       << "incorrect value for states[27].mesid.code, expected 1, is "
       << last_msg_->states[27].mesid.code;
-  EXPECT_EQ(last_msg_->states[27].mesid.sat, 10)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[27].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[27].mesid.sat)),
+      10)
       << "incorrect value for states[27].mesid.sat, expected 10, is "
       << last_msg_->states[27].mesid.sat;
-  EXPECT_EQ(last_msg_->states[28].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[28].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[28].cn0)),
+            0)
       << "incorrect value for states[28].cn0, expected 0, is "
       << last_msg_->states[28].cn0;
-  EXPECT_EQ(last_msg_->states[28].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[28].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[28].mesid.code)),
+      0)
       << "incorrect value for states[28].mesid.code, expected 0, is "
       << last_msg_->states[28].mesid.code;
-  EXPECT_EQ(last_msg_->states[28].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[28].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[28].mesid.sat)),
+      0)
       << "incorrect value for states[28].mesid.sat, expected 0, is "
       << last_msg_->states[28].mesid.sat;
-  EXPECT_EQ(last_msg_->states[29].cn0, 230)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[29].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[29].cn0)),
+            230)
       << "incorrect value for states[29].cn0, expected 230, is "
       << last_msg_->states[29].cn0;
-  EXPECT_EQ(last_msg_->states[29].mesid.code, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[29].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[29].mesid.code)),
+      3)
       << "incorrect value for states[29].mesid.code, expected 3, is "
       << last_msg_->states[29].mesid.code;
-  EXPECT_EQ(last_msg_->states[29].mesid.sat, 96)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[29].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[29].mesid.sat)),
+      96)
       << "incorrect value for states[29].mesid.sat, expected 96, is "
       << last_msg_->states[29].mesid.sat;
-  EXPECT_EQ(last_msg_->states[30].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[30].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[30].cn0)),
+            0)
       << "incorrect value for states[30].cn0, expected 0, is "
       << last_msg_->states[30].cn0;
-  EXPECT_EQ(last_msg_->states[30].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[30].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[30].mesid.code)),
+      0)
       << "incorrect value for states[30].mesid.code, expected 0, is "
       << last_msg_->states[30].mesid.code;
-  EXPECT_EQ(last_msg_->states[30].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[30].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[30].mesid.sat)),
+      0)
       << "incorrect value for states[30].mesid.sat, expected 0, is "
       << last_msg_->states[30].mesid.sat;
-  EXPECT_EQ(last_msg_->states[31].cn0, 214)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[31].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[31].cn0)),
+            214)
       << "incorrect value for states[31].cn0, expected 214, is "
       << last_msg_->states[31].cn0;
-  EXPECT_EQ(last_msg_->states[31].mesid.code, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[31].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[31].mesid.code)),
+      3)
       << "incorrect value for states[31].mesid.code, expected 3, is "
       << last_msg_->states[31].mesid.code;
-  EXPECT_EQ(last_msg_->states[31].mesid.sat, 101)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[31].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[31].mesid.sat)),
+      101)
       << "incorrect value for states[31].mesid.sat, expected 101, is "
       << last_msg_->states[31].mesid.sat;
-  EXPECT_EQ(last_msg_->states[32].cn0, 212)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[32].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[32].cn0)),
+            212)
       << "incorrect value for states[32].cn0, expected 212, is "
       << last_msg_->states[32].cn0;
-  EXPECT_EQ(last_msg_->states[32].mesid.code, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[32].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[32].mesid.code)),
+      3)
       << "incorrect value for states[32].mesid.code, expected 3, is "
       << last_msg_->states[32].mesid.code;
-  EXPECT_EQ(last_msg_->states[32].mesid.sat, 103)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[32].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[32].mesid.sat)),
+      103)
       << "incorrect value for states[32].mesid.sat, expected 103, is "
       << last_msg_->states[32].mesid.sat;
-  EXPECT_EQ(last_msg_->states[33].cn0, 209)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[33].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[33].cn0)),
+            209)
       << "incorrect value for states[33].cn0, expected 209, is "
       << last_msg_->states[33].cn0;
-  EXPECT_EQ(last_msg_->states[33].mesid.code, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[33].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[33].mesid.code)),
+      3)
       << "incorrect value for states[33].mesid.code, expected 3, is "
       << last_msg_->states[33].mesid.code;
-  EXPECT_EQ(last_msg_->states[33].mesid.sat, 104)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[33].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[33].mesid.sat)),
+      104)
       << "incorrect value for states[33].mesid.sat, expected 104, is "
       << last_msg_->states[33].mesid.sat;
-  EXPECT_EQ(last_msg_->states[34].cn0, 157)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[34].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[34].cn0)),
+            157)
       << "incorrect value for states[34].cn0, expected 157, is "
       << last_msg_->states[34].cn0;
-  EXPECT_EQ(last_msg_->states[34].mesid.code, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[34].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[34].mesid.code)),
+      3)
       << "incorrect value for states[34].mesid.code, expected 3, is "
       << last_msg_->states[34].mesid.code;
-  EXPECT_EQ(last_msg_->states[34].mesid.sat, 106)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[34].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[34].mesid.sat)),
+      106)
       << "incorrect value for states[34].mesid.sat, expected 106, is "
       << last_msg_->states[34].mesid.sat;
-  EXPECT_EQ(last_msg_->states[35].cn0, 230)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[35].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[35].cn0)),
+            230)
       << "incorrect value for states[35].cn0, expected 230, is "
       << last_msg_->states[35].cn0;
-  EXPECT_EQ(last_msg_->states[35].mesid.code, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[35].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[35].mesid.code)),
+      3)
       << "incorrect value for states[35].mesid.code, expected 3, is "
       << last_msg_->states[35].mesid.code;
-  EXPECT_EQ(last_msg_->states[35].mesid.sat, 102)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[35].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[35].mesid.sat)),
+      102)
       << "incorrect value for states[35].mesid.sat, expected 102, is "
       << last_msg_->states[35].mesid.sat;
-  EXPECT_EQ(last_msg_->states[36].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[36].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[36].cn0)),
+            0)
       << "incorrect value for states[36].cn0, expected 0, is "
       << last_msg_->states[36].cn0;
-  EXPECT_EQ(last_msg_->states[36].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[36].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[36].mesid.code)),
+      0)
       << "incorrect value for states[36].mesid.code, expected 0, is "
       << last_msg_->states[36].mesid.code;
-  EXPECT_EQ(last_msg_->states[36].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[36].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[36].mesid.sat)),
+      0)
       << "incorrect value for states[36].mesid.sat, expected 0, is "
       << last_msg_->states[36].mesid.sat;
-  EXPECT_EQ(last_msg_->states[37].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[37].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[37].cn0)),
+            0)
       << "incorrect value for states[37].cn0, expected 0, is "
       << last_msg_->states[37].cn0;
-  EXPECT_EQ(last_msg_->states[37].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[37].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[37].mesid.code)),
+      0)
       << "incorrect value for states[37].mesid.code, expected 0, is "
       << last_msg_->states[37].mesid.code;
-  EXPECT_EQ(last_msg_->states[37].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[37].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[37].mesid.sat)),
+      0)
       << "incorrect value for states[37].mesid.sat, expected 0, is "
       << last_msg_->states[37].mesid.sat;
-  EXPECT_EQ(last_msg_->states[38].cn0, 189)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[38].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[38].cn0)),
+            189)
       << "incorrect value for states[38].cn0, expected 189, is "
       << last_msg_->states[38].cn0;
-  EXPECT_EQ(last_msg_->states[38].mesid.code, 4)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[38].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[38].mesid.code)),
+      4)
       << "incorrect value for states[38].mesid.code, expected 4, is "
       << last_msg_->states[38].mesid.code;
-  EXPECT_EQ(last_msg_->states[38].mesid.sat, 101)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[38].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[38].mesid.sat)),
+      101)
       << "incorrect value for states[38].mesid.sat, expected 101, is "
       << last_msg_->states[38].mesid.sat;
-  EXPECT_EQ(last_msg_->states[39].cn0, 207)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[39].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[39].cn0)),
+            207)
       << "incorrect value for states[39].cn0, expected 207, is "
       << last_msg_->states[39].cn0;
-  EXPECT_EQ(last_msg_->states[39].mesid.code, 4)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[39].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[39].mesid.code)),
+      4)
       << "incorrect value for states[39].mesid.code, expected 4, is "
       << last_msg_->states[39].mesid.code;
-  EXPECT_EQ(last_msg_->states[39].mesid.sat, 96)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[39].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[39].mesid.sat)),
+      96)
       << "incorrect value for states[39].mesid.sat, expected 96, is "
       << last_msg_->states[39].mesid.sat;
-  EXPECT_EQ(last_msg_->states[40].cn0, 164)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[40].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[40].cn0)),
+            164)
       << "incorrect value for states[40].cn0, expected 164, is "
       << last_msg_->states[40].cn0;
-  EXPECT_EQ(last_msg_->states[40].mesid.code, 4)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[40].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[40].mesid.code)),
+      4)
       << "incorrect value for states[40].mesid.code, expected 4, is "
       << last_msg_->states[40].mesid.code;
-  EXPECT_EQ(last_msg_->states[40].mesid.sat, 106)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[40].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[40].mesid.sat)),
+      106)
       << "incorrect value for states[40].mesid.sat, expected 106, is "
       << last_msg_->states[40].mesid.sat;
-  EXPECT_EQ(last_msg_->states[41].cn0, 193)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[41].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[41].cn0)),
+            193)
       << "incorrect value for states[41].cn0, expected 193, is "
       << last_msg_->states[41].cn0;
-  EXPECT_EQ(last_msg_->states[41].mesid.code, 4)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[41].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[41].mesid.code)),
+      4)
       << "incorrect value for states[41].mesid.code, expected 4, is "
       << last_msg_->states[41].mesid.code;
-  EXPECT_EQ(last_msg_->states[41].mesid.sat, 104)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[41].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[41].mesid.sat)),
+      104)
       << "incorrect value for states[41].mesid.sat, expected 104, is "
       << last_msg_->states[41].mesid.sat;
-  EXPECT_EQ(last_msg_->states[42].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[42].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[42].cn0)),
+            0)
       << "incorrect value for states[42].cn0, expected 0, is "
       << last_msg_->states[42].cn0;
-  EXPECT_EQ(last_msg_->states[42].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[42].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[42].mesid.code)),
+      0)
       << "incorrect value for states[42].mesid.code, expected 0, is "
       << last_msg_->states[42].mesid.code;
-  EXPECT_EQ(last_msg_->states[42].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[42].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[42].mesid.sat)),
+      0)
       << "incorrect value for states[42].mesid.sat, expected 0, is "
       << last_msg_->states[42].mesid.sat;
-  EXPECT_EQ(last_msg_->states[43].cn0, 208)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[43].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[43].cn0)),
+            208)
       << "incorrect value for states[43].cn0, expected 208, is "
       << last_msg_->states[43].cn0;
-  EXPECT_EQ(last_msg_->states[43].mesid.code, 4)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[43].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[43].mesid.code)),
+      4)
       << "incorrect value for states[43].mesid.code, expected 4, is "
       << last_msg_->states[43].mesid.code;
-  EXPECT_EQ(last_msg_->states[43].mesid.sat, 102)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[43].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[43].mesid.sat)),
+      102)
       << "incorrect value for states[43].mesid.sat, expected 102, is "
       << last_msg_->states[43].mesid.sat;
-  EXPECT_EQ(last_msg_->states[44].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[44].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[44].cn0)),
+            0)
       << "incorrect value for states[44].cn0, expected 0, is "
       << last_msg_->states[44].cn0;
-  EXPECT_EQ(last_msg_->states[44].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[44].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[44].mesid.code)),
+      0)
       << "incorrect value for states[44].mesid.code, expected 0, is "
       << last_msg_->states[44].mesid.code;
-  EXPECT_EQ(last_msg_->states[44].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[44].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[44].mesid.sat)),
+      0)
       << "incorrect value for states[44].mesid.sat, expected 0, is "
       << last_msg_->states[44].mesid.sat;
-  EXPECT_EQ(last_msg_->states[45].cn0, 212)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[45].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[45].cn0)),
+            212)
       << "incorrect value for states[45].cn0, expected 212, is "
       << last_msg_->states[45].cn0;
-  EXPECT_EQ(last_msg_->states[45].mesid.code, 12)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[45].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[45].mesid.code)),
+      12)
       << "incorrect value for states[45].mesid.code, expected 12, is "
       << last_msg_->states[45].mesid.code;
-  EXPECT_EQ(last_msg_->states[45].mesid.sat, 27)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[45].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[45].mesid.sat)),
+      27)
       << "incorrect value for states[45].mesid.sat, expected 27, is "
       << last_msg_->states[45].mesid.sat;
-  EXPECT_EQ(last_msg_->states[46].cn0, 161)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[46].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[46].cn0)),
+            161)
       << "incorrect value for states[46].cn0, expected 161, is "
       << last_msg_->states[46].cn0;
-  EXPECT_EQ(last_msg_->states[46].mesid.code, 12)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[46].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[46].mesid.code)),
+      12)
       << "incorrect value for states[46].mesid.code, expected 12, is "
       << last_msg_->states[46].mesid.code;
-  EXPECT_EQ(last_msg_->states[46].mesid.sat, 29)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[46].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[46].mesid.sat)),
+      29)
       << "incorrect value for states[46].mesid.sat, expected 29, is "
       << last_msg_->states[46].mesid.sat;
-  EXPECT_EQ(last_msg_->states[47].cn0, 216)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[47].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[47].cn0)),
+            216)
       << "incorrect value for states[47].cn0, expected 216, is "
       << last_msg_->states[47].cn0;
-  EXPECT_EQ(last_msg_->states[47].mesid.code, 12)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[47].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[47].mesid.code)),
+      12)
       << "incorrect value for states[47].mesid.code, expected 12, is "
       << last_msg_->states[47].mesid.code;
-  EXPECT_EQ(last_msg_->states[47].mesid.sat, 32)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[47].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[47].mesid.sat)),
+      32)
       << "incorrect value for states[47].mesid.sat, expected 32, is "
       << last_msg_->states[47].mesid.sat;
-  EXPECT_EQ(last_msg_->states[48].cn0, 216)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[48].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[48].cn0)),
+            216)
       << "incorrect value for states[48].cn0, expected 216, is "
       << last_msg_->states[48].cn0;
-  EXPECT_EQ(last_msg_->states[48].mesid.code, 12)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[48].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[48].mesid.code)),
+      12)
       << "incorrect value for states[48].mesid.code, expected 12, is "
       << last_msg_->states[48].mesid.code;
-  EXPECT_EQ(last_msg_->states[48].mesid.sat, 30)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[48].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[48].mesid.sat)),
+      30)
       << "incorrect value for states[48].mesid.sat, expected 30, is "
       << last_msg_->states[48].mesid.sat;
-  EXPECT_EQ(last_msg_->states[49].cn0, 178)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[49].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[49].cn0)),
+            178)
       << "incorrect value for states[49].cn0, expected 178, is "
       << last_msg_->states[49].cn0;
-  EXPECT_EQ(last_msg_->states[49].mesid.code, 12)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[49].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[49].mesid.code)),
+      12)
       << "incorrect value for states[49].mesid.code, expected 12, is "
       << last_msg_->states[49].mesid.code;
-  EXPECT_EQ(last_msg_->states[49].mesid.sat, 20)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[49].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[49].mesid.sat)),
+      20)
       << "incorrect value for states[49].mesid.sat, expected 20, is "
       << last_msg_->states[49].mesid.sat;
-  EXPECT_EQ(last_msg_->states[50].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[50].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[50].cn0)),
+            0)
       << "incorrect value for states[50].cn0, expected 0, is "
       << last_msg_->states[50].cn0;
-  EXPECT_EQ(last_msg_->states[50].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[50].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[50].mesid.code)),
+      0)
       << "incorrect value for states[50].mesid.code, expected 0, is "
       << last_msg_->states[50].mesid.code;
-  EXPECT_EQ(last_msg_->states[50].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[50].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[50].mesid.sat)),
+      0)
       << "incorrect value for states[50].mesid.sat, expected 0, is "
       << last_msg_->states[50].mesid.sat;
-  EXPECT_EQ(last_msg_->states[51].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[51].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[51].cn0)),
+            0)
       << "incorrect value for states[51].cn0, expected 0, is "
       << last_msg_->states[51].cn0;
-  EXPECT_EQ(last_msg_->states[51].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[51].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[51].mesid.code)),
+      0)
       << "incorrect value for states[51].mesid.code, expected 0, is "
       << last_msg_->states[51].mesid.code;
-  EXPECT_EQ(last_msg_->states[51].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[51].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[51].mesid.sat)),
+      0)
       << "incorrect value for states[51].mesid.sat, expected 0, is "
       << last_msg_->states[51].mesid.sat;
-  EXPECT_EQ(last_msg_->states[52].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[52].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[52].cn0)),
+            0)
       << "incorrect value for states[52].cn0, expected 0, is "
       << last_msg_->states[52].cn0;
-  EXPECT_EQ(last_msg_->states[52].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[52].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[52].mesid.code)),
+      0)
       << "incorrect value for states[52].mesid.code, expected 0, is "
       << last_msg_->states[52].mesid.code;
-  EXPECT_EQ(last_msg_->states[52].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[52].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[52].mesid.sat)),
+      0)
       << "incorrect value for states[52].mesid.sat, expected 0, is "
       << last_msg_->states[52].mesid.sat;
-  EXPECT_EQ(last_msg_->states[53].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[53].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[53].cn0)),
+            0)
       << "incorrect value for states[53].cn0, expected 0, is "
       << last_msg_->states[53].cn0;
-  EXPECT_EQ(last_msg_->states[53].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[53].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[53].mesid.code)),
+      0)
       << "incorrect value for states[53].mesid.code, expected 0, is "
       << last_msg_->states[53].mesid.code;
-  EXPECT_EQ(last_msg_->states[53].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[53].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[53].mesid.sat)),
+      0)
       << "incorrect value for states[53].mesid.sat, expected 0, is "
       << last_msg_->states[53].mesid.sat;
-  EXPECT_EQ(last_msg_->states[54].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[54].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[54].cn0)),
+            0)
       << "incorrect value for states[54].cn0, expected 0, is "
       << last_msg_->states[54].cn0;
-  EXPECT_EQ(last_msg_->states[54].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[54].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[54].mesid.code)),
+      0)
       << "incorrect value for states[54].mesid.code, expected 0, is "
       << last_msg_->states[54].mesid.code;
-  EXPECT_EQ(last_msg_->states[54].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[54].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[54].mesid.sat)),
+      0)
       << "incorrect value for states[54].mesid.sat, expected 0, is "
       << last_msg_->states[54].mesid.sat;
-  EXPECT_EQ(last_msg_->states[55].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[55].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[55].cn0)),
+            0)
       << "incorrect value for states[55].cn0, expected 0, is "
       << last_msg_->states[55].cn0;
-  EXPECT_EQ(last_msg_->states[55].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[55].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[55].mesid.code)),
+      0)
       << "incorrect value for states[55].mesid.code, expected 0, is "
       << last_msg_->states[55].mesid.code;
-  EXPECT_EQ(last_msg_->states[55].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[55].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[55].mesid.sat)),
+      0)
       << "incorrect value for states[55].mesid.sat, expected 0, is "
       << last_msg_->states[55].mesid.sat;
-  EXPECT_EQ(last_msg_->states[56].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[56].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[56].cn0)),
+            0)
       << "incorrect value for states[56].cn0, expected 0, is "
       << last_msg_->states[56].cn0;
-  EXPECT_EQ(last_msg_->states[56].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[56].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[56].mesid.code)),
+      0)
       << "incorrect value for states[56].mesid.code, expected 0, is "
       << last_msg_->states[56].mesid.code;
-  EXPECT_EQ(last_msg_->states[56].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[56].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[56].mesid.sat)),
+      0)
       << "incorrect value for states[56].mesid.sat, expected 0, is "
       << last_msg_->states[56].mesid.sat;
-  EXPECT_EQ(last_msg_->states[57].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[57].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[57].cn0)),
+            0)
       << "incorrect value for states[57].cn0, expected 0, is "
       << last_msg_->states[57].cn0;
-  EXPECT_EQ(last_msg_->states[57].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[57].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[57].mesid.code)),
+      0)
       << "incorrect value for states[57].mesid.code, expected 0, is "
       << last_msg_->states[57].mesid.code;
-  EXPECT_EQ(last_msg_->states[57].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[57].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[57].mesid.sat)),
+      0)
       << "incorrect value for states[57].mesid.sat, expected 0, is "
       << last_msg_->states[57].mesid.sat;
-  EXPECT_EQ(last_msg_->states[58].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[58].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[58].cn0)),
+            0)
       << "incorrect value for states[58].cn0, expected 0, is "
       << last_msg_->states[58].cn0;
-  EXPECT_EQ(last_msg_->states[58].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[58].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[58].mesid.code)),
+      0)
       << "incorrect value for states[58].mesid.code, expected 0, is "
       << last_msg_->states[58].mesid.code;
-  EXPECT_EQ(last_msg_->states[58].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[58].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[58].mesid.sat)),
+      0)
       << "incorrect value for states[58].mesid.sat, expected 0, is "
       << last_msg_->states[58].mesid.sat;
-  EXPECT_EQ(last_msg_->states[59].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[59].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[59].cn0)),
+            0)
       << "incorrect value for states[59].cn0, expected 0, is "
       << last_msg_->states[59].cn0;
-  EXPECT_EQ(last_msg_->states[59].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[59].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[59].mesid.code)),
+      0)
       << "incorrect value for states[59].mesid.code, expected 0, is "
       << last_msg_->states[59].mesid.code;
-  EXPECT_EQ(last_msg_->states[59].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[59].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[59].mesid.sat)),
+      0)
       << "incorrect value for states[59].mesid.sat, expected 0, is "
       << last_msg_->states[59].mesid.sat;
-  EXPECT_EQ(last_msg_->states[60].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[60].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[60].cn0)),
+            0)
       << "incorrect value for states[60].cn0, expected 0, is "
       << last_msg_->states[60].cn0;
-  EXPECT_EQ(last_msg_->states[60].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[60].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[60].mesid.code)),
+      0)
       << "incorrect value for states[60].mesid.code, expected 0, is "
       << last_msg_->states[60].mesid.code;
-  EXPECT_EQ(last_msg_->states[60].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[60].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[60].mesid.sat)),
+      0)
       << "incorrect value for states[60].mesid.sat, expected 0, is "
       << last_msg_->states[60].mesid.sat;
-  EXPECT_EQ(last_msg_->states[61].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[61].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[61].cn0)),
+            0)
       << "incorrect value for states[61].cn0, expected 0, is "
       << last_msg_->states[61].cn0;
-  EXPECT_EQ(last_msg_->states[61].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[61].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[61].mesid.code)),
+      0)
       << "incorrect value for states[61].mesid.code, expected 0, is "
       << last_msg_->states[61].mesid.code;
-  EXPECT_EQ(last_msg_->states[61].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[61].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[61].mesid.sat)),
+      0)
       << "incorrect value for states[61].mesid.sat, expected 0, is "
       << last_msg_->states[61].mesid.sat;
-  EXPECT_EQ(last_msg_->states[62].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[62].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[62].cn0)),
+            0)
       << "incorrect value for states[62].cn0, expected 0, is "
       << last_msg_->states[62].cn0;
-  EXPECT_EQ(last_msg_->states[62].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[62].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[62].mesid.code)),
+      0)
       << "incorrect value for states[62].mesid.code, expected 0, is "
       << last_msg_->states[62].mesid.code;
-  EXPECT_EQ(last_msg_->states[62].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[62].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[62].mesid.sat)),
+      0)
       << "incorrect value for states[62].mesid.sat, expected 0, is "
       << last_msg_->states[62].mesid.sat;
-  EXPECT_EQ(last_msg_->states[63].cn0, 203)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[63].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[63].cn0)),
+            203)
       << "incorrect value for states[63].cn0, expected 203, is "
       << last_msg_->states[63].cn0;
-  EXPECT_EQ(last_msg_->states[63].mesid.code, 14)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[63].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[63].mesid.code)),
+      14)
       << "incorrect value for states[63].mesid.code, expected 14, is "
       << last_msg_->states[63].mesid.code;
-  EXPECT_EQ(last_msg_->states[63].mesid.sat, 36)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[63].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[63].mesid.sat)),
+      36)
       << "incorrect value for states[63].mesid.sat, expected 36, is "
       << last_msg_->states[63].mesid.sat;
-  EXPECT_EQ(last_msg_->states[64].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[64].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[64].cn0)),
+            0)
       << "incorrect value for states[64].cn0, expected 0, is "
       << last_msg_->states[64].cn0;
-  EXPECT_EQ(last_msg_->states[64].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[64].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[64].mesid.code)),
+      0)
       << "incorrect value for states[64].mesid.code, expected 0, is "
       << last_msg_->states[64].mesid.code;
-  EXPECT_EQ(last_msg_->states[64].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[64].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[64].mesid.sat)),
+      0)
       << "incorrect value for states[64].mesid.sat, expected 0, is "
       << last_msg_->states[64].mesid.sat;
-  EXPECT_EQ(last_msg_->states[65].cn0, 158)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[65].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[65].cn0)),
+            158)
       << "incorrect value for states[65].cn0, expected 158, is "
       << last_msg_->states[65].cn0;
-  EXPECT_EQ(last_msg_->states[65].mesid.code, 14)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[65].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[65].mesid.code)),
+      14)
       << "incorrect value for states[65].mesid.code, expected 14, is "
       << last_msg_->states[65].mesid.code;
-  EXPECT_EQ(last_msg_->states[65].mesid.sat, 5)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[65].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[65].mesid.sat)),
+      5)
       << "incorrect value for states[65].mesid.sat, expected 5, is "
       << last_msg_->states[65].mesid.sat;
-  EXPECT_EQ(last_msg_->states[66].cn0, 194)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[66].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[66].cn0)),
+            194)
       << "incorrect value for states[66].cn0, expected 194, is "
       << last_msg_->states[66].cn0;
-  EXPECT_EQ(last_msg_->states[66].mesid.code, 14)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[66].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[66].mesid.code)),
+      14)
       << "incorrect value for states[66].mesid.code, expected 14, is "
       << last_msg_->states[66].mesid.code;
-  EXPECT_EQ(last_msg_->states[66].mesid.sat, 4)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[66].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[66].mesid.sat)),
+      4)
       << "incorrect value for states[66].mesid.sat, expected 4, is "
       << last_msg_->states[66].mesid.sat;
-  EXPECT_EQ(last_msg_->states[67].cn0, 192)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[67].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[67].cn0)),
+            192)
       << "incorrect value for states[67].cn0, expected 192, is "
       << last_msg_->states[67].cn0;
-  EXPECT_EQ(last_msg_->states[67].mesid.code, 14)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[67].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[67].mesid.code)),
+      14)
       << "incorrect value for states[67].mesid.code, expected 14, is "
       << last_msg_->states[67].mesid.code;
-  EXPECT_EQ(last_msg_->states[67].mesid.sat, 11)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[67].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[67].mesid.sat)),
+      11)
       << "incorrect value for states[67].mesid.sat, expected 11, is "
       << last_msg_->states[67].mesid.sat;
-  EXPECT_EQ(last_msg_->states[68].cn0, 207)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[68].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[68].cn0)),
+            207)
       << "incorrect value for states[68].cn0, expected 207, is "
       << last_msg_->states[68].cn0;
-  EXPECT_EQ(last_msg_->states[68].mesid.code, 14)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[68].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[68].mesid.code)),
+      14)
       << "incorrect value for states[68].mesid.code, expected 14, is "
       << last_msg_->states[68].mesid.code;
-  EXPECT_EQ(last_msg_->states[68].mesid.sat, 9)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[68].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[68].mesid.sat)),
+      9)
       << "incorrect value for states[68].mesid.sat, expected 9, is "
       << last_msg_->states[68].mesid.sat;
-  EXPECT_EQ(last_msg_->states[69].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[69].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[69].cn0)),
+            0)
       << "incorrect value for states[69].cn0, expected 0, is "
       << last_msg_->states[69].cn0;
-  EXPECT_EQ(last_msg_->states[69].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[69].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[69].mesid.code)),
+      0)
       << "incorrect value for states[69].mesid.code, expected 0, is "
       << last_msg_->states[69].mesid.code;
-  EXPECT_EQ(last_msg_->states[69].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[69].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[69].mesid.sat)),
+      0)
       << "incorrect value for states[69].mesid.sat, expected 0, is "
       << last_msg_->states[69].mesid.sat;
-  EXPECT_EQ(last_msg_->states[70].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[70].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[70].cn0)),
+            0)
       << "incorrect value for states[70].cn0, expected 0, is "
       << last_msg_->states[70].cn0;
-  EXPECT_EQ(last_msg_->states[70].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[70].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[70].mesid.code)),
+      0)
       << "incorrect value for states[70].mesid.code, expected 0, is "
       << last_msg_->states[70].mesid.code;
-  EXPECT_EQ(last_msg_->states[70].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[70].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[70].mesid.sat)),
+      0)
       << "incorrect value for states[70].mesid.sat, expected 0, is "
       << last_msg_->states[70].mesid.sat;
-  EXPECT_EQ(last_msg_->states[71].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[71].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[71].cn0)),
+            0)
       << "incorrect value for states[71].cn0, expected 0, is "
       << last_msg_->states[71].cn0;
-  EXPECT_EQ(last_msg_->states[71].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[71].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[71].mesid.code)),
+      0)
       << "incorrect value for states[71].mesid.code, expected 0, is "
       << last_msg_->states[71].mesid.code;
-  EXPECT_EQ(last_msg_->states[71].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[71].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[71].mesid.sat)),
+      0)
       << "incorrect value for states[71].mesid.sat, expected 0, is "
       << last_msg_->states[71].mesid.sat;
-  EXPECT_EQ(last_msg_->states[72].cn0, 218)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[72].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[72].cn0)),
+            218)
       << "incorrect value for states[72].cn0, expected 218, is "
       << last_msg_->states[72].cn0;
-  EXPECT_EQ(last_msg_->states[72].mesid.code, 20)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[72].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[72].mesid.code)),
+      20)
       << "incorrect value for states[72].mesid.code, expected 20, is "
       << last_msg_->states[72].mesid.code;
-  EXPECT_EQ(last_msg_->states[72].mesid.sat, 9)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[72].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[72].mesid.sat)),
+      9)
       << "incorrect value for states[72].mesid.sat, expected 9, is "
       << last_msg_->states[72].mesid.sat;
-  EXPECT_EQ(last_msg_->states[73].cn0, 176)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[73].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[73].cn0)),
+            176)
       << "incorrect value for states[73].cn0, expected 176, is "
       << last_msg_->states[73].cn0;
-  EXPECT_EQ(last_msg_->states[73].mesid.code, 20)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[73].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[73].mesid.code)),
+      20)
       << "incorrect value for states[73].mesid.code, expected 20, is "
       << last_msg_->states[73].mesid.code;
-  EXPECT_EQ(last_msg_->states[73].mesid.sat, 5)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[73].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[73].mesid.sat)),
+      5)
       << "incorrect value for states[73].mesid.sat, expected 5, is "
       << last_msg_->states[73].mesid.sat;
-  EXPECT_EQ(last_msg_->states[74].cn0, 217)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[74].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[74].cn0)),
+            217)
       << "incorrect value for states[74].cn0, expected 217, is "
       << last_msg_->states[74].cn0;
-  EXPECT_EQ(last_msg_->states[74].mesid.code, 20)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[74].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[74].mesid.code)),
+      20)
       << "incorrect value for states[74].mesid.code, expected 20, is "
       << last_msg_->states[74].mesid.code;
-  EXPECT_EQ(last_msg_->states[74].mesid.sat, 36)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[74].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[74].mesid.sat)),
+      36)
       << "incorrect value for states[74].mesid.sat, expected 36, is "
       << last_msg_->states[74].mesid.sat;
-  EXPECT_EQ(last_msg_->states[75].cn0, 200)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[75].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[75].cn0)),
+            200)
       << "incorrect value for states[75].cn0, expected 200, is "
       << last_msg_->states[75].cn0;
-  EXPECT_EQ(last_msg_->states[75].mesid.code, 20)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[75].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[75].mesid.code)),
+      20)
       << "incorrect value for states[75].mesid.code, expected 20, is "
       << last_msg_->states[75].mesid.code;
-  EXPECT_EQ(last_msg_->states[75].mesid.sat, 11)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[75].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[75].mesid.sat)),
+      11)
       << "incorrect value for states[75].mesid.sat, expected 11, is "
       << last_msg_->states[75].mesid.sat;
-  EXPECT_EQ(last_msg_->states[76].cn0, 205)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[76].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[76].cn0)),
+            205)
       << "incorrect value for states[76].cn0, expected 205, is "
       << last_msg_->states[76].cn0;
-  EXPECT_EQ(last_msg_->states[76].mesid.code, 20)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[76].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[76].mesid.code)),
+      20)
       << "incorrect value for states[76].mesid.code, expected 20, is "
       << last_msg_->states[76].mesid.code;
-  EXPECT_EQ(last_msg_->states[76].mesid.sat, 4)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[76].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[76].mesid.sat)),
+      4)
       << "incorrect value for states[76].mesid.sat, expected 4, is "
       << last_msg_->states[76].mesid.sat;
-  EXPECT_EQ(last_msg_->states[77].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[77].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[77].cn0)),
+            0)
       << "incorrect value for states[77].cn0, expected 0, is "
       << last_msg_->states[77].cn0;
-  EXPECT_EQ(last_msg_->states[77].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[77].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[77].mesid.code)),
+      0)
       << "incorrect value for states[77].mesid.code, expected 0, is "
       << last_msg_->states[77].mesid.code;
-  EXPECT_EQ(last_msg_->states[77].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[77].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[77].mesid.sat)),
+      0)
       << "incorrect value for states[77].mesid.sat, expected 0, is "
       << last_msg_->states[77].mesid.sat;
-  EXPECT_EQ(last_msg_->states[78].cn0, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[78].cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[78].cn0)),
+            0)
       << "incorrect value for states[78].cn0, expected 0, is "
       << last_msg_->states[78].cn0;
-  EXPECT_EQ(last_msg_->states[78].mesid.code, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[78].mesid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[78].mesid.code)),
+      0)
       << "incorrect value for states[78].mesid.code, expected 0, is "
       << last_msg_->states[78].mesid.code;
-  EXPECT_EQ(last_msg_->states[78].mesid.sat, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[78].mesid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[78].mesid.sat)),
+      0)
       << "incorrect value for states[78].mesid.sat, expected 0, is "
       << last_msg_->states[78].mesid.sat;
 }

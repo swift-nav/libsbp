@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/tracking.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDepB0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -383,421 +390,747 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDepB0, Test) {
   EXPECT_LT((last_msg_->states[0].cn0 * 100 - 5856.20019531 * 100), 0.05)
       << "incorrect value for states[0].cn0, expected 5856.20019531, is "
       << last_msg_->states[0].cn0;
-  EXPECT_EQ(last_msg_->states[0].sid.code, 63)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[0].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[0].sid.code)),
+      63)
       << "incorrect value for states[0].sid.code, expected 63, is "
       << last_msg_->states[0].sid.code;
-  EXPECT_EQ(last_msg_->states[0].sid.reserved, 68)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[0].sid.reserved)),
+            68)
       << "incorrect value for states[0].sid.reserved, expected 68, is "
       << last_msg_->states[0].sid.reserved;
-  EXPECT_EQ(last_msg_->states[0].sid.sat, 58295)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[0].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[0].sid.sat)),
+      58295)
       << "incorrect value for states[0].sid.sat, expected 58295, is "
       << last_msg_->states[0].sid.sat;
-  EXPECT_EQ(last_msg_->states[0].state, 115)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].state)),
+            115)
       << "incorrect value for states[0].state, expected 115, is "
       << last_msg_->states[0].state;
   EXPECT_LT((last_msg_->states[1].cn0 * 100 - 2612.19995117 * 100), 0.05)
       << "incorrect value for states[1].cn0, expected 2612.19995117, is "
       << last_msg_->states[1].cn0;
-  EXPECT_EQ(last_msg_->states[1].sid.code, 43)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[1].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[1].sid.code)),
+      43)
       << "incorrect value for states[1].sid.code, expected 43, is "
       << last_msg_->states[1].sid.code;
-  EXPECT_EQ(last_msg_->states[1].sid.reserved, 222)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[1].sid.reserved)),
+            222)
       << "incorrect value for states[1].sid.reserved, expected 222, is "
       << last_msg_->states[1].sid.reserved;
-  EXPECT_EQ(last_msg_->states[1].sid.sat, 31151)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[1].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[1].sid.sat)),
+      31151)
       << "incorrect value for states[1].sid.sat, expected 31151, is "
       << last_msg_->states[1].sid.sat;
-  EXPECT_EQ(last_msg_->states[1].state, 255)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].state)),
+            255)
       << "incorrect value for states[1].state, expected 255, is "
       << last_msg_->states[1].state;
   EXPECT_LT((last_msg_->states[2].cn0 * 100 - 2925.19995117 * 100), 0.05)
       << "incorrect value for states[2].cn0, expected 2925.19995117, is "
       << last_msg_->states[2].cn0;
-  EXPECT_EQ(last_msg_->states[2].sid.code, 53)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[2].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[2].sid.code)),
+      53)
       << "incorrect value for states[2].sid.code, expected 53, is "
       << last_msg_->states[2].sid.code;
-  EXPECT_EQ(last_msg_->states[2].sid.reserved, 20)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[2].sid.reserved)),
+            20)
       << "incorrect value for states[2].sid.reserved, expected 20, is "
       << last_msg_->states[2].sid.reserved;
-  EXPECT_EQ(last_msg_->states[2].sid.sat, 1520)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[2].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[2].sid.sat)),
+      1520)
       << "incorrect value for states[2].sid.sat, expected 1520, is "
       << last_msg_->states[2].sid.sat;
-  EXPECT_EQ(last_msg_->states[2].state, 78)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].state)),
+            78)
       << "incorrect value for states[2].state, expected 78, is "
       << last_msg_->states[2].state;
   EXPECT_LT((last_msg_->states[3].cn0 * 100 - 3198.19995117 * 100), 0.05)
       << "incorrect value for states[3].cn0, expected 3198.19995117, is "
       << last_msg_->states[3].cn0;
-  EXPECT_EQ(last_msg_->states[3].sid.code, 66)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[3].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[3].sid.code)),
+      66)
       << "incorrect value for states[3].sid.code, expected 66, is "
       << last_msg_->states[3].sid.code;
-  EXPECT_EQ(last_msg_->states[3].sid.reserved, 155)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[3].sid.reserved)),
+            155)
       << "incorrect value for states[3].sid.reserved, expected 155, is "
       << last_msg_->states[3].sid.reserved;
-  EXPECT_EQ(last_msg_->states[3].sid.sat, 60802)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[3].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[3].sid.sat)),
+      60802)
       << "incorrect value for states[3].sid.sat, expected 60802, is "
       << last_msg_->states[3].sid.sat;
-  EXPECT_EQ(last_msg_->states[3].state, 153)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].state)),
+            153)
       << "incorrect value for states[3].state, expected 153, is "
       << last_msg_->states[3].state;
   EXPECT_LT((last_msg_->states[4].cn0 * 100 - 8623.20019531 * 100), 0.05)
       << "incorrect value for states[4].cn0, expected 8623.20019531, is "
       << last_msg_->states[4].cn0;
-  EXPECT_EQ(last_msg_->states[4].sid.code, 161)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[4].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[4].sid.code)),
+      161)
       << "incorrect value for states[4].sid.code, expected 161, is "
       << last_msg_->states[4].sid.code;
-  EXPECT_EQ(last_msg_->states[4].sid.reserved, 190)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[4].sid.reserved)),
+            190)
       << "incorrect value for states[4].sid.reserved, expected 190, is "
       << last_msg_->states[4].sid.reserved;
-  EXPECT_EQ(last_msg_->states[4].sid.sat, 35058)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[4].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[4].sid.sat)),
+      35058)
       << "incorrect value for states[4].sid.sat, expected 35058, is "
       << last_msg_->states[4].sid.sat;
-  EXPECT_EQ(last_msg_->states[4].state, 53)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].state)),
+            53)
       << "incorrect value for states[4].state, expected 53, is "
       << last_msg_->states[4].state;
   EXPECT_LT((last_msg_->states[5].cn0 * 100 - 5915.20019531 * 100), 0.05)
       << "incorrect value for states[5].cn0, expected 5915.20019531, is "
       << last_msg_->states[5].cn0;
-  EXPECT_EQ(last_msg_->states[5].sid.code, 142)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[5].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[5].sid.code)),
+      142)
       << "incorrect value for states[5].sid.code, expected 142, is "
       << last_msg_->states[5].sid.code;
-  EXPECT_EQ(last_msg_->states[5].sid.reserved, 149)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[5].sid.reserved)),
+            149)
       << "incorrect value for states[5].sid.reserved, expected 149, is "
       << last_msg_->states[5].sid.reserved;
-  EXPECT_EQ(last_msg_->states[5].sid.sat, 65405)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[5].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[5].sid.sat)),
+      65405)
       << "incorrect value for states[5].sid.sat, expected 65405, is "
       << last_msg_->states[5].sid.sat;
-  EXPECT_EQ(last_msg_->states[5].state, 153)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].state)),
+            153)
       << "incorrect value for states[5].state, expected 153, is "
       << last_msg_->states[5].state;
   EXPECT_LT((last_msg_->states[6].cn0 * 100 - 5412.20019531 * 100), 0.05)
       << "incorrect value for states[6].cn0, expected 5412.20019531, is "
       << last_msg_->states[6].cn0;
-  EXPECT_EQ(last_msg_->states[6].sid.code, 31)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[6].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[6].sid.code)),
+      31)
       << "incorrect value for states[6].sid.code, expected 31, is "
       << last_msg_->states[6].sid.code;
-  EXPECT_EQ(last_msg_->states[6].sid.reserved, 76)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[6].sid.reserved)),
+            76)
       << "incorrect value for states[6].sid.reserved, expected 76, is "
       << last_msg_->states[6].sid.reserved;
-  EXPECT_EQ(last_msg_->states[6].sid.sat, 24422)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[6].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[6].sid.sat)),
+      24422)
       << "incorrect value for states[6].sid.sat, expected 24422, is "
       << last_msg_->states[6].sid.sat;
-  EXPECT_EQ(last_msg_->states[6].state, 248)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].state)),
+            248)
       << "incorrect value for states[6].state, expected 248, is "
       << last_msg_->states[6].state;
   EXPECT_LT((last_msg_->states[7].cn0 * 100 - 6428.20019531 * 100), 0.05)
       << "incorrect value for states[7].cn0, expected 6428.20019531, is "
       << last_msg_->states[7].cn0;
-  EXPECT_EQ(last_msg_->states[7].sid.code, 27)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[7].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[7].sid.code)),
+      27)
       << "incorrect value for states[7].sid.code, expected 27, is "
       << last_msg_->states[7].sid.code;
-  EXPECT_EQ(last_msg_->states[7].sid.reserved, 12)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[7].sid.reserved)),
+            12)
       << "incorrect value for states[7].sid.reserved, expected 12, is "
       << last_msg_->states[7].sid.reserved;
-  EXPECT_EQ(last_msg_->states[7].sid.sat, 36211)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[7].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[7].sid.sat)),
+      36211)
       << "incorrect value for states[7].sid.sat, expected 36211, is "
       << last_msg_->states[7].sid.sat;
-  EXPECT_EQ(last_msg_->states[7].state, 131)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].state)),
+            131)
       << "incorrect value for states[7].state, expected 131, is "
       << last_msg_->states[7].state;
   EXPECT_LT((last_msg_->states[8].cn0 * 100 - 3104.19995117 * 100), 0.05)
       << "incorrect value for states[8].cn0, expected 3104.19995117, is "
       << last_msg_->states[8].cn0;
-  EXPECT_EQ(last_msg_->states[8].sid.code, 39)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[8].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[8].sid.code)),
+      39)
       << "incorrect value for states[8].sid.code, expected 39, is "
       << last_msg_->states[8].sid.code;
-  EXPECT_EQ(last_msg_->states[8].sid.reserved, 23)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[8].sid.reserved)),
+            23)
       << "incorrect value for states[8].sid.reserved, expected 23, is "
       << last_msg_->states[8].sid.reserved;
-  EXPECT_EQ(last_msg_->states[8].sid.sat, 37676)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[8].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[8].sid.sat)),
+      37676)
       << "incorrect value for states[8].sid.sat, expected 37676, is "
       << last_msg_->states[8].sid.sat;
-  EXPECT_EQ(last_msg_->states[8].state, 208)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].state)),
+            208)
       << "incorrect value for states[8].state, expected 208, is "
       << last_msg_->states[8].state;
   EXPECT_LT((last_msg_->states[9].cn0 * 100 - 3686.19995117 * 100), 0.05)
       << "incorrect value for states[9].cn0, expected 3686.19995117, is "
       << last_msg_->states[9].cn0;
-  EXPECT_EQ(last_msg_->states[9].sid.code, 49)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[9].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[9].sid.code)),
+      49)
       << "incorrect value for states[9].sid.code, expected 49, is "
       << last_msg_->states[9].sid.code;
-  EXPECT_EQ(last_msg_->states[9].sid.reserved, 203)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[9].sid.reserved)),
+            203)
       << "incorrect value for states[9].sid.reserved, expected 203, is "
       << last_msg_->states[9].sid.reserved;
-  EXPECT_EQ(last_msg_->states[9].sid.sat, 64415)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[9].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[9].sid.sat)),
+      64415)
       << "incorrect value for states[9].sid.sat, expected 64415, is "
       << last_msg_->states[9].sid.sat;
-  EXPECT_EQ(last_msg_->states[9].state, 237)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].state)),
+            237)
       << "incorrect value for states[9].state, expected 237, is "
       << last_msg_->states[9].state;
   EXPECT_LT((last_msg_->states[10].cn0 * 100 - 5967.20019531 * 100), 0.05)
       << "incorrect value for states[10].cn0, expected 5967.20019531, is "
       << last_msg_->states[10].cn0;
-  EXPECT_EQ(last_msg_->states[10].sid.code, 128)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].sid.code)),
+      128)
       << "incorrect value for states[10].sid.code, expected 128, is "
       << last_msg_->states[10].sid.code;
-  EXPECT_EQ(last_msg_->states[10].sid.reserved, 206)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[10].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[10].sid.reserved)),
+            206)
       << "incorrect value for states[10].sid.reserved, expected 206, is "
       << last_msg_->states[10].sid.reserved;
-  EXPECT_EQ(last_msg_->states[10].sid.sat, 22486)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].sid.sat)),
+      22486)
       << "incorrect value for states[10].sid.sat, expected 22486, is "
       << last_msg_->states[10].sid.sat;
-  EXPECT_EQ(last_msg_->states[10].state, 70)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].state)),
+      70)
       << "incorrect value for states[10].state, expected 70, is "
       << last_msg_->states[10].state;
   EXPECT_LT((last_msg_->states[11].cn0 * 100 - 5423.20019531 * 100), 0.05)
       << "incorrect value for states[11].cn0, expected 5423.20019531, is "
       << last_msg_->states[11].cn0;
-  EXPECT_EQ(last_msg_->states[11].sid.code, 218)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[11].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[11].sid.code)),
+      218)
       << "incorrect value for states[11].sid.code, expected 218, is "
       << last_msg_->states[11].sid.code;
-  EXPECT_EQ(last_msg_->states[11].sid.reserved, 19)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[11].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[11].sid.reserved)),
+            19)
       << "incorrect value for states[11].sid.reserved, expected 19, is "
       << last_msg_->states[11].sid.reserved;
-  EXPECT_EQ(last_msg_->states[11].sid.sat, 28622)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[11].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[11].sid.sat)),
+      28622)
       << "incorrect value for states[11].sid.sat, expected 28622, is "
       << last_msg_->states[11].sid.sat;
-  EXPECT_EQ(last_msg_->states[11].state, 14)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[11].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[11].state)),
+      14)
       << "incorrect value for states[11].state, expected 14, is "
       << last_msg_->states[11].state;
   EXPECT_LT((last_msg_->states[12].cn0 * 100 - 438.200012207 * 100), 0.05)
       << "incorrect value for states[12].cn0, expected 438.200012207, is "
       << last_msg_->states[12].cn0;
-  EXPECT_EQ(last_msg_->states[12].sid.code, 54)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[12].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[12].sid.code)),
+      54)
       << "incorrect value for states[12].sid.code, expected 54, is "
       << last_msg_->states[12].sid.code;
-  EXPECT_EQ(last_msg_->states[12].sid.reserved, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[12].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[12].sid.reserved)),
+            2)
       << "incorrect value for states[12].sid.reserved, expected 2, is "
       << last_msg_->states[12].sid.reserved;
-  EXPECT_EQ(last_msg_->states[12].sid.sat, 53602)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[12].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[12].sid.sat)),
+      53602)
       << "incorrect value for states[12].sid.sat, expected 53602, is "
       << last_msg_->states[12].sid.sat;
-  EXPECT_EQ(last_msg_->states[12].state, 216)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[12].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[12].state)),
+      216)
       << "incorrect value for states[12].state, expected 216, is "
       << last_msg_->states[12].state;
   EXPECT_LT((last_msg_->states[13].cn0 * 100 - 1862.19995117 * 100), 0.05)
       << "incorrect value for states[13].cn0, expected 1862.19995117, is "
       << last_msg_->states[13].cn0;
-  EXPECT_EQ(last_msg_->states[13].sid.code, 7)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[13].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[13].sid.code)),
+      7)
       << "incorrect value for states[13].sid.code, expected 7, is "
       << last_msg_->states[13].sid.code;
-  EXPECT_EQ(last_msg_->states[13].sid.reserved, 34)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[13].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[13].sid.reserved)),
+            34)
       << "incorrect value for states[13].sid.reserved, expected 34, is "
       << last_msg_->states[13].sid.reserved;
-  EXPECT_EQ(last_msg_->states[13].sid.sat, 25477)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[13].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[13].sid.sat)),
+      25477)
       << "incorrect value for states[13].sid.sat, expected 25477, is "
       << last_msg_->states[13].sid.sat;
-  EXPECT_EQ(last_msg_->states[13].state, 200)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[13].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[13].state)),
+      200)
       << "incorrect value for states[13].state, expected 200, is "
       << last_msg_->states[13].state;
   EXPECT_LT((last_msg_->states[14].cn0 * 100 - 5462.20019531 * 100), 0.05)
       << "incorrect value for states[14].cn0, expected 5462.20019531, is "
       << last_msg_->states[14].cn0;
-  EXPECT_EQ(last_msg_->states[14].sid.code, 135)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[14].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[14].sid.code)),
+      135)
       << "incorrect value for states[14].sid.code, expected 135, is "
       << last_msg_->states[14].sid.code;
-  EXPECT_EQ(last_msg_->states[14].sid.reserved, 46)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[14].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[14].sid.reserved)),
+            46)
       << "incorrect value for states[14].sid.reserved, expected 46, is "
       << last_msg_->states[14].sid.reserved;
-  EXPECT_EQ(last_msg_->states[14].sid.sat, 21803)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[14].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[14].sid.sat)),
+      21803)
       << "incorrect value for states[14].sid.sat, expected 21803, is "
       << last_msg_->states[14].sid.sat;
-  EXPECT_EQ(last_msg_->states[14].state, 155)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[14].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[14].state)),
+      155)
       << "incorrect value for states[14].state, expected 155, is "
       << last_msg_->states[14].state;
   EXPECT_LT((last_msg_->states[15].cn0 * 100 - 7454.20019531 * 100), 0.05)
       << "incorrect value for states[15].cn0, expected 7454.20019531, is "
       << last_msg_->states[15].cn0;
-  EXPECT_EQ(last_msg_->states[15].sid.code, 171)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[15].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[15].sid.code)),
+      171)
       << "incorrect value for states[15].sid.code, expected 171, is "
       << last_msg_->states[15].sid.code;
-  EXPECT_EQ(last_msg_->states[15].sid.reserved, 201)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[15].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[15].sid.reserved)),
+            201)
       << "incorrect value for states[15].sid.reserved, expected 201, is "
       << last_msg_->states[15].sid.reserved;
-  EXPECT_EQ(last_msg_->states[15].sid.sat, 21251)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[15].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[15].sid.sat)),
+      21251)
       << "incorrect value for states[15].sid.sat, expected 21251, is "
       << last_msg_->states[15].sid.sat;
-  EXPECT_EQ(last_msg_->states[15].state, 155)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[15].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[15].state)),
+      155)
       << "incorrect value for states[15].state, expected 155, is "
       << last_msg_->states[15].state;
   EXPECT_LT((last_msg_->states[16].cn0 * 100 - 7134.20019531 * 100), 0.05)
       << "incorrect value for states[16].cn0, expected 7134.20019531, is "
       << last_msg_->states[16].cn0;
-  EXPECT_EQ(last_msg_->states[16].sid.code, 16)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[16].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[16].sid.code)),
+      16)
       << "incorrect value for states[16].sid.code, expected 16, is "
       << last_msg_->states[16].sid.code;
-  EXPECT_EQ(last_msg_->states[16].sid.reserved, 19)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[16].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[16].sid.reserved)),
+            19)
       << "incorrect value for states[16].sid.reserved, expected 19, is "
       << last_msg_->states[16].sid.reserved;
-  EXPECT_EQ(last_msg_->states[16].sid.sat, 50475)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[16].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[16].sid.sat)),
+      50475)
       << "incorrect value for states[16].sid.sat, expected 50475, is "
       << last_msg_->states[16].sid.sat;
-  EXPECT_EQ(last_msg_->states[16].state, 121)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[16].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[16].state)),
+      121)
       << "incorrect value for states[16].state, expected 121, is "
       << last_msg_->states[16].state;
   EXPECT_LT((last_msg_->states[17].cn0 * 100 - 3111.19995117 * 100), 0.05)
       << "incorrect value for states[17].cn0, expected 3111.19995117, is "
       << last_msg_->states[17].cn0;
-  EXPECT_EQ(last_msg_->states[17].sid.code, 63)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[17].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[17].sid.code)),
+      63)
       << "incorrect value for states[17].sid.code, expected 63, is "
       << last_msg_->states[17].sid.code;
-  EXPECT_EQ(last_msg_->states[17].sid.reserved, 176)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[17].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[17].sid.reserved)),
+            176)
       << "incorrect value for states[17].sid.reserved, expected 176, is "
       << last_msg_->states[17].sid.reserved;
-  EXPECT_EQ(last_msg_->states[17].sid.sat, 13813)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[17].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[17].sid.sat)),
+      13813)
       << "incorrect value for states[17].sid.sat, expected 13813, is "
       << last_msg_->states[17].sid.sat;
-  EXPECT_EQ(last_msg_->states[17].state, 128)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[17].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[17].state)),
+      128)
       << "incorrect value for states[17].state, expected 128, is "
       << last_msg_->states[17].state;
   EXPECT_LT((last_msg_->states[18].cn0 * 100 - 4297.20019531 * 100), 0.05)
       << "incorrect value for states[18].cn0, expected 4297.20019531, is "
       << last_msg_->states[18].cn0;
-  EXPECT_EQ(last_msg_->states[18].sid.code, 153)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[18].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[18].sid.code)),
+      153)
       << "incorrect value for states[18].sid.code, expected 153, is "
       << last_msg_->states[18].sid.code;
-  EXPECT_EQ(last_msg_->states[18].sid.reserved, 51)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[18].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[18].sid.reserved)),
+            51)
       << "incorrect value for states[18].sid.reserved, expected 51, is "
       << last_msg_->states[18].sid.reserved;
-  EXPECT_EQ(last_msg_->states[18].sid.sat, 15636)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[18].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[18].sid.sat)),
+      15636)
       << "incorrect value for states[18].sid.sat, expected 15636, is "
       << last_msg_->states[18].sid.sat;
-  EXPECT_EQ(last_msg_->states[18].state, 36)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[18].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[18].state)),
+      36)
       << "incorrect value for states[18].state, expected 36, is "
       << last_msg_->states[18].state;
   EXPECT_LT((last_msg_->states[19].cn0 * 100 - 2649.19995117 * 100), 0.05)
       << "incorrect value for states[19].cn0, expected 2649.19995117, is "
       << last_msg_->states[19].cn0;
-  EXPECT_EQ(last_msg_->states[19].sid.code, 140)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[19].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[19].sid.code)),
+      140)
       << "incorrect value for states[19].sid.code, expected 140, is "
       << last_msg_->states[19].sid.code;
-  EXPECT_EQ(last_msg_->states[19].sid.reserved, 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[19].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[19].sid.reserved)),
+            22)
       << "incorrect value for states[19].sid.reserved, expected 22, is "
       << last_msg_->states[19].sid.reserved;
-  EXPECT_EQ(last_msg_->states[19].sid.sat, 29778)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[19].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[19].sid.sat)),
+      29778)
       << "incorrect value for states[19].sid.sat, expected 29778, is "
       << last_msg_->states[19].sid.sat;
-  EXPECT_EQ(last_msg_->states[19].state, 46)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[19].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[19].state)),
+      46)
       << "incorrect value for states[19].state, expected 46, is "
       << last_msg_->states[19].state;
   EXPECT_LT((last_msg_->states[20].cn0 * 100 - 941.200012207 * 100), 0.05)
       << "incorrect value for states[20].cn0, expected 941.200012207, is "
       << last_msg_->states[20].cn0;
-  EXPECT_EQ(last_msg_->states[20].sid.code, 96)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[20].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[20].sid.code)),
+      96)
       << "incorrect value for states[20].sid.code, expected 96, is "
       << last_msg_->states[20].sid.code;
-  EXPECT_EQ(last_msg_->states[20].sid.reserved, 143)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[20].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[20].sid.reserved)),
+            143)
       << "incorrect value for states[20].sid.reserved, expected 143, is "
       << last_msg_->states[20].sid.reserved;
-  EXPECT_EQ(last_msg_->states[20].sid.sat, 37443)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[20].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[20].sid.sat)),
+      37443)
       << "incorrect value for states[20].sid.sat, expected 37443, is "
       << last_msg_->states[20].sid.sat;
-  EXPECT_EQ(last_msg_->states[20].state, 177)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[20].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[20].state)),
+      177)
       << "incorrect value for states[20].state, expected 177, is "
       << last_msg_->states[20].state;
   EXPECT_LT((last_msg_->states[21].cn0 * 100 - 1539.19995117 * 100), 0.05)
       << "incorrect value for states[21].cn0, expected 1539.19995117, is "
       << last_msg_->states[21].cn0;
-  EXPECT_EQ(last_msg_->states[21].sid.code, 201)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[21].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[21].sid.code)),
+      201)
       << "incorrect value for states[21].sid.code, expected 201, is "
       << last_msg_->states[21].sid.code;
-  EXPECT_EQ(last_msg_->states[21].sid.reserved, 251)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[21].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[21].sid.reserved)),
+            251)
       << "incorrect value for states[21].sid.reserved, expected 251, is "
       << last_msg_->states[21].sid.reserved;
-  EXPECT_EQ(last_msg_->states[21].sid.sat, 41011)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[21].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[21].sid.sat)),
+      41011)
       << "incorrect value for states[21].sid.sat, expected 41011, is "
       << last_msg_->states[21].sid.sat;
-  EXPECT_EQ(last_msg_->states[21].state, 220)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[21].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[21].state)),
+      220)
       << "incorrect value for states[21].state, expected 220, is "
       << last_msg_->states[21].state;
   EXPECT_LT((last_msg_->states[22].cn0 * 100 - 1443.19995117 * 100), 0.05)
       << "incorrect value for states[22].cn0, expected 1443.19995117, is "
       << last_msg_->states[22].cn0;
-  EXPECT_EQ(last_msg_->states[22].sid.code, 161)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[22].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[22].sid.code)),
+      161)
       << "incorrect value for states[22].sid.code, expected 161, is "
       << last_msg_->states[22].sid.code;
-  EXPECT_EQ(last_msg_->states[22].sid.reserved, 220)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[22].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[22].sid.reserved)),
+            220)
       << "incorrect value for states[22].sid.reserved, expected 220, is "
       << last_msg_->states[22].sid.reserved;
-  EXPECT_EQ(last_msg_->states[22].sid.sat, 706)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[22].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[22].sid.sat)),
+      706)
       << "incorrect value for states[22].sid.sat, expected 706, is "
       << last_msg_->states[22].sid.sat;
-  EXPECT_EQ(last_msg_->states[22].state, 168)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[22].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[22].state)),
+      168)
       << "incorrect value for states[22].state, expected 168, is "
       << last_msg_->states[22].state;
   EXPECT_LT((last_msg_->states[23].cn0 * 100 - 1074.19995117 * 100), 0.05)
       << "incorrect value for states[23].cn0, expected 1074.19995117, is "
       << last_msg_->states[23].cn0;
-  EXPECT_EQ(last_msg_->states[23].sid.code, 125)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[23].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[23].sid.code)),
+      125)
       << "incorrect value for states[23].sid.code, expected 125, is "
       << last_msg_->states[23].sid.code;
-  EXPECT_EQ(last_msg_->states[23].sid.reserved, 178)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[23].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[23].sid.reserved)),
+            178)
       << "incorrect value for states[23].sid.reserved, expected 178, is "
       << last_msg_->states[23].sid.reserved;
-  EXPECT_EQ(last_msg_->states[23].sid.sat, 2312)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[23].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[23].sid.sat)),
+      2312)
       << "incorrect value for states[23].sid.sat, expected 2312, is "
       << last_msg_->states[23].sid.sat;
-  EXPECT_EQ(last_msg_->states[23].state, 69)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[23].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[23].state)),
+      69)
       << "incorrect value for states[23].state, expected 69, is "
       << last_msg_->states[23].state;
   EXPECT_LT((last_msg_->states[24].cn0 * 100 - 2122.19995117 * 100), 0.05)
       << "incorrect value for states[24].cn0, expected 2122.19995117, is "
       << last_msg_->states[24].cn0;
-  EXPECT_EQ(last_msg_->states[24].sid.code, 186)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[24].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[24].sid.code)),
+      186)
       << "incorrect value for states[24].sid.code, expected 186, is "
       << last_msg_->states[24].sid.code;
-  EXPECT_EQ(last_msg_->states[24].sid.reserved, 171)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[24].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[24].sid.reserved)),
+            171)
       << "incorrect value for states[24].sid.reserved, expected 171, is "
       << last_msg_->states[24].sid.reserved;
-  EXPECT_EQ(last_msg_->states[24].sid.sat, 34580)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[24].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[24].sid.sat)),
+      34580)
       << "incorrect value for states[24].sid.sat, expected 34580, is "
       << last_msg_->states[24].sid.sat;
-  EXPECT_EQ(last_msg_->states[24].state, 185)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[24].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[24].state)),
+      185)
       << "incorrect value for states[24].state, expected 185, is "
       << last_msg_->states[24].state;
   EXPECT_LT((last_msg_->states[25].cn0 * 100 - 9076.20019531 * 100), 0.05)
       << "incorrect value for states[25].cn0, expected 9076.20019531, is "
       << last_msg_->states[25].cn0;
-  EXPECT_EQ(last_msg_->states[25].sid.code, 85)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[25].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[25].sid.code)),
+      85)
       << "incorrect value for states[25].sid.code, expected 85, is "
       << last_msg_->states[25].sid.code;
-  EXPECT_EQ(last_msg_->states[25].sid.reserved, 170)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[25].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[25].sid.reserved)),
+            170)
       << "incorrect value for states[25].sid.reserved, expected 170, is "
       << last_msg_->states[25].sid.reserved;
-  EXPECT_EQ(last_msg_->states[25].sid.sat, 39804)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[25].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[25].sid.sat)),
+      39804)
       << "incorrect value for states[25].sid.sat, expected 39804, is "
       << last_msg_->states[25].sid.sat;
-  EXPECT_EQ(last_msg_->states[25].state, 18)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[25].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[25].state)),
+      18)
       << "incorrect value for states[25].state, expected 18, is "
       << last_msg_->states[25].state;
   EXPECT_LT((last_msg_->states[26].cn0 * 100 - 4781.20019531 * 100), 0.05)
       << "incorrect value for states[26].cn0, expected 4781.20019531, is "
       << last_msg_->states[26].cn0;
-  EXPECT_EQ(last_msg_->states[26].sid.code, 255)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[26].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[26].sid.code)),
+      255)
       << "incorrect value for states[26].sid.code, expected 255, is "
       << last_msg_->states[26].sid.code;
-  EXPECT_EQ(last_msg_->states[26].sid.reserved, 186)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[26].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[26].sid.reserved)),
+            186)
       << "incorrect value for states[26].sid.reserved, expected 186, is "
       << last_msg_->states[26].sid.reserved;
-  EXPECT_EQ(last_msg_->states[26].sid.sat, 52980)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[26].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[26].sid.sat)),
+      52980)
       << "incorrect value for states[26].sid.sat, expected 52980, is "
       << last_msg_->states[26].sid.sat;
-  EXPECT_EQ(last_msg_->states[26].state, 57)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[26].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[26].state)),
+      57)
       << "incorrect value for states[26].state, expected 57, is "
       << last_msg_->states[26].state;
   EXPECT_LT((last_msg_->states[27].cn0 * 100 - 3076.19995117 * 100), 0.05)
       << "incorrect value for states[27].cn0, expected 3076.19995117, is "
       << last_msg_->states[27].cn0;
-  EXPECT_EQ(last_msg_->states[27].sid.code, 181)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[27].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[27].sid.code)),
+      181)
       << "incorrect value for states[27].sid.code, expected 181, is "
       << last_msg_->states[27].sid.code;
-  EXPECT_EQ(last_msg_->states[27].sid.reserved, 175)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[27].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->states[27].sid.reserved)),
+            175)
       << "incorrect value for states[27].sid.reserved, expected 175, is "
       << last_msg_->states[27].sid.reserved;
-  EXPECT_EQ(last_msg_->states[27].sid.sat, 24007)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[27].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[27].sid.sat)),
+      24007)
       << "incorrect value for states[27].sid.sat, expected 24007, is "
       << last_msg_->states[27].sid.sat;
-  EXPECT_EQ(last_msg_->states[27].state, 165)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[27].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[27].state)),
+      165)
       << "incorrect value for states[27].state, expected 165, is "
       << last_msg_->states[27].state;
 }

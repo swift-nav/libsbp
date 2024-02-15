@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/flash.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_flash_MsgFlashReadReq0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -126,18 +133,28 @@ TEST_F(Test_legacy_auto_check_sbp_flash_MsgFlashReadReq0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->addr_len, 71)
+  EXPECT_EQ(get_as<decltype(last_msg_->addr_len)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->addr_len)),
+            71)
       << "incorrect value for addr_len, expected 71, is "
       << last_msg_->addr_len;
-  EXPECT_EQ(last_msg_->addr_start[0], 28)
+  EXPECT_EQ(get_as<decltype(last_msg_->addr_start[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->addr_start[0])),
+            28)
       << "incorrect value for addr_start[0], expected 28, is "
       << last_msg_->addr_start[0];
-  EXPECT_EQ(last_msg_->addr_start[1], 75)
+  EXPECT_EQ(get_as<decltype(last_msg_->addr_start[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->addr_start[1])),
+            75)
       << "incorrect value for addr_start[1], expected 75, is "
       << last_msg_->addr_start[1];
-  EXPECT_EQ(last_msg_->addr_start[2], 244)
+  EXPECT_EQ(get_as<decltype(last_msg_->addr_start[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->addr_start[2])),
+            244)
       << "incorrect value for addr_start[2], expected 244, is "
       << last_msg_->addr_start[2];
-  EXPECT_EQ(last_msg_->target, 241)
+  EXPECT_EQ(get_as<decltype(last_msg_->target)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->target)),
+            241)
       << "incorrect value for target, expected 241, is " << last_msg_->target;
 }

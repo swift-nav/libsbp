@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -120,7 +127,9 @@ TEST_F(Test_legacy_auto_check_sbp_bootload_MsgBootloaderHandshakeResp0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 0);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
   {
     const char check_string[] = {(char)118, (char)49, (char)46, (char)50,
@@ -232,16 +241,24 @@ TEST_F(Test_legacy_auto_check_sbp_bootload_MsgBootloaderHandshakeResp1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->handshake[0], 118)
+  EXPECT_EQ(get_as<decltype(last_msg_->handshake[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->handshake[0])),
+            118)
       << "incorrect value for handshake[0], expected 118, is "
       << last_msg_->handshake[0];
-  EXPECT_EQ(last_msg_->handshake[1], 49)
+  EXPECT_EQ(get_as<decltype(last_msg_->handshake[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->handshake[1])),
+            49)
       << "incorrect value for handshake[1], expected 49, is "
       << last_msg_->handshake[1];
-  EXPECT_EQ(last_msg_->handshake[2], 46)
+  EXPECT_EQ(get_as<decltype(last_msg_->handshake[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->handshake[2])),
+            46)
       << "incorrect value for handshake[2], expected 46, is "
       << last_msg_->handshake[2];
-  EXPECT_EQ(last_msg_->handshake[3], 50)
+  EXPECT_EQ(get_as<decltype(last_msg_->handshake[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->handshake[3])),
+            50)
       << "incorrect value for handshake[3], expected 50, is "
       << last_msg_->handshake[3];
 }

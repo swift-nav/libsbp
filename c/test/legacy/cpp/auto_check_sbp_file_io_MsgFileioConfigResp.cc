@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/file_io.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_file_io_MsgFileioConfigResp0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -116,16 +123,24 @@ TEST_F(Test_legacy_auto_check_sbp_file_io_MsgFileioConfigResp0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->batch_size, 1040160728)
+  EXPECT_EQ(get_as<decltype(last_msg_->batch_size)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->batch_size)),
+            1040160728)
       << "incorrect value for batch_size, expected 1040160728, is "
       << last_msg_->batch_size;
-  EXPECT_EQ(last_msg_->fileio_version, 2420269324)
+  EXPECT_EQ(get_as<decltype(last_msg_->fileio_version)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fileio_version)),
+            2420269324)
       << "incorrect value for fileio_version, expected 2420269324, is "
       << last_msg_->fileio_version;
-  EXPECT_EQ(last_msg_->sequence, 1530154154)
+  EXPECT_EQ(get_as<decltype(last_msg_->sequence)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sequence)),
+            1530154154)
       << "incorrect value for sequence, expected 1530154154, is "
       << last_msg_->sequence;
-  EXPECT_EQ(last_msg_->window_size, 53262997)
+  EXPECT_EQ(get_as<decltype(last_msg_->window_size)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->window_size)),
+            53262997)
       << "incorrect value for window_size, expected 53262997, is "
       << last_msg_->window_size;
 }

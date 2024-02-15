@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/system.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_system_MsgInsUpdates0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -116,19 +123,33 @@ TEST_F(Test_legacy_auto_check_sbp_system_MsgInsUpdates0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 789);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gnsspos, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->gnsspos)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gnsspos)),
+            0)
       << "incorrect value for gnsspos, expected 0, is " << last_msg_->gnsspos;
-  EXPECT_EQ(last_msg_->gnssvel, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->gnssvel)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gnssvel)),
+            0)
       << "incorrect value for gnssvel, expected 0, is " << last_msg_->gnssvel;
-  EXPECT_EQ(last_msg_->nhc, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->nhc)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->nhc)),
+            0)
       << "incorrect value for nhc, expected 0, is " << last_msg_->nhc;
-  EXPECT_EQ(last_msg_->speed, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->speed)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->speed)),
+            0)
       << "incorrect value for speed, expected 0, is " << last_msg_->speed;
-  EXPECT_EQ(last_msg_->tow, 504489300)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            504489300)
       << "incorrect value for tow, expected 504489300, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wheelticks, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->wheelticks)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wheelticks)),
+            0)
       << "incorrect value for wheelticks, expected 0, is "
       << last_msg_->wheelticks;
-  EXPECT_EQ(last_msg_->zerovel, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->zerovel)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->zerovel)),
+            0)
       << "incorrect value for zerovel, expected 0, is " << last_msg_->zerovel;
 }

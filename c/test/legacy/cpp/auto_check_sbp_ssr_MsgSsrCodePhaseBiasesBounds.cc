@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ssr.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -154,95 +161,180 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->const_id, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->const_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->const_id)),
+            1)
       << "incorrect value for const_id, expected 1, is " << last_msg_->const_id;
-  EXPECT_EQ(last_msg_->header.num_msgs, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.num_msgs)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.num_msgs)),
+            1)
       << "incorrect value for header.num_msgs, expected 1, is "
       << last_msg_->header.num_msgs;
-  EXPECT_EQ(last_msg_->header.seq_num, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.seq_num)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.seq_num)),
+            2)
       << "incorrect value for header.seq_num, expected 2, is "
       << last_msg_->header.seq_num;
-  EXPECT_EQ(last_msg_->header.sol_id, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.sol_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.sol_id)),
+            14)
       << "incorrect value for header.sol_id, expected 14, is "
       << last_msg_->header.sol_id;
-  EXPECT_EQ(last_msg_->header.time.tow, 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.time.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.time.tow)),
+            180)
       << "incorrect value for header.time.tow, expected 180, is "
       << last_msg_->header.time.tow;
-  EXPECT_EQ(last_msg_->header.time.wn, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.time.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.time.wn)),
+            3)
       << "incorrect value for header.time.wn, expected 3, is "
       << last_msg_->header.time.wn;
-  EXPECT_EQ(last_msg_->header.update_interval, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.update_interval)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->header.update_interval)),
+            1)
       << "incorrect value for header.update_interval, expected 1, is "
       << last_msg_->header.update_interval;
-  EXPECT_EQ(last_msg_->n_sats_signals, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats_signals)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats_signals)),
+            3)
       << "incorrect value for n_sats_signals, expected 3, is "
       << last_msg_->n_sats_signals;
-  EXPECT_EQ(last_msg_->satellites_signals[0].code_bias_bound_mu, 39)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[0].code_bias_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[0].code_bias_bound_mu)),
+      39)
       << "incorrect value for satellites_signals[0].code_bias_bound_mu, "
          "expected 39, is "
       << last_msg_->satellites_signals[0].code_bias_bound_mu;
-  EXPECT_EQ(last_msg_->satellites_signals[0].code_bias_bound_sig, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[0].code_bias_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[0].code_bias_bound_sig)),
+      1)
       << "incorrect value for satellites_signals[0].code_bias_bound_sig, "
          "expected 1, is "
       << last_msg_->satellites_signals[0].code_bias_bound_sig;
-  EXPECT_EQ(last_msg_->satellites_signals[0].phase_bias_bound_mu, 39)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[0].phase_bias_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[0].phase_bias_bound_mu)),
+      39)
       << "incorrect value for satellites_signals[0].phase_bias_bound_mu, "
          "expected 39, is "
       << last_msg_->satellites_signals[0].phase_bias_bound_mu;
-  EXPECT_EQ(last_msg_->satellites_signals[0].phase_bias_bound_sig, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[0].phase_bias_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[0].phase_bias_bound_sig)),
+      1)
       << "incorrect value for satellites_signals[0].phase_bias_bound_sig, "
          "expected 1, is "
       << last_msg_->satellites_signals[0].phase_bias_bound_sig;
-  EXPECT_EQ(last_msg_->satellites_signals[0].sat_id, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->satellites_signals[0].sat_id)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->satellites_signals[0].sat_id)),
+            0)
       << "incorrect value for satellites_signals[0].sat_id, expected 0, is "
       << last_msg_->satellites_signals[0].sat_id;
-  EXPECT_EQ(last_msg_->satellites_signals[0].signal_id, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->satellites_signals[0].signal_id)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->satellites_signals[0].signal_id)),
+            3)
       << "incorrect value for satellites_signals[0].signal_id, expected 3, is "
       << last_msg_->satellites_signals[0].signal_id;
-  EXPECT_EQ(last_msg_->satellites_signals[1].code_bias_bound_mu, 39)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[1].code_bias_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[1].code_bias_bound_mu)),
+      39)
       << "incorrect value for satellites_signals[1].code_bias_bound_mu, "
          "expected 39, is "
       << last_msg_->satellites_signals[1].code_bias_bound_mu;
-  EXPECT_EQ(last_msg_->satellites_signals[1].code_bias_bound_sig, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[1].code_bias_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[1].code_bias_bound_sig)),
+      1)
       << "incorrect value for satellites_signals[1].code_bias_bound_sig, "
          "expected 1, is "
       << last_msg_->satellites_signals[1].code_bias_bound_sig;
-  EXPECT_EQ(last_msg_->satellites_signals[1].phase_bias_bound_mu, 39)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[1].phase_bias_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[1].phase_bias_bound_mu)),
+      39)
       << "incorrect value for satellites_signals[1].phase_bias_bound_mu, "
          "expected 39, is "
       << last_msg_->satellites_signals[1].phase_bias_bound_mu;
-  EXPECT_EQ(last_msg_->satellites_signals[1].phase_bias_bound_sig, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[1].phase_bias_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[1].phase_bias_bound_sig)),
+      1)
       << "incorrect value for satellites_signals[1].phase_bias_bound_sig, "
          "expected 1, is "
       << last_msg_->satellites_signals[1].phase_bias_bound_sig;
-  EXPECT_EQ(last_msg_->satellites_signals[1].sat_id, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->satellites_signals[1].sat_id)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->satellites_signals[1].sat_id)),
+            1)
       << "incorrect value for satellites_signals[1].sat_id, expected 1, is "
       << last_msg_->satellites_signals[1].sat_id;
-  EXPECT_EQ(last_msg_->satellites_signals[1].signal_id, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->satellites_signals[1].signal_id)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->satellites_signals[1].signal_id)),
+            3)
       << "incorrect value for satellites_signals[1].signal_id, expected 3, is "
       << last_msg_->satellites_signals[1].signal_id;
-  EXPECT_EQ(last_msg_->satellites_signals[2].code_bias_bound_mu, 39)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[2].code_bias_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[2].code_bias_bound_mu)),
+      39)
       << "incorrect value for satellites_signals[2].code_bias_bound_mu, "
          "expected 39, is "
       << last_msg_->satellites_signals[2].code_bias_bound_mu;
-  EXPECT_EQ(last_msg_->satellites_signals[2].code_bias_bound_sig, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[2].code_bias_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[2].code_bias_bound_sig)),
+      1)
       << "incorrect value for satellites_signals[2].code_bias_bound_sig, "
          "expected 1, is "
       << last_msg_->satellites_signals[2].code_bias_bound_sig;
-  EXPECT_EQ(last_msg_->satellites_signals[2].phase_bias_bound_mu, 39)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[2].phase_bias_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[2].phase_bias_bound_mu)),
+      39)
       << "incorrect value for satellites_signals[2].phase_bias_bound_mu, "
          "expected 39, is "
       << last_msg_->satellites_signals[2].phase_bias_bound_mu;
-  EXPECT_EQ(last_msg_->satellites_signals[2].phase_bias_bound_sig, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->satellites_signals[2].phase_bias_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->satellites_signals[2].phase_bias_bound_sig)),
+      1)
       << "incorrect value for satellites_signals[2].phase_bias_bound_sig, "
          "expected 1, is "
       << last_msg_->satellites_signals[2].phase_bias_bound_sig;
-  EXPECT_EQ(last_msg_->satellites_signals[2].sat_id, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->satellites_signals[2].sat_id)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->satellites_signals[2].sat_id)),
+            1)
       << "incorrect value for satellites_signals[2].sat_id, expected 1, is "
       << last_msg_->satellites_signals[2].sat_id;
-  EXPECT_EQ(last_msg_->satellites_signals[2].signal_id, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->satellites_signals[2].signal_id)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->satellites_signals[2].signal_id)),
+            1)
       << "incorrect value for satellites_signals[2].signal_id, expected 1, is "
       << last_msg_->satellites_signals[2].signal_id;
-  EXPECT_EQ(last_msg_->ssr_iod, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->ssr_iod)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ssr_iod)),
+            15)
       << "incorrect value for ssr_iod, expected 15, is " << last_msg_->ssr_iod;
 }

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ndb.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ndb_MsgNdbEvent0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -120,32 +127,52 @@ TEST_F(Test_legacy_auto_check_sbp_ndb_MsgNdbEvent0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 44708);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->data_source, 115)
+  EXPECT_EQ(get_as<decltype(last_msg_->data_source)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->data_source)),
+            115)
       << "incorrect value for data_source, expected 115, is "
       << last_msg_->data_source;
-  EXPECT_EQ(last_msg_->event, 249)
+  EXPECT_EQ(get_as<decltype(last_msg_->event)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->event)),
+            249)
       << "incorrect value for event, expected 249, is " << last_msg_->event;
-  EXPECT_EQ(last_msg_->object_sid.code, 74)
+  EXPECT_EQ(get_as<decltype(last_msg_->object_sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->object_sid.code)),
+            74)
       << "incorrect value for object_sid.code, expected 74, is "
       << last_msg_->object_sid.code;
-  EXPECT_EQ(last_msg_->object_sid.sat, 238)
+  EXPECT_EQ(get_as<decltype(last_msg_->object_sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->object_sid.sat)),
+            238)
       << "incorrect value for object_sid.sat, expected 238, is "
       << last_msg_->object_sid.sat;
-  EXPECT_EQ(last_msg_->object_type, 73)
+  EXPECT_EQ(get_as<decltype(last_msg_->object_type)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->object_type)),
+            73)
       << "incorrect value for object_type, expected 73, is "
       << last_msg_->object_type;
-  EXPECT_EQ(last_msg_->original_sender, 38070)
+  EXPECT_EQ(get_as<decltype(last_msg_->original_sender)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->original_sender)),
+            38070)
       << "incorrect value for original_sender, expected 38070, is "
       << last_msg_->original_sender;
-  EXPECT_EQ(last_msg_->recv_time, 299461164286)
+  EXPECT_EQ(get_as<decltype(last_msg_->recv_time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->recv_time)),
+            299461164286)
       << "incorrect value for recv_time, expected 299461164286, is "
       << last_msg_->recv_time;
-  EXPECT_EQ(last_msg_->result, 205)
+  EXPECT_EQ(get_as<decltype(last_msg_->result)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->result)),
+            205)
       << "incorrect value for result, expected 205, is " << last_msg_->result;
-  EXPECT_EQ(last_msg_->src_sid.code, 66)
+  EXPECT_EQ(get_as<decltype(last_msg_->src_sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->src_sid.code)),
+            66)
       << "incorrect value for src_sid.code, expected 66, is "
       << last_msg_->src_sid.code;
-  EXPECT_EQ(last_msg_->src_sid.sat, 98)
+  EXPECT_EQ(get_as<decltype(last_msg_->src_sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->src_sid.sat)),
+            98)
       << "incorrect value for src_sid.sat, expected 98, is "
       << last_msg_->src_sid.sat;
 }

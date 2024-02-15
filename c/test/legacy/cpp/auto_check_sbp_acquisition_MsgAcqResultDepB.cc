@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -121,12 +128,18 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB0, Test) {
       << "incorrect value for cf, expected 4995.1171875, is " << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 322.0 * 100), 0.05)
       << "incorrect value for cp, expected 322.0, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            9)
       << "incorrect value for sid.sat, expected 9, is " << last_msg_->sid.sat;
   EXPECT_LT((last_msg_->snr * 100 - 36.663608551 * 100), 0.05)
       << "incorrect value for snr, expected 36.663608551, is "
@@ -225,12 +238,18 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB1, Test) {
       << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 843.0 * 100), 0.05)
       << "incorrect value for cp, expected 843.0, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            3)
       << "incorrect value for sid.sat, expected 3, is " << last_msg_->sid.sat;
   EXPECT_LT((last_msg_->snr * 100 - 36.1687545776 * 100), 0.05)
       << "incorrect value for snr, expected 36.1687545776, is "
@@ -328,12 +347,18 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB2, Test) {
       << "incorrect value for cf, expected 4745.36132812, is " << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 794.0 * 100), 0.05)
       << "incorrect value for cp, expected 794.0, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 18)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            18)
       << "incorrect value for sid.sat, expected 18, is " << last_msg_->sid.sat;
   EXPECT_LT((last_msg_->snr * 100 - 35.7772369385 * 100), 0.05)
       << "incorrect value for snr, expected 35.7772369385, is "
@@ -431,12 +456,18 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB3, Test) {
       << "incorrect value for cf, expected 2497.55859375, is " << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 258.5 * 100), 0.05)
       << "incorrect value for cp, expected 258.5, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 17)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            17)
       << "incorrect value for sid.sat, expected 17, is " << last_msg_->sid.sat;
   EXPECT_LT((last_msg_->snr * 100 - 35.6945114136 * 100), 0.05)
       << "incorrect value for snr, expected 35.6945114136, is "
@@ -535,12 +566,18 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepB4, Test) {
       << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 522.0 * 100), 0.05)
       << "incorrect value for cp, expected 522.0, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            5)
       << "incorrect value for sid.sat, expected 5, is " << last_msg_->sid.sat;
   EXPECT_LT((last_msg_->snr * 100 - 35.5241775513 * 100), 0.05)
       << "incorrect value for snr, expected 35.5241775513, is "

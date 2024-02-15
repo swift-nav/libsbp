@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/flash.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_flash_MsgFlashReadResp0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -126,18 +133,28 @@ TEST_F(Test_legacy_auto_check_sbp_flash_MsgFlashReadResp0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->addr_len, 124)
+  EXPECT_EQ(get_as<decltype(last_msg_->addr_len)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->addr_len)),
+            124)
       << "incorrect value for addr_len, expected 124, is "
       << last_msg_->addr_len;
-  EXPECT_EQ(last_msg_->addr_start[0], 155)
+  EXPECT_EQ(get_as<decltype(last_msg_->addr_start[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->addr_start[0])),
+            155)
       << "incorrect value for addr_start[0], expected 155, is "
       << last_msg_->addr_start[0];
-  EXPECT_EQ(last_msg_->addr_start[1], 52)
+  EXPECT_EQ(get_as<decltype(last_msg_->addr_start[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->addr_start[1])),
+            52)
       << "incorrect value for addr_start[1], expected 52, is "
       << last_msg_->addr_start[1];
-  EXPECT_EQ(last_msg_->addr_start[2], 172)
+  EXPECT_EQ(get_as<decltype(last_msg_->addr_start[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->addr_start[2])),
+            172)
       << "incorrect value for addr_start[2], expected 172, is "
       << last_msg_->addr_start[2];
-  EXPECT_EQ(last_msg_->target, 136)
+  EXPECT_EQ(get_as<decltype(last_msg_->target)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->target)),
+            136)
       << "incorrect value for target, expected 136, is " << last_msg_->target;
 }

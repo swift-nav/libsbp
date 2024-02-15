@@ -1,4 +1,101 @@
+# Causes the build to default to the custom toolchain
+build --incompatible_enable_cc_toolchain_resolution
+
 build --action_env=BAZEL_CXXOPTS='-std=c++14'
 
 build:clang-tidy --aspects @rules_swiftnav//clang_tidy:clang_tidy.bzl%clang_tidy_aspect
 build:clang-tidy --output_groups=report
+
+# Shared sanitizer configuration
+common:sanitize -c dbg
+common:sanitize --cxxopt=-g3
+common:sanitize --copt=-g3
+common:sanitize --linkopt=-g3
+#common:sanitize --cxxopt=-O1
+#common:sanitize --copt=-O1
+#common:sanitize --linkopt=-O1
+common:sanitize --cxxopt=-fno-omit-frame-pointer
+common:sanitize --copt=-fno-omit-frame-pointer
+common:sanitize --linkopt=-fno-omit-frame-pointer
+common:sanitize --@rules_swiftnav//cc:enable_symbolizer=true
+
+# Sanitizer overhead can cause some functions to become so large that
+# the compiler falls back to a linear register allocator.  This
+# shouldn't cause a sanitizer build to fail.
+common:sanitize --cxxopt=-Wno-error=disabled-optimization
+common:sanitize --copt=-Wno-error=disabled-optimization 
+common:sanitize --linkopt=-Wno-error=disabled-optimization
+# https://github.com/bazelbuild/bazel/issues/12797#issuecomment-980641064
+common:sanitize --linkopt='-fsanitize-link-c++-runtime'
+common:sanitize --cxxopt=-fPIC
+common:sanitize --copt=-fPIC
+common:sanitize --linkopt=-fPIC
+
+# Address sanitizer
+common:asan --config=sanitize
+common:asan --cxxopt=-fsanitize=address
+common:asan --copt=-fsanitize=address
+common:asan --linkopt=-fsanitize=address
+common:asan --cxxopt=-fno-optimize-sibling-calls
+common:asan --copt=-fno-optimize-sibling-calls
+common:asan --linkopt=-fno-optimize-sibling-calls
+common:asan --platform_suffix=asan
+
+# Undefined behavior sanitizer
+common:ubsan --config=sanitize
+common:ubsan --cxxopt=-fsanitize=undefined
+common:ubsan --copt=-fsanitize=undefined
+common:ubsan --linkopt=-fsanitize=undefined
+common:ubsan --cxxopt=-fno-sanitize-recover=all
+common:ubsan --copt=-fno-sanitize-recover=all
+common:ubsan --linkopt=-fno-sanitize-recover=all
+common:ubsan --cxxopt=-fsanitize=local-bounds
+common:ubsan --copt=-fsanitize=local-bounds
+common:ubsan --linkopt=-fsanitize=local-bounds
+common:ubsan --@rules_swiftnav//cc:enable_rtti=true
+# Unfortunately the current build setup doesn't seem to provide stack
+# frame names using clang++ and llvm-symbolizer.  (This was also the
+# case in cmake, but the default of g++ there _did_ provide frame
+# names in backtraces.)
+test:ubsan --action_env="UBSAN_OPTIONS=print_stacktrace=1"
+run:ubsan --action_env="UBSAN_OPTIONS=print_stacktrace=1"
+# vptr sanitizer is horribly broken to the point of throwing false positives at a
+# rate that suppressions or an ignore list are impractical.
+common:ubsan --cxxopt=-fno-sanitize=vptr
+common:ubsan --linkopt=-fno-sanitize=vptr
+# enum sanitizer is really annoying in this repo even though it's useful
+common:ubsan --cxxopt=-fno-sanitize=enum
+common:ubsan --copt=-fno-sanitize=enum
+common:ubsan --linkopt=-fno-sanitize=enum
+common:ubsan --platform_suffix=ubsan
+
+# Dynamic memory sanitizer
+#
+# Warning: takes an incredible amount of space!  Try testing only one
+# target at a time.
+common:msan --config=sanitize
+common:msan --cxxopt=-fsanitize=memory
+common:msan --copt=-fsanitize=memory
+common:msan --linkopt=-fsanitize=memory
+common:msan --cxxopt=-fsanitize-memory-track-origins=2
+common:msan --copt=-fsanitize-memory-track-origins=2
+common:msan --linkopt=-fsanitize-memory-track-origins=2
+common:msan --cxxopt=-fsanitize-memory-use-after-dtor
+common:msan --copt=-fsanitize-memory-use-after-dtor
+common:msan --linkopt=-fsanitize-memory-use-after-dtor
+common:msan --platform_suffix=msan
+
+# > Currently, ThreadSanitizer symbolizes its output using an external
+# > addr2line process (this will be fixed in future).
+#
+# https://clang.llvm.org/docs/ThreadSanitizer.html#usage
+common:tsan --config=sanitize
+common:tsan --cxxopt=-fsanitize=thread
+common:tsan --copt=-fsanitize=thread
+common:tsan --linkopt=-fsanitize=thread
+common:tsan --platform_suffix=tsan
+
+# Helpful aliases
+common:asan_ubsan --config=asan
+common:asan_ubsan --config=ubsan
+common:ubsan_asan --config=asan_ubsan

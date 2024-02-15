@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -116,17 +123,29 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gdop, 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->gdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gdop)),
+            180)
       << "incorrect value for gdop, expected 180, is " << last_msg_->gdop;
-  EXPECT_EQ(last_msg_->hdop, 160)
+  EXPECT_EQ(get_as<decltype(last_msg_->hdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hdop)),
+            160)
       << "incorrect value for hdop, expected 160, is " << last_msg_->hdop;
-  EXPECT_EQ(last_msg_->pdop, 190)
+  EXPECT_EQ(get_as<decltype(last_msg_->pdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pdop)),
+            190)
       << "incorrect value for pdop, expected 190, is " << last_msg_->pdop;
-  EXPECT_EQ(last_msg_->tdop, 170)
+  EXPECT_EQ(get_as<decltype(last_msg_->tdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tdop)),
+            170)
       << "incorrect value for tdop, expected 170, is " << last_msg_->tdop;
-  EXPECT_EQ(last_msg_->tow, 2568200)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            2568200)
       << "incorrect value for tow, expected 2568200, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vdop, 150)
+  EXPECT_EQ(get_as<decltype(last_msg_->vdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vdop)),
+            150)
       << "incorrect value for vdop, expected 150, is " << last_msg_->vdop;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA1
@@ -216,17 +235,29 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gdop, 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->gdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gdop)),
+            180)
       << "incorrect value for gdop, expected 180, is " << last_msg_->gdop;
-  EXPECT_EQ(last_msg_->hdop, 160)
+  EXPECT_EQ(get_as<decltype(last_msg_->hdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hdop)),
+            160)
       << "incorrect value for hdop, expected 160, is " << last_msg_->hdop;
-  EXPECT_EQ(last_msg_->pdop, 190)
+  EXPECT_EQ(get_as<decltype(last_msg_->pdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pdop)),
+            190)
       << "incorrect value for pdop, expected 190, is " << last_msg_->pdop;
-  EXPECT_EQ(last_msg_->tdop, 170)
+  EXPECT_EQ(get_as<decltype(last_msg_->tdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tdop)),
+            170)
       << "incorrect value for tdop, expected 170, is " << last_msg_->tdop;
-  EXPECT_EQ(last_msg_->tow, 2569200)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            2569200)
       << "incorrect value for tow, expected 2569200, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vdop, 150)
+  EXPECT_EQ(get_as<decltype(last_msg_->vdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vdop)),
+            150)
       << "incorrect value for vdop, expected 150, is " << last_msg_->vdop;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA2
@@ -316,17 +347,29 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA2, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gdop, 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->gdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gdop)),
+            180)
       << "incorrect value for gdop, expected 180, is " << last_msg_->gdop;
-  EXPECT_EQ(last_msg_->hdop, 160)
+  EXPECT_EQ(get_as<decltype(last_msg_->hdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hdop)),
+            160)
       << "incorrect value for hdop, expected 160, is " << last_msg_->hdop;
-  EXPECT_EQ(last_msg_->pdop, 190)
+  EXPECT_EQ(get_as<decltype(last_msg_->pdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pdop)),
+            190)
       << "incorrect value for pdop, expected 190, is " << last_msg_->pdop;
-  EXPECT_EQ(last_msg_->tdop, 170)
+  EXPECT_EQ(get_as<decltype(last_msg_->tdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tdop)),
+            170)
       << "incorrect value for tdop, expected 170, is " << last_msg_->tdop;
-  EXPECT_EQ(last_msg_->tow, 2570200)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            2570200)
       << "incorrect value for tow, expected 2570200, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vdop, 150)
+  EXPECT_EQ(get_as<decltype(last_msg_->vdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vdop)),
+            150)
       << "incorrect value for vdop, expected 150, is " << last_msg_->vdop;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA3
@@ -416,17 +459,29 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA3, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gdop, 247)
+  EXPECT_EQ(get_as<decltype(last_msg_->gdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gdop)),
+            247)
       << "incorrect value for gdop, expected 247, is " << last_msg_->gdop;
-  EXPECT_EQ(last_msg_->hdop, 273)
+  EXPECT_EQ(get_as<decltype(last_msg_->hdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hdop)),
+            273)
       << "incorrect value for hdop, expected 273, is " << last_msg_->hdop;
-  EXPECT_EQ(last_msg_->pdop, 215)
+  EXPECT_EQ(get_as<decltype(last_msg_->pdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pdop)),
+            215)
       << "incorrect value for pdop, expected 215, is " << last_msg_->pdop;
-  EXPECT_EQ(last_msg_->tdop, 123)
+  EXPECT_EQ(get_as<decltype(last_msg_->tdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tdop)),
+            123)
       << "incorrect value for tdop, expected 123, is " << last_msg_->tdop;
-  EXPECT_EQ(last_msg_->tow, 407084500)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407084500)
       << "incorrect value for tow, expected 407084500, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vdop, 44)
+  EXPECT_EQ(get_as<decltype(last_msg_->vdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vdop)),
+            44)
       << "incorrect value for vdop, expected 44, is " << last_msg_->vdop;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA4
@@ -516,17 +571,29 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA4, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gdop, 65535)
+  EXPECT_EQ(get_as<decltype(last_msg_->gdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gdop)),
+            65535)
       << "incorrect value for gdop, expected 65535, is " << last_msg_->gdop;
-  EXPECT_EQ(last_msg_->hdop, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->hdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hdop)),
+            0)
       << "incorrect value for hdop, expected 0, is " << last_msg_->hdop;
-  EXPECT_EQ(last_msg_->pdop, 65535)
+  EXPECT_EQ(get_as<decltype(last_msg_->pdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pdop)),
+            65535)
       << "incorrect value for pdop, expected 65535, is " << last_msg_->pdop;
-  EXPECT_EQ(last_msg_->tdop, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tdop)),
+            0)
       << "incorrect value for tdop, expected 0, is " << last_msg_->tdop;
-  EXPECT_EQ(last_msg_->tow, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            0)
       << "incorrect value for tow, expected 0, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vdop, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->vdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vdop)),
+            0)
       << "incorrect value for vdop, expected 0, is " << last_msg_->vdop;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA5
@@ -616,17 +683,29 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA5, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gdop, 348)
+  EXPECT_EQ(get_as<decltype(last_msg_->gdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gdop)),
+            348)
       << "incorrect value for gdop, expected 348, is " << last_msg_->gdop;
-  EXPECT_EQ(last_msg_->hdop, 637)
+  EXPECT_EQ(get_as<decltype(last_msg_->hdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hdop)),
+            637)
       << "incorrect value for hdop, expected 637, is " << last_msg_->hdop;
-  EXPECT_EQ(last_msg_->pdop, 312)
+  EXPECT_EQ(get_as<decltype(last_msg_->pdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pdop)),
+            312)
       << "incorrect value for pdop, expected 312, is " << last_msg_->pdop;
-  EXPECT_EQ(last_msg_->tdop, 155)
+  EXPECT_EQ(get_as<decltype(last_msg_->tdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tdop)),
+            155)
       << "incorrect value for tdop, expected 155, is " << last_msg_->tdop;
-  EXPECT_EQ(last_msg_->tow, 407152000)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407152000)
       << "incorrect value for tow, expected 407152000, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vdop, 113)
+  EXPECT_EQ(get_as<decltype(last_msg_->vdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vdop)),
+            113)
       << "incorrect value for vdop, expected 113, is " << last_msg_->vdop;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA6
@@ -716,17 +795,29 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA6, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gdop, 348)
+  EXPECT_EQ(get_as<decltype(last_msg_->gdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gdop)),
+            348)
       << "incorrect value for gdop, expected 348, is " << last_msg_->gdop;
-  EXPECT_EQ(last_msg_->hdop, 637)
+  EXPECT_EQ(get_as<decltype(last_msg_->hdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hdop)),
+            637)
       << "incorrect value for hdop, expected 637, is " << last_msg_->hdop;
-  EXPECT_EQ(last_msg_->pdop, 311)
+  EXPECT_EQ(get_as<decltype(last_msg_->pdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pdop)),
+            311)
       << "incorrect value for pdop, expected 311, is " << last_msg_->pdop;
-  EXPECT_EQ(last_msg_->tdop, 155)
+  EXPECT_EQ(get_as<decltype(last_msg_->tdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tdop)),
+            155)
       << "incorrect value for tdop, expected 155, is " << last_msg_->tdop;
-  EXPECT_EQ(last_msg_->tow, 407153000)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407153000)
       << "incorrect value for tow, expected 407153000, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vdop, 113)
+  EXPECT_EQ(get_as<decltype(last_msg_->vdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vdop)),
+            113)
       << "incorrect value for vdop, expected 113, is " << last_msg_->vdop;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA7
@@ -816,17 +907,29 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA7, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gdop, 348)
+  EXPECT_EQ(get_as<decltype(last_msg_->gdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gdop)),
+            348)
       << "incorrect value for gdop, expected 348, is " << last_msg_->gdop;
-  EXPECT_EQ(last_msg_->hdop, 637)
+  EXPECT_EQ(get_as<decltype(last_msg_->hdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hdop)),
+            637)
       << "incorrect value for hdop, expected 637, is " << last_msg_->hdop;
-  EXPECT_EQ(last_msg_->pdop, 311)
+  EXPECT_EQ(get_as<decltype(last_msg_->pdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pdop)),
+            311)
       << "incorrect value for pdop, expected 311, is " << last_msg_->pdop;
-  EXPECT_EQ(last_msg_->tdop, 155)
+  EXPECT_EQ(get_as<decltype(last_msg_->tdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tdop)),
+            155)
       << "incorrect value for tdop, expected 155, is " << last_msg_->tdop;
-  EXPECT_EQ(last_msg_->tow, 407154000)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407154000)
       << "incorrect value for tow, expected 407154000, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vdop, 112)
+  EXPECT_EQ(get_as<decltype(last_msg_->vdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vdop)),
+            112)
       << "incorrect value for vdop, expected 112, is " << last_msg_->vdop;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgDopsDepA8
@@ -916,16 +1019,28 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDopsDepA8, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->gdop, 348)
+  EXPECT_EQ(get_as<decltype(last_msg_->gdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gdop)),
+            348)
       << "incorrect value for gdop, expected 348, is " << last_msg_->gdop;
-  EXPECT_EQ(last_msg_->hdop, 637)
+  EXPECT_EQ(get_as<decltype(last_msg_->hdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hdop)),
+            637)
       << "incorrect value for hdop, expected 637, is " << last_msg_->hdop;
-  EXPECT_EQ(last_msg_->pdop, 311)
+  EXPECT_EQ(get_as<decltype(last_msg_->pdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pdop)),
+            311)
       << "incorrect value for pdop, expected 311, is " << last_msg_->pdop;
-  EXPECT_EQ(last_msg_->tdop, 155)
+  EXPECT_EQ(get_as<decltype(last_msg_->tdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tdop)),
+            155)
       << "incorrect value for tdop, expected 155, is " << last_msg_->tdop;
-  EXPECT_EQ(last_msg_->tow, 407155000)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407155000)
       << "incorrect value for tow, expected 407155000, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vdop, 112)
+  EXPECT_EQ(get_as<decltype(last_msg_->vdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vdop)),
+            112)
       << "incorrect value for vdop, expected 112, is " << last_msg_->vdop;
 }

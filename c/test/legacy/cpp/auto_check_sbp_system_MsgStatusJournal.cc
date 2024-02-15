@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/system.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_system_MsgStatusJournal0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -140,52 +147,99 @@ TEST_F(Test_legacy_auto_check_sbp_system_MsgStatusJournal0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 35027);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->journal[0].report.component, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[0].report.component)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[0].report.component)),
+            6)
       << "incorrect value for journal[0].report.component, expected 6, is "
       << last_msg_->journal[0].report.component;
-  EXPECT_EQ(last_msg_->journal[0].report.generic, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[0].report.generic)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[0].report.generic)),
+            1)
       << "incorrect value for journal[0].report.generic, expected 1, is "
       << last_msg_->journal[0].report.generic;
-  EXPECT_EQ(last_msg_->journal[0].report.specific, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[0].report.specific)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[0].report.specific)),
+            13)
       << "incorrect value for journal[0].report.specific, expected 13, is "
       << last_msg_->journal[0].report.specific;
-  EXPECT_EQ(last_msg_->journal[0].uptime, 4242)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->journal[0].uptime)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->journal[0].uptime)),
+      4242)
       << "incorrect value for journal[0].uptime, expected 4242, is "
       << last_msg_->journal[0].uptime;
-  EXPECT_EQ(last_msg_->journal[1].report.component, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[1].report.component)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[1].report.component)),
+            6)
       << "incorrect value for journal[1].report.component, expected 6, is "
       << last_msg_->journal[1].report.component;
-  EXPECT_EQ(last_msg_->journal[1].report.generic, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[1].report.generic)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[1].report.generic)),
+            1)
       << "incorrect value for journal[1].report.generic, expected 1, is "
       << last_msg_->journal[1].report.generic;
-  EXPECT_EQ(last_msg_->journal[1].report.specific, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[1].report.specific)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[1].report.specific)),
+            14)
       << "incorrect value for journal[1].report.specific, expected 14, is "
       << last_msg_->journal[1].report.specific;
-  EXPECT_EQ(last_msg_->journal[1].uptime, 5050)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->journal[1].uptime)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->journal[1].uptime)),
+      5050)
       << "incorrect value for journal[1].uptime, expected 5050, is "
       << last_msg_->journal[1].uptime;
-  EXPECT_EQ(last_msg_->journal[2].report.component, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[2].report.component)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[2].report.component)),
+            6)
       << "incorrect value for journal[2].report.component, expected 6, is "
       << last_msg_->journal[2].report.component;
-  EXPECT_EQ(last_msg_->journal[2].report.generic, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[2].report.generic)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[2].report.generic)),
+            1)
       << "incorrect value for journal[2].report.generic, expected 1, is "
       << last_msg_->journal[2].report.generic;
-  EXPECT_EQ(last_msg_->journal[2].report.specific, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[2].report.specific)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[2].report.specific)),
+            15)
       << "incorrect value for journal[2].report.specific, expected 15, is "
       << last_msg_->journal[2].report.specific;
-  EXPECT_EQ(last_msg_->journal[2].uptime, 8888)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->journal[2].uptime)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->journal[2].uptime)),
+      8888)
       << "incorrect value for journal[2].uptime, expected 8888, is "
       << last_msg_->journal[2].uptime;
-  EXPECT_EQ(last_msg_->reporting_system, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->reporting_system)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->reporting_system)),
+      1)
       << "incorrect value for reporting_system, expected 1, is "
       << last_msg_->reporting_system;
-  EXPECT_EQ(last_msg_->sbp_version, 1025)
+  EXPECT_EQ(get_as<decltype(last_msg_->sbp_version)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sbp_version)),
+            1025)
       << "incorrect value for sbp_version, expected 1025, is "
       << last_msg_->sbp_version;
-  EXPECT_EQ(last_msg_->sequence_descriptor, 16)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->sequence_descriptor)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->sequence_descriptor)),
+      16)
       << "incorrect value for sequence_descriptor, expected 16, is "
       << last_msg_->sequence_descriptor;
-  EXPECT_EQ(last_msg_->total_status_reports, 100)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->total_status_reports)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->total_status_reports)),
+      100)
       << "incorrect value for total_status_reports, expected 100, is "
       << last_msg_->total_status_reports;
 }
@@ -283,28 +337,51 @@ TEST_F(Test_legacy_auto_check_sbp_system_MsgStatusJournal1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 35027);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->journal[0].report.component, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[0].report.component)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[0].report.component)),
+            6)
       << "incorrect value for journal[0].report.component, expected 6, is "
       << last_msg_->journal[0].report.component;
-  EXPECT_EQ(last_msg_->journal[0].report.generic, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[0].report.generic)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[0].report.generic)),
+            1)
       << "incorrect value for journal[0].report.generic, expected 1, is "
       << last_msg_->journal[0].report.generic;
-  EXPECT_EQ(last_msg_->journal[0].report.specific, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->journal[0].report.specific)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->journal[0].report.specific)),
+            13)
       << "incorrect value for journal[0].report.specific, expected 13, is "
       << last_msg_->journal[0].report.specific;
-  EXPECT_EQ(last_msg_->journal[0].uptime, 4242)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->journal[0].uptime)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->journal[0].uptime)),
+      4242)
       << "incorrect value for journal[0].uptime, expected 4242, is "
       << last_msg_->journal[0].uptime;
-  EXPECT_EQ(last_msg_->reporting_system, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->reporting_system)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->reporting_system)),
+      1)
       << "incorrect value for reporting_system, expected 1, is "
       << last_msg_->reporting_system;
-  EXPECT_EQ(last_msg_->sbp_version, 1025)
+  EXPECT_EQ(get_as<decltype(last_msg_->sbp_version)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sbp_version)),
+            1025)
       << "incorrect value for sbp_version, expected 1025, is "
       << last_msg_->sbp_version;
-  EXPECT_EQ(last_msg_->sequence_descriptor, 16)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->sequence_descriptor)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->sequence_descriptor)),
+      16)
       << "incorrect value for sequence_descriptor, expected 16, is "
       << last_msg_->sequence_descriptor;
-  EXPECT_EQ(last_msg_->total_status_reports, 100)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->total_status_reports)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->total_status_reports)),
+      100)
       << "incorrect value for total_status_reports, expected 100, is "
       << last_msg_->total_status_reports;
 }

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ssr.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBounds0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -150,98 +157,183 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBounds0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->const_id, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->const_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->const_id)),
+            1)
       << "incorrect value for const_id, expected 1, is " << last_msg_->const_id;
-  EXPECT_EQ(last_msg_->header.num_msgs, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.num_msgs)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.num_msgs)),
+            1)
       << "incorrect value for header.num_msgs, expected 1, is "
       << last_msg_->header.num_msgs;
-  EXPECT_EQ(last_msg_->header.seq_num, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.seq_num)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.seq_num)),
+            2)
       << "incorrect value for header.seq_num, expected 2, is "
       << last_msg_->header.seq_num;
-  EXPECT_EQ(last_msg_->header.sol_id, 48)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.sol_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.sol_id)),
+            48)
       << "incorrect value for header.sol_id, expected 48, is "
       << last_msg_->header.sol_id;
-  EXPECT_EQ(last_msg_->header.time.tow, 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.time.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.time.tow)),
+            180)
       << "incorrect value for header.time.tow, expected 180, is "
       << last_msg_->header.time.tow;
-  EXPECT_EQ(last_msg_->header.time.wn, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.time.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.time.wn)),
+            3)
       << "incorrect value for header.time.wn, expected 3, is "
       << last_msg_->header.time.wn;
-  EXPECT_EQ(last_msg_->header.update_interval, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.update_interval)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->header.update_interval)),
+            3)
       << "incorrect value for header.update_interval, expected 3, is "
       << last_msg_->header.update_interval;
-  EXPECT_EQ(last_msg_->n_sats, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats)),
+            2)
       << "incorrect value for n_sats, expected 2, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[0].clock_bound_mu, 39)
+  EXPECT_EQ(get_as<decltype(last_msg_->orbit_clock_bounds[0].clock_bound_mu)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->orbit_clock_bounds[0].clock_bound_mu)),
+            39)
       << "incorrect value for orbit_clock_bounds[0].clock_bound_mu, expected "
          "39, is "
       << last_msg_->orbit_clock_bounds[0].clock_bound_mu;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[0].clock_bound_sig, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->orbit_clock_bounds[0].clock_bound_sig)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->orbit_clock_bounds[0].clock_bound_sig)),
+            1)
       << "incorrect value for orbit_clock_bounds[0].clock_bound_sig, expected "
          "1, is "
       << last_msg_->orbit_clock_bounds[0].clock_bound_sig;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[0].orb_along_bound_mu, 38)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[0].orb_along_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[0].orb_along_bound_mu)),
+      38)
       << "incorrect value for orbit_clock_bounds[0].orb_along_bound_mu, "
          "expected 38, is "
       << last_msg_->orbit_clock_bounds[0].orb_along_bound_mu;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[0].orb_along_bound_sig, 2)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[0].orb_along_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[0].orb_along_bound_sig)),
+      2)
       << "incorrect value for orbit_clock_bounds[0].orb_along_bound_sig, "
          "expected 2, is "
       << last_msg_->orbit_clock_bounds[0].orb_along_bound_sig;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[0].orb_cross_bound_mu, 37)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[0].orb_cross_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[0].orb_cross_bound_mu)),
+      37)
       << "incorrect value for orbit_clock_bounds[0].orb_cross_bound_mu, "
          "expected 37, is "
       << last_msg_->orbit_clock_bounds[0].orb_cross_bound_mu;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[0].orb_cross_bound_sig, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[0].orb_cross_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[0].orb_cross_bound_sig)),
+      3)
       << "incorrect value for orbit_clock_bounds[0].orb_cross_bound_sig, "
          "expected 3, is "
       << last_msg_->orbit_clock_bounds[0].orb_cross_bound_sig;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[0].orb_radial_bound_mu, 39)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[0].orb_radial_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[0].orb_radial_bound_mu)),
+      39)
       << "incorrect value for orbit_clock_bounds[0].orb_radial_bound_mu, "
          "expected 39, is "
       << last_msg_->orbit_clock_bounds[0].orb_radial_bound_mu;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[0].orb_radial_bound_sig, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[0].orb_radial_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[0].orb_radial_bound_sig)),
+      1)
       << "incorrect value for orbit_clock_bounds[0].orb_radial_bound_sig, "
          "expected 1, is "
       << last_msg_->orbit_clock_bounds[0].orb_radial_bound_sig;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[0].sat_id, 24)
+  EXPECT_EQ(get_as<decltype(last_msg_->orbit_clock_bounds[0].sat_id)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->orbit_clock_bounds[0].sat_id)),
+            24)
       << "incorrect value for orbit_clock_bounds[0].sat_id, expected 24, is "
       << last_msg_->orbit_clock_bounds[0].sat_id;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[1].clock_bound_mu, 39)
+  EXPECT_EQ(get_as<decltype(last_msg_->orbit_clock_bounds[1].clock_bound_mu)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->orbit_clock_bounds[1].clock_bound_mu)),
+            39)
       << "incorrect value for orbit_clock_bounds[1].clock_bound_mu, expected "
          "39, is "
       << last_msg_->orbit_clock_bounds[1].clock_bound_mu;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[1].clock_bound_sig, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->orbit_clock_bounds[1].clock_bound_sig)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->orbit_clock_bounds[1].clock_bound_sig)),
+            1)
       << "incorrect value for orbit_clock_bounds[1].clock_bound_sig, expected "
          "1, is "
       << last_msg_->orbit_clock_bounds[1].clock_bound_sig;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[1].orb_along_bound_mu, 38)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[1].orb_along_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[1].orb_along_bound_mu)),
+      38)
       << "incorrect value for orbit_clock_bounds[1].orb_along_bound_mu, "
          "expected 38, is "
       << last_msg_->orbit_clock_bounds[1].orb_along_bound_mu;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[1].orb_along_bound_sig, 2)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[1].orb_along_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[1].orb_along_bound_sig)),
+      2)
       << "incorrect value for orbit_clock_bounds[1].orb_along_bound_sig, "
          "expected 2, is "
       << last_msg_->orbit_clock_bounds[1].orb_along_bound_sig;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[1].orb_cross_bound_mu, 37)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[1].orb_cross_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[1].orb_cross_bound_mu)),
+      37)
       << "incorrect value for orbit_clock_bounds[1].orb_cross_bound_mu, "
          "expected 37, is "
       << last_msg_->orbit_clock_bounds[1].orb_cross_bound_mu;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[1].orb_cross_bound_sig, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[1].orb_cross_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[1].orb_cross_bound_sig)),
+      3)
       << "incorrect value for orbit_clock_bounds[1].orb_cross_bound_sig, "
          "expected 3, is "
       << last_msg_->orbit_clock_bounds[1].orb_cross_bound_sig;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[1].orb_radial_bound_mu, 39)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[1].orb_radial_bound_mu)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[1].orb_radial_bound_mu)),
+      39)
       << "incorrect value for orbit_clock_bounds[1].orb_radial_bound_mu, "
          "expected 39, is "
       << last_msg_->orbit_clock_bounds[1].orb_radial_bound_mu;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[1].orb_radial_bound_sig, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->orbit_clock_bounds[1].orb_radial_bound_sig)>(
+          reinterpret_cast<const uint8_t *>(
+              &last_msg_->orbit_clock_bounds[1].orb_radial_bound_sig)),
+      1)
       << "incorrect value for orbit_clock_bounds[1].orb_radial_bound_sig, "
          "expected 1, is "
       << last_msg_->orbit_clock_bounds[1].orb_radial_bound_sig;
-  EXPECT_EQ(last_msg_->orbit_clock_bounds[1].sat_id, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->orbit_clock_bounds[1].sat_id)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->orbit_clock_bounds[1].sat_id)),
+            3)
       << "incorrect value for orbit_clock_bounds[1].sat_id, expected 3, is "
       << last_msg_->orbit_clock_bounds[1].sat_id;
-  EXPECT_EQ(last_msg_->ssr_iod, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->ssr_iod)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ssr_iod)),
+            15)
       << "incorrect value for ssr_iod, expected 15, is " << last_msg_->ssr_iod;
 }

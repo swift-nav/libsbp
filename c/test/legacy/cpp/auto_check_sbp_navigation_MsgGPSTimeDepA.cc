@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -113,14 +120,22 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            0)
       << "incorrect value for ns_residual, expected 0, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 2567800)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            2567800)
       << "incorrect value for tow, expected 2567800, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1787)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1787)
       << "incorrect value for wn, expected 1787, is " << last_msg_->wn;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA1
@@ -207,14 +222,22 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            0)
       << "incorrect value for ns_residual, expected 0, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 2567900)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            2567900)
       << "incorrect value for tow, expected 2567900, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1787)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1787)
       << "incorrect value for wn, expected 1787, is " << last_msg_->wn;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA2
@@ -301,14 +324,22 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA2, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            0)
       << "incorrect value for ns_residual, expected 0, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 2568000)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            2568000)
       << "incorrect value for tow, expected 2568000, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1787)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1787)
       << "incorrect value for wn, expected 1787, is " << last_msg_->wn;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA3
@@ -395,14 +426,22 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA3, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            0)
       << "incorrect value for ns_residual, expected 0, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 2568100)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            2568100)
       << "incorrect value for tow, expected 2568100, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1787)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1787)
       << "incorrect value for wn, expected 1787, is " << last_msg_->wn;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA4
@@ -489,14 +528,22 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA4, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            0)
       << "incorrect value for ns_residual, expected 0, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 2568200)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            2568200)
       << "incorrect value for tow, expected 2568200, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1787)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1787)
       << "incorrect value for wn, expected 1787, is " << last_msg_->wn;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA5
@@ -584,14 +631,22 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA5, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, -224401)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            -224401)
       << "incorrect value for ns_residual, expected -224401, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 407084500)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407084500)
       << "incorrect value for tow, expected 407084500, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1838)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA6
@@ -678,14 +733,22 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA6, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, 223085)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            223085)
       << "incorrect value for ns_residual, expected 223085, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 407084600)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407084600)
       << "incorrect value for tow, expected 407084600, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1838)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA7
@@ -773,14 +836,22 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA7, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, -222999)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            -222999)
       << "incorrect value for ns_residual, expected -222999, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 407084700)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407084700)
       << "incorrect value for tow, expected 407084700, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1838)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA8
@@ -867,14 +938,22 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA8, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, 236272)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            236272)
       << "incorrect value for ns_residual, expected 236272, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 407084800)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407084800)
       << "incorrect value for tow, expected 407084800, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1838)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA9
@@ -962,14 +1041,22 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA9, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, -236144)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            -236144)
       << "incorrect value for ns_residual, expected -236144, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 407084900)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407084900)
       << "incorrect value for tow, expected 407084900, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1838)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA10
@@ -1057,13 +1144,21 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgGPSTimeDepA10, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, -334131)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            -334131)
       << "incorrect value for ns_residual, expected -334131, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->tow, 407151150)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            407151150)
       << "incorrect value for tow, expected 407151150, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1838)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1838)
       << "incorrect value for wn, expected 1838, is " << last_msg_->wn;
 }

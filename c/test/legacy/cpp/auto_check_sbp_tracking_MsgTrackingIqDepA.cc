@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/tracking.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_tracking_MsgTrackingIqDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -135,33 +142,53 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingIqDepA0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 17336);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->channel, 139)
+  EXPECT_EQ(get_as<decltype(last_msg_->channel)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->channel)),
+            139)
       << "incorrect value for channel, expected 139, is " << last_msg_->channel;
-  EXPECT_EQ(last_msg_->corrs[0].I, 1621776995)
+  EXPECT_EQ(get_as<decltype(last_msg_->corrs[0].I)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corrs[0].I)),
+            1621776995)
       << "incorrect value for corrs[0].I, expected 1621776995, is "
       << last_msg_->corrs[0].I;
-  EXPECT_EQ(last_msg_->corrs[0].Q, -1591641785)
+  EXPECT_EQ(get_as<decltype(last_msg_->corrs[0].Q)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corrs[0].Q)),
+            -1591641785)
       << "incorrect value for corrs[0].Q, expected -1591641785, is "
       << last_msg_->corrs[0].Q;
-  EXPECT_EQ(last_msg_->corrs[1].I, 1705169716)
+  EXPECT_EQ(get_as<decltype(last_msg_->corrs[1].I)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corrs[1].I)),
+            1705169716)
       << "incorrect value for corrs[1].I, expected 1705169716, is "
       << last_msg_->corrs[1].I;
-  EXPECT_EQ(last_msg_->corrs[1].Q, 1675764777)
+  EXPECT_EQ(get_as<decltype(last_msg_->corrs[1].Q)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corrs[1].Q)),
+            1675764777)
       << "incorrect value for corrs[1].Q, expected 1675764777, is "
       << last_msg_->corrs[1].Q;
-  EXPECT_EQ(last_msg_->corrs[2].I, -267498681)
+  EXPECT_EQ(get_as<decltype(last_msg_->corrs[2].I)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corrs[2].I)),
+            -267498681)
       << "incorrect value for corrs[2].I, expected -267498681, is "
       << last_msg_->corrs[2].I;
-  EXPECT_EQ(last_msg_->corrs[2].Q, 1403998854)
+  EXPECT_EQ(get_as<decltype(last_msg_->corrs[2].Q)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corrs[2].Q)),
+            1403998854)
       << "incorrect value for corrs[2].Q, expected 1403998854, is "
       << last_msg_->corrs[2].Q;
-  EXPECT_EQ(last_msg_->sid.code, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            15)
       << "incorrect value for sid.code, expected 15, is "
       << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 64028)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            64028)
       << "incorrect value for sid.sat, expected 64028, is "
       << last_msg_->sid.sat;
 }

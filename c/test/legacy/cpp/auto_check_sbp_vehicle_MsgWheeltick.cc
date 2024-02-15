@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/vehicle.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_vehicle_MsgWheeltick0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -114,14 +121,22 @@ TEST_F(Test_legacy_auto_check_sbp_vehicle_MsgWheeltick0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 17771);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            1)
       << "incorrect value for flags, expected 1, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->source, 146)
+  EXPECT_EQ(get_as<decltype(last_msg_->source)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->source)),
+            146)
       << "incorrect value for source, expected 146, is " << last_msg_->source;
-  EXPECT_EQ(last_msg_->ticks, -771148831)
+  EXPECT_EQ(get_as<decltype(last_msg_->ticks)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ticks)),
+            -771148831)
       << "incorrect value for ticks, expected -771148831, is "
       << last_msg_->ticks;
-  EXPECT_EQ(last_msg_->time, 112414825470)
+  EXPECT_EQ(get_as<decltype(last_msg_->time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time)),
+            112414825470)
       << "incorrect value for time, expected 112414825470, is "
       << last_msg_->time;
 }

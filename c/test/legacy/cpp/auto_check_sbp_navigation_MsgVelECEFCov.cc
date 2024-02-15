@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgVelECEFCov0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -135,16 +142,28 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelECEFCov0, Test) {
       << "incorrect value for cov_y_z, expected 1.0, is " << last_msg_->cov_y_z;
   EXPECT_LT((last_msg_->cov_z_z * 100 - 3.0 * 100), 0.05)
       << "incorrect value for cov_z_z, expected 3.0, is " << last_msg_->cov_z_z;
-  EXPECT_EQ(last_msg_->flags, 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            4)
       << "incorrect value for flags, expected 4, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->n_sats, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats)),
+            3)
       << "incorrect value for n_sats, expected 3, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            2)
       << "incorrect value for tow, expected 2, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->x, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->x)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->x)),
+            0)
       << "incorrect value for x, expected 0, is " << last_msg_->x;
-  EXPECT_EQ(last_msg_->y, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->y)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->y)),
+            0)
       << "incorrect value for y, expected 0, is " << last_msg_->y;
-  EXPECT_EQ(last_msg_->z, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->z)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->z)),
+            6)
       << "incorrect value for z, expected 6, is " << last_msg_->z;
 }

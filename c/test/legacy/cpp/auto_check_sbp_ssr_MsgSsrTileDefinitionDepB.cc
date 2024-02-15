@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ssr.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinitionDepB0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -122,31 +129,51 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinitionDepB0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->bitmask, 1234567890)
+  EXPECT_EQ(get_as<decltype(last_msg_->bitmask)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->bitmask)),
+            1234567890)
       << "incorrect value for bitmask, expected 1234567890, is "
       << last_msg_->bitmask;
-  EXPECT_EQ(last_msg_->cols, 32768)
+  EXPECT_EQ(get_as<decltype(last_msg_->cols)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cols)),
+            32768)
       << "incorrect value for cols, expected 32768, is " << last_msg_->cols;
-  EXPECT_EQ(last_msg_->corner_nw_lat, 1024)
+  EXPECT_EQ(get_as<decltype(last_msg_->corner_nw_lat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corner_nw_lat)),
+            1024)
       << "incorrect value for corner_nw_lat, expected 1024, is "
       << last_msg_->corner_nw_lat;
-  EXPECT_EQ(last_msg_->corner_nw_lon, 2048)
+  EXPECT_EQ(get_as<decltype(last_msg_->corner_nw_lon)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corner_nw_lon)),
+            2048)
       << "incorrect value for corner_nw_lon, expected 2048, is "
       << last_msg_->corner_nw_lon;
-  EXPECT_EQ(last_msg_->rows, 16384)
+  EXPECT_EQ(get_as<decltype(last_msg_->rows)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->rows)),
+            16384)
       << "incorrect value for rows, expected 16384, is " << last_msg_->rows;
-  EXPECT_EQ(last_msg_->spacing_lat, 4096)
+  EXPECT_EQ(get_as<decltype(last_msg_->spacing_lat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->spacing_lat)),
+            4096)
       << "incorrect value for spacing_lat, expected 4096, is "
       << last_msg_->spacing_lat;
-  EXPECT_EQ(last_msg_->spacing_lon, 8192)
+  EXPECT_EQ(get_as<decltype(last_msg_->spacing_lon)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->spacing_lon)),
+            8192)
       << "incorrect value for spacing_lon, expected 8192, is "
       << last_msg_->spacing_lon;
-  EXPECT_EQ(last_msg_->ssr_sol_id, 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->ssr_sol_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ssr_sol_id)),
+            31)
       << "incorrect value for ssr_sol_id, expected 31, is "
       << last_msg_->ssr_sol_id;
-  EXPECT_EQ(last_msg_->tile_id, 512)
+  EXPECT_EQ(get_as<decltype(last_msg_->tile_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tile_id)),
+            512)
       << "incorrect value for tile_id, expected 512, is " << last_msg_->tile_id;
-  EXPECT_EQ(last_msg_->tile_set_id, 256)
+  EXPECT_EQ(get_as<decltype(last_msg_->tile_set_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tile_set_id)),
+            256)
       << "incorrect value for tile_set_id, expected 256, is "
       << last_msg_->tile_set_id;
 }

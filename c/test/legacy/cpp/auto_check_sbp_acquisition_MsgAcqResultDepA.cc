@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -119,7 +126,9 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepA0, Test) {
       << "incorrect value for cf, expected 8241.94335938, is " << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 727.0 * 100), 0.05)
       << "incorrect value for cp, expected 727.0, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->prn, 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->prn)),
+            8)
       << "incorrect value for prn, expected 8, is " << last_msg_->prn;
   EXPECT_LT((last_msg_->snr * 100 - 14.5 * 100), 0.05)
       << "incorrect value for snr, expected 14.5, is " << last_msg_->snr;
@@ -214,7 +223,9 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepA1, Test) {
       << "incorrect value for cf, expected 749.26763916, is " << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 359.5 * 100), 0.05)
       << "incorrect value for cp, expected 359.5, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->prn, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->prn)),
+            9)
       << "incorrect value for prn, expected 9, is " << last_msg_->prn;
   EXPECT_LT((last_msg_->snr * 100 - 15.3000001907 * 100), 0.05)
       << "incorrect value for snr, expected 15.3000001907, is "
@@ -311,7 +322,9 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepA2, Test) {
       << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 40.5 * 100), 0.05)
       << "incorrect value for cp, expected 40.5, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->prn, 11)
+  EXPECT_EQ(get_as<decltype(last_msg_->prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->prn)),
+            11)
       << "incorrect value for prn, expected 11, is " << last_msg_->prn;
   EXPECT_LT((last_msg_->snr * 100 - 18.1000003815 * 100), 0.05)
       << "incorrect value for snr, expected 18.1000003815, is "
@@ -408,7 +421,9 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepA3, Test) {
       << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 548.5 * 100), 0.05)
       << "incorrect value for cp, expected 548.5, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->prn, 12)
+  EXPECT_EQ(get_as<decltype(last_msg_->prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->prn)),
+            12)
       << "incorrect value for prn, expected 12, is " << last_msg_->prn;
   EXPECT_LT((last_msg_->snr * 100 - 15.3000001907 * 100), 0.05)
       << "incorrect value for snr, expected 15.3000001907, is "
@@ -504,7 +519,9 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepA4, Test) {
       << "incorrect value for cf, expected 4745.36132812, is " << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 780.5 * 100), 0.05)
       << "incorrect value for cp, expected 780.5, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->prn, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->prn)),
+            14)
       << "incorrect value for prn, expected 14, is " << last_msg_->prn;
   EXPECT_LT((last_msg_->snr * 100 - 15.3000001907 * 100), 0.05)
       << "incorrect value for snr, expected 15.3000001907, is "
@@ -601,7 +618,9 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResultDepA5, Test) {
       << last_msg_->cf;
   EXPECT_LT((last_msg_->cp * 100 - 584.5 * 100), 0.05)
       << "incorrect value for cp, expected 584.5, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->prn)),
+            0)
       << "incorrect value for prn, expected 0, is " << last_msg_->prn;
   EXPECT_LT((last_msg_->snr * 100 - 163.222229004 * 100), 0.05)
       << "incorrect value for snr, expected 163.222229004, is "

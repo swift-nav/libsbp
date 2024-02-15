@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/tracking.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -195,100 +202,145 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA0, Test) {
   EXPECT_LT((last_msg_->states[0].cn0 * 100 - 11.2309074402 * 100), 0.05)
       << "incorrect value for states[0].cn0, expected 11.2309074402, is "
       << last_msg_->states[0].cn0;
-  EXPECT_EQ(last_msg_->states[0].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].prn)),
+            0)
       << "incorrect value for states[0].prn, expected 0, is "
       << last_msg_->states[0].prn;
-  EXPECT_EQ(last_msg_->states[0].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].state)),
+            1)
       << "incorrect value for states[0].state, expected 1, is "
       << last_msg_->states[0].state;
   EXPECT_LT((last_msg_->states[1].cn0 * 100 - 10.43866539 * 100), 0.05)
       << "incorrect value for states[1].cn0, expected 10.43866539, is "
       << last_msg_->states[1].cn0;
-  EXPECT_EQ(last_msg_->states[1].prn, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].prn)),
+            2)
       << "incorrect value for states[1].prn, expected 2, is "
       << last_msg_->states[1].prn;
-  EXPECT_EQ(last_msg_->states[1].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].state)),
+            1)
       << "incorrect value for states[1].state, expected 1, is "
       << last_msg_->states[1].state;
   EXPECT_LT((last_msg_->states[2].cn0 * 100 - 9.73214244843 * 100), 0.05)
       << "incorrect value for states[2].cn0, expected 9.73214244843, is "
       << last_msg_->states[2].cn0;
-  EXPECT_EQ(last_msg_->states[2].prn, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].prn)),
+            3)
       << "incorrect value for states[2].prn, expected 3, is "
       << last_msg_->states[2].prn;
-  EXPECT_EQ(last_msg_->states[2].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].state)),
+            1)
       << "incorrect value for states[2].state, expected 1, is "
       << last_msg_->states[2].state;
   EXPECT_LT((last_msg_->states[3].cn0 * 100 - 14.34192276 * 100), 0.05)
       << "incorrect value for states[3].cn0, expected 14.34192276, is "
       << last_msg_->states[3].cn0;
-  EXPECT_EQ(last_msg_->states[3].prn, 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].prn)),
+            7)
       << "incorrect value for states[3].prn, expected 7, is "
       << last_msg_->states[3].prn;
-  EXPECT_EQ(last_msg_->states[3].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].state)),
+            1)
       << "incorrect value for states[3].state, expected 1, is "
       << last_msg_->states[3].state;
   EXPECT_LT((last_msg_->states[4].cn0 * 100 - 7.85490179062 * 100), 0.05)
       << "incorrect value for states[4].cn0, expected 7.85490179062, is "
       << last_msg_->states[4].cn0;
-  EXPECT_EQ(last_msg_->states[4].prn, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].prn)),
+            10)
       << "incorrect value for states[4].prn, expected 10, is "
       << last_msg_->states[4].prn;
-  EXPECT_EQ(last_msg_->states[4].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].state)),
+            1)
       << "incorrect value for states[4].state, expected 1, is "
       << last_msg_->states[4].state;
   EXPECT_LT((last_msg_->states[5].cn0 * 100 - 5.09828662872 * 100), 0.05)
       << "incorrect value for states[5].cn0, expected 5.09828662872, is "
       << last_msg_->states[5].cn0;
-  EXPECT_EQ(last_msg_->states[5].prn, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].prn)),
+            13)
       << "incorrect value for states[5].prn, expected 13, is "
       << last_msg_->states[5].prn;
-  EXPECT_EQ(last_msg_->states[5].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].state)),
+            1)
       << "incorrect value for states[5].state, expected 1, is "
       << last_msg_->states[5].state;
   EXPECT_LT((last_msg_->states[6].cn0 * 100 - 6.74127292633 * 100), 0.05)
       << "incorrect value for states[6].cn0, expected 6.74127292633, is "
       << last_msg_->states[6].cn0;
-  EXPECT_EQ(last_msg_->states[6].prn, 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].prn)),
+            22)
       << "incorrect value for states[6].prn, expected 22, is "
       << last_msg_->states[6].prn;
-  EXPECT_EQ(last_msg_->states[6].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].state)),
+            1)
       << "incorrect value for states[6].state, expected 1, is "
       << last_msg_->states[6].state;
   EXPECT_LT((last_msg_->states[7].cn0 * 100 - 12.7005491257 * 100), 0.05)
       << "incorrect value for states[7].cn0, expected 12.7005491257, is "
       << last_msg_->states[7].cn0;
-  EXPECT_EQ(last_msg_->states[7].prn, 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].prn)),
+            30)
       << "incorrect value for states[7].prn, expected 30, is "
       << last_msg_->states[7].prn;
-  EXPECT_EQ(last_msg_->states[7].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].state)),
+            1)
       << "incorrect value for states[7].state, expected 1, is "
       << last_msg_->states[7].state;
   EXPECT_LT((last_msg_->states[8].cn0 * 100 - 15.893081665 * 100), 0.05)
       << "incorrect value for states[8].cn0, expected 15.893081665, is "
       << last_msg_->states[8].cn0;
-  EXPECT_EQ(last_msg_->states[8].prn, 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].prn)),
+            31)
       << "incorrect value for states[8].prn, expected 31, is "
       << last_msg_->states[8].prn;
-  EXPECT_EQ(last_msg_->states[8].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].state)),
+            1)
       << "incorrect value for states[8].state, expected 1, is "
       << last_msg_->states[8].state;
   EXPECT_LT((last_msg_->states[9].cn0 * 100 - 4.24273872375 * 100), 0.05)
       << "incorrect value for states[9].cn0, expected 4.24273872375, is "
       << last_msg_->states[9].cn0;
-  EXPECT_EQ(last_msg_->states[9].prn, 25)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].prn)),
+            25)
       << "incorrect value for states[9].prn, expected 25, is "
       << last_msg_->states[9].prn;
-  EXPECT_EQ(last_msg_->states[9].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].state)),
+            1)
       << "incorrect value for states[9].state, expected 1, is "
       << last_msg_->states[9].state;
   EXPECT_LT((last_msg_->states[10].cn0 * 100 - 6.97599983215 * 100), 0.05)
       << "incorrect value for states[10].cn0, expected 6.97599983215, is "
       << last_msg_->states[10].cn0;
-  EXPECT_EQ(last_msg_->states[10].prn, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[10].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[10].prn)),
+            6)
       << "incorrect value for states[10].prn, expected 6, is "
       << last_msg_->states[10].prn;
-  EXPECT_EQ(last_msg_->states[10].state, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].state)),
+      1)
       << "incorrect value for states[10].state, expected 1, is "
       << last_msg_->states[10].state;
 }
@@ -458,100 +510,145 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA1, Test) {
   EXPECT_LT((last_msg_->states[0].cn0 * 100 - 11.0141220093 * 100), 0.05)
       << "incorrect value for states[0].cn0, expected 11.0141220093, is "
       << last_msg_->states[0].cn0;
-  EXPECT_EQ(last_msg_->states[0].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].prn)),
+            0)
       << "incorrect value for states[0].prn, expected 0, is "
       << last_msg_->states[0].prn;
-  EXPECT_EQ(last_msg_->states[0].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].state)),
+            1)
       << "incorrect value for states[0].state, expected 1, is "
       << last_msg_->states[0].state;
   EXPECT_LT((last_msg_->states[1].cn0 * 100 - 10.8851480484 * 100), 0.05)
       << "incorrect value for states[1].cn0, expected 10.8851480484, is "
       << last_msg_->states[1].cn0;
-  EXPECT_EQ(last_msg_->states[1].prn, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].prn)),
+            2)
       << "incorrect value for states[1].prn, expected 2, is "
       << last_msg_->states[1].prn;
-  EXPECT_EQ(last_msg_->states[1].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].state)),
+            1)
       << "incorrect value for states[1].state, expected 1, is "
       << last_msg_->states[1].state;
   EXPECT_LT((last_msg_->states[2].cn0 * 100 - 10.1313514709 * 100), 0.05)
       << "incorrect value for states[2].cn0, expected 10.1313514709, is "
       << last_msg_->states[2].cn0;
-  EXPECT_EQ(last_msg_->states[2].prn, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].prn)),
+            3)
       << "incorrect value for states[2].prn, expected 3, is "
       << last_msg_->states[2].prn;
-  EXPECT_EQ(last_msg_->states[2].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].state)),
+            1)
       << "incorrect value for states[2].state, expected 1, is "
       << last_msg_->states[2].state;
   EXPECT_LT((last_msg_->states[3].cn0 * 100 - 14.8290262222 * 100), 0.05)
       << "incorrect value for states[3].cn0, expected 14.8290262222, is "
       << last_msg_->states[3].cn0;
-  EXPECT_EQ(last_msg_->states[3].prn, 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].prn)),
+            7)
       << "incorrect value for states[3].prn, expected 7, is "
       << last_msg_->states[3].prn;
-  EXPECT_EQ(last_msg_->states[3].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].state)),
+            1)
       << "incorrect value for states[3].state, expected 1, is "
       << last_msg_->states[3].state;
   EXPECT_LT((last_msg_->states[4].cn0 * 100 - 7.79104471207 * 100), 0.05)
       << "incorrect value for states[4].cn0, expected 7.79104471207, is "
       << last_msg_->states[4].cn0;
-  EXPECT_EQ(last_msg_->states[4].prn, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].prn)),
+            10)
       << "incorrect value for states[4].prn, expected 10, is "
       << last_msg_->states[4].prn;
-  EXPECT_EQ(last_msg_->states[4].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].state)),
+            1)
       << "incorrect value for states[4].state, expected 1, is "
       << last_msg_->states[4].state;
   EXPECT_LT((last_msg_->states[5].cn0 * 100 - 4.86816120148 * 100), 0.05)
       << "incorrect value for states[5].cn0, expected 4.86816120148, is "
       << last_msg_->states[5].cn0;
-  EXPECT_EQ(last_msg_->states[5].prn, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].prn)),
+            13)
       << "incorrect value for states[5].prn, expected 13, is "
       << last_msg_->states[5].prn;
-  EXPECT_EQ(last_msg_->states[5].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].state)),
+            1)
       << "incorrect value for states[5].state, expected 1, is "
       << last_msg_->states[5].state;
   EXPECT_LT((last_msg_->states[6].cn0 * 100 - 6.72109556198 * 100), 0.05)
       << "incorrect value for states[6].cn0, expected 6.72109556198, is "
       << last_msg_->states[6].cn0;
-  EXPECT_EQ(last_msg_->states[6].prn, 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].prn)),
+            22)
       << "incorrect value for states[6].prn, expected 22, is "
       << last_msg_->states[6].prn;
-  EXPECT_EQ(last_msg_->states[6].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].state)),
+            1)
       << "incorrect value for states[6].state, expected 1, is "
       << last_msg_->states[6].state;
   EXPECT_LT((last_msg_->states[7].cn0 * 100 - 12.9713230133 * 100), 0.05)
       << "incorrect value for states[7].cn0, expected 12.9713230133, is "
       << last_msg_->states[7].cn0;
-  EXPECT_EQ(last_msg_->states[7].prn, 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].prn)),
+            30)
       << "incorrect value for states[7].prn, expected 30, is "
       << last_msg_->states[7].prn;
-  EXPECT_EQ(last_msg_->states[7].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].state)),
+            1)
       << "incorrect value for states[7].state, expected 1, is "
       << last_msg_->states[7].state;
   EXPECT_LT((last_msg_->states[8].cn0 * 100 - 15.4814052582 * 100), 0.05)
       << "incorrect value for states[8].cn0, expected 15.4814052582, is "
       << last_msg_->states[8].cn0;
-  EXPECT_EQ(last_msg_->states[8].prn, 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].prn)),
+            31)
       << "incorrect value for states[8].prn, expected 31, is "
       << last_msg_->states[8].prn;
-  EXPECT_EQ(last_msg_->states[8].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].state)),
+            1)
       << "incorrect value for states[8].state, expected 1, is "
       << last_msg_->states[8].state;
   EXPECT_LT((last_msg_->states[9].cn0 * 100 - 3.88343548775 * 100), 0.05)
       << "incorrect value for states[9].cn0, expected 3.88343548775, is "
       << last_msg_->states[9].cn0;
-  EXPECT_EQ(last_msg_->states[9].prn, 25)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].prn)),
+            25)
       << "incorrect value for states[9].prn, expected 25, is "
       << last_msg_->states[9].prn;
-  EXPECT_EQ(last_msg_->states[9].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].state)),
+            1)
       << "incorrect value for states[9].state, expected 1, is "
       << last_msg_->states[9].state;
   EXPECT_LT((last_msg_->states[10].cn0 * 100 - 4.06148862839 * 100), 0.05)
       << "incorrect value for states[10].cn0, expected 4.06148862839, is "
       << last_msg_->states[10].cn0;
-  EXPECT_EQ(last_msg_->states[10].prn, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[10].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[10].prn)),
+            6)
       << "incorrect value for states[10].prn, expected 6, is "
       << last_msg_->states[10].prn;
-  EXPECT_EQ(last_msg_->states[10].state, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].state)),
+      1)
       << "incorrect value for states[10].state, expected 1, is "
       << last_msg_->states[10].state;
 }
@@ -721,100 +818,145 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA2, Test) {
   EXPECT_LT((last_msg_->states[0].cn0 * 100 - 11.7686891556 * 100), 0.05)
       << "incorrect value for states[0].cn0, expected 11.7686891556, is "
       << last_msg_->states[0].cn0;
-  EXPECT_EQ(last_msg_->states[0].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].prn)),
+            0)
       << "incorrect value for states[0].prn, expected 0, is "
       << last_msg_->states[0].prn;
-  EXPECT_EQ(last_msg_->states[0].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].state)),
+            1)
       << "incorrect value for states[0].state, expected 1, is "
       << last_msg_->states[0].state;
   EXPECT_LT((last_msg_->states[1].cn0 * 100 - 10.9090013504 * 100), 0.05)
       << "incorrect value for states[1].cn0, expected 10.9090013504, is "
       << last_msg_->states[1].cn0;
-  EXPECT_EQ(last_msg_->states[1].prn, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].prn)),
+            2)
       << "incorrect value for states[1].prn, expected 2, is "
       << last_msg_->states[1].prn;
-  EXPECT_EQ(last_msg_->states[1].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].state)),
+            1)
       << "incorrect value for states[1].state, expected 1, is "
       << last_msg_->states[1].state;
   EXPECT_LT((last_msg_->states[2].cn0 * 100 - 9.88173103333 * 100), 0.05)
       << "incorrect value for states[2].cn0, expected 9.88173103333, is "
       << last_msg_->states[2].cn0;
-  EXPECT_EQ(last_msg_->states[2].prn, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].prn)),
+            3)
       << "incorrect value for states[2].prn, expected 3, is "
       << last_msg_->states[2].prn;
-  EXPECT_EQ(last_msg_->states[2].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].state)),
+            1)
       << "incorrect value for states[2].state, expected 1, is "
       << last_msg_->states[2].state;
   EXPECT_LT((last_msg_->states[3].cn0 * 100 - 14.0763959885 * 100), 0.05)
       << "incorrect value for states[3].cn0, expected 14.0763959885, is "
       << last_msg_->states[3].cn0;
-  EXPECT_EQ(last_msg_->states[3].prn, 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].prn)),
+            7)
       << "incorrect value for states[3].prn, expected 7, is "
       << last_msg_->states[3].prn;
-  EXPECT_EQ(last_msg_->states[3].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].state)),
+            1)
       << "incorrect value for states[3].state, expected 1, is "
       << last_msg_->states[3].state;
   EXPECT_LT((last_msg_->states[4].cn0 * 100 - 7.6198182106 * 100), 0.05)
       << "incorrect value for states[4].cn0, expected 7.6198182106, is "
       << last_msg_->states[4].cn0;
-  EXPECT_EQ(last_msg_->states[4].prn, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].prn)),
+            10)
       << "incorrect value for states[4].prn, expected 10, is "
       << last_msg_->states[4].prn;
-  EXPECT_EQ(last_msg_->states[4].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].state)),
+            1)
       << "incorrect value for states[4].state, expected 1, is "
       << last_msg_->states[4].state;
   EXPECT_LT((last_msg_->states[5].cn0 * 100 - 5.20837116241 * 100), 0.05)
       << "incorrect value for states[5].cn0, expected 5.20837116241, is "
       << last_msg_->states[5].cn0;
-  EXPECT_EQ(last_msg_->states[5].prn, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].prn)),
+            13)
       << "incorrect value for states[5].prn, expected 13, is "
       << last_msg_->states[5].prn;
-  EXPECT_EQ(last_msg_->states[5].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].state)),
+            1)
       << "incorrect value for states[5].state, expected 1, is "
       << last_msg_->states[5].state;
   EXPECT_LT((last_msg_->states[6].cn0 * 100 - 6.29358720779 * 100), 0.05)
       << "incorrect value for states[6].cn0, expected 6.29358720779, is "
       << last_msg_->states[6].cn0;
-  EXPECT_EQ(last_msg_->states[6].prn, 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].prn)),
+            22)
       << "incorrect value for states[6].prn, expected 22, is "
       << last_msg_->states[6].prn;
-  EXPECT_EQ(last_msg_->states[6].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].state)),
+            1)
       << "incorrect value for states[6].state, expected 1, is "
       << last_msg_->states[6].state;
   EXPECT_LT((last_msg_->states[7].cn0 * 100 - 13.2323417664 * 100), 0.05)
       << "incorrect value for states[7].cn0, expected 13.2323417664, is "
       << last_msg_->states[7].cn0;
-  EXPECT_EQ(last_msg_->states[7].prn, 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].prn)),
+            30)
       << "incorrect value for states[7].prn, expected 30, is "
       << last_msg_->states[7].prn;
-  EXPECT_EQ(last_msg_->states[7].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].state)),
+            1)
       << "incorrect value for states[7].state, expected 1, is "
       << last_msg_->states[7].state;
   EXPECT_LT((last_msg_->states[8].cn0 * 100 - 15.5473461151 * 100), 0.05)
       << "incorrect value for states[8].cn0, expected 15.5473461151, is "
       << last_msg_->states[8].cn0;
-  EXPECT_EQ(last_msg_->states[8].prn, 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].prn)),
+            31)
       << "incorrect value for states[8].prn, expected 31, is "
       << last_msg_->states[8].prn;
-  EXPECT_EQ(last_msg_->states[8].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].state)),
+            1)
       << "incorrect value for states[8].state, expected 1, is "
       << last_msg_->states[8].state;
   EXPECT_LT((last_msg_->states[9].cn0 * 100 - 4.13096427917 * 100), 0.05)
       << "incorrect value for states[9].cn0, expected 4.13096427917, is "
       << last_msg_->states[9].cn0;
-  EXPECT_EQ(last_msg_->states[9].prn, 25)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].prn)),
+            25)
       << "incorrect value for states[9].prn, expected 25, is "
       << last_msg_->states[9].prn;
-  EXPECT_EQ(last_msg_->states[9].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].state)),
+            1)
       << "incorrect value for states[9].state, expected 1, is "
       << last_msg_->states[9].state;
   EXPECT_LT((last_msg_->states[10].cn0 * 100 - 2.85682320595 * 100), 0.05)
       << "incorrect value for states[10].cn0, expected 2.85682320595, is "
       << last_msg_->states[10].cn0;
-  EXPECT_EQ(last_msg_->states[10].prn, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[10].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[10].prn)),
+            6)
       << "incorrect value for states[10].prn, expected 6, is "
       << last_msg_->states[10].prn;
-  EXPECT_EQ(last_msg_->states[10].state, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].state)),
+      1)
       << "incorrect value for states[10].state, expected 1, is "
       << last_msg_->states[10].state;
 }
@@ -984,100 +1126,145 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA3, Test) {
   EXPECT_LT((last_msg_->states[0].cn0 * 100 - 62.1398582458 * 100), 0.05)
       << "incorrect value for states[0].cn0, expected 62.1398582458, is "
       << last_msg_->states[0].cn0;
-  EXPECT_EQ(last_msg_->states[0].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].prn)),
+            0)
       << "incorrect value for states[0].prn, expected 0, is "
       << last_msg_->states[0].prn;
-  EXPECT_EQ(last_msg_->states[0].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].state)),
+            1)
       << "incorrect value for states[0].state, expected 1, is "
       << last_msg_->states[0].state;
   EXPECT_LT((last_msg_->states[1].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[1].cn0, expected -1.0, is "
       << last_msg_->states[1].cn0;
-  EXPECT_EQ(last_msg_->states[1].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].prn)),
+            0)
       << "incorrect value for states[1].prn, expected 0, is "
       << last_msg_->states[1].prn;
-  EXPECT_EQ(last_msg_->states[1].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].state)),
+            0)
       << "incorrect value for states[1].state, expected 0, is "
       << last_msg_->states[1].state;
   EXPECT_LT((last_msg_->states[2].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[2].cn0, expected -1.0, is "
       << last_msg_->states[2].cn0;
-  EXPECT_EQ(last_msg_->states[2].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].prn)),
+            0)
       << "incorrect value for states[2].prn, expected 0, is "
       << last_msg_->states[2].prn;
-  EXPECT_EQ(last_msg_->states[2].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].state)),
+            0)
       << "incorrect value for states[2].state, expected 0, is "
       << last_msg_->states[2].state;
   EXPECT_LT((last_msg_->states[3].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[3].cn0, expected -1.0, is "
       << last_msg_->states[3].cn0;
-  EXPECT_EQ(last_msg_->states[3].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].prn)),
+            0)
       << "incorrect value for states[3].prn, expected 0, is "
       << last_msg_->states[3].prn;
-  EXPECT_EQ(last_msg_->states[3].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].state)),
+            0)
       << "incorrect value for states[3].state, expected 0, is "
       << last_msg_->states[3].state;
   EXPECT_LT((last_msg_->states[4].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[4].cn0, expected -1.0, is "
       << last_msg_->states[4].cn0;
-  EXPECT_EQ(last_msg_->states[4].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].prn)),
+            0)
       << "incorrect value for states[4].prn, expected 0, is "
       << last_msg_->states[4].prn;
-  EXPECT_EQ(last_msg_->states[4].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].state)),
+            0)
       << "incorrect value for states[4].state, expected 0, is "
       << last_msg_->states[4].state;
   EXPECT_LT((last_msg_->states[5].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[5].cn0, expected -1.0, is "
       << last_msg_->states[5].cn0;
-  EXPECT_EQ(last_msg_->states[5].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].prn)),
+            0)
       << "incorrect value for states[5].prn, expected 0, is "
       << last_msg_->states[5].prn;
-  EXPECT_EQ(last_msg_->states[5].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].state)),
+            0)
       << "incorrect value for states[5].state, expected 0, is "
       << last_msg_->states[5].state;
   EXPECT_LT((last_msg_->states[6].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[6].cn0, expected -1.0, is "
       << last_msg_->states[6].cn0;
-  EXPECT_EQ(last_msg_->states[6].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].prn)),
+            0)
       << "incorrect value for states[6].prn, expected 0, is "
       << last_msg_->states[6].prn;
-  EXPECT_EQ(last_msg_->states[6].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].state)),
+            0)
       << "incorrect value for states[6].state, expected 0, is "
       << last_msg_->states[6].state;
   EXPECT_LT((last_msg_->states[7].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[7].cn0, expected -1.0, is "
       << last_msg_->states[7].cn0;
-  EXPECT_EQ(last_msg_->states[7].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].prn)),
+            0)
       << "incorrect value for states[7].prn, expected 0, is "
       << last_msg_->states[7].prn;
-  EXPECT_EQ(last_msg_->states[7].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].state)),
+            0)
       << "incorrect value for states[7].state, expected 0, is "
       << last_msg_->states[7].state;
   EXPECT_LT((last_msg_->states[8].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[8].cn0, expected -1.0, is "
       << last_msg_->states[8].cn0;
-  EXPECT_EQ(last_msg_->states[8].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].prn)),
+            0)
       << "incorrect value for states[8].prn, expected 0, is "
       << last_msg_->states[8].prn;
-  EXPECT_EQ(last_msg_->states[8].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].state)),
+            0)
       << "incorrect value for states[8].state, expected 0, is "
       << last_msg_->states[8].state;
   EXPECT_LT((last_msg_->states[9].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[9].cn0, expected -1.0, is "
       << last_msg_->states[9].cn0;
-  EXPECT_EQ(last_msg_->states[9].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].prn)),
+            0)
       << "incorrect value for states[9].prn, expected 0, is "
       << last_msg_->states[9].prn;
-  EXPECT_EQ(last_msg_->states[9].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].state)),
+            0)
       << "incorrect value for states[9].state, expected 0, is "
       << last_msg_->states[9].state;
   EXPECT_LT((last_msg_->states[10].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[10].cn0, expected -1.0, is "
       << last_msg_->states[10].cn0;
-  EXPECT_EQ(last_msg_->states[10].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[10].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[10].prn)),
+            0)
       << "incorrect value for states[10].prn, expected 0, is "
       << last_msg_->states[10].prn;
-  EXPECT_EQ(last_msg_->states[10].state, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].state)),
+      0)
       << "incorrect value for states[10].state, expected 0, is "
       << last_msg_->states[10].state;
 }
@@ -1247,100 +1434,145 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA4, Test) {
   EXPECT_LT((last_msg_->states[0].cn0 * 100 - 36.764503479 * 100), 0.05)
       << "incorrect value for states[0].cn0, expected 36.764503479, is "
       << last_msg_->states[0].cn0;
-  EXPECT_EQ(last_msg_->states[0].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].prn)),
+            0)
       << "incorrect value for states[0].prn, expected 0, is "
       << last_msg_->states[0].prn;
-  EXPECT_EQ(last_msg_->states[0].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].state)),
+            1)
       << "incorrect value for states[0].state, expected 1, is "
       << last_msg_->states[0].state;
   EXPECT_LT((last_msg_->states[1].cn0 * 100 - 9.31343269348 * 100), 0.05)
       << "incorrect value for states[1].cn0, expected 9.31343269348, is "
       << last_msg_->states[1].cn0;
-  EXPECT_EQ(last_msg_->states[1].prn, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].prn)),
+            2)
       << "incorrect value for states[1].prn, expected 2, is "
       << last_msg_->states[1].prn;
-  EXPECT_EQ(last_msg_->states[1].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].state)),
+            1)
       << "incorrect value for states[1].state, expected 1, is "
       << last_msg_->states[1].state;
   EXPECT_LT((last_msg_->states[2].cn0 * 100 - 16.8549385071 * 100), 0.05)
       << "incorrect value for states[2].cn0, expected 16.8549385071, is "
       << last_msg_->states[2].cn0;
-  EXPECT_EQ(last_msg_->states[2].prn, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].prn)),
+            3)
       << "incorrect value for states[2].prn, expected 3, is "
       << last_msg_->states[2].prn;
-  EXPECT_EQ(last_msg_->states[2].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].state)),
+            1)
       << "incorrect value for states[2].state, expected 1, is "
       << last_msg_->states[2].state;
   EXPECT_LT((last_msg_->states[3].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[3].cn0, expected -1.0, is "
       << last_msg_->states[3].cn0;
-  EXPECT_EQ(last_msg_->states[3].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].prn)),
+            0)
       << "incorrect value for states[3].prn, expected 0, is "
       << last_msg_->states[3].prn;
-  EXPECT_EQ(last_msg_->states[3].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].state)),
+            0)
       << "incorrect value for states[3].state, expected 0, is "
       << last_msg_->states[3].state;
   EXPECT_LT((last_msg_->states[4].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[4].cn0, expected -1.0, is "
       << last_msg_->states[4].cn0;
-  EXPECT_EQ(last_msg_->states[4].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].prn)),
+            0)
       << "incorrect value for states[4].prn, expected 0, is "
       << last_msg_->states[4].prn;
-  EXPECT_EQ(last_msg_->states[4].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].state)),
+            0)
       << "incorrect value for states[4].state, expected 0, is "
       << last_msg_->states[4].state;
   EXPECT_LT((last_msg_->states[5].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[5].cn0, expected -1.0, is "
       << last_msg_->states[5].cn0;
-  EXPECT_EQ(last_msg_->states[5].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].prn)),
+            0)
       << "incorrect value for states[5].prn, expected 0, is "
       << last_msg_->states[5].prn;
-  EXPECT_EQ(last_msg_->states[5].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].state)),
+            0)
       << "incorrect value for states[5].state, expected 0, is "
       << last_msg_->states[5].state;
   EXPECT_LT((last_msg_->states[6].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[6].cn0, expected -1.0, is "
       << last_msg_->states[6].cn0;
-  EXPECT_EQ(last_msg_->states[6].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].prn)),
+            0)
       << "incorrect value for states[6].prn, expected 0, is "
       << last_msg_->states[6].prn;
-  EXPECT_EQ(last_msg_->states[6].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].state)),
+            0)
       << "incorrect value for states[6].state, expected 0, is "
       << last_msg_->states[6].state;
   EXPECT_LT((last_msg_->states[7].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[7].cn0, expected -1.0, is "
       << last_msg_->states[7].cn0;
-  EXPECT_EQ(last_msg_->states[7].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].prn)),
+            0)
       << "incorrect value for states[7].prn, expected 0, is "
       << last_msg_->states[7].prn;
-  EXPECT_EQ(last_msg_->states[7].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].state)),
+            0)
       << "incorrect value for states[7].state, expected 0, is "
       << last_msg_->states[7].state;
   EXPECT_LT((last_msg_->states[8].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[8].cn0, expected -1.0, is "
       << last_msg_->states[8].cn0;
-  EXPECT_EQ(last_msg_->states[8].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].prn)),
+            0)
       << "incorrect value for states[8].prn, expected 0, is "
       << last_msg_->states[8].prn;
-  EXPECT_EQ(last_msg_->states[8].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].state)),
+            0)
       << "incorrect value for states[8].state, expected 0, is "
       << last_msg_->states[8].state;
   EXPECT_LT((last_msg_->states[9].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[9].cn0, expected -1.0, is "
       << last_msg_->states[9].cn0;
-  EXPECT_EQ(last_msg_->states[9].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].prn)),
+            0)
       << "incorrect value for states[9].prn, expected 0, is "
       << last_msg_->states[9].prn;
-  EXPECT_EQ(last_msg_->states[9].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].state)),
+            0)
       << "incorrect value for states[9].state, expected 0, is "
       << last_msg_->states[9].state;
   EXPECT_LT((last_msg_->states[10].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[10].cn0, expected -1.0, is "
       << last_msg_->states[10].cn0;
-  EXPECT_EQ(last_msg_->states[10].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[10].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[10].prn)),
+            0)
       << "incorrect value for states[10].prn, expected 0, is "
       << last_msg_->states[10].prn;
-  EXPECT_EQ(last_msg_->states[10].state, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].state)),
+      0)
       << "incorrect value for states[10].state, expected 0, is "
       << last_msg_->states[10].state;
 }
@@ -1510,100 +1742,145 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgtrackingStateDepA5, Test) {
   EXPECT_LT((last_msg_->states[0].cn0 * 100 - 27.3942298889 * 100), 0.05)
       << "incorrect value for states[0].cn0, expected 27.3942298889, is "
       << last_msg_->states[0].cn0;
-  EXPECT_EQ(last_msg_->states[0].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].prn)),
+            0)
       << "incorrect value for states[0].prn, expected 0, is "
       << last_msg_->states[0].prn;
-  EXPECT_EQ(last_msg_->states[0].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[0].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[0].state)),
+            1)
       << "incorrect value for states[0].state, expected 1, is "
       << last_msg_->states[0].state;
   EXPECT_LT((last_msg_->states[1].cn0 * 100 - 2.875 * 100), 0.05)
       << "incorrect value for states[1].cn0, expected 2.875, is "
       << last_msg_->states[1].cn0;
-  EXPECT_EQ(last_msg_->states[1].prn, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].prn)),
+            2)
       << "incorrect value for states[1].prn, expected 2, is "
       << last_msg_->states[1].prn;
-  EXPECT_EQ(last_msg_->states[1].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[1].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[1].state)),
+            1)
       << "incorrect value for states[1].state, expected 1, is "
       << last_msg_->states[1].state;
   EXPECT_LT((last_msg_->states[2].cn0 * 100 - 8.46764469147 * 100), 0.05)
       << "incorrect value for states[2].cn0, expected 8.46764469147, is "
       << last_msg_->states[2].cn0;
-  EXPECT_EQ(last_msg_->states[2].prn, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].prn)),
+            3)
       << "incorrect value for states[2].prn, expected 3, is "
       << last_msg_->states[2].prn;
-  EXPECT_EQ(last_msg_->states[2].state, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[2].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[2].state)),
+            1)
       << "incorrect value for states[2].state, expected 1, is "
       << last_msg_->states[2].state;
   EXPECT_LT((last_msg_->states[3].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[3].cn0, expected -1.0, is "
       << last_msg_->states[3].cn0;
-  EXPECT_EQ(last_msg_->states[3].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].prn)),
+            0)
       << "incorrect value for states[3].prn, expected 0, is "
       << last_msg_->states[3].prn;
-  EXPECT_EQ(last_msg_->states[3].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[3].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[3].state)),
+            0)
       << "incorrect value for states[3].state, expected 0, is "
       << last_msg_->states[3].state;
   EXPECT_LT((last_msg_->states[4].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[4].cn0, expected -1.0, is "
       << last_msg_->states[4].cn0;
-  EXPECT_EQ(last_msg_->states[4].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].prn)),
+            0)
       << "incorrect value for states[4].prn, expected 0, is "
       << last_msg_->states[4].prn;
-  EXPECT_EQ(last_msg_->states[4].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[4].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[4].state)),
+            0)
       << "incorrect value for states[4].state, expected 0, is "
       << last_msg_->states[4].state;
   EXPECT_LT((last_msg_->states[5].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[5].cn0, expected -1.0, is "
       << last_msg_->states[5].cn0;
-  EXPECT_EQ(last_msg_->states[5].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].prn)),
+            0)
       << "incorrect value for states[5].prn, expected 0, is "
       << last_msg_->states[5].prn;
-  EXPECT_EQ(last_msg_->states[5].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[5].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[5].state)),
+            0)
       << "incorrect value for states[5].state, expected 0, is "
       << last_msg_->states[5].state;
   EXPECT_LT((last_msg_->states[6].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[6].cn0, expected -1.0, is "
       << last_msg_->states[6].cn0;
-  EXPECT_EQ(last_msg_->states[6].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].prn)),
+            0)
       << "incorrect value for states[6].prn, expected 0, is "
       << last_msg_->states[6].prn;
-  EXPECT_EQ(last_msg_->states[6].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[6].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[6].state)),
+            0)
       << "incorrect value for states[6].state, expected 0, is "
       << last_msg_->states[6].state;
   EXPECT_LT((last_msg_->states[7].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[7].cn0, expected -1.0, is "
       << last_msg_->states[7].cn0;
-  EXPECT_EQ(last_msg_->states[7].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].prn)),
+            0)
       << "incorrect value for states[7].prn, expected 0, is "
       << last_msg_->states[7].prn;
-  EXPECT_EQ(last_msg_->states[7].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[7].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[7].state)),
+            0)
       << "incorrect value for states[7].state, expected 0, is "
       << last_msg_->states[7].state;
   EXPECT_LT((last_msg_->states[8].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[8].cn0, expected -1.0, is "
       << last_msg_->states[8].cn0;
-  EXPECT_EQ(last_msg_->states[8].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].prn)),
+            0)
       << "incorrect value for states[8].prn, expected 0, is "
       << last_msg_->states[8].prn;
-  EXPECT_EQ(last_msg_->states[8].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[8].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[8].state)),
+            0)
       << "incorrect value for states[8].state, expected 0, is "
       << last_msg_->states[8].state;
   EXPECT_LT((last_msg_->states[9].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[9].cn0, expected -1.0, is "
       << last_msg_->states[9].cn0;
-  EXPECT_EQ(last_msg_->states[9].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].prn)),
+            0)
       << "incorrect value for states[9].prn, expected 0, is "
       << last_msg_->states[9].prn;
-  EXPECT_EQ(last_msg_->states[9].state, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[9].state)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[9].state)),
+            0)
       << "incorrect value for states[9].state, expected 0, is "
       << last_msg_->states[9].state;
   EXPECT_LT((last_msg_->states[10].cn0 * 100 - -1.0 * 100), 0.05)
       << "incorrect value for states[10].cn0, expected -1.0, is "
       << last_msg_->states[10].cn0;
-  EXPECT_EQ(last_msg_->states[10].prn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->states[10].prn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->states[10].prn)),
+            0)
       << "incorrect value for states[10].prn, expected 0, is "
       << last_msg_->states[10].prn;
-  EXPECT_EQ(last_msg_->states[10].state, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->states[10].state)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->states[10].state)),
+      0)
       << "incorrect value for states[10].state, expected 0, is "
       << last_msg_->states[10].state;
 }
