@@ -22,7 +22,7 @@ bool sbp_msg_tracking_state_detailed_dep_a_encode_internal(
   if (!sbp_u64_encode(ctx, &msg->recv_time)) {
     return false;
   }
-  if (!sbp_v4_gps_time_encode_internal(ctx, &msg->tot)) {
+  if (!sbp_gps_time_encode_internal(ctx, &msg->tot)) {
     return false;
   }
   if (!sbp_u32_encode(ctx, &msg->P)) {
@@ -40,7 +40,7 @@ bool sbp_msg_tracking_state_detailed_dep_a_encode_internal(
   if (!sbp_u16_encode(ctx, &msg->lock)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_s32_encode(ctx, &msg->doppler)) {
@@ -106,7 +106,7 @@ bool sbp_msg_tracking_state_detailed_dep_a_decode_internal(
   if (!sbp_u64_decode(ctx, &msg->recv_time)) {
     return false;
   }
-  if (!sbp_v4_gps_time_decode_internal(ctx, &msg->tot)) {
+  if (!sbp_gps_time_decode_internal(ctx, &msg->tot)) {
     return false;
   }
   if (!sbp_u32_decode(ctx, &msg->P)) {
@@ -124,7 +124,7 @@ bool sbp_msg_tracking_state_detailed_dep_a_decode_internal(
   if (!sbp_u16_decode(ctx, &msg->lock)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_s32_decode(ctx, &msg->doppler)) {
@@ -195,7 +195,7 @@ s8 sbp_msg_tracking_state_detailed_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_STATE_DETAILED_DEP_A,
+  return sbp_internal_forward_payload(s, SbpMsgTrackingStateDetailedDepA,
                                       sender_id, payload_len, payload, write);
 }
 
@@ -209,7 +209,7 @@ int sbp_msg_tracking_state_detailed_dep_a_cmp(
     return ret;
   }
 
-  ret = sbp_v4_gps_time_cmp(&a->tot, &b->tot);
+  ret = sbp_gps_time_cmp(&a->tot, &b->tot);
   if (ret != 0) {
     return ret;
   }
@@ -239,7 +239,7 @@ int sbp_msg_tracking_state_detailed_dep_a_cmp(
     return ret;
   }
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -486,7 +486,7 @@ s8 sbp_msg_tracking_state_detailed_dep_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_STATE_DETAILED_DEP,
+  return sbp_internal_forward_payload(s, SbpMsgTrackingStateDetailedDep,
                                       sender_id, payload_len, payload, write);
 }
 
@@ -601,7 +601,7 @@ int sbp_msg_tracking_state_detailed_dep_cmp(
 
 bool sbp_tracking_channel_state_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_tracking_channel_state_t *msg) {
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->fcn)) {
@@ -631,7 +631,7 @@ s8 sbp_tracking_channel_state_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_tracking_channel_state_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_tracking_channel_state_t *msg) {
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->fcn)) {
@@ -663,7 +663,7 @@ int sbp_tracking_channel_state_cmp(const sbp_tracking_channel_state_t *a,
                                    const sbp_tracking_channel_state_t *b) {
   int ret = 0;
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -744,7 +744,7 @@ s8 sbp_msg_tracking_state_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_STATE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgTrackingState, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -767,7 +767,7 @@ int sbp_msg_tracking_state_cmp(const sbp_msg_tracking_state_t *a,
 
 bool sbp_measurement_state_encode_internal(sbp_encode_ctx_t *ctx,
                                            const sbp_measurement_state_t *msg) {
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->mesid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->mesid)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->cn0)) {
@@ -793,7 +793,7 @@ s8 sbp_measurement_state_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_measurement_state_decode_internal(sbp_decode_ctx_t *ctx,
                                            sbp_measurement_state_t *msg) {
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->mesid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->mesid)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->cn0)) {
@@ -821,7 +821,7 @@ int sbp_measurement_state_cmp(const sbp_measurement_state_t *a,
                               const sbp_measurement_state_t *b) {
   int ret = 0;
 
-  ret = sbp_v4_gnss_signal_cmp(&a->mesid, &b->mesid);
+  ret = sbp_gnss_signal_cmp(&a->mesid, &b->mesid);
   if (ret != 0) {
     return ret;
   }
@@ -897,7 +897,7 @@ s8 sbp_msg_measurement_state_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_MEASUREMENT_STATE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgMeasurementState, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -991,7 +991,7 @@ bool sbp_msg_tracking_iq_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->channel)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   for (size_t i = 0; i < SBP_MSG_TRACKING_IQ_CORRS_MAX; i++) {
@@ -1023,7 +1023,7 @@ bool sbp_msg_tracking_iq_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->channel)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   for (uint8_t i = 0; i < SBP_MSG_TRACKING_IQ_CORRS_MAX; i++) {
@@ -1060,7 +1060,7 @@ s8 sbp_msg_tracking_iq_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_IQ, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgTrackingIq, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1073,7 +1073,7 @@ int sbp_msg_tracking_iq_cmp(const sbp_msg_tracking_iq_t *a,
     return ret;
   }
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -1160,7 +1160,7 @@ bool sbp_msg_tracking_iq_dep_b_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->channel)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   for (size_t i = 0; i < SBP_MSG_TRACKING_IQ_DEP_B_CORRS_MAX; i++) {
@@ -1193,7 +1193,7 @@ bool sbp_msg_tracking_iq_dep_b_decode_internal(
   if (!sbp_u8_decode(ctx, &msg->channel)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   for (uint8_t i = 0; i < SBP_MSG_TRACKING_IQ_DEP_B_CORRS_MAX; i++) {
@@ -1231,7 +1231,7 @@ s8 sbp_msg_tracking_iq_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_IQ_DEP_B, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgTrackingIqDepB, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1244,7 +1244,7 @@ int sbp_msg_tracking_iq_dep_b_cmp(const sbp_msg_tracking_iq_dep_b_t *a,
     return ret;
   }
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -1334,7 +1334,7 @@ s8 sbp_msg_tracking_iq_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_IQ_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgTrackingIqDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1510,8 +1510,8 @@ s8 sbp_msg_tracking_state_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_STATE_DEP_A,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgTrackingStateDepA, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_tracking_state_dep_a_cmp(const sbp_msg_tracking_state_dep_a_t *a,
@@ -1680,8 +1680,8 @@ s8 sbp_msg_tracking_state_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_TRACKING_STATE_DEP_B,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgTrackingStateDepB, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_tracking_state_dep_b_cmp(const sbp_msg_tracking_state_dep_b_t *a,

@@ -52,7 +52,7 @@ typedef struct {
   /**
    * Receiver time of this observation
    */
-  sbp_v4_gps_time_t t;
+  sbp_gps_time_t t;
 
   /**
    * Reference frequency of this packet [MHz]

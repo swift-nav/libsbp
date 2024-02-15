@@ -198,7 +198,7 @@ s8 sbp_msg_soln_meta_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SOLN_META_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgSolnMetaDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -361,8 +361,8 @@ s8 sbp_msg_soln_meta_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_SOLN_META, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgSolnMeta, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_soln_meta_cmp(const sbp_msg_soln_meta_t *a,

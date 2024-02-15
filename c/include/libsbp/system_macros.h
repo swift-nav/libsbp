@@ -18,7 +18,6 @@
 #ifndef LIBSBP_SYSTEM_MACROS_H
 #define LIBSBP_SYSTEM_MACROS_H
 
-#define SBP_MSG_STARTUP 0xFF00
 #define SBP_STARTUP_CAUSE_OF_STARTUP_MASK (0xffu)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SHIFT (0u)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_GET(flags)               \
@@ -51,12 +50,10 @@
 #define SBP_STARTUP_HOT_START (2)
 #define SBP_STARTUP_HOT_START (2)
 /**
- * Encoded length of sbp_msg_startup_t (V4 API) and
- * msg_startup_t (legacy API)
+ * Encoded length of sbp_msg_startup_t (V4 API)
  */
 #define SBP_MSG_STARTUP_ENCODED_LEN 4u
 
-#define SBP_MSG_DGNSS_STATUS 0xFF02
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_MASK (0xfu)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_SHIFT (0u)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_GET(flags)               \
@@ -76,27 +73,24 @@
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_RTK (2)
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_dgnss_status_t::source (V4 API) or msg_dgnss_status_t::source (legacy
- * API) before the maximum SBP message size is exceeded
+ * sbp_msg_dgnss_status_t::source before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_MSG_DGNSS_STATUS_SOURCE_MAX 251u
 
 /**
- * Encoded length of sbp_msg_dgnss_status_t (V4 API) and
- * msg_dgnss_status_t (legacy API)
+ * Encoded length of sbp_msg_dgnss_status_t (V4 API)
  *
  * This type is not fixed size and an instance of this message may be longer
  * than the value indicated by this symbol. Users of the V4 API should call
  * #sbp_msg_dgnss_status_encoded_len to determine the actual size of an instance
- * of this message. Users of the legacy API are required to track the encoded
- * message length when interacting with the legacy type.
+ * of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_DGNSS_STATUS_ENCODED_OVERHEAD 4u
 
-#define SBP_MSG_HEARTBEAT 0xFFFF
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_MASK (0x1u)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_SHIFT (31u)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_GET(flags)                 \
@@ -207,8 +201,7 @@
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_SYSTEM_HEALTHY (0)
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_AN_ERROR_HAS_OCCURRED (1)
 /**
- * Encoded length of sbp_msg_heartbeat_t (V4 API) and
- * msg_heartbeat_t (legacy API)
+ * Encoded length of sbp_msg_heartbeat_t (V4 API)
  */
 #define SBP_MSG_HEARTBEAT_ENCODED_LEN 4u
 
@@ -251,12 +244,10 @@
 #define SBP_SUBSYSTEMREPORT_GENERIC_DEGRADED (3)
 #define SBP_SUBSYSTEMREPORT_GENERIC_UNUSABLE (4)
 /**
- * Encoded length of sbp_sub_system_report_t (V4 API) and
- * sub_system_report_t (legacy API)
+ * Encoded length of sbp_sub_system_report_t (V4 API)
  */
 #define SBP_SUB_SYSTEM_REPORT_ENCODED_LEN 4u
 
-#define SBP_MSG_STATUS_REPORT 0xFFFE
 #define SBP_STATUS_REPORT_SYSTEM_MASK (0xffffu)
 #define SBP_STATUS_REPORT_SYSTEM_SHIFT (0u)
 #define SBP_STATUS_REPORT_SYSTEM_GET(flags)                 \
@@ -306,20 +297,18 @@
 
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_status_report_t::status (V4 API) or msg_status_report_t::status
- * (legacy API) before the maximum SBP message size is exceeded
+ * sbp_msg_status_report_t::status before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_MSG_STATUS_REPORT_STATUS_MAX 60u
 
 /**
- * Encoded length of sbp_msg_status_report_t (V4 API) and
- * msg_status_report_t (legacy API)
+ * Encoded length of sbp_msg_status_report_t (V4 API)
  *
  * This type is not fixed size and an instance of this message may be longer
  * than the value indicated by this symbol. Users of the V4 API should call
  * #sbp_msg_status_report_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
+ * instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
@@ -327,12 +316,10 @@
 #define SBP_MSG_STATUS_REPORT_ENCODED_OVERHEAD 12u
 
 /**
- * Encoded length of sbp_status_journal_item_t (V4 API) and
- * status_journal_item_t (legacy API)
+ * Encoded length of sbp_status_journal_item_t (V4 API)
  */
 #define SBP_STATUS_JOURNAL_ITEM_ENCODED_LEN 8u
 
-#define SBP_MSG_STATUS_JOURNAL 0xFFFD
 #define SBP_STATUS_JOURNAL_SYSTEM_MASK (0xffffu)
 #define SBP_STATUS_JOURNAL_SYSTEM_SHIFT (0u)
 #define SBP_STATUS_JOURNAL_SYSTEM_GET(flags)                 \
@@ -382,27 +369,24 @@
 
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_status_journal_t::journal (V4 API) or msg_status_journal_t::journal
- * (legacy API) before the maximum SBP message size is exceeded
+ * sbp_msg_status_journal_t::journal before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_MSG_STATUS_JOURNAL_JOURNAL_MAX 30u
 
 /**
- * Encoded length of sbp_msg_status_journal_t (V4 API) and
- * msg_status_journal_t (legacy API)
+ * Encoded length of sbp_msg_status_journal_t (V4 API)
  *
  * This type is not fixed size and an instance of this message may be longer
  * than the value indicated by this symbol. Users of the V4 API should call
  * #sbp_msg_status_journal_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
+ * instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_STATUS_JOURNAL_ENCODED_OVERHEAD 9u
 
-#define SBP_MSG_INS_STATUS 0xFF03
 #define SBP_INS_STATUS_INS_TYPE_MASK (0x7u)
 #define SBP_INS_STATUS_INS_TYPE_SHIFT (29u)
 #define SBP_INS_STATUS_INS_TYPE_GET(flags)                 \
@@ -519,60 +503,50 @@
 #define SBP_INS_STATUS_MODE_FASTSTART_VALIDATING (5)
 #define SBP_INS_STATUS_MODE_VALIDATING_UNSAFE_FAST_START_SEED (6)
 /**
- * Encoded length of sbp_msg_ins_status_t (V4 API) and
- * msg_ins_status_t (legacy API)
+ * Encoded length of sbp_msg_ins_status_t (V4 API)
  */
 #define SBP_MSG_INS_STATUS_ENCODED_LEN 4u
 
-#define SBP_MSG_CSAC_TELEMETRY 0xFF04
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_csac_telemetry_t::telemetry (V4 API) or
- * msg_csac_telemetry_t::telemetry (legacy API) before the maximum SBP message
- * size is exceeded
+ * sbp_msg_csac_telemetry_t::telemetry before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX 254u
 
 /**
- * Encoded length of sbp_msg_csac_telemetry_t (V4 API) and
- * msg_csac_telemetry_t (legacy API)
+ * Encoded length of sbp_msg_csac_telemetry_t (V4 API)
  *
  * This type is not fixed size and an instance of this message may be longer
  * than the value indicated by this symbol. Users of the V4 API should call
  * #sbp_msg_csac_telemetry_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
+ * instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_CSAC_TELEMETRY_ENCODED_OVERHEAD 1u
 
-#define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_csac_telemetry_labels_t::telemetry_labels (V4 API) or
- * msg_csac_telemetry_labels_t::telemetry_labels (legacy API) before the maximum
- * SBP message size is exceeded
+ * sbp_msg_csac_telemetry_labels_t::telemetry_labels before the maximum SBP
+ * message size is exceeded
  */
 #define SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX 254u
 
 /**
- * Encoded length of sbp_msg_csac_telemetry_labels_t (V4 API) and
- * msg_csac_telemetry_labels_t (legacy API)
+ * Encoded length of sbp_msg_csac_telemetry_labels_t (V4 API)
  *
  * This type is not fixed size and an instance of this message may be longer
  * than the value indicated by this symbol. Users of the V4 API should call
  * #sbp_msg_csac_telemetry_labels_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
+ * instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_CSAC_TELEMETRY_LABELS_ENCODED_OVERHEAD 1u
 
-#define SBP_MSG_INS_UPDATES 0xFF06
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_MASK \
   (0xfu)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_SHIFT \
@@ -850,12 +824,10 @@
   } while (0)
 
 /**
- * Encoded length of sbp_msg_ins_updates_t (V4 API) and
- * msg_ins_updates_t (legacy API)
+ * Encoded length of sbp_msg_ins_updates_t (V4 API)
  */
 #define SBP_MSG_INS_UPDATES_ENCODED_LEN 10u
 
-#define SBP_MSG_GNSS_TIME_OFFSET 0xFF07
 #define SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_MASK (0x7fu)
 #define SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_SHIFT (1u)
 #define SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_GET(flags)               \
@@ -889,12 +861,10 @@
 #define SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_INCREMENTED_ON_LOCAL_TIMESTAMP_ROLLOVER \
   (1)
 /**
- * Encoded length of sbp_msg_gnss_time_offset_t (V4 API) and
- * msg_gnss_time_offset_t (legacy API)
+ * Encoded length of sbp_msg_gnss_time_offset_t (V4 API)
  */
 #define SBP_MSG_GNSS_TIME_OFFSET_ENCODED_LEN 9u
 
-#define SBP_MSG_PPS_TIME 0xFF08
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_MASK (0x3fu)
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_SHIFT (2u)
 #define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_GET(flags)               \
@@ -930,12 +900,10 @@
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__1_MICROSECONDS (3)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY_1_MICROSECONDS (3)
 /**
- * Encoded length of sbp_msg_pps_time_t (V4 API) and
- * msg_pps_time_t (legacy API)
+ * Encoded length of sbp_msg_pps_time_t (V4 API)
  */
 #define SBP_MSG_PPS_TIME_ENCODED_LEN 9u
 
-#define SBP_MSG_SENSOR_AID_EVENT 0xFF09
 #define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_MASK (0xffu)
 #define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_SHIFT (0u)
 #define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_GET(flags)               \
@@ -959,12 +927,10 @@
 #define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_TIME_DIFFERENCES_OF_CARRIER_PHASE \
   (6)
 /**
- * Encoded length of sbp_msg_sensor_aid_event_t (V4 API) and
- * msg_sensor_aid_event_t (legacy API)
+ * Encoded length of sbp_msg_sensor_aid_event_t (V4 API)
  */
 #define SBP_MSG_SENSOR_AID_EVENT_ENCODED_LEN 15u
 
-#define SBP_MSG_GROUP_META 0xFF0A
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_MASK (0x3u)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_SHIFT (0u)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GET(flags)               \
@@ -984,20 +950,18 @@
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSSINS (2)
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_group_meta_t::group_msgs (V4 API) or msg_group_meta_t::group_msgs
- * (legacy API) before the maximum SBP message size is exceeded
+ * sbp_msg_group_meta_t::group_msgs before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_MSG_GROUP_META_GROUP_MSGS_MAX 126u
 
 /**
- * Encoded length of sbp_msg_group_meta_t (V4 API) and
- * msg_group_meta_t (legacy API)
+ * Encoded length of sbp_msg_group_meta_t (V4 API)
  *
  * This type is not fixed size and an instance of this message may be longer
  * than the value indicated by this symbol. Users of the V4 API should call
  * #sbp_msg_group_meta_encoded_len to determine the actual size of an instance
- * of this message. Users of the legacy API are required to track the encoded
- * message length when interacting with the legacy type.
+ * of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)

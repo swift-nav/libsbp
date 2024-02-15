@@ -10,7 +10,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 """
-Generator for c target (V4 API).
+Generator for c target
 """
 
 import re
@@ -20,7 +20,6 @@ from sbpg import ReleaseVersion
 
 SBP_MESSAGES_TEMPLATE_NAME = "c/include/libsbp/package/sbp_messages_template.h"
 SBP_PACKAGE_TEMPLATE_NAME = "c/include/libsbp/sbp_package_template.h"
-SBP_OLD_PACKAGE_TEMPLATE_NAME = "c/include/libsbp/v4/sbp_package_template.h"
 SBP_MSG_TEMPLATE_NAME = "c/include/libsbp/sbp_msg_template.h"
 VERSION_TEMPLATE_NAME = "c/include/libsbp/sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "c/include/libsbp/cpp/message_traits_template.h"
@@ -47,21 +46,19 @@ PRIMITIVE_SIZES = {
 }
 
 TO_GNSS = {
-    "MSG_GPS_TIME" : "MSG_GPS_TIME_GNSS",
-    "MSG_UTC_TIME" : "MSG_UTC_TIME_GNSS",
-    "MSG_POS_LLH" : "MSG_POS_LLH_GNSS",
-    "MSG_POS_ECEF" : "MSG_POS_ECEF_GNSS",
-    "MSG_VEL_NED" : "MSG_VEL_NED_GNSS",
-    "MSG_VEL_ECEF" : "MSG_VEL_ECEF_GNSS",
-    "MSG_POS_ECEF_COV" : "MSG_POS_ECEF_COV_GNSS",
-    "MSG_VEL_ECEF_COV" : "MSG_VEL_ECEF_COV_GNSS",
-    "MSG_POS_LLH_COV" : "MSG_POS_LLH_COV_GNSS",
-    "MSG_VEL_NED_COV" : "MSG_VEL_NED_COV_GNSS"
-    }
+    "MSG_GPS_TIME": "MSG_GPS_TIME_GNSS",
+    "MSG_UTC_TIME": "MSG_UTC_TIME_GNSS",
+    "MSG_POS_LLH": "MSG_POS_LLH_GNSS",
+    "MSG_POS_ECEF": "MSG_POS_ECEF_GNSS",
+    "MSG_VEL_NED": "MSG_VEL_NED_GNSS",
+    "MSG_VEL_ECEF": "MSG_VEL_ECEF_GNSS",
+    "MSG_POS_ECEF_COV": "MSG_POS_ECEF_COV_GNSS",
+    "MSG_VEL_ECEF_COV": "MSG_VEL_ECEF_COV_GNSS",
+    "MSG_POS_LLH_COV": "MSG_POS_LLH_COV_GNSS",
+    "MSG_VEL_NED_COV": "MSG_VEL_NED_COV_GNSS",
+}
 
 TO_NON_GNSS = {v: k for k, v in TO_GNSS.items()}
-
-COLLISIONS = set(["GnssSignal", "GPSTime"])
 
 
 def commentify(value):
@@ -82,68 +79,44 @@ def camel_case(value):
     return "".join(ele.title() for ele in value.split("_"))
 
 
-def get_v4_basename(identifier):
+def get_basename(identifier):
     """
-    Convert an identifier from the SBP spec to the base component used to construct other related identifiers in the V4 schema
+    Convert an identifier from the SBP spec to the base component used to construct other related identifiers
 
-    The basename is the identifier from the SBP spec convertered to snake_case and prefixed with either:
-    "sbp_v4_" for types in the collisions list
-    "sbp_" for everything else
+    The basename is the identifier from the SBP spec convertered to snake_case and prefixed with "sbp_"
     """
     s0 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", identifier)
     s1 = re.sub("([a-z0-9])([A-Z])", r"\1_\2", s0).lower()
-    s2 = "sbp_v4_" + s1 if identifier in COLLISIONS else "sbp_" + s1
-    return s2
+    return "sbp_" + s1
 
 
 def get_union_member_name(identifier):
     """Convert an identifier to the appropriate name for use in the `sbp_msg_t` union
     Only works for real messages, calling this with any other typename will assert
     """
-    basename = get_v4_basename(identifier)
+    basename = get_basename(identifier)
     dropped = basename[:8]
     assert dropped == "sbp_msg_"
     return basename[8:]
 
 
-def get_v4_typename(identifier):
+def get_typename(identifier):
     """
-    Convert an SBP spec identifier in to the correct typename according to the V4 API
+    Convert an SBP spec identifier in to the correct typename
     """
     if identifier in PRIMITIVE_TYPES:
         return identifier
-    return get_v4_basename(identifier) + "_t"
+    return get_basename(identifier) + "_t"
 
 
-def get_legacy_typename(identifier):
+def get_msg_type(identifier):
     """
-    Convert an SBP spec identifier in to the correct typename according to the legacy API
-    """
-    typename = get_v4_typename(identifier)
-    if typename[:7] == "sbp_v4_":
-        return "sbp_" + typename[7:]
-    assert typename[:4] == "sbp_"
-    return typename[4:]
-
-
-def get_v4_msg_type(identifier):
-    """
-    Convert an SBP spec identifier to the msg_type identifier according to the V4 API
+    Convert an SBP spec identifier to the msg_type identifier
     Only works for real messages will assert when called for any other type
     """
 
     assert identifier[:4] == "MSG_"
     return camel_case("sbp_" + identifier.lower())
-
-
-def get_legacy_msg_type(identifier):
-    """
-    Convert an SBP spec identifier to the message type #define identifier according to the legacy API
-    Only works for real messages, will assert when called for any other type
-    """
-
-    assert identifier[:4] == "MSG_"
-    return "SBP_" + identifier
 
 
 def get_public_encode_fn(typename):
@@ -215,7 +188,7 @@ def get_field_encoded_len(field, package_specs):
     if field.type_id == "array":
         if "size" in field.options:
             return field.options["size"].value * get_encoded_len_value(
-                get_v4_typename(field.options["fill"].value), package_specs
+                get_typename(field.options["fill"].value), package_specs
             )
         # Variable length array, can't calculate a length. This will later cause an assert if it's being used from an embedded type
         return 0
@@ -223,7 +196,7 @@ def get_field_encoded_len(field, package_specs):
         if "size" in field.options:
             return field.options["size"].value
         return 0
-    return get_encoded_len_value(get_v4_typename(field.type_id), package_specs)
+    return get_encoded_len_value(get_typename(field.type_id), package_specs)
 
 
 def get_encoded_len_macro(typename, is_fixed_size):
@@ -248,7 +221,7 @@ def get_encoded_len_value(typename, package_specs):
     encoded_len = 0
     for package in package_specs:
         for msg in package.definitions:
-            if get_v4_typename(msg.identifier) == typename:
+            if get_typename(msg.identifier) == typename:
                 for f in msg.fields:
                     encoded_len = encoded_len + get_field_encoded_len(f, package_specs)
     return encoded_len
@@ -284,7 +257,7 @@ def get_max_possible_items(msg, field, package_specs):
     if field.type_id == "string":
         return available_space
     elem_size = get_encoded_len_value(
-        get_v4_typename(field.options["fill"].value), package_specs
+        get_typename(field.options["fill"].value), package_specs
     )
     return int(available_space / elem_size)
 
@@ -294,9 +267,7 @@ def get_max_possible_items_macro(msg, field):
     Get the name of the macro which will define the maximum number of items that can be stored in a field
     """
     assert field.type_id == "array" or field.type_id == "string"
-    macro_name = get_v4_basename(msg.identifier)
-    if macro_name[:7] == "sbp_v4_":
-        macro_name = "sbp_" + macro_name[7:]
+    macro_name = get_basename(msg.identifier)
     macro_name = macro_name + "_" + field.identifier + "_MAX"
     return macro_name.upper()
 
@@ -324,7 +295,11 @@ def create_bitfield_macros(field, msg):
                 """#define {}_GET(flags) \\
                              (({})(({})((flags) >> {}_SHIFT) \\
                              & {}_MASK))""".format(
-                    base_string, field.basetype, field.basetype, base_string, base_string
+                    base_string,
+                    field.basetype,
+                    field.basetype,
+                    base_string,
+                    base_string,
                 )
             )
             ret_list.append(
@@ -333,7 +308,12 @@ def create_bitfield_macros(field, msg):
                              (((val) & ({}_MASK)) \\
                              << ({}_SHIFT)));}} while(0)
                              """.format(
-                    base_string, field.basetype, base_string, base_string, base_string, base_string
+                    base_string,
+                    field.basetype,
+                    base_string,
+                    base_string,
+                    base_string,
+                    base_string,
                 )
             )
             ret_list.append("")
@@ -383,7 +363,7 @@ class FieldItem(object):
         type_id = field.type_id
         self.units = field.units
         self.desc = field.desc
-        self.fn_prefix = get_v4_basename(msg.identifier) + "_" + field.identifier
+        self.fn_prefix = get_basename(msg.identifier) + "_" + field.identifier
 
         if type_id == "string" and "size" in field.options:
             self.packing = "fixed-array"
@@ -408,7 +388,7 @@ class FieldItem(object):
         elif type_id == "array" and "size" in field.options:
             self.packing = "fixed-array"
             self.basetype_from_spec = field.options["fill"].value
-            self.basetype = get_v4_typename(field.options["fill"].value)
+            self.basetype = get_typename(field.options["fill"].value)
             self.encode_fn = get_internal_encode_fn(self.basetype)
             self.decode_fn = get_internal_decode_fn(self.basetype)
             self.cmp_fn = get_cmp_fn(self.basetype)
@@ -421,7 +401,7 @@ class FieldItem(object):
         elif type_id == "array":
             self.packing = "variable-array"
             self.basetype_from_spec = field.options["fill"].value
-            self.basetype = get_v4_typename(field.options["fill"].value)
+            self.basetype = get_typename(field.options["fill"].value)
             self.encode_fn = get_internal_encode_fn(self.basetype)
             self.decode_fn = get_internal_decode_fn(self.basetype)
             self.cmp_fn = get_cmp_fn(self.basetype)
@@ -440,7 +420,7 @@ class FieldItem(object):
         else:
             self.packing = "single"
             self.basetype_from_spec = type_id
-            self.basetype = get_v4_typename(type_id)
+            self.basetype = get_typename(type_id)
             self.encode_fn = get_internal_encode_fn(self.basetype)
             self.decode_fn = get_internal_decode_fn(self.basetype)
             self.cmp_fn = get_cmp_fn(self.basetype)
@@ -473,16 +453,14 @@ class MsgItem(object):
 
     def __init__(self, msg, package, package_specs):
         self.name = msg.identifier
-        self.basename = get_v4_basename(msg.identifier)
-        self.type_name = get_v4_typename(msg.identifier)
-        self.legacy_type_name = get_legacy_typename(msg.identifier)
+        self.basename = get_basename(msg.identifier)
+        self.type_name = get_typename(msg.identifier)
         self.is_real_message = msg.is_real_message
         self.package_name = package.name
         self.package_filepath = package.filepath
         self.package_includes = package.includes
         if self.is_real_message:
-            self.v4_msg_type = get_v4_msg_type(msg.identifier)
-            self.legacy_msg_type = get_legacy_msg_type(msg.identifier)
+            self.msg_type = get_msg_type(msg.identifier)
             self.union_member_name = get_union_member_name(msg.identifier)
             self.send_fn = get_send_fn(self.type_name)
         self.public_encode_fn = get_public_encode_fn(self.type_name)
@@ -501,11 +479,13 @@ class MsgItem(object):
         self.non_gnss_type_name = ""
         self.return_union_member_name = ""
         if self.name in TO_GNSS:
-            self.gnss_type_name = get_v4_typename(TO_GNSS[self.name])
+            self.gnss_type_name = get_typename(TO_GNSS[self.name])
             self.return_union_member_name = get_union_member_name(TO_GNSS[self.name])
         if self.name in TO_NON_GNSS:
-            self.non_gnss_type_name = get_v4_typename(TO_NON_GNSS[self.name])
-            self.return_union_member_name = get_union_member_name(TO_NON_GNSS[self.name])
+            self.non_gnss_type_name = get_typename(TO_NON_GNSS[self.name])
+            self.return_union_member_name = get_union_member_name(
+                TO_NON_GNSS[self.name]
+            )
         for f in msg.fields:
             new_field = FieldItem(msg, package_specs, f)
             if not new_field.is_fixed_size:
@@ -528,7 +508,7 @@ class MsgItem(object):
         self.encoded_len_value = get_encoded_len_value(self.type_name, package_specs)
 
     def render(self, output_dir):
-        # Public header for V4 API - include/libsbp/<package>/<type>.h
+        # Public header - include/libsbp/<package>/<type>.h
         destination_filename = "%s/include/libsbp/%s/%s.h" % (
             output_dir,
             self.package_name,
@@ -578,22 +558,9 @@ class PackageItem(object):
                 "package": self,
             },
         )
-        #
-        # Old public header for the package - include/libsbp/v4/<package>.h
-        # Generates a compile time message and includes the real public header - include/libsbp/<package>.h
-        # To be removed in version 6
-        destination_filename = "%s/include/libsbp/v4/%s.h" % (output_dir, self.name)
-        render_file(
-            SBP_OLD_PACKAGE_TEMPLATE_NAME,
-            destination_filename,
-            {
-                "package": self,
-            },
-        )
 
         # Public macros header - include/libsbp/<package>_macros.h
-        # Declares certain symbols shared between legacy and V4 APIs such as
-        # message type #define and bitfield macros
+        # Declares certain constants and symbols such as bitfield macros
         destination_filename = "%s/include/libsbp/%s_macros.h" % (output_dir, self.name)
         render_file(
             SBP_MESSAGES_MACROS_TEMPLATE_NAME,
@@ -661,7 +628,7 @@ def render_all(output_dir, package_specs):
     for p in all_packages:
         p.render(output_dir)
 
-    # Render sbp_msg_t type, union of all real messages in V4 API
+    # Render sbp_msg_t type, union of all real messages
     destination_filename = "%s/include/libsbp/sbp_msg.h" % (output_dir)
     render_file(
         SBP_MSG_TEMPLATE_NAME,
@@ -672,7 +639,7 @@ def render_all(output_dir, package_specs):
         },
     )
 
-    # Render sbp_msg_type_t type, V4 message type enum
+    # Render sbp_msg_type_t type
     destination_filename = "%s/include/libsbp/sbp_msg_type.h" % (output_dir)
     render_file(
         SBP_MSG_TYPE_TEMPLATE_NAME,
@@ -683,7 +650,7 @@ def render_all(output_dir, package_specs):
         },
     )
 
-    # C++ message traits for V4 API
+    # C++ message traits
     destination_filename = "%s/include/libsbp/cpp/message_traits.h" % (output_dir)
     render_file(
         MESSAGE_TRAITS_TEMPLATE_NAME,

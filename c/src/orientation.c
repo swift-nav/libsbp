@@ -93,7 +93,7 @@ s8 sbp_msg_baseline_heading_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BASELINE_HEADING, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgBaselineHeading, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -230,7 +230,7 @@ s8 sbp_msg_orient_quat_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ORIENT_QUAT, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgOrientQuat, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -385,7 +385,7 @@ s8 sbp_msg_orient_euler_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ORIENT_EULER, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgOrientEuler, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -512,7 +512,7 @@ s8 sbp_msg_angular_rate_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ANGULAR_RATE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAngularRate, sender_id,
                                       payload_len, payload, write);
 }
 
