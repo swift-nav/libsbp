@@ -63,10 +63,6 @@ run:ubsan --action_env="UBSAN_OPTIONS=print_stacktrace=1"
 # rate that suppressions or an ignore list are impractical.
 common:ubsan --cxxopt=-fno-sanitize=vptr
 common:ubsan --linkopt=-fno-sanitize=vptr
-# enum sanitizer is really annoying in this repo even though it's useful
-common:ubsan --cxxopt=-fno-sanitize=enum
-common:ubsan --copt=-fno-sanitize=enum
-common:ubsan --linkopt=-fno-sanitize=enum
 common:ubsan --platform_suffix=ubsan
 
 # Dynamic memory sanitizer
