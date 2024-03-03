@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgPoseRelative0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -187,34 +194,58 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPoseRelative0, Test) {
   EXPECT_LT((last_msg_->cov_r_z_z * 100 - 1.0 * 100), 0.05)
       << "incorrect value for cov_r_z_z, expected 1.0, is "
       << last_msg_->cov_r_z_z;
-  EXPECT_EQ(last_msg_->flags, 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            5)
       << "incorrect value for flags, expected 5, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->sensor_id, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sensor_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sensor_id)),
+            0)
       << "incorrect value for sensor_id, expected 0, is "
       << last_msg_->sensor_id;
-  EXPECT_EQ(last_msg_->timestamp_1, 1110)
+  EXPECT_EQ(get_as<decltype(last_msg_->timestamp_1)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->timestamp_1)),
+            1110)
       << "incorrect value for timestamp_1, expected 1110, is "
       << last_msg_->timestamp_1;
-  EXPECT_EQ(last_msg_->timestamp_2, 2220)
+  EXPECT_EQ(get_as<decltype(last_msg_->timestamp_2)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->timestamp_2)),
+            2220)
       << "incorrect value for timestamp_2, expected 2220, is "
       << last_msg_->timestamp_2;
-  EXPECT_EQ(last_msg_->tow, 1110)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            1110)
       << "incorrect value for tow, expected 1110, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->trans[0], 1100)
+  EXPECT_EQ(get_as<decltype(last_msg_->trans[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->trans[0])),
+            1100)
       << "incorrect value for trans[0], expected 1100, is "
       << last_msg_->trans[0];
-  EXPECT_EQ(last_msg_->trans[1], 550)
+  EXPECT_EQ(get_as<decltype(last_msg_->trans[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->trans[1])),
+            550)
       << "incorrect value for trans[1], expected 550, is "
       << last_msg_->trans[1];
-  EXPECT_EQ(last_msg_->trans[2], 100)
+  EXPECT_EQ(get_as<decltype(last_msg_->trans[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->trans[2])),
+            100)
       << "incorrect value for trans[2], expected 100, is "
       << last_msg_->trans[2];
-  EXPECT_EQ(last_msg_->w, -859307164)
+  EXPECT_EQ(get_as<decltype(last_msg_->w)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->w)),
+            -859307164)
       << "incorrect value for w, expected -859307164, is " << last_msg_->w;
-  EXPECT_EQ(last_msg_->x, -6444804)
+  EXPECT_EQ(get_as<decltype(last_msg_->x)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->x)),
+            -6444804)
       << "incorrect value for x, expected -6444804, is " << last_msg_->x;
-  EXPECT_EQ(last_msg_->y, -1866844813)
+  EXPECT_EQ(get_as<decltype(last_msg_->y)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->y)),
+            -1866844813)
       << "incorrect value for y, expected -1866844813, is " << last_msg_->y;
-  EXPECT_EQ(last_msg_->z, 622997694)
+  EXPECT_EQ(get_as<decltype(last_msg_->z)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->z)),
+            622997694)
       << "incorrect value for z, expected 622997694, is " << last_msg_->z;
 }

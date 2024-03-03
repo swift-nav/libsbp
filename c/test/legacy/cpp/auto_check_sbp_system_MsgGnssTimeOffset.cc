@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/system.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_system_MsgGnssTimeOffset0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -114,14 +121,22 @@ TEST_F(Test_legacy_auto_check_sbp_system_MsgGnssTimeOffset0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 3862);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 221)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            221)
       << "incorrect value for flags, expected 221, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->microseconds, 9494)
+  EXPECT_EQ(get_as<decltype(last_msg_->microseconds)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->microseconds)),
+            9494)
       << "incorrect value for microseconds, expected 9494, is "
       << last_msg_->microseconds;
-  EXPECT_EQ(last_msg_->milliseconds, 1728664402)
+  EXPECT_EQ(get_as<decltype(last_msg_->milliseconds)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->milliseconds)),
+            1728664402)
       << "incorrect value for milliseconds, expected 1728664402, is "
       << last_msg_->milliseconds;
-  EXPECT_EQ(last_msg_->weeks, 14857)
+  EXPECT_EQ(get_as<decltype(last_msg_->weeks)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->weeks)),
+            14857)
       << "incorrect value for weeks, expected 14857, is " << last_msg_->weeks;
 }

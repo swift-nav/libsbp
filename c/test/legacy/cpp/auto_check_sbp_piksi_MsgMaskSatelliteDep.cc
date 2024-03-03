@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/piksi.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_piksi_MsgMaskSatelliteDep0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -115,15 +122,23 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgMaskSatelliteDep0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 34491);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->mask, 33)
+  EXPECT_EQ(get_as<decltype(last_msg_->mask)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->mask)),
+            33)
       << "incorrect value for mask, expected 33, is " << last_msg_->mask;
-  EXPECT_EQ(last_msg_->sid.code, 95)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            95)
       << "incorrect value for sid.code, expected 95, is "
       << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            4)
       << "incorrect value for sid.reserved, expected 4, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 39170)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            39170)
       << "incorrect value for sid.sat, expected 39170, is "
       << last_msg_->sid.sat;
 }

@@ -340,7 +340,7 @@ class Testauto_check_sbp_navigation_MsgDopsDepA0 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -1113,7 +1113,7 @@ class Testauto_check_sbp_navigation_MsgDopsDepA1 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -1886,7 +1886,7 @@ class Testauto_check_sbp_navigation_MsgDopsDepA2 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -2659,7 +2659,7 @@ class Testauto_check_sbp_navigation_MsgDopsDepA3 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -3432,7 +3432,7 @@ class Testauto_check_sbp_navigation_MsgDopsDepA4 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -4205,7 +4205,7 @@ class Testauto_check_sbp_navigation_MsgDopsDepA5 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -4978,7 +4978,7 @@ class Testauto_check_sbp_navigation_MsgDopsDepA6 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -5751,7 +5751,7 @@ class Testauto_check_sbp_navigation_MsgDopsDepA7 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -6524,7 +6524,7 @@ class Testauto_check_sbp_navigation_MsgDopsDepA8 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;

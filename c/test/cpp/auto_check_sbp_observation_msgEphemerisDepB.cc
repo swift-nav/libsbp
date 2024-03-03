@@ -369,7 +369,7 @@ class Testauto_check_sbp_observation_msgEphemerisDepB0
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -1332,7 +1332,7 @@ class Testauto_check_sbp_observation_msgEphemerisDepB1
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -2295,7 +2295,7 @@ class Testauto_check_sbp_observation_msgEphemerisDepB2
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -3258,7 +3258,7 @@ class Testauto_check_sbp_observation_msgEphemerisDepB3
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -4221,7 +4221,7 @@ class Testauto_check_sbp_observation_msgEphemerisDepB4
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -5184,7 +5184,7 @@ class Testauto_check_sbp_observation_msgEphemerisDepB5
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;

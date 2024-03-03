@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/tracking.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -139,69 +146,119 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 26427);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->L.f, 169)
+  EXPECT_EQ(get_as<decltype(last_msg_->L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->L.f)),
+            169)
       << "incorrect value for L.f, expected 169, is " << last_msg_->L.f;
-  EXPECT_EQ(last_msg_->L.i, 1319)
+  EXPECT_EQ(get_as<decltype(last_msg_->L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->L.i)),
+            1319)
       << "incorrect value for L.i, expected 1319, is " << last_msg_->L.i;
-  EXPECT_EQ(last_msg_->P, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->P)),
+            0)
       << "incorrect value for P, expected 0, is " << last_msg_->P;
-  EXPECT_EQ(last_msg_->P_std, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->P_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->P_std)),
+            0)
       << "incorrect value for P_std, expected 0, is " << last_msg_->P_std;
-  EXPECT_EQ(last_msg_->acceleration, 108)
+  EXPECT_EQ(get_as<decltype(last_msg_->acceleration)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->acceleration)),
+            108)
       << "incorrect value for acceleration, expected 108, is "
       << last_msg_->acceleration;
-  EXPECT_EQ(last_msg_->clock_drift, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->clock_drift)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->clock_drift)),
+            0)
       << "incorrect value for clock_drift, expected 0, is "
       << last_msg_->clock_drift;
-  EXPECT_EQ(last_msg_->clock_offset, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->clock_offset)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->clock_offset)),
+            0)
       << "incorrect value for clock_offset, expected 0, is "
       << last_msg_->clock_offset;
-  EXPECT_EQ(last_msg_->cn0, 177)
+  EXPECT_EQ(get_as<decltype(last_msg_->cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cn0)),
+            177)
       << "incorrect value for cn0, expected 177, is " << last_msg_->cn0;
-  EXPECT_EQ(last_msg_->corr_spacing, 40)
+  EXPECT_EQ(get_as<decltype(last_msg_->corr_spacing)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corr_spacing)),
+            40)
       << "incorrect value for corr_spacing, expected 40, is "
       << last_msg_->corr_spacing;
-  EXPECT_EQ(last_msg_->doppler, 15701)
+  EXPECT_EQ(get_as<decltype(last_msg_->doppler)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->doppler)),
+            15701)
       << "incorrect value for doppler, expected 15701, is "
       << last_msg_->doppler;
-  EXPECT_EQ(last_msg_->doppler_std, 39)
+  EXPECT_EQ(get_as<decltype(last_msg_->doppler_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->doppler_std)),
+            39)
       << "incorrect value for doppler_std, expected 39, is "
       << last_msg_->doppler_std;
-  EXPECT_EQ(last_msg_->lock, 14032)
+  EXPECT_EQ(get_as<decltype(last_msg_->lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->lock)),
+            14032)
       << "incorrect value for lock, expected 14032, is " << last_msg_->lock;
-  EXPECT_EQ(last_msg_->misc_flags, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->misc_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->misc_flags)),
+            9)
       << "incorrect value for misc_flags, expected 9, is "
       << last_msg_->misc_flags;
-  EXPECT_EQ(last_msg_->nav_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->nav_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->nav_flags)),
+            0)
       << "incorrect value for nav_flags, expected 0, is "
       << last_msg_->nav_flags;
-  EXPECT_EQ(last_msg_->pset_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->pset_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pset_flags)),
+            0)
       << "incorrect value for pset_flags, expected 0, is "
       << last_msg_->pset_flags;
-  EXPECT_EQ(last_msg_->recv_time, 7909447587)
+  EXPECT_EQ(get_as<decltype(last_msg_->recv_time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->recv_time)),
+            7909447587)
       << "incorrect value for recv_time, expected 7909447587, is "
       << last_msg_->recv_time;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            15)
       << "incorrect value for sid.sat, expected 15, is " << last_msg_->sid.sat;
-  EXPECT_EQ(last_msg_->sync_flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->sync_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sync_flags)),
+            1)
       << "incorrect value for sync_flags, expected 1, is "
       << last_msg_->sync_flags;
-  EXPECT_EQ(last_msg_->tot.tow, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tot.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tot.tow)),
+            0)
       << "incorrect value for tot.tow, expected 0, is " << last_msg_->tot.tow;
-  EXPECT_EQ(last_msg_->tot.wn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tot.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tot.wn)),
+            0)
       << "incorrect value for tot.wn, expected 0, is " << last_msg_->tot.wn;
-  EXPECT_EQ(last_msg_->tow_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow_flags)),
+            0)
       << "incorrect value for tow_flags, expected 0, is "
       << last_msg_->tow_flags;
-  EXPECT_EQ(last_msg_->track_flags, 11)
+  EXPECT_EQ(get_as<decltype(last_msg_->track_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->track_flags)),
+            11)
       << "incorrect value for track_flags, expected 11, is "
       << last_msg_->track_flags;
-  EXPECT_EQ(last_msg_->uptime, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->uptime)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->uptime)),
+            1)
       << "incorrect value for uptime, expected 1, is " << last_msg_->uptime;
 }
 class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1
@@ -314,69 +371,119 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 26427);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->L.f, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->L.f)),
+            14)
       << "incorrect value for L.f, expected 14, is " << last_msg_->L.f;
-  EXPECT_EQ(last_msg_->L.i, 1810)
+  EXPECT_EQ(get_as<decltype(last_msg_->L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->L.i)),
+            1810)
       << "incorrect value for L.i, expected 1810, is " << last_msg_->L.i;
-  EXPECT_EQ(last_msg_->P, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->P)),
+            0)
       << "incorrect value for P, expected 0, is " << last_msg_->P;
-  EXPECT_EQ(last_msg_->P_std, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->P_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->P_std)),
+            0)
       << "incorrect value for P_std, expected 0, is " << last_msg_->P_std;
-  EXPECT_EQ(last_msg_->acceleration, -32)
+  EXPECT_EQ(get_as<decltype(last_msg_->acceleration)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->acceleration)),
+            -32)
       << "incorrect value for acceleration, expected -32, is "
       << last_msg_->acceleration;
-  EXPECT_EQ(last_msg_->clock_drift, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->clock_drift)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->clock_drift)),
+            0)
       << "incorrect value for clock_drift, expected 0, is "
       << last_msg_->clock_drift;
-  EXPECT_EQ(last_msg_->clock_offset, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->clock_offset)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->clock_offset)),
+            0)
       << "incorrect value for clock_offset, expected 0, is "
       << last_msg_->clock_offset;
-  EXPECT_EQ(last_msg_->cn0, 175)
+  EXPECT_EQ(get_as<decltype(last_msg_->cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cn0)),
+            175)
       << "incorrect value for cn0, expected 175, is " << last_msg_->cn0;
-  EXPECT_EQ(last_msg_->corr_spacing, 40)
+  EXPECT_EQ(get_as<decltype(last_msg_->corr_spacing)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corr_spacing)),
+            40)
       << "incorrect value for corr_spacing, expected 40, is "
       << last_msg_->corr_spacing;
-  EXPECT_EQ(last_msg_->doppler, 15667)
+  EXPECT_EQ(get_as<decltype(last_msg_->doppler)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->doppler)),
+            15667)
       << "incorrect value for doppler, expected 15667, is "
       << last_msg_->doppler;
-  EXPECT_EQ(last_msg_->doppler_std, 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->doppler_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->doppler_std)),
+            30)
       << "incorrect value for doppler_std, expected 30, is "
       << last_msg_->doppler_std;
-  EXPECT_EQ(last_msg_->lock, 14032)
+  EXPECT_EQ(get_as<decltype(last_msg_->lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->lock)),
+            14032)
       << "incorrect value for lock, expected 14032, is " << last_msg_->lock;
-  EXPECT_EQ(last_msg_->misc_flags, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->misc_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->misc_flags)),
+            9)
       << "incorrect value for misc_flags, expected 9, is "
       << last_msg_->misc_flags;
-  EXPECT_EQ(last_msg_->nav_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->nav_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->nav_flags)),
+            0)
       << "incorrect value for nav_flags, expected 0, is "
       << last_msg_->nav_flags;
-  EXPECT_EQ(last_msg_->pset_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->pset_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pset_flags)),
+            0)
       << "incorrect value for pset_flags, expected 0, is "
       << last_msg_->pset_flags;
-  EXPECT_EQ(last_msg_->recv_time, 8409447265)
+  EXPECT_EQ(get_as<decltype(last_msg_->recv_time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->recv_time)),
+            8409447265)
       << "incorrect value for recv_time, expected 8409447265, is "
       << last_msg_->recv_time;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            15)
       << "incorrect value for sid.sat, expected 15, is " << last_msg_->sid.sat;
-  EXPECT_EQ(last_msg_->sync_flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->sync_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sync_flags)),
+            1)
       << "incorrect value for sync_flags, expected 1, is "
       << last_msg_->sync_flags;
-  EXPECT_EQ(last_msg_->tot.tow, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tot.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tot.tow)),
+            0)
       << "incorrect value for tot.tow, expected 0, is " << last_msg_->tot.tow;
-  EXPECT_EQ(last_msg_->tot.wn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tot.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tot.wn)),
+            0)
       << "incorrect value for tot.wn, expected 0, is " << last_msg_->tot.wn;
-  EXPECT_EQ(last_msg_->tow_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow_flags)),
+            0)
       << "incorrect value for tow_flags, expected 0, is "
       << last_msg_->tow_flags;
-  EXPECT_EQ(last_msg_->track_flags, 11)
+  EXPECT_EQ(get_as<decltype(last_msg_->track_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->track_flags)),
+            11)
       << "incorrect value for track_flags, expected 11, is "
       << last_msg_->track_flags;
-  EXPECT_EQ(last_msg_->uptime, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->uptime)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->uptime)),
+            1)
       << "incorrect value for uptime, expected 1, is " << last_msg_->uptime;
 }
 class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2
@@ -489,69 +596,119 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep2, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 26427);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->L.f, 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->L.f)),
+            8)
       << "incorrect value for L.f, expected 8, is " << last_msg_->L.f;
-  EXPECT_EQ(last_msg_->L.i, 2298)
+  EXPECT_EQ(get_as<decltype(last_msg_->L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->L.i)),
+            2298)
       << "incorrect value for L.i, expected 2298, is " << last_msg_->L.i;
-  EXPECT_EQ(last_msg_->P, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->P)),
+            0)
       << "incorrect value for P, expected 0, is " << last_msg_->P;
-  EXPECT_EQ(last_msg_->P_std, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->P_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->P_std)),
+            0)
       << "incorrect value for P_std, expected 0, is " << last_msg_->P_std;
-  EXPECT_EQ(last_msg_->acceleration, 27)
+  EXPECT_EQ(get_as<decltype(last_msg_->acceleration)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->acceleration)),
+            27)
       << "incorrect value for acceleration, expected 27, is "
       << last_msg_->acceleration;
-  EXPECT_EQ(last_msg_->clock_drift, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->clock_drift)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->clock_drift)),
+            0)
       << "incorrect value for clock_drift, expected 0, is "
       << last_msg_->clock_drift;
-  EXPECT_EQ(last_msg_->clock_offset, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->clock_offset)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->clock_offset)),
+            0)
       << "incorrect value for clock_offset, expected 0, is "
       << last_msg_->clock_offset;
-  EXPECT_EQ(last_msg_->cn0, 179)
+  EXPECT_EQ(get_as<decltype(last_msg_->cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cn0)),
+            179)
       << "incorrect value for cn0, expected 179, is " << last_msg_->cn0;
-  EXPECT_EQ(last_msg_->corr_spacing, 40)
+  EXPECT_EQ(get_as<decltype(last_msg_->corr_spacing)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corr_spacing)),
+            40)
       << "incorrect value for corr_spacing, expected 40, is "
       << last_msg_->corr_spacing;
-  EXPECT_EQ(last_msg_->doppler, 15683)
+  EXPECT_EQ(get_as<decltype(last_msg_->doppler)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->doppler)),
+            15683)
       << "incorrect value for doppler, expected 15683, is "
       << last_msg_->doppler;
-  EXPECT_EQ(last_msg_->doppler_std, 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->doppler_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->doppler_std)),
+            22)
       << "incorrect value for doppler_std, expected 22, is "
       << last_msg_->doppler_std;
-  EXPECT_EQ(last_msg_->lock, 14032)
+  EXPECT_EQ(get_as<decltype(last_msg_->lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->lock)),
+            14032)
       << "incorrect value for lock, expected 14032, is " << last_msg_->lock;
-  EXPECT_EQ(last_msg_->misc_flags, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->misc_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->misc_flags)),
+            9)
       << "incorrect value for misc_flags, expected 9, is "
       << last_msg_->misc_flags;
-  EXPECT_EQ(last_msg_->nav_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->nav_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->nav_flags)),
+            0)
       << "incorrect value for nav_flags, expected 0, is "
       << last_msg_->nav_flags;
-  EXPECT_EQ(last_msg_->pset_flags, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->pset_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pset_flags)),
+            2)
       << "incorrect value for pset_flags, expected 2, is "
       << last_msg_->pset_flags;
-  EXPECT_EQ(last_msg_->recv_time, 8907446923)
+  EXPECT_EQ(get_as<decltype(last_msg_->recv_time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->recv_time)),
+            8907446923)
       << "incorrect value for recv_time, expected 8907446923, is "
       << last_msg_->recv_time;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            15)
       << "incorrect value for sid.sat, expected 15, is " << last_msg_->sid.sat;
-  EXPECT_EQ(last_msg_->sync_flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->sync_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sync_flags)),
+            1)
       << "incorrect value for sync_flags, expected 1, is "
       << last_msg_->sync_flags;
-  EXPECT_EQ(last_msg_->tot.tow, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tot.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tot.tow)),
+            0)
       << "incorrect value for tot.tow, expected 0, is " << last_msg_->tot.tow;
-  EXPECT_EQ(last_msg_->tot.wn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tot.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tot.wn)),
+            0)
       << "incorrect value for tot.wn, expected 0, is " << last_msg_->tot.wn;
-  EXPECT_EQ(last_msg_->tow_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow_flags)),
+            0)
       << "incorrect value for tow_flags, expected 0, is "
       << last_msg_->tow_flags;
-  EXPECT_EQ(last_msg_->track_flags, 11)
+  EXPECT_EQ(get_as<decltype(last_msg_->track_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->track_flags)),
+            11)
       << "incorrect value for track_flags, expected 11, is "
       << last_msg_->track_flags;
-  EXPECT_EQ(last_msg_->uptime, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->uptime)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->uptime)),
+            2)
       << "incorrect value for uptime, expected 2, is " << last_msg_->uptime;
 }
 class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3
@@ -664,69 +821,119 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep3, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 26427);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->L.f, 125)
+  EXPECT_EQ(get_as<decltype(last_msg_->L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->L.f)),
+            125)
       << "incorrect value for L.f, expected 125, is " << last_msg_->L.f;
-  EXPECT_EQ(last_msg_->L.i, 2786)
+  EXPECT_EQ(get_as<decltype(last_msg_->L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->L.i)),
+            2786)
       << "incorrect value for L.i, expected 2786, is " << last_msg_->L.i;
-  EXPECT_EQ(last_msg_->P, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->P)),
+            0)
       << "incorrect value for P, expected 0, is " << last_msg_->P;
-  EXPECT_EQ(last_msg_->P_std, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->P_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->P_std)),
+            0)
       << "incorrect value for P_std, expected 0, is " << last_msg_->P_std;
-  EXPECT_EQ(last_msg_->acceleration, -36)
+  EXPECT_EQ(get_as<decltype(last_msg_->acceleration)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->acceleration)),
+            -36)
       << "incorrect value for acceleration, expected -36, is "
       << last_msg_->acceleration;
-  EXPECT_EQ(last_msg_->clock_drift, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->clock_drift)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->clock_drift)),
+            0)
       << "incorrect value for clock_drift, expected 0, is "
       << last_msg_->clock_drift;
-  EXPECT_EQ(last_msg_->clock_offset, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->clock_offset)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->clock_offset)),
+            0)
       << "incorrect value for clock_offset, expected 0, is "
       << last_msg_->clock_offset;
-  EXPECT_EQ(last_msg_->cn0, 181)
+  EXPECT_EQ(get_as<decltype(last_msg_->cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cn0)),
+            181)
       << "incorrect value for cn0, expected 181, is " << last_msg_->cn0;
-  EXPECT_EQ(last_msg_->corr_spacing, 40)
+  EXPECT_EQ(get_as<decltype(last_msg_->corr_spacing)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corr_spacing)),
+            40)
       << "incorrect value for corr_spacing, expected 40, is "
       << last_msg_->corr_spacing;
-  EXPECT_EQ(last_msg_->doppler, 15645)
+  EXPECT_EQ(get_as<decltype(last_msg_->doppler)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->doppler)),
+            15645)
       << "incorrect value for doppler, expected 15645, is "
       << last_msg_->doppler;
-  EXPECT_EQ(last_msg_->doppler_std, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->doppler_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->doppler_std)),
+            10)
       << "incorrect value for doppler_std, expected 10, is "
       << last_msg_->doppler_std;
-  EXPECT_EQ(last_msg_->lock, 14032)
+  EXPECT_EQ(get_as<decltype(last_msg_->lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->lock)),
+            14032)
       << "incorrect value for lock, expected 14032, is " << last_msg_->lock;
-  EXPECT_EQ(last_msg_->misc_flags, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->misc_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->misc_flags)),
+            9)
       << "incorrect value for misc_flags, expected 9, is "
       << last_msg_->misc_flags;
-  EXPECT_EQ(last_msg_->nav_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->nav_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->nav_flags)),
+            0)
       << "incorrect value for nav_flags, expected 0, is "
       << last_msg_->nav_flags;
-  EXPECT_EQ(last_msg_->pset_flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->pset_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pset_flags)),
+            3)
       << "incorrect value for pset_flags, expected 3, is "
       << last_msg_->pset_flags;
-  EXPECT_EQ(last_msg_->recv_time, 9406446591)
+  EXPECT_EQ(get_as<decltype(last_msg_->recv_time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->recv_time)),
+            9406446591)
       << "incorrect value for recv_time, expected 9406446591, is "
       << last_msg_->recv_time;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            15)
       << "incorrect value for sid.sat, expected 15, is " << last_msg_->sid.sat;
-  EXPECT_EQ(last_msg_->sync_flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->sync_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sync_flags)),
+            1)
       << "incorrect value for sync_flags, expected 1, is "
       << last_msg_->sync_flags;
-  EXPECT_EQ(last_msg_->tot.tow, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tot.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tot.tow)),
+            0)
       << "incorrect value for tot.tow, expected 0, is " << last_msg_->tot.tow;
-  EXPECT_EQ(last_msg_->tot.wn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tot.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tot.wn)),
+            0)
       << "incorrect value for tot.wn, expected 0, is " << last_msg_->tot.wn;
-  EXPECT_EQ(last_msg_->tow_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow_flags)),
+            0)
       << "incorrect value for tow_flags, expected 0, is "
       << last_msg_->tow_flags;
-  EXPECT_EQ(last_msg_->track_flags, 11)
+  EXPECT_EQ(get_as<decltype(last_msg_->track_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->track_flags)),
+            11)
       << "incorrect value for track_flags, expected 11, is "
       << last_msg_->track_flags;
-  EXPECT_EQ(last_msg_->uptime, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->uptime)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->uptime)),
+            2)
       << "incorrect value for uptime, expected 2, is " << last_msg_->uptime;
 }
 class Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4
@@ -839,68 +1046,118 @@ TEST_F(Test_legacy_auto_check_sbp_tracking_MsgTrackingStateDetailedDep4, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 26427);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->L.f, 64)
+  EXPECT_EQ(get_as<decltype(last_msg_->L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->L.f)),
+            64)
       << "incorrect value for L.f, expected 64, is " << last_msg_->L.f;
-  EXPECT_EQ(last_msg_->L.i, 3275)
+  EXPECT_EQ(get_as<decltype(last_msg_->L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->L.i)),
+            3275)
       << "incorrect value for L.i, expected 3275, is " << last_msg_->L.i;
-  EXPECT_EQ(last_msg_->P, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->P)),
+            0)
       << "incorrect value for P, expected 0, is " << last_msg_->P;
-  EXPECT_EQ(last_msg_->P_std, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->P_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->P_std)),
+            0)
       << "incorrect value for P_std, expected 0, is " << last_msg_->P_std;
-  EXPECT_EQ(last_msg_->acceleration, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->acceleration)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->acceleration)),
+            2)
       << "incorrect value for acceleration, expected 2, is "
       << last_msg_->acceleration;
-  EXPECT_EQ(last_msg_->clock_drift, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->clock_drift)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->clock_drift)),
+            0)
       << "incorrect value for clock_drift, expected 0, is "
       << last_msg_->clock_drift;
-  EXPECT_EQ(last_msg_->clock_offset, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->clock_offset)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->clock_offset)),
+            0)
       << "incorrect value for clock_offset, expected 0, is "
       << last_msg_->clock_offset;
-  EXPECT_EQ(last_msg_->cn0, 184)
+  EXPECT_EQ(get_as<decltype(last_msg_->cn0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cn0)),
+            184)
       << "incorrect value for cn0, expected 184, is " << last_msg_->cn0;
-  EXPECT_EQ(last_msg_->corr_spacing, 40)
+  EXPECT_EQ(get_as<decltype(last_msg_->corr_spacing)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->corr_spacing)),
+            40)
       << "incorrect value for corr_spacing, expected 40, is "
       << last_msg_->corr_spacing;
-  EXPECT_EQ(last_msg_->doppler, 15640)
+  EXPECT_EQ(get_as<decltype(last_msg_->doppler)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->doppler)),
+            15640)
       << "incorrect value for doppler, expected 15640, is "
       << last_msg_->doppler;
-  EXPECT_EQ(last_msg_->doppler_std, 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->doppler_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->doppler_std)),
+            4)
       << "incorrect value for doppler_std, expected 4, is "
       << last_msg_->doppler_std;
-  EXPECT_EQ(last_msg_->lock, 14032)
+  EXPECT_EQ(get_as<decltype(last_msg_->lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->lock)),
+            14032)
       << "incorrect value for lock, expected 14032, is " << last_msg_->lock;
-  EXPECT_EQ(last_msg_->misc_flags, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->misc_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->misc_flags)),
+            9)
       << "incorrect value for misc_flags, expected 9, is "
       << last_msg_->misc_flags;
-  EXPECT_EQ(last_msg_->nav_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->nav_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->nav_flags)),
+            0)
       << "incorrect value for nav_flags, expected 0, is "
       << last_msg_->nav_flags;
-  EXPECT_EQ(last_msg_->pset_flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->pset_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pset_flags)),
+            3)
       << "incorrect value for pset_flags, expected 3, is "
       << last_msg_->pset_flags;
-  EXPECT_EQ(last_msg_->recv_time, 9906446269)
+  EXPECT_EQ(get_as<decltype(last_msg_->recv_time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->recv_time)),
+            9906446269)
       << "incorrect value for recv_time, expected 9906446269, is "
       << last_msg_->recv_time;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.reserved)),
+            0)
       << "incorrect value for sid.reserved, expected 0, is "
       << last_msg_->sid.reserved;
-  EXPECT_EQ(last_msg_->sid.sat, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            15)
       << "incorrect value for sid.sat, expected 15, is " << last_msg_->sid.sat;
-  EXPECT_EQ(last_msg_->sync_flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->sync_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sync_flags)),
+            1)
       << "incorrect value for sync_flags, expected 1, is "
       << last_msg_->sync_flags;
-  EXPECT_EQ(last_msg_->tot.tow, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tot.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tot.tow)),
+            0)
       << "incorrect value for tot.tow, expected 0, is " << last_msg_->tot.tow;
-  EXPECT_EQ(last_msg_->tot.wn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tot.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tot.wn)),
+            0)
       << "incorrect value for tot.wn, expected 0, is " << last_msg_->tot.wn;
-  EXPECT_EQ(last_msg_->tow_flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow_flags)),
+            0)
       << "incorrect value for tow_flags, expected 0, is "
       << last_msg_->tow_flags;
-  EXPECT_EQ(last_msg_->track_flags, 11)
+  EXPECT_EQ(get_as<decltype(last_msg_->track_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->track_flags)),
+            11)
       << "incorrect value for track_flags, expected 11, is "
       << last_msg_->track_flags;
-  EXPECT_EQ(last_msg_->uptime, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->uptime)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->uptime)),
+            3)
       << "incorrect value for uptime, expected 3, is " << last_msg_->uptime;
 }

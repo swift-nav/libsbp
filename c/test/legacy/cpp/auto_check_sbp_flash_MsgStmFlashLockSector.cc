@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/flash.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_flash_MsgStmFlashLockSector0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -112,7 +119,9 @@ TEST_F(Test_legacy_auto_check_sbp_flash_MsgStmFlashLockSector0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->sector, 1137047457)
+  EXPECT_EQ(get_as<decltype(last_msg_->sector)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sector)),
+            1137047457)
       << "incorrect value for sector, expected 1137047457, is "
       << last_msg_->sector;
 }

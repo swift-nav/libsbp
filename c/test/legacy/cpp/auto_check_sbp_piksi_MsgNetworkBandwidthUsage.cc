@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/piksi.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -219,7 +226,10 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 31183);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->interfaces[0].duration, 2159176030)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[0].duration)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[0].duration)),
+            2159176030)
       << "incorrect value for interfaces[0].duration, expected 2159176030, is "
       << last_msg_->interfaces[0].duration;
   {
@@ -235,16 +245,28 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage0, Test) {
         << check_string << "', is '" << last_msg_->interfaces[0].interface_name
         << "'";
   }
-  EXPECT_EQ(last_msg_->interfaces[0].rx_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[0].rx_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[0].rx_bytes)),
+            0)
       << "incorrect value for interfaces[0].rx_bytes, expected 0, is "
       << last_msg_->interfaces[0].rx_bytes;
-  EXPECT_EQ(last_msg_->interfaces[0].total_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[0].total_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[0].total_bytes)),
+            0)
       << "incorrect value for interfaces[0].total_bytes, expected 0, is "
       << last_msg_->interfaces[0].total_bytes;
-  EXPECT_EQ(last_msg_->interfaces[0].tx_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[0].tx_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[0].tx_bytes)),
+            0)
       << "incorrect value for interfaces[0].tx_bytes, expected 0, is "
       << last_msg_->interfaces[0].tx_bytes;
-  EXPECT_EQ(last_msg_->interfaces[1].duration, 2159176030)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[1].duration)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[1].duration)),
+            2159176030)
       << "incorrect value for interfaces[1].duration, expected 2159176030, is "
       << last_msg_->interfaces[1].duration;
   {
@@ -260,16 +282,28 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage0, Test) {
         << check_string << "', is '" << last_msg_->interfaces[1].interface_name
         << "'";
   }
-  EXPECT_EQ(last_msg_->interfaces[1].rx_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[1].rx_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[1].rx_bytes)),
+            0)
       << "incorrect value for interfaces[1].rx_bytes, expected 0, is "
       << last_msg_->interfaces[1].rx_bytes;
-  EXPECT_EQ(last_msg_->interfaces[1].total_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[1].total_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[1].total_bytes)),
+            0)
       << "incorrect value for interfaces[1].total_bytes, expected 0, is "
       << last_msg_->interfaces[1].total_bytes;
-  EXPECT_EQ(last_msg_->interfaces[1].tx_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[1].tx_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[1].tx_bytes)),
+            0)
       << "incorrect value for interfaces[1].tx_bytes, expected 0, is "
       << last_msg_->interfaces[1].tx_bytes;
-  EXPECT_EQ(last_msg_->interfaces[2].duration, 2159176030)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[2].duration)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[2].duration)),
+            2159176030)
       << "incorrect value for interfaces[2].duration, expected 2159176030, is "
       << last_msg_->interfaces[2].duration;
   {
@@ -285,17 +319,29 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage0, Test) {
         << check_string << "', is '" << last_msg_->interfaces[2].interface_name
         << "'";
   }
-  EXPECT_EQ(last_msg_->interfaces[2].rx_bytes, 4036234989)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[2].rx_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[2].rx_bytes)),
+            4036234989)
       << "incorrect value for interfaces[2].rx_bytes, expected 4036234989, is "
       << last_msg_->interfaces[2].rx_bytes;
-  EXPECT_EQ(last_msg_->interfaces[2].total_bytes, 3411995557)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[2].total_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[2].total_bytes)),
+            3411995557)
       << "incorrect value for interfaces[2].total_bytes, expected 3411995557, "
          "is "
       << last_msg_->interfaces[2].total_bytes;
-  EXPECT_EQ(last_msg_->interfaces[2].tx_bytes, 3670727864)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[2].tx_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[2].tx_bytes)),
+            3670727864)
       << "incorrect value for interfaces[2].tx_bytes, expected 3670727864, is "
       << last_msg_->interfaces[2].tx_bytes;
-  EXPECT_EQ(last_msg_->interfaces[3].duration, 2159176030)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[3].duration)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[3].duration)),
+            2159176030)
       << "incorrect value for interfaces[3].duration, expected 2159176030, is "
       << last_msg_->interfaces[3].duration;
   {
@@ -311,16 +357,28 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage0, Test) {
         << check_string << "', is '" << last_msg_->interfaces[3].interface_name
         << "'";
   }
-  EXPECT_EQ(last_msg_->interfaces[3].rx_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[3].rx_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[3].rx_bytes)),
+            0)
       << "incorrect value for interfaces[3].rx_bytes, expected 0, is "
       << last_msg_->interfaces[3].rx_bytes;
-  EXPECT_EQ(last_msg_->interfaces[3].total_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[3].total_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[3].total_bytes)),
+            0)
       << "incorrect value for interfaces[3].total_bytes, expected 0, is "
       << last_msg_->interfaces[3].total_bytes;
-  EXPECT_EQ(last_msg_->interfaces[3].tx_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[3].tx_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[3].tx_bytes)),
+            0)
       << "incorrect value for interfaces[3].tx_bytes, expected 0, is "
       << last_msg_->interfaces[3].tx_bytes;
-  EXPECT_EQ(last_msg_->interfaces[4].duration, 2159176030)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[4].duration)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[4].duration)),
+            2159176030)
       << "incorrect value for interfaces[4].duration, expected 2159176030, is "
       << last_msg_->interfaces[4].duration;
   {
@@ -336,13 +394,22 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgNetworkBandwidthUsage0, Test) {
         << check_string << "', is '" << last_msg_->interfaces[4].interface_name
         << "'";
   }
-  EXPECT_EQ(last_msg_->interfaces[4].rx_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[4].rx_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[4].rx_bytes)),
+            0)
       << "incorrect value for interfaces[4].rx_bytes, expected 0, is "
       << last_msg_->interfaces[4].rx_bytes;
-  EXPECT_EQ(last_msg_->interfaces[4].total_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[4].total_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[4].total_bytes)),
+            0)
       << "incorrect value for interfaces[4].total_bytes, expected 0, is "
       << last_msg_->interfaces[4].total_bytes;
-  EXPECT_EQ(last_msg_->interfaces[4].tx_bytes, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->interfaces[4].tx_bytes)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->interfaces[4].tx_bytes)),
+            0)
       << "incorrect value for interfaces[4].tx_bytes, expected 0, is "
       << last_msg_->interfaces[4].tx_bytes;
 }

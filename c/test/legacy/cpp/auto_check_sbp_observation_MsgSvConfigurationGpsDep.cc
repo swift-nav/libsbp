@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/observation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_observation_MsgSvConfigurationGpsDep0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -114,13 +121,19 @@ TEST_F(Test_legacy_auto_check_sbp_observation_MsgSvConfigurationGpsDep0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 123);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->l2c_mask, 2808462402)
+  EXPECT_EQ(get_as<decltype(last_msg_->l2c_mask)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->l2c_mask)),
+            2808462402)
       << "incorrect value for l2c_mask, expected 2808462402, is "
       << last_msg_->l2c_mask;
-  EXPECT_EQ(last_msg_->t_nmct.tow, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->t_nmct.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->t_nmct.tow)),
+            0)
       << "incorrect value for t_nmct.tow, expected 0, is "
       << last_msg_->t_nmct.tow;
-  EXPECT_EQ(last_msg_->t_nmct.wn, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->t_nmct.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->t_nmct.wn)),
+            0)
       << "incorrect value for t_nmct.wn, expected 0, is "
       << last_msg_->t_nmct.wn;
 }

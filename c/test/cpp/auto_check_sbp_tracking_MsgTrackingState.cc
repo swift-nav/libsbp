@@ -657,7 +657,7 @@ class Testauto_check_sbp_tracking_MsgTrackingState0 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -3152,7 +3152,7 @@ class Testauto_check_sbp_tracking_MsgTrackingState1 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -4353,7 +4353,7 @@ class Testauto_check_sbp_tracking_MsgTrackingState2 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -5554,7 +5554,7 @@ class Testauto_check_sbp_tracking_MsgTrackingState3 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -6755,7 +6755,7 @@ class Testauto_check_sbp_tracking_MsgTrackingState4 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -7956,7 +7956,7 @@ class Testauto_check_sbp_tracking_MsgTrackingState5 : public ::testing::Test {
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;

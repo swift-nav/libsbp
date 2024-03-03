@@ -350,7 +350,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA0
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -1162,7 +1162,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA1
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -1974,7 +1974,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA2
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -2786,7 +2786,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA3
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -3598,7 +3598,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA4
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -4410,7 +4410,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA5
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -5222,7 +5222,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA6
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -6034,7 +6034,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA7
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -6846,7 +6846,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA8
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -7658,7 +7658,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA9
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;
@@ -8470,7 +8470,7 @@ class Testauto_check_sbp_navigation_MsgBaselineNEDDepA10
   template <typename T,
             std::enable_if_t<std::is_integral<T>::value, bool> = true>
   void make_lesser_greater(T &lesser, T &greater) {
-    if (greater == std::numeric_limits<T>::max()) {
+    if (lesser > std::numeric_limits<T>::min()) {
       lesser--;
     } else {
       greater++;

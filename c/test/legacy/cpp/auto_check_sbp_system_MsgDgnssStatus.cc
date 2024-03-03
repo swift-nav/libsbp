@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/system.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_system_MsgDgnssStatus0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -121,11 +128,17 @@ TEST_F(Test_legacy_auto_check_sbp_system_MsgDgnssStatus0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->latency, 50)
+  EXPECT_EQ(get_as<decltype(last_msg_->latency)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->latency)),
+            50)
       << "incorrect value for latency, expected 50, is " << last_msg_->latency;
-  EXPECT_EQ(last_msg_->num_signals, 12)
+  EXPECT_EQ(get_as<decltype(last_msg_->num_signals)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->num_signals)),
+            12)
       << "incorrect value for num_signals, expected 12, is "
       << last_msg_->num_signals;
   {

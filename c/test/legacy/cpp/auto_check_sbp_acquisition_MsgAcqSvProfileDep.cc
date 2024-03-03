@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_acquisition_MsgAcqSvProfileDep0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -175,130 +182,256 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqSvProfileDep0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].bin_width, 187)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].bin_width)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].bin_width)),
+            187)
       << "incorrect value for acq_sv_profile[0].bin_width, expected 187, is "
       << last_msg_->acq_sv_profile[0].bin_width;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].cf, 60)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->acq_sv_profile[0].cf)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->acq_sv_profile[0].cf)),
+      60)
       << "incorrect value for acq_sv_profile[0].cf, expected 60, is "
       << last_msg_->acq_sv_profile[0].cf;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].cf_max, 36)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].cf_max)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].cf_max)),
+            36)
       << "incorrect value for acq_sv_profile[0].cf_max, expected 36, is "
       << last_msg_->acq_sv_profile[0].cf_max;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].cf_min, 132)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].cf_min)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].cf_min)),
+            132)
       << "incorrect value for acq_sv_profile[0].cf_min, expected 132, is "
       << last_msg_->acq_sv_profile[0].cf_min;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].cn0, 151)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->acq_sv_profile[0].cn0)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->acq_sv_profile[0].cn0)),
+      151)
       << "incorrect value for acq_sv_profile[0].cn0, expected 151, is "
       << last_msg_->acq_sv_profile[0].cn0;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].cp, 241)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->acq_sv_profile[0].cp)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->acq_sv_profile[0].cp)),
+      241)
       << "incorrect value for acq_sv_profile[0].cp, expected 241, is "
       << last_msg_->acq_sv_profile[0].cp;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].int_time, 12)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].int_time)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].int_time)),
+            12)
       << "incorrect value for acq_sv_profile[0].int_time, expected 12, is "
       << last_msg_->acq_sv_profile[0].int_time;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].job_type, 67)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].job_type)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].job_type)),
+            67)
       << "incorrect value for acq_sv_profile[0].job_type, expected 67, is "
       << last_msg_->acq_sv_profile[0].job_type;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].sid.code)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].sid.code)),
+            0)
       << "incorrect value for acq_sv_profile[0].sid.code, expected 0, is "
       << last_msg_->acq_sv_profile[0].sid.code;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].sid.reserved)),
+            0)
       << "incorrect value for acq_sv_profile[0].sid.reserved, expected 0, is "
       << last_msg_->acq_sv_profile[0].sid.reserved;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].sid.sat, 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].sid.sat)),
+            22)
       << "incorrect value for acq_sv_profile[0].sid.sat, expected 22, is "
       << last_msg_->acq_sv_profile[0].sid.sat;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].status, 103)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].status)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].status)),
+            103)
       << "incorrect value for acq_sv_profile[0].status, expected 103, is "
       << last_msg_->acq_sv_profile[0].status;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].time_spent, 75)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].time_spent)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].time_spent)),
+            75)
       << "incorrect value for acq_sv_profile[0].time_spent, expected 75, is "
       << last_msg_->acq_sv_profile[0].time_spent;
-  EXPECT_EQ(last_msg_->acq_sv_profile[0].timestamp, 91)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[0].timestamp)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[0].timestamp)),
+            91)
       << "incorrect value for acq_sv_profile[0].timestamp, expected 91, is "
       << last_msg_->acq_sv_profile[0].timestamp;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].bin_width, 176)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].bin_width)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].bin_width)),
+            176)
       << "incorrect value for acq_sv_profile[1].bin_width, expected 176, is "
       << last_msg_->acq_sv_profile[1].bin_width;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].cf, 212)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->acq_sv_profile[1].cf)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->acq_sv_profile[1].cf)),
+      212)
       << "incorrect value for acq_sv_profile[1].cf, expected 212, is "
       << last_msg_->acq_sv_profile[1].cf;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].cf_max, 24)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].cf_max)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].cf_max)),
+            24)
       << "incorrect value for acq_sv_profile[1].cf_max, expected 24, is "
       << last_msg_->acq_sv_profile[1].cf_max;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].cf_min, 155)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].cf_min)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].cf_min)),
+            155)
       << "incorrect value for acq_sv_profile[1].cf_min, expected 155, is "
       << last_msg_->acq_sv_profile[1].cf_min;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].cn0, 111)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->acq_sv_profile[1].cn0)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->acq_sv_profile[1].cn0)),
+      111)
       << "incorrect value for acq_sv_profile[1].cn0, expected 111, is "
       << last_msg_->acq_sv_profile[1].cn0;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].cp, 247)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->acq_sv_profile[1].cp)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->acq_sv_profile[1].cp)),
+      247)
       << "incorrect value for acq_sv_profile[1].cp, expected 247, is "
       << last_msg_->acq_sv_profile[1].cp;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].int_time, 179)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].int_time)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].int_time)),
+            179)
       << "incorrect value for acq_sv_profile[1].int_time, expected 179, is "
       << last_msg_->acq_sv_profile[1].int_time;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].job_type, 238)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].job_type)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].job_type)),
+            238)
       << "incorrect value for acq_sv_profile[1].job_type, expected 238, is "
       << last_msg_->acq_sv_profile[1].job_type;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].sid.code, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].sid.code)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].sid.code)),
+            1)
       << "incorrect value for acq_sv_profile[1].sid.code, expected 1, is "
       << last_msg_->acq_sv_profile[1].sid.code;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].sid.reserved)),
+            0)
       << "incorrect value for acq_sv_profile[1].sid.reserved, expected 0, is "
       << last_msg_->acq_sv_profile[1].sid.reserved;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].sid.sat, 23)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].sid.sat)),
+            23)
       << "incorrect value for acq_sv_profile[1].sid.sat, expected 23, is "
       << last_msg_->acq_sv_profile[1].sid.sat;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].status, 38)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].status)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].status)),
+            38)
       << "incorrect value for acq_sv_profile[1].status, expected 38, is "
       << last_msg_->acq_sv_profile[1].status;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].time_spent, 234)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].time_spent)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].time_spent)),
+            234)
       << "incorrect value for acq_sv_profile[1].time_spent, expected 234, is "
       << last_msg_->acq_sv_profile[1].time_spent;
-  EXPECT_EQ(last_msg_->acq_sv_profile[1].timestamp, 166)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[1].timestamp)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[1].timestamp)),
+            166)
       << "incorrect value for acq_sv_profile[1].timestamp, expected 166, is "
       << last_msg_->acq_sv_profile[1].timestamp;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].bin_width, 52)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].bin_width)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].bin_width)),
+            52)
       << "incorrect value for acq_sv_profile[2].bin_width, expected 52, is "
       << last_msg_->acq_sv_profile[2].bin_width;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].cf, 212)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->acq_sv_profile[2].cf)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->acq_sv_profile[2].cf)),
+      212)
       << "incorrect value for acq_sv_profile[2].cf, expected 212, is "
       << last_msg_->acq_sv_profile[2].cf;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].cf_max, 248)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].cf_max)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].cf_max)),
+            248)
       << "incorrect value for acq_sv_profile[2].cf_max, expected 248, is "
       << last_msg_->acq_sv_profile[2].cf_max;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].cf_min, 76)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].cf_min)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].cf_min)),
+            76)
       << "incorrect value for acq_sv_profile[2].cf_min, expected 76, is "
       << last_msg_->acq_sv_profile[2].cf_min;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].cn0, 68)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->acq_sv_profile[2].cn0)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->acq_sv_profile[2].cn0)),
+      68)
       << "incorrect value for acq_sv_profile[2].cn0, expected 68, is "
       << last_msg_->acq_sv_profile[2].cn0;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].cp, 101)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->acq_sv_profile[2].cp)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->acq_sv_profile[2].cp)),
+      101)
       << "incorrect value for acq_sv_profile[2].cp, expected 101, is "
       << last_msg_->acq_sv_profile[2].cp;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].int_time, 53)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].int_time)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].int_time)),
+            53)
       << "incorrect value for acq_sv_profile[2].int_time, expected 53, is "
       << last_msg_->acq_sv_profile[2].int_time;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].job_type, 142)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].job_type)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].job_type)),
+            142)
       << "incorrect value for acq_sv_profile[2].job_type, expected 142, is "
       << last_msg_->acq_sv_profile[2].job_type;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].sid.code)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].sid.code)),
+            0)
       << "incorrect value for acq_sv_profile[2].sid.code, expected 0, is "
       << last_msg_->acq_sv_profile[2].sid.code;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].sid.reserved, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].sid.reserved)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].sid.reserved)),
+            0)
       << "incorrect value for acq_sv_profile[2].sid.reserved, expected 0, is "
       << last_msg_->acq_sv_profile[2].sid.reserved;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].sid.sat, 24)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].sid.sat)),
+            24)
       << "incorrect value for acq_sv_profile[2].sid.sat, expected 24, is "
       << last_msg_->acq_sv_profile[2].sid.sat;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].status, 213)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].status)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].status)),
+            213)
       << "incorrect value for acq_sv_profile[2].status, expected 213, is "
       << last_msg_->acq_sv_profile[2].status;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].time_spent, 245)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].time_spent)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].time_spent)),
+            245)
       << "incorrect value for acq_sv_profile[2].time_spent, expected 245, is "
       << last_msg_->acq_sv_profile[2].time_spent;
-  EXPECT_EQ(last_msg_->acq_sv_profile[2].timestamp, 49)
+  EXPECT_EQ(get_as<decltype(last_msg_->acq_sv_profile[2].timestamp)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->acq_sv_profile[2].timestamp)),
+            49)
       << "incorrect value for acq_sv_profile[2].timestamp, expected 49, is "
       << last_msg_->acq_sv_profile[2].timestamp;
 }

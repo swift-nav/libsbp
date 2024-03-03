@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/imu.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_imu_MsgImuRaw0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -118,20 +125,36 @@ TEST_F(Test_legacy_auto_check_sbp_imu_MsgImuRaw0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 4660);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->acc_x, 96)
+  EXPECT_EQ(get_as<decltype(last_msg_->acc_x)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->acc_x)),
+            96)
       << "incorrect value for acc_x, expected 96, is " << last_msg_->acc_x;
-  EXPECT_EQ(last_msg_->acc_y, -33)
+  EXPECT_EQ(get_as<decltype(last_msg_->acc_y)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->acc_y)),
+            -33)
       << "incorrect value for acc_y, expected -33, is " << last_msg_->acc_y;
-  EXPECT_EQ(last_msg_->acc_z, 4140)
+  EXPECT_EQ(get_as<decltype(last_msg_->acc_z)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->acc_z)),
+            4140)
       << "incorrect value for acc_z, expected 4140, is " << last_msg_->acc_z;
-  EXPECT_EQ(last_msg_->gyr_x, 60)
+  EXPECT_EQ(get_as<decltype(last_msg_->gyr_x)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gyr_x)),
+            60)
       << "incorrect value for gyr_x, expected 60, is " << last_msg_->gyr_x;
-  EXPECT_EQ(last_msg_->gyr_y, -304)
+  EXPECT_EQ(get_as<decltype(last_msg_->gyr_y)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gyr_y)),
+            -304)
       << "incorrect value for gyr_y, expected -304, is " << last_msg_->gyr_y;
-  EXPECT_EQ(last_msg_->gyr_z, -18)
+  EXPECT_EQ(get_as<decltype(last_msg_->gyr_z)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gyr_z)),
+            -18)
       << "incorrect value for gyr_z, expected -18, is " << last_msg_->gyr_z;
-  EXPECT_EQ(last_msg_->tow, 3221225754)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            3221225754)
       << "incorrect value for tow, expected 3221225754, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->tow_f, 206)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow_f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow_f)),
+            206)
       << "incorrect value for tow_f, expected 206, is " << last_msg_->tow_f;
 }

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/piksi.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -115,19 +122,29 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 16991);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu_temperature, 6165)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_temperature)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_temperature)),
+            6165)
       << "incorrect value for cpu_temperature, expected 6165, is "
       << last_msg_->cpu_temperature;
-  EXPECT_EQ(last_msg_->cpu_vaux, 1789)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_vaux)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_vaux)),
+            1789)
       << "incorrect value for cpu_vaux, expected 1789, is "
       << last_msg_->cpu_vaux;
-  EXPECT_EQ(last_msg_->cpu_vint, 987)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_vint)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_vint)),
+            987)
       << "incorrect value for cpu_vint, expected 987, is "
       << last_msg_->cpu_vint;
-  EXPECT_EQ(last_msg_->dev_vin, -9999)
+  EXPECT_EQ(get_as<decltype(last_msg_->dev_vin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dev_vin)),
+            -9999)
       << "incorrect value for dev_vin, expected -9999, is "
       << last_msg_->dev_vin;
-  EXPECT_EQ(last_msg_->fe_temperature, 4776)
+  EXPECT_EQ(get_as<decltype(last_msg_->fe_temperature)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fe_temperature)),
+            4776)
       << "incorrect value for fe_temperature, expected 4776, is "
       << last_msg_->fe_temperature;
 }
@@ -217,19 +234,29 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 16991);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu_temperature, 6168)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_temperature)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_temperature)),
+            6168)
       << "incorrect value for cpu_temperature, expected 6168, is "
       << last_msg_->cpu_temperature;
-  EXPECT_EQ(last_msg_->cpu_vaux, 1790)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_vaux)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_vaux)),
+            1790)
       << "incorrect value for cpu_vaux, expected 1790, is "
       << last_msg_->cpu_vaux;
-  EXPECT_EQ(last_msg_->cpu_vint, 987)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_vint)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_vint)),
+            987)
       << "incorrect value for cpu_vint, expected 987, is "
       << last_msg_->cpu_vint;
-  EXPECT_EQ(last_msg_->dev_vin, -9999)
+  EXPECT_EQ(get_as<decltype(last_msg_->dev_vin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dev_vin)),
+            -9999)
       << "incorrect value for dev_vin, expected -9999, is "
       << last_msg_->dev_vin;
-  EXPECT_EQ(last_msg_->fe_temperature, 4776)
+  EXPECT_EQ(get_as<decltype(last_msg_->fe_temperature)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fe_temperature)),
+            4776)
       << "incorrect value for fe_temperature, expected 4776, is "
       << last_msg_->fe_temperature;
 }
@@ -319,19 +346,29 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor2, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 16991);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu_temperature, 6166)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_temperature)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_temperature)),
+            6166)
       << "incorrect value for cpu_temperature, expected 6166, is "
       << last_msg_->cpu_temperature;
-  EXPECT_EQ(last_msg_->cpu_vaux, 1789)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_vaux)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_vaux)),
+            1789)
       << "incorrect value for cpu_vaux, expected 1789, is "
       << last_msg_->cpu_vaux;
-  EXPECT_EQ(last_msg_->cpu_vint, 987)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_vint)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_vint)),
+            987)
       << "incorrect value for cpu_vint, expected 987, is "
       << last_msg_->cpu_vint;
-  EXPECT_EQ(last_msg_->dev_vin, -9999)
+  EXPECT_EQ(get_as<decltype(last_msg_->dev_vin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dev_vin)),
+            -9999)
       << "incorrect value for dev_vin, expected -9999, is "
       << last_msg_->dev_vin;
-  EXPECT_EQ(last_msg_->fe_temperature, 4776)
+  EXPECT_EQ(get_as<decltype(last_msg_->fe_temperature)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fe_temperature)),
+            4776)
       << "incorrect value for fe_temperature, expected 4776, is "
       << last_msg_->fe_temperature;
 }
@@ -421,19 +458,29 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor3, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 16991);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu_temperature, 6150)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_temperature)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_temperature)),
+            6150)
       << "incorrect value for cpu_temperature, expected 6150, is "
       << last_msg_->cpu_temperature;
-  EXPECT_EQ(last_msg_->cpu_vaux, 1788)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_vaux)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_vaux)),
+            1788)
       << "incorrect value for cpu_vaux, expected 1788, is "
       << last_msg_->cpu_vaux;
-  EXPECT_EQ(last_msg_->cpu_vint, 986)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_vint)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_vint)),
+            986)
       << "incorrect value for cpu_vint, expected 986, is "
       << last_msg_->cpu_vint;
-  EXPECT_EQ(last_msg_->dev_vin, -9999)
+  EXPECT_EQ(get_as<decltype(last_msg_->dev_vin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dev_vin)),
+            -9999)
       << "incorrect value for dev_vin, expected -9999, is "
       << last_msg_->dev_vin;
-  EXPECT_EQ(last_msg_->fe_temperature, 4776)
+  EXPECT_EQ(get_as<decltype(last_msg_->fe_temperature)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fe_temperature)),
+            4776)
       << "incorrect value for fe_temperature, expected 4776, is "
       << last_msg_->fe_temperature;
 }
@@ -523,19 +570,29 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgDeviceMonitor4, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 16991);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->cpu_temperature, 6123)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_temperature)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_temperature)),
+            6123)
       << "incorrect value for cpu_temperature, expected 6123, is "
       << last_msg_->cpu_temperature;
-  EXPECT_EQ(last_msg_->cpu_vaux, 1789)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_vaux)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_vaux)),
+            1789)
       << "incorrect value for cpu_vaux, expected 1789, is "
       << last_msg_->cpu_vaux;
-  EXPECT_EQ(last_msg_->cpu_vint, 988)
+  EXPECT_EQ(get_as<decltype(last_msg_->cpu_vint)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->cpu_vint)),
+            988)
       << "incorrect value for cpu_vint, expected 988, is "
       << last_msg_->cpu_vint;
-  EXPECT_EQ(last_msg_->dev_vin, -9999)
+  EXPECT_EQ(get_as<decltype(last_msg_->dev_vin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dev_vin)),
+            -9999)
       << "incorrect value for dev_vin, expected -9999, is "
       << last_msg_->dev_vin;
-  EXPECT_EQ(last_msg_->fe_temperature, 4776)
+  EXPECT_EQ(get_as<decltype(last_msg_->fe_temperature)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fe_temperature)),
+            4776)
       << "incorrect value for fe_temperature, expected 4776, is "
       << last_msg_->fe_temperature;
 }

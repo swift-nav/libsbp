@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/linux.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_linux_MsgLinuxCpuState0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -159,15 +166,25 @@ TEST_F(Test_legacy_auto_check_sbp_linux_MsgLinuxCpuState0, Test) {
         << "incorrect value for last_msg_->cmdline, expected string '"
         << check_string << "', is '" << last_msg_->cmdline << "'";
   }
-  EXPECT_EQ(last_msg_->flags, 20)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            20)
       << "incorrect value for flags, expected 20, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->index, 101)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            101)
       << "incorrect value for index, expected 101, is " << last_msg_->index;
-  EXPECT_EQ(last_msg_->pcpu, 98)
+  EXPECT_EQ(get_as<decltype(last_msg_->pcpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pcpu)),
+            98)
       << "incorrect value for pcpu, expected 98, is " << last_msg_->pcpu;
-  EXPECT_EQ(last_msg_->pid, 50042)
+  EXPECT_EQ(get_as<decltype(last_msg_->pid)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pid)),
+            50042)
       << "incorrect value for pid, expected 50042, is " << last_msg_->pid;
-  EXPECT_EQ(last_msg_->time, 3948815319)
+  EXPECT_EQ(get_as<decltype(last_msg_->time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time)),
+            3948815319)
       << "incorrect value for time, expected 3948815319, is "
       << last_msg_->time;
   {

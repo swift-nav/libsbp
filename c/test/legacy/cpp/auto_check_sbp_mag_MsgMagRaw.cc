@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/mag.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_mag_MsgMagRaw0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -115,14 +122,24 @@ TEST_F(Test_legacy_auto_check_sbp_mag_MsgMagRaw0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->mag_x, 866)
+  EXPECT_EQ(get_as<decltype(last_msg_->mag_x)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->mag_x)),
+            866)
       << "incorrect value for mag_x, expected 866, is " << last_msg_->mag_x;
-  EXPECT_EQ(last_msg_->mag_y, 742)
+  EXPECT_EQ(get_as<decltype(last_msg_->mag_y)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->mag_y)),
+            742)
       << "incorrect value for mag_y, expected 742, is " << last_msg_->mag_y;
-  EXPECT_EQ(last_msg_->mag_z, -6802)
+  EXPECT_EQ(get_as<decltype(last_msg_->mag_z)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->mag_z)),
+            -6802)
       << "incorrect value for mag_z, expected -6802, is " << last_msg_->mag_z;
-  EXPECT_EQ(last_msg_->tow, 3332301741)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            3332301741)
       << "incorrect value for tow, expected 3332301741, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->tow_f, 206)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow_f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow_f)),
+            206)
       << "incorrect value for tow_f, expected 206, is " << last_msg_->tow_f;
 }

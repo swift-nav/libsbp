@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/integrity.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_integrity_MsgSsrFlagIonoGridPoints0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -136,40 +143,71 @@ TEST_F(Test_legacy_auto_check_sbp_integrity_MsgSsrFlagIonoGridPoints0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->faulty_points[0], 10)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->faulty_points[0])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->faulty_points[0])),
+      10)
       << "incorrect value for faulty_points[0], expected 10, is "
       << last_msg_->faulty_points[0];
-  EXPECT_EQ(last_msg_->faulty_points[1], 11)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->faulty_points[1])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->faulty_points[1])),
+      11)
       << "incorrect value for faulty_points[1], expected 11, is "
       << last_msg_->faulty_points[1];
-  EXPECT_EQ(last_msg_->faulty_points[2], 12)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->faulty_points[2])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->faulty_points[2])),
+      12)
       << "incorrect value for faulty_points[2], expected 12, is "
       << last_msg_->faulty_points[2];
-  EXPECT_EQ(last_msg_->header.chain_id, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.chain_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.chain_id)),
+            6)
       << "incorrect value for header.chain_id, expected 6, is "
       << last_msg_->header.chain_id;
-  EXPECT_EQ(last_msg_->header.num_msgs, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.num_msgs)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.num_msgs)),
+            1)
       << "incorrect value for header.num_msgs, expected 1, is "
       << last_msg_->header.num_msgs;
-  EXPECT_EQ(last_msg_->header.obs_time.tow, 180)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->header.obs_time.tow)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->header.obs_time.tow)),
+      180)
       << "incorrect value for header.obs_time.tow, expected 180, is "
       << last_msg_->header.obs_time.tow;
-  EXPECT_EQ(last_msg_->header.obs_time.wn, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->header.obs_time.wn)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->header.obs_time.wn)),
+      3)
       << "incorrect value for header.obs_time.wn, expected 3, is "
       << last_msg_->header.obs_time.wn;
-  EXPECT_EQ(last_msg_->header.seq_num, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.seq_num)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.seq_num)),
+            2)
       << "incorrect value for header.seq_num, expected 2, is "
       << last_msg_->header.seq_num;
-  EXPECT_EQ(last_msg_->header.ssr_sol_id, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->header.ssr_sol_id)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->header.ssr_sol_id)),
+      3)
       << "incorrect value for header.ssr_sol_id, expected 3, is "
       << last_msg_->header.ssr_sol_id;
-  EXPECT_EQ(last_msg_->header.tile_id, 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.tile_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.tile_id)),
+            5)
       << "incorrect value for header.tile_id, expected 5, is "
       << last_msg_->header.tile_id;
-  EXPECT_EQ(last_msg_->header.tile_set_id, 4)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->header.tile_set_id)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->header.tile_set_id)),
+      4)
       << "incorrect value for header.tile_set_id, expected 4, is "
       << last_msg_->header.tile_set_id;
-  EXPECT_EQ(last_msg_->n_faulty_points, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_faulty_points)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_faulty_points)),
+            3)
       << "incorrect value for n_faulty_points, expected 3, is "
       << last_msg_->n_faulty_points;
 }

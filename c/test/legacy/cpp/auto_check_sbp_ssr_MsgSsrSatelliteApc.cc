@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ssr.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ssr_MsgSsrSatelliteApc0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -247,101 +254,167 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrSatelliteApc0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 0);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->apc[0].pco[0], 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pco[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pco[0])),
+            1)
       << "incorrect value for apc[0].pco[0], expected 1, is "
       << last_msg_->apc[0].pco[0];
-  EXPECT_EQ(last_msg_->apc[0].pco[1], -1)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pco[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pco[1])),
+            -1)
       << "incorrect value for apc[0].pco[1], expected -1, is "
       << last_msg_->apc[0].pco[1];
-  EXPECT_EQ(last_msg_->apc[0].pco[2], 729)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pco[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pco[2])),
+            729)
       << "incorrect value for apc[0].pco[2], expected 729, is "
       << last_msg_->apc[0].pco[2];
-  EXPECT_EQ(last_msg_->apc[0].pcv[0], 11)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[0])),
+            11)
       << "incorrect value for apc[0].pcv[0], expected 11, is "
       << last_msg_->apc[0].pcv[0];
-  EXPECT_EQ(last_msg_->apc[0].pcv[1], 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[1])),
+            10)
       << "incorrect value for apc[0].pcv[1], expected 10, is "
       << last_msg_->apc[0].pcv[1];
-  EXPECT_EQ(last_msg_->apc[0].pcv[2], 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[2])),
+            8)
       << "incorrect value for apc[0].pcv[2], expected 8, is "
       << last_msg_->apc[0].pcv[2];
-  EXPECT_EQ(last_msg_->apc[0].pcv[3], 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[3])),
+            5)
       << "incorrect value for apc[0].pcv[3], expected 5, is "
       << last_msg_->apc[0].pcv[3];
-  EXPECT_EQ(last_msg_->apc[0].pcv[4], 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[4])),
+            1)
       << "incorrect value for apc[0].pcv[4], expected 1, is "
       << last_msg_->apc[0].pcv[4];
-  EXPECT_EQ(last_msg_->apc[0].pcv[5], -4)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[5])),
+            -4)
       << "incorrect value for apc[0].pcv[5], expected -4, is "
       << last_msg_->apc[0].pcv[5];
-  EXPECT_EQ(last_msg_->apc[0].pcv[6], -8)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[6])),
+            -8)
       << "incorrect value for apc[0].pcv[6], expected -8, is "
       << last_msg_->apc[0].pcv[6];
-  EXPECT_EQ(last_msg_->apc[0].pcv[7], -10)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[7])),
+            -10)
       << "incorrect value for apc[0].pcv[7], expected -10, is "
       << last_msg_->apc[0].pcv[7];
-  EXPECT_EQ(last_msg_->apc[0].pcv[8], -10)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[8])),
+            -10)
       << "incorrect value for apc[0].pcv[8], expected -10, is "
       << last_msg_->apc[0].pcv[8];
-  EXPECT_EQ(last_msg_->apc[0].pcv[9], -10)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[9])),
+            -10)
       << "incorrect value for apc[0].pcv[9], expected -10, is "
       << last_msg_->apc[0].pcv[9];
-  EXPECT_EQ(last_msg_->apc[0].pcv[10], -7)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[10])),
+            -7)
       << "incorrect value for apc[0].pcv[10], expected -7, is "
       << last_msg_->apc[0].pcv[10];
-  EXPECT_EQ(last_msg_->apc[0].pcv[11], -4)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[11])),
+            -4)
       << "incorrect value for apc[0].pcv[11], expected -4, is "
       << last_msg_->apc[0].pcv[11];
-  EXPECT_EQ(last_msg_->apc[0].pcv[12], 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[12])),
+            0)
       << "incorrect value for apc[0].pcv[12], expected 0, is "
       << last_msg_->apc[0].pcv[12];
-  EXPECT_EQ(last_msg_->apc[0].pcv[13], 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[13])),
+            6)
       << "incorrect value for apc[0].pcv[13], expected 6, is "
       << last_msg_->apc[0].pcv[13];
-  EXPECT_EQ(last_msg_->apc[0].pcv[14], 12)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[14])),
+            12)
       << "incorrect value for apc[0].pcv[14], expected 12, is "
       << last_msg_->apc[0].pcv[14];
-  EXPECT_EQ(last_msg_->apc[0].pcv[15], 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[15])),
+            22)
       << "incorrect value for apc[0].pcv[15], expected 22, is "
       << last_msg_->apc[0].pcv[15];
-  EXPECT_EQ(last_msg_->apc[0].pcv[16], 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[16])),
+            30)
       << "incorrect value for apc[0].pcv[16], expected 30, is "
       << last_msg_->apc[0].pcv[16];
-  EXPECT_EQ(last_msg_->apc[0].pcv[17], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[17])),
+            41)
       << "incorrect value for apc[0].pcv[17], expected 41, is "
       << last_msg_->apc[0].pcv[17];
-  EXPECT_EQ(last_msg_->apc[0].pcv[18], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[18])),
+            41)
       << "incorrect value for apc[0].pcv[18], expected 41, is "
       << last_msg_->apc[0].pcv[18];
-  EXPECT_EQ(last_msg_->apc[0].pcv[19], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[19])),
+            41)
       << "incorrect value for apc[0].pcv[19], expected 41, is "
       << last_msg_->apc[0].pcv[19];
-  EXPECT_EQ(last_msg_->apc[0].pcv[20], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[20])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[20])),
+            41)
       << "incorrect value for apc[0].pcv[20], expected 41, is "
       << last_msg_->apc[0].pcv[20];
-  EXPECT_EQ(last_msg_->apc[0].sat_info, 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].sat_info)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].sat_info)),
+            4)
       << "incorrect value for apc[0].sat_info, expected 4, is "
       << last_msg_->apc[0].sat_info;
-  EXPECT_EQ(last_msg_->apc[0].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].sid.code)),
+            0)
       << "incorrect value for apc[0].sid.code, expected 0, is "
       << last_msg_->apc[0].sid.code;
-  EXPECT_EQ(last_msg_->apc[0].sid.sat, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].sid.sat)),
+            2)
       << "incorrect value for apc[0].sid.sat, expected 2, is "
       << last_msg_->apc[0].sid.sat;
-  EXPECT_EQ(last_msg_->apc[0].svn, 61)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].svn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].svn)),
+            61)
       << "incorrect value for apc[0].svn, expected 61, is "
       << last_msg_->apc[0].svn;
-  EXPECT_EQ(last_msg_->iod_ssr, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->iod_ssr)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->iod_ssr)),
+            3)
       << "incorrect value for iod_ssr, expected 3, is " << last_msg_->iod_ssr;
-  EXPECT_EQ(last_msg_->sol_id, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->sol_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sol_id)),
+            2)
       << "incorrect value for sol_id, expected 2, is " << last_msg_->sol_id;
-  EXPECT_EQ(last_msg_->time.tow, 604799)
+  EXPECT_EQ(get_as<decltype(last_msg_->time.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time.tow)),
+            604799)
       << "incorrect value for time.tow, expected 604799, is "
       << last_msg_->time.tow;
-  EXPECT_EQ(last_msg_->time.wn, 2222)
+  EXPECT_EQ(get_as<decltype(last_msg_->time.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time.wn)),
+            2222)
       << "incorrect value for time.wn, expected 2222, is "
       << last_msg_->time.wn;
-  EXPECT_EQ(last_msg_->update_interval, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->update_interval)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->update_interval)),
+            1)
       << "incorrect value for update_interval, expected 1, is "
       << last_msg_->update_interval;
 }

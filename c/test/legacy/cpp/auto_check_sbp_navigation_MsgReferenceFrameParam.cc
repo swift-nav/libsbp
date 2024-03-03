@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -160,38 +167,64 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->delta_X0, 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->delta_X0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->delta_X0)),
+            7)
       << "incorrect value for delta_X0, expected 7, is " << last_msg_->delta_X0;
-  EXPECT_EQ(last_msg_->delta_Y0, 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->delta_Y0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->delta_Y0)),
+            8)
       << "incorrect value for delta_Y0, expected 8, is " << last_msg_->delta_Y0;
-  EXPECT_EQ(last_msg_->delta_Z0, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->delta_Z0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->delta_Z0)),
+            9)
       << "incorrect value for delta_Z0, expected 9, is " << last_msg_->delta_Z0;
-  EXPECT_EQ(last_msg_->dot_delta_X0, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->dot_delta_X0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dot_delta_X0)),
+            14)
       << "incorrect value for dot_delta_X0, expected 14, is "
       << last_msg_->dot_delta_X0;
-  EXPECT_EQ(last_msg_->dot_delta_Y0, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->dot_delta_Y0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dot_delta_Y0)),
+            15)
       << "incorrect value for dot_delta_Y0, expected 15, is "
       << last_msg_->dot_delta_Y0;
-  EXPECT_EQ(last_msg_->dot_delta_Z0, 16)
+  EXPECT_EQ(get_as<decltype(last_msg_->dot_delta_Z0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dot_delta_Z0)),
+            16)
       << "incorrect value for dot_delta_Z0, expected 16, is "
       << last_msg_->dot_delta_Z0;
-  EXPECT_EQ(last_msg_->dot_scale, 20)
+  EXPECT_EQ(get_as<decltype(last_msg_->dot_scale)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dot_scale)),
+            20)
       << "incorrect value for dot_scale, expected 20, is "
       << last_msg_->dot_scale;
-  EXPECT_EQ(last_msg_->dot_theta_01, 17)
+  EXPECT_EQ(get_as<decltype(last_msg_->dot_theta_01)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dot_theta_01)),
+            17)
       << "incorrect value for dot_theta_01, expected 17, is "
       << last_msg_->dot_theta_01;
-  EXPECT_EQ(last_msg_->dot_theta_02, 18)
+  EXPECT_EQ(get_as<decltype(last_msg_->dot_theta_02)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dot_theta_02)),
+            18)
       << "incorrect value for dot_theta_02, expected 18, is "
       << last_msg_->dot_theta_02;
-  EXPECT_EQ(last_msg_->dot_theta_03, 19)
+  EXPECT_EQ(get_as<decltype(last_msg_->dot_theta_03)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dot_theta_03)),
+            19)
       << "incorrect value for dot_theta_03, expected 19, is "
       << last_msg_->dot_theta_03;
-  EXPECT_EQ(last_msg_->re_t0, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->re_t0)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->re_t0)),
+            6)
       << "incorrect value for re_t0, expected 6, is " << last_msg_->re_t0;
-  EXPECT_EQ(last_msg_->scale, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->scale)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->scale)),
+            13)
       << "incorrect value for scale, expected 13, is " << last_msg_->scale;
-  EXPECT_EQ(last_msg_->sin, 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->sin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sin)),
+            4)
       << "incorrect value for sin, expected 4, is " << last_msg_->sin;
   {
     const char check_string[] = {
@@ -204,15 +237,23 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam0, Test) {
         << "incorrect value for last_msg_->sn, expected string '"
         << check_string << "', is '" << last_msg_->sn << "'";
   }
-  EXPECT_EQ(last_msg_->ssr_iod, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->ssr_iod)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ssr_iod)),
+            1)
       << "incorrect value for ssr_iod, expected 1, is " << last_msg_->ssr_iod;
-  EXPECT_EQ(last_msg_->theta_01, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->theta_01)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->theta_01)),
+            10)
       << "incorrect value for theta_01, expected 10, is "
       << last_msg_->theta_01;
-  EXPECT_EQ(last_msg_->theta_02, 11)
+  EXPECT_EQ(get_as<decltype(last_msg_->theta_02)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->theta_02)),
+            11)
       << "incorrect value for theta_02, expected 11, is "
       << last_msg_->theta_02;
-  EXPECT_EQ(last_msg_->theta_03, 12)
+  EXPECT_EQ(get_as<decltype(last_msg_->theta_03)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->theta_03)),
+            12)
       << "incorrect value for theta_03, expected 12, is "
       << last_msg_->theta_03;
   {
@@ -226,6 +267,8 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam0, Test) {
         << "incorrect value for last_msg_->tn, expected string '"
         << check_string << "', is '" << last_msg_->tn << "'";
   }
-  EXPECT_EQ(last_msg_->utn, 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->utn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->utn)),
+            5)
       << "incorrect value for utn, expected 5, is " << last_msg_->utn;
 }

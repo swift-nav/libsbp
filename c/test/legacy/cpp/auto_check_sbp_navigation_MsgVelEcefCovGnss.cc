@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgVelEcefCovGnss0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -144,16 +151,28 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelEcefCovGnss0, Test) {
   EXPECT_LT((last_msg_->cov_z_z * 100 - 0.00378042715602 * 100), 0.05)
       << "incorrect value for cov_z_z, expected 0.00378042715602, is "
       << last_msg_->cov_z_z;
-  EXPECT_EQ(last_msg_->flags, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            2)
       << "incorrect value for flags, expected 2, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->n_sats, 21)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats)),
+            21)
       << "incorrect value for n_sats, expected 21, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 501868000)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            501868000)
       << "incorrect value for tow, expected 501868000, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->x, -3)
+  EXPECT_EQ(get_as<decltype(last_msg_->x)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->x)),
+            -3)
       << "incorrect value for x, expected -3, is " << last_msg_->x;
-  EXPECT_EQ(last_msg_->y, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->y)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->y)),
+            1)
       << "incorrect value for y, expected 1, is " << last_msg_->y;
-  EXPECT_EQ(last_msg_->z, 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->z)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->z)),
+            4)
       << "incorrect value for z, expected 4, is " << last_msg_->z;
 }

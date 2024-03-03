@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/logging.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_logging_MsgFwd0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -192,56 +199,92 @@ TEST_F(Test_legacy_auto_check_sbp_logging_MsgFwd0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->fwd_payload[0], 86)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[0])),
+            86)
       << "incorrect value for fwd_payload[0], expected 86, is "
       << last_msg_->fwd_payload[0];
-  EXPECT_EQ(last_msg_->fwd_payload[1], 81)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[1])),
+            81)
       << "incorrect value for fwd_payload[1], expected 81, is "
       << last_msg_->fwd_payload[1];
-  EXPECT_EQ(last_msg_->fwd_payload[2], 68)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[2])),
+            68)
       << "incorrect value for fwd_payload[2], expected 68, is "
       << last_msg_->fwd_payload[2];
-  EXPECT_EQ(last_msg_->fwd_payload[3], 47)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[3])),
+            47)
       << "incorrect value for fwd_payload[3], expected 47, is "
       << last_msg_->fwd_payload[3];
-  EXPECT_EQ(last_msg_->fwd_payload[4], 81)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[4])),
+            81)
       << "incorrect value for fwd_payload[4], expected 81, is "
       << last_msg_->fwd_payload[4];
-  EXPECT_EQ(last_msg_->fwd_payload[5], 103)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[5])),
+            103)
       << "incorrect value for fwd_payload[5], expected 103, is "
       << last_msg_->fwd_payload[5];
-  EXPECT_EQ(last_msg_->fwd_payload[6], 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[6])),
+            65)
       << "incorrect value for fwd_payload[6], expected 65, is "
       << last_msg_->fwd_payload[6];
-  EXPECT_EQ(last_msg_->fwd_payload[7], 69)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[7])),
+            69)
       << "incorrect value for fwd_payload[7], expected 69, is "
       << last_msg_->fwd_payload[7];
-  EXPECT_EQ(last_msg_->fwd_payload[8], 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[8])),
+            65)
       << "incorrect value for fwd_payload[8], expected 65, is "
       << last_msg_->fwd_payload[8];
-  EXPECT_EQ(last_msg_->fwd_payload[9], 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[9])),
+            65)
       << "incorrect value for fwd_payload[9], expected 65, is "
       << last_msg_->fwd_payload[9];
-  EXPECT_EQ(last_msg_->fwd_payload[10], 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[10])),
+            65)
       << "incorrect value for fwd_payload[10], expected 65, is "
       << last_msg_->fwd_payload[10];
-  EXPECT_EQ(last_msg_->fwd_payload[11], 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[11])),
+            65)
       << "incorrect value for fwd_payload[11], expected 65, is "
       << last_msg_->fwd_payload[11];
-  EXPECT_EQ(last_msg_->fwd_payload[12], 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[12])),
+            65)
       << "incorrect value for fwd_payload[12], expected 65, is "
       << last_msg_->fwd_payload[12];
-  EXPECT_EQ(last_msg_->fwd_payload[13], 69)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[13])),
+            69)
       << "incorrect value for fwd_payload[13], expected 69, is "
       << last_msg_->fwd_payload[13];
-  EXPECT_EQ(last_msg_->fwd_payload[14], 97)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[14])),
+            97)
       << "incorrect value for fwd_payload[14], expected 97, is "
       << last_msg_->fwd_payload[14];
-  EXPECT_EQ(last_msg_->fwd_payload[15], 103)
+  EXPECT_EQ(get_as<decltype(last_msg_->fwd_payload[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fwd_payload[15])),
+            103)
       << "incorrect value for fwd_payload[15], expected 103, is "
       << last_msg_->fwd_payload[15];
-  EXPECT_EQ(last_msg_->protocol, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->protocol)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->protocol)),
+            0)
       << "incorrect value for protocol, expected 0, is " << last_msg_->protocol;
-  EXPECT_EQ(last_msg_->source, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->source)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->source)),
+            0)
       << "incorrect value for source, expected 0, is " << last_msg_->source;
 }

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/settings.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -137,7 +144,9 @@ TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->index, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            0)
       << "incorrect value for index, expected 0, is " << last_msg_->index;
   {
     const char check_string[] = {
@@ -257,7 +266,9 @@ TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->index, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            1)
       << "incorrect value for index, expected 1, is " << last_msg_->index;
   {
     const char check_string[] = {
@@ -370,7 +381,9 @@ TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp2, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->index, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            2)
       << "incorrect value for index, expected 2, is " << last_msg_->index;
   {
     const char check_string[] = {
@@ -482,7 +495,9 @@ TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp3, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->index, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            3)
       << "incorrect value for index, expected 3, is " << last_msg_->index;
   {
     const char check_string[] = {
@@ -594,7 +609,9 @@ TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp4, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 55286);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->index, 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            4)
       << "incorrect value for index, expected 4, is " << last_msg_->index;
   {
     const char check_string[] = {

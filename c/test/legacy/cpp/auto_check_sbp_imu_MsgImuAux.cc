@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/imu.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_imu_MsgImuAux0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -112,11 +119,17 @@ TEST_F(Test_legacy_auto_check_sbp_imu_MsgImuAux0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 4660);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->imu_conf, 66)
+  EXPECT_EQ(get_as<decltype(last_msg_->imu_conf)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->imu_conf)),
+            66)
       << "incorrect value for imu_conf, expected 66, is "
       << last_msg_->imu_conf;
-  EXPECT_EQ(last_msg_->imu_type, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->imu_type)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->imu_type)),
+            1)
       << "incorrect value for imu_type, expected 1, is " << last_msg_->imu_type;
-  EXPECT_EQ(last_msg_->temp, 2804)
+  EXPECT_EQ(get_as<decltype(last_msg_->temp)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->temp)),
+            2804)
       << "incorrect value for temp, expected 2804, is " << last_msg_->temp;
 }

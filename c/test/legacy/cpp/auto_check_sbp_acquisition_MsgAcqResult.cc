@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_acquisition_MsgAcqResult0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -121,8 +128,12 @@ TEST_F(Test_legacy_auto_check_sbp_acquisition_MsgAcqResult0, Test) {
       << "incorrect value for cn0, expected 14.5, is " << last_msg_->cn0;
   EXPECT_LT((last_msg_->cp * 100 - 72.1999969482 * 100), 0.05)
       << "incorrect value for cp, expected 72.1999969482, is " << last_msg_->cp;
-  EXPECT_EQ(last_msg_->sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            0)
       << "incorrect value for sid.code, expected 0, is " << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.sat, 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            8)
       << "incorrect value for sid.sat, expected 8, is " << last_msg_->sid.sat;
 }

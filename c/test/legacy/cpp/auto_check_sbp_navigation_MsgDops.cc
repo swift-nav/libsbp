@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgDops0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -117,18 +124,32 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgDops0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->gdop, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->gdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->gdop)),
+            2)
       << "incorrect value for gdop, expected 2, is " << last_msg_->gdop;
-  EXPECT_EQ(last_msg_->hdop, 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->hdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hdop)),
+            5)
       << "incorrect value for hdop, expected 5, is " << last_msg_->hdop;
-  EXPECT_EQ(last_msg_->pdop, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->pdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pdop)),
+            6)
       << "incorrect value for pdop, expected 6, is " << last_msg_->pdop;
-  EXPECT_EQ(last_msg_->tdop, 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->tdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tdop)),
+            5)
       << "incorrect value for tdop, expected 5, is " << last_msg_->tdop;
-  EXPECT_EQ(last_msg_->tow, 100)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            100)
       << "incorrect value for tow, expected 100, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vdop, 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->vdop)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vdop)),
+            5)
       << "incorrect value for vdop, expected 5, is " << last_msg_->vdop;
 }

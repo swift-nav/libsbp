@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/observation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_observation_MsgOsr0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -297,376 +304,653 @@ TEST_F(Test_legacy_auto_check_sbp_observation_MsgOsr0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 0);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->header.n_obs, 64)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.n_obs)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.n_obs)),
+            64)
       << "incorrect value for header.n_obs, expected 64, is "
       << last_msg_->header.n_obs;
-  EXPECT_EQ(last_msg_->header.t.ns_residual, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->header.t.ns_residual)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->header.t.ns_residual)),
+      0)
       << "incorrect value for header.t.ns_residual, expected 0, is "
       << last_msg_->header.t.ns_residual;
-  EXPECT_EQ(last_msg_->header.t.tow, 501867000)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.t.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.t.tow)),
+            501867000)
       << "incorrect value for header.t.tow, expected 501867000, is "
       << last_msg_->header.t.tow;
-  EXPECT_EQ(last_msg_->header.t.wn, 2152)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.t.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.t.wn)),
+            2152)
       << "incorrect value for header.t.wn, expected 2152, is "
       << last_msg_->header.t.wn;
-  EXPECT_EQ(last_msg_->obs[0].L.f, 66)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[0].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[0].L.f)),
+            66)
       << "incorrect value for obs[0].L.f, expected 66, is "
       << last_msg_->obs[0].L.f;
-  EXPECT_EQ(last_msg_->obs[0].L.i, 121567974)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[0].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[0].L.i)),
+            121567974)
       << "incorrect value for obs[0].L.i, expected 121567974, is "
       << last_msg_->obs[0].L.i;
-  EXPECT_EQ(last_msg_->obs[0].P, 1156681547)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[0].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[0].P)),
+            1156681547)
       << "incorrect value for obs[0].P, expected 1156681547, is "
       << last_msg_->obs[0].P;
-  EXPECT_EQ(last_msg_->obs[0].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[0].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[0].flags)),
+            3)
       << "incorrect value for obs[0].flags, expected 3, is "
       << last_msg_->obs[0].flags;
-  EXPECT_EQ(last_msg_->obs[0].iono_std, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[0].iono_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[0].iono_std)),
+            13)
       << "incorrect value for obs[0].iono_std, expected 13, is "
       << last_msg_->obs[0].iono_std;
-  EXPECT_EQ(last_msg_->obs[0].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[0].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[0].lock)),
+            15)
       << "incorrect value for obs[0].lock, expected 15, is "
       << last_msg_->obs[0].lock;
-  EXPECT_EQ(last_msg_->obs[0].range_std, 7)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[0].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[0].range_std)),
+      7)
       << "incorrect value for obs[0].range_std, expected 7, is "
       << last_msg_->obs[0].range_std;
-  EXPECT_EQ(last_msg_->obs[0].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[0].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[0].sid.code)),
+            0)
       << "incorrect value for obs[0].sid.code, expected 0, is "
       << last_msg_->obs[0].sid.code;
-  EXPECT_EQ(last_msg_->obs[0].sid.sat, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[0].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[0].sid.sat)),
+            1)
       << "incorrect value for obs[0].sid.sat, expected 1, is "
       << last_msg_->obs[0].sid.sat;
-  EXPECT_EQ(last_msg_->obs[0].tropo_std, 7)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[0].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[0].tropo_std)),
+      7)
       << "incorrect value for obs[0].tropo_std, expected 7, is "
       << last_msg_->obs[0].tropo_std;
-  EXPECT_EQ(last_msg_->obs[1].L.f, 75)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[1].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[1].L.f)),
+            75)
       << "incorrect value for obs[1].L.f, expected 75, is "
       << last_msg_->obs[1].L.f;
-  EXPECT_EQ(last_msg_->obs[1].L.i, 111817196)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[1].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[1].L.i)),
+            111817196)
       << "incorrect value for obs[1].L.i, expected 111817196, is "
       << last_msg_->obs[1].L.i;
-  EXPECT_EQ(last_msg_->obs[1].P, 1063905486)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[1].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[1].P)),
+            1063905486)
       << "incorrect value for obs[1].P, expected 1063905486, is "
       << last_msg_->obs[1].P;
-  EXPECT_EQ(last_msg_->obs[1].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[1].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[1].flags)),
+            3)
       << "incorrect value for obs[1].flags, expected 3, is "
       << last_msg_->obs[1].flags;
-  EXPECT_EQ(last_msg_->obs[1].iono_std, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[1].iono_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[1].iono_std)),
+            13)
       << "incorrect value for obs[1].iono_std, expected 13, is "
       << last_msg_->obs[1].iono_std;
-  EXPECT_EQ(last_msg_->obs[1].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[1].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[1].lock)),
+            15)
       << "incorrect value for obs[1].lock, expected 15, is "
       << last_msg_->obs[1].lock;
-  EXPECT_EQ(last_msg_->obs[1].range_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[1].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[1].range_std)),
+      3)
       << "incorrect value for obs[1].range_std, expected 3, is "
       << last_msg_->obs[1].range_std;
-  EXPECT_EQ(last_msg_->obs[1].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[1].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[1].sid.code)),
+            0)
       << "incorrect value for obs[1].sid.code, expected 0, is "
       << last_msg_->obs[1].sid.code;
-  EXPECT_EQ(last_msg_->obs[1].sid.sat, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[1].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[1].sid.sat)),
+            13)
       << "incorrect value for obs[1].sid.sat, expected 13, is "
       << last_msg_->obs[1].sid.sat;
-  EXPECT_EQ(last_msg_->obs[1].tropo_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[1].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[1].tropo_std)),
+      3)
       << "incorrect value for obs[1].tropo_std, expected 3, is "
       << last_msg_->obs[1].tropo_std;
-  EXPECT_EQ(last_msg_->obs[2].L.f, 128)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[2].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[2].L.f)),
+            128)
       << "incorrect value for obs[2].L.f, expected 128, is "
       << last_msg_->obs[2].L.f;
-  EXPECT_EQ(last_msg_->obs[2].L.i, 110692129)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[2].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[2].L.i)),
+            110692129)
       << "incorrect value for obs[2].L.i, expected 110692129, is "
       << last_msg_->obs[2].L.i;
-  EXPECT_EQ(last_msg_->obs[2].P, 1053200685)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[2].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[2].P)),
+            1053200685)
       << "incorrect value for obs[2].P, expected 1053200685, is "
       << last_msg_->obs[2].P;
-  EXPECT_EQ(last_msg_->obs[2].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[2].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[2].flags)),
+            3)
       << "incorrect value for obs[2].flags, expected 3, is "
       << last_msg_->obs[2].flags;
-  EXPECT_EQ(last_msg_->obs[2].iono_std, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[2].iono_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[2].iono_std)),
+            13)
       << "incorrect value for obs[2].iono_std, expected 13, is "
       << last_msg_->obs[2].iono_std;
-  EXPECT_EQ(last_msg_->obs[2].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[2].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[2].lock)),
+            15)
       << "incorrect value for obs[2].lock, expected 15, is "
       << last_msg_->obs[2].lock;
-  EXPECT_EQ(last_msg_->obs[2].range_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[2].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[2].range_std)),
+      3)
       << "incorrect value for obs[2].range_std, expected 3, is "
       << last_msg_->obs[2].range_std;
-  EXPECT_EQ(last_msg_->obs[2].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[2].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[2].sid.code)),
+            0)
       << "incorrect value for obs[2].sid.code, expected 0, is "
       << last_msg_->obs[2].sid.code;
-  EXPECT_EQ(last_msg_->obs[2].sid.sat, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[2].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[2].sid.sat)),
+            14)
       << "incorrect value for obs[2].sid.sat, expected 14, is "
       << last_msg_->obs[2].sid.sat;
-  EXPECT_EQ(last_msg_->obs[2].tropo_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[2].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[2].tropo_std)),
+      3)
       << "incorrect value for obs[2].tropo_std, expected 3, is "
       << last_msg_->obs[2].tropo_std;
-  EXPECT_EQ(last_msg_->obs[3].L.f, 127)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[3].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[3].L.f)),
+            127)
       << "incorrect value for obs[3].L.f, expected 127, is "
       << last_msg_->obs[3].L.f;
-  EXPECT_EQ(last_msg_->obs[3].L.i, 119549583)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[3].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[3].L.i)),
+            119549583)
       << "incorrect value for obs[3].L.i, expected 119549583, is "
       << last_msg_->obs[3].L.i;
-  EXPECT_EQ(last_msg_->obs[3].P, 1137476697)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[3].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[3].P)),
+            1137476697)
       << "incorrect value for obs[3].P, expected 1137476697, is "
       << last_msg_->obs[3].P;
-  EXPECT_EQ(last_msg_->obs[3].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[3].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[3].flags)),
+            3)
       << "incorrect value for obs[3].flags, expected 3, is "
       << last_msg_->obs[3].flags;
-  EXPECT_EQ(last_msg_->obs[3].iono_std, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[3].iono_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[3].iono_std)),
+            13)
       << "incorrect value for obs[3].iono_std, expected 13, is "
       << last_msg_->obs[3].iono_std;
-  EXPECT_EQ(last_msg_->obs[3].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[3].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[3].lock)),
+            15)
       << "incorrect value for obs[3].lock, expected 15, is "
       << last_msg_->obs[3].lock;
-  EXPECT_EQ(last_msg_->obs[3].range_std, 5)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[3].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[3].range_std)),
+      5)
       << "incorrect value for obs[3].range_std, expected 5, is "
       << last_msg_->obs[3].range_std;
-  EXPECT_EQ(last_msg_->obs[3].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[3].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[3].sid.code)),
+            0)
       << "incorrect value for obs[3].sid.code, expected 0, is "
       << last_msg_->obs[3].sid.code;
-  EXPECT_EQ(last_msg_->obs[3].sid.sat, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[3].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[3].sid.sat)),
+            15)
       << "incorrect value for obs[3].sid.sat, expected 15, is "
       << last_msg_->obs[3].sid.sat;
-  EXPECT_EQ(last_msg_->obs[3].tropo_std, 5)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[3].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[3].tropo_std)),
+      5)
       << "incorrect value for obs[3].tropo_std, expected 5, is "
       << last_msg_->obs[3].tropo_std;
-  EXPECT_EQ(last_msg_->obs[4].L.f, 55)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[4].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[4].L.f)),
+            55)
       << "incorrect value for obs[4].L.f, expected 55, is "
       << last_msg_->obs[4].L.f;
-  EXPECT_EQ(last_msg_->obs[4].L.i, 106934294)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[4].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[4].L.i)),
+            106934294)
       << "incorrect value for obs[4].L.i, expected 106934294, is "
       << last_msg_->obs[4].L.i;
-  EXPECT_EQ(last_msg_->obs[4].P, 1017446132)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[4].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[4].P)),
+            1017446132)
       << "incorrect value for obs[4].P, expected 1017446132, is "
       << last_msg_->obs[4].P;
-  EXPECT_EQ(last_msg_->obs[4].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[4].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[4].flags)),
+            3)
       << "incorrect value for obs[4].flags, expected 3, is "
       << last_msg_->obs[4].flags;
-  EXPECT_EQ(last_msg_->obs[4].iono_std, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[4].iono_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[4].iono_std)),
+            0)
       << "incorrect value for obs[4].iono_std, expected 0, is "
       << last_msg_->obs[4].iono_std;
-  EXPECT_EQ(last_msg_->obs[4].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[4].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[4].lock)),
+            15)
       << "incorrect value for obs[4].lock, expected 15, is "
       << last_msg_->obs[4].lock;
-  EXPECT_EQ(last_msg_->obs[4].range_std, 2)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[4].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[4].range_std)),
+      2)
       << "incorrect value for obs[4].range_std, expected 2, is "
       << last_msg_->obs[4].range_std;
-  EXPECT_EQ(last_msg_->obs[4].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[4].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[4].sid.code)),
+            0)
       << "incorrect value for obs[4].sid.code, expected 0, is "
       << last_msg_->obs[4].sid.code;
-  EXPECT_EQ(last_msg_->obs[4].sid.sat, 17)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[4].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[4].sid.sat)),
+            17)
       << "incorrect value for obs[4].sid.sat, expected 17, is "
       << last_msg_->obs[4].sid.sat;
-  EXPECT_EQ(last_msg_->obs[4].tropo_std, 2)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[4].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[4].tropo_std)),
+      2)
       << "incorrect value for obs[4].tropo_std, expected 2, is "
       << last_msg_->obs[4].tropo_std;
-  EXPECT_EQ(last_msg_->obs[5].L.f, 108)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[5].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[5].L.f)),
+            108)
       << "incorrect value for obs[5].L.f, expected 108, is "
       << last_msg_->obs[5].L.f;
-  EXPECT_EQ(last_msg_->obs[5].L.i, 110024343)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[5].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[5].L.i)),
+            110024343)
       << "incorrect value for obs[5].L.i, expected 110024343, is "
       << last_msg_->obs[5].L.i;
-  EXPECT_EQ(last_msg_->obs[5].P, 1046846826)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[5].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[5].P)),
+            1046846826)
       << "incorrect value for obs[5].P, expected 1046846826, is "
       << last_msg_->obs[5].P;
-  EXPECT_EQ(last_msg_->obs[5].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[5].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[5].flags)),
+            3)
       << "incorrect value for obs[5].flags, expected 3, is "
       << last_msg_->obs[5].flags;
-  EXPECT_EQ(last_msg_->obs[5].iono_std, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[5].iono_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[5].iono_std)),
+            13)
       << "incorrect value for obs[5].iono_std, expected 13, is "
       << last_msg_->obs[5].iono_std;
-  EXPECT_EQ(last_msg_->obs[5].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[5].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[5].lock)),
+            15)
       << "incorrect value for obs[5].lock, expected 15, is "
       << last_msg_->obs[5].lock;
-  EXPECT_EQ(last_msg_->obs[5].range_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[5].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[5].range_std)),
+      3)
       << "incorrect value for obs[5].range_std, expected 3, is "
       << last_msg_->obs[5].range_std;
-  EXPECT_EQ(last_msg_->obs[5].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[5].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[5].sid.code)),
+            0)
       << "incorrect value for obs[5].sid.code, expected 0, is "
       << last_msg_->obs[5].sid.code;
-  EXPECT_EQ(last_msg_->obs[5].sid.sat, 19)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[5].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[5].sid.sat)),
+            19)
       << "incorrect value for obs[5].sid.sat, expected 19, is "
       << last_msg_->obs[5].sid.sat;
-  EXPECT_EQ(last_msg_->obs[5].tropo_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[5].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[5].tropo_std)),
+      3)
       << "incorrect value for obs[5].tropo_std, expected 3, is "
       << last_msg_->obs[5].tropo_std;
-  EXPECT_EQ(last_msg_->obs[6].L.f, 206)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[6].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[6].L.f)),
+            206)
       << "incorrect value for obs[6].L.f, expected 206, is "
       << last_msg_->obs[6].L.f;
-  EXPECT_EQ(last_msg_->obs[6].L.i, 111507381)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[6].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[6].L.i)),
+            111507381)
       << "incorrect value for obs[6].L.i, expected 111507381, is "
       << last_msg_->obs[6].L.i;
-  EXPECT_EQ(last_msg_->obs[6].P, 1060957521)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[6].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[6].P)),
+            1060957521)
       << "incorrect value for obs[6].P, expected 1060957521, is "
       << last_msg_->obs[6].P;
-  EXPECT_EQ(last_msg_->obs[6].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[6].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[6].flags)),
+            3)
       << "incorrect value for obs[6].flags, expected 3, is "
       << last_msg_->obs[6].flags;
-  EXPECT_EQ(last_msg_->obs[6].iono_std, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[6].iono_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[6].iono_std)),
+            13)
       << "incorrect value for obs[6].iono_std, expected 13, is "
       << last_msg_->obs[6].iono_std;
-  EXPECT_EQ(last_msg_->obs[6].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[6].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[6].lock)),
+            15)
       << "incorrect value for obs[6].lock, expected 15, is "
       << last_msg_->obs[6].lock;
-  EXPECT_EQ(last_msg_->obs[6].range_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[6].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[6].range_std)),
+      3)
       << "incorrect value for obs[6].range_std, expected 3, is "
       << last_msg_->obs[6].range_std;
-  EXPECT_EQ(last_msg_->obs[6].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[6].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[6].sid.code)),
+            0)
       << "incorrect value for obs[6].sid.code, expected 0, is "
       << last_msg_->obs[6].sid.code;
-  EXPECT_EQ(last_msg_->obs[6].sid.sat, 28)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[6].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[6].sid.sat)),
+            28)
       << "incorrect value for obs[6].sid.sat, expected 28, is "
       << last_msg_->obs[6].sid.sat;
-  EXPECT_EQ(last_msg_->obs[6].tropo_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[6].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[6].tropo_std)),
+      3)
       << "incorrect value for obs[6].tropo_std, expected 3, is "
       << last_msg_->obs[6].tropo_std;
-  EXPECT_EQ(last_msg_->obs[7].L.f, 200)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[7].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[7].L.f)),
+            200)
       << "incorrect value for obs[7].L.f, expected 200, is "
       << last_msg_->obs[7].L.f;
-  EXPECT_EQ(last_msg_->obs[7].L.i, 113614775)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[7].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[7].L.i)),
+            113614775)
       << "incorrect value for obs[7].L.i, expected 113614775, is "
       << last_msg_->obs[7].L.i;
-  EXPECT_EQ(last_msg_->obs[7].P, 1081009286)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[7].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[7].P)),
+            1081009286)
       << "incorrect value for obs[7].P, expected 1081009286, is "
       << last_msg_->obs[7].P;
-  EXPECT_EQ(last_msg_->obs[7].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[7].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[7].flags)),
+            3)
       << "incorrect value for obs[7].flags, expected 3, is "
       << last_msg_->obs[7].flags;
-  EXPECT_EQ(last_msg_->obs[7].iono_std, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[7].iono_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[7].iono_std)),
+            13)
       << "incorrect value for obs[7].iono_std, expected 13, is "
       << last_msg_->obs[7].iono_std;
-  EXPECT_EQ(last_msg_->obs[7].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[7].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[7].lock)),
+            15)
       << "incorrect value for obs[7].lock, expected 15, is "
       << last_msg_->obs[7].lock;
-  EXPECT_EQ(last_msg_->obs[7].range_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[7].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[7].range_std)),
+      3)
       << "incorrect value for obs[7].range_std, expected 3, is "
       << last_msg_->obs[7].range_std;
-  EXPECT_EQ(last_msg_->obs[7].sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[7].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[7].sid.code)),
+            0)
       << "incorrect value for obs[7].sid.code, expected 0, is "
       << last_msg_->obs[7].sid.code;
-  EXPECT_EQ(last_msg_->obs[7].sid.sat, 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[7].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[7].sid.sat)),
+            30)
       << "incorrect value for obs[7].sid.sat, expected 30, is "
       << last_msg_->obs[7].sid.sat;
-  EXPECT_EQ(last_msg_->obs[7].tropo_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[7].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[7].tropo_std)),
+      3)
       << "incorrect value for obs[7].tropo_std, expected 3, is "
       << last_msg_->obs[7].tropo_std;
-  EXPECT_EQ(last_msg_->obs[8].L.f, 170)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[8].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[8].L.f)),
+            170)
       << "incorrect value for obs[8].L.f, expected 170, is "
       << last_msg_->obs[8].L.f;
-  EXPECT_EQ(last_msg_->obs[8].L.i, 94728270)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[8].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[8].L.i)),
+            94728270)
       << "incorrect value for obs[8].L.i, expected 94728270, is "
       << last_msg_->obs[8].L.i;
-  EXPECT_EQ(last_msg_->obs[8].P, 1156681781)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[8].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[8].P)),
+            1156681781)
       << "incorrect value for obs[8].P, expected 1156681781, is "
       << last_msg_->obs[8].P;
-  EXPECT_EQ(last_msg_->obs[8].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[8].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[8].flags)),
+            3)
       << "incorrect value for obs[8].flags, expected 3, is "
       << last_msg_->obs[8].flags;
-  EXPECT_EQ(last_msg_->obs[8].iono_std, 21)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[8].iono_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[8].iono_std)),
+            21)
       << "incorrect value for obs[8].iono_std, expected 21, is "
       << last_msg_->obs[8].iono_std;
-  EXPECT_EQ(last_msg_->obs[8].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[8].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[8].lock)),
+            15)
       << "incorrect value for obs[8].lock, expected 15, is "
       << last_msg_->obs[8].lock;
-  EXPECT_EQ(last_msg_->obs[8].range_std, 7)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[8].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[8].range_std)),
+      7)
       << "incorrect value for obs[8].range_std, expected 7, is "
       << last_msg_->obs[8].range_std;
-  EXPECT_EQ(last_msg_->obs[8].sid.code, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[8].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[8].sid.code)),
+            6)
       << "incorrect value for obs[8].sid.code, expected 6, is "
       << last_msg_->obs[8].sid.code;
-  EXPECT_EQ(last_msg_->obs[8].sid.sat, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[8].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[8].sid.sat)),
+            1)
       << "incorrect value for obs[8].sid.sat, expected 1, is "
       << last_msg_->obs[8].sid.sat;
-  EXPECT_EQ(last_msg_->obs[8].tropo_std, 7)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[8].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[8].tropo_std)),
+      7)
       << "incorrect value for obs[8].tropo_std, expected 7, is "
       << last_msg_->obs[8].tropo_std;
-  EXPECT_EQ(last_msg_->obs[9].L.f, 129)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[9].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[9].L.f)),
+            129)
       << "incorrect value for obs[9].L.f, expected 129, is "
       << last_msg_->obs[9].L.f;
-  EXPECT_EQ(last_msg_->obs[9].L.i, 87130275)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[9].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[9].L.i)),
+            87130275)
       << "incorrect value for obs[9].L.i, expected 87130275, is "
       << last_msg_->obs[9].L.i;
-  EXPECT_EQ(last_msg_->obs[9].P, 1063905531)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[9].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[9].P)),
+            1063905531)
       << "incorrect value for obs[9].P, expected 1063905531, is "
       << last_msg_->obs[9].P;
-  EXPECT_EQ(last_msg_->obs[9].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[9].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[9].flags)),
+            3)
       << "incorrect value for obs[9].flags, expected 3, is "
       << last_msg_->obs[9].flags;
-  EXPECT_EQ(last_msg_->obs[9].iono_std, 21)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[9].iono_std)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[9].iono_std)),
+            21)
       << "incorrect value for obs[9].iono_std, expected 21, is "
       << last_msg_->obs[9].iono_std;
-  EXPECT_EQ(last_msg_->obs[9].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[9].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[9].lock)),
+            15)
       << "incorrect value for obs[9].lock, expected 15, is "
       << last_msg_->obs[9].lock;
-  EXPECT_EQ(last_msg_->obs[9].range_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[9].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[9].range_std)),
+      3)
       << "incorrect value for obs[9].range_std, expected 3, is "
       << last_msg_->obs[9].range_std;
-  EXPECT_EQ(last_msg_->obs[9].sid.code, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[9].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[9].sid.code)),
+            6)
       << "incorrect value for obs[9].sid.code, expected 6, is "
       << last_msg_->obs[9].sid.code;
-  EXPECT_EQ(last_msg_->obs[9].sid.sat, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[9].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[9].sid.sat)),
+            13)
       << "incorrect value for obs[9].sid.sat, expected 13, is "
       << last_msg_->obs[9].sid.sat;
-  EXPECT_EQ(last_msg_->obs[9].tropo_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[9].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[9].tropo_std)),
+      3)
       << "incorrect value for obs[9].tropo_std, expected 3, is "
       << last_msg_->obs[9].tropo_std;
-  EXPECT_EQ(last_msg_->obs[10].L.f, 46)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[10].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[10].L.f)),
+            46)
       << "incorrect value for obs[10].L.f, expected 46, is "
       << last_msg_->obs[10].L.f;
-  EXPECT_EQ(last_msg_->obs[10].L.i, 86253605)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[10].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[10].L.i)),
+            86253605)
       << "incorrect value for obs[10].L.i, expected 86253605, is "
       << last_msg_->obs[10].L.i;
-  EXPECT_EQ(last_msg_->obs[10].P, 1053200752)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[10].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[10].P)),
+            1053200752)
       << "incorrect value for obs[10].P, expected 1053200752, is "
       << last_msg_->obs[10].P;
-  EXPECT_EQ(last_msg_->obs[10].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[10].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[10].flags)),
+            3)
       << "incorrect value for obs[10].flags, expected 3, is "
       << last_msg_->obs[10].flags;
-  EXPECT_EQ(last_msg_->obs[10].iono_std, 21)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[10].iono_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[10].iono_std)),
+      21)
       << "incorrect value for obs[10].iono_std, expected 21, is "
       << last_msg_->obs[10].iono_std;
-  EXPECT_EQ(last_msg_->obs[10].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[10].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[10].lock)),
+            15)
       << "incorrect value for obs[10].lock, expected 15, is "
       << last_msg_->obs[10].lock;
-  EXPECT_EQ(last_msg_->obs[10].range_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[10].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[10].range_std)),
+      3)
       << "incorrect value for obs[10].range_std, expected 3, is "
       << last_msg_->obs[10].range_std;
-  EXPECT_EQ(last_msg_->obs[10].sid.code, 6)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[10].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[10].sid.code)),
+      6)
       << "incorrect value for obs[10].sid.code, expected 6, is "
       << last_msg_->obs[10].sid.code;
-  EXPECT_EQ(last_msg_->obs[10].sid.sat, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[10].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[10].sid.sat)),
+            14)
       << "incorrect value for obs[10].sid.sat, expected 14, is "
       << last_msg_->obs[10].sid.sat;
-  EXPECT_EQ(last_msg_->obs[10].tropo_std, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[10].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[10].tropo_std)),
+      3)
       << "incorrect value for obs[10].tropo_std, expected 3, is "
       << last_msg_->obs[10].tropo_std;
-  EXPECT_EQ(last_msg_->obs[11].L.f, 95)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[11].L.f)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[11].L.f)),
+            95)
       << "incorrect value for obs[11].L.f, expected 95, is "
       << last_msg_->obs[11].L.f;
-  EXPECT_EQ(last_msg_->obs[11].L.i, 93155512)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[11].L.i)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[11].L.i)),
+            93155512)
       << "incorrect value for obs[11].L.i, expected 93155512, is "
       << last_msg_->obs[11].L.i;
-  EXPECT_EQ(last_msg_->obs[11].P, 1137476774)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[11].P)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[11].P)),
+            1137476774)
       << "incorrect value for obs[11].P, expected 1137476774, is "
       << last_msg_->obs[11].P;
-  EXPECT_EQ(last_msg_->obs[11].flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[11].flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[11].flags)),
+            3)
       << "incorrect value for obs[11].flags, expected 3, is "
       << last_msg_->obs[11].flags;
-  EXPECT_EQ(last_msg_->obs[11].iono_std, 21)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[11].iono_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[11].iono_std)),
+      21)
       << "incorrect value for obs[11].iono_std, expected 21, is "
       << last_msg_->obs[11].iono_std;
-  EXPECT_EQ(last_msg_->obs[11].lock, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[11].lock)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[11].lock)),
+            15)
       << "incorrect value for obs[11].lock, expected 15, is "
       << last_msg_->obs[11].lock;
-  EXPECT_EQ(last_msg_->obs[11].range_std, 5)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[11].range_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[11].range_std)),
+      5)
       << "incorrect value for obs[11].range_std, expected 5, is "
       << last_msg_->obs[11].range_std;
-  EXPECT_EQ(last_msg_->obs[11].sid.code, 6)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[11].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[11].sid.code)),
+      6)
       << "incorrect value for obs[11].sid.code, expected 6, is "
       << last_msg_->obs[11].sid.code;
-  EXPECT_EQ(last_msg_->obs[11].sid.sat, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->obs[11].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->obs[11].sid.sat)),
+            15)
       << "incorrect value for obs[11].sid.sat, expected 15, is "
       << last_msg_->obs[11].sid.sat;
-  EXPECT_EQ(last_msg_->obs[11].tropo_std, 5)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->obs[11].tropo_std)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->obs[11].tropo_std)),
+      5)
       << "incorrect value for obs[11].tropo_std, expected 5, is "
       << last_msg_->obs[11].tropo_std;
 }

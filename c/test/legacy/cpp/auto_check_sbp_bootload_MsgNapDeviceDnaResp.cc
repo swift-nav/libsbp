@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/legacy_state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_bootload_MsgNapDeviceDnaResp0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -151,20 +158,36 @@ TEST_F(Test_legacy_auto_check_sbp_bootload_MsgNapDeviceDnaResp0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 14505);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->dna[0], 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->dna[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dna[0])),
+            2)
       << "incorrect value for dna[0], expected 2, is " << last_msg_->dna[0];
-  EXPECT_EQ(last_msg_->dna[1], 187)
+  EXPECT_EQ(get_as<decltype(last_msg_->dna[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dna[1])),
+            187)
       << "incorrect value for dna[1], expected 187, is " << last_msg_->dna[1];
-  EXPECT_EQ(last_msg_->dna[2], 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->dna[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dna[2])),
+            1)
       << "incorrect value for dna[2], expected 1, is " << last_msg_->dna[2];
-  EXPECT_EQ(last_msg_->dna[3], 130)
+  EXPECT_EQ(get_as<decltype(last_msg_->dna[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dna[3])),
+            130)
       << "incorrect value for dna[3], expected 130, is " << last_msg_->dna[3];
-  EXPECT_EQ(last_msg_->dna[4], 173)
+  EXPECT_EQ(get_as<decltype(last_msg_->dna[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dna[4])),
+            173)
       << "incorrect value for dna[4], expected 173, is " << last_msg_->dna[4];
-  EXPECT_EQ(last_msg_->dna[5], 244)
+  EXPECT_EQ(get_as<decltype(last_msg_->dna[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dna[5])),
+            244)
       << "incorrect value for dna[5], expected 244, is " << last_msg_->dna[5];
-  EXPECT_EQ(last_msg_->dna[6], 67)
+  EXPECT_EQ(get_as<decltype(last_msg_->dna[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dna[6])),
+            67)
       << "incorrect value for dna[6], expected 67, is " << last_msg_->dna[6];
-  EXPECT_EQ(last_msg_->dna[7], 122)
+  EXPECT_EQ(get_as<decltype(last_msg_->dna[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dna[7])),
+            122)
       << "incorrect value for dna[7], expected 122, is " << last_msg_->dna[7];
 }

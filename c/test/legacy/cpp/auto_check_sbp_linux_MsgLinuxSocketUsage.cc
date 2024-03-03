@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/linux.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_linux_MsgLinuxSocketUsage0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -311,106 +318,206 @@ TEST_F(Test_legacy_auto_check_sbp_linux_MsgLinuxSocketUsage0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 35442);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->avg_queue_depth, 2907030541)
+  EXPECT_EQ(get_as<decltype(last_msg_->avg_queue_depth)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->avg_queue_depth)),
+            2907030541)
       << "incorrect value for avg_queue_depth, expected 2907030541, is "
       << last_msg_->avg_queue_depth;
-  EXPECT_EQ(last_msg_->max_queue_depth, 3048922691)
+  EXPECT_EQ(get_as<decltype(last_msg_->max_queue_depth)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->max_queue_depth)),
+            3048922691)
       << "incorrect value for max_queue_depth, expected 3048922691, is "
       << last_msg_->max_queue_depth;
-  EXPECT_EQ(last_msg_->socket_state_counts[0], 39670)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[0])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[0])),
+            39670)
       << "incorrect value for socket_state_counts[0], expected 39670, is "
       << last_msg_->socket_state_counts[0];
-  EXPECT_EQ(last_msg_->socket_state_counts[1], 4603)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[1])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[1])),
+            4603)
       << "incorrect value for socket_state_counts[1], expected 4603, is "
       << last_msg_->socket_state_counts[1];
-  EXPECT_EQ(last_msg_->socket_state_counts[2], 46048)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[2])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[2])),
+            46048)
       << "incorrect value for socket_state_counts[2], expected 46048, is "
       << last_msg_->socket_state_counts[2];
-  EXPECT_EQ(last_msg_->socket_state_counts[3], 43290)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[3])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[3])),
+            43290)
       << "incorrect value for socket_state_counts[3], expected 43290, is "
       << last_msg_->socket_state_counts[3];
-  EXPECT_EQ(last_msg_->socket_state_counts[4], 23217)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[4])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[4])),
+            23217)
       << "incorrect value for socket_state_counts[4], expected 23217, is "
       << last_msg_->socket_state_counts[4];
-  EXPECT_EQ(last_msg_->socket_state_counts[5], 54677)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[5])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[5])),
+            54677)
       << "incorrect value for socket_state_counts[5], expected 54677, is "
       << last_msg_->socket_state_counts[5];
-  EXPECT_EQ(last_msg_->socket_state_counts[6], 1750)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[6])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[6])),
+            1750)
       << "incorrect value for socket_state_counts[6], expected 1750, is "
       << last_msg_->socket_state_counts[6];
-  EXPECT_EQ(last_msg_->socket_state_counts[7], 16510)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[7])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[7])),
+            16510)
       << "incorrect value for socket_state_counts[7], expected 16510, is "
       << last_msg_->socket_state_counts[7];
-  EXPECT_EQ(last_msg_->socket_state_counts[8], 47480)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[8])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[8])),
+            47480)
       << "incorrect value for socket_state_counts[8], expected 47480, is "
       << last_msg_->socket_state_counts[8];
-  EXPECT_EQ(last_msg_->socket_state_counts[9], 33620)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[9])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[9])),
+            33620)
       << "incorrect value for socket_state_counts[9], expected 33620, is "
       << last_msg_->socket_state_counts[9];
-  EXPECT_EQ(last_msg_->socket_state_counts[10], 28616)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[10])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[10])),
+            28616)
       << "incorrect value for socket_state_counts[10], expected 28616, is "
       << last_msg_->socket_state_counts[10];
-  EXPECT_EQ(last_msg_->socket_state_counts[11], 36128)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[11])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[11])),
+            36128)
       << "incorrect value for socket_state_counts[11], expected 36128, is "
       << last_msg_->socket_state_counts[11];
-  EXPECT_EQ(last_msg_->socket_state_counts[12], 53721)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[12])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[12])),
+            53721)
       << "incorrect value for socket_state_counts[12], expected 53721, is "
       << last_msg_->socket_state_counts[12];
-  EXPECT_EQ(last_msg_->socket_state_counts[13], 3636)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[13])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[13])),
+            3636)
       << "incorrect value for socket_state_counts[13], expected 3636, is "
       << last_msg_->socket_state_counts[13];
-  EXPECT_EQ(last_msg_->socket_state_counts[14], 37822)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[14])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[14])),
+            37822)
       << "incorrect value for socket_state_counts[14], expected 37822, is "
       << last_msg_->socket_state_counts[14];
-  EXPECT_EQ(last_msg_->socket_state_counts[15], 63135)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_state_counts[15])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_state_counts[15])),
+            63135)
       << "incorrect value for socket_state_counts[15], expected 63135, is "
       << last_msg_->socket_state_counts[15];
-  EXPECT_EQ(last_msg_->socket_type_counts[0], 31373)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->socket_type_counts[0])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->socket_type_counts[0])),
+      31373)
       << "incorrect value for socket_type_counts[0], expected 31373, is "
       << last_msg_->socket_type_counts[0];
-  EXPECT_EQ(last_msg_->socket_type_counts[1], 30676)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->socket_type_counts[1])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->socket_type_counts[1])),
+      30676)
       << "incorrect value for socket_type_counts[1], expected 30676, is "
       << last_msg_->socket_type_counts[1];
-  EXPECT_EQ(last_msg_->socket_type_counts[2], 7811)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->socket_type_counts[2])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->socket_type_counts[2])),
+      7811)
       << "incorrect value for socket_type_counts[2], expected 7811, is "
       << last_msg_->socket_type_counts[2];
-  EXPECT_EQ(last_msg_->socket_type_counts[3], 12152)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->socket_type_counts[3])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->socket_type_counts[3])),
+      12152)
       << "incorrect value for socket_type_counts[3], expected 12152, is "
       << last_msg_->socket_type_counts[3];
-  EXPECT_EQ(last_msg_->socket_type_counts[4], 27929)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->socket_type_counts[4])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->socket_type_counts[4])),
+      27929)
       << "incorrect value for socket_type_counts[4], expected 27929, is "
       << last_msg_->socket_type_counts[4];
-  EXPECT_EQ(last_msg_->socket_type_counts[5], 16794)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->socket_type_counts[5])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->socket_type_counts[5])),
+      16794)
       << "incorrect value for socket_type_counts[5], expected 16794, is "
       << last_msg_->socket_type_counts[5];
-  EXPECT_EQ(last_msg_->socket_type_counts[6], 42116)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->socket_type_counts[6])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->socket_type_counts[6])),
+      42116)
       << "incorrect value for socket_type_counts[6], expected 42116, is "
       << last_msg_->socket_type_counts[6];
-  EXPECT_EQ(last_msg_->socket_type_counts[7], 7719)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->socket_type_counts[7])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->socket_type_counts[7])),
+      7719)
       << "incorrect value for socket_type_counts[7], expected 7719, is "
       << last_msg_->socket_type_counts[7];
-  EXPECT_EQ(last_msg_->socket_type_counts[8], 44830)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->socket_type_counts[8])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->socket_type_counts[8])),
+      44830)
       << "incorrect value for socket_type_counts[8], expected 44830, is "
       << last_msg_->socket_type_counts[8];
-  EXPECT_EQ(last_msg_->socket_type_counts[9], 11272)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->socket_type_counts[9])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->socket_type_counts[9])),
+      11272)
       << "incorrect value for socket_type_counts[9], expected 11272, is "
       << last_msg_->socket_type_counts[9];
-  EXPECT_EQ(last_msg_->socket_type_counts[10], 28444)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_type_counts[10])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_type_counts[10])),
+            28444)
       << "incorrect value for socket_type_counts[10], expected 28444, is "
       << last_msg_->socket_type_counts[10];
-  EXPECT_EQ(last_msg_->socket_type_counts[11], 61676)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_type_counts[11])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_type_counts[11])),
+            61676)
       << "incorrect value for socket_type_counts[11], expected 61676, is "
       << last_msg_->socket_type_counts[11];
-  EXPECT_EQ(last_msg_->socket_type_counts[12], 19120)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_type_counts[12])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_type_counts[12])),
+            19120)
       << "incorrect value for socket_type_counts[12], expected 19120, is "
       << last_msg_->socket_type_counts[12];
-  EXPECT_EQ(last_msg_->socket_type_counts[13], 33183)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_type_counts[13])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_type_counts[13])),
+            33183)
       << "incorrect value for socket_type_counts[13], expected 33183, is "
       << last_msg_->socket_type_counts[13];
-  EXPECT_EQ(last_msg_->socket_type_counts[14], 39322)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_type_counts[14])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_type_counts[14])),
+            39322)
       << "incorrect value for socket_type_counts[14], expected 39322, is "
       << last_msg_->socket_type_counts[14];
-  EXPECT_EQ(last_msg_->socket_type_counts[15], 58786)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_type_counts[15])>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->socket_type_counts[15])),
+            58786)
       << "incorrect value for socket_type_counts[15], expected 58786, is "
       << last_msg_->socket_type_counts[15];
 }

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/linux.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_linux_MsgLinuxSysStateDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -119,20 +126,32 @@ TEST_F(Test_legacy_auto_check_sbp_linux_MsgLinuxSysStateDepA0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 14420);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->mem_total, 41916)
+  EXPECT_EQ(get_as<decltype(last_msg_->mem_total)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->mem_total)),
+            41916)
       << "incorrect value for mem_total, expected 41916, is "
       << last_msg_->mem_total;
-  EXPECT_EQ(last_msg_->pcpu, 211)
+  EXPECT_EQ(get_as<decltype(last_msg_->pcpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pcpu)),
+            211)
       << "incorrect value for pcpu, expected 211, is " << last_msg_->pcpu;
-  EXPECT_EQ(last_msg_->pid_count, 51580)
+  EXPECT_EQ(get_as<decltype(last_msg_->pid_count)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pid_count)),
+            51580)
       << "incorrect value for pid_count, expected 51580, is "
       << last_msg_->pid_count;
-  EXPECT_EQ(last_msg_->pmem, 194)
+  EXPECT_EQ(get_as<decltype(last_msg_->pmem)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pmem)),
+            194)
       << "incorrect value for pmem, expected 194, is " << last_msg_->pmem;
-  EXPECT_EQ(last_msg_->procs_starting, 18291)
+  EXPECT_EQ(get_as<decltype(last_msg_->procs_starting)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->procs_starting)),
+            18291)
       << "incorrect value for procs_starting, expected 18291, is "
       << last_msg_->procs_starting;
-  EXPECT_EQ(last_msg_->procs_stopping, 26469)
+  EXPECT_EQ(get_as<decltype(last_msg_->procs_stopping)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->procs_stopping)),
+            26469)
       << "incorrect value for procs_stopping, expected 26469, is "
       << last_msg_->procs_stopping;
 }

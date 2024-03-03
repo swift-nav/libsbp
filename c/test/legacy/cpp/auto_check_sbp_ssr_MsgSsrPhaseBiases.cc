@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ssr.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ssr_MsgSsrPhaseBiases0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -407,534 +414,944 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrPhaseBiases0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 52955);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->biases[0].bias, -1311498533)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[0].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[0].bias)),
+            -1311498533)
       << "incorrect value for biases[0].bias, expected -1311498533, is "
       << last_msg_->biases[0].bias;
-  EXPECT_EQ(last_msg_->biases[0].code, 29)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[0].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[0].code)),
+            29)
       << "incorrect value for biases[0].code, expected 29, is "
       << last_msg_->biases[0].code;
-  EXPECT_EQ(last_msg_->biases[0].discontinuity_counter, 193)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[0].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[0].discontinuity_counter)),
+            193)
       << "incorrect value for biases[0].discontinuity_counter, expected 193, "
          "is "
       << last_msg_->biases[0].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[0].integer_indicator, 250)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[0].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[0].integer_indicator)),
+            250)
       << "incorrect value for biases[0].integer_indicator, expected 250, is "
       << last_msg_->biases[0].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[0].widelane_integer_indicator, 245)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[0].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[0].widelane_integer_indicator)),
+            245)
       << "incorrect value for biases[0].widelane_integer_indicator, expected "
          "245, is "
       << last_msg_->biases[0].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[1].bias, 1101319226)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[1].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[1].bias)),
+            1101319226)
       << "incorrect value for biases[1].bias, expected 1101319226, is "
       << last_msg_->biases[1].bias;
-  EXPECT_EQ(last_msg_->biases[1].code, 207)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[1].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[1].code)),
+            207)
       << "incorrect value for biases[1].code, expected 207, is "
       << last_msg_->biases[1].code;
-  EXPECT_EQ(last_msg_->biases[1].discontinuity_counter, 146)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[1].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[1].discontinuity_counter)),
+            146)
       << "incorrect value for biases[1].discontinuity_counter, expected 146, "
          "is "
       << last_msg_->biases[1].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[1].integer_indicator, 187)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[1].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[1].integer_indicator)),
+            187)
       << "incorrect value for biases[1].integer_indicator, expected 187, is "
       << last_msg_->biases[1].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[1].widelane_integer_indicator, 33)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[1].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[1].widelane_integer_indicator)),
+            33)
       << "incorrect value for biases[1].widelane_integer_indicator, expected "
          "33, is "
       << last_msg_->biases[1].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[2].bias, -64184056)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[2].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[2].bias)),
+            -64184056)
       << "incorrect value for biases[2].bias, expected -64184056, is "
       << last_msg_->biases[2].bias;
-  EXPECT_EQ(last_msg_->biases[2].code, 114)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[2].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[2].code)),
+            114)
       << "incorrect value for biases[2].code, expected 114, is "
       << last_msg_->biases[2].code;
-  EXPECT_EQ(last_msg_->biases[2].discontinuity_counter, 52)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[2].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[2].discontinuity_counter)),
+            52)
       << "incorrect value for biases[2].discontinuity_counter, expected 52, is "
       << last_msg_->biases[2].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[2].integer_indicator, 49)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[2].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[2].integer_indicator)),
+            49)
       << "incorrect value for biases[2].integer_indicator, expected 49, is "
       << last_msg_->biases[2].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[2].widelane_integer_indicator, 248)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[2].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[2].widelane_integer_indicator)),
+            248)
       << "incorrect value for biases[2].widelane_integer_indicator, expected "
          "248, is "
       << last_msg_->biases[2].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[3].bias, -240298362)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[3].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[3].bias)),
+            -240298362)
       << "incorrect value for biases[3].bias, expected -240298362, is "
       << last_msg_->biases[3].bias;
-  EXPECT_EQ(last_msg_->biases[3].code, 166)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[3].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[3].code)),
+            166)
       << "incorrect value for biases[3].code, expected 166, is "
       << last_msg_->biases[3].code;
-  EXPECT_EQ(last_msg_->biases[3].discontinuity_counter, 124)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[3].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[3].discontinuity_counter)),
+            124)
       << "incorrect value for biases[3].discontinuity_counter, expected 124, "
          "is "
       << last_msg_->biases[3].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[3].integer_indicator, 168)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[3].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[3].integer_indicator)),
+            168)
       << "incorrect value for biases[3].integer_indicator, expected 168, is "
       << last_msg_->biases[3].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[3].widelane_integer_indicator, 232)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[3].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[3].widelane_integer_indicator)),
+            232)
       << "incorrect value for biases[3].widelane_integer_indicator, expected "
          "232, is "
       << last_msg_->biases[3].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[4].bias, -1581740159)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[4].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[4].bias)),
+            -1581740159)
       << "incorrect value for biases[4].bias, expected -1581740159, is "
       << last_msg_->biases[4].bias;
-  EXPECT_EQ(last_msg_->biases[4].code, 174)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[4].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[4].code)),
+            174)
       << "incorrect value for biases[4].code, expected 174, is "
       << last_msg_->biases[4].code;
-  EXPECT_EQ(last_msg_->biases[4].discontinuity_counter, 155)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[4].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[4].discontinuity_counter)),
+            155)
       << "incorrect value for biases[4].discontinuity_counter, expected 155, "
          "is "
       << last_msg_->biases[4].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[4].integer_indicator, 44)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[4].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[4].integer_indicator)),
+            44)
       << "incorrect value for biases[4].integer_indicator, expected 44, is "
       << last_msg_->biases[4].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[4].widelane_integer_indicator, 142)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[4].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[4].widelane_integer_indicator)),
+            142)
       << "incorrect value for biases[4].widelane_integer_indicator, expected "
          "142, is "
       << last_msg_->biases[4].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[5].bias, -1730297136)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[5].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[5].bias)),
+            -1730297136)
       << "incorrect value for biases[5].bias, expected -1730297136, is "
       << last_msg_->biases[5].bias;
-  EXPECT_EQ(last_msg_->biases[5].code, 211)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[5].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[5].code)),
+            211)
       << "incorrect value for biases[5].code, expected 211, is "
       << last_msg_->biases[5].code;
-  EXPECT_EQ(last_msg_->biases[5].discontinuity_counter, 189)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[5].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[5].discontinuity_counter)),
+            189)
       << "incorrect value for biases[5].discontinuity_counter, expected 189, "
          "is "
       << last_msg_->biases[5].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[5].integer_indicator, 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[5].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[5].integer_indicator)),
+            15)
       << "incorrect value for biases[5].integer_indicator, expected 15, is "
       << last_msg_->biases[5].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[5].widelane_integer_indicator, 36)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[5].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[5].widelane_integer_indicator)),
+            36)
       << "incorrect value for biases[5].widelane_integer_indicator, expected "
          "36, is "
       << last_msg_->biases[5].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[6].bias, -1117221444)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[6].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[6].bias)),
+            -1117221444)
       << "incorrect value for biases[6].bias, expected -1117221444, is "
       << last_msg_->biases[6].bias;
-  EXPECT_EQ(last_msg_->biases[6].code, 16)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[6].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[6].code)),
+            16)
       << "incorrect value for biases[6].code, expected 16, is "
       << last_msg_->biases[6].code;
-  EXPECT_EQ(last_msg_->biases[6].discontinuity_counter, 34)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[6].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[6].discontinuity_counter)),
+            34)
       << "incorrect value for biases[6].discontinuity_counter, expected 34, is "
       << last_msg_->biases[6].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[6].integer_indicator, 203)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[6].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[6].integer_indicator)),
+            203)
       << "incorrect value for biases[6].integer_indicator, expected 203, is "
       << last_msg_->biases[6].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[6].widelane_integer_indicator, 87)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[6].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[6].widelane_integer_indicator)),
+            87)
       << "incorrect value for biases[6].widelane_integer_indicator, expected "
          "87, is "
       << last_msg_->biases[6].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[7].bias, -1137604357)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[7].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[7].bias)),
+            -1137604357)
       << "incorrect value for biases[7].bias, expected -1137604357, is "
       << last_msg_->biases[7].bias;
-  EXPECT_EQ(last_msg_->biases[7].code, 102)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[7].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[7].code)),
+            102)
       << "incorrect value for biases[7].code, expected 102, is "
       << last_msg_->biases[7].code;
-  EXPECT_EQ(last_msg_->biases[7].discontinuity_counter, 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[7].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[7].discontinuity_counter)),
+            22)
       << "incorrect value for biases[7].discontinuity_counter, expected 22, is "
       << last_msg_->biases[7].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[7].integer_indicator, 156)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[7].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[7].integer_indicator)),
+            156)
       << "incorrect value for biases[7].integer_indicator, expected 156, is "
       << last_msg_->biases[7].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[7].widelane_integer_indicator, 252)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[7].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[7].widelane_integer_indicator)),
+            252)
       << "incorrect value for biases[7].widelane_integer_indicator, expected "
          "252, is "
       << last_msg_->biases[7].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[8].bias, -1910370172)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[8].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[8].bias)),
+            -1910370172)
       << "incorrect value for biases[8].bias, expected -1910370172, is "
       << last_msg_->biases[8].bias;
-  EXPECT_EQ(last_msg_->biases[8].code, 157)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[8].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[8].code)),
+            157)
       << "incorrect value for biases[8].code, expected 157, is "
       << last_msg_->biases[8].code;
-  EXPECT_EQ(last_msg_->biases[8].discontinuity_counter, 49)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[8].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[8].discontinuity_counter)),
+            49)
       << "incorrect value for biases[8].discontinuity_counter, expected 49, is "
       << last_msg_->biases[8].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[8].integer_indicator, 222)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[8].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[8].integer_indicator)),
+            222)
       << "incorrect value for biases[8].integer_indicator, expected 222, is "
       << last_msg_->biases[8].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[8].widelane_integer_indicator, 245)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[8].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[8].widelane_integer_indicator)),
+            245)
       << "incorrect value for biases[8].widelane_integer_indicator, expected "
          "245, is "
       << last_msg_->biases[8].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[9].bias, 1247996869)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[9].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[9].bias)),
+            1247996869)
       << "incorrect value for biases[9].bias, expected 1247996869, is "
       << last_msg_->biases[9].bias;
-  EXPECT_EQ(last_msg_->biases[9].code, 228)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[9].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[9].code)),
+            228)
       << "incorrect value for biases[9].code, expected 228, is "
       << last_msg_->biases[9].code;
-  EXPECT_EQ(last_msg_->biases[9].discontinuity_counter, 221)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[9].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[9].discontinuity_counter)),
+            221)
       << "incorrect value for biases[9].discontinuity_counter, expected 221, "
          "is "
       << last_msg_->biases[9].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[9].integer_indicator, 85)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[9].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[9].integer_indicator)),
+            85)
       << "incorrect value for biases[9].integer_indicator, expected 85, is "
       << last_msg_->biases[9].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[9].widelane_integer_indicator, 139)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[9].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[9].widelane_integer_indicator)),
+            139)
       << "incorrect value for biases[9].widelane_integer_indicator, expected "
          "139, is "
       << last_msg_->biases[9].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[10].bias, -1133446161)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[10].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[10].bias)),
+            -1133446161)
       << "incorrect value for biases[10].bias, expected -1133446161, is "
       << last_msg_->biases[10].bias;
-  EXPECT_EQ(last_msg_->biases[10].code, 107)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[10].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[10].code)),
+            107)
       << "incorrect value for biases[10].code, expected 107, is "
       << last_msg_->biases[10].code;
-  EXPECT_EQ(last_msg_->biases[10].discontinuity_counter, 38)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[10].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[10].discontinuity_counter)),
+            38)
       << "incorrect value for biases[10].discontinuity_counter, expected 38, "
          "is "
       << last_msg_->biases[10].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[10].integer_indicator, 70)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[10].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[10].integer_indicator)),
+            70)
       << "incorrect value for biases[10].integer_indicator, expected 70, is "
       << last_msg_->biases[10].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[10].widelane_integer_indicator, 36)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[10].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[10].widelane_integer_indicator)),
+            36)
       << "incorrect value for biases[10].widelane_integer_indicator, expected "
          "36, is "
       << last_msg_->biases[10].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[11].bias, -720934762)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[11].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[11].bias)),
+            -720934762)
       << "incorrect value for biases[11].bias, expected -720934762, is "
       << last_msg_->biases[11].bias;
-  EXPECT_EQ(last_msg_->biases[11].code, 124)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[11].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[11].code)),
+            124)
       << "incorrect value for biases[11].code, expected 124, is "
       << last_msg_->biases[11].code;
-  EXPECT_EQ(last_msg_->biases[11].discontinuity_counter, 164)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[11].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[11].discontinuity_counter)),
+            164)
       << "incorrect value for biases[11].discontinuity_counter, expected 164, "
          "is "
       << last_msg_->biases[11].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[11].integer_indicator, 246)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[11].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[11].integer_indicator)),
+            246)
       << "incorrect value for biases[11].integer_indicator, expected 246, is "
       << last_msg_->biases[11].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[11].widelane_integer_indicator, 141)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[11].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[11].widelane_integer_indicator)),
+            141)
       << "incorrect value for biases[11].widelane_integer_indicator, expected "
          "141, is "
       << last_msg_->biases[11].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[12].bias, 706252548)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[12].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[12].bias)),
+            706252548)
       << "incorrect value for biases[12].bias, expected 706252548, is "
       << last_msg_->biases[12].bias;
-  EXPECT_EQ(last_msg_->biases[12].code, 44)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[12].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[12].code)),
+            44)
       << "incorrect value for biases[12].code, expected 44, is "
       << last_msg_->biases[12].code;
-  EXPECT_EQ(last_msg_->biases[12].discontinuity_counter, 192)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[12].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[12].discontinuity_counter)),
+            192)
       << "incorrect value for biases[12].discontinuity_counter, expected 192, "
          "is "
       << last_msg_->biases[12].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[12].integer_indicator, 21)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[12].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[12].integer_indicator)),
+            21)
       << "incorrect value for biases[12].integer_indicator, expected 21, is "
       << last_msg_->biases[12].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[12].widelane_integer_indicator, 244)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[12].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[12].widelane_integer_indicator)),
+            244)
       << "incorrect value for biases[12].widelane_integer_indicator, expected "
          "244, is "
       << last_msg_->biases[12].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[13].bias, 388855338)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[13].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[13].bias)),
+            388855338)
       << "incorrect value for biases[13].bias, expected 388855338, is "
       << last_msg_->biases[13].bias;
-  EXPECT_EQ(last_msg_->biases[13].code, 21)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[13].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[13].code)),
+            21)
       << "incorrect value for biases[13].code, expected 21, is "
       << last_msg_->biases[13].code;
-  EXPECT_EQ(last_msg_->biases[13].discontinuity_counter, 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[13].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[13].discontinuity_counter)),
+            7)
       << "incorrect value for biases[13].discontinuity_counter, expected 7, is "
       << last_msg_->biases[13].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[13].integer_indicator, 84)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[13].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[13].integer_indicator)),
+            84)
       << "incorrect value for biases[13].integer_indicator, expected 84, is "
       << last_msg_->biases[13].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[13].widelane_integer_indicator, 136)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[13].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[13].widelane_integer_indicator)),
+            136)
       << "incorrect value for biases[13].widelane_integer_indicator, expected "
          "136, is "
       << last_msg_->biases[13].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[14].bias, 47517353)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[14].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[14].bias)),
+            47517353)
       << "incorrect value for biases[14].bias, expected 47517353, is "
       << last_msg_->biases[14].bias;
-  EXPECT_EQ(last_msg_->biases[14].code, 174)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[14].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[14].code)),
+            174)
       << "incorrect value for biases[14].code, expected 174, is "
       << last_msg_->biases[14].code;
-  EXPECT_EQ(last_msg_->biases[14].discontinuity_counter, 54)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[14].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[14].discontinuity_counter)),
+            54)
       << "incorrect value for biases[14].discontinuity_counter, expected 54, "
          "is "
       << last_msg_->biases[14].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[14].integer_indicator, 175)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[14].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[14].integer_indicator)),
+            175)
       << "incorrect value for biases[14].integer_indicator, expected 175, is "
       << last_msg_->biases[14].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[14].widelane_integer_indicator, 129)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[14].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[14].widelane_integer_indicator)),
+            129)
       << "incorrect value for biases[14].widelane_integer_indicator, expected "
          "129, is "
       << last_msg_->biases[14].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[15].bias, -2124125745)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[15].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[15].bias)),
+            -2124125745)
       << "incorrect value for biases[15].bias, expected -2124125745, is "
       << last_msg_->biases[15].bias;
-  EXPECT_EQ(last_msg_->biases[15].code, 197)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[15].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[15].code)),
+            197)
       << "incorrect value for biases[15].code, expected 197, is "
       << last_msg_->biases[15].code;
-  EXPECT_EQ(last_msg_->biases[15].discontinuity_counter, 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[15].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[15].discontinuity_counter)),
+            13)
       << "incorrect value for biases[15].discontinuity_counter, expected 13, "
          "is "
       << last_msg_->biases[15].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[15].integer_indicator, 98)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[15].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[15].integer_indicator)),
+            98)
       << "incorrect value for biases[15].integer_indicator, expected 98, is "
       << last_msg_->biases[15].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[15].widelane_integer_indicator, 60)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[15].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[15].widelane_integer_indicator)),
+            60)
       << "incorrect value for biases[15].widelane_integer_indicator, expected "
          "60, is "
       << last_msg_->biases[15].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[16].bias, -1401812607)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[16].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[16].bias)),
+            -1401812607)
       << "incorrect value for biases[16].bias, expected -1401812607, is "
       << last_msg_->biases[16].bias;
-  EXPECT_EQ(last_msg_->biases[16].code, 72)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[16].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[16].code)),
+            72)
       << "incorrect value for biases[16].code, expected 72, is "
       << last_msg_->biases[16].code;
-  EXPECT_EQ(last_msg_->biases[16].discontinuity_counter, 140)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[16].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[16].discontinuity_counter)),
+            140)
       << "incorrect value for biases[16].discontinuity_counter, expected 140, "
          "is "
       << last_msg_->biases[16].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[16].integer_indicator, 136)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[16].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[16].integer_indicator)),
+            136)
       << "incorrect value for biases[16].integer_indicator, expected 136, is "
       << last_msg_->biases[16].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[16].widelane_integer_indicator, 240)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[16].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[16].widelane_integer_indicator)),
+            240)
       << "incorrect value for biases[16].widelane_integer_indicator, expected "
          "240, is "
       << last_msg_->biases[16].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[17].bias, 60257151)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[17].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[17].bias)),
+            60257151)
       << "incorrect value for biases[17].bias, expected 60257151, is "
       << last_msg_->biases[17].bias;
-  EXPECT_EQ(last_msg_->biases[17].code, 151)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[17].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[17].code)),
+            151)
       << "incorrect value for biases[17].code, expected 151, is "
       << last_msg_->biases[17].code;
-  EXPECT_EQ(last_msg_->biases[17].discontinuity_counter, 210)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[17].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[17].discontinuity_counter)),
+            210)
       << "incorrect value for biases[17].discontinuity_counter, expected 210, "
          "is "
       << last_msg_->biases[17].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[17].integer_indicator, 150)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[17].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[17].integer_indicator)),
+            150)
       << "incorrect value for biases[17].integer_indicator, expected 150, is "
       << last_msg_->biases[17].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[17].widelane_integer_indicator, 17)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[17].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[17].widelane_integer_indicator)),
+            17)
       << "incorrect value for biases[17].widelane_integer_indicator, expected "
          "17, is "
       << last_msg_->biases[17].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[18].bias, 41820677)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[18].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[18].bias)),
+            41820677)
       << "incorrect value for biases[18].bias, expected 41820677, is "
       << last_msg_->biases[18].bias;
-  EXPECT_EQ(last_msg_->biases[18].code, 242)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[18].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[18].code)),
+            242)
       << "incorrect value for biases[18].code, expected 242, is "
       << last_msg_->biases[18].code;
-  EXPECT_EQ(last_msg_->biases[18].discontinuity_counter, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[18].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[18].discontinuity_counter)),
+            14)
       << "incorrect value for biases[18].discontinuity_counter, expected 14, "
          "is "
       << last_msg_->biases[18].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[18].integer_indicator, 254)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[18].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[18].integer_indicator)),
+            254)
       << "incorrect value for biases[18].integer_indicator, expected 254, is "
       << last_msg_->biases[18].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[18].widelane_integer_indicator, 215)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[18].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[18].widelane_integer_indicator)),
+            215)
       << "incorrect value for biases[18].widelane_integer_indicator, expected "
          "215, is "
       << last_msg_->biases[18].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[19].bias, 1640616471)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[19].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[19].bias)),
+            1640616471)
       << "incorrect value for biases[19].bias, expected 1640616471, is "
       << last_msg_->biases[19].bias;
-  EXPECT_EQ(last_msg_->biases[19].code, 215)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[19].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[19].code)),
+            215)
       << "incorrect value for biases[19].code, expected 215, is "
       << last_msg_->biases[19].code;
-  EXPECT_EQ(last_msg_->biases[19].discontinuity_counter, 176)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[19].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[19].discontinuity_counter)),
+            176)
       << "incorrect value for biases[19].discontinuity_counter, expected 176, "
          "is "
       << last_msg_->biases[19].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[19].integer_indicator, 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[19].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[19].integer_indicator)),
+            65)
       << "incorrect value for biases[19].integer_indicator, expected 65, is "
       << last_msg_->biases[19].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[19].widelane_integer_indicator, 38)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[19].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[19].widelane_integer_indicator)),
+            38)
       << "incorrect value for biases[19].widelane_integer_indicator, expected "
          "38, is "
       << last_msg_->biases[19].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[20].bias, -744786918)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[20].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[20].bias)),
+            -744786918)
       << "incorrect value for biases[20].bias, expected -744786918, is "
       << last_msg_->biases[20].bias;
-  EXPECT_EQ(last_msg_->biases[20].code, 36)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[20].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[20].code)),
+            36)
       << "incorrect value for biases[20].code, expected 36, is "
       << last_msg_->biases[20].code;
-  EXPECT_EQ(last_msg_->biases[20].discontinuity_counter, 224)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[20].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[20].discontinuity_counter)),
+            224)
       << "incorrect value for biases[20].discontinuity_counter, expected 224, "
          "is "
       << last_msg_->biases[20].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[20].integer_indicator, 207)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[20].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[20].integer_indicator)),
+            207)
       << "incorrect value for biases[20].integer_indicator, expected 207, is "
       << last_msg_->biases[20].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[20].widelane_integer_indicator, 92)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[20].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[20].widelane_integer_indicator)),
+            92)
       << "incorrect value for biases[20].widelane_integer_indicator, expected "
          "92, is "
       << last_msg_->biases[20].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[21].bias, 1966589763)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[21].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[21].bias)),
+            1966589763)
       << "incorrect value for biases[21].bias, expected 1966589763, is "
       << last_msg_->biases[21].bias;
-  EXPECT_EQ(last_msg_->biases[21].code, 165)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[21].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[21].code)),
+            165)
       << "incorrect value for biases[21].code, expected 165, is "
       << last_msg_->biases[21].code;
-  EXPECT_EQ(last_msg_->biases[21].discontinuity_counter, 38)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[21].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[21].discontinuity_counter)),
+            38)
       << "incorrect value for biases[21].discontinuity_counter, expected 38, "
          "is "
       << last_msg_->biases[21].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[21].integer_indicator, 47)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[21].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[21].integer_indicator)),
+            47)
       << "incorrect value for biases[21].integer_indicator, expected 47, is "
       << last_msg_->biases[21].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[21].widelane_integer_indicator, 102)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[21].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[21].widelane_integer_indicator)),
+            102)
       << "incorrect value for biases[21].widelane_integer_indicator, expected "
          "102, is "
       << last_msg_->biases[21].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[22].bias, 364366310)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[22].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[22].bias)),
+            364366310)
       << "incorrect value for biases[22].bias, expected 364366310, is "
       << last_msg_->biases[22].bias;
-  EXPECT_EQ(last_msg_->biases[22].code, 36)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[22].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[22].code)),
+            36)
       << "incorrect value for biases[22].code, expected 36, is "
       << last_msg_->biases[22].code;
-  EXPECT_EQ(last_msg_->biases[22].discontinuity_counter, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[22].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[22].discontinuity_counter)),
+            1)
       << "incorrect value for biases[22].discontinuity_counter, expected 1, is "
       << last_msg_->biases[22].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[22].integer_indicator, 169)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[22].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[22].integer_indicator)),
+            169)
       << "incorrect value for biases[22].integer_indicator, expected 169, is "
       << last_msg_->biases[22].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[22].widelane_integer_indicator, 33)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[22].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[22].widelane_integer_indicator)),
+            33)
       << "incorrect value for biases[22].widelane_integer_indicator, expected "
          "33, is "
       << last_msg_->biases[22].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[23].bias, -1839031379)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[23].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[23].bias)),
+            -1839031379)
       << "incorrect value for biases[23].bias, expected -1839031379, is "
       << last_msg_->biases[23].bias;
-  EXPECT_EQ(last_msg_->biases[23].code, 42)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[23].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[23].code)),
+            42)
       << "incorrect value for biases[23].code, expected 42, is "
       << last_msg_->biases[23].code;
-  EXPECT_EQ(last_msg_->biases[23].discontinuity_counter, 173)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[23].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[23].discontinuity_counter)),
+            173)
       << "incorrect value for biases[23].discontinuity_counter, expected 173, "
          "is "
       << last_msg_->biases[23].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[23].integer_indicator, 62)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[23].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[23].integer_indicator)),
+            62)
       << "incorrect value for biases[23].integer_indicator, expected 62, is "
       << last_msg_->biases[23].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[23].widelane_integer_indicator, 147)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[23].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[23].widelane_integer_indicator)),
+            147)
       << "incorrect value for biases[23].widelane_integer_indicator, expected "
          "147, is "
       << last_msg_->biases[23].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[24].bias, 31817639)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[24].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[24].bias)),
+            31817639)
       << "incorrect value for biases[24].bias, expected 31817639, is "
       << last_msg_->biases[24].bias;
-  EXPECT_EQ(last_msg_->biases[24].code, 231)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[24].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[24].code)),
+            231)
       << "incorrect value for biases[24].code, expected 231, is "
       << last_msg_->biases[24].code;
-  EXPECT_EQ(last_msg_->biases[24].discontinuity_counter, 82)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[24].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[24].discontinuity_counter)),
+            82)
       << "incorrect value for biases[24].discontinuity_counter, expected 82, "
          "is "
       << last_msg_->biases[24].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[24].integer_indicator, 167)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[24].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[24].integer_indicator)),
+            167)
       << "incorrect value for biases[24].integer_indicator, expected 167, is "
       << last_msg_->biases[24].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[24].widelane_integer_indicator, 138)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[24].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[24].widelane_integer_indicator)),
+            138)
       << "incorrect value for biases[24].widelane_integer_indicator, expected "
          "138, is "
       << last_msg_->biases[24].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[25].bias, -1619830156)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[25].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[25].bias)),
+            -1619830156)
       << "incorrect value for biases[25].bias, expected -1619830156, is "
       << last_msg_->biases[25].bias;
-  EXPECT_EQ(last_msg_->biases[25].code, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[25].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[25].code)),
+            2)
       << "incorrect value for biases[25].code, expected 2, is "
       << last_msg_->biases[25].code;
-  EXPECT_EQ(last_msg_->biases[25].discontinuity_counter, 207)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[25].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[25].discontinuity_counter)),
+            207)
       << "incorrect value for biases[25].discontinuity_counter, expected 207, "
          "is "
       << last_msg_->biases[25].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[25].integer_indicator, 127)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[25].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[25].integer_indicator)),
+            127)
       << "incorrect value for biases[25].integer_indicator, expected 127, is "
       << last_msg_->biases[25].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[25].widelane_integer_indicator, 237)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[25].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[25].widelane_integer_indicator)),
+            237)
       << "incorrect value for biases[25].widelane_integer_indicator, expected "
          "237, is "
       << last_msg_->biases[25].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[26].bias, -83375622)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[26].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[26].bias)),
+            -83375622)
       << "incorrect value for biases[26].bias, expected -83375622, is "
       << last_msg_->biases[26].bias;
-  EXPECT_EQ(last_msg_->biases[26].code, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[26].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[26].code)),
+            3)
       << "incorrect value for biases[26].code, expected 3, is "
       << last_msg_->biases[26].code;
-  EXPECT_EQ(last_msg_->biases[26].discontinuity_counter, 145)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[26].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[26].discontinuity_counter)),
+            145)
       << "incorrect value for biases[26].discontinuity_counter, expected 145, "
          "is "
       << last_msg_->biases[26].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[26].integer_indicator, 42)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[26].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[26].integer_indicator)),
+            42)
       << "incorrect value for biases[26].integer_indicator, expected 42, is "
       << last_msg_->biases[26].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[26].widelane_integer_indicator, 66)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[26].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[26].widelane_integer_indicator)),
+            66)
       << "incorrect value for biases[26].widelane_integer_indicator, expected "
          "66, is "
       << last_msg_->biases[26].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[27].bias, 1077458389)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[27].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[27].bias)),
+            1077458389)
       << "incorrect value for biases[27].bias, expected 1077458389, is "
       << last_msg_->biases[27].bias;
-  EXPECT_EQ(last_msg_->biases[27].code, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[27].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[27].code)),
+            2)
       << "incorrect value for biases[27].code, expected 2, is "
       << last_msg_->biases[27].code;
-  EXPECT_EQ(last_msg_->biases[27].discontinuity_counter, 26)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[27].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[27].discontinuity_counter)),
+            26)
       << "incorrect value for biases[27].discontinuity_counter, expected 26, "
          "is "
       << last_msg_->biases[27].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[27].integer_indicator, 75)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[27].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[27].integer_indicator)),
+            75)
       << "incorrect value for biases[27].integer_indicator, expected 75, is "
       << last_msg_->biases[27].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[27].widelane_integer_indicator, 230)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[27].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[27].widelane_integer_indicator)),
+            230)
       << "incorrect value for biases[27].widelane_integer_indicator, expected "
          "230, is "
       << last_msg_->biases[27].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[28].bias, -883355501)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[28].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[28].bias)),
+            -883355501)
       << "incorrect value for biases[28].bias, expected -883355501, is "
       << last_msg_->biases[28].bias;
-  EXPECT_EQ(last_msg_->biases[28].code, 97)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[28].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[28].code)),
+            97)
       << "incorrect value for biases[28].code, expected 97, is "
       << last_msg_->biases[28].code;
-  EXPECT_EQ(last_msg_->biases[28].discontinuity_counter, 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[28].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[28].discontinuity_counter)),
+            6)
       << "incorrect value for biases[28].discontinuity_counter, expected 6, is "
       << last_msg_->biases[28].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[28].integer_indicator, 88)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[28].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[28].integer_indicator)),
+            88)
       << "incorrect value for biases[28].integer_indicator, expected 88, is "
       << last_msg_->biases[28].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[28].widelane_integer_indicator, 255)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[28].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[28].widelane_integer_indicator)),
+            255)
       << "incorrect value for biases[28].widelane_integer_indicator, expected "
          "255, is "
       << last_msg_->biases[28].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->biases[29].bias, -1448611273)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[29].bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[29].bias)),
+            -1448611273)
       << "incorrect value for biases[29].bias, expected -1448611273, is "
       << last_msg_->biases[29].bias;
-  EXPECT_EQ(last_msg_->biases[29].code, 27)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[29].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[29].code)),
+            27)
       << "incorrect value for biases[29].code, expected 27, is "
       << last_msg_->biases[29].code;
-  EXPECT_EQ(last_msg_->biases[29].discontinuity_counter, 230)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[29].discontinuity_counter)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[29].discontinuity_counter)),
+            230)
       << "incorrect value for biases[29].discontinuity_counter, expected 230, "
          "is "
       << last_msg_->biases[29].discontinuity_counter;
-  EXPECT_EQ(last_msg_->biases[29].integer_indicator, 68)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[29].integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[29].integer_indicator)),
+            68)
       << "incorrect value for biases[29].integer_indicator, expected 68, is "
       << last_msg_->biases[29].integer_indicator;
-  EXPECT_EQ(last_msg_->biases[29].widelane_integer_indicator, 243)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[29].widelane_integer_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->biases[29].widelane_integer_indicator)),
+            243)
       << "incorrect value for biases[29].widelane_integer_indicator, expected "
          "243, is "
       << last_msg_->biases[29].widelane_integer_indicator;
-  EXPECT_EQ(last_msg_->dispersive_bias, 98)
+  EXPECT_EQ(get_as<decltype(last_msg_->dispersive_bias)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->dispersive_bias)),
+            98)
       << "incorrect value for dispersive_bias, expected 98, is "
       << last_msg_->dispersive_bias;
-  EXPECT_EQ(last_msg_->iod_ssr, 230)
+  EXPECT_EQ(get_as<decltype(last_msg_->iod_ssr)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->iod_ssr)),
+            230)
       << "incorrect value for iod_ssr, expected 230, is " << last_msg_->iod_ssr;
-  EXPECT_EQ(last_msg_->mw_consistency, 209)
+  EXPECT_EQ(get_as<decltype(last_msg_->mw_consistency)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->mw_consistency)),
+            209)
       << "incorrect value for mw_consistency, expected 209, is "
       << last_msg_->mw_consistency;
-  EXPECT_EQ(last_msg_->sid.code, 82)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            82)
       << "incorrect value for sid.code, expected 82, is "
       << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.sat, 169)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            169)
       << "incorrect value for sid.sat, expected 169, is " << last_msg_->sid.sat;
-  EXPECT_EQ(last_msg_->time.tow, 210803409)
+  EXPECT_EQ(get_as<decltype(last_msg_->time.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time.tow)),
+            210803409)
       << "incorrect value for time.tow, expected 210803409, is "
       << last_msg_->time.tow;
-  EXPECT_EQ(last_msg_->time.wn, 42197)
+  EXPECT_EQ(get_as<decltype(last_msg_->time.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time.wn)),
+            42197)
       << "incorrect value for time.wn, expected 42197, is "
       << last_msg_->time.wn;
-  EXPECT_EQ(last_msg_->update_interval, 177)
+  EXPECT_EQ(get_as<decltype(last_msg_->update_interval)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->update_interval)),
+            177)
       << "incorrect value for update_interval, expected 177, is "
       << last_msg_->update_interval;
-  EXPECT_EQ(last_msg_->yaw, 5881)
+  EXPECT_EQ(get_as<decltype(last_msg_->yaw)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->yaw)),
+            5881)
       << "incorrect value for yaw, expected 5881, is " << last_msg_->yaw;
-  EXPECT_EQ(last_msg_->yaw_rate, 17)
+  EXPECT_EQ(get_as<decltype(last_msg_->yaw_rate)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->yaw_rate)),
+            17)
       << "incorrect value for yaw_rate, expected 17, is "
       << last_msg_->yaw_rate;
 }

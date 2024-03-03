@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/flash.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_flash_MsgStmUniqueIdResp0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -172,40 +179,64 @@ TEST_F(Test_legacy_auto_check_sbp_flash_MsgStmUniqueIdResp0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->stm_id[0], 196)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[0])),
+            196)
       << "incorrect value for stm_id[0], expected 196, is "
       << last_msg_->stm_id[0];
-  EXPECT_EQ(last_msg_->stm_id[1], 16)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[1])),
+            16)
       << "incorrect value for stm_id[1], expected 16, is "
       << last_msg_->stm_id[1];
-  EXPECT_EQ(last_msg_->stm_id[2], 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[2])),
+            15)
       << "incorrect value for stm_id[2], expected 15, is "
       << last_msg_->stm_id[2];
-  EXPECT_EQ(last_msg_->stm_id[3], 163)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[3])),
+            163)
       << "incorrect value for stm_id[3], expected 163, is "
       << last_msg_->stm_id[3];
-  EXPECT_EQ(last_msg_->stm_id[4], 85)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[4])),
+            85)
       << "incorrect value for stm_id[4], expected 85, is "
       << last_msg_->stm_id[4];
-  EXPECT_EQ(last_msg_->stm_id[5], 221)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[5])),
+            221)
       << "incorrect value for stm_id[5], expected 221, is "
       << last_msg_->stm_id[5];
-  EXPECT_EQ(last_msg_->stm_id[6], 119)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[6])),
+            119)
       << "incorrect value for stm_id[6], expected 119, is "
       << last_msg_->stm_id[6];
-  EXPECT_EQ(last_msg_->stm_id[7], 102)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[7])),
+            102)
       << "incorrect value for stm_id[7], expected 102, is "
       << last_msg_->stm_id[7];
-  EXPECT_EQ(last_msg_->stm_id[8], 32)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[8])),
+            32)
       << "incorrect value for stm_id[8], expected 32, is "
       << last_msg_->stm_id[8];
-  EXPECT_EQ(last_msg_->stm_id[9], 194)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[9])),
+            194)
       << "incorrect value for stm_id[9], expected 194, is "
       << last_msg_->stm_id[9];
-  EXPECT_EQ(last_msg_->stm_id[10], 56)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[10])),
+            56)
       << "incorrect value for stm_id[10], expected 56, is "
       << last_msg_->stm_id[10];
-  EXPECT_EQ(last_msg_->stm_id[11], 144)
+  EXPECT_EQ(get_as<decltype(last_msg_->stm_id[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->stm_id[11])),
+            144)
       << "incorrect value for stm_id[11], expected 144, is "
       << last_msg_->stm_id[11];
 }

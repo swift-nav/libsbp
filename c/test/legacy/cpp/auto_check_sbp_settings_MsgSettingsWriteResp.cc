@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/settings.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_settings_MsgSettingsWriteResp0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -151,6 +158,8 @@ TEST_F(Test_legacy_auto_check_sbp_settings_MsgSettingsWriteResp0, Test) {
         << "incorrect value for last_msg_->setting, expected string '"
         << check_string << "', is '" << last_msg_->setting << "'";
   }
-  EXPECT_EQ(last_msg_->status, 152)
+  EXPECT_EQ(get_as<decltype(last_msg_->status)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->status)),
+            152)
       << "incorrect value for status, expected 152, is " << last_msg_->status;
 }

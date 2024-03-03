@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgProtectionLevel0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -136,50 +143,86 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgProtectionLevel0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 813);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->atpl, 10663)
+  EXPECT_EQ(get_as<decltype(last_msg_->atpl)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->atpl)),
+            10663)
       << "incorrect value for atpl, expected 10663, is " << last_msg_->atpl;
-  EXPECT_EQ(last_msg_->ctpl, 5433)
+  EXPECT_EQ(get_as<decltype(last_msg_->ctpl)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ctpl)),
+            5433)
       << "incorrect value for ctpl, expected 5433, is " << last_msg_->ctpl;
-  EXPECT_EQ(last_msg_->flags, 555755625)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            555755625)
       << "incorrect value for flags, expected 555755625, is "
       << last_msg_->flags;
-  EXPECT_EQ(last_msg_->heading, -529244741)
+  EXPECT_EQ(get_as<decltype(last_msg_->heading)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->heading)),
+            -529244741)
       << "incorrect value for heading, expected -529244741, is "
       << last_msg_->heading;
   EXPECT_LT((last_msg_->height * 100 - 412.2 * 100), 0.05)
       << "incorrect value for height, expected 412.2, is " << last_msg_->height;
-  EXPECT_EQ(last_msg_->hopl, 26707)
+  EXPECT_EQ(get_as<decltype(last_msg_->hopl)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hopl)),
+            26707)
       << "incorrect value for hopl, expected 26707, is " << last_msg_->hopl;
-  EXPECT_EQ(last_msg_->hpl, 41013)
+  EXPECT_EQ(get_as<decltype(last_msg_->hpl)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hpl)),
+            41013)
       << "incorrect value for hpl, expected 41013, is " << last_msg_->hpl;
-  EXPECT_EQ(last_msg_->hvpl, 62681)
+  EXPECT_EQ(get_as<decltype(last_msg_->hvpl)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->hvpl)),
+            62681)
       << "incorrect value for hvpl, expected 62681, is " << last_msg_->hvpl;
   EXPECT_LT((last_msg_->lat * 100 - 5290.2 * 100), 0.05)
       << "incorrect value for lat, expected 5290.2, is " << last_msg_->lat;
   EXPECT_LT((last_msg_->lon * 100 - 9904.2 * 100), 0.05)
       << "incorrect value for lon, expected 9904.2, is " << last_msg_->lon;
-  EXPECT_EQ(last_msg_->pitch, -1598561301)
+  EXPECT_EQ(get_as<decltype(last_msg_->pitch)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pitch)),
+            -1598561301)
       << "incorrect value for pitch, expected -1598561301, is "
       << last_msg_->pitch;
-  EXPECT_EQ(last_msg_->popl, 35212)
+  EXPECT_EQ(get_as<decltype(last_msg_->popl)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->popl)),
+            35212)
       << "incorrect value for popl, expected 35212, is " << last_msg_->popl;
-  EXPECT_EQ(last_msg_->roll, 1018834477)
+  EXPECT_EQ(get_as<decltype(last_msg_->roll)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->roll)),
+            1018834477)
       << "incorrect value for roll, expected 1018834477, is "
       << last_msg_->roll;
-  EXPECT_EQ(last_msg_->ropl, 63066)
+  EXPECT_EQ(get_as<decltype(last_msg_->ropl)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ropl)),
+            63066)
       << "incorrect value for ropl, expected 63066, is " << last_msg_->ropl;
-  EXPECT_EQ(last_msg_->tow, 4060370030)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            4060370030)
       << "incorrect value for tow, expected 4060370030, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->v_x, -584647705)
+  EXPECT_EQ(get_as<decltype(last_msg_->v_x)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->v_x)),
+            -584647705)
       << "incorrect value for v_x, expected -584647705, is " << last_msg_->v_x;
-  EXPECT_EQ(last_msg_->v_y, 1353168848)
+  EXPECT_EQ(get_as<decltype(last_msg_->v_y)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->v_y)),
+            1353168848)
       << "incorrect value for v_y, expected 1353168848, is " << last_msg_->v_y;
-  EXPECT_EQ(last_msg_->v_z, -1537140001)
+  EXPECT_EQ(get_as<decltype(last_msg_->v_z)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->v_z)),
+            -1537140001)
       << "incorrect value for v_z, expected -1537140001, is " << last_msg_->v_z;
-  EXPECT_EQ(last_msg_->vpl, 21593)
+  EXPECT_EQ(get_as<decltype(last_msg_->vpl)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vpl)),
+            21593)
       << "incorrect value for vpl, expected 21593, is " << last_msg_->vpl;
-  EXPECT_EQ(last_msg_->vvpl, 41277)
+  EXPECT_EQ(get_as<decltype(last_msg_->vvpl)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->vvpl)),
+            41277)
       << "incorrect value for vvpl, expected 41277, is " << last_msg_->vvpl;
-  EXPECT_EQ(last_msg_->wn, 13102)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            13102)
       << "incorrect value for wn, expected 13102, is " << last_msg_->wn;
 }

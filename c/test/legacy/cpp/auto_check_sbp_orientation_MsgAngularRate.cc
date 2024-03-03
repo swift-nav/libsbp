@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/orientation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_orientation_MsgAngularRate0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -115,14 +122,24 @@ TEST_F(Test_legacy_auto_check_sbp_orientation_MsgAngularRate0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->tow, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            2)
       << "incorrect value for tow, expected 2, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->x, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->x)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->x)),
+            2)
       << "incorrect value for x, expected 2, is " << last_msg_->x;
-  EXPECT_EQ(last_msg_->y, 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->y)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->y)),
+            5)
       << "incorrect value for y, expected 5, is " << last_msg_->y;
-  EXPECT_EQ(last_msg_->z, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->z)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->z)),
+            2)
       << "incorrect value for z, expected 2, is " << last_msg_->z;
 }

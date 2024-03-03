@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/navigation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_navigation_MsgPosLlhCovGnss0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -144,7 +151,9 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosLlhCovGnss0, Test) {
   EXPECT_LT((last_msg_->cov_n_n * 100 - 0.00748897157609 * 100), 0.05)
       << "incorrect value for cov_n_n, expected 0.00748897157609, is "
       << last_msg_->cov_n_n;
-  EXPECT_EQ(last_msg_->flags, 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            4)
       << "incorrect value for flags, expected 4, is " << last_msg_->flags;
   EXPECT_LT((last_msg_->height * 100 - -17.3938212478 * 100), 0.05)
       << "incorrect value for height, expected -17.3938212478, is "
@@ -155,8 +164,12 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgPosLlhCovGnss0, Test) {
   EXPECT_LT((last_msg_->lon * 100 - -122.28650381 * 100), 0.05)
       << "incorrect value for lon, expected -122.28650381, is "
       << last_msg_->lon;
-  EXPECT_EQ(last_msg_->n_sats, 18)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats)),
+            18)
       << "incorrect value for n_sats, expected 18, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 501867800)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            501867800)
       << "incorrect value for tow, expected 501867800, is " << last_msg_->tow;
 }

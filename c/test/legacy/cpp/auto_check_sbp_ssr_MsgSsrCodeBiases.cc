@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ssr.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ssr_MsgSsrCodeBiases0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -618,506 +625,913 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrCodeBiases0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 22311);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->biases[0].code, 51)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[0].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[0].code)),
+            51)
       << "incorrect value for biases[0].code, expected 51, is "
       << last_msg_->biases[0].code;
-  EXPECT_EQ(last_msg_->biases[0].value, -31996)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[0].value)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[0].value)),
+            -31996)
       << "incorrect value for biases[0].value, expected -31996, is "
       << last_msg_->biases[0].value;
-  EXPECT_EQ(last_msg_->biases[1].code, 240)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[1].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[1].code)),
+            240)
       << "incorrect value for biases[1].code, expected 240, is "
       << last_msg_->biases[1].code;
-  EXPECT_EQ(last_msg_->biases[1].value, 21368)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[1].value)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[1].value)),
+            21368)
       << "incorrect value for biases[1].value, expected 21368, is "
       << last_msg_->biases[1].value;
-  EXPECT_EQ(last_msg_->biases[2].code, 148)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[2].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[2].code)),
+            148)
       << "incorrect value for biases[2].code, expected 148, is "
       << last_msg_->biases[2].code;
-  EXPECT_EQ(last_msg_->biases[2].value, -10799)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[2].value)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[2].value)),
+            -10799)
       << "incorrect value for biases[2].value, expected -10799, is "
       << last_msg_->biases[2].value;
-  EXPECT_EQ(last_msg_->biases[3].code, 62)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[3].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[3].code)),
+            62)
       << "incorrect value for biases[3].code, expected 62, is "
       << last_msg_->biases[3].code;
-  EXPECT_EQ(last_msg_->biases[3].value, -5916)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[3].value)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[3].value)),
+            -5916)
       << "incorrect value for biases[3].value, expected -5916, is "
       << last_msg_->biases[3].value;
-  EXPECT_EQ(last_msg_->biases[4].code, 71)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[4].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[4].code)),
+            71)
       << "incorrect value for biases[4].code, expected 71, is "
       << last_msg_->biases[4].code;
-  EXPECT_EQ(last_msg_->biases[4].value, -17342)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[4].value)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[4].value)),
+            -17342)
       << "incorrect value for biases[4].value, expected -17342, is "
       << last_msg_->biases[4].value;
-  EXPECT_EQ(last_msg_->biases[5].code, 210)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[5].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[5].code)),
+            210)
       << "incorrect value for biases[5].code, expected 210, is "
       << last_msg_->biases[5].code;
-  EXPECT_EQ(last_msg_->biases[5].value, 13952)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[5].value)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[5].value)),
+            13952)
       << "incorrect value for biases[5].value, expected 13952, is "
       << last_msg_->biases[5].value;
-  EXPECT_EQ(last_msg_->biases[6].code, 131)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[6].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[6].code)),
+            131)
       << "incorrect value for biases[6].code, expected 131, is "
       << last_msg_->biases[6].code;
-  EXPECT_EQ(last_msg_->biases[6].value, -32360)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[6].value)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[6].value)),
+            -32360)
       << "incorrect value for biases[6].value, expected -32360, is "
       << last_msg_->biases[6].value;
-  EXPECT_EQ(last_msg_->biases[7].code, 111)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[7].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[7].code)),
+            111)
       << "incorrect value for biases[7].code, expected 111, is "
       << last_msg_->biases[7].code;
-  EXPECT_EQ(last_msg_->biases[7].value, -3445)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[7].value)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[7].value)),
+            -3445)
       << "incorrect value for biases[7].value, expected -3445, is "
       << last_msg_->biases[7].value;
-  EXPECT_EQ(last_msg_->biases[8].code, 177)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[8].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[8].code)),
+            177)
       << "incorrect value for biases[8].code, expected 177, is "
       << last_msg_->biases[8].code;
-  EXPECT_EQ(last_msg_->biases[8].value, 11409)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[8].value)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[8].value)),
+            11409)
       << "incorrect value for biases[8].value, expected 11409, is "
       << last_msg_->biases[8].value;
-  EXPECT_EQ(last_msg_->biases[9].code, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[9].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[9].code)),
+            9)
       << "incorrect value for biases[9].code, expected 9, is "
       << last_msg_->biases[9].code;
-  EXPECT_EQ(last_msg_->biases[9].value, -12299)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[9].value)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[9].value)),
+            -12299)
       << "incorrect value for biases[9].value, expected -12299, is "
       << last_msg_->biases[9].value;
-  EXPECT_EQ(last_msg_->biases[10].code, 241)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[10].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[10].code)),
+            241)
       << "incorrect value for biases[10].code, expected 241, is "
       << last_msg_->biases[10].code;
-  EXPECT_EQ(last_msg_->biases[10].value, -26934)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[10].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[10].value)),
+      -26934)
       << "incorrect value for biases[10].value, expected -26934, is "
       << last_msg_->biases[10].value;
-  EXPECT_EQ(last_msg_->biases[11].code, 141)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[11].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[11].code)),
+            141)
       << "incorrect value for biases[11].code, expected 141, is "
       << last_msg_->biases[11].code;
-  EXPECT_EQ(last_msg_->biases[11].value, -24782)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[11].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[11].value)),
+      -24782)
       << "incorrect value for biases[11].value, expected -24782, is "
       << last_msg_->biases[11].value;
-  EXPECT_EQ(last_msg_->biases[12].code, 220)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[12].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[12].code)),
+            220)
       << "incorrect value for biases[12].code, expected 220, is "
       << last_msg_->biases[12].code;
-  EXPECT_EQ(last_msg_->biases[12].value, 9611)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[12].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[12].value)),
+      9611)
       << "incorrect value for biases[12].value, expected 9611, is "
       << last_msg_->biases[12].value;
-  EXPECT_EQ(last_msg_->biases[13].code, 187)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[13].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[13].code)),
+            187)
       << "incorrect value for biases[13].code, expected 187, is "
       << last_msg_->biases[13].code;
-  EXPECT_EQ(last_msg_->biases[13].value, -16542)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[13].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[13].value)),
+      -16542)
       << "incorrect value for biases[13].value, expected -16542, is "
       << last_msg_->biases[13].value;
-  EXPECT_EQ(last_msg_->biases[14].code, 23)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[14].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[14].code)),
+            23)
       << "incorrect value for biases[14].code, expected 23, is "
       << last_msg_->biases[14].code;
-  EXPECT_EQ(last_msg_->biases[14].value, -30592)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[14].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[14].value)),
+      -30592)
       << "incorrect value for biases[14].value, expected -30592, is "
       << last_msg_->biases[14].value;
-  EXPECT_EQ(last_msg_->biases[15].code, 167)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[15].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[15].code)),
+            167)
       << "incorrect value for biases[15].code, expected 167, is "
       << last_msg_->biases[15].code;
-  EXPECT_EQ(last_msg_->biases[15].value, 1736)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[15].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[15].value)),
+      1736)
       << "incorrect value for biases[15].value, expected 1736, is "
       << last_msg_->biases[15].value;
-  EXPECT_EQ(last_msg_->biases[16].code, 211)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[16].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[16].code)),
+            211)
       << "incorrect value for biases[16].code, expected 211, is "
       << last_msg_->biases[16].code;
-  EXPECT_EQ(last_msg_->biases[16].value, 5978)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[16].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[16].value)),
+      5978)
       << "incorrect value for biases[16].value, expected 5978, is "
       << last_msg_->biases[16].value;
-  EXPECT_EQ(last_msg_->biases[17].code, 244)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[17].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[17].code)),
+            244)
       << "incorrect value for biases[17].code, expected 244, is "
       << last_msg_->biases[17].code;
-  EXPECT_EQ(last_msg_->biases[17].value, -10358)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[17].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[17].value)),
+      -10358)
       << "incorrect value for biases[17].value, expected -10358, is "
       << last_msg_->biases[17].value;
-  EXPECT_EQ(last_msg_->biases[18].code, 209)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[18].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[18].code)),
+            209)
       << "incorrect value for biases[18].code, expected 209, is "
       << last_msg_->biases[18].code;
-  EXPECT_EQ(last_msg_->biases[18].value, 3467)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[18].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[18].value)),
+      3467)
       << "incorrect value for biases[18].value, expected 3467, is "
       << last_msg_->biases[18].value;
-  EXPECT_EQ(last_msg_->biases[19].code, 101)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[19].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[19].code)),
+            101)
       << "incorrect value for biases[19].code, expected 101, is "
       << last_msg_->biases[19].code;
-  EXPECT_EQ(last_msg_->biases[19].value, 1824)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[19].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[19].value)),
+      1824)
       << "incorrect value for biases[19].value, expected 1824, is "
       << last_msg_->biases[19].value;
-  EXPECT_EQ(last_msg_->biases[20].code, 18)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[20].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[20].code)),
+            18)
       << "incorrect value for biases[20].code, expected 18, is "
       << last_msg_->biases[20].code;
-  EXPECT_EQ(last_msg_->biases[20].value, 17949)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[20].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[20].value)),
+      17949)
       << "incorrect value for biases[20].value, expected 17949, is "
       << last_msg_->biases[20].value;
-  EXPECT_EQ(last_msg_->biases[21].code, 250)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[21].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[21].code)),
+            250)
       << "incorrect value for biases[21].code, expected 250, is "
       << last_msg_->biases[21].code;
-  EXPECT_EQ(last_msg_->biases[21].value, 18797)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[21].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[21].value)),
+      18797)
       << "incorrect value for biases[21].value, expected 18797, is "
       << last_msg_->biases[21].value;
-  EXPECT_EQ(last_msg_->biases[22].code, 202)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[22].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[22].code)),
+            202)
       << "incorrect value for biases[22].code, expected 202, is "
       << last_msg_->biases[22].code;
-  EXPECT_EQ(last_msg_->biases[22].value, -28593)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[22].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[22].value)),
+      -28593)
       << "incorrect value for biases[22].value, expected -28593, is "
       << last_msg_->biases[22].value;
-  EXPECT_EQ(last_msg_->biases[23].code, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[23].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[23].code)),
+            9)
       << "incorrect value for biases[23].code, expected 9, is "
       << last_msg_->biases[23].code;
-  EXPECT_EQ(last_msg_->biases[23].value, 17810)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[23].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[23].value)),
+      17810)
       << "incorrect value for biases[23].value, expected 17810, is "
       << last_msg_->biases[23].value;
-  EXPECT_EQ(last_msg_->biases[24].code, 241)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[24].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[24].code)),
+            241)
       << "incorrect value for biases[24].code, expected 241, is "
       << last_msg_->biases[24].code;
-  EXPECT_EQ(last_msg_->biases[24].value, 5684)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[24].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[24].value)),
+      5684)
       << "incorrect value for biases[24].value, expected 5684, is "
       << last_msg_->biases[24].value;
-  EXPECT_EQ(last_msg_->biases[25].code, 99)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[25].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[25].code)),
+            99)
       << "incorrect value for biases[25].code, expected 99, is "
       << last_msg_->biases[25].code;
-  EXPECT_EQ(last_msg_->biases[25].value, -13214)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[25].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[25].value)),
+      -13214)
       << "incorrect value for biases[25].value, expected -13214, is "
       << last_msg_->biases[25].value;
-  EXPECT_EQ(last_msg_->biases[26].code, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[26].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[26].code)),
+            3)
       << "incorrect value for biases[26].code, expected 3, is "
       << last_msg_->biases[26].code;
-  EXPECT_EQ(last_msg_->biases[26].value, -6485)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[26].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[26].value)),
+      -6485)
       << "incorrect value for biases[26].value, expected -6485, is "
       << last_msg_->biases[26].value;
-  EXPECT_EQ(last_msg_->biases[27].code, 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[27].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[27].code)),
+            180)
       << "incorrect value for biases[27].code, expected 180, is "
       << last_msg_->biases[27].code;
-  EXPECT_EQ(last_msg_->biases[27].value, 15947)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[27].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[27].value)),
+      15947)
       << "incorrect value for biases[27].value, expected 15947, is "
       << last_msg_->biases[27].value;
-  EXPECT_EQ(last_msg_->biases[28].code, 145)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[28].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[28].code)),
+            145)
       << "incorrect value for biases[28].code, expected 145, is "
       << last_msg_->biases[28].code;
-  EXPECT_EQ(last_msg_->biases[28].value, -32170)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[28].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[28].value)),
+      -32170)
       << "incorrect value for biases[28].value, expected -32170, is "
       << last_msg_->biases[28].value;
-  EXPECT_EQ(last_msg_->biases[29].code, 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[29].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[29].code)),
+            31)
       << "incorrect value for biases[29].code, expected 31, is "
       << last_msg_->biases[29].code;
-  EXPECT_EQ(last_msg_->biases[29].value, -25826)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[29].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[29].value)),
+      -25826)
       << "incorrect value for biases[29].value, expected -25826, is "
       << last_msg_->biases[29].value;
-  EXPECT_EQ(last_msg_->biases[30].code, 37)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[30].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[30].code)),
+            37)
       << "incorrect value for biases[30].code, expected 37, is "
       << last_msg_->biases[30].code;
-  EXPECT_EQ(last_msg_->biases[30].value, 14098)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[30].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[30].value)),
+      14098)
       << "incorrect value for biases[30].value, expected 14098, is "
       << last_msg_->biases[30].value;
-  EXPECT_EQ(last_msg_->biases[31].code, 210)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[31].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[31].code)),
+            210)
       << "incorrect value for biases[31].code, expected 210, is "
       << last_msg_->biases[31].code;
-  EXPECT_EQ(last_msg_->biases[31].value, 32551)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[31].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[31].value)),
+      32551)
       << "incorrect value for biases[31].value, expected 32551, is "
       << last_msg_->biases[31].value;
-  EXPECT_EQ(last_msg_->biases[32].code, 242)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[32].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[32].code)),
+            242)
       << "incorrect value for biases[32].code, expected 242, is "
       << last_msg_->biases[32].code;
-  EXPECT_EQ(last_msg_->biases[32].value, 3394)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[32].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[32].value)),
+      3394)
       << "incorrect value for biases[32].value, expected 3394, is "
       << last_msg_->biases[32].value;
-  EXPECT_EQ(last_msg_->biases[33].code, 237)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[33].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[33].code)),
+            237)
       << "incorrect value for biases[33].code, expected 237, is "
       << last_msg_->biases[33].code;
-  EXPECT_EQ(last_msg_->biases[33].value, -21864)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[33].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[33].value)),
+      -21864)
       << "incorrect value for biases[33].value, expected -21864, is "
       << last_msg_->biases[33].value;
-  EXPECT_EQ(last_msg_->biases[34].code, 212)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[34].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[34].code)),
+            212)
       << "incorrect value for biases[34].code, expected 212, is "
       << last_msg_->biases[34].code;
-  EXPECT_EQ(last_msg_->biases[34].value, -2545)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[34].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[34].value)),
+      -2545)
       << "incorrect value for biases[34].value, expected -2545, is "
       << last_msg_->biases[34].value;
-  EXPECT_EQ(last_msg_->biases[35].code, 59)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[35].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[35].code)),
+            59)
       << "incorrect value for biases[35].code, expected 59, is "
       << last_msg_->biases[35].code;
-  EXPECT_EQ(last_msg_->biases[35].value, -19362)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[35].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[35].value)),
+      -19362)
       << "incorrect value for biases[35].value, expected -19362, is "
       << last_msg_->biases[35].value;
-  EXPECT_EQ(last_msg_->biases[36].code, 195)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[36].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[36].code)),
+            195)
       << "incorrect value for biases[36].code, expected 195, is "
       << last_msg_->biases[36].code;
-  EXPECT_EQ(last_msg_->biases[36].value, 17821)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[36].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[36].value)),
+      17821)
       << "incorrect value for biases[36].value, expected 17821, is "
       << last_msg_->biases[36].value;
-  EXPECT_EQ(last_msg_->biases[37].code, 100)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[37].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[37].code)),
+            100)
       << "incorrect value for biases[37].code, expected 100, is "
       << last_msg_->biases[37].code;
-  EXPECT_EQ(last_msg_->biases[37].value, 4215)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[37].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[37].value)),
+      4215)
       << "incorrect value for biases[37].value, expected 4215, is "
       << last_msg_->biases[37].value;
-  EXPECT_EQ(last_msg_->biases[38].code, 68)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[38].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[38].code)),
+            68)
       << "incorrect value for biases[38].code, expected 68, is "
       << last_msg_->biases[38].code;
-  EXPECT_EQ(last_msg_->biases[38].value, -20557)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[38].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[38].value)),
+      -20557)
       << "incorrect value for biases[38].value, expected -20557, is "
       << last_msg_->biases[38].value;
-  EXPECT_EQ(last_msg_->biases[39].code, 144)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[39].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[39].code)),
+            144)
       << "incorrect value for biases[39].code, expected 144, is "
       << last_msg_->biases[39].code;
-  EXPECT_EQ(last_msg_->biases[39].value, 20849)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[39].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[39].value)),
+      20849)
       << "incorrect value for biases[39].value, expected 20849, is "
       << last_msg_->biases[39].value;
-  EXPECT_EQ(last_msg_->biases[40].code, 82)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[40].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[40].code)),
+            82)
       << "incorrect value for biases[40].code, expected 82, is "
       << last_msg_->biases[40].code;
-  EXPECT_EQ(last_msg_->biases[40].value, -26850)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[40].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[40].value)),
+      -26850)
       << "incorrect value for biases[40].value, expected -26850, is "
       << last_msg_->biases[40].value;
-  EXPECT_EQ(last_msg_->biases[41].code, 21)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[41].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[41].code)),
+            21)
       << "incorrect value for biases[41].code, expected 21, is "
       << last_msg_->biases[41].code;
-  EXPECT_EQ(last_msg_->biases[41].value, 10605)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[41].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[41].value)),
+      10605)
       << "incorrect value for biases[41].value, expected 10605, is "
       << last_msg_->biases[41].value;
-  EXPECT_EQ(last_msg_->biases[42].code, 225)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[42].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[42].code)),
+            225)
       << "incorrect value for biases[42].code, expected 225, is "
       << last_msg_->biases[42].code;
-  EXPECT_EQ(last_msg_->biases[42].value, 19720)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[42].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[42].value)),
+      19720)
       << "incorrect value for biases[42].value, expected 19720, is "
       << last_msg_->biases[42].value;
-  EXPECT_EQ(last_msg_->biases[43].code, 164)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[43].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[43].code)),
+            164)
       << "incorrect value for biases[43].code, expected 164, is "
       << last_msg_->biases[43].code;
-  EXPECT_EQ(last_msg_->biases[43].value, 157)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[43].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[43].value)),
+      157)
       << "incorrect value for biases[43].value, expected 157, is "
       << last_msg_->biases[43].value;
-  EXPECT_EQ(last_msg_->biases[44].code, 73)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[44].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[44].code)),
+            73)
       << "incorrect value for biases[44].code, expected 73, is "
       << last_msg_->biases[44].code;
-  EXPECT_EQ(last_msg_->biases[44].value, 1566)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[44].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[44].value)),
+      1566)
       << "incorrect value for biases[44].value, expected 1566, is "
       << last_msg_->biases[44].value;
-  EXPECT_EQ(last_msg_->biases[45].code, 78)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[45].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[45].code)),
+            78)
       << "incorrect value for biases[45].code, expected 78, is "
       << last_msg_->biases[45].code;
-  EXPECT_EQ(last_msg_->biases[45].value, -28847)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[45].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[45].value)),
+      -28847)
       << "incorrect value for biases[45].value, expected -28847, is "
       << last_msg_->biases[45].value;
-  EXPECT_EQ(last_msg_->biases[46].code, 116)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[46].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[46].code)),
+            116)
       << "incorrect value for biases[46].code, expected 116, is "
       << last_msg_->biases[46].code;
-  EXPECT_EQ(last_msg_->biases[46].value, -26640)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[46].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[46].value)),
+      -26640)
       << "incorrect value for biases[46].value, expected -26640, is "
       << last_msg_->biases[46].value;
-  EXPECT_EQ(last_msg_->biases[47].code, 55)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[47].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[47].code)),
+            55)
       << "incorrect value for biases[47].code, expected 55, is "
       << last_msg_->biases[47].code;
-  EXPECT_EQ(last_msg_->biases[47].value, -22087)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[47].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[47].value)),
+      -22087)
       << "incorrect value for biases[47].value, expected -22087, is "
       << last_msg_->biases[47].value;
-  EXPECT_EQ(last_msg_->biases[48].code, 254)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[48].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[48].code)),
+            254)
       << "incorrect value for biases[48].code, expected 254, is "
       << last_msg_->biases[48].code;
-  EXPECT_EQ(last_msg_->biases[48].value, 10035)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[48].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[48].value)),
+      10035)
       << "incorrect value for biases[48].value, expected 10035, is "
       << last_msg_->biases[48].value;
-  EXPECT_EQ(last_msg_->biases[49].code, 74)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[49].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[49].code)),
+            74)
       << "incorrect value for biases[49].code, expected 74, is "
       << last_msg_->biases[49].code;
-  EXPECT_EQ(last_msg_->biases[49].value, -2129)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[49].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[49].value)),
+      -2129)
       << "incorrect value for biases[49].value, expected -2129, is "
       << last_msg_->biases[49].value;
-  EXPECT_EQ(last_msg_->biases[50].code, 34)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[50].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[50].code)),
+            34)
       << "incorrect value for biases[50].code, expected 34, is "
       << last_msg_->biases[50].code;
-  EXPECT_EQ(last_msg_->biases[50].value, 19041)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[50].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[50].value)),
+      19041)
       << "incorrect value for biases[50].value, expected 19041, is "
       << last_msg_->biases[50].value;
-  EXPECT_EQ(last_msg_->biases[51].code, 97)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[51].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[51].code)),
+            97)
       << "incorrect value for biases[51].code, expected 97, is "
       << last_msg_->biases[51].code;
-  EXPECT_EQ(last_msg_->biases[51].value, 12464)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[51].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[51].value)),
+      12464)
       << "incorrect value for biases[51].value, expected 12464, is "
       << last_msg_->biases[51].value;
-  EXPECT_EQ(last_msg_->biases[52].code, 236)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[52].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[52].code)),
+            236)
       << "incorrect value for biases[52].code, expected 236, is "
       << last_msg_->biases[52].code;
-  EXPECT_EQ(last_msg_->biases[52].value, 3245)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[52].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[52].value)),
+      3245)
       << "incorrect value for biases[52].value, expected 3245, is "
       << last_msg_->biases[52].value;
-  EXPECT_EQ(last_msg_->biases[53].code, 174)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[53].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[53].code)),
+            174)
       << "incorrect value for biases[53].code, expected 174, is "
       << last_msg_->biases[53].code;
-  EXPECT_EQ(last_msg_->biases[53].value, -32155)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[53].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[53].value)),
+      -32155)
       << "incorrect value for biases[53].value, expected -32155, is "
       << last_msg_->biases[53].value;
-  EXPECT_EQ(last_msg_->biases[54].code, 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[54].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[54].code)),
+            30)
       << "incorrect value for biases[54].code, expected 30, is "
       << last_msg_->biases[54].code;
-  EXPECT_EQ(last_msg_->biases[54].value, -15959)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[54].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[54].value)),
+      -15959)
       << "incorrect value for biases[54].value, expected -15959, is "
       << last_msg_->biases[54].value;
-  EXPECT_EQ(last_msg_->biases[55].code, 190)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[55].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[55].code)),
+            190)
       << "incorrect value for biases[55].code, expected 190, is "
       << last_msg_->biases[55].code;
-  EXPECT_EQ(last_msg_->biases[55].value, -15156)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[55].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[55].value)),
+      -15156)
       << "incorrect value for biases[55].value, expected -15156, is "
       << last_msg_->biases[55].value;
-  EXPECT_EQ(last_msg_->biases[56].code, 123)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[56].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[56].code)),
+            123)
       << "incorrect value for biases[56].code, expected 123, is "
       << last_msg_->biases[56].code;
-  EXPECT_EQ(last_msg_->biases[56].value, 6507)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[56].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[56].value)),
+      6507)
       << "incorrect value for biases[56].value, expected 6507, is "
       << last_msg_->biases[56].value;
-  EXPECT_EQ(last_msg_->biases[57].code, 225)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[57].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[57].code)),
+            225)
       << "incorrect value for biases[57].code, expected 225, is "
       << last_msg_->biases[57].code;
-  EXPECT_EQ(last_msg_->biases[57].value, 2378)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[57].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[57].value)),
+      2378)
       << "incorrect value for biases[57].value, expected 2378, is "
       << last_msg_->biases[57].value;
-  EXPECT_EQ(last_msg_->biases[58].code, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[58].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[58].code)),
+            10)
       << "incorrect value for biases[58].code, expected 10, is "
       << last_msg_->biases[58].code;
-  EXPECT_EQ(last_msg_->biases[58].value, 823)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[58].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[58].value)),
+      823)
       << "incorrect value for biases[58].value, expected 823, is "
       << last_msg_->biases[58].value;
-  EXPECT_EQ(last_msg_->biases[59].code, 131)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[59].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[59].code)),
+            131)
       << "incorrect value for biases[59].code, expected 131, is "
       << last_msg_->biases[59].code;
-  EXPECT_EQ(last_msg_->biases[59].value, 25590)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[59].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[59].value)),
+      25590)
       << "incorrect value for biases[59].value, expected 25590, is "
       << last_msg_->biases[59].value;
-  EXPECT_EQ(last_msg_->biases[60].code, 133)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[60].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[60].code)),
+            133)
       << "incorrect value for biases[60].code, expected 133, is "
       << last_msg_->biases[60].code;
-  EXPECT_EQ(last_msg_->biases[60].value, -7390)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[60].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[60].value)),
+      -7390)
       << "incorrect value for biases[60].value, expected -7390, is "
       << last_msg_->biases[60].value;
-  EXPECT_EQ(last_msg_->biases[61].code, 203)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[61].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[61].code)),
+            203)
       << "incorrect value for biases[61].code, expected 203, is "
       << last_msg_->biases[61].code;
-  EXPECT_EQ(last_msg_->biases[61].value, 4676)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[61].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[61].value)),
+      4676)
       << "incorrect value for biases[61].value, expected 4676, is "
       << last_msg_->biases[61].value;
-  EXPECT_EQ(last_msg_->biases[62].code, 97)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[62].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[62].code)),
+            97)
       << "incorrect value for biases[62].code, expected 97, is "
       << last_msg_->biases[62].code;
-  EXPECT_EQ(last_msg_->biases[62].value, 23007)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[62].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[62].value)),
+      23007)
       << "incorrect value for biases[62].value, expected 23007, is "
       << last_msg_->biases[62].value;
-  EXPECT_EQ(last_msg_->biases[63].code, 192)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[63].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[63].code)),
+            192)
       << "incorrect value for biases[63].code, expected 192, is "
       << last_msg_->biases[63].code;
-  EXPECT_EQ(last_msg_->biases[63].value, 13046)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[63].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[63].value)),
+      13046)
       << "incorrect value for biases[63].value, expected 13046, is "
       << last_msg_->biases[63].value;
-  EXPECT_EQ(last_msg_->biases[64].code, 69)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[64].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[64].code)),
+            69)
       << "incorrect value for biases[64].code, expected 69, is "
       << last_msg_->biases[64].code;
-  EXPECT_EQ(last_msg_->biases[64].value, 2651)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[64].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[64].value)),
+      2651)
       << "incorrect value for biases[64].value, expected 2651, is "
       << last_msg_->biases[64].value;
-  EXPECT_EQ(last_msg_->biases[65].code, 151)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[65].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[65].code)),
+            151)
       << "incorrect value for biases[65].code, expected 151, is "
       << last_msg_->biases[65].code;
-  EXPECT_EQ(last_msg_->biases[65].value, 30282)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[65].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[65].value)),
+      30282)
       << "incorrect value for biases[65].value, expected 30282, is "
       << last_msg_->biases[65].value;
-  EXPECT_EQ(last_msg_->biases[66].code, 110)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[66].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[66].code)),
+            110)
       << "incorrect value for biases[66].code, expected 110, is "
       << last_msg_->biases[66].code;
-  EXPECT_EQ(last_msg_->biases[66].value, -22492)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[66].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[66].value)),
+      -22492)
       << "incorrect value for biases[66].value, expected -22492, is "
       << last_msg_->biases[66].value;
-  EXPECT_EQ(last_msg_->biases[67].code, 247)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[67].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[67].code)),
+            247)
       << "incorrect value for biases[67].code, expected 247, is "
       << last_msg_->biases[67].code;
-  EXPECT_EQ(last_msg_->biases[67].value, 19872)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[67].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[67].value)),
+      19872)
       << "incorrect value for biases[67].value, expected 19872, is "
       << last_msg_->biases[67].value;
-  EXPECT_EQ(last_msg_->biases[68].code, 179)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[68].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[68].code)),
+            179)
       << "incorrect value for biases[68].code, expected 179, is "
       << last_msg_->biases[68].code;
-  EXPECT_EQ(last_msg_->biases[68].value, -19827)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[68].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[68].value)),
+      -19827)
       << "incorrect value for biases[68].value, expected -19827, is "
       << last_msg_->biases[68].value;
-  EXPECT_EQ(last_msg_->biases[69].code, 99)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[69].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[69].code)),
+            99)
       << "incorrect value for biases[69].code, expected 99, is "
       << last_msg_->biases[69].code;
-  EXPECT_EQ(last_msg_->biases[69].value, 30911)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[69].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[69].value)),
+      30911)
       << "incorrect value for biases[69].value, expected 30911, is "
       << last_msg_->biases[69].value;
-  EXPECT_EQ(last_msg_->biases[70].code, 77)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[70].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[70].code)),
+            77)
       << "incorrect value for biases[70].code, expected 77, is "
       << last_msg_->biases[70].code;
-  EXPECT_EQ(last_msg_->biases[70].value, 23488)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[70].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[70].value)),
+      23488)
       << "incorrect value for biases[70].value, expected 23488, is "
       << last_msg_->biases[70].value;
-  EXPECT_EQ(last_msg_->biases[71].code, 224)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[71].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[71].code)),
+            224)
       << "incorrect value for biases[71].code, expected 224, is "
       << last_msg_->biases[71].code;
-  EXPECT_EQ(last_msg_->biases[71].value, -7679)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[71].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[71].value)),
+      -7679)
       << "incorrect value for biases[71].value, expected -7679, is "
       << last_msg_->biases[71].value;
-  EXPECT_EQ(last_msg_->biases[72].code, 50)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[72].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[72].code)),
+            50)
       << "incorrect value for biases[72].code, expected 50, is "
       << last_msg_->biases[72].code;
-  EXPECT_EQ(last_msg_->biases[72].value, -28073)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[72].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[72].value)),
+      -28073)
       << "incorrect value for biases[72].value, expected -28073, is "
       << last_msg_->biases[72].value;
-  EXPECT_EQ(last_msg_->biases[73].code, 148)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[73].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[73].code)),
+            148)
       << "incorrect value for biases[73].code, expected 148, is "
       << last_msg_->biases[73].code;
-  EXPECT_EQ(last_msg_->biases[73].value, 25838)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[73].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[73].value)),
+      25838)
       << "incorrect value for biases[73].value, expected 25838, is "
       << last_msg_->biases[73].value;
-  EXPECT_EQ(last_msg_->biases[74].code, 179)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[74].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[74].code)),
+            179)
       << "incorrect value for biases[74].code, expected 179, is "
       << last_msg_->biases[74].code;
-  EXPECT_EQ(last_msg_->biases[74].value, -7299)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[74].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[74].value)),
+      -7299)
       << "incorrect value for biases[74].value, expected -7299, is "
       << last_msg_->biases[74].value;
-  EXPECT_EQ(last_msg_->biases[75].code, 215)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[75].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[75].code)),
+            215)
       << "incorrect value for biases[75].code, expected 215, is "
       << last_msg_->biases[75].code;
-  EXPECT_EQ(last_msg_->biases[75].value, -18328)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[75].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[75].value)),
+      -18328)
       << "incorrect value for biases[75].value, expected -18328, is "
       << last_msg_->biases[75].value;
-  EXPECT_EQ(last_msg_->biases[76].code, 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[76].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[76].code)),
+            31)
       << "incorrect value for biases[76].code, expected 31, is "
       << last_msg_->biases[76].code;
-  EXPECT_EQ(last_msg_->biases[76].value, 23097)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[76].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[76].value)),
+      23097)
       << "incorrect value for biases[76].value, expected 23097, is "
       << last_msg_->biases[76].value;
-  EXPECT_EQ(last_msg_->biases[77].code, 79)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[77].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[77].code)),
+            79)
       << "incorrect value for biases[77].code, expected 79, is "
       << last_msg_->biases[77].code;
-  EXPECT_EQ(last_msg_->biases[77].value, -25579)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[77].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[77].value)),
+      -25579)
       << "incorrect value for biases[77].value, expected -25579, is "
       << last_msg_->biases[77].value;
-  EXPECT_EQ(last_msg_->biases[78].code, 245)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[78].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[78].code)),
+            245)
       << "incorrect value for biases[78].code, expected 245, is "
       << last_msg_->biases[78].code;
-  EXPECT_EQ(last_msg_->biases[78].value, 15441)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[78].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[78].value)),
+      15441)
       << "incorrect value for biases[78].value, expected 15441, is "
       << last_msg_->biases[78].value;
-  EXPECT_EQ(last_msg_->biases[79].code, 93)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[79].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[79].code)),
+            93)
       << "incorrect value for biases[79].code, expected 93, is "
       << last_msg_->biases[79].code;
-  EXPECT_EQ(last_msg_->biases[79].value, 15530)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[79].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[79].value)),
+      15530)
       << "incorrect value for biases[79].value, expected 15530, is "
       << last_msg_->biases[79].value;
-  EXPECT_EQ(last_msg_->biases[80].code, 200)
+  EXPECT_EQ(get_as<decltype(last_msg_->biases[80].code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->biases[80].code)),
+            200)
       << "incorrect value for biases[80].code, expected 200, is "
       << last_msg_->biases[80].code;
-  EXPECT_EQ(last_msg_->biases[80].value, 3495)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->biases[80].value)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->biases[80].value)),
+      3495)
       << "incorrect value for biases[80].value, expected 3495, is "
       << last_msg_->biases[80].value;
-  EXPECT_EQ(last_msg_->iod_ssr, 132)
+  EXPECT_EQ(get_as<decltype(last_msg_->iod_ssr)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->iod_ssr)),
+            132)
       << "incorrect value for iod_ssr, expected 132, is " << last_msg_->iod_ssr;
-  EXPECT_EQ(last_msg_->sid.code, 241)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.code)),
+            241)
       << "incorrect value for sid.code, expected 241, is "
       << last_msg_->sid.code;
-  EXPECT_EQ(last_msg_->sid.sat, 133)
+  EXPECT_EQ(get_as<decltype(last_msg_->sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sid.sat)),
+            133)
       << "incorrect value for sid.sat, expected 133, is " << last_msg_->sid.sat;
-  EXPECT_EQ(last_msg_->time.tow, 387144400)
+  EXPECT_EQ(get_as<decltype(last_msg_->time.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time.tow)),
+            387144400)
       << "incorrect value for time.tow, expected 387144400, is "
       << last_msg_->time.tow;
-  EXPECT_EQ(last_msg_->time.wn, 16905)
+  EXPECT_EQ(get_as<decltype(last_msg_->time.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time.wn)),
+            16905)
       << "incorrect value for time.wn, expected 16905, is "
       << last_msg_->time.wn;
-  EXPECT_EQ(last_msg_->update_interval, 254)
+  EXPECT_EQ(get_as<decltype(last_msg_->update_interval)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->update_interval)),
+            254)
       << "incorrect value for update_interval, expected 254, is "
       << last_msg_->update_interval;
 }

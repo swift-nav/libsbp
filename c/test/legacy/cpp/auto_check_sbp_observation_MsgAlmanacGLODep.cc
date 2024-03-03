@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/observation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_observation_MsgAlmanacGLODep0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -130,31 +137,50 @@ TEST_F(Test_legacy_auto_check_sbp_observation_MsgAlmanacGLODep0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->common.fit_interval, 14400)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->common.fit_interval)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->common.fit_interval)),
+      14400)
       << "incorrect value for common.fit_interval, expected 14400, is "
       << last_msg_->common.fit_interval;
-  EXPECT_EQ(last_msg_->common.health_bits, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->common.health_bits)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->common.health_bits)),
+      0)
       << "incorrect value for common.health_bits, expected 0, is "
       << last_msg_->common.health_bits;
-  EXPECT_EQ(last_msg_->common.sid.code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->common.sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->common.sid.code)),
+            0)
       << "incorrect value for common.sid.code, expected 0, is "
       << last_msg_->common.sid.code;
-  EXPECT_EQ(last_msg_->common.sid.reserved, 0)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->common.sid.reserved)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->common.sid.reserved)),
+      0)
       << "incorrect value for common.sid.reserved, expected 0, is "
       << last_msg_->common.sid.reserved;
-  EXPECT_EQ(last_msg_->common.sid.sat, 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->common.sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->common.sid.sat)),
+            22)
       << "incorrect value for common.sid.sat, expected 22, is "
       << last_msg_->common.sid.sat;
-  EXPECT_EQ(last_msg_->common.toa.tow, 446384)
+  EXPECT_EQ(get_as<decltype(last_msg_->common.toa.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->common.toa.tow)),
+            446384)
       << "incorrect value for common.toa.tow, expected 446384, is "
       << last_msg_->common.toa.tow;
-  EXPECT_EQ(last_msg_->common.toa.wn, 2154)
+  EXPECT_EQ(get_as<decltype(last_msg_->common.toa.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->common.toa.wn)),
+            2154)
       << "incorrect value for common.toa.wn, expected 2154, is "
       << last_msg_->common.toa.wn;
   EXPECT_LT((last_msg_->common.ura * 100 - 2.2 * 100), 0.05)
       << "incorrect value for common.ura, expected 2.2, is "
       << last_msg_->common.ura;
-  EXPECT_EQ(last_msg_->common.valid, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->common.valid)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->common.valid)),
+            1)
       << "incorrect value for common.valid, expected 1, is "
       << last_msg_->common.valid;
   EXPECT_LT((last_msg_->epsilon * 100 - -0.98930366296 * 100), 0.05)

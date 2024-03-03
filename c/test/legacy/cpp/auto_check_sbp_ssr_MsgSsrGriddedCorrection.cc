@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ssr.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ssr_MsgSsrGriddedCorrection0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -555,640 +562,1224 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrGriddedCorrection0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 63940);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->header.iod_atmo, 170)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.iod_atmo)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.iod_atmo)),
+            170)
       << "incorrect value for header.iod_atmo, expected 170, is "
       << last_msg_->header.iod_atmo;
-  EXPECT_EQ(last_msg_->header.num_msgs, 48535)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.num_msgs)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.num_msgs)),
+            48535)
       << "incorrect value for header.num_msgs, expected 48535, is "
       << last_msg_->header.num_msgs;
-  EXPECT_EQ(last_msg_->header.seq_num, 50380)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.seq_num)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.seq_num)),
+            50380)
       << "incorrect value for header.seq_num, expected 50380, is "
       << last_msg_->header.seq_num;
-  EXPECT_EQ(last_msg_->header.tile_id, 12951)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.tile_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.tile_id)),
+            12951)
       << "incorrect value for header.tile_id, expected 12951, is "
       << last_msg_->header.tile_id;
-  EXPECT_EQ(last_msg_->header.tile_set_id, 3605)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->header.tile_set_id)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->header.tile_set_id)),
+      3605)
       << "incorrect value for header.tile_set_id, expected 3605, is "
       << last_msg_->header.tile_set_id;
-  EXPECT_EQ(last_msg_->header.time.tow, 2535294328)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.time.tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.time.tow)),
+            2535294328)
       << "incorrect value for header.time.tow, expected 2535294328, is "
       << last_msg_->header.time.tow;
-  EXPECT_EQ(last_msg_->header.time.wn, 58798)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.time.wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->header.time.wn)),
+            58798)
       << "incorrect value for header.time.wn, expected 58798, is "
       << last_msg_->header.time.wn;
-  EXPECT_EQ(last_msg_->header.tropo_quality_indicator, 120)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.tropo_quality_indicator)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->header.tropo_quality_indicator)),
+            120)
       << "incorrect value for header.tropo_quality_indicator, expected 120, is "
       << last_msg_->header.tropo_quality_indicator;
-  EXPECT_EQ(last_msg_->header.update_interval, 105)
+  EXPECT_EQ(get_as<decltype(last_msg_->header.update_interval)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->header.update_interval)),
+            105)
       << "incorrect value for header.update_interval, expected 105, is "
       << last_msg_->header.update_interval;
-  EXPECT_EQ(last_msg_->index, 43413)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            43413)
       << "incorrect value for index, expected 43413, is " << last_msg_->index;
-  EXPECT_EQ(last_msg_->stec_residuals[0].residual, -21246)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[0].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[0].residual)),
+            -21246)
       << "incorrect value for stec_residuals[0].residual, expected -21246, is "
       << last_msg_->stec_residuals[0].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[0].stddev, 88)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[0].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[0].stddev)),
+            88)
       << "incorrect value for stec_residuals[0].stddev, expected 88, is "
       << last_msg_->stec_residuals[0].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[0].sv_id.constellation, 101)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[0].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[0].sv_id.constellation)),
+            101)
       << "incorrect value for stec_residuals[0].sv_id.constellation, expected "
          "101, is "
       << last_msg_->stec_residuals[0].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[0].sv_id.satId, 140)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[0].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[0].sv_id.satId)),
+            140)
       << "incorrect value for stec_residuals[0].sv_id.satId, expected 140, is "
       << last_msg_->stec_residuals[0].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[1].residual, -26570)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[1].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[1].residual)),
+            -26570)
       << "incorrect value for stec_residuals[1].residual, expected -26570, is "
       << last_msg_->stec_residuals[1].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[1].stddev, 115)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[1].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[1].stddev)),
+            115)
       << "incorrect value for stec_residuals[1].stddev, expected 115, is "
       << last_msg_->stec_residuals[1].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[1].sv_id.constellation, 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[1].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[1].sv_id.constellation)),
+            180)
       << "incorrect value for stec_residuals[1].sv_id.constellation, expected "
          "180, is "
       << last_msg_->stec_residuals[1].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[1].sv_id.satId, 70)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[1].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[1].sv_id.satId)),
+            70)
       << "incorrect value for stec_residuals[1].sv_id.satId, expected 70, is "
       << last_msg_->stec_residuals[1].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[2].residual, 6049)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[2].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[2].residual)),
+            6049)
       << "incorrect value for stec_residuals[2].residual, expected 6049, is "
       << last_msg_->stec_residuals[2].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[2].stddev, 135)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[2].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[2].stddev)),
+            135)
       << "incorrect value for stec_residuals[2].stddev, expected 135, is "
       << last_msg_->stec_residuals[2].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[2].sv_id.constellation, 201)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[2].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[2].sv_id.constellation)),
+            201)
       << "incorrect value for stec_residuals[2].sv_id.constellation, expected "
          "201, is "
       << last_msg_->stec_residuals[2].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[2].sv_id.satId, 78)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[2].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[2].sv_id.satId)),
+            78)
       << "incorrect value for stec_residuals[2].sv_id.satId, expected 78, is "
       << last_msg_->stec_residuals[2].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[3].residual, 19261)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[3].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[3].residual)),
+            19261)
       << "incorrect value for stec_residuals[3].residual, expected 19261, is "
       << last_msg_->stec_residuals[3].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[3].stddev, 178)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[3].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[3].stddev)),
+            178)
       << "incorrect value for stec_residuals[3].stddev, expected 178, is "
       << last_msg_->stec_residuals[3].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[3].sv_id.constellation, 98)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[3].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[3].sv_id.constellation)),
+            98)
       << "incorrect value for stec_residuals[3].sv_id.constellation, expected "
          "98, is "
       << last_msg_->stec_residuals[3].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[3].sv_id.satId, 152)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[3].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[3].sv_id.satId)),
+            152)
       << "incorrect value for stec_residuals[3].sv_id.satId, expected 152, is "
       << last_msg_->stec_residuals[3].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[4].residual, 14226)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[4].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[4].residual)),
+            14226)
       << "incorrect value for stec_residuals[4].residual, expected 14226, is "
       << last_msg_->stec_residuals[4].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[4].stddev, 58)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[4].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[4].stddev)),
+            58)
       << "incorrect value for stec_residuals[4].stddev, expected 58, is "
       << last_msg_->stec_residuals[4].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[4].sv_id.constellation, 229)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[4].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[4].sv_id.constellation)),
+            229)
       << "incorrect value for stec_residuals[4].sv_id.constellation, expected "
          "229, is "
       << last_msg_->stec_residuals[4].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[4].sv_id.satId, 120)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[4].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[4].sv_id.satId)),
+            120)
       << "incorrect value for stec_residuals[4].sv_id.satId, expected 120, is "
       << last_msg_->stec_residuals[4].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[5].residual, 17894)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[5].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[5].residual)),
+            17894)
       << "incorrect value for stec_residuals[5].residual, expected 17894, is "
       << last_msg_->stec_residuals[5].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[5].stddev, 172)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[5].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[5].stddev)),
+            172)
       << "incorrect value for stec_residuals[5].stddev, expected 172, is "
       << last_msg_->stec_residuals[5].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[5].sv_id.constellation, 234)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[5].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[5].sv_id.constellation)),
+            234)
       << "incorrect value for stec_residuals[5].sv_id.constellation, expected "
          "234, is "
       << last_msg_->stec_residuals[5].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[5].sv_id.satId, 169)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[5].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[5].sv_id.satId)),
+            169)
       << "incorrect value for stec_residuals[5].sv_id.satId, expected 169, is "
       << last_msg_->stec_residuals[5].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[6].residual, 22930)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[6].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[6].residual)),
+            22930)
       << "incorrect value for stec_residuals[6].residual, expected 22930, is "
       << last_msg_->stec_residuals[6].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[6].stddev, 150)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[6].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[6].stddev)),
+            150)
       << "incorrect value for stec_residuals[6].stddev, expected 150, is "
       << last_msg_->stec_residuals[6].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[6].sv_id.constellation, 127)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[6].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[6].sv_id.constellation)),
+            127)
       << "incorrect value for stec_residuals[6].sv_id.constellation, expected "
          "127, is "
       << last_msg_->stec_residuals[6].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[6].sv_id.satId, 191)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[6].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[6].sv_id.satId)),
+            191)
       << "incorrect value for stec_residuals[6].sv_id.satId, expected 191, is "
       << last_msg_->stec_residuals[6].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[7].residual, 10721)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[7].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[7].residual)),
+            10721)
       << "incorrect value for stec_residuals[7].residual, expected 10721, is "
       << last_msg_->stec_residuals[7].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[7].stddev, 17)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[7].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[7].stddev)),
+            17)
       << "incorrect value for stec_residuals[7].stddev, expected 17, is "
       << last_msg_->stec_residuals[7].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[7].sv_id.constellation, 111)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[7].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[7].sv_id.constellation)),
+            111)
       << "incorrect value for stec_residuals[7].sv_id.constellation, expected "
          "111, is "
       << last_msg_->stec_residuals[7].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[7].sv_id.satId, 91)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[7].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[7].sv_id.satId)),
+            91)
       << "incorrect value for stec_residuals[7].sv_id.satId, expected 91, is "
       << last_msg_->stec_residuals[7].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[8].residual, -22874)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[8].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[8].residual)),
+            -22874)
       << "incorrect value for stec_residuals[8].residual, expected -22874, is "
       << last_msg_->stec_residuals[8].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[8].stddev, 120)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[8].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[8].stddev)),
+            120)
       << "incorrect value for stec_residuals[8].stddev, expected 120, is "
       << last_msg_->stec_residuals[8].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[8].sv_id.constellation, 52)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[8].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[8].sv_id.constellation)),
+            52)
       << "incorrect value for stec_residuals[8].sv_id.constellation, expected "
          "52, is "
       << last_msg_->stec_residuals[8].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[8].sv_id.satId, 119)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[8].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[8].sv_id.satId)),
+            119)
       << "incorrect value for stec_residuals[8].sv_id.satId, expected 119, is "
       << last_msg_->stec_residuals[8].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[9].residual, 780)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[9].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[9].residual)),
+            780)
       << "incorrect value for stec_residuals[9].residual, expected 780, is "
       << last_msg_->stec_residuals[9].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[9].stddev, 156)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[9].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[9].stddev)),
+            156)
       << "incorrect value for stec_residuals[9].stddev, expected 156, is "
       << last_msg_->stec_residuals[9].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[9].sv_id.constellation, 221)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[9].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[9].sv_id.constellation)),
+            221)
       << "incorrect value for stec_residuals[9].sv_id.constellation, expected "
          "221, is "
       << last_msg_->stec_residuals[9].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[9].sv_id.satId, 57)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[9].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[9].sv_id.satId)),
+            57)
       << "incorrect value for stec_residuals[9].sv_id.satId, expected 57, is "
       << last_msg_->stec_residuals[9].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[10].residual, 32547)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[10].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[10].residual)),
+            32547)
       << "incorrect value for stec_residuals[10].residual, expected 32547, is "
       << last_msg_->stec_residuals[10].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[10].stddev, 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[10].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[10].stddev)),
+            8)
       << "incorrect value for stec_residuals[10].stddev, expected 8, is "
       << last_msg_->stec_residuals[10].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[10].sv_id.constellation, 156)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[10].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[10].sv_id.constellation)),
+            156)
       << "incorrect value for stec_residuals[10].sv_id.constellation, expected "
          "156, is "
       << last_msg_->stec_residuals[10].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[10].sv_id.satId, 70)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[10].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[10].sv_id.satId)),
+            70)
       << "incorrect value for stec_residuals[10].sv_id.satId, expected 70, is "
       << last_msg_->stec_residuals[10].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[11].residual, 14208)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[11].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[11].residual)),
+            14208)
       << "incorrect value for stec_residuals[11].residual, expected 14208, is "
       << last_msg_->stec_residuals[11].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[11].stddev, 115)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[11].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[11].stddev)),
+            115)
       << "incorrect value for stec_residuals[11].stddev, expected 115, is "
       << last_msg_->stec_residuals[11].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[11].sv_id.constellation, 58)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[11].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[11].sv_id.constellation)),
+            58)
       << "incorrect value for stec_residuals[11].sv_id.constellation, expected "
          "58, is "
       << last_msg_->stec_residuals[11].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[11].sv_id.satId, 127)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[11].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[11].sv_id.satId)),
+            127)
       << "incorrect value for stec_residuals[11].sv_id.satId, expected 127, is "
       << last_msg_->stec_residuals[11].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[12].residual, -26246)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[12].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[12].residual)),
+            -26246)
       << "incorrect value for stec_residuals[12].residual, expected -26246, is "
       << last_msg_->stec_residuals[12].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[12].stddev, 124)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[12].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[12].stddev)),
+            124)
       << "incorrect value for stec_residuals[12].stddev, expected 124, is "
       << last_msg_->stec_residuals[12].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[12].sv_id.constellation, 157)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[12].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[12].sv_id.constellation)),
+            157)
       << "incorrect value for stec_residuals[12].sv_id.constellation, expected "
          "157, is "
       << last_msg_->stec_residuals[12].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[12].sv_id.satId, 80)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[12].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[12].sv_id.satId)),
+            80)
       << "incorrect value for stec_residuals[12].sv_id.satId, expected 80, is "
       << last_msg_->stec_residuals[12].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[13].residual, 26466)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[13].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[13].residual)),
+            26466)
       << "incorrect value for stec_residuals[13].residual, expected 26466, is "
       << last_msg_->stec_residuals[13].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[13].stddev, 204)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[13].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[13].stddev)),
+            204)
       << "incorrect value for stec_residuals[13].stddev, expected 204, is "
       << last_msg_->stec_residuals[13].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[13].sv_id.constellation, 128)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[13].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[13].sv_id.constellation)),
+            128)
       << "incorrect value for stec_residuals[13].sv_id.constellation, expected "
          "128, is "
       << last_msg_->stec_residuals[13].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[13].sv_id.satId, 27)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[13].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[13].sv_id.satId)),
+            27)
       << "incorrect value for stec_residuals[13].sv_id.satId, expected 27, is "
       << last_msg_->stec_residuals[13].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[14].residual, -7552)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[14].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[14].residual)),
+            -7552)
       << "incorrect value for stec_residuals[14].residual, expected -7552, is "
       << last_msg_->stec_residuals[14].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[14].stddev, 148)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[14].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[14].stddev)),
+            148)
       << "incorrect value for stec_residuals[14].stddev, expected 148, is "
       << last_msg_->stec_residuals[14].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[14].sv_id.constellation, 238)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[14].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[14].sv_id.constellation)),
+            238)
       << "incorrect value for stec_residuals[14].sv_id.constellation, expected "
          "238, is "
       << last_msg_->stec_residuals[14].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[14].sv_id.satId, 75)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[14].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[14].sv_id.satId)),
+            75)
       << "incorrect value for stec_residuals[14].sv_id.satId, expected 75, is "
       << last_msg_->stec_residuals[14].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[15].residual, -12072)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[15].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[15].residual)),
+            -12072)
       << "incorrect value for stec_residuals[15].residual, expected -12072, is "
       << last_msg_->stec_residuals[15].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[15].stddev, 149)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[15].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[15].stddev)),
+            149)
       << "incorrect value for stec_residuals[15].stddev, expected 149, is "
       << last_msg_->stec_residuals[15].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[15].sv_id.constellation, 61)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[15].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[15].sv_id.constellation)),
+            61)
       << "incorrect value for stec_residuals[15].sv_id.constellation, expected "
          "61, is "
       << last_msg_->stec_residuals[15].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[15].sv_id.satId, 248)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[15].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[15].sv_id.satId)),
+            248)
       << "incorrect value for stec_residuals[15].sv_id.satId, expected 248, is "
       << last_msg_->stec_residuals[15].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[16].residual, -28632)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[16].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[16].residual)),
+            -28632)
       << "incorrect value for stec_residuals[16].residual, expected -28632, is "
       << last_msg_->stec_residuals[16].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[16].stddev, 186)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[16].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[16].stddev)),
+            186)
       << "incorrect value for stec_residuals[16].stddev, expected 186, is "
       << last_msg_->stec_residuals[16].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[16].sv_id.constellation, 224)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[16].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[16].sv_id.constellation)),
+            224)
       << "incorrect value for stec_residuals[16].sv_id.constellation, expected "
          "224, is "
       << last_msg_->stec_residuals[16].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[16].sv_id.satId, 167)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[16].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[16].sv_id.satId)),
+            167)
       << "incorrect value for stec_residuals[16].sv_id.satId, expected 167, is "
       << last_msg_->stec_residuals[16].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[17].residual, -4024)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[17].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[17].residual)),
+            -4024)
       << "incorrect value for stec_residuals[17].residual, expected -4024, is "
       << last_msg_->stec_residuals[17].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[17].stddev, 100)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[17].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[17].stddev)),
+            100)
       << "incorrect value for stec_residuals[17].stddev, expected 100, is "
       << last_msg_->stec_residuals[17].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[17].sv_id.constellation, 227)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[17].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[17].sv_id.constellation)),
+            227)
       << "incorrect value for stec_residuals[17].sv_id.constellation, expected "
          "227, is "
       << last_msg_->stec_residuals[17].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[17].sv_id.satId, 157)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[17].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[17].sv_id.satId)),
+            157)
       << "incorrect value for stec_residuals[17].sv_id.satId, expected 157, is "
       << last_msg_->stec_residuals[17].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[18].residual, 2004)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[18].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[18].residual)),
+            2004)
       << "incorrect value for stec_residuals[18].residual, expected 2004, is "
       << last_msg_->stec_residuals[18].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[18].stddev, 59)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[18].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[18].stddev)),
+            59)
       << "incorrect value for stec_residuals[18].stddev, expected 59, is "
       << last_msg_->stec_residuals[18].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[18].sv_id.constellation, 12)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[18].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[18].sv_id.constellation)),
+            12)
       << "incorrect value for stec_residuals[18].sv_id.constellation, expected "
          "12, is "
       << last_msg_->stec_residuals[18].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[18].sv_id.satId, 35)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[18].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[18].sv_id.satId)),
+            35)
       << "incorrect value for stec_residuals[18].sv_id.satId, expected 35, is "
       << last_msg_->stec_residuals[18].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[19].residual, 6998)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[19].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[19].residual)),
+            6998)
       << "incorrect value for stec_residuals[19].residual, expected 6998, is "
       << last_msg_->stec_residuals[19].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[19].stddev, 24)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[19].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[19].stddev)),
+            24)
       << "incorrect value for stec_residuals[19].stddev, expected 24, is "
       << last_msg_->stec_residuals[19].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[19].sv_id.constellation, 81)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[19].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[19].sv_id.constellation)),
+            81)
       << "incorrect value for stec_residuals[19].sv_id.constellation, expected "
          "81, is "
       << last_msg_->stec_residuals[19].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[19].sv_id.satId, 176)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[19].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[19].sv_id.satId)),
+            176)
       << "incorrect value for stec_residuals[19].sv_id.satId, expected 176, is "
       << last_msg_->stec_residuals[19].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[20].residual, -31701)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[20].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[20].residual)),
+            -31701)
       << "incorrect value for stec_residuals[20].residual, expected -31701, is "
       << last_msg_->stec_residuals[20].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[20].stddev, 45)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[20].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[20].stddev)),
+            45)
       << "incorrect value for stec_residuals[20].stddev, expected 45, is "
       << last_msg_->stec_residuals[20].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[20].sv_id.constellation, 67)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[20].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[20].sv_id.constellation)),
+            67)
       << "incorrect value for stec_residuals[20].sv_id.constellation, expected "
          "67, is "
       << last_msg_->stec_residuals[20].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[20].sv_id.satId, 155)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[20].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[20].sv_id.satId)),
+            155)
       << "incorrect value for stec_residuals[20].sv_id.satId, expected 155, is "
       << last_msg_->stec_residuals[20].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[21].residual, 28678)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[21].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[21].residual)),
+            28678)
       << "incorrect value for stec_residuals[21].residual, expected 28678, is "
       << last_msg_->stec_residuals[21].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[21].stddev, 183)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[21].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[21].stddev)),
+            183)
       << "incorrect value for stec_residuals[21].stddev, expected 183, is "
       << last_msg_->stec_residuals[21].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[21].sv_id.constellation, 44)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[21].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[21].sv_id.constellation)),
+            44)
       << "incorrect value for stec_residuals[21].sv_id.constellation, expected "
          "44, is "
       << last_msg_->stec_residuals[21].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[21].sv_id.satId, 203)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[21].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[21].sv_id.satId)),
+            203)
       << "incorrect value for stec_residuals[21].sv_id.satId, expected 203, is "
       << last_msg_->stec_residuals[21].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[22].residual, -15793)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[22].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[22].residual)),
+            -15793)
       << "incorrect value for stec_residuals[22].residual, expected -15793, is "
       << last_msg_->stec_residuals[22].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[22].stddev, 253)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[22].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[22].stddev)),
+            253)
       << "incorrect value for stec_residuals[22].stddev, expected 253, is "
       << last_msg_->stec_residuals[22].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[22].sv_id.constellation, 176)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[22].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[22].sv_id.constellation)),
+            176)
       << "incorrect value for stec_residuals[22].sv_id.constellation, expected "
          "176, is "
       << last_msg_->stec_residuals[22].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[22].sv_id.satId, 231)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[22].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[22].sv_id.satId)),
+            231)
       << "incorrect value for stec_residuals[22].sv_id.satId, expected 231, is "
       << last_msg_->stec_residuals[22].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[23].residual, -7589)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[23].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[23].residual)),
+            -7589)
       << "incorrect value for stec_residuals[23].residual, expected -7589, is "
       << last_msg_->stec_residuals[23].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[23].stddev, 116)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[23].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[23].stddev)),
+            116)
       << "incorrect value for stec_residuals[23].stddev, expected 116, is "
       << last_msg_->stec_residuals[23].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[23].sv_id.constellation, 103)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[23].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[23].sv_id.constellation)),
+            103)
       << "incorrect value for stec_residuals[23].sv_id.constellation, expected "
          "103, is "
       << last_msg_->stec_residuals[23].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[23].sv_id.satId, 247)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[23].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[23].sv_id.satId)),
+            247)
       << "incorrect value for stec_residuals[23].sv_id.satId, expected 247, is "
       << last_msg_->stec_residuals[23].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[24].residual, -7362)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[24].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[24].residual)),
+            -7362)
       << "incorrect value for stec_residuals[24].residual, expected -7362, is "
       << last_msg_->stec_residuals[24].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[24].stddev, 240)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[24].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[24].stddev)),
+            240)
       << "incorrect value for stec_residuals[24].stddev, expected 240, is "
       << last_msg_->stec_residuals[24].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[24].sv_id.constellation, 23)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[24].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[24].sv_id.constellation)),
+            23)
       << "incorrect value for stec_residuals[24].sv_id.constellation, expected "
          "23, is "
       << last_msg_->stec_residuals[24].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[24].sv_id.satId, 148)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[24].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[24].sv_id.satId)),
+            148)
       << "incorrect value for stec_residuals[24].sv_id.satId, expected 148, is "
       << last_msg_->stec_residuals[24].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[25].residual, 4813)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[25].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[25].residual)),
+            4813)
       << "incorrect value for stec_residuals[25].residual, expected 4813, is "
       << last_msg_->stec_residuals[25].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[25].stddev, 242)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[25].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[25].stddev)),
+            242)
       << "incorrect value for stec_residuals[25].stddev, expected 242, is "
       << last_msg_->stec_residuals[25].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[25].sv_id.constellation, 219)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[25].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[25].sv_id.constellation)),
+            219)
       << "incorrect value for stec_residuals[25].sv_id.constellation, expected "
          "219, is "
       << last_msg_->stec_residuals[25].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[25].sv_id.satId, 29)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[25].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[25].sv_id.satId)),
+            29)
       << "incorrect value for stec_residuals[25].sv_id.satId, expected 29, is "
       << last_msg_->stec_residuals[25].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[26].residual, 20295)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[26].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[26].residual)),
+            20295)
       << "incorrect value for stec_residuals[26].residual, expected 20295, is "
       << last_msg_->stec_residuals[26].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[26].stddev, 37)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[26].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[26].stddev)),
+            37)
       << "incorrect value for stec_residuals[26].stddev, expected 37, is "
       << last_msg_->stec_residuals[26].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[26].sv_id.constellation, 72)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[26].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[26].sv_id.constellation)),
+            72)
       << "incorrect value for stec_residuals[26].sv_id.constellation, expected "
          "72, is "
       << last_msg_->stec_residuals[26].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[26].sv_id.satId, 207)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[26].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[26].sv_id.satId)),
+            207)
       << "incorrect value for stec_residuals[26].sv_id.satId, expected 207, is "
       << last_msg_->stec_residuals[26].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[27].residual, -13623)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[27].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[27].residual)),
+            -13623)
       << "incorrect value for stec_residuals[27].residual, expected -13623, is "
       << last_msg_->stec_residuals[27].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[27].stddev, 91)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[27].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[27].stddev)),
+            91)
       << "incorrect value for stec_residuals[27].stddev, expected 91, is "
       << last_msg_->stec_residuals[27].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[27].sv_id.constellation, 176)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[27].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[27].sv_id.constellation)),
+            176)
       << "incorrect value for stec_residuals[27].sv_id.constellation, expected "
          "176, is "
       << last_msg_->stec_residuals[27].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[27].sv_id.satId, 42)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[27].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[27].sv_id.satId)),
+            42)
       << "incorrect value for stec_residuals[27].sv_id.satId, expected 42, is "
       << last_msg_->stec_residuals[27].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[28].residual, 15250)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[28].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[28].residual)),
+            15250)
       << "incorrect value for stec_residuals[28].residual, expected 15250, is "
       << last_msg_->stec_residuals[28].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[28].stddev, 110)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[28].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[28].stddev)),
+            110)
       << "incorrect value for stec_residuals[28].stddev, expected 110, is "
       << last_msg_->stec_residuals[28].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[28].sv_id.constellation, 115)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[28].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[28].sv_id.constellation)),
+            115)
       << "incorrect value for stec_residuals[28].sv_id.constellation, expected "
          "115, is "
       << last_msg_->stec_residuals[28].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[28].sv_id.satId, 105)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[28].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[28].sv_id.satId)),
+            105)
       << "incorrect value for stec_residuals[28].sv_id.satId, expected 105, is "
       << last_msg_->stec_residuals[28].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[29].residual, -18560)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[29].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[29].residual)),
+            -18560)
       << "incorrect value for stec_residuals[29].residual, expected -18560, is "
       << last_msg_->stec_residuals[29].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[29].stddev, 185)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[29].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[29].stddev)),
+            185)
       << "incorrect value for stec_residuals[29].stddev, expected 185, is "
       << last_msg_->stec_residuals[29].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[29].sv_id.constellation, 109)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[29].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[29].sv_id.constellation)),
+            109)
       << "incorrect value for stec_residuals[29].sv_id.constellation, expected "
          "109, is "
       << last_msg_->stec_residuals[29].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[29].sv_id.satId, 44)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[29].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[29].sv_id.satId)),
+            44)
       << "incorrect value for stec_residuals[29].sv_id.satId, expected 44, is "
       << last_msg_->stec_residuals[29].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[30].residual, 23717)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[30].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[30].residual)),
+            23717)
       << "incorrect value for stec_residuals[30].residual, expected 23717, is "
       << last_msg_->stec_residuals[30].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[30].stddev, 79)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[30].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[30].stddev)),
+            79)
       << "incorrect value for stec_residuals[30].stddev, expected 79, is "
       << last_msg_->stec_residuals[30].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[30].sv_id.constellation, 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[30].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[30].sv_id.constellation)),
+            31)
       << "incorrect value for stec_residuals[30].sv_id.constellation, expected "
          "31, is "
       << last_msg_->stec_residuals[30].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[30].sv_id.satId, 67)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[30].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[30].sv_id.satId)),
+            67)
       << "incorrect value for stec_residuals[30].sv_id.satId, expected 67, is "
       << last_msg_->stec_residuals[30].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[31].residual, 1886)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[31].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[31].residual)),
+            1886)
       << "incorrect value for stec_residuals[31].residual, expected 1886, is "
       << last_msg_->stec_residuals[31].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[31].stddev, 162)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[31].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[31].stddev)),
+            162)
       << "incorrect value for stec_residuals[31].stddev, expected 162, is "
       << last_msg_->stec_residuals[31].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[31].sv_id.constellation, 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[31].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[31].sv_id.constellation)),
+            180)
       << "incorrect value for stec_residuals[31].sv_id.constellation, expected "
          "180, is "
       << last_msg_->stec_residuals[31].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[31].sv_id.satId, 189)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[31].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[31].sv_id.satId)),
+            189)
       << "incorrect value for stec_residuals[31].sv_id.satId, expected 189, is "
       << last_msg_->stec_residuals[31].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[32].residual, 12242)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[32].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[32].residual)),
+            12242)
       << "incorrect value for stec_residuals[32].residual, expected 12242, is "
       << last_msg_->stec_residuals[32].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[32].stddev, 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[32].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[32].stddev)),
+            7)
       << "incorrect value for stec_residuals[32].stddev, expected 7, is "
       << last_msg_->stec_residuals[32].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[32].sv_id.constellation, 156)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[32].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[32].sv_id.constellation)),
+            156)
       << "incorrect value for stec_residuals[32].sv_id.constellation, expected "
          "156, is "
       << last_msg_->stec_residuals[32].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[32].sv_id.satId, 121)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[32].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[32].sv_id.satId)),
+            121)
       << "incorrect value for stec_residuals[32].sv_id.satId, expected 121, is "
       << last_msg_->stec_residuals[32].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[33].residual, 10670)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[33].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[33].residual)),
+            10670)
       << "incorrect value for stec_residuals[33].residual, expected 10670, is "
       << last_msg_->stec_residuals[33].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[33].stddev, 241)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[33].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[33].stddev)),
+            241)
       << "incorrect value for stec_residuals[33].stddev, expected 241, is "
       << last_msg_->stec_residuals[33].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[33].sv_id.constellation, 205)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[33].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[33].sv_id.constellation)),
+            205)
       << "incorrect value for stec_residuals[33].sv_id.constellation, expected "
          "205, is "
       << last_msg_->stec_residuals[33].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[33].sv_id.satId, 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[33].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[33].sv_id.satId)),
+            7)
       << "incorrect value for stec_residuals[33].sv_id.satId, expected 7, is "
       << last_msg_->stec_residuals[33].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[34].residual, 25899)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[34].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[34].residual)),
+            25899)
       << "incorrect value for stec_residuals[34].residual, expected 25899, is "
       << last_msg_->stec_residuals[34].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[34].stddev, 186)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[34].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[34].stddev)),
+            186)
       << "incorrect value for stec_residuals[34].stddev, expected 186, is "
       << last_msg_->stec_residuals[34].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[34].sv_id.constellation, 210)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[34].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[34].sv_id.constellation)),
+            210)
       << "incorrect value for stec_residuals[34].sv_id.constellation, expected "
          "210, is "
       << last_msg_->stec_residuals[34].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[34].sv_id.satId, 129)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[34].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[34].sv_id.satId)),
+            129)
       << "incorrect value for stec_residuals[34].sv_id.satId, expected 129, is "
       << last_msg_->stec_residuals[34].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[35].residual, -2078)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[35].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[35].residual)),
+            -2078)
       << "incorrect value for stec_residuals[35].residual, expected -2078, is "
       << last_msg_->stec_residuals[35].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[35].stddev, 187)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[35].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[35].stddev)),
+            187)
       << "incorrect value for stec_residuals[35].stddev, expected 187, is "
       << last_msg_->stec_residuals[35].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[35].sv_id.constellation, 195)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[35].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[35].sv_id.constellation)),
+            195)
       << "incorrect value for stec_residuals[35].sv_id.constellation, expected "
          "195, is "
       << last_msg_->stec_residuals[35].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[35].sv_id.satId, 208)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[35].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[35].sv_id.satId)),
+            208)
       << "incorrect value for stec_residuals[35].sv_id.satId, expected 208, is "
       << last_msg_->stec_residuals[35].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[36].residual, -16264)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[36].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[36].residual)),
+            -16264)
       << "incorrect value for stec_residuals[36].residual, expected -16264, is "
       << last_msg_->stec_residuals[36].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[36].stddev, 102)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[36].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[36].stddev)),
+            102)
       << "incorrect value for stec_residuals[36].stddev, expected 102, is "
       << last_msg_->stec_residuals[36].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[36].sv_id.constellation, 160)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[36].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[36].sv_id.constellation)),
+            160)
       << "incorrect value for stec_residuals[36].sv_id.constellation, expected "
          "160, is "
       << last_msg_->stec_residuals[36].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[36].sv_id.satId, 219)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[36].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[36].sv_id.satId)),
+            219)
       << "incorrect value for stec_residuals[36].sv_id.satId, expected 219, is "
       << last_msg_->stec_residuals[36].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[37].residual, -21002)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[37].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[37].residual)),
+            -21002)
       << "incorrect value for stec_residuals[37].residual, expected -21002, is "
       << last_msg_->stec_residuals[37].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[37].stddev, 94)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[37].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[37].stddev)),
+            94)
       << "incorrect value for stec_residuals[37].stddev, expected 94, is "
       << last_msg_->stec_residuals[37].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[37].sv_id.constellation, 42)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[37].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[37].sv_id.constellation)),
+            42)
       << "incorrect value for stec_residuals[37].sv_id.constellation, expected "
          "42, is "
       << last_msg_->stec_residuals[37].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[37].sv_id.satId, 166)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[37].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[37].sv_id.satId)),
+            166)
       << "incorrect value for stec_residuals[37].sv_id.satId, expected 166, is "
       << last_msg_->stec_residuals[37].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[38].residual, 7902)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[38].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[38].residual)),
+            7902)
       << "incorrect value for stec_residuals[38].residual, expected 7902, is "
       << last_msg_->stec_residuals[38].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[38].stddev, 35)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[38].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[38].stddev)),
+            35)
       << "incorrect value for stec_residuals[38].stddev, expected 35, is "
       << last_msg_->stec_residuals[38].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[38].sv_id.constellation, 156)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[38].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[38].sv_id.constellation)),
+            156)
       << "incorrect value for stec_residuals[38].sv_id.constellation, expected "
          "156, is "
       << last_msg_->stec_residuals[38].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[38].sv_id.satId, 102)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[38].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[38].sv_id.satId)),
+            102)
       << "incorrect value for stec_residuals[38].sv_id.satId, expected 102, is "
       << last_msg_->stec_residuals[38].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[39].residual, -30275)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[39].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[39].residual)),
+            -30275)
       << "incorrect value for stec_residuals[39].residual, expected -30275, is "
       << last_msg_->stec_residuals[39].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[39].stddev, 204)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[39].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[39].stddev)),
+            204)
       << "incorrect value for stec_residuals[39].stddev, expected 204, is "
       << last_msg_->stec_residuals[39].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[39].sv_id.constellation, 64)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[39].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[39].sv_id.constellation)),
+            64)
       << "incorrect value for stec_residuals[39].sv_id.constellation, expected "
          "64, is "
       << last_msg_->stec_residuals[39].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[39].sv_id.satId, 247)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[39].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[39].sv_id.satId)),
+            247)
       << "incorrect value for stec_residuals[39].sv_id.satId, expected 247, is "
       << last_msg_->stec_residuals[39].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[40].residual, -8633)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[40].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[40].residual)),
+            -8633)
       << "incorrect value for stec_residuals[40].residual, expected -8633, is "
       << last_msg_->stec_residuals[40].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[40].stddev, 222)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[40].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[40].stddev)),
+            222)
       << "incorrect value for stec_residuals[40].stddev, expected 222, is "
       << last_msg_->stec_residuals[40].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[40].sv_id.constellation, 32)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[40].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[40].sv_id.constellation)),
+            32)
       << "incorrect value for stec_residuals[40].sv_id.constellation, expected "
          "32, is "
       << last_msg_->stec_residuals[40].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[40].sv_id.satId, 220)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[40].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[40].sv_id.satId)),
+            220)
       << "incorrect value for stec_residuals[40].sv_id.satId, expected 220, is "
       << last_msg_->stec_residuals[40].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[41].residual, 6403)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[41].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[41].residual)),
+            6403)
       << "incorrect value for stec_residuals[41].residual, expected 6403, is "
       << last_msg_->stec_residuals[41].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[41].stddev, 45)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[41].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[41].stddev)),
+            45)
       << "incorrect value for stec_residuals[41].stddev, expected 45, is "
       << last_msg_->stec_residuals[41].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[41].sv_id.constellation, 246)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[41].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[41].sv_id.constellation)),
+            246)
       << "incorrect value for stec_residuals[41].sv_id.constellation, expected "
          "246, is "
       << last_msg_->stec_residuals[41].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[41].sv_id.satId, 201)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[41].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[41].sv_id.satId)),
+            201)
       << "incorrect value for stec_residuals[41].sv_id.satId, expected 201, is "
       << last_msg_->stec_residuals[41].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[42].residual, 22643)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[42].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[42].residual)),
+            22643)
       << "incorrect value for stec_residuals[42].residual, expected 22643, is "
       << last_msg_->stec_residuals[42].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[42].stddev, 218)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[42].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[42].stddev)),
+            218)
       << "incorrect value for stec_residuals[42].stddev, expected 218, is "
       << last_msg_->stec_residuals[42].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[42].sv_id.constellation, 239)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[42].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[42].sv_id.constellation)),
+            239)
       << "incorrect value for stec_residuals[42].sv_id.constellation, expected "
          "239, is "
       << last_msg_->stec_residuals[42].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[42].sv_id.satId, 251)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[42].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[42].sv_id.satId)),
+            251)
       << "incorrect value for stec_residuals[42].sv_id.satId, expected 251, is "
       << last_msg_->stec_residuals[42].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[43].residual, 16760)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[43].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[43].residual)),
+            16760)
       << "incorrect value for stec_residuals[43].residual, expected 16760, is "
       << last_msg_->stec_residuals[43].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[43].stddev, 175)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[43].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[43].stddev)),
+            175)
       << "incorrect value for stec_residuals[43].stddev, expected 175, is "
       << last_msg_->stec_residuals[43].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[43].sv_id.constellation, 209)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[43].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[43].sv_id.constellation)),
+            209)
       << "incorrect value for stec_residuals[43].sv_id.constellation, expected "
          "209, is "
       << last_msg_->stec_residuals[43].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[43].sv_id.satId, 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[43].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[43].sv_id.satId)),
+            10)
       << "incorrect value for stec_residuals[43].sv_id.satId, expected 10, is "
       << last_msg_->stec_residuals[43].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[44].residual, -20951)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[44].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[44].residual)),
+            -20951)
       << "incorrect value for stec_residuals[44].residual, expected -20951, is "
       << last_msg_->stec_residuals[44].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[44].stddev, 137)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[44].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[44].stddev)),
+            137)
       << "incorrect value for stec_residuals[44].stddev, expected 137, is "
       << last_msg_->stec_residuals[44].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[44].sv_id.constellation, 194)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[44].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[44].sv_id.constellation)),
+            194)
       << "incorrect value for stec_residuals[44].sv_id.constellation, expected "
          "194, is "
       << last_msg_->stec_residuals[44].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[44].sv_id.satId, 131)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[44].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[44].sv_id.satId)),
+            131)
       << "incorrect value for stec_residuals[44].sv_id.satId, expected 131, is "
       << last_msg_->stec_residuals[44].sv_id.satId;
-  EXPECT_EQ(last_msg_->stec_residuals[45].residual, -740)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[45].residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[45].residual)),
+            -740)
       << "incorrect value for stec_residuals[45].residual, expected -740, is "
       << last_msg_->stec_residuals[45].residual;
-  EXPECT_EQ(last_msg_->stec_residuals[45].stddev, 42)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[45].stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[45].stddev)),
+            42)
       << "incorrect value for stec_residuals[45].stddev, expected 42, is "
       << last_msg_->stec_residuals[45].stddev;
-  EXPECT_EQ(last_msg_->stec_residuals[45].sv_id.constellation, 68)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[45].sv_id.constellation)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[45].sv_id.constellation)),
+            68)
       << "incorrect value for stec_residuals[45].sv_id.constellation, expected "
          "68, is "
       << last_msg_->stec_residuals[45].sv_id.constellation;
-  EXPECT_EQ(last_msg_->stec_residuals[45].sv_id.satId, 17)
+  EXPECT_EQ(get_as<decltype(last_msg_->stec_residuals[45].sv_id.satId)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->stec_residuals[45].sv_id.satId)),
+            17)
       << "incorrect value for stec_residuals[45].sv_id.satId, expected 17, is "
       << last_msg_->stec_residuals[45].sv_id.satId;
-  EXPECT_EQ(last_msg_->tropo_delay_correction.hydro, -3035)
+  EXPECT_EQ(get_as<decltype(last_msg_->tropo_delay_correction.hydro)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->tropo_delay_correction.hydro)),
+            -3035)
       << "incorrect value for tropo_delay_correction.hydro, expected -3035, is "
       << last_msg_->tropo_delay_correction.hydro;
-  EXPECT_EQ(last_msg_->tropo_delay_correction.stddev, 72)
+  EXPECT_EQ(get_as<decltype(last_msg_->tropo_delay_correction.stddev)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->tropo_delay_correction.stddev)),
+            72)
       << "incorrect value for tropo_delay_correction.stddev, expected 72, is "
       << last_msg_->tropo_delay_correction.stddev;
-  EXPECT_EQ(last_msg_->tropo_delay_correction.wet, 78)
+  EXPECT_EQ(get_as<decltype(last_msg_->tropo_delay_correction.wet)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->tropo_delay_correction.wet)),
+            78)
       << "incorrect value for tropo_delay_correction.wet, expected 78, is "
       << last_msg_->tropo_delay_correction.wet;
 }

@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/piksi.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_piksi_MsgNetworkStateResp0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -229,7 +236,9 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgNetworkStateResp0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 3880);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 2471552451)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            2471552451)
       << "incorrect value for flags, expected 2471552451, is "
       << last_msg_->flags;
   {
@@ -243,76 +252,130 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgNetworkStateResp0, Test) {
         << "incorrect value for last_msg_->interface_name, expected string '"
         << check_string << "', is '" << last_msg_->interface_name << "'";
   }
-  EXPECT_EQ(last_msg_->ipv4_address[0], 143)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv4_address[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv4_address[0])),
+            143)
       << "incorrect value for ipv4_address[0], expected 143, is "
       << last_msg_->ipv4_address[0];
-  EXPECT_EQ(last_msg_->ipv4_address[1], 241)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv4_address[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv4_address[1])),
+            241)
       << "incorrect value for ipv4_address[1], expected 241, is "
       << last_msg_->ipv4_address[1];
-  EXPECT_EQ(last_msg_->ipv4_address[2], 84)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv4_address[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv4_address[2])),
+            84)
       << "incorrect value for ipv4_address[2], expected 84, is "
       << last_msg_->ipv4_address[2];
-  EXPECT_EQ(last_msg_->ipv4_address[3], 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv4_address[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv4_address[3])),
+            180)
       << "incorrect value for ipv4_address[3], expected 180, is "
       << last_msg_->ipv4_address[3];
-  EXPECT_EQ(last_msg_->ipv4_mask_size, 152)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv4_mask_size)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv4_mask_size)),
+            152)
       << "incorrect value for ipv4_mask_size, expected 152, is "
       << last_msg_->ipv4_mask_size;
-  EXPECT_EQ(last_msg_->ipv6_address[0], 194)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_address[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[0])),
+            194)
       << "incorrect value for ipv6_address[0], expected 194, is "
       << last_msg_->ipv6_address[0];
-  EXPECT_EQ(last_msg_->ipv6_address[1], 137)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_address[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[1])),
+            137)
       << "incorrect value for ipv6_address[1], expected 137, is "
       << last_msg_->ipv6_address[1];
-  EXPECT_EQ(last_msg_->ipv6_address[2], 32)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_address[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[2])),
+            32)
       << "incorrect value for ipv6_address[2], expected 32, is "
       << last_msg_->ipv6_address[2];
-  EXPECT_EQ(last_msg_->ipv6_address[3], 44)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_address[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[3])),
+            44)
       << "incorrect value for ipv6_address[3], expected 44, is "
       << last_msg_->ipv6_address[3];
-  EXPECT_EQ(last_msg_->ipv6_address[4], 114)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_address[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[4])),
+            114)
       << "incorrect value for ipv6_address[4], expected 114, is "
       << last_msg_->ipv6_address[4];
-  EXPECT_EQ(last_msg_->ipv6_address[5], 147)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_address[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[5])),
+            147)
       << "incorrect value for ipv6_address[5], expected 147, is "
       << last_msg_->ipv6_address[5];
-  EXPECT_EQ(last_msg_->ipv6_address[6], 68)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_address[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[6])),
+            68)
       << "incorrect value for ipv6_address[6], expected 68, is "
       << last_msg_->ipv6_address[6];
-  EXPECT_EQ(last_msg_->ipv6_address[7], 222)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_address[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[7])),
+            222)
       << "incorrect value for ipv6_address[7], expected 222, is "
       << last_msg_->ipv6_address[7];
-  EXPECT_EQ(last_msg_->ipv6_address[8], 92)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_address[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[8])),
+            92)
       << "incorrect value for ipv6_address[8], expected 92, is "
       << last_msg_->ipv6_address[8];
-  EXPECT_EQ(last_msg_->ipv6_address[9], 192)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_address[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[9])),
+            192)
       << "incorrect value for ipv6_address[9], expected 192, is "
       << last_msg_->ipv6_address[9];
-  EXPECT_EQ(last_msg_->ipv6_address[10], 78)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->ipv6_address[10])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[10])),
+      78)
       << "incorrect value for ipv6_address[10], expected 78, is "
       << last_msg_->ipv6_address[10];
-  EXPECT_EQ(last_msg_->ipv6_address[11], 235)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->ipv6_address[11])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[11])),
+      235)
       << "incorrect value for ipv6_address[11], expected 235, is "
       << last_msg_->ipv6_address[11];
-  EXPECT_EQ(last_msg_->ipv6_address[12], 63)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->ipv6_address[12])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[12])),
+      63)
       << "incorrect value for ipv6_address[12], expected 63, is "
       << last_msg_->ipv6_address[12];
-  EXPECT_EQ(last_msg_->ipv6_address[13], 208)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->ipv6_address[13])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[13])),
+      208)
       << "incorrect value for ipv6_address[13], expected 208, is "
       << last_msg_->ipv6_address[13];
-  EXPECT_EQ(last_msg_->ipv6_address[14], 114)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->ipv6_address[14])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[14])),
+      114)
       << "incorrect value for ipv6_address[14], expected 114, is "
       << last_msg_->ipv6_address[14];
-  EXPECT_EQ(last_msg_->ipv6_address[15], 53)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->ipv6_address[15])>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_address[15])),
+      53)
       << "incorrect value for ipv6_address[15], expected 53, is "
       << last_msg_->ipv6_address[15];
-  EXPECT_EQ(last_msg_->ipv6_mask_size, 183)
+  EXPECT_EQ(get_as<decltype(last_msg_->ipv6_mask_size)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ipv6_mask_size)),
+            183)
       << "incorrect value for ipv6_mask_size, expected 183, is "
       << last_msg_->ipv6_mask_size;
-  EXPECT_EQ(last_msg_->rx_bytes, 451408920)
+  EXPECT_EQ(get_as<decltype(last_msg_->rx_bytes)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->rx_bytes)),
+            451408920)
       << "incorrect value for rx_bytes, expected 451408920, is "
       << last_msg_->rx_bytes;
-  EXPECT_EQ(last_msg_->tx_bytes, 59251049)
+  EXPECT_EQ(get_as<decltype(last_msg_->tx_bytes)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tx_bytes)),
+            59251049)
       << "incorrect value for tx_bytes, expected 59251049, is "
       << last_msg_->tx_bytes;
 }

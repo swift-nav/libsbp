@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ext_events.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ext_events_MsgExtEvent0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -115,15 +122,25 @@ TEST_F(Test_legacy_auto_check_sbp_ext_events_MsgExtEvent0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1781);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            3)
       << "incorrect value for flags, expected 3, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->ns_residual, 999882)
+  EXPECT_EQ(get_as<decltype(last_msg_->ns_residual)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->ns_residual)),
+            999882)
       << "incorrect value for ns_residual, expected 999882, is "
       << last_msg_->ns_residual;
-  EXPECT_EQ(last_msg_->pin, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->pin)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pin)),
+            0)
       << "incorrect value for pin, expected 0, is " << last_msg_->pin;
-  EXPECT_EQ(last_msg_->tow, 254924999)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            254924999)
       << "incorrect value for tow, expected 254924999, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 1840)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            1840)
       << "incorrect value for wn, expected 1840, is " << last_msg_->wn;
 }

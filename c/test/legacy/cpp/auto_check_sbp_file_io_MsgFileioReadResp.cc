@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/file_io.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_file_io_MsgFileioReadResp0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -1383,760 +1390,1264 @@ TEST_F(Test_legacy_auto_check_sbp_file_io_MsgFileioReadResp0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->contents[0], 73)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[0])),
+            73)
       << "incorrect value for contents[0], expected 73, is "
       << last_msg_->contents[0];
-  EXPECT_EQ(last_msg_->contents[1], 231)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[1])),
+            231)
       << "incorrect value for contents[1], expected 231, is "
       << last_msg_->contents[1];
-  EXPECT_EQ(last_msg_->contents[2], 227)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[2])),
+            227)
       << "incorrect value for contents[2], expected 227, is "
       << last_msg_->contents[2];
-  EXPECT_EQ(last_msg_->contents[3], 179)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[3])),
+            179)
       << "incorrect value for contents[3], expected 179, is "
       << last_msg_->contents[3];
-  EXPECT_EQ(last_msg_->contents[4], 18)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[4])),
+            18)
       << "incorrect value for contents[4], expected 18, is "
       << last_msg_->contents[4];
-  EXPECT_EQ(last_msg_->contents[5], 76)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[5])),
+            76)
       << "incorrect value for contents[5], expected 76, is "
       << last_msg_->contents[5];
-  EXPECT_EQ(last_msg_->contents[6], 68)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[6])),
+            68)
       << "incorrect value for contents[6], expected 68, is "
       << last_msg_->contents[6];
-  EXPECT_EQ(last_msg_->contents[7], 229)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[7])),
+            229)
       << "incorrect value for contents[7], expected 229, is "
       << last_msg_->contents[7];
-  EXPECT_EQ(last_msg_->contents[8], 216)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[8])),
+            216)
       << "incorrect value for contents[8], expected 216, is "
       << last_msg_->contents[8];
-  EXPECT_EQ(last_msg_->contents[9], 21)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[9])),
+            21)
       << "incorrect value for contents[9], expected 21, is "
       << last_msg_->contents[9];
-  EXPECT_EQ(last_msg_->contents[10], 98)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[10])),
+            98)
       << "incorrect value for contents[10], expected 98, is "
       << last_msg_->contents[10];
-  EXPECT_EQ(last_msg_->contents[11], 183)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[11])),
+            183)
       << "incorrect value for contents[11], expected 183, is "
       << last_msg_->contents[11];
-  EXPECT_EQ(last_msg_->contents[12], 69)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[12])),
+            69)
       << "incorrect value for contents[12], expected 69, is "
       << last_msg_->contents[12];
-  EXPECT_EQ(last_msg_->contents[13], 190)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[13])),
+            190)
       << "incorrect value for contents[13], expected 190, is "
       << last_msg_->contents[13];
-  EXPECT_EQ(last_msg_->contents[14], 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[14])),
+            5)
       << "incorrect value for contents[14], expected 5, is "
       << last_msg_->contents[14];
-  EXPECT_EQ(last_msg_->contents[15], 252)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[15])),
+            252)
       << "incorrect value for contents[15], expected 252, is "
       << last_msg_->contents[15];
-  EXPECT_EQ(last_msg_->contents[16], 176)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[16])),
+            176)
       << "incorrect value for contents[16], expected 176, is "
       << last_msg_->contents[16];
-  EXPECT_EQ(last_msg_->contents[17], 55)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[17])),
+            55)
       << "incorrect value for contents[17], expected 55, is "
       << last_msg_->contents[17];
-  EXPECT_EQ(last_msg_->contents[18], 32)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[18])),
+            32)
       << "incorrect value for contents[18], expected 32, is "
       << last_msg_->contents[18];
-  EXPECT_EQ(last_msg_->contents[19], 78)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[19])),
+            78)
       << "incorrect value for contents[19], expected 78, is "
       << last_msg_->contents[19];
-  EXPECT_EQ(last_msg_->contents[20], 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[20])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[20])),
+            8)
       << "incorrect value for contents[20], expected 8, is "
       << last_msg_->contents[20];
-  EXPECT_EQ(last_msg_->contents[21], 52)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[21])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[21])),
+            52)
       << "incorrect value for contents[21], expected 52, is "
       << last_msg_->contents[21];
-  EXPECT_EQ(last_msg_->contents[22], 127)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[22])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[22])),
+            127)
       << "incorrect value for contents[22], expected 127, is "
       << last_msg_->contents[22];
-  EXPECT_EQ(last_msg_->contents[23], 50)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[23])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[23])),
+            50)
       << "incorrect value for contents[23], expected 50, is "
       << last_msg_->contents[23];
-  EXPECT_EQ(last_msg_->contents[24], 71)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[24])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[24])),
+            71)
       << "incorrect value for contents[24], expected 71, is "
       << last_msg_->contents[24];
-  EXPECT_EQ(last_msg_->contents[25], 106)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[25])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[25])),
+            106)
       << "incorrect value for contents[25], expected 106, is "
       << last_msg_->contents[25];
-  EXPECT_EQ(last_msg_->contents[26], 61)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[26])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[26])),
+            61)
       << "incorrect value for contents[26], expected 61, is "
       << last_msg_->contents[26];
-  EXPECT_EQ(last_msg_->contents[27], 79)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[27])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[27])),
+            79)
       << "incorrect value for contents[27], expected 79, is "
       << last_msg_->contents[27];
-  EXPECT_EQ(last_msg_->contents[28], 191)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[28])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[28])),
+            191)
       << "incorrect value for contents[28], expected 191, is "
       << last_msg_->contents[28];
-  EXPECT_EQ(last_msg_->contents[29], 106)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[29])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[29])),
+            106)
       << "incorrect value for contents[29], expected 106, is "
       << last_msg_->contents[29];
-  EXPECT_EQ(last_msg_->contents[30], 46)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[30])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[30])),
+            46)
       << "incorrect value for contents[30], expected 46, is "
       << last_msg_->contents[30];
-  EXPECT_EQ(last_msg_->contents[31], 79)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[31])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[31])),
+            79)
       << "incorrect value for contents[31], expected 79, is "
       << last_msg_->contents[31];
-  EXPECT_EQ(last_msg_->contents[32], 118)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[32])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[32])),
+            118)
       << "incorrect value for contents[32], expected 118, is "
       << last_msg_->contents[32];
-  EXPECT_EQ(last_msg_->contents[33], 248)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[33])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[33])),
+            248)
       << "incorrect value for contents[33], expected 248, is "
       << last_msg_->contents[33];
-  EXPECT_EQ(last_msg_->contents[34], 118)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[34])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[34])),
+            118)
       << "incorrect value for contents[34], expected 118, is "
       << last_msg_->contents[34];
-  EXPECT_EQ(last_msg_->contents[35], 207)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[35])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[35])),
+            207)
       << "incorrect value for contents[35], expected 207, is "
       << last_msg_->contents[35];
-  EXPECT_EQ(last_msg_->contents[36], 206)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[36])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[36])),
+            206)
       << "incorrect value for contents[36], expected 206, is "
       << last_msg_->contents[36];
-  EXPECT_EQ(last_msg_->contents[37], 210)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[37])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[37])),
+            210)
       << "incorrect value for contents[37], expected 210, is "
       << last_msg_->contents[37];
-  EXPECT_EQ(last_msg_->contents[38], 91)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[38])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[38])),
+            91)
       << "incorrect value for contents[38], expected 91, is "
       << last_msg_->contents[38];
-  EXPECT_EQ(last_msg_->contents[39], 73)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[39])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[39])),
+            73)
       << "incorrect value for contents[39], expected 73, is "
       << last_msg_->contents[39];
-  EXPECT_EQ(last_msg_->contents[40], 251)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[40])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[40])),
+            251)
       << "incorrect value for contents[40], expected 251, is "
       << last_msg_->contents[40];
-  EXPECT_EQ(last_msg_->contents[41], 81)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[41])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[41])),
+            81)
       << "incorrect value for contents[41], expected 81, is "
       << last_msg_->contents[41];
-  EXPECT_EQ(last_msg_->contents[42], 131)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[42])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[42])),
+            131)
       << "incorrect value for contents[42], expected 131, is "
       << last_msg_->contents[42];
-  EXPECT_EQ(last_msg_->contents[43], 205)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[43])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[43])),
+            205)
       << "incorrect value for contents[43], expected 205, is "
       << last_msg_->contents[43];
-  EXPECT_EQ(last_msg_->contents[44], 193)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[44])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[44])),
+            193)
       << "incorrect value for contents[44], expected 193, is "
       << last_msg_->contents[44];
-  EXPECT_EQ(last_msg_->contents[45], 146)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[45])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[45])),
+            146)
       << "incorrect value for contents[45], expected 146, is "
       << last_msg_->contents[45];
-  EXPECT_EQ(last_msg_->contents[46], 206)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[46])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[46])),
+            206)
       << "incorrect value for contents[46], expected 206, is "
       << last_msg_->contents[46];
-  EXPECT_EQ(last_msg_->contents[47], 185)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[47])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[47])),
+            185)
       << "incorrect value for contents[47], expected 185, is "
       << last_msg_->contents[47];
-  EXPECT_EQ(last_msg_->contents[48], 140)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[48])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[48])),
+            140)
       << "incorrect value for contents[48], expected 140, is "
       << last_msg_->contents[48];
-  EXPECT_EQ(last_msg_->contents[49], 249)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[49])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[49])),
+            249)
       << "incorrect value for contents[49], expected 249, is "
       << last_msg_->contents[49];
-  EXPECT_EQ(last_msg_->contents[50], 163)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[50])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[50])),
+            163)
       << "incorrect value for contents[50], expected 163, is "
       << last_msg_->contents[50];
-  EXPECT_EQ(last_msg_->contents[51], 231)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[51])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[51])),
+            231)
       << "incorrect value for contents[51], expected 231, is "
       << last_msg_->contents[51];
-  EXPECT_EQ(last_msg_->contents[52], 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[52])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[52])),
+            65)
       << "incorrect value for contents[52], expected 65, is "
       << last_msg_->contents[52];
-  EXPECT_EQ(last_msg_->contents[53], 67)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[53])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[53])),
+            67)
       << "incorrect value for contents[53], expected 67, is "
       << last_msg_->contents[53];
-  EXPECT_EQ(last_msg_->contents[54], 94)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[54])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[54])),
+            94)
       << "incorrect value for contents[54], expected 94, is "
       << last_msg_->contents[54];
-  EXPECT_EQ(last_msg_->contents[55], 250)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[55])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[55])),
+            250)
       << "incorrect value for contents[55], expected 250, is "
       << last_msg_->contents[55];
-  EXPECT_EQ(last_msg_->contents[56], 109)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[56])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[56])),
+            109)
       << "incorrect value for contents[56], expected 109, is "
       << last_msg_->contents[56];
-  EXPECT_EQ(last_msg_->contents[57], 152)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[57])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[57])),
+            152)
       << "incorrect value for contents[57], expected 152, is "
       << last_msg_->contents[57];
-  EXPECT_EQ(last_msg_->contents[58], 95)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[58])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[58])),
+            95)
       << "incorrect value for contents[58], expected 95, is "
       << last_msg_->contents[58];
-  EXPECT_EQ(last_msg_->contents[59], 123)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[59])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[59])),
+            123)
       << "incorrect value for contents[59], expected 123, is "
       << last_msg_->contents[59];
-  EXPECT_EQ(last_msg_->contents[60], 77)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[60])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[60])),
+            77)
       << "incorrect value for contents[60], expected 77, is "
       << last_msg_->contents[60];
-  EXPECT_EQ(last_msg_->contents[61], 224)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[61])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[61])),
+            224)
       << "incorrect value for contents[61], expected 224, is "
       << last_msg_->contents[61];
-  EXPECT_EQ(last_msg_->contents[62], 124)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[62])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[62])),
+            124)
       << "incorrect value for contents[62], expected 124, is "
       << last_msg_->contents[62];
-  EXPECT_EQ(last_msg_->contents[63], 238)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[63])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[63])),
+            238)
       << "incorrect value for contents[63], expected 238, is "
       << last_msg_->contents[63];
-  EXPECT_EQ(last_msg_->contents[64], 205)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[64])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[64])),
+            205)
       << "incorrect value for contents[64], expected 205, is "
       << last_msg_->contents[64];
-  EXPECT_EQ(last_msg_->contents[65], 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[65])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[65])),
+            65)
       << "incorrect value for contents[65], expected 65, is "
       << last_msg_->contents[65];
-  EXPECT_EQ(last_msg_->contents[66], 103)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[66])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[66])),
+            103)
       << "incorrect value for contents[66], expected 103, is "
       << last_msg_->contents[66];
-  EXPECT_EQ(last_msg_->contents[67], 35)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[67])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[67])),
+            35)
       << "incorrect value for contents[67], expected 35, is "
       << last_msg_->contents[67];
-  EXPECT_EQ(last_msg_->contents[68], 104)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[68])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[68])),
+            104)
       << "incorrect value for contents[68], expected 104, is "
       << last_msg_->contents[68];
-  EXPECT_EQ(last_msg_->contents[69], 209)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[69])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[69])),
+            209)
       << "incorrect value for contents[69], expected 209, is "
       << last_msg_->contents[69];
-  EXPECT_EQ(last_msg_->contents[70], 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[70])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[70])),
+            5)
       << "incorrect value for contents[70], expected 5, is "
       << last_msg_->contents[70];
-  EXPECT_EQ(last_msg_->contents[71], 191)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[71])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[71])),
+            191)
       << "incorrect value for contents[71], expected 191, is "
       << last_msg_->contents[71];
-  EXPECT_EQ(last_msg_->contents[72], 47)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[72])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[72])),
+            47)
       << "incorrect value for contents[72], expected 47, is "
       << last_msg_->contents[72];
-  EXPECT_EQ(last_msg_->contents[73], 249)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[73])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[73])),
+            249)
       << "incorrect value for contents[73], expected 249, is "
       << last_msg_->contents[73];
-  EXPECT_EQ(last_msg_->contents[74], 176)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[74])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[74])),
+            176)
       << "incorrect value for contents[74], expected 176, is "
       << last_msg_->contents[74];
-  EXPECT_EQ(last_msg_->contents[75], 166)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[75])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[75])),
+            166)
       << "incorrect value for contents[75], expected 166, is "
       << last_msg_->contents[75];
-  EXPECT_EQ(last_msg_->contents[76], 213)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[76])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[76])),
+            213)
       << "incorrect value for contents[76], expected 213, is "
       << last_msg_->contents[76];
-  EXPECT_EQ(last_msg_->contents[77], 46)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[77])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[77])),
+            46)
       << "incorrect value for contents[77], expected 46, is "
       << last_msg_->contents[77];
-  EXPECT_EQ(last_msg_->contents[78], 192)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[78])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[78])),
+            192)
       << "incorrect value for contents[78], expected 192, is "
       << last_msg_->contents[78];
-  EXPECT_EQ(last_msg_->contents[79], 86)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[79])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[79])),
+            86)
       << "incorrect value for contents[79], expected 86, is "
       << last_msg_->contents[79];
-  EXPECT_EQ(last_msg_->contents[80], 32)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[80])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[80])),
+            32)
       << "incorrect value for contents[80], expected 32, is "
       << last_msg_->contents[80];
-  EXPECT_EQ(last_msg_->contents[81], 103)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[81])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[81])),
+            103)
       << "incorrect value for contents[81], expected 103, is "
       << last_msg_->contents[81];
-  EXPECT_EQ(last_msg_->contents[82], 146)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[82])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[82])),
+            146)
       << "incorrect value for contents[82], expected 146, is "
       << last_msg_->contents[82];
-  EXPECT_EQ(last_msg_->contents[83], 252)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[83])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[83])),
+            252)
       << "incorrect value for contents[83], expected 252, is "
       << last_msg_->contents[83];
-  EXPECT_EQ(last_msg_->contents[84], 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[84])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[84])),
+            4)
       << "incorrect value for contents[84], expected 4, is "
       << last_msg_->contents[84];
-  EXPECT_EQ(last_msg_->contents[85], 16)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[85])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[85])),
+            16)
       << "incorrect value for contents[85], expected 16, is "
       << last_msg_->contents[85];
-  EXPECT_EQ(last_msg_->contents[86], 54)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[86])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[86])),
+            54)
       << "incorrect value for contents[86], expected 54, is "
       << last_msg_->contents[86];
-  EXPECT_EQ(last_msg_->contents[87], 161)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[87])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[87])),
+            161)
       << "incorrect value for contents[87], expected 161, is "
       << last_msg_->contents[87];
-  EXPECT_EQ(last_msg_->contents[88], 60)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[88])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[88])),
+            60)
       << "incorrect value for contents[88], expected 60, is "
       << last_msg_->contents[88];
-  EXPECT_EQ(last_msg_->contents[89], 6)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[89])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[89])),
+            6)
       << "incorrect value for contents[89], expected 6, is "
       << last_msg_->contents[89];
-  EXPECT_EQ(last_msg_->contents[90], 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[90])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[90])),
+            13)
       << "incorrect value for contents[90], expected 13, is "
       << last_msg_->contents[90];
-  EXPECT_EQ(last_msg_->contents[91], 191)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[91])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[91])),
+            191)
       << "incorrect value for contents[91], expected 191, is "
       << last_msg_->contents[91];
-  EXPECT_EQ(last_msg_->contents[92], 116)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[92])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[92])),
+            116)
       << "incorrect value for contents[92], expected 116, is "
       << last_msg_->contents[92];
-  EXPECT_EQ(last_msg_->contents[93], 182)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[93])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[93])),
+            182)
       << "incorrect value for contents[93], expected 182, is "
       << last_msg_->contents[93];
-  EXPECT_EQ(last_msg_->contents[94], 42)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[94])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[94])),
+            42)
       << "incorrect value for contents[94], expected 42, is "
       << last_msg_->contents[94];
-  EXPECT_EQ(last_msg_->contents[95], 191)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[95])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[95])),
+            191)
       << "incorrect value for contents[95], expected 191, is "
       << last_msg_->contents[95];
-  EXPECT_EQ(last_msg_->contents[96], 213)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[96])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[96])),
+            213)
       << "incorrect value for contents[96], expected 213, is "
       << last_msg_->contents[96];
-  EXPECT_EQ(last_msg_->contents[97], 20)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[97])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[97])),
+            20)
       << "incorrect value for contents[97], expected 20, is "
       << last_msg_->contents[97];
-  EXPECT_EQ(last_msg_->contents[98], 217)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[98])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[98])),
+            217)
       << "incorrect value for contents[98], expected 217, is "
       << last_msg_->contents[98];
-  EXPECT_EQ(last_msg_->contents[99], 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[99])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[99])),
+            8)
       << "incorrect value for contents[99], expected 8, is "
       << last_msg_->contents[99];
-  EXPECT_EQ(last_msg_->contents[100], 142)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[100])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[100])),
+            142)
       << "incorrect value for contents[100], expected 142, is "
       << last_msg_->contents[100];
-  EXPECT_EQ(last_msg_->contents[101], 187)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[101])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[101])),
+            187)
       << "incorrect value for contents[101], expected 187, is "
       << last_msg_->contents[101];
-  EXPECT_EQ(last_msg_->contents[102], 238)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[102])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[102])),
+            238)
       << "incorrect value for contents[102], expected 238, is "
       << last_msg_->contents[102];
-  EXPECT_EQ(last_msg_->contents[103], 120)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[103])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[103])),
+            120)
       << "incorrect value for contents[103], expected 120, is "
       << last_msg_->contents[103];
-  EXPECT_EQ(last_msg_->contents[104], 184)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[104])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[104])),
+            184)
       << "incorrect value for contents[104], expected 184, is "
       << last_msg_->contents[104];
-  EXPECT_EQ(last_msg_->contents[105], 250)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[105])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[105])),
+            250)
       << "incorrect value for contents[105], expected 250, is "
       << last_msg_->contents[105];
-  EXPECT_EQ(last_msg_->contents[106], 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[106])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[106])),
+            31)
       << "incorrect value for contents[106], expected 31, is "
       << last_msg_->contents[106];
-  EXPECT_EQ(last_msg_->contents[107], 151)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[107])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[107])),
+            151)
       << "incorrect value for contents[107], expected 151, is "
       << last_msg_->contents[107];
-  EXPECT_EQ(last_msg_->contents[108], 37)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[108])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[108])),
+            37)
       << "incorrect value for contents[108], expected 37, is "
       << last_msg_->contents[108];
-  EXPECT_EQ(last_msg_->contents[109], 51)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[109])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[109])),
+            51)
       << "incorrect value for contents[109], expected 51, is "
       << last_msg_->contents[109];
-  EXPECT_EQ(last_msg_->contents[110], 177)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[110])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[110])),
+            177)
       << "incorrect value for contents[110], expected 177, is "
       << last_msg_->contents[110];
-  EXPECT_EQ(last_msg_->contents[111], 130)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[111])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[111])),
+            130)
       << "incorrect value for contents[111], expected 130, is "
       << last_msg_->contents[111];
-  EXPECT_EQ(last_msg_->contents[112], 190)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[112])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[112])),
+            190)
       << "incorrect value for contents[112], expected 190, is "
       << last_msg_->contents[112];
-  EXPECT_EQ(last_msg_->contents[113], 155)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[113])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[113])),
+            155)
       << "incorrect value for contents[113], expected 155, is "
       << last_msg_->contents[113];
-  EXPECT_EQ(last_msg_->contents[114], 71)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[114])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[114])),
+            71)
       << "incorrect value for contents[114], expected 71, is "
       << last_msg_->contents[114];
-  EXPECT_EQ(last_msg_->contents[115], 68)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[115])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[115])),
+            68)
       << "incorrect value for contents[115], expected 68, is "
       << last_msg_->contents[115];
-  EXPECT_EQ(last_msg_->contents[116], 56)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[116])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[116])),
+            56)
       << "incorrect value for contents[116], expected 56, is "
       << last_msg_->contents[116];
-  EXPECT_EQ(last_msg_->contents[117], 238)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[117])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[117])),
+            238)
       << "incorrect value for contents[117], expected 238, is "
       << last_msg_->contents[117];
-  EXPECT_EQ(last_msg_->contents[118], 92)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[118])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[118])),
+            92)
       << "incorrect value for contents[118], expected 92, is "
       << last_msg_->contents[118];
-  EXPECT_EQ(last_msg_->contents[119], 130)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[119])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[119])),
+            130)
       << "incorrect value for contents[119], expected 130, is "
       << last_msg_->contents[119];
-  EXPECT_EQ(last_msg_->contents[120], 37)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[120])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[120])),
+            37)
       << "incorrect value for contents[120], expected 37, is "
       << last_msg_->contents[120];
-  EXPECT_EQ(last_msg_->contents[121], 137)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[121])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[121])),
+            137)
       << "incorrect value for contents[121], expected 137, is "
       << last_msg_->contents[121];
-  EXPECT_EQ(last_msg_->contents[122], 146)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[122])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[122])),
+            146)
       << "incorrect value for contents[122], expected 146, is "
       << last_msg_->contents[122];
-  EXPECT_EQ(last_msg_->contents[123], 246)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[123])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[123])),
+            246)
       << "incorrect value for contents[123], expected 246, is "
       << last_msg_->contents[123];
-  EXPECT_EQ(last_msg_->contents[124], 114)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[124])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[124])),
+            114)
       << "incorrect value for contents[124], expected 114, is "
       << last_msg_->contents[124];
-  EXPECT_EQ(last_msg_->contents[125], 116)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[125])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[125])),
+            116)
       << "incorrect value for contents[125], expected 116, is "
       << last_msg_->contents[125];
-  EXPECT_EQ(last_msg_->contents[126], 138)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[126])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[126])),
+            138)
       << "incorrect value for contents[126], expected 138, is "
       << last_msg_->contents[126];
-  EXPECT_EQ(last_msg_->contents[127], 165)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[127])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[127])),
+            165)
       << "incorrect value for contents[127], expected 165, is "
       << last_msg_->contents[127];
-  EXPECT_EQ(last_msg_->contents[128], 217)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[128])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[128])),
+            217)
       << "incorrect value for contents[128], expected 217, is "
       << last_msg_->contents[128];
-  EXPECT_EQ(last_msg_->contents[129], 79)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[129])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[129])),
+            79)
       << "incorrect value for contents[129], expected 79, is "
       << last_msg_->contents[129];
-  EXPECT_EQ(last_msg_->contents[130], 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[130])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[130])),
+            10)
       << "incorrect value for contents[130], expected 10, is "
       << last_msg_->contents[130];
-  EXPECT_EQ(last_msg_->contents[131], 189)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[131])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[131])),
+            189)
       << "incorrect value for contents[131], expected 189, is "
       << last_msg_->contents[131];
-  EXPECT_EQ(last_msg_->contents[132], 128)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[132])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[132])),
+            128)
       << "incorrect value for contents[132], expected 128, is "
       << last_msg_->contents[132];
-  EXPECT_EQ(last_msg_->contents[133], 189)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[133])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[133])),
+            189)
       << "incorrect value for contents[133], expected 189, is "
       << last_msg_->contents[133];
-  EXPECT_EQ(last_msg_->contents[134], 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[134])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[134])),
+            2)
       << "incorrect value for contents[134], expected 2, is "
       << last_msg_->contents[134];
-  EXPECT_EQ(last_msg_->contents[135], 240)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[135])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[135])),
+            240)
       << "incorrect value for contents[135], expected 240, is "
       << last_msg_->contents[135];
-  EXPECT_EQ(last_msg_->contents[136], 92)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[136])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[136])),
+            92)
       << "incorrect value for contents[136], expected 92, is "
       << last_msg_->contents[136];
-  EXPECT_EQ(last_msg_->contents[137], 28)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[137])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[137])),
+            28)
       << "incorrect value for contents[137], expected 28, is "
       << last_msg_->contents[137];
-  EXPECT_EQ(last_msg_->contents[138], 126)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[138])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[138])),
+            126)
       << "incorrect value for contents[138], expected 126, is "
       << last_msg_->contents[138];
-  EXPECT_EQ(last_msg_->contents[139], 105)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[139])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[139])),
+            105)
       << "incorrect value for contents[139], expected 105, is "
       << last_msg_->contents[139];
-  EXPECT_EQ(last_msg_->contents[140], 236)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[140])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[140])),
+            236)
       << "incorrect value for contents[140], expected 236, is "
       << last_msg_->contents[140];
-  EXPECT_EQ(last_msg_->contents[141], 228)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[141])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[141])),
+            228)
       << "incorrect value for contents[141], expected 228, is "
       << last_msg_->contents[141];
-  EXPECT_EQ(last_msg_->contents[142], 194)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[142])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[142])),
+            194)
       << "incorrect value for contents[142], expected 194, is "
       << last_msg_->contents[142];
-  EXPECT_EQ(last_msg_->contents[143], 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[143])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[143])),
+            0)
       << "incorrect value for contents[143], expected 0, is "
       << last_msg_->contents[143];
-  EXPECT_EQ(last_msg_->contents[144], 51)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[144])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[144])),
+            51)
       << "incorrect value for contents[144], expected 51, is "
       << last_msg_->contents[144];
-  EXPECT_EQ(last_msg_->contents[145], 61)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[145])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[145])),
+            61)
       << "incorrect value for contents[145], expected 61, is "
       << last_msg_->contents[145];
-  EXPECT_EQ(last_msg_->contents[146], 74)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[146])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[146])),
+            74)
       << "incorrect value for contents[146], expected 74, is "
       << last_msg_->contents[146];
-  EXPECT_EQ(last_msg_->contents[147], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[147])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[147])),
+            41)
       << "incorrect value for contents[147], expected 41, is "
       << last_msg_->contents[147];
-  EXPECT_EQ(last_msg_->contents[148], 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[148])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[148])),
+            10)
       << "incorrect value for contents[148], expected 10, is "
       << last_msg_->contents[148];
-  EXPECT_EQ(last_msg_->contents[149], 239)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[149])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[149])),
+            239)
       << "incorrect value for contents[149], expected 239, is "
       << last_msg_->contents[149];
-  EXPECT_EQ(last_msg_->contents[150], 133)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[150])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[150])),
+            133)
       << "incorrect value for contents[150], expected 133, is "
       << last_msg_->contents[150];
-  EXPECT_EQ(last_msg_->contents[151], 106)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[151])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[151])),
+            106)
       << "incorrect value for contents[151], expected 106, is "
       << last_msg_->contents[151];
-  EXPECT_EQ(last_msg_->contents[152], 190)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[152])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[152])),
+            190)
       << "incorrect value for contents[152], expected 190, is "
       << last_msg_->contents[152];
-  EXPECT_EQ(last_msg_->contents[153], 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[153])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[153])),
+            30)
       << "incorrect value for contents[153], expected 30, is "
       << last_msg_->contents[153];
-  EXPECT_EQ(last_msg_->contents[154], 27)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[154])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[154])),
+            27)
       << "incorrect value for contents[154], expected 27, is "
       << last_msg_->contents[154];
-  EXPECT_EQ(last_msg_->contents[155], 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[155])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[155])),
+            3)
       << "incorrect value for contents[155], expected 3, is "
       << last_msg_->contents[155];
-  EXPECT_EQ(last_msg_->contents[156], 240)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[156])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[156])),
+            240)
       << "incorrect value for contents[156], expected 240, is "
       << last_msg_->contents[156];
-  EXPECT_EQ(last_msg_->contents[157], 205)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[157])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[157])),
+            205)
       << "incorrect value for contents[157], expected 205, is "
       << last_msg_->contents[157];
-  EXPECT_EQ(last_msg_->contents[158], 253)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[158])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[158])),
+            253)
       << "incorrect value for contents[158], expected 253, is "
       << last_msg_->contents[158];
-  EXPECT_EQ(last_msg_->contents[159], 113)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[159])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[159])),
+            113)
       << "incorrect value for contents[159], expected 113, is "
       << last_msg_->contents[159];
-  EXPECT_EQ(last_msg_->contents[160], 25)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[160])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[160])),
+            25)
       << "incorrect value for contents[160], expected 25, is "
       << last_msg_->contents[160];
-  EXPECT_EQ(last_msg_->contents[161], 28)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[161])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[161])),
+            28)
       << "incorrect value for contents[161], expected 28, is "
       << last_msg_->contents[161];
-  EXPECT_EQ(last_msg_->contents[162], 187)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[162])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[162])),
+            187)
       << "incorrect value for contents[162], expected 187, is "
       << last_msg_->contents[162];
-  EXPECT_EQ(last_msg_->contents[163], 81)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[163])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[163])),
+            81)
       << "incorrect value for contents[163], expected 81, is "
       << last_msg_->contents[163];
-  EXPECT_EQ(last_msg_->contents[164], 101)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[164])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[164])),
+            101)
       << "incorrect value for contents[164], expected 101, is "
       << last_msg_->contents[164];
-  EXPECT_EQ(last_msg_->contents[165], 216)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[165])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[165])),
+            216)
       << "incorrect value for contents[165], expected 216, is "
       << last_msg_->contents[165];
-  EXPECT_EQ(last_msg_->contents[166], 121)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[166])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[166])),
+            121)
       << "incorrect value for contents[166], expected 121, is "
       << last_msg_->contents[166];
-  EXPECT_EQ(last_msg_->contents[167], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[167])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[167])),
+            41)
       << "incorrect value for contents[167], expected 41, is "
       << last_msg_->contents[167];
-  EXPECT_EQ(last_msg_->contents[168], 179)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[168])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[168])),
+            179)
       << "incorrect value for contents[168], expected 179, is "
       << last_msg_->contents[168];
-  EXPECT_EQ(last_msg_->contents[169], 120)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[169])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[169])),
+            120)
       << "incorrect value for contents[169], expected 120, is "
       << last_msg_->contents[169];
-  EXPECT_EQ(last_msg_->contents[170], 152)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[170])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[170])),
+            152)
       << "incorrect value for contents[170], expected 152, is "
       << last_msg_->contents[170];
-  EXPECT_EQ(last_msg_->contents[171], 18)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[171])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[171])),
+            18)
       << "incorrect value for contents[171], expected 18, is "
       << last_msg_->contents[171];
-  EXPECT_EQ(last_msg_->contents[172], 116)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[172])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[172])),
+            116)
       << "incorrect value for contents[172], expected 116, is "
       << last_msg_->contents[172];
-  EXPECT_EQ(last_msg_->contents[173], 53)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[173])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[173])),
+            53)
       << "incorrect value for contents[173], expected 53, is "
       << last_msg_->contents[173];
-  EXPECT_EQ(last_msg_->contents[174], 212)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[174])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[174])),
+            212)
       << "incorrect value for contents[174], expected 212, is "
       << last_msg_->contents[174];
-  EXPECT_EQ(last_msg_->contents[175], 100)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[175])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[175])),
+            100)
       << "incorrect value for contents[175], expected 100, is "
       << last_msg_->contents[175];
-  EXPECT_EQ(last_msg_->contents[176], 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[176])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[176])),
+            2)
       << "incorrect value for contents[176], expected 2, is "
       << last_msg_->contents[176];
-  EXPECT_EQ(last_msg_->contents[177], 114)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[177])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[177])),
+            114)
       << "incorrect value for contents[177], expected 114, is "
       << last_msg_->contents[177];
-  EXPECT_EQ(last_msg_->contents[178], 198)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[178])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[178])),
+            198)
       << "incorrect value for contents[178], expected 198, is "
       << last_msg_->contents[178];
-  EXPECT_EQ(last_msg_->contents[179], 200)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[179])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[179])),
+            200)
       << "incorrect value for contents[179], expected 200, is "
       << last_msg_->contents[179];
-  EXPECT_EQ(last_msg_->contents[180], 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[180])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[180])),
+            10)
       << "incorrect value for contents[180], expected 10, is "
       << last_msg_->contents[180];
-  EXPECT_EQ(last_msg_->contents[181], 147)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[181])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[181])),
+            147)
       << "incorrect value for contents[181], expected 147, is "
       << last_msg_->contents[181];
-  EXPECT_EQ(last_msg_->contents[182], 25)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[182])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[182])),
+            25)
       << "incorrect value for contents[182], expected 25, is "
       << last_msg_->contents[182];
-  EXPECT_EQ(last_msg_->contents[183], 33)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[183])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[183])),
+            33)
       << "incorrect value for contents[183], expected 33, is "
       << last_msg_->contents[183];
-  EXPECT_EQ(last_msg_->contents[184], 115)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[184])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[184])),
+            115)
       << "incorrect value for contents[184], expected 115, is "
       << last_msg_->contents[184];
-  EXPECT_EQ(last_msg_->contents[185], 208)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[185])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[185])),
+            208)
       << "incorrect value for contents[185], expected 208, is "
       << last_msg_->contents[185];
-  EXPECT_EQ(last_msg_->contents[186], 113)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[186])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[186])),
+            113)
       << "incorrect value for contents[186], expected 113, is "
       << last_msg_->contents[186];
-  EXPECT_EQ(last_msg_->contents[187], 60)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[187])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[187])),
+            60)
       << "incorrect value for contents[187], expected 60, is "
       << last_msg_->contents[187];
-  EXPECT_EQ(last_msg_->contents[188], 179)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[188])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[188])),
+            179)
       << "incorrect value for contents[188], expected 179, is "
       << last_msg_->contents[188];
-  EXPECT_EQ(last_msg_->contents[189], 183)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[189])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[189])),
+            183)
       << "incorrect value for contents[189], expected 183, is "
       << last_msg_->contents[189];
-  EXPECT_EQ(last_msg_->contents[190], 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[190])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[190])),
+            0)
       << "incorrect value for contents[190], expected 0, is "
       << last_msg_->contents[190];
-  EXPECT_EQ(last_msg_->contents[191], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[191])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[191])),
+            41)
       << "incorrect value for contents[191], expected 41, is "
       << last_msg_->contents[191];
-  EXPECT_EQ(last_msg_->contents[192], 217)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[192])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[192])),
+            217)
       << "incorrect value for contents[192], expected 217, is "
       << last_msg_->contents[192];
-  EXPECT_EQ(last_msg_->contents[193], 206)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[193])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[193])),
+            206)
       << "incorrect value for contents[193], expected 206, is "
       << last_msg_->contents[193];
-  EXPECT_EQ(last_msg_->contents[194], 255)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[194])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[194])),
+            255)
       << "incorrect value for contents[194], expected 255, is "
       << last_msg_->contents[194];
-  EXPECT_EQ(last_msg_->contents[195], 211)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[195])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[195])),
+            211)
       << "incorrect value for contents[195], expected 211, is "
       << last_msg_->contents[195];
-  EXPECT_EQ(last_msg_->contents[196], 225)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[196])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[196])),
+            225)
       << "incorrect value for contents[196], expected 225, is "
       << last_msg_->contents[196];
-  EXPECT_EQ(last_msg_->contents[197], 142)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[197])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[197])),
+            142)
       << "incorrect value for contents[197], expected 142, is "
       << last_msg_->contents[197];
-  EXPECT_EQ(last_msg_->contents[198], 191)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[198])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[198])),
+            191)
       << "incorrect value for contents[198], expected 191, is "
       << last_msg_->contents[198];
-  EXPECT_EQ(last_msg_->contents[199], 133)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[199])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[199])),
+            133)
       << "incorrect value for contents[199], expected 133, is "
       << last_msg_->contents[199];
-  EXPECT_EQ(last_msg_->contents[200], 81)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[200])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[200])),
+            81)
       << "incorrect value for contents[200], expected 81, is "
       << last_msg_->contents[200];
-  EXPECT_EQ(last_msg_->contents[201], 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[201])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[201])),
+            15)
       << "incorrect value for contents[201], expected 15, is "
       << last_msg_->contents[201];
-  EXPECT_EQ(last_msg_->contents[202], 248)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[202])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[202])),
+            248)
       << "incorrect value for contents[202], expected 248, is "
       << last_msg_->contents[202];
-  EXPECT_EQ(last_msg_->contents[203], 193)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[203])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[203])),
+            193)
       << "incorrect value for contents[203], expected 193, is "
       << last_msg_->contents[203];
-  EXPECT_EQ(last_msg_->contents[204], 66)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[204])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[204])),
+            66)
       << "incorrect value for contents[204], expected 66, is "
       << last_msg_->contents[204];
-  EXPECT_EQ(last_msg_->contents[205], 191)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[205])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[205])),
+            191)
       << "incorrect value for contents[205], expected 191, is "
       << last_msg_->contents[205];
-  EXPECT_EQ(last_msg_->contents[206], 244)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[206])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[206])),
+            244)
       << "incorrect value for contents[206], expected 244, is "
       << last_msg_->contents[206];
-  EXPECT_EQ(last_msg_->contents[207], 221)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[207])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[207])),
+            221)
       << "incorrect value for contents[207], expected 221, is "
       << last_msg_->contents[207];
-  EXPECT_EQ(last_msg_->contents[208], 248)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[208])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[208])),
+            248)
       << "incorrect value for contents[208], expected 248, is "
       << last_msg_->contents[208];
-  EXPECT_EQ(last_msg_->contents[209], 199)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[209])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[209])),
+            199)
       << "incorrect value for contents[209], expected 199, is "
       << last_msg_->contents[209];
-  EXPECT_EQ(last_msg_->contents[210], 241)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[210])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[210])),
+            241)
       << "incorrect value for contents[210], expected 241, is "
       << last_msg_->contents[210];
-  EXPECT_EQ(last_msg_->contents[211], 112)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[211])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[211])),
+            112)
       << "incorrect value for contents[211], expected 112, is "
       << last_msg_->contents[211];
-  EXPECT_EQ(last_msg_->contents[212], 51)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[212])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[212])),
+            51)
       << "incorrect value for contents[212], expected 51, is "
       << last_msg_->contents[212];
-  EXPECT_EQ(last_msg_->contents[213], 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[213])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[213])),
+            1)
       << "incorrect value for contents[213], expected 1, is "
       << last_msg_->contents[213];
-  EXPECT_EQ(last_msg_->contents[214], 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[214])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[214])),
+            180)
       << "incorrect value for contents[214], expected 180, is "
       << last_msg_->contents[214];
-  EXPECT_EQ(last_msg_->contents[215], 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[215])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[215])),
+            180)
       << "incorrect value for contents[215], expected 180, is "
       << last_msg_->contents[215];
-  EXPECT_EQ(last_msg_->contents[216], 125)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[216])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[216])),
+            125)
       << "incorrect value for contents[216], expected 125, is "
       << last_msg_->contents[216];
-  EXPECT_EQ(last_msg_->contents[217], 97)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[217])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[217])),
+            97)
       << "incorrect value for contents[217], expected 97, is "
       << last_msg_->contents[217];
-  EXPECT_EQ(last_msg_->contents[218], 145)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[218])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[218])),
+            145)
       << "incorrect value for contents[218], expected 145, is "
       << last_msg_->contents[218];
-  EXPECT_EQ(last_msg_->contents[219], 25)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[219])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[219])),
+            25)
       << "incorrect value for contents[219], expected 25, is "
       << last_msg_->contents[219];
-  EXPECT_EQ(last_msg_->contents[220], 72)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[220])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[220])),
+            72)
       << "incorrect value for contents[220], expected 72, is "
       << last_msg_->contents[220];
-  EXPECT_EQ(last_msg_->contents[221], 210)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[221])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[221])),
+            210)
       << "incorrect value for contents[221], expected 210, is "
       << last_msg_->contents[221];
-  EXPECT_EQ(last_msg_->contents[222], 215)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[222])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[222])),
+            215)
       << "incorrect value for contents[222], expected 215, is "
       << last_msg_->contents[222];
-  EXPECT_EQ(last_msg_->contents[223], 208)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[223])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[223])),
+            208)
       << "incorrect value for contents[223], expected 208, is "
       << last_msg_->contents[223];
-  EXPECT_EQ(last_msg_->contents[224], 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[224])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[224])),
+            15)
       << "incorrect value for contents[224], expected 15, is "
       << last_msg_->contents[224];
-  EXPECT_EQ(last_msg_->contents[225], 126)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[225])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[225])),
+            126)
       << "incorrect value for contents[225], expected 126, is "
       << last_msg_->contents[225];
-  EXPECT_EQ(last_msg_->contents[226], 56)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[226])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[226])),
+            56)
       << "incorrect value for contents[226], expected 56, is "
       << last_msg_->contents[226];
-  EXPECT_EQ(last_msg_->contents[227], 38)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[227])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[227])),
+            38)
       << "incorrect value for contents[227], expected 38, is "
       << last_msg_->contents[227];
-  EXPECT_EQ(last_msg_->contents[228], 65)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[228])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[228])),
+            65)
       << "incorrect value for contents[228], expected 65, is "
       << last_msg_->contents[228];
-  EXPECT_EQ(last_msg_->contents[229], 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[229])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[229])),
+            4)
       << "incorrect value for contents[229], expected 4, is "
       << last_msg_->contents[229];
-  EXPECT_EQ(last_msg_->contents[230], 64)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[230])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[230])),
+            64)
       << "incorrect value for contents[230], expected 64, is "
       << last_msg_->contents[230];
-  EXPECT_EQ(last_msg_->contents[231], 19)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[231])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[231])),
+            19)
       << "incorrect value for contents[231], expected 19, is "
       << last_msg_->contents[231];
-  EXPECT_EQ(last_msg_->contents[232], 74)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[232])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[232])),
+            74)
       << "incorrect value for contents[232], expected 74, is "
       << last_msg_->contents[232];
-  EXPECT_EQ(last_msg_->contents[233], 223)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[233])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[233])),
+            223)
       << "incorrect value for contents[233], expected 223, is "
       << last_msg_->contents[233];
-  EXPECT_EQ(last_msg_->contents[234], 111)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[234])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[234])),
+            111)
       << "incorrect value for contents[234], expected 111, is "
       << last_msg_->contents[234];
-  EXPECT_EQ(last_msg_->contents[235], 109)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[235])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[235])),
+            109)
       << "incorrect value for contents[235], expected 109, is "
       << last_msg_->contents[235];
-  EXPECT_EQ(last_msg_->contents[236], 52)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[236])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[236])),
+            52)
       << "incorrect value for contents[236], expected 52, is "
       << last_msg_->contents[236];
-  EXPECT_EQ(last_msg_->contents[237], 43)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[237])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[237])),
+            43)
       << "incorrect value for contents[237], expected 43, is "
       << last_msg_->contents[237];
-  EXPECT_EQ(last_msg_->contents[238], 167)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[238])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[238])),
+            167)
       << "incorrect value for contents[238], expected 167, is "
       << last_msg_->contents[238];
-  EXPECT_EQ(last_msg_->contents[239], 186)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[239])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[239])),
+            186)
       << "incorrect value for contents[239], expected 186, is "
       << last_msg_->contents[239];
-  EXPECT_EQ(last_msg_->contents[240], 202)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[240])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[240])),
+            202)
       << "incorrect value for contents[240], expected 202, is "
       << last_msg_->contents[240];
-  EXPECT_EQ(last_msg_->contents[241], 111)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[241])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[241])),
+            111)
       << "incorrect value for contents[241], expected 111, is "
       << last_msg_->contents[241];
-  EXPECT_EQ(last_msg_->contents[242], 11)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[242])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[242])),
+            11)
       << "incorrect value for contents[242], expected 11, is "
       << last_msg_->contents[242];
-  EXPECT_EQ(last_msg_->contents[243], 91)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[243])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[243])),
+            91)
       << "incorrect value for contents[243], expected 91, is "
       << last_msg_->contents[243];
-  EXPECT_EQ(last_msg_->contents[244], 21)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[244])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[244])),
+            21)
       << "incorrect value for contents[244], expected 21, is "
       << last_msg_->contents[244];
-  EXPECT_EQ(last_msg_->contents[245], 236)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[245])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[245])),
+            236)
       << "incorrect value for contents[245], expected 236, is "
       << last_msg_->contents[245];
-  EXPECT_EQ(last_msg_->contents[246], 234)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[246])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[246])),
+            234)
       << "incorrect value for contents[246], expected 234, is "
       << last_msg_->contents[246];
-  EXPECT_EQ(last_msg_->contents[247], 196)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[247])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[247])),
+            196)
       << "incorrect value for contents[247], expected 196, is "
       << last_msg_->contents[247];
-  EXPECT_EQ(last_msg_->contents[248], 36)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[248])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[248])),
+            36)
       << "incorrect value for contents[248], expected 36, is "
       << last_msg_->contents[248];
-  EXPECT_EQ(last_msg_->contents[249], 171)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[249])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[249])),
+            171)
       << "incorrect value for contents[249], expected 171, is "
       << last_msg_->contents[249];
-  EXPECT_EQ(last_msg_->contents[250], 147)
+  EXPECT_EQ(get_as<decltype(last_msg_->contents[250])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->contents[250])),
+            147)
       << "incorrect value for contents[250], expected 147, is "
       << last_msg_->contents[250];
-  EXPECT_EQ(last_msg_->sequence, 259241795)
+  EXPECT_EQ(get_as<decltype(last_msg_->sequence)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sequence)),
+            259241795)
       << "incorrect value for sequence, expected 259241795, is "
       << last_msg_->sequence;
 }

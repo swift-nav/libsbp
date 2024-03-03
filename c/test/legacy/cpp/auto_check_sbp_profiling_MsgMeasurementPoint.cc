@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/profiling.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_profiling_MsgMeasurementPoint0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -137,24 +144,40 @@ TEST_F(Test_legacy_auto_check_sbp_profiling_MsgMeasurementPoint0, Test) {
         << "incorrect value for last_msg_->func, expected string '"
         << check_string << "', is '" << last_msg_->func << "'";
   }
-  EXPECT_EQ(last_msg_->id, 2496234002)
+  EXPECT_EQ(get_as<decltype(last_msg_->id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->id)),
+            2496234002)
       << "incorrect value for id, expected 2496234002, is " << last_msg_->id;
-  EXPECT_EQ(last_msg_->line, 18)
+  EXPECT_EQ(get_as<decltype(last_msg_->line)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->line)),
+            18)
       << "incorrect value for line, expected 18, is " << last_msg_->line;
-  EXPECT_EQ(last_msg_->max, 40)
+  EXPECT_EQ(get_as<decltype(last_msg_->max)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->max)),
+            40)
       << "incorrect value for max, expected 40, is " << last_msg_->max;
-  EXPECT_EQ(last_msg_->min, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->min)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->min)),
+            2)
       << "incorrect value for min, expected 2, is " << last_msg_->min;
-  EXPECT_EQ(last_msg_->num_executions, 180)
+  EXPECT_EQ(get_as<decltype(last_msg_->num_executions)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->num_executions)),
+            180)
       << "incorrect value for num_executions, expected 180, is "
       << last_msg_->num_executions;
-  EXPECT_EQ(last_msg_->return_addr, 93877475527042)
+  EXPECT_EQ(get_as<decltype(last_msg_->return_addr)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->return_addr)),
+            93877475527042)
       << "incorrect value for return_addr, expected 93877475527042, is "
       << last_msg_->return_addr;
-  EXPECT_EQ(last_msg_->slice_time, 261963842)
+  EXPECT_EQ(get_as<decltype(last_msg_->slice_time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->slice_time)),
+            261963842)
       << "incorrect value for slice_time, expected 261963842, is "
       << last_msg_->slice_time;
-  EXPECT_EQ(last_msg_->total_time, 2042)
+  EXPECT_EQ(get_as<decltype(last_msg_->total_time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->total_time)),
+            2042)
       << "incorrect value for total_time, expected 2042, is "
       << last_msg_->total_time;
 }

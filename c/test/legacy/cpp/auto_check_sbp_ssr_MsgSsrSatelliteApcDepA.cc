@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/ssr.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_ssr_MsgSsrSatelliteApcDepA0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -1022,592 +1029,984 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrSatelliteApcDepA0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 4920);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->apc[0].pco[0], -21547)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pco[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pco[0])),
+            -21547)
       << "incorrect value for apc[0].pco[0], expected -21547, is "
       << last_msg_->apc[0].pco[0];
-  EXPECT_EQ(last_msg_->apc[0].pco[1], -10498)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pco[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pco[1])),
+            -10498)
       << "incorrect value for apc[0].pco[1], expected -10498, is "
       << last_msg_->apc[0].pco[1];
-  EXPECT_EQ(last_msg_->apc[0].pco[2], 1236)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pco[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pco[2])),
+            1236)
       << "incorrect value for apc[0].pco[2], expected 1236, is "
       << last_msg_->apc[0].pco[2];
-  EXPECT_EQ(last_msg_->apc[0].pcv[0], 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[0])),
+            8)
       << "incorrect value for apc[0].pcv[0], expected 8, is "
       << last_msg_->apc[0].pcv[0];
-  EXPECT_EQ(last_msg_->apc[0].pcv[1], 33)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[1])),
+            33)
       << "incorrect value for apc[0].pcv[1], expected 33, is "
       << last_msg_->apc[0].pcv[1];
-  EXPECT_EQ(last_msg_->apc[0].pcv[2], 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[2])),
+            31)
       << "incorrect value for apc[0].pcv[2], expected 31, is "
       << last_msg_->apc[0].pcv[2];
-  EXPECT_EQ(last_msg_->apc[0].pcv[3], 80)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[3])),
+            80)
       << "incorrect value for apc[0].pcv[3], expected 80, is "
       << last_msg_->apc[0].pcv[3];
-  EXPECT_EQ(last_msg_->apc[0].pcv[4], 21)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[4])),
+            21)
       << "incorrect value for apc[0].pcv[4], expected 21, is "
       << last_msg_->apc[0].pcv[4];
-  EXPECT_EQ(last_msg_->apc[0].pcv[5], 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[5])),
+            4)
       << "incorrect value for apc[0].pcv[5], expected 4, is "
       << last_msg_->apc[0].pcv[5];
-  EXPECT_EQ(last_msg_->apc[0].pcv[6], 105)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[6])),
+            105)
       << "incorrect value for apc[0].pcv[6], expected 105, is "
       << last_msg_->apc[0].pcv[6];
-  EXPECT_EQ(last_msg_->apc[0].pcv[7], -31)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[7])),
+            -31)
       << "incorrect value for apc[0].pcv[7], expected -31, is "
       << last_msg_->apc[0].pcv[7];
-  EXPECT_EQ(last_msg_->apc[0].pcv[8], 39)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[8])),
+            39)
       << "incorrect value for apc[0].pcv[8], expected 39, is "
       << last_msg_->apc[0].pcv[8];
-  EXPECT_EQ(last_msg_->apc[0].pcv[9], -117)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[9])),
+            -117)
       << "incorrect value for apc[0].pcv[9], expected -117, is "
       << last_msg_->apc[0].pcv[9];
-  EXPECT_EQ(last_msg_->apc[0].pcv[10], 124)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[10])),
+            124)
       << "incorrect value for apc[0].pcv[10], expected 124, is "
       << last_msg_->apc[0].pcv[10];
-  EXPECT_EQ(last_msg_->apc[0].pcv[11], -107)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[11])),
+            -107)
       << "incorrect value for apc[0].pcv[11], expected -107, is "
       << last_msg_->apc[0].pcv[11];
-  EXPECT_EQ(last_msg_->apc[0].pcv[12], 48)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[12])),
+            48)
       << "incorrect value for apc[0].pcv[12], expected 48, is "
       << last_msg_->apc[0].pcv[12];
-  EXPECT_EQ(last_msg_->apc[0].pcv[13], 15)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[13])),
+            15)
       << "incorrect value for apc[0].pcv[13], expected 15, is "
       << last_msg_->apc[0].pcv[13];
-  EXPECT_EQ(last_msg_->apc[0].pcv[14], -42)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[14])),
+            -42)
       << "incorrect value for apc[0].pcv[14], expected -42, is "
       << last_msg_->apc[0].pcv[14];
-  EXPECT_EQ(last_msg_->apc[0].pcv[15], -59)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[15])),
+            -59)
       << "incorrect value for apc[0].pcv[15], expected -59, is "
       << last_msg_->apc[0].pcv[15];
-  EXPECT_EQ(last_msg_->apc[0].pcv[16], -115)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[16])),
+            -115)
       << "incorrect value for apc[0].pcv[16], expected -115, is "
       << last_msg_->apc[0].pcv[16];
-  EXPECT_EQ(last_msg_->apc[0].pcv[17], 32)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[17])),
+            32)
       << "incorrect value for apc[0].pcv[17], expected 32, is "
       << last_msg_->apc[0].pcv[17];
-  EXPECT_EQ(last_msg_->apc[0].pcv[18], 33)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[18])),
+            33)
       << "incorrect value for apc[0].pcv[18], expected 33, is "
       << last_msg_->apc[0].pcv[18];
-  EXPECT_EQ(last_msg_->apc[0].pcv[19], -121)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[19])),
+            -121)
       << "incorrect value for apc[0].pcv[19], expected -121, is "
       << last_msg_->apc[0].pcv[19];
-  EXPECT_EQ(last_msg_->apc[0].pcv[20], -106)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].pcv[20])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].pcv[20])),
+            -106)
       << "incorrect value for apc[0].pcv[20], expected -106, is "
       << last_msg_->apc[0].pcv[20];
-  EXPECT_EQ(last_msg_->apc[0].sat_info, 240)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].sat_info)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].sat_info)),
+            240)
       << "incorrect value for apc[0].sat_info, expected 240, is "
       << last_msg_->apc[0].sat_info;
-  EXPECT_EQ(last_msg_->apc[0].sid.code, 169)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].sid.code)),
+            169)
       << "incorrect value for apc[0].sid.code, expected 169, is "
       << last_msg_->apc[0].sid.code;
-  EXPECT_EQ(last_msg_->apc[0].sid.sat, 203)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].sid.sat)),
+            203)
       << "incorrect value for apc[0].sid.sat, expected 203, is "
       << last_msg_->apc[0].sid.sat;
-  EXPECT_EQ(last_msg_->apc[0].svn, 1102)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[0].svn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[0].svn)),
+            1102)
       << "incorrect value for apc[0].svn, expected 1102, is "
       << last_msg_->apc[0].svn;
-  EXPECT_EQ(last_msg_->apc[1].pco[0], 23079)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pco[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pco[0])),
+            23079)
       << "incorrect value for apc[1].pco[0], expected 23079, is "
       << last_msg_->apc[1].pco[0];
-  EXPECT_EQ(last_msg_->apc[1].pco[1], -22252)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pco[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pco[1])),
+            -22252)
       << "incorrect value for apc[1].pco[1], expected -22252, is "
       << last_msg_->apc[1].pco[1];
-  EXPECT_EQ(last_msg_->apc[1].pco[2], 12271)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pco[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pco[2])),
+            12271)
       << "incorrect value for apc[1].pco[2], expected 12271, is "
       << last_msg_->apc[1].pco[2];
-  EXPECT_EQ(last_msg_->apc[1].pcv[0], -103)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[0])),
+            -103)
       << "incorrect value for apc[1].pcv[0], expected -103, is "
       << last_msg_->apc[1].pcv[0];
-  EXPECT_EQ(last_msg_->apc[1].pcv[1], -81)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[1])),
+            -81)
       << "incorrect value for apc[1].pcv[1], expected -81, is "
       << last_msg_->apc[1].pcv[1];
-  EXPECT_EQ(last_msg_->apc[1].pcv[2], 35)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[2])),
+            35)
       << "incorrect value for apc[1].pcv[2], expected 35, is "
       << last_msg_->apc[1].pcv[2];
-  EXPECT_EQ(last_msg_->apc[1].pcv[3], -111)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[3])),
+            -111)
       << "incorrect value for apc[1].pcv[3], expected -111, is "
       << last_msg_->apc[1].pcv[3];
-  EXPECT_EQ(last_msg_->apc[1].pcv[4], -111)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[4])),
+            -111)
       << "incorrect value for apc[1].pcv[4], expected -111, is "
       << last_msg_->apc[1].pcv[4];
-  EXPECT_EQ(last_msg_->apc[1].pcv[5], 123)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[5])),
+            123)
       << "incorrect value for apc[1].pcv[5], expected 123, is "
       << last_msg_->apc[1].pcv[5];
-  EXPECT_EQ(last_msg_->apc[1].pcv[6], -62)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[6])),
+            -62)
       << "incorrect value for apc[1].pcv[6], expected -62, is "
       << last_msg_->apc[1].pcv[6];
-  EXPECT_EQ(last_msg_->apc[1].pcv[7], 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[7])),
+            2)
       << "incorrect value for apc[1].pcv[7], expected 2, is "
       << last_msg_->apc[1].pcv[7];
-  EXPECT_EQ(last_msg_->apc[1].pcv[8], 102)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[8])),
+            102)
       << "incorrect value for apc[1].pcv[8], expected 102, is "
       << last_msg_->apc[1].pcv[8];
-  EXPECT_EQ(last_msg_->apc[1].pcv[9], 74)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[9])),
+            74)
       << "incorrect value for apc[1].pcv[9], expected 74, is "
       << last_msg_->apc[1].pcv[9];
-  EXPECT_EQ(last_msg_->apc[1].pcv[10], -107)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[10])),
+            -107)
       << "incorrect value for apc[1].pcv[10], expected -107, is "
       << last_msg_->apc[1].pcv[10];
-  EXPECT_EQ(last_msg_->apc[1].pcv[11], 95)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[11])),
+            95)
       << "incorrect value for apc[1].pcv[11], expected 95, is "
       << last_msg_->apc[1].pcv[11];
-  EXPECT_EQ(last_msg_->apc[1].pcv[12], -85)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[12])),
+            -85)
       << "incorrect value for apc[1].pcv[12], expected -85, is "
       << last_msg_->apc[1].pcv[12];
-  EXPECT_EQ(last_msg_->apc[1].pcv[13], -18)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[13])),
+            -18)
       << "incorrect value for apc[1].pcv[13], expected -18, is "
       << last_msg_->apc[1].pcv[13];
-  EXPECT_EQ(last_msg_->apc[1].pcv[14], -7)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[14])),
+            -7)
       << "incorrect value for apc[1].pcv[14], expected -7, is "
       << last_msg_->apc[1].pcv[14];
-  EXPECT_EQ(last_msg_->apc[1].pcv[15], 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[15])),
+            7)
       << "incorrect value for apc[1].pcv[15], expected 7, is "
       << last_msg_->apc[1].pcv[15];
-  EXPECT_EQ(last_msg_->apc[1].pcv[16], -19)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[16])),
+            -19)
       << "incorrect value for apc[1].pcv[16], expected -19, is "
       << last_msg_->apc[1].pcv[16];
-  EXPECT_EQ(last_msg_->apc[1].pcv[17], -86)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[17])),
+            -86)
       << "incorrect value for apc[1].pcv[17], expected -86, is "
       << last_msg_->apc[1].pcv[17];
-  EXPECT_EQ(last_msg_->apc[1].pcv[18], 125)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[18])),
+            125)
       << "incorrect value for apc[1].pcv[18], expected 125, is "
       << last_msg_->apc[1].pcv[18];
-  EXPECT_EQ(last_msg_->apc[1].pcv[19], 106)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[19])),
+            106)
       << "incorrect value for apc[1].pcv[19], expected 106, is "
       << last_msg_->apc[1].pcv[19];
-  EXPECT_EQ(last_msg_->apc[1].pcv[20], -98)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].pcv[20])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].pcv[20])),
+            -98)
       << "incorrect value for apc[1].pcv[20], expected -98, is "
       << last_msg_->apc[1].pcv[20];
-  EXPECT_EQ(last_msg_->apc[1].sat_info, 49)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].sat_info)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].sat_info)),
+            49)
       << "incorrect value for apc[1].sat_info, expected 49, is "
       << last_msg_->apc[1].sat_info;
-  EXPECT_EQ(last_msg_->apc[1].sid.code, 123)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].sid.code)),
+            123)
       << "incorrect value for apc[1].sid.code, expected 123, is "
       << last_msg_->apc[1].sid.code;
-  EXPECT_EQ(last_msg_->apc[1].sid.sat, 148)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].sid.sat)),
+            148)
       << "incorrect value for apc[1].sid.sat, expected 148, is "
       << last_msg_->apc[1].sid.sat;
-  EXPECT_EQ(last_msg_->apc[1].svn, 24967)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[1].svn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[1].svn)),
+            24967)
       << "incorrect value for apc[1].svn, expected 24967, is "
       << last_msg_->apc[1].svn;
-  EXPECT_EQ(last_msg_->apc[2].pco[0], -7596)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pco[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pco[0])),
+            -7596)
       << "incorrect value for apc[2].pco[0], expected -7596, is "
       << last_msg_->apc[2].pco[0];
-  EXPECT_EQ(last_msg_->apc[2].pco[1], 31630)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pco[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pco[1])),
+            31630)
       << "incorrect value for apc[2].pco[1], expected 31630, is "
       << last_msg_->apc[2].pco[1];
-  EXPECT_EQ(last_msg_->apc[2].pco[2], -9907)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pco[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pco[2])),
+            -9907)
       << "incorrect value for apc[2].pco[2], expected -9907, is "
       << last_msg_->apc[2].pco[2];
-  EXPECT_EQ(last_msg_->apc[2].pcv[0], -8)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[0])),
+            -8)
       << "incorrect value for apc[2].pcv[0], expected -8, is "
       << last_msg_->apc[2].pcv[0];
-  EXPECT_EQ(last_msg_->apc[2].pcv[1], 67)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[1])),
+            67)
       << "incorrect value for apc[2].pcv[1], expected 67, is "
       << last_msg_->apc[2].pcv[1];
-  EXPECT_EQ(last_msg_->apc[2].pcv[2], -41)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[2])),
+            -41)
       << "incorrect value for apc[2].pcv[2], expected -41, is "
       << last_msg_->apc[2].pcv[2];
-  EXPECT_EQ(last_msg_->apc[2].pcv[3], -127)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[3])),
+            -127)
       << "incorrect value for apc[2].pcv[3], expected -127, is "
       << last_msg_->apc[2].pcv[3];
-  EXPECT_EQ(last_msg_->apc[2].pcv[4], 114)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[4])),
+            114)
       << "incorrect value for apc[2].pcv[4], expected 114, is "
       << last_msg_->apc[2].pcv[4];
-  EXPECT_EQ(last_msg_->apc[2].pcv[5], -118)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[5])),
+            -118)
       << "incorrect value for apc[2].pcv[5], expected -118, is "
       << last_msg_->apc[2].pcv[5];
-  EXPECT_EQ(last_msg_->apc[2].pcv[6], 25)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[6])),
+            25)
       << "incorrect value for apc[2].pcv[6], expected 25, is "
       << last_msg_->apc[2].pcv[6];
-  EXPECT_EQ(last_msg_->apc[2].pcv[7], -16)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[7])),
+            -16)
       << "incorrect value for apc[2].pcv[7], expected -16, is "
       << last_msg_->apc[2].pcv[7];
-  EXPECT_EQ(last_msg_->apc[2].pcv[8], 10)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[8])),
+            10)
       << "incorrect value for apc[2].pcv[8], expected 10, is "
       << last_msg_->apc[2].pcv[8];
-  EXPECT_EQ(last_msg_->apc[2].pcv[9], 56)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[9])),
+            56)
       << "incorrect value for apc[2].pcv[9], expected 56, is "
       << last_msg_->apc[2].pcv[9];
-  EXPECT_EQ(last_msg_->apc[2].pcv[10], 76)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[10])),
+            76)
       << "incorrect value for apc[2].pcv[10], expected 76, is "
       << last_msg_->apc[2].pcv[10];
-  EXPECT_EQ(last_msg_->apc[2].pcv[11], 61)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[11])),
+            61)
       << "incorrect value for apc[2].pcv[11], expected 61, is "
       << last_msg_->apc[2].pcv[11];
-  EXPECT_EQ(last_msg_->apc[2].pcv[12], -95)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[12])),
+            -95)
       << "incorrect value for apc[2].pcv[12], expected -95, is "
       << last_msg_->apc[2].pcv[12];
-  EXPECT_EQ(last_msg_->apc[2].pcv[13], -40)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[13])),
+            -40)
       << "incorrect value for apc[2].pcv[13], expected -40, is "
       << last_msg_->apc[2].pcv[13];
-  EXPECT_EQ(last_msg_->apc[2].pcv[14], 22)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[14])),
+            22)
       << "incorrect value for apc[2].pcv[14], expected 22, is "
       << last_msg_->apc[2].pcv[14];
-  EXPECT_EQ(last_msg_->apc[2].pcv[15], -75)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[15])),
+            -75)
       << "incorrect value for apc[2].pcv[15], expected -75, is "
       << last_msg_->apc[2].pcv[15];
-  EXPECT_EQ(last_msg_->apc[2].pcv[16], -82)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[16])),
+            -82)
       << "incorrect value for apc[2].pcv[16], expected -82, is "
       << last_msg_->apc[2].pcv[16];
-  EXPECT_EQ(last_msg_->apc[2].pcv[17], 33)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[17])),
+            33)
       << "incorrect value for apc[2].pcv[17], expected 33, is "
       << last_msg_->apc[2].pcv[17];
-  EXPECT_EQ(last_msg_->apc[2].pcv[18], 13)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[18])),
+            13)
       << "incorrect value for apc[2].pcv[18], expected 13, is "
       << last_msg_->apc[2].pcv[18];
-  EXPECT_EQ(last_msg_->apc[2].pcv[19], -4)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[19])),
+            -4)
       << "incorrect value for apc[2].pcv[19], expected -4, is "
       << last_msg_->apc[2].pcv[19];
-  EXPECT_EQ(last_msg_->apc[2].pcv[20], -20)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].pcv[20])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].pcv[20])),
+            -20)
       << "incorrect value for apc[2].pcv[20], expected -20, is "
       << last_msg_->apc[2].pcv[20];
-  EXPECT_EQ(last_msg_->apc[2].sat_info, 181)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].sat_info)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].sat_info)),
+            181)
       << "incorrect value for apc[2].sat_info, expected 181, is "
       << last_msg_->apc[2].sat_info;
-  EXPECT_EQ(last_msg_->apc[2].sid.code, 188)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].sid.code)),
+            188)
       << "incorrect value for apc[2].sid.code, expected 188, is "
       << last_msg_->apc[2].sid.code;
-  EXPECT_EQ(last_msg_->apc[2].sid.sat, 83)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].sid.sat)),
+            83)
       << "incorrect value for apc[2].sid.sat, expected 83, is "
       << last_msg_->apc[2].sid.sat;
-  EXPECT_EQ(last_msg_->apc[2].svn, 7106)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[2].svn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[2].svn)),
+            7106)
       << "incorrect value for apc[2].svn, expected 7106, is "
       << last_msg_->apc[2].svn;
-  EXPECT_EQ(last_msg_->apc[3].pco[0], -19478)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pco[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pco[0])),
+            -19478)
       << "incorrect value for apc[3].pco[0], expected -19478, is "
       << last_msg_->apc[3].pco[0];
-  EXPECT_EQ(last_msg_->apc[3].pco[1], 11484)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pco[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pco[1])),
+            11484)
       << "incorrect value for apc[3].pco[1], expected 11484, is "
       << last_msg_->apc[3].pco[1];
-  EXPECT_EQ(last_msg_->apc[3].pco[2], 14804)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pco[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pco[2])),
+            14804)
       << "incorrect value for apc[3].pco[2], expected 14804, is "
       << last_msg_->apc[3].pco[2];
-  EXPECT_EQ(last_msg_->apc[3].pcv[0], 44)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[0])),
+            44)
       << "incorrect value for apc[3].pcv[0], expected 44, is "
       << last_msg_->apc[3].pcv[0];
-  EXPECT_EQ(last_msg_->apc[3].pcv[1], -83)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[1])),
+            -83)
       << "incorrect value for apc[3].pcv[1], expected -83, is "
       << last_msg_->apc[3].pcv[1];
-  EXPECT_EQ(last_msg_->apc[3].pcv[2], 49)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[2])),
+            49)
       << "incorrect value for apc[3].pcv[2], expected 49, is "
       << last_msg_->apc[3].pcv[2];
-  EXPECT_EQ(last_msg_->apc[3].pcv[3], 36)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[3])),
+            36)
       << "incorrect value for apc[3].pcv[3], expected 36, is "
       << last_msg_->apc[3].pcv[3];
-  EXPECT_EQ(last_msg_->apc[3].pcv[4], -119)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[4])),
+            -119)
       << "incorrect value for apc[3].pcv[4], expected -119, is "
       << last_msg_->apc[3].pcv[4];
-  EXPECT_EQ(last_msg_->apc[3].pcv[5], -8)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[5])),
+            -8)
       << "incorrect value for apc[3].pcv[5], expected -8, is "
       << last_msg_->apc[3].pcv[5];
-  EXPECT_EQ(last_msg_->apc[3].pcv[6], -21)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[6])),
+            -21)
       << "incorrect value for apc[3].pcv[6], expected -21, is "
       << last_msg_->apc[3].pcv[6];
-  EXPECT_EQ(last_msg_->apc[3].pcv[7], 97)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[7])),
+            97)
       << "incorrect value for apc[3].pcv[7], expected 97, is "
       << last_msg_->apc[3].pcv[7];
-  EXPECT_EQ(last_msg_->apc[3].pcv[8], 112)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[8])),
+            112)
       << "incorrect value for apc[3].pcv[8], expected 112, is "
       << last_msg_->apc[3].pcv[8];
-  EXPECT_EQ(last_msg_->apc[3].pcv[9], -99)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[9])),
+            -99)
       << "incorrect value for apc[3].pcv[9], expected -99, is "
       << last_msg_->apc[3].pcv[9];
-  EXPECT_EQ(last_msg_->apc[3].pcv[10], -117)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[10])),
+            -117)
       << "incorrect value for apc[3].pcv[10], expected -117, is "
       << last_msg_->apc[3].pcv[10];
-  EXPECT_EQ(last_msg_->apc[3].pcv[11], 26)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[11])),
+            26)
       << "incorrect value for apc[3].pcv[11], expected 26, is "
       << last_msg_->apc[3].pcv[11];
-  EXPECT_EQ(last_msg_->apc[3].pcv[12], 115)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[12])),
+            115)
       << "incorrect value for apc[3].pcv[12], expected 115, is "
       << last_msg_->apc[3].pcv[12];
-  EXPECT_EQ(last_msg_->apc[3].pcv[13], -64)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[13])),
+            -64)
       << "incorrect value for apc[3].pcv[13], expected -64, is "
       << last_msg_->apc[3].pcv[13];
-  EXPECT_EQ(last_msg_->apc[3].pcv[14], 31)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[14])),
+            31)
       << "incorrect value for apc[3].pcv[14], expected 31, is "
       << last_msg_->apc[3].pcv[14];
-  EXPECT_EQ(last_msg_->apc[3].pcv[15], 85)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[15])),
+            85)
       << "incorrect value for apc[3].pcv[15], expected 85, is "
       << last_msg_->apc[3].pcv[15];
-  EXPECT_EQ(last_msg_->apc[3].pcv[16], 127)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[16])),
+            127)
       << "incorrect value for apc[3].pcv[16], expected 127, is "
       << last_msg_->apc[3].pcv[16];
-  EXPECT_EQ(last_msg_->apc[3].pcv[17], -28)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[17])),
+            -28)
       << "incorrect value for apc[3].pcv[17], expected -28, is "
       << last_msg_->apc[3].pcv[17];
-  EXPECT_EQ(last_msg_->apc[3].pcv[18], 81)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[18])),
+            81)
       << "incorrect value for apc[3].pcv[18], expected 81, is "
       << last_msg_->apc[3].pcv[18];
-  EXPECT_EQ(last_msg_->apc[3].pcv[19], -4)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[19])),
+            -4)
       << "incorrect value for apc[3].pcv[19], expected -4, is "
       << last_msg_->apc[3].pcv[19];
-  EXPECT_EQ(last_msg_->apc[3].pcv[20], -37)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].pcv[20])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].pcv[20])),
+            -37)
       << "incorrect value for apc[3].pcv[20], expected -37, is "
       << last_msg_->apc[3].pcv[20];
-  EXPECT_EQ(last_msg_->apc[3].sat_info, 128)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].sat_info)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].sat_info)),
+            128)
       << "incorrect value for apc[3].sat_info, expected 128, is "
       << last_msg_->apc[3].sat_info;
-  EXPECT_EQ(last_msg_->apc[3].sid.code, 196)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].sid.code)),
+            196)
       << "incorrect value for apc[3].sid.code, expected 196, is "
       << last_msg_->apc[3].sid.code;
-  EXPECT_EQ(last_msg_->apc[3].sid.sat, 230)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].sid.sat)),
+            230)
       << "incorrect value for apc[3].sid.sat, expected 230, is "
       << last_msg_->apc[3].sid.sat;
-  EXPECT_EQ(last_msg_->apc[3].svn, 61399)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[3].svn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[3].svn)),
+            61399)
       << "incorrect value for apc[3].svn, expected 61399, is "
       << last_msg_->apc[3].svn;
-  EXPECT_EQ(last_msg_->apc[4].pco[0], -11049)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pco[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pco[0])),
+            -11049)
       << "incorrect value for apc[4].pco[0], expected -11049, is "
       << last_msg_->apc[4].pco[0];
-  EXPECT_EQ(last_msg_->apc[4].pco[1], 6580)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pco[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pco[1])),
+            6580)
       << "incorrect value for apc[4].pco[1], expected 6580, is "
       << last_msg_->apc[4].pco[1];
-  EXPECT_EQ(last_msg_->apc[4].pco[2], -28589)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pco[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pco[2])),
+            -28589)
       << "incorrect value for apc[4].pco[2], expected -28589, is "
       << last_msg_->apc[4].pco[2];
-  EXPECT_EQ(last_msg_->apc[4].pcv[0], -9)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[0])),
+            -9)
       << "incorrect value for apc[4].pcv[0], expected -9, is "
       << last_msg_->apc[4].pcv[0];
-  EXPECT_EQ(last_msg_->apc[4].pcv[1], 12)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[1])),
+            12)
       << "incorrect value for apc[4].pcv[1], expected 12, is "
       << last_msg_->apc[4].pcv[1];
-  EXPECT_EQ(last_msg_->apc[4].pcv[2], 27)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[2])),
+            27)
       << "incorrect value for apc[4].pcv[2], expected 27, is "
       << last_msg_->apc[4].pcv[2];
-  EXPECT_EQ(last_msg_->apc[4].pcv[3], -57)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[3])),
+            -57)
       << "incorrect value for apc[4].pcv[3], expected -57, is "
       << last_msg_->apc[4].pcv[3];
-  EXPECT_EQ(last_msg_->apc[4].pcv[4], -83)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[4])),
+            -83)
       << "incorrect value for apc[4].pcv[4], expected -83, is "
       << last_msg_->apc[4].pcv[4];
-  EXPECT_EQ(last_msg_->apc[4].pcv[5], 74)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[5])),
+            74)
       << "incorrect value for apc[4].pcv[5], expected 74, is "
       << last_msg_->apc[4].pcv[5];
-  EXPECT_EQ(last_msg_->apc[4].pcv[6], 23)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[6])),
+            23)
       << "incorrect value for apc[4].pcv[6], expected 23, is "
       << last_msg_->apc[4].pcv[6];
-  EXPECT_EQ(last_msg_->apc[4].pcv[7], 4)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[7])),
+            4)
       << "incorrect value for apc[4].pcv[7], expected 4, is "
       << last_msg_->apc[4].pcv[7];
-  EXPECT_EQ(last_msg_->apc[4].pcv[8], -17)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[8])),
+            -17)
       << "incorrect value for apc[4].pcv[8], expected -17, is "
       << last_msg_->apc[4].pcv[8];
-  EXPECT_EQ(last_msg_->apc[4].pcv[9], 103)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[9])),
+            103)
       << "incorrect value for apc[4].pcv[9], expected 103, is "
       << last_msg_->apc[4].pcv[9];
-  EXPECT_EQ(last_msg_->apc[4].pcv[10], -33)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[10])),
+            -33)
       << "incorrect value for apc[4].pcv[10], expected -33, is "
       << last_msg_->apc[4].pcv[10];
-  EXPECT_EQ(last_msg_->apc[4].pcv[11], -36)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[11])),
+            -36)
       << "incorrect value for apc[4].pcv[11], expected -36, is "
       << last_msg_->apc[4].pcv[11];
-  EXPECT_EQ(last_msg_->apc[4].pcv[12], -117)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[12])),
+            -117)
       << "incorrect value for apc[4].pcv[12], expected -117, is "
       << last_msg_->apc[4].pcv[12];
-  EXPECT_EQ(last_msg_->apc[4].pcv[13], 91)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[13])),
+            91)
       << "incorrect value for apc[4].pcv[13], expected 91, is "
       << last_msg_->apc[4].pcv[13];
-  EXPECT_EQ(last_msg_->apc[4].pcv[14], 127)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[14])),
+            127)
       << "incorrect value for apc[4].pcv[14], expected 127, is "
       << last_msg_->apc[4].pcv[14];
-  EXPECT_EQ(last_msg_->apc[4].pcv[15], -42)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[15])),
+            -42)
       << "incorrect value for apc[4].pcv[15], expected -42, is "
       << last_msg_->apc[4].pcv[15];
-  EXPECT_EQ(last_msg_->apc[4].pcv[16], 86)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[16])),
+            86)
       << "incorrect value for apc[4].pcv[16], expected 86, is "
       << last_msg_->apc[4].pcv[16];
-  EXPECT_EQ(last_msg_->apc[4].pcv[17], 48)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[17])),
+            48)
       << "incorrect value for apc[4].pcv[17], expected 48, is "
       << last_msg_->apc[4].pcv[17];
-  EXPECT_EQ(last_msg_->apc[4].pcv[18], -53)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[18])),
+            -53)
       << "incorrect value for apc[4].pcv[18], expected -53, is "
       << last_msg_->apc[4].pcv[18];
-  EXPECT_EQ(last_msg_->apc[4].pcv[19], -28)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[19])),
+            -28)
       << "incorrect value for apc[4].pcv[19], expected -28, is "
       << last_msg_->apc[4].pcv[19];
-  EXPECT_EQ(last_msg_->apc[4].pcv[20], 99)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].pcv[20])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].pcv[20])),
+            99)
       << "incorrect value for apc[4].pcv[20], expected 99, is "
       << last_msg_->apc[4].pcv[20];
-  EXPECT_EQ(last_msg_->apc[4].sat_info, 147)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].sat_info)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].sat_info)),
+            147)
       << "incorrect value for apc[4].sat_info, expected 147, is "
       << last_msg_->apc[4].sat_info;
-  EXPECT_EQ(last_msg_->apc[4].sid.code, 110)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].sid.code)),
+            110)
       << "incorrect value for apc[4].sid.code, expected 110, is "
       << last_msg_->apc[4].sid.code;
-  EXPECT_EQ(last_msg_->apc[4].sid.sat, 249)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].sid.sat)),
+            249)
       << "incorrect value for apc[4].sid.sat, expected 249, is "
       << last_msg_->apc[4].sid.sat;
-  EXPECT_EQ(last_msg_->apc[4].svn, 41224)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[4].svn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[4].svn)),
+            41224)
       << "incorrect value for apc[4].svn, expected 41224, is "
       << last_msg_->apc[4].svn;
-  EXPECT_EQ(last_msg_->apc[5].pco[0], -21881)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pco[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pco[0])),
+            -21881)
       << "incorrect value for apc[5].pco[0], expected -21881, is "
       << last_msg_->apc[5].pco[0];
-  EXPECT_EQ(last_msg_->apc[5].pco[1], -9942)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pco[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pco[1])),
+            -9942)
       << "incorrect value for apc[5].pco[1], expected -9942, is "
       << last_msg_->apc[5].pco[1];
-  EXPECT_EQ(last_msg_->apc[5].pco[2], -5689)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pco[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pco[2])),
+            -5689)
       << "incorrect value for apc[5].pco[2], expected -5689, is "
       << last_msg_->apc[5].pco[2];
-  EXPECT_EQ(last_msg_->apc[5].pcv[0], 42)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[0])),
+            42)
       << "incorrect value for apc[5].pcv[0], expected 42, is "
       << last_msg_->apc[5].pcv[0];
-  EXPECT_EQ(last_msg_->apc[5].pcv[1], -86)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[1])),
+            -86)
       << "incorrect value for apc[5].pcv[1], expected -86, is "
       << last_msg_->apc[5].pcv[1];
-  EXPECT_EQ(last_msg_->apc[5].pcv[2], 78)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[2])),
+            78)
       << "incorrect value for apc[5].pcv[2], expected 78, is "
       << last_msg_->apc[5].pcv[2];
-  EXPECT_EQ(last_msg_->apc[5].pcv[3], -50)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[3])),
+            -50)
       << "incorrect value for apc[5].pcv[3], expected -50, is "
       << last_msg_->apc[5].pcv[3];
-  EXPECT_EQ(last_msg_->apc[5].pcv[4], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[4])),
+            41)
       << "incorrect value for apc[5].pcv[4], expected 41, is "
       << last_msg_->apc[5].pcv[4];
-  EXPECT_EQ(last_msg_->apc[5].pcv[5], 43)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[5])),
+            43)
       << "incorrect value for apc[5].pcv[5], expected 43, is "
       << last_msg_->apc[5].pcv[5];
-  EXPECT_EQ(last_msg_->apc[5].pcv[6], 81)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[6])),
+            81)
       << "incorrect value for apc[5].pcv[6], expected 81, is "
       << last_msg_->apc[5].pcv[6];
-  EXPECT_EQ(last_msg_->apc[5].pcv[7], -9)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[7])),
+            -9)
       << "incorrect value for apc[5].pcv[7], expected -9, is "
       << last_msg_->apc[5].pcv[7];
-  EXPECT_EQ(last_msg_->apc[5].pcv[8], 99)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[8])),
+            99)
       << "incorrect value for apc[5].pcv[8], expected 99, is "
       << last_msg_->apc[5].pcv[8];
-  EXPECT_EQ(last_msg_->apc[5].pcv[9], -58)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[9])),
+            -58)
       << "incorrect value for apc[5].pcv[9], expected -58, is "
       << last_msg_->apc[5].pcv[9];
-  EXPECT_EQ(last_msg_->apc[5].pcv[10], -112)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[10])),
+            -112)
       << "incorrect value for apc[5].pcv[10], expected -112, is "
       << last_msg_->apc[5].pcv[10];
-  EXPECT_EQ(last_msg_->apc[5].pcv[11], 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[11])),
+            2)
       << "incorrect value for apc[5].pcv[11], expected 2, is "
       << last_msg_->apc[5].pcv[11];
-  EXPECT_EQ(last_msg_->apc[5].pcv[12], -124)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[12])),
+            -124)
       << "incorrect value for apc[5].pcv[12], expected -124, is "
       << last_msg_->apc[5].pcv[12];
-  EXPECT_EQ(last_msg_->apc[5].pcv[13], 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[13])),
+            2)
       << "incorrect value for apc[5].pcv[13], expected 2, is "
       << last_msg_->apc[5].pcv[13];
-  EXPECT_EQ(last_msg_->apc[5].pcv[14], -32)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[14])),
+            -32)
       << "incorrect value for apc[5].pcv[14], expected -32, is "
       << last_msg_->apc[5].pcv[14];
-  EXPECT_EQ(last_msg_->apc[5].pcv[15], -36)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[15])),
+            -36)
       << "incorrect value for apc[5].pcv[15], expected -36, is "
       << last_msg_->apc[5].pcv[15];
-  EXPECT_EQ(last_msg_->apc[5].pcv[16], -108)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[16])),
+            -108)
       << "incorrect value for apc[5].pcv[16], expected -108, is "
       << last_msg_->apc[5].pcv[16];
-  EXPECT_EQ(last_msg_->apc[5].pcv[17], 58)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[17])),
+            58)
       << "incorrect value for apc[5].pcv[17], expected 58, is "
       << last_msg_->apc[5].pcv[17];
-  EXPECT_EQ(last_msg_->apc[5].pcv[18], 85)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[18])),
+            85)
       << "incorrect value for apc[5].pcv[18], expected 85, is "
       << last_msg_->apc[5].pcv[18];
-  EXPECT_EQ(last_msg_->apc[5].pcv[19], -118)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[19])),
+            -118)
       << "incorrect value for apc[5].pcv[19], expected -118, is "
       << last_msg_->apc[5].pcv[19];
-  EXPECT_EQ(last_msg_->apc[5].pcv[20], -46)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].pcv[20])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].pcv[20])),
+            -46)
       << "incorrect value for apc[5].pcv[20], expected -46, is "
       << last_msg_->apc[5].pcv[20];
-  EXPECT_EQ(last_msg_->apc[5].sat_info, 159)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].sat_info)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].sat_info)),
+            159)
       << "incorrect value for apc[5].sat_info, expected 159, is "
       << last_msg_->apc[5].sat_info;
-  EXPECT_EQ(last_msg_->apc[5].sid.code, 83)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].sid.code)),
+            83)
       << "incorrect value for apc[5].sid.code, expected 83, is "
       << last_msg_->apc[5].sid.code;
-  EXPECT_EQ(last_msg_->apc[5].sid.sat, 45)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].sid.sat)),
+            45)
       << "incorrect value for apc[5].sid.sat, expected 45, is "
       << last_msg_->apc[5].sid.sat;
-  EXPECT_EQ(last_msg_->apc[5].svn, 64011)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[5].svn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[5].svn)),
+            64011)
       << "incorrect value for apc[5].svn, expected 64011, is "
       << last_msg_->apc[5].svn;
-  EXPECT_EQ(last_msg_->apc[6].pco[0], -14290)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pco[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pco[0])),
+            -14290)
       << "incorrect value for apc[6].pco[0], expected -14290, is "
       << last_msg_->apc[6].pco[0];
-  EXPECT_EQ(last_msg_->apc[6].pco[1], 30340)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pco[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pco[1])),
+            30340)
       << "incorrect value for apc[6].pco[1], expected 30340, is "
       << last_msg_->apc[6].pco[1];
-  EXPECT_EQ(last_msg_->apc[6].pco[2], 3569)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pco[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pco[2])),
+            3569)
       << "incorrect value for apc[6].pco[2], expected 3569, is "
       << last_msg_->apc[6].pco[2];
-  EXPECT_EQ(last_msg_->apc[6].pcv[0], 37)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[0])),
+            37)
       << "incorrect value for apc[6].pcv[0], expected 37, is "
       << last_msg_->apc[6].pcv[0];
-  EXPECT_EQ(last_msg_->apc[6].pcv[1], 62)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[1])),
+            62)
       << "incorrect value for apc[6].pcv[1], expected 62, is "
       << last_msg_->apc[6].pcv[1];
-  EXPECT_EQ(last_msg_->apc[6].pcv[2], 107)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[2])),
+            107)
       << "incorrect value for apc[6].pcv[2], expected 107, is "
       << last_msg_->apc[6].pcv[2];
-  EXPECT_EQ(last_msg_->apc[6].pcv[3], -3)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[3])),
+            -3)
       << "incorrect value for apc[6].pcv[3], expected -3, is "
       << last_msg_->apc[6].pcv[3];
-  EXPECT_EQ(last_msg_->apc[6].pcv[4], -66)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[4])),
+            -66)
       << "incorrect value for apc[6].pcv[4], expected -66, is "
       << last_msg_->apc[6].pcv[4];
-  EXPECT_EQ(last_msg_->apc[6].pcv[5], -120)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[5])),
+            -120)
       << "incorrect value for apc[6].pcv[5], expected -120, is "
       << last_msg_->apc[6].pcv[5];
-  EXPECT_EQ(last_msg_->apc[6].pcv[6], 66)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[6])),
+            66)
       << "incorrect value for apc[6].pcv[6], expected 66, is "
       << last_msg_->apc[6].pcv[6];
-  EXPECT_EQ(last_msg_->apc[6].pcv[7], 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[7])),
+            9)
       << "incorrect value for apc[6].pcv[7], expected 9, is "
       << last_msg_->apc[6].pcv[7];
-  EXPECT_EQ(last_msg_->apc[6].pcv[8], 84)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[8])),
+            84)
       << "incorrect value for apc[6].pcv[8], expected 84, is "
       << last_msg_->apc[6].pcv[8];
-  EXPECT_EQ(last_msg_->apc[6].pcv[9], -101)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[9])),
+            -101)
       << "incorrect value for apc[6].pcv[9], expected -101, is "
       << last_msg_->apc[6].pcv[9];
-  EXPECT_EQ(last_msg_->apc[6].pcv[10], 86)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[10])),
+            86)
       << "incorrect value for apc[6].pcv[10], expected 86, is "
       << last_msg_->apc[6].pcv[10];
-  EXPECT_EQ(last_msg_->apc[6].pcv[11], -76)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[11])),
+            -76)
       << "incorrect value for apc[6].pcv[11], expected -76, is "
       << last_msg_->apc[6].pcv[11];
-  EXPECT_EQ(last_msg_->apc[6].pcv[12], 41)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[12])),
+            41)
       << "incorrect value for apc[6].pcv[12], expected 41, is "
       << last_msg_->apc[6].pcv[12];
-  EXPECT_EQ(last_msg_->apc[6].pcv[13], -60)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[13])),
+            -60)
       << "incorrect value for apc[6].pcv[13], expected -60, is "
       << last_msg_->apc[6].pcv[13];
-  EXPECT_EQ(last_msg_->apc[6].pcv[14], 40)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[14])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[14])),
+            40)
       << "incorrect value for apc[6].pcv[14], expected 40, is "
       << last_msg_->apc[6].pcv[14];
-  EXPECT_EQ(last_msg_->apc[6].pcv[15], 119)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[15])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[15])),
+            119)
       << "incorrect value for apc[6].pcv[15], expected 119, is "
       << last_msg_->apc[6].pcv[15];
-  EXPECT_EQ(last_msg_->apc[6].pcv[16], 101)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[16])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[16])),
+            101)
       << "incorrect value for apc[6].pcv[16], expected 101, is "
       << last_msg_->apc[6].pcv[16];
-  EXPECT_EQ(last_msg_->apc[6].pcv[17], -4)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[17])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[17])),
+            -4)
       << "incorrect value for apc[6].pcv[17], expected -4, is "
       << last_msg_->apc[6].pcv[17];
-  EXPECT_EQ(last_msg_->apc[6].pcv[18], -33)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[18])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[18])),
+            -33)
       << "incorrect value for apc[6].pcv[18], expected -33, is "
       << last_msg_->apc[6].pcv[18];
-  EXPECT_EQ(last_msg_->apc[6].pcv[19], -112)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[19])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[19])),
+            -112)
       << "incorrect value for apc[6].pcv[19], expected -112, is "
       << last_msg_->apc[6].pcv[19];
-  EXPECT_EQ(last_msg_->apc[6].pcv[20], -103)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].pcv[20])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].pcv[20])),
+            -103)
       << "incorrect value for apc[6].pcv[20], expected -103, is "
       << last_msg_->apc[6].pcv[20];
-  EXPECT_EQ(last_msg_->apc[6].sat_info, 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].sat_info)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].sat_info)),
+            7)
       << "incorrect value for apc[6].sat_info, expected 7, is "
       << last_msg_->apc[6].sat_info;
-  EXPECT_EQ(last_msg_->apc[6].sid.code, 158)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].sid.code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].sid.code)),
+            158)
       << "incorrect value for apc[6].sid.code, expected 158, is "
       << last_msg_->apc[6].sid.code;
-  EXPECT_EQ(last_msg_->apc[6].sid.sat, 200)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].sid.sat)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].sid.sat)),
+            200)
       << "incorrect value for apc[6].sid.sat, expected 200, is "
       << last_msg_->apc[6].sid.sat;
-  EXPECT_EQ(last_msg_->apc[6].svn, 17310)
+  EXPECT_EQ(get_as<decltype(last_msg_->apc[6].svn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->apc[6].svn)),
+            17310)
       << "incorrect value for apc[6].svn, expected 17310, is "
       << last_msg_->apc[6].svn;
 }

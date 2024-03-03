@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/linux.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_linux_MsgLinuxProcessFdCount0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -147,11 +154,17 @@ TEST_F(Test_legacy_auto_check_sbp_linux_MsgLinuxProcessFdCount0, Test) {
         << "incorrect value for last_msg_->cmdline, expected string '"
         << check_string << "', is '" << last_msg_->cmdline << "'";
   }
-  EXPECT_EQ(last_msg_->fd_count, 35589)
+  EXPECT_EQ(get_as<decltype(last_msg_->fd_count)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->fd_count)),
+            35589)
       << "incorrect value for fd_count, expected 35589, is "
       << last_msg_->fd_count;
-  EXPECT_EQ(last_msg_->index, 164)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            164)
       << "incorrect value for index, expected 164, is " << last_msg_->index;
-  EXPECT_EQ(last_msg_->pid, 42429)
+  EXPECT_EQ(get_as<decltype(last_msg_->pid)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pid)),
+            42429)
       << "incorrect value for pid, expected 42429, is " << last_msg_->pid;
 }

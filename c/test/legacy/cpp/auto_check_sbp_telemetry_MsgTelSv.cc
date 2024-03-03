@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/telemetry.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_telemetry_MsgTelSv0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -128,43 +135,79 @@ TEST_F(Test_legacy_auto_check_sbp_telemetry_MsgTelSv0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 9876);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->n_obs, 16)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_obs)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_obs)),
+            16)
       << "incorrect value for n_obs, expected 16, is " << last_msg_->n_obs;
-  EXPECT_EQ(last_msg_->origin_flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->origin_flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->origin_flags)),
+            1)
       << "incorrect value for origin_flags, expected 1, is "
       << last_msg_->origin_flags;
-  EXPECT_EQ(last_msg_->sv_tel[0].availability_flags, 5)
+  EXPECT_EQ(get_as<decltype(last_msg_->sv_tel[0].availability_flags)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->sv_tel[0].availability_flags)),
+            5)
       << "incorrect value for sv_tel[0].availability_flags, expected 5, is "
       << last_msg_->sv_tel[0].availability_flags;
-  EXPECT_EQ(last_msg_->sv_tel[0].az, 40)
+  EXPECT_EQ(get_as<decltype(last_msg_->sv_tel[0].az)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sv_tel[0].az)),
+            40)
       << "incorrect value for sv_tel[0].az, expected 40, is "
       << last_msg_->sv_tel[0].az;
-  EXPECT_EQ(last_msg_->sv_tel[0].correction_flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->sv_tel[0].correction_flags)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->sv_tel[0].correction_flags)),
+            1)
       << "incorrect value for sv_tel[0].correction_flags, expected 1, is "
       << last_msg_->sv_tel[0].correction_flags;
-  EXPECT_EQ(last_msg_->sv_tel[0].el, 50)
+  EXPECT_EQ(get_as<decltype(last_msg_->sv_tel[0].el)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sv_tel[0].el)),
+            50)
       << "incorrect value for sv_tel[0].el, expected 50, is "
       << last_msg_->sv_tel[0].el;
-  EXPECT_EQ(last_msg_->sv_tel[0].ephemeris_flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->sv_tel[0].ephemeris_flags)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->sv_tel[0].ephemeris_flags)),
+            1)
       << "incorrect value for sv_tel[0].ephemeris_flags, expected 1, is "
       << last_msg_->sv_tel[0].ephemeris_flags;
-  EXPECT_EQ(last_msg_->sv_tel[0].outlier_flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->sv_tel[0].outlier_flags)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->sv_tel[0].outlier_flags)),
+            1)
       << "incorrect value for sv_tel[0].outlier_flags, expected 1, is "
       << last_msg_->sv_tel[0].outlier_flags;
-  EXPECT_EQ(last_msg_->sv_tel[0].phase_residual, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->sv_tel[0].phase_residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->sv_tel[0].phase_residual)),
+            1)
       << "incorrect value for sv_tel[0].phase_residual, expected 1, is "
       << last_msg_->sv_tel[0].phase_residual;
-  EXPECT_EQ(last_msg_->sv_tel[0].pseudorange_residual, -30)
+  EXPECT_EQ(get_as<decltype(last_msg_->sv_tel[0].pseudorange_residual)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->sv_tel[0].pseudorange_residual)),
+            -30)
       << "incorrect value for sv_tel[0].pseudorange_residual, expected -30, is "
       << last_msg_->sv_tel[0].pseudorange_residual;
-  EXPECT_EQ(last_msg_->sv_tel[0].sid.code, 12)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->sv_tel[0].sid.code)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->sv_tel[0].sid.code)),
+      12)
       << "incorrect value for sv_tel[0].sid.code, expected 12, is "
       << last_msg_->sv_tel[0].sid.code;
-  EXPECT_EQ(last_msg_->sv_tel[0].sid.sat, 33)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->sv_tel[0].sid.sat)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->sv_tel[0].sid.sat)),
+      33)
       << "incorrect value for sv_tel[0].sid.sat, expected 33, is "
       << last_msg_->sv_tel[0].sid.sat;
-  EXPECT_EQ(last_msg_->tow, 406773200)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            406773200)
       << "incorrect value for tow, expected 406773200, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->wn, 2223)
+  EXPECT_EQ(get_as<decltype(last_msg_->wn)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->wn)),
+            2223)
       << "incorrect value for wn, expected 2223, is " << last_msg_->wn;
 }

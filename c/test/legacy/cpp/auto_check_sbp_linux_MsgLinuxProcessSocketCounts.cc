@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/linux.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_linux_MsgLinuxProcessSocketCounts0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -149,17 +156,27 @@ TEST_F(Test_legacy_auto_check_sbp_linux_MsgLinuxProcessSocketCounts0, Test) {
         << "incorrect value for last_msg_->cmdline, expected string '"
         << check_string << "', is '" << last_msg_->cmdline << "'";
   }
-  EXPECT_EQ(last_msg_->index, 51)
+  EXPECT_EQ(get_as<decltype(last_msg_->index)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->index)),
+            51)
       << "incorrect value for index, expected 51, is " << last_msg_->index;
-  EXPECT_EQ(last_msg_->pid, 28553)
+  EXPECT_EQ(get_as<decltype(last_msg_->pid)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pid)),
+            28553)
       << "incorrect value for pid, expected 28553, is " << last_msg_->pid;
-  EXPECT_EQ(last_msg_->socket_count, 30287)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_count)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->socket_count)),
+            30287)
       << "incorrect value for socket_count, expected 30287, is "
       << last_msg_->socket_count;
-  EXPECT_EQ(last_msg_->socket_states, 29554)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_states)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->socket_states)),
+            29554)
       << "incorrect value for socket_states, expected 29554, is "
       << last_msg_->socket_states;
-  EXPECT_EQ(last_msg_->socket_types, 35843)
+  EXPECT_EQ(get_as<decltype(last_msg_->socket_types)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->socket_types)),
+            35843)
       << "incorrect value for socket_types, expected 35843, is "
       << last_msg_->socket_types;
 }

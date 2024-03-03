@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/orientation.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_orientation_MsgBaselineHeading0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -115,13 +122,21 @@ TEST_F(Test_legacy_auto_check_sbp_orientation_MsgBaselineHeading0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 24019);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 91)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            91)
       << "incorrect value for flags, expected 91, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->heading, 1036342316)
+  EXPECT_EQ(get_as<decltype(last_msg_->heading)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->heading)),
+            1036342316)
       << "incorrect value for heading, expected 1036342316, is "
       << last_msg_->heading;
-  EXPECT_EQ(last_msg_->n_sats, 91)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_sats)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_sats)),
+            91)
       << "incorrect value for n_sats, expected 91, is " << last_msg_->n_sats;
-  EXPECT_EQ(last_msg_->tow, 3289197980)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            3289197980)
       << "incorrect value for tow, expected 3289197980, is " << last_msg_->tow;
 }

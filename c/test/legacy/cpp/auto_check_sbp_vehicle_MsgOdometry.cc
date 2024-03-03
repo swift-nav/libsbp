@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/vehicle.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_vehicle_MsgOdometry0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -112,10 +119,16 @@ TEST_F(Test_legacy_auto_check_sbp_vehicle_MsgOdometry0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            1)
       << "incorrect value for flags, expected 1, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->tow, 8)
+  EXPECT_EQ(get_as<decltype(last_msg_->tow)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->tow)),
+            8)
       << "incorrect value for tow, expected 8, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->velocity, 7)
+  EXPECT_EQ(get_as<decltype(last_msg_->velocity)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->velocity)),
+            7)
       << "incorrect value for velocity, expected 7, is " << last_msg_->velocity;
 }

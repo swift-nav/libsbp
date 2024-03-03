@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/system.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_system_MsgGroupMeta0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -128,20 +135,32 @@ TEST_F(Test_legacy_auto_check_sbp_system_MsgGroupMeta0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 61166);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            2)
       << "incorrect value for flags, expected 2, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->group_id, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_id)),
+            1)
       << "incorrect value for group_id, expected 1, is " << last_msg_->group_id;
-  EXPECT_EQ(last_msg_->group_msgs[0], 65290)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[0])),
+            65290)
       << "incorrect value for group_msgs[0], expected 65290, is "
       << last_msg_->group_msgs[0];
-  EXPECT_EQ(last_msg_->group_msgs[1], 522)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[1])),
+            522)
       << "incorrect value for group_msgs[1], expected 522, is "
       << last_msg_->group_msgs[1];
-  EXPECT_EQ(last_msg_->group_msgs[2], 65282)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[2])),
+            65282)
       << "incorrect value for group_msgs[2], expected 65282, is "
       << last_msg_->group_msgs[2];
-  EXPECT_EQ(last_msg_->n_group_msgs, 3)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_group_msgs)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_group_msgs)),
+            3)
       << "incorrect value for n_group_msgs, expected 3, is "
       << last_msg_->n_group_msgs;
 }
@@ -300,53 +319,87 @@ TEST_F(Test_legacy_auto_check_sbp_system_MsgGroupMeta1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 789);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            1)
       << "incorrect value for flags, expected 1, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->group_id, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_id)),
+            1)
       << "incorrect value for group_id, expected 1, is " << last_msg_->group_id;
-  EXPECT_EQ(last_msg_->group_msgs[0], 258)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[0])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[0])),
+            258)
       << "incorrect value for group_msgs[0], expected 258, is "
       << last_msg_->group_msgs[0];
-  EXPECT_EQ(last_msg_->group_msgs[1], 259)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[1])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[1])),
+            259)
       << "incorrect value for group_msgs[1], expected 259, is "
       << last_msg_->group_msgs[1];
-  EXPECT_EQ(last_msg_->group_msgs[2], 522)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[2])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[2])),
+            522)
       << "incorrect value for group_msgs[2], expected 522, is "
       << last_msg_->group_msgs[2];
-  EXPECT_EQ(last_msg_->group_msgs[3], 529)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[3])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[3])),
+            529)
       << "incorrect value for group_msgs[3], expected 529, is "
       << last_msg_->group_msgs[3];
-  EXPECT_EQ(last_msg_->group_msgs[4], 521)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[4])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[4])),
+            521)
       << "incorrect value for group_msgs[4], expected 521, is "
       << last_msg_->group_msgs[4];
-  EXPECT_EQ(last_msg_->group_msgs[5], 532)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[5])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[5])),
+            532)
       << "incorrect value for group_msgs[5], expected 532, is "
       << last_msg_->group_msgs[5];
-  EXPECT_EQ(last_msg_->group_msgs[6], 526)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[6])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[6])),
+            526)
       << "incorrect value for group_msgs[6], expected 526, is "
       << last_msg_->group_msgs[6];
-  EXPECT_EQ(last_msg_->group_msgs[7], 530)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[7])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[7])),
+            530)
       << "incorrect value for group_msgs[7], expected 530, is "
       << last_msg_->group_msgs[7];
-  EXPECT_EQ(last_msg_->group_msgs[8], 525)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[8])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[8])),
+            525)
       << "incorrect value for group_msgs[8], expected 525, is "
       << last_msg_->group_msgs[8];
-  EXPECT_EQ(last_msg_->group_msgs[9], 533)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[9])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[9])),
+            533)
       << "incorrect value for group_msgs[9], expected 533, is "
       << last_msg_->group_msgs[9];
-  EXPECT_EQ(last_msg_->group_msgs[10], 545)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[10])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[10])),
+            545)
       << "incorrect value for group_msgs[10], expected 545, is "
       << last_msg_->group_msgs[10];
-  EXPECT_EQ(last_msg_->group_msgs[11], 65283)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[11])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[11])),
+            65283)
       << "incorrect value for group_msgs[11], expected 65283, is "
       << last_msg_->group_msgs[11];
-  EXPECT_EQ(last_msg_->group_msgs[12], 65286)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[12])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[12])),
+            65286)
       << "incorrect value for group_msgs[12], expected 65286, is "
       << last_msg_->group_msgs[12];
-  EXPECT_EQ(last_msg_->group_msgs[13], 65294)
+  EXPECT_EQ(get_as<decltype(last_msg_->group_msgs[13])>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->group_msgs[13])),
+            65294)
       << "incorrect value for group_msgs[13], expected 65294, is "
       << last_msg_->group_msgs[13];
-  EXPECT_EQ(last_msg_->n_group_msgs, 14)
+  EXPECT_EQ(get_as<decltype(last_msg_->n_group_msgs)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->n_group_msgs)),
+            14)
       << "incorrect value for n_group_msgs, expected 14, is "
       << last_msg_->n_group_msgs;
 }

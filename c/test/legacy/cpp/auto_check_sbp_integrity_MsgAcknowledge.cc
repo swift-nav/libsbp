@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/integrity.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_integrity_MsgAcknowledge0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -115,22 +122,36 @@ TEST_F(Test_legacy_auto_check_sbp_integrity_MsgAcknowledge0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 42);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->area_id, 123456)
+  EXPECT_EQ(get_as<decltype(last_msg_->area_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->area_id)),
+            123456)
       << "incorrect value for area_id, expected 123456, is "
       << last_msg_->area_id;
-  EXPECT_EQ(last_msg_->correction_mask_on_demand, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->correction_mask_on_demand)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->correction_mask_on_demand)),
+            1)
       << "incorrect value for correction_mask_on_demand, expected 1, is "
       << last_msg_->correction_mask_on_demand;
-  EXPECT_EQ(last_msg_->correction_mask_stream, 1)
+  EXPECT_EQ(get_as<decltype(last_msg_->correction_mask_stream)>(
+                reinterpret_cast<const uint8_t *>(
+                    &last_msg_->correction_mask_stream)),
+            1)
       << "incorrect value for correction_mask_stream, expected 1, is "
       << last_msg_->correction_mask_stream;
-  EXPECT_EQ(last_msg_->request_id, 30)
+  EXPECT_EQ(get_as<decltype(last_msg_->request_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->request_id)),
+            30)
       << "incorrect value for request_id, expected 30, is "
       << last_msg_->request_id;
-  EXPECT_EQ(last_msg_->response_code, 0)
+  EXPECT_EQ(get_as<decltype(last_msg_->response_code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->response_code)),
+            0)
       << "incorrect value for response_code, expected 0, is "
       << last_msg_->response_code;
-  EXPECT_EQ(last_msg_->solution_id, 2)
+  EXPECT_EQ(get_as<decltype(last_msg_->solution_id)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->solution_id)),
+            2)
       << "incorrect value for solution_id, expected 2, is "
       << last_msg_->solution_id;
 }

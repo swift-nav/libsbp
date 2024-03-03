@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/system.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_system_MsgStatusReport0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -551,556 +558,1105 @@ TEST_F(Test_legacy_auto_check_sbp_system_MsgStatusReport0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 21510);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->reporting_system, 64850)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->reporting_system)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->reporting_system)),
+      64850)
       << "incorrect value for reporting_system, expected 64850, is "
       << last_msg_->reporting_system;
-  EXPECT_EQ(last_msg_->sbp_version, 24497)
+  EXPECT_EQ(get_as<decltype(last_msg_->sbp_version)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sbp_version)),
+            24497)
       << "incorrect value for sbp_version, expected 24497, is "
       << last_msg_->sbp_version;
-  EXPECT_EQ(last_msg_->sequence, 1519336451)
+  EXPECT_EQ(get_as<decltype(last_msg_->sequence)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sequence)),
+            1519336451)
       << "incorrect value for sequence, expected 1519336451, is "
       << last_msg_->sequence;
-  EXPECT_EQ(last_msg_->status[0].component, 52215)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[0].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[0].component)),
+      52215)
       << "incorrect value for status[0].component, expected 52215, is "
       << last_msg_->status[0].component;
-  EXPECT_EQ(last_msg_->status[0].generic, 221)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[0].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[0].generic)),
+      221)
       << "incorrect value for status[0].generic, expected 221, is "
       << last_msg_->status[0].generic;
-  EXPECT_EQ(last_msg_->status[0].specific, 198)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[0].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[0].specific)),
+      198)
       << "incorrect value for status[0].specific, expected 198, is "
       << last_msg_->status[0].specific;
-  EXPECT_EQ(last_msg_->status[1].component, 53148)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[1].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[1].component)),
+      53148)
       << "incorrect value for status[1].component, expected 53148, is "
       << last_msg_->status[1].component;
-  EXPECT_EQ(last_msg_->status[1].generic, 217)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[1].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[1].generic)),
+      217)
       << "incorrect value for status[1].generic, expected 217, is "
       << last_msg_->status[1].generic;
-  EXPECT_EQ(last_msg_->status[1].specific, 238)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[1].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[1].specific)),
+      238)
       << "incorrect value for status[1].specific, expected 238, is "
       << last_msg_->status[1].specific;
-  EXPECT_EQ(last_msg_->status[2].component, 34978)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[2].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[2].component)),
+      34978)
       << "incorrect value for status[2].component, expected 34978, is "
       << last_msg_->status[2].component;
-  EXPECT_EQ(last_msg_->status[2].generic, 154)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[2].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[2].generic)),
+      154)
       << "incorrect value for status[2].generic, expected 154, is "
       << last_msg_->status[2].generic;
-  EXPECT_EQ(last_msg_->status[2].specific, 11)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[2].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[2].specific)),
+      11)
       << "incorrect value for status[2].specific, expected 11, is "
       << last_msg_->status[2].specific;
-  EXPECT_EQ(last_msg_->status[3].component, 60530)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[3].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[3].component)),
+      60530)
       << "incorrect value for status[3].component, expected 60530, is "
       << last_msg_->status[3].component;
-  EXPECT_EQ(last_msg_->status[3].generic, 134)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[3].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[3].generic)),
+      134)
       << "incorrect value for status[3].generic, expected 134, is "
       << last_msg_->status[3].generic;
-  EXPECT_EQ(last_msg_->status[3].specific, 235)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[3].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[3].specific)),
+      235)
       << "incorrect value for status[3].specific, expected 235, is "
       << last_msg_->status[3].specific;
-  EXPECT_EQ(last_msg_->status[4].component, 34060)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[4].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[4].component)),
+      34060)
       << "incorrect value for status[4].component, expected 34060, is "
       << last_msg_->status[4].component;
-  EXPECT_EQ(last_msg_->status[4].generic, 9)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[4].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[4].generic)),
+      9)
       << "incorrect value for status[4].generic, expected 9, is "
       << last_msg_->status[4].generic;
-  EXPECT_EQ(last_msg_->status[4].specific, 30)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[4].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[4].specific)),
+      30)
       << "incorrect value for status[4].specific, expected 30, is "
       << last_msg_->status[4].specific;
-  EXPECT_EQ(last_msg_->status[5].component, 37295)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[5].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[5].component)),
+      37295)
       << "incorrect value for status[5].component, expected 37295, is "
       << last_msg_->status[5].component;
-  EXPECT_EQ(last_msg_->status[5].generic, 26)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[5].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[5].generic)),
+      26)
       << "incorrect value for status[5].generic, expected 26, is "
       << last_msg_->status[5].generic;
-  EXPECT_EQ(last_msg_->status[5].specific, 114)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[5].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[5].specific)),
+      114)
       << "incorrect value for status[5].specific, expected 114, is "
       << last_msg_->status[5].specific;
-  EXPECT_EQ(last_msg_->status[6].component, 5335)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[6].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[6].component)),
+      5335)
       << "incorrect value for status[6].component, expected 5335, is "
       << last_msg_->status[6].component;
-  EXPECT_EQ(last_msg_->status[6].generic, 146)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[6].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[6].generic)),
+      146)
       << "incorrect value for status[6].generic, expected 146, is "
       << last_msg_->status[6].generic;
-  EXPECT_EQ(last_msg_->status[6].specific, 249)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[6].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[6].specific)),
+      249)
       << "incorrect value for status[6].specific, expected 249, is "
       << last_msg_->status[6].specific;
-  EXPECT_EQ(last_msg_->status[7].component, 13878)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[7].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[7].component)),
+      13878)
       << "incorrect value for status[7].component, expected 13878, is "
       << last_msg_->status[7].component;
-  EXPECT_EQ(last_msg_->status[7].generic, 133)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[7].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[7].generic)),
+      133)
       << "incorrect value for status[7].generic, expected 133, is "
       << last_msg_->status[7].generic;
-  EXPECT_EQ(last_msg_->status[7].specific, 193)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[7].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[7].specific)),
+      193)
       << "incorrect value for status[7].specific, expected 193, is "
       << last_msg_->status[7].specific;
-  EXPECT_EQ(last_msg_->status[8].component, 47722)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[8].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[8].component)),
+      47722)
       << "incorrect value for status[8].component, expected 47722, is "
       << last_msg_->status[8].component;
-  EXPECT_EQ(last_msg_->status[8].generic, 210)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[8].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[8].generic)),
+      210)
       << "incorrect value for status[8].generic, expected 210, is "
       << last_msg_->status[8].generic;
-  EXPECT_EQ(last_msg_->status[8].specific, 183)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[8].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[8].specific)),
+      183)
       << "incorrect value for status[8].specific, expected 183, is "
       << last_msg_->status[8].specific;
-  EXPECT_EQ(last_msg_->status[9].component, 33024)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[9].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[9].component)),
+      33024)
       << "incorrect value for status[9].component, expected 33024, is "
       << last_msg_->status[9].component;
-  EXPECT_EQ(last_msg_->status[9].generic, 5)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[9].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[9].generic)),
+      5)
       << "incorrect value for status[9].generic, expected 5, is "
       << last_msg_->status[9].generic;
-  EXPECT_EQ(last_msg_->status[9].specific, 248)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[9].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[9].specific)),
+      248)
       << "incorrect value for status[9].specific, expected 248, is "
       << last_msg_->status[9].specific;
-  EXPECT_EQ(last_msg_->status[10].component, 38369)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[10].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[10].component)),
+      38369)
       << "incorrect value for status[10].component, expected 38369, is "
       << last_msg_->status[10].component;
-  EXPECT_EQ(last_msg_->status[10].generic, 135)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[10].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[10].generic)),
+      135)
       << "incorrect value for status[10].generic, expected 135, is "
       << last_msg_->status[10].generic;
-  EXPECT_EQ(last_msg_->status[10].specific, 127)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[10].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[10].specific)),
+      127)
       << "incorrect value for status[10].specific, expected 127, is "
       << last_msg_->status[10].specific;
-  EXPECT_EQ(last_msg_->status[11].component, 6658)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[11].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[11].component)),
+      6658)
       << "incorrect value for status[11].component, expected 6658, is "
       << last_msg_->status[11].component;
-  EXPECT_EQ(last_msg_->status[11].generic, 88)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[11].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[11].generic)),
+      88)
       << "incorrect value for status[11].generic, expected 88, is "
       << last_msg_->status[11].generic;
-  EXPECT_EQ(last_msg_->status[11].specific, 92)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[11].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[11].specific)),
+      92)
       << "incorrect value for status[11].specific, expected 92, is "
       << last_msg_->status[11].specific;
-  EXPECT_EQ(last_msg_->status[12].component, 26378)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[12].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[12].component)),
+      26378)
       << "incorrect value for status[12].component, expected 26378, is "
       << last_msg_->status[12].component;
-  EXPECT_EQ(last_msg_->status[12].generic, 73)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[12].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[12].generic)),
+      73)
       << "incorrect value for status[12].generic, expected 73, is "
       << last_msg_->status[12].generic;
-  EXPECT_EQ(last_msg_->status[12].specific, 3)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[12].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[12].specific)),
+      3)
       << "incorrect value for status[12].specific, expected 3, is "
       << last_msg_->status[12].specific;
-  EXPECT_EQ(last_msg_->status[13].component, 17511)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[13].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[13].component)),
+      17511)
       << "incorrect value for status[13].component, expected 17511, is "
       << last_msg_->status[13].component;
-  EXPECT_EQ(last_msg_->status[13].generic, 76)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[13].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[13].generic)),
+      76)
       << "incorrect value for status[13].generic, expected 76, is "
       << last_msg_->status[13].generic;
-  EXPECT_EQ(last_msg_->status[13].specific, 184)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[13].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[13].specific)),
+      184)
       << "incorrect value for status[13].specific, expected 184, is "
       << last_msg_->status[13].specific;
-  EXPECT_EQ(last_msg_->status[14].component, 52769)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[14].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[14].component)),
+      52769)
       << "incorrect value for status[14].component, expected 52769, is "
       << last_msg_->status[14].component;
-  EXPECT_EQ(last_msg_->status[14].generic, 194)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[14].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[14].generic)),
+      194)
       << "incorrect value for status[14].generic, expected 194, is "
       << last_msg_->status[14].generic;
-  EXPECT_EQ(last_msg_->status[14].specific, 163)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[14].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[14].specific)),
+      163)
       << "incorrect value for status[14].specific, expected 163, is "
       << last_msg_->status[14].specific;
-  EXPECT_EQ(last_msg_->status[15].component, 7803)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[15].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[15].component)),
+      7803)
       << "incorrect value for status[15].component, expected 7803, is "
       << last_msg_->status[15].component;
-  EXPECT_EQ(last_msg_->status[15].generic, 151)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[15].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[15].generic)),
+      151)
       << "incorrect value for status[15].generic, expected 151, is "
       << last_msg_->status[15].generic;
-  EXPECT_EQ(last_msg_->status[15].specific, 176)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[15].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[15].specific)),
+      176)
       << "incorrect value for status[15].specific, expected 176, is "
       << last_msg_->status[15].specific;
-  EXPECT_EQ(last_msg_->status[16].component, 44181)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[16].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[16].component)),
+      44181)
       << "incorrect value for status[16].component, expected 44181, is "
       << last_msg_->status[16].component;
-  EXPECT_EQ(last_msg_->status[16].generic, 184)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[16].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[16].generic)),
+      184)
       << "incorrect value for status[16].generic, expected 184, is "
       << last_msg_->status[16].generic;
-  EXPECT_EQ(last_msg_->status[16].specific, 231)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[16].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[16].specific)),
+      231)
       << "incorrect value for status[16].specific, expected 231, is "
       << last_msg_->status[16].specific;
-  EXPECT_EQ(last_msg_->status[17].component, 58998)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[17].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[17].component)),
+      58998)
       << "incorrect value for status[17].component, expected 58998, is "
       << last_msg_->status[17].component;
-  EXPECT_EQ(last_msg_->status[17].generic, 200)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[17].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[17].generic)),
+      200)
       << "incorrect value for status[17].generic, expected 200, is "
       << last_msg_->status[17].generic;
-  EXPECT_EQ(last_msg_->status[17].specific, 168)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[17].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[17].specific)),
+      168)
       << "incorrect value for status[17].specific, expected 168, is "
       << last_msg_->status[17].specific;
-  EXPECT_EQ(last_msg_->status[18].component, 28004)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[18].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[18].component)),
+      28004)
       << "incorrect value for status[18].component, expected 28004, is "
       << last_msg_->status[18].component;
-  EXPECT_EQ(last_msg_->status[18].generic, 10)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[18].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[18].generic)),
+      10)
       << "incorrect value for status[18].generic, expected 10, is "
       << last_msg_->status[18].generic;
-  EXPECT_EQ(last_msg_->status[18].specific, 233)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[18].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[18].specific)),
+      233)
       << "incorrect value for status[18].specific, expected 233, is "
       << last_msg_->status[18].specific;
-  EXPECT_EQ(last_msg_->status[19].component, 15364)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[19].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[19].component)),
+      15364)
       << "incorrect value for status[19].component, expected 15364, is "
       << last_msg_->status[19].component;
-  EXPECT_EQ(last_msg_->status[19].generic, 247)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[19].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[19].generic)),
+      247)
       << "incorrect value for status[19].generic, expected 247, is "
       << last_msg_->status[19].generic;
-  EXPECT_EQ(last_msg_->status[19].specific, 82)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[19].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[19].specific)),
+      82)
       << "incorrect value for status[19].specific, expected 82, is "
       << last_msg_->status[19].specific;
-  EXPECT_EQ(last_msg_->status[20].component, 42711)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[20].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[20].component)),
+      42711)
       << "incorrect value for status[20].component, expected 42711, is "
       << last_msg_->status[20].component;
-  EXPECT_EQ(last_msg_->status[20].generic, 28)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[20].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[20].generic)),
+      28)
       << "incorrect value for status[20].generic, expected 28, is "
       << last_msg_->status[20].generic;
-  EXPECT_EQ(last_msg_->status[20].specific, 138)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[20].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[20].specific)),
+      138)
       << "incorrect value for status[20].specific, expected 138, is "
       << last_msg_->status[20].specific;
-  EXPECT_EQ(last_msg_->status[21].component, 11630)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[21].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[21].component)),
+      11630)
       << "incorrect value for status[21].component, expected 11630, is "
       << last_msg_->status[21].component;
-  EXPECT_EQ(last_msg_->status[21].generic, 98)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[21].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[21].generic)),
+      98)
       << "incorrect value for status[21].generic, expected 98, is "
       << last_msg_->status[21].generic;
-  EXPECT_EQ(last_msg_->status[21].specific, 218)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[21].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[21].specific)),
+      218)
       << "incorrect value for status[21].specific, expected 218, is "
       << last_msg_->status[21].specific;
-  EXPECT_EQ(last_msg_->status[22].component, 46068)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[22].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[22].component)),
+      46068)
       << "incorrect value for status[22].component, expected 46068, is "
       << last_msg_->status[22].component;
-  EXPECT_EQ(last_msg_->status[22].generic, 126)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[22].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[22].generic)),
+      126)
       << "incorrect value for status[22].generic, expected 126, is "
       << last_msg_->status[22].generic;
-  EXPECT_EQ(last_msg_->status[22].specific, 107)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[22].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[22].specific)),
+      107)
       << "incorrect value for status[22].specific, expected 107, is "
       << last_msg_->status[22].specific;
-  EXPECT_EQ(last_msg_->status[23].component, 31836)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[23].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[23].component)),
+      31836)
       << "incorrect value for status[23].component, expected 31836, is "
       << last_msg_->status[23].component;
-  EXPECT_EQ(last_msg_->status[23].generic, 94)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[23].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[23].generic)),
+      94)
       << "incorrect value for status[23].generic, expected 94, is "
       << last_msg_->status[23].generic;
-  EXPECT_EQ(last_msg_->status[23].specific, 157)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[23].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[23].specific)),
+      157)
       << "incorrect value for status[23].specific, expected 157, is "
       << last_msg_->status[23].specific;
-  EXPECT_EQ(last_msg_->status[24].component, 47914)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[24].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[24].component)),
+      47914)
       << "incorrect value for status[24].component, expected 47914, is "
       << last_msg_->status[24].component;
-  EXPECT_EQ(last_msg_->status[24].generic, 124)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[24].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[24].generic)),
+      124)
       << "incorrect value for status[24].generic, expected 124, is "
       << last_msg_->status[24].generic;
-  EXPECT_EQ(last_msg_->status[24].specific, 6)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[24].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[24].specific)),
+      6)
       << "incorrect value for status[24].specific, expected 6, is "
       << last_msg_->status[24].specific;
-  EXPECT_EQ(last_msg_->status[25].component, 63329)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[25].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[25].component)),
+      63329)
       << "incorrect value for status[25].component, expected 63329, is "
       << last_msg_->status[25].component;
-  EXPECT_EQ(last_msg_->status[25].generic, 160)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[25].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[25].generic)),
+      160)
       << "incorrect value for status[25].generic, expected 160, is "
       << last_msg_->status[25].generic;
-  EXPECT_EQ(last_msg_->status[25].specific, 188)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[25].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[25].specific)),
+      188)
       << "incorrect value for status[25].specific, expected 188, is "
       << last_msg_->status[25].specific;
-  EXPECT_EQ(last_msg_->status[26].component, 30830)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[26].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[26].component)),
+      30830)
       << "incorrect value for status[26].component, expected 30830, is "
       << last_msg_->status[26].component;
-  EXPECT_EQ(last_msg_->status[26].generic, 254)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[26].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[26].generic)),
+      254)
       << "incorrect value for status[26].generic, expected 254, is "
       << last_msg_->status[26].generic;
-  EXPECT_EQ(last_msg_->status[26].specific, 214)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[26].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[26].specific)),
+      214)
       << "incorrect value for status[26].specific, expected 214, is "
       << last_msg_->status[26].specific;
-  EXPECT_EQ(last_msg_->status[27].component, 13166)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[27].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[27].component)),
+      13166)
       << "incorrect value for status[27].component, expected 13166, is "
       << last_msg_->status[27].component;
-  EXPECT_EQ(last_msg_->status[27].generic, 240)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[27].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[27].generic)),
+      240)
       << "incorrect value for status[27].generic, expected 240, is "
       << last_msg_->status[27].generic;
-  EXPECT_EQ(last_msg_->status[27].specific, 164)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[27].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[27].specific)),
+      164)
       << "incorrect value for status[27].specific, expected 164, is "
       << last_msg_->status[27].specific;
-  EXPECT_EQ(last_msg_->status[28].component, 4755)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[28].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[28].component)),
+      4755)
       << "incorrect value for status[28].component, expected 4755, is "
       << last_msg_->status[28].component;
-  EXPECT_EQ(last_msg_->status[28].generic, 74)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[28].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[28].generic)),
+      74)
       << "incorrect value for status[28].generic, expected 74, is "
       << last_msg_->status[28].generic;
-  EXPECT_EQ(last_msg_->status[28].specific, 178)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[28].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[28].specific)),
+      178)
       << "incorrect value for status[28].specific, expected 178, is "
       << last_msg_->status[28].specific;
-  EXPECT_EQ(last_msg_->status[29].component, 1091)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[29].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[29].component)),
+      1091)
       << "incorrect value for status[29].component, expected 1091, is "
       << last_msg_->status[29].component;
-  EXPECT_EQ(last_msg_->status[29].generic, 27)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[29].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[29].generic)),
+      27)
       << "incorrect value for status[29].generic, expected 27, is "
       << last_msg_->status[29].generic;
-  EXPECT_EQ(last_msg_->status[29].specific, 73)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[29].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[29].specific)),
+      73)
       << "incorrect value for status[29].specific, expected 73, is "
       << last_msg_->status[29].specific;
-  EXPECT_EQ(last_msg_->status[30].component, 16574)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[30].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[30].component)),
+      16574)
       << "incorrect value for status[30].component, expected 16574, is "
       << last_msg_->status[30].component;
-  EXPECT_EQ(last_msg_->status[30].generic, 179)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[30].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[30].generic)),
+      179)
       << "incorrect value for status[30].generic, expected 179, is "
       << last_msg_->status[30].generic;
-  EXPECT_EQ(last_msg_->status[30].specific, 146)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[30].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[30].specific)),
+      146)
       << "incorrect value for status[30].specific, expected 146, is "
       << last_msg_->status[30].specific;
-  EXPECT_EQ(last_msg_->status[31].component, 39293)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[31].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[31].component)),
+      39293)
       << "incorrect value for status[31].component, expected 39293, is "
       << last_msg_->status[31].component;
-  EXPECT_EQ(last_msg_->status[31].generic, 192)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[31].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[31].generic)),
+      192)
       << "incorrect value for status[31].generic, expected 192, is "
       << last_msg_->status[31].generic;
-  EXPECT_EQ(last_msg_->status[31].specific, 46)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[31].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[31].specific)),
+      46)
       << "incorrect value for status[31].specific, expected 46, is "
       << last_msg_->status[31].specific;
-  EXPECT_EQ(last_msg_->status[32].component, 17098)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[32].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[32].component)),
+      17098)
       << "incorrect value for status[32].component, expected 17098, is "
       << last_msg_->status[32].component;
-  EXPECT_EQ(last_msg_->status[32].generic, 248)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[32].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[32].generic)),
+      248)
       << "incorrect value for status[32].generic, expected 248, is "
       << last_msg_->status[32].generic;
-  EXPECT_EQ(last_msg_->status[32].specific, 46)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[32].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[32].specific)),
+      46)
       << "incorrect value for status[32].specific, expected 46, is "
       << last_msg_->status[32].specific;
-  EXPECT_EQ(last_msg_->status[33].component, 41256)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[33].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[33].component)),
+      41256)
       << "incorrect value for status[33].component, expected 41256, is "
       << last_msg_->status[33].component;
-  EXPECT_EQ(last_msg_->status[33].generic, 173)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[33].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[33].generic)),
+      173)
       << "incorrect value for status[33].generic, expected 173, is "
       << last_msg_->status[33].generic;
-  EXPECT_EQ(last_msg_->status[33].specific, 242)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[33].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[33].specific)),
+      242)
       << "incorrect value for status[33].specific, expected 242, is "
       << last_msg_->status[33].specific;
-  EXPECT_EQ(last_msg_->status[34].component, 982)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[34].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[34].component)),
+      982)
       << "incorrect value for status[34].component, expected 982, is "
       << last_msg_->status[34].component;
-  EXPECT_EQ(last_msg_->status[34].generic, 11)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[34].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[34].generic)),
+      11)
       << "incorrect value for status[34].generic, expected 11, is "
       << last_msg_->status[34].generic;
-  EXPECT_EQ(last_msg_->status[34].specific, 1)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[34].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[34].specific)),
+      1)
       << "incorrect value for status[34].specific, expected 1, is "
       << last_msg_->status[34].specific;
-  EXPECT_EQ(last_msg_->status[35].component, 18038)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[35].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[35].component)),
+      18038)
       << "incorrect value for status[35].component, expected 18038, is "
       << last_msg_->status[35].component;
-  EXPECT_EQ(last_msg_->status[35].generic, 162)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[35].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[35].generic)),
+      162)
       << "incorrect value for status[35].generic, expected 162, is "
       << last_msg_->status[35].generic;
-  EXPECT_EQ(last_msg_->status[35].specific, 61)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[35].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[35].specific)),
+      61)
       << "incorrect value for status[35].specific, expected 61, is "
       << last_msg_->status[35].specific;
-  EXPECT_EQ(last_msg_->status[36].component, 7090)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[36].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[36].component)),
+      7090)
       << "incorrect value for status[36].component, expected 7090, is "
       << last_msg_->status[36].component;
-  EXPECT_EQ(last_msg_->status[36].generic, 156)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[36].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[36].generic)),
+      156)
       << "incorrect value for status[36].generic, expected 156, is "
       << last_msg_->status[36].generic;
-  EXPECT_EQ(last_msg_->status[36].specific, 40)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[36].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[36].specific)),
+      40)
       << "incorrect value for status[36].specific, expected 40, is "
       << last_msg_->status[36].specific;
-  EXPECT_EQ(last_msg_->status[37].component, 29119)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[37].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[37].component)),
+      29119)
       << "incorrect value for status[37].component, expected 29119, is "
       << last_msg_->status[37].component;
-  EXPECT_EQ(last_msg_->status[37].generic, 230)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[37].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[37].generic)),
+      230)
       << "incorrect value for status[37].generic, expected 230, is "
       << last_msg_->status[37].generic;
-  EXPECT_EQ(last_msg_->status[37].specific, 200)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[37].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[37].specific)),
+      200)
       << "incorrect value for status[37].specific, expected 200, is "
       << last_msg_->status[37].specific;
-  EXPECT_EQ(last_msg_->status[38].component, 2120)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[38].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[38].component)),
+      2120)
       << "incorrect value for status[38].component, expected 2120, is "
       << last_msg_->status[38].component;
-  EXPECT_EQ(last_msg_->status[38].generic, 215)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[38].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[38].generic)),
+      215)
       << "incorrect value for status[38].generic, expected 215, is "
       << last_msg_->status[38].generic;
-  EXPECT_EQ(last_msg_->status[38].specific, 245)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[38].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[38].specific)),
+      245)
       << "incorrect value for status[38].specific, expected 245, is "
       << last_msg_->status[38].specific;
-  EXPECT_EQ(last_msg_->status[39].component, 15182)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[39].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[39].component)),
+      15182)
       << "incorrect value for status[39].component, expected 15182, is "
       << last_msg_->status[39].component;
-  EXPECT_EQ(last_msg_->status[39].generic, 222)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[39].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[39].generic)),
+      222)
       << "incorrect value for status[39].generic, expected 222, is "
       << last_msg_->status[39].generic;
-  EXPECT_EQ(last_msg_->status[39].specific, 250)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[39].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[39].specific)),
+      250)
       << "incorrect value for status[39].specific, expected 250, is "
       << last_msg_->status[39].specific;
-  EXPECT_EQ(last_msg_->status[40].component, 8307)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[40].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[40].component)),
+      8307)
       << "incorrect value for status[40].component, expected 8307, is "
       << last_msg_->status[40].component;
-  EXPECT_EQ(last_msg_->status[40].generic, 33)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[40].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[40].generic)),
+      33)
       << "incorrect value for status[40].generic, expected 33, is "
       << last_msg_->status[40].generic;
-  EXPECT_EQ(last_msg_->status[40].specific, 30)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[40].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[40].specific)),
+      30)
       << "incorrect value for status[40].specific, expected 30, is "
       << last_msg_->status[40].specific;
-  EXPECT_EQ(last_msg_->status[41].component, 43731)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[41].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[41].component)),
+      43731)
       << "incorrect value for status[41].component, expected 43731, is "
       << last_msg_->status[41].component;
-  EXPECT_EQ(last_msg_->status[41].generic, 145)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[41].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[41].generic)),
+      145)
       << "incorrect value for status[41].generic, expected 145, is "
       << last_msg_->status[41].generic;
-  EXPECT_EQ(last_msg_->status[41].specific, 92)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[41].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[41].specific)),
+      92)
       << "incorrect value for status[41].specific, expected 92, is "
       << last_msg_->status[41].specific;
-  EXPECT_EQ(last_msg_->status[42].component, 19357)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[42].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[42].component)),
+      19357)
       << "incorrect value for status[42].component, expected 19357, is "
       << last_msg_->status[42].component;
-  EXPECT_EQ(last_msg_->status[42].generic, 24)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[42].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[42].generic)),
+      24)
       << "incorrect value for status[42].generic, expected 24, is "
       << last_msg_->status[42].generic;
-  EXPECT_EQ(last_msg_->status[42].specific, 169)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[42].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[42].specific)),
+      169)
       << "incorrect value for status[42].specific, expected 169, is "
       << last_msg_->status[42].specific;
-  EXPECT_EQ(last_msg_->status[43].component, 14086)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[43].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[43].component)),
+      14086)
       << "incorrect value for status[43].component, expected 14086, is "
       << last_msg_->status[43].component;
-  EXPECT_EQ(last_msg_->status[43].generic, 62)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[43].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[43].generic)),
+      62)
       << "incorrect value for status[43].generic, expected 62, is "
       << last_msg_->status[43].generic;
-  EXPECT_EQ(last_msg_->status[43].specific, 8)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[43].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[43].specific)),
+      8)
       << "incorrect value for status[43].specific, expected 8, is "
       << last_msg_->status[43].specific;
-  EXPECT_EQ(last_msg_->status[44].component, 21099)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[44].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[44].component)),
+      21099)
       << "incorrect value for status[44].component, expected 21099, is "
       << last_msg_->status[44].component;
-  EXPECT_EQ(last_msg_->status[44].generic, 140)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[44].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[44].generic)),
+      140)
       << "incorrect value for status[44].generic, expected 140, is "
       << last_msg_->status[44].generic;
-  EXPECT_EQ(last_msg_->status[44].specific, 49)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[44].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[44].specific)),
+      49)
       << "incorrect value for status[44].specific, expected 49, is "
       << last_msg_->status[44].specific;
-  EXPECT_EQ(last_msg_->status[45].component, 31411)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[45].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[45].component)),
+      31411)
       << "incorrect value for status[45].component, expected 31411, is "
       << last_msg_->status[45].component;
-  EXPECT_EQ(last_msg_->status[45].generic, 90)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[45].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[45].generic)),
+      90)
       << "incorrect value for status[45].generic, expected 90, is "
       << last_msg_->status[45].generic;
-  EXPECT_EQ(last_msg_->status[45].specific, 71)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[45].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[45].specific)),
+      71)
       << "incorrect value for status[45].specific, expected 71, is "
       << last_msg_->status[45].specific;
-  EXPECT_EQ(last_msg_->status[46].component, 22556)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[46].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[46].component)),
+      22556)
       << "incorrect value for status[46].component, expected 22556, is "
       << last_msg_->status[46].component;
-  EXPECT_EQ(last_msg_->status[46].generic, 103)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[46].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[46].generic)),
+      103)
       << "incorrect value for status[46].generic, expected 103, is "
       << last_msg_->status[46].generic;
-  EXPECT_EQ(last_msg_->status[46].specific, 51)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[46].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[46].specific)),
+      51)
       << "incorrect value for status[46].specific, expected 51, is "
       << last_msg_->status[46].specific;
-  EXPECT_EQ(last_msg_->status[47].component, 18609)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[47].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[47].component)),
+      18609)
       << "incorrect value for status[47].component, expected 18609, is "
       << last_msg_->status[47].component;
-  EXPECT_EQ(last_msg_->status[47].generic, 93)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[47].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[47].generic)),
+      93)
       << "incorrect value for status[47].generic, expected 93, is "
       << last_msg_->status[47].generic;
-  EXPECT_EQ(last_msg_->status[47].specific, 39)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[47].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[47].specific)),
+      39)
       << "incorrect value for status[47].specific, expected 39, is "
       << last_msg_->status[47].specific;
-  EXPECT_EQ(last_msg_->status[48].component, 2964)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[48].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[48].component)),
+      2964)
       << "incorrect value for status[48].component, expected 2964, is "
       << last_msg_->status[48].component;
-  EXPECT_EQ(last_msg_->status[48].generic, 202)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[48].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[48].generic)),
+      202)
       << "incorrect value for status[48].generic, expected 202, is "
       << last_msg_->status[48].generic;
-  EXPECT_EQ(last_msg_->status[48].specific, 42)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[48].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[48].specific)),
+      42)
       << "incorrect value for status[48].specific, expected 42, is "
       << last_msg_->status[48].specific;
-  EXPECT_EQ(last_msg_->status[49].component, 23586)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[49].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[49].component)),
+      23586)
       << "incorrect value for status[49].component, expected 23586, is "
       << last_msg_->status[49].component;
-  EXPECT_EQ(last_msg_->status[49].generic, 204)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[49].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[49].generic)),
+      204)
       << "incorrect value for status[49].generic, expected 204, is "
       << last_msg_->status[49].generic;
-  EXPECT_EQ(last_msg_->status[49].specific, 102)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[49].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[49].specific)),
+      102)
       << "incorrect value for status[49].specific, expected 102, is "
       << last_msg_->status[49].specific;
-  EXPECT_EQ(last_msg_->status[50].component, 25117)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[50].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[50].component)),
+      25117)
       << "incorrect value for status[50].component, expected 25117, is "
       << last_msg_->status[50].component;
-  EXPECT_EQ(last_msg_->status[50].generic, 249)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[50].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[50].generic)),
+      249)
       << "incorrect value for status[50].generic, expected 249, is "
       << last_msg_->status[50].generic;
-  EXPECT_EQ(last_msg_->status[50].specific, 91)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[50].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[50].specific)),
+      91)
       << "incorrect value for status[50].specific, expected 91, is "
       << last_msg_->status[50].specific;
-  EXPECT_EQ(last_msg_->status[51].component, 24454)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[51].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[51].component)),
+      24454)
       << "incorrect value for status[51].component, expected 24454, is "
       << last_msg_->status[51].component;
-  EXPECT_EQ(last_msg_->status[51].generic, 23)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[51].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[51].generic)),
+      23)
       << "incorrect value for status[51].generic, expected 23, is "
       << last_msg_->status[51].generic;
-  EXPECT_EQ(last_msg_->status[51].specific, 248)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[51].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[51].specific)),
+      248)
       << "incorrect value for status[51].specific, expected 248, is "
       << last_msg_->status[51].specific;
-  EXPECT_EQ(last_msg_->status[52].component, 5312)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[52].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[52].component)),
+      5312)
       << "incorrect value for status[52].component, expected 5312, is "
       << last_msg_->status[52].component;
-  EXPECT_EQ(last_msg_->status[52].generic, 83)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[52].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[52].generic)),
+      83)
       << "incorrect value for status[52].generic, expected 83, is "
       << last_msg_->status[52].generic;
-  EXPECT_EQ(last_msg_->status[52].specific, 195)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[52].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[52].specific)),
+      195)
       << "incorrect value for status[52].specific, expected 195, is "
       << last_msg_->status[52].specific;
-  EXPECT_EQ(last_msg_->status[53].component, 46175)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[53].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[53].component)),
+      46175)
       << "incorrect value for status[53].component, expected 46175, is "
       << last_msg_->status[53].component;
-  EXPECT_EQ(last_msg_->status[53].generic, 54)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[53].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[53].generic)),
+      54)
       << "incorrect value for status[53].generic, expected 54, is "
       << last_msg_->status[53].generic;
-  EXPECT_EQ(last_msg_->status[53].specific, 36)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[53].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[53].specific)),
+      36)
       << "incorrect value for status[53].specific, expected 36, is "
       << last_msg_->status[53].specific;
-  EXPECT_EQ(last_msg_->status[54].component, 19386)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[54].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[54].component)),
+      19386)
       << "incorrect value for status[54].component, expected 19386, is "
       << last_msg_->status[54].component;
-  EXPECT_EQ(last_msg_->status[54].generic, 64)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[54].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[54].generic)),
+      64)
       << "incorrect value for status[54].generic, expected 64, is "
       << last_msg_->status[54].generic;
-  EXPECT_EQ(last_msg_->status[54].specific, 20)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[54].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[54].specific)),
+      20)
       << "incorrect value for status[54].specific, expected 20, is "
       << last_msg_->status[54].specific;
-  EXPECT_EQ(last_msg_->status[55].component, 34205)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[55].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[55].component)),
+      34205)
       << "incorrect value for status[55].component, expected 34205, is "
       << last_msg_->status[55].component;
-  EXPECT_EQ(last_msg_->status[55].generic, 12)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[55].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[55].generic)),
+      12)
       << "incorrect value for status[55].generic, expected 12, is "
       << last_msg_->status[55].generic;
-  EXPECT_EQ(last_msg_->status[55].specific, 149)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[55].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[55].specific)),
+      149)
       << "incorrect value for status[55].specific, expected 149, is "
       << last_msg_->status[55].specific;
-  EXPECT_EQ(last_msg_->status[56].component, 3612)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[56].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[56].component)),
+      3612)
       << "incorrect value for status[56].component, expected 3612, is "
       << last_msg_->status[56].component;
-  EXPECT_EQ(last_msg_->status[56].generic, 185)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[56].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[56].generic)),
+      185)
       << "incorrect value for status[56].generic, expected 185, is "
       << last_msg_->status[56].generic;
-  EXPECT_EQ(last_msg_->status[56].specific, 129)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[56].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[56].specific)),
+      129)
       << "incorrect value for status[56].specific, expected 129, is "
       << last_msg_->status[56].specific;
-  EXPECT_EQ(last_msg_->status[57].component, 61285)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[57].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[57].component)),
+      61285)
       << "incorrect value for status[57].component, expected 61285, is "
       << last_msg_->status[57].component;
-  EXPECT_EQ(last_msg_->status[57].generic, 74)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[57].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[57].generic)),
+      74)
       << "incorrect value for status[57].generic, expected 74, is "
       << last_msg_->status[57].generic;
-  EXPECT_EQ(last_msg_->status[57].specific, 248)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[57].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[57].specific)),
+      248)
       << "incorrect value for status[57].specific, expected 248, is "
       << last_msg_->status[57].specific;
-  EXPECT_EQ(last_msg_->status[58].component, 7925)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[58].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[58].component)),
+      7925)
       << "incorrect value for status[58].component, expected 7925, is "
       << last_msg_->status[58].component;
-  EXPECT_EQ(last_msg_->status[58].generic, 228)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[58].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[58].generic)),
+      228)
       << "incorrect value for status[58].generic, expected 228, is "
       << last_msg_->status[58].generic;
-  EXPECT_EQ(last_msg_->status[58].specific, 88)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[58].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[58].specific)),
+      88)
       << "incorrect value for status[58].specific, expected 88, is "
       << last_msg_->status[58].specific;
-  EXPECT_EQ(last_msg_->status[59].component, 54414)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[59].component)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[59].component)),
+      54414)
       << "incorrect value for status[59].component, expected 54414, is "
       << last_msg_->status[59].component;
-  EXPECT_EQ(last_msg_->status[59].generic, 53)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[59].generic)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[59].generic)),
+      53)
       << "incorrect value for status[59].generic, expected 53, is "
       << last_msg_->status[59].generic;
-  EXPECT_EQ(last_msg_->status[59].specific, 224)
+  EXPECT_EQ(
+      get_as<decltype(last_msg_->status[59].specific)>(
+          reinterpret_cast<const uint8_t *>(&last_msg_->status[59].specific)),
+      224)
       << "incorrect value for status[59].specific, expected 224, is "
       << last_msg_->status[59].specific;
-  EXPECT_EQ(last_msg_->uptime, 1657804265)
+  EXPECT_EQ(get_as<decltype(last_msg_->uptime)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->uptime)),
+            1657804265)
       << "incorrect value for uptime, expected 1657804265, is "
       << last_msg_->uptime;
 }

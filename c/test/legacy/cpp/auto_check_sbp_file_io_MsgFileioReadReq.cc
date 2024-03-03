@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/file_io.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_file_io_MsgFileioReadReq0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -125,7 +132,9 @@ TEST_F(Test_legacy_auto_check_sbp_file_io_MsgFileioReadReq0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 1219);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->chunk_size, 53)
+  EXPECT_EQ(get_as<decltype(last_msg_->chunk_size)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->chunk_size)),
+            53)
       << "incorrect value for chunk_size, expected 53, is "
       << last_msg_->chunk_size;
   {
@@ -139,10 +148,14 @@ TEST_F(Test_legacy_auto_check_sbp_file_io_MsgFileioReadReq0, Test) {
         << "incorrect value for last_msg_->filename, expected string '"
         << check_string << "', is '" << last_msg_->filename << "'";
   }
-  EXPECT_EQ(last_msg_->offset, 398373474)
+  EXPECT_EQ(get_as<decltype(last_msg_->offset)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->offset)),
+            398373474)
       << "incorrect value for offset, expected 398373474, is "
       << last_msg_->offset;
-  EXPECT_EQ(last_msg_->sequence, 679648290)
+  EXPECT_EQ(get_as<decltype(last_msg_->sequence)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sequence)),
+            679648290)
       << "incorrect value for sequence, expected 679648290, is "
       << last_msg_->sequence;
 }

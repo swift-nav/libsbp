@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/piksi.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_piksi_MsgCommandResp0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -111,10 +118,14 @@ TEST_F(Test_legacy_auto_check_sbp_piksi_MsgCommandResp0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 52793);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->code, 1737912018)
+  EXPECT_EQ(get_as<decltype(last_msg_->code)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->code)),
+            1737912018)
       << "incorrect value for code, expected 1737912018, is "
       << last_msg_->code;
-  EXPECT_EQ(last_msg_->sequence, 2692994934)
+  EXPECT_EQ(get_as<decltype(last_msg_->sequence)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->sequence)),
+            2692994934)
       << "incorrect value for sequence, expected 2692994934, is "
       << last_msg_->sequence;
 }

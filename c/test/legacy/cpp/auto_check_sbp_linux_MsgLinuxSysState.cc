@@ -29,6 +29,13 @@
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
 #include <libsbp/legacy/linux.h>
+
+template <typename T, typename U = std::remove_reference_t<T>>
+U get_as(const uint8_t *buf) {
+  U v;
+  memcpy(&v, buf, sizeof(T));
+  return v;
+}
 class Test_legacy_auto_check_sbp_linux_MsgLinuxSysState0
     : public ::testing::Test,
       public sbp::LegacyState,
@@ -119,24 +126,40 @@ TEST_F(Test_legacy_auto_check_sbp_linux_MsgLinuxSysState0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 42837);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->flags, 9)
+  EXPECT_EQ(get_as<decltype(last_msg_->flags)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->flags)),
+            9)
       << "incorrect value for flags, expected 9, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->mem_total, 53012)
+  EXPECT_EQ(get_as<decltype(last_msg_->mem_total)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->mem_total)),
+            53012)
       << "incorrect value for mem_total, expected 53012, is "
       << last_msg_->mem_total;
-  EXPECT_EQ(last_msg_->pcpu, 125)
+  EXPECT_EQ(get_as<decltype(last_msg_->pcpu)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pcpu)),
+            125)
       << "incorrect value for pcpu, expected 125, is " << last_msg_->pcpu;
-  EXPECT_EQ(last_msg_->pid_count, 47866)
+  EXPECT_EQ(get_as<decltype(last_msg_->pid_count)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pid_count)),
+            47866)
       << "incorrect value for pid_count, expected 47866, is "
       << last_msg_->pid_count;
-  EXPECT_EQ(last_msg_->pmem, 215)
+  EXPECT_EQ(get_as<decltype(last_msg_->pmem)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->pmem)),
+            215)
       << "incorrect value for pmem, expected 215, is " << last_msg_->pmem;
-  EXPECT_EQ(last_msg_->procs_starting, 18372)
+  EXPECT_EQ(get_as<decltype(last_msg_->procs_starting)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->procs_starting)),
+            18372)
       << "incorrect value for procs_starting, expected 18372, is "
       << last_msg_->procs_starting;
-  EXPECT_EQ(last_msg_->procs_stopping, 58785)
+  EXPECT_EQ(get_as<decltype(last_msg_->procs_stopping)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->procs_stopping)),
+            58785)
       << "incorrect value for procs_stopping, expected 58785, is "
       << last_msg_->procs_stopping;
-  EXPECT_EQ(last_msg_->time, 90840684)
+  EXPECT_EQ(get_as<decltype(last_msg_->time)>(
+                reinterpret_cast<const uint8_t *>(&last_msg_->time)),
+            90840684)
       << "incorrect value for time, expected 90840684, is " << last_msg_->time;
 }
