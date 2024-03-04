@@ -224,7 +224,7 @@ s8 sbp_msg_measurement_point_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_MEASUREMENT_POINT, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgMeasurementPoint, sender_id,
                                       payload_len, payload, write);
 }
 

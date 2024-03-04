@@ -89,8 +89,8 @@ s8 sbp_msg_gps_time_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_GPS_TIME, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgGpsTime, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_gps_time_cmp(const sbp_msg_gps_time_t *a,
@@ -190,7 +190,7 @@ s8 sbp_msg_gps_time_gnss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_GPS_TIME_GNSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgGpsTimeGnss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -319,8 +319,8 @@ s8 sbp_msg_utc_time_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_UTC_TIME, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgUtcTime, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_utc_time_cmp(const sbp_msg_utc_time_t *a,
@@ -475,7 +475,7 @@ s8 sbp_msg_utc_time_gnss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_UTC_TIME_GNSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgUtcTimeGnss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -616,7 +616,7 @@ s8 sbp_msg_dops_send(sbp_state_t *s, u16 sender_id, const sbp_msg_dops_t *msg,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_DOPS, sender_id, payload_len,
+  return sbp_internal_forward_payload(s, SbpMsgDops, sender_id, payload_len,
                                       payload, write);
 }
 
@@ -747,8 +747,8 @@ s8 sbp_msg_pos_ecef_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_ECEF, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgPosEcef, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_pos_ecef_cmp(const sbp_msg_pos_ecef_t *a,
@@ -911,7 +911,7 @@ s8 sbp_msg_pos_ecef_cov_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_ECEF_COV, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgPosEcefCov, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1074,8 +1074,8 @@ s8 sbp_msg_pos_llh_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_LLH, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgPosLlh, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_pos_llh_cmp(const sbp_msg_pos_llh_t *a,
@@ -1243,7 +1243,7 @@ s8 sbp_msg_pos_llh_cov_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_LLH_COV, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgPosLlhCov, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1520,7 +1520,7 @@ s8 sbp_msg_pos_llh_acc_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_LLH_ACC, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgPosLlhAcc, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1685,7 +1685,7 @@ s8 sbp_msg_baseline_ecef_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BASELINE_ECEF, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgBaselineEcef, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1825,7 +1825,7 @@ s8 sbp_msg_baseline_ned_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BASELINE_NED, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgBaselineNed, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1962,8 +1962,8 @@ s8 sbp_msg_vel_ecef_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_ECEF, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgVelEcef, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_vel_ecef_cmp(const sbp_msg_vel_ecef_t *a,
@@ -2126,7 +2126,7 @@ s8 sbp_msg_vel_ecef_cov_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_ECEF_COV, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgVelEcefCov, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2289,8 +2289,8 @@ s8 sbp_msg_vel_ned_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_NED, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgVelNed, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_vel_ned_cmp(const sbp_msg_vel_ned_t *a,
@@ -2458,7 +2458,7 @@ s8 sbp_msg_vel_ned_cov_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_NED_COV, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgVelNedCov, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2617,7 +2617,7 @@ s8 sbp_msg_pos_ecef_gnss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_ECEF_GNSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgPosEcefGnss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2783,7 +2783,7 @@ s8 sbp_msg_pos_ecef_cov_gnss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_ECEF_COV_GNSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgPosEcefCovGnss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -2948,7 +2948,7 @@ s8 sbp_msg_pos_llh_gnss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_LLH_GNSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgPosLlhGnss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -3119,7 +3119,7 @@ s8 sbp_msg_pos_llh_cov_gnss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_LLH_COV_GNSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgPosLlhCovGnss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -3278,7 +3278,7 @@ s8 sbp_msg_vel_ecef_gnss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_ECEF_GNSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgVelEcefGnss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -3444,7 +3444,7 @@ s8 sbp_msg_vel_ecef_cov_gnss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_ECEF_COV_GNSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgVelEcefCovGnss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -3609,7 +3609,7 @@ s8 sbp_msg_vel_ned_gnss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_NED_GNSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgVelNedGnss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -3780,7 +3780,7 @@ s8 sbp_msg_vel_ned_cov_gnss_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_NED_COV_GNSS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgVelNedCovGnss, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -3967,8 +3967,8 @@ s8 sbp_msg_vel_body_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_BODY, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgVelBody, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_vel_body_cmp(const sbp_msg_vel_body_t *a,
@@ -4130,8 +4130,8 @@ s8 sbp_msg_vel_cog_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_COG, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgVelCog, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_vel_cog_cmp(const sbp_msg_vel_cog_t *a,
@@ -4240,7 +4240,7 @@ s8 sbp_msg_age_corrections_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_AGE_CORRECTIONS, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAgeCorrections, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -4332,7 +4332,7 @@ s8 sbp_msg_gps_time_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_GPS_TIME_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgGpsTimeDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -4445,8 +4445,8 @@ s8 sbp_msg_dops_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_DOPS_DEP_A, sender_id,
-                                      payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgDopsDepA, sender_id, payload_len,
+                                      payload, write);
 }
 
 int sbp_msg_dops_dep_a_cmp(const sbp_msg_dops_dep_a_t *a,
@@ -4575,7 +4575,7 @@ s8 sbp_msg_pos_ecef_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_ECEF_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgPosEcefDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -4715,7 +4715,7 @@ s8 sbp_msg_pos_llh_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POS_LLH_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgPosLlhDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -4856,7 +4856,7 @@ s8 sbp_msg_baseline_ecef_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BASELINE_ECEF_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgBaselineEcefDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -4998,7 +4998,7 @@ s8 sbp_msg_baseline_ned_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BASELINE_NED_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgBaselineNedDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -5138,7 +5138,7 @@ s8 sbp_msg_vel_ecef_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_ECEF_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgVelEcefDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -5278,7 +5278,7 @@ s8 sbp_msg_vel_ned_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_VEL_NED_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgVelNedDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -5401,8 +5401,8 @@ s8 sbp_msg_baseline_heading_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BASELINE_HEADING_DEP_A,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgBaselineHeadingDepA, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_baseline_heading_dep_a_cmp(
@@ -5523,8 +5523,8 @@ s8 sbp_msg_protection_level_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_PROTECTION_LEVEL_DEP_A,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgProtectionLevelDepA, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_protection_level_dep_a_cmp(
@@ -5744,7 +5744,7 @@ s8 sbp_msg_protection_level_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_PROTECTION_LEVEL, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgProtectionLevel, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -5961,7 +5961,7 @@ s8 sbp_msg_utc_leap_second_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_UTC_LEAP_SECOND, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgUtcLeapSecond, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -6193,8 +6193,8 @@ s8 sbp_msg_reference_frame_param_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_REFERENCE_FRAME_PARAM,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgReferenceFrameParam, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_reference_frame_param_cmp(
@@ -6497,7 +6497,7 @@ s8 sbp_msg_pose_relative_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_POSE_RELATIVE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgPoseRelative, sender_id,
                                       payload_len, payload, write);
 }
 

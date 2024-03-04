@@ -73,7 +73,7 @@ s8 sbp_msg_bootloader_handshake_req_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_REQ,
+  return sbp_internal_forward_payload(s, SbpMsgBootloaderHandshakeReq,
                                       sender_id, payload_len, payload, write);
 }
 
@@ -249,7 +249,7 @@ s8 sbp_msg_bootloader_handshake_resp_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP,
+  return sbp_internal_forward_payload(s, SbpMsgBootloaderHandshakeResp,
                                       sender_id, payload_len, payload, write);
 }
 
@@ -325,8 +325,8 @@ s8 sbp_msg_bootloader_jump_to_app_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BOOTLOADER_JUMP_TO_APP,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgBootloaderJumpToApp, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_bootloader_jump_to_app_cmp(
@@ -394,7 +394,7 @@ s8 sbp_msg_nap_device_dna_req_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_NAP_DEVICE_DNA_REQ, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgNapDeviceDnaReq, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -468,7 +468,7 @@ s8 sbp_msg_nap_device_dna_resp_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_NAP_DEVICE_DNA_RESP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgNapDeviceDnaResp, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -645,7 +645,7 @@ s8 sbp_msg_bootloader_handshake_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A,
+  return sbp_internal_forward_payload(s, SbpMsgBootloaderHandshakeDepA,
                                       sender_id, payload_len, payload, write);
 }
 

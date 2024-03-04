@@ -43,7 +43,7 @@ bool sbp_telemetry_sv_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->correction_flags)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -90,7 +90,7 @@ bool sbp_telemetry_sv_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->correction_flags)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -155,7 +155,7 @@ int sbp_telemetry_sv_cmp(const sbp_telemetry_sv_t *a,
     return ret;
   }
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   return ret;
 }
 
@@ -246,7 +246,7 @@ s8 sbp_msg_tel_sv_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_TEL_SV, sender_id, payload_len,
+  return sbp_internal_forward_payload(s, SbpMsgTelSv, sender_id, payload_len,
                                       payload, write);
 }
 

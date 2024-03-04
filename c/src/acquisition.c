@@ -28,7 +28,7 @@ bool sbp_msg_acq_result_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_float_encode(ctx, &msg->cf)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -60,7 +60,7 @@ bool sbp_msg_acq_result_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_float_decode(ctx, &msg->cf)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   return true;
@@ -91,7 +91,7 @@ s8 sbp_msg_acq_result_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_RESULT, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAcqResult, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -114,7 +114,7 @@ int sbp_msg_acq_result_cmp(const sbp_msg_acq_result_t *a,
     return ret;
   }
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   return ret;
 }
 
@@ -194,7 +194,7 @@ s8 sbp_msg_acq_result_dep_c_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_RESULT_DEP_C, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAcqResultDepC, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -297,7 +297,7 @@ s8 sbp_msg_acq_result_dep_b_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_RESULT_DEP_B, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAcqResultDepB, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -400,7 +400,7 @@ s8 sbp_msg_acq_result_dep_a_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_RESULT_DEP_A, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAcqResultDepA, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -441,7 +441,7 @@ bool sbp_acq_sv_profile_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_u8_encode(ctx, &msg->int_time)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_encode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u16_encode(ctx, &msg->bin_width)) {
@@ -497,7 +497,7 @@ bool sbp_acq_sv_profile_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u8_decode(ctx, &msg->int_time)) {
     return false;
   }
-  if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->sid)) {
+  if (!sbp_gnss_signal_decode_internal(ctx, &msg->sid)) {
     return false;
   }
   if (!sbp_u16_decode(ctx, &msg->bin_width)) {
@@ -563,7 +563,7 @@ int sbp_acq_sv_profile_cmp(const sbp_acq_sv_profile_t *a,
     return ret;
   }
 
-  ret = sbp_v4_gnss_signal_cmp(&a->sid, &b->sid);
+  ret = sbp_gnss_signal_cmp(&a->sid, &b->sid);
   if (ret != 0) {
     return ret;
   }
@@ -844,7 +844,7 @@ s8 sbp_msg_acq_sv_profile_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_SV_PROFILE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAcqSvProfile, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -933,7 +933,7 @@ s8 sbp_msg_acq_sv_profile_dep_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ACQ_SV_PROFILE_DEP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgAcqSvProfileDep, sender_id,
                                       payload_len, payload, write);
 }
 

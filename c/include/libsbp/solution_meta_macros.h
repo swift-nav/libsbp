@@ -56,12 +56,10 @@
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_ODOMETRY_SPEED (5)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_IMU_SENSOR (6)
 /**
- * Encoded length of sbp_solution_input_type_t (V4 API) and
- * solution_input_type_t (legacy API)
+ * Encoded length of sbp_solution_input_type_t (V4 API)
  */
 #define SBP_SOLUTION_INPUT_TYPE_ENCODED_LEN 2u
 
-#define SBP_MSG_SOLN_META_DEP_A 0xFF0F
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK (0x7u)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT (0u)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_GET(flags)               \
@@ -88,27 +86,24 @@
   (4)
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_soln_meta_dep_a_t::sol_in (V4 API) or msg_soln_meta_dep_a_t::sol_in
- * (legacy API) before the maximum SBP message size is exceeded
+ * sbp_msg_soln_meta_dep_a_t::sol_in before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_MSG_SOLN_META_DEP_A_SOL_IN_MAX 118u
 
 /**
- * Encoded length of sbp_msg_soln_meta_dep_a_t (V4 API) and
- * msg_soln_meta_dep_a_t (legacy API)
+ * Encoded length of sbp_msg_soln_meta_dep_a_t (V4 API)
  *
  * This type is not fixed size and an instance of this message may be longer
  * than the value indicated by this symbol. Users of the V4 API should call
  * #sbp_msg_soln_meta_dep_a_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
+ * instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SOLN_META_DEP_A_ENCODED_OVERHEAD 18u
 
-#define SBP_MSG_SOLN_META 0xFF0E
 #define SBP_SOLN_META_TIME_STATUS_MASK (0x3u)
 #define SBP_SOLN_META_TIME_STATUS_SHIFT (30u)
 #define SBP_SOLN_META_TIME_STATUS_GET(flags)                 \
@@ -147,20 +142,17 @@
 
 /**
  * The maximum number of items that can be stored in sbp_msg_soln_meta_t::sol_in
- * (V4 API) or msg_soln_meta_t::sol_in (legacy API) before the maximum SBP
- * message size is exceeded
+ * before the maximum SBP message size is exceeded
  */
 #define SBP_MSG_SOLN_META_SOL_IN_MAX 119u
 
 /**
- * Encoded length of sbp_msg_soln_meta_t (V4 API) and
- * msg_soln_meta_t (legacy API)
+ * Encoded length of sbp_msg_soln_meta_t (V4 API)
  *
  * This type is not fixed size and an instance of this message may be longer
  * than the value indicated by this symbol. Users of the V4 API should call
  * #sbp_msg_soln_meta_encoded_len to determine the actual size of an instance
- * of this message. Users of the legacy API are required to track the encoded
- * message length when interacting with the legacy type.
+ * of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
@@ -186,8 +178,7 @@
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GNSS_VELOCITY_DISPLACEMENT \
   (2)
 /**
- * Encoded length of sbp_gnss_input_type_t (V4 API) and
- * gnss_input_type_t (legacy API)
+ * Encoded length of sbp_gnss_input_type_t (V4 API)
  */
 #define SBP_GNSS_INPUT_TYPE_ENCODED_LEN 1u
 
@@ -243,8 +234,7 @@
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_6_AXIS_MEMS (0)
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_OTHER_TYPE (1)
 /**
- * Encoded length of sbp_imu_input_type_t (V4 API) and
- * imu_input_type_t (legacy API)
+ * Encoded length of sbp_imu_input_type_t (V4 API)
  */
 #define SBP_IMU_INPUT_TYPE_ENCODED_LEN 1u
 
@@ -297,8 +287,7 @@
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MULTI_DIMENSIONAL_TICKS (2)
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MULTI_DIMENSIONAL_SPEED (3)
 /**
- * Encoded length of sbp_odo_input_type_t (V4 API) and
- * odo_input_type_t (legacy API)
+ * Encoded length of sbp_odo_input_type_t (V4 API)
  */
 #define SBP_ODO_INPUT_TYPE_ENCODED_LEN 1u
 

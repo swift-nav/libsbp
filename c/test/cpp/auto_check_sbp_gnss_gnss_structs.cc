@@ -35,7 +35,7 @@ class Test_Struct_auto_check_sbp_gnss_gnss_structs0 : public ::testing::Test {
   }
 
   struct TestStructInfo {
-    sbp_v4_gnss_signal_t test_struct;
+    sbp_gnss_signal_t test_struct;
     const uint8_t *encoded_data;
     uint32_t encoded_len;
   };
@@ -49,7 +49,7 @@ class Test_Struct_auto_check_sbp_gnss_gnss_structs0 : public ::testing::Test {
   }
 
  private:
-  sbp_v4_gnss_signal_t test_struct_{};
+  sbp_gnss_signal_t test_struct_{};
   uint8_t encoded_data_[2] = {
       162,
       244,
@@ -58,15 +58,15 @@ class Test_Struct_auto_check_sbp_gnss_gnss_structs0 : public ::testing::Test {
 
 TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs0, EncodedLen) {
   auto info = get_test_struct_info();
-  EXPECT_EQ(sbp_v4_gnss_signal_encoded_len(&info.test_struct), 2);
+  EXPECT_EQ(sbp_gnss_signal_encoded_len(&info.test_struct), 2);
 }
 
 TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs0, FreeEncode) {
   auto info = get_test_struct_info();
   uint8_t nwritten = 0;
   uint8_t buf[2];
-  EXPECT_EQ(sbp_v4_gnss_signal_encode(&buf[0], sizeof(buf), &nwritten,
-                                      &info.test_struct),
+  EXPECT_EQ(sbp_gnss_signal_encode(&buf[0], sizeof(buf), &nwritten,
+                                   &info.test_struct),
             SBP_OK);
   EXPECT_EQ(nwritten, 2);
   EXPECT_EQ(memcmp(&buf[0], info.encoded_data, nwritten), 0);
@@ -76,9 +76,9 @@ TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs0,
        FreeEncodeWithoutNwritten) {
   auto info = get_test_struct_info();
   uint8_t buf[2];
-  EXPECT_EQ(sbp_v4_gnss_signal_encode(&buf[0], sizeof(buf), nullptr,
-                                      &info.test_struct),
-            SBP_OK);
+  EXPECT_EQ(
+      sbp_gnss_signal_encode(&buf[0], sizeof(buf), nullptr, &info.test_struct),
+      SBP_OK);
   EXPECT_EQ(memcmp(&buf[0], info.encoded_data, 2), 0);
 }
 
@@ -86,7 +86,7 @@ TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs0, FreeEncodeUnderflow) {
   auto info = get_test_struct_info();
   uint8_t buf[2];
   for (uint8_t i = 0; i < 2; i++) {
-    EXPECT_EQ(sbp_v4_gnss_signal_encode(&buf[0], i, nullptr, &info.test_struct),
+    EXPECT_EQ(sbp_gnss_signal_encode(&buf[0], i, nullptr, &info.test_struct),
               SBP_ENCODE_ERROR);
   }
 }
@@ -94,27 +94,25 @@ TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs0, FreeEncodeUnderflow) {
 TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs0, FreeDecode) {
   auto info = get_test_struct_info();
   uint8_t nread = 0;
-  sbp_v4_gnss_signal_t t{};
-  EXPECT_EQ(sbp_v4_gnss_signal_decode(info.encoded_data, 2, &nread, &t),
-            SBP_OK);
+  sbp_gnss_signal_t t{};
+  EXPECT_EQ(sbp_gnss_signal_decode(info.encoded_data, 2, &nread, &t), SBP_OK);
   EXPECT_EQ(nread, info.encoded_len);
-  EXPECT_EQ(sbp_v4_gnss_signal_cmp(&t, &info.test_struct), 0);
+  EXPECT_EQ(sbp_gnss_signal_cmp(&t, &info.test_struct), 0);
 }
 
 TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs0, FreeDecodeWithoutNread) {
   auto info = get_test_struct_info();
-  sbp_v4_gnss_signal_t t{};
-  EXPECT_EQ(sbp_v4_gnss_signal_decode(info.encoded_data, 2, nullptr, &t),
-            SBP_OK);
-  EXPECT_EQ(sbp_v4_gnss_signal_cmp(&t, &info.test_struct), 0);
+  sbp_gnss_signal_t t{};
+  EXPECT_EQ(sbp_gnss_signal_decode(info.encoded_data, 2, nullptr, &t), SBP_OK);
+  EXPECT_EQ(sbp_gnss_signal_cmp(&t, &info.test_struct), 0);
 }
 
 TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs0, FreeDecodeUnderflow) {
   auto info = get_test_struct_info();
-  sbp_v4_gnss_signal_t t{};
+  sbp_gnss_signal_t t{};
 
   for (uint8_t i = 0; i < 2; i++) {
-    EXPECT_EQ(sbp_v4_gnss_signal_decode(info.encoded_data, i, nullptr, &t),
+    EXPECT_EQ(sbp_gnss_signal_decode(info.encoded_data, i, nullptr, &t),
               SBP_DECODE_ERROR);
   }
 }
@@ -491,7 +489,7 @@ class Test_Struct_auto_check_sbp_gnss_gnss_structs5 : public ::testing::Test {
   }
 
   struct TestStructInfo {
-    sbp_v4_gps_time_t test_struct;
+    sbp_gps_time_t test_struct;
     const uint8_t *encoded_data;
     uint32_t encoded_len;
   };
@@ -505,7 +503,7 @@ class Test_Struct_auto_check_sbp_gnss_gnss_structs5 : public ::testing::Test {
   }
 
  private:
-  sbp_v4_gps_time_t test_struct_{};
+  sbp_gps_time_t test_struct_{};
   uint8_t encoded_data_[10] = {
       31, 13, 189, 5, 30, 178, 29, 28, 31, 184,
   };
@@ -513,16 +511,16 @@ class Test_Struct_auto_check_sbp_gnss_gnss_structs5 : public ::testing::Test {
 
 TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs5, EncodedLen) {
   auto info = get_test_struct_info();
-  EXPECT_EQ(sbp_v4_gps_time_encoded_len(&info.test_struct), 10);
+  EXPECT_EQ(sbp_gps_time_encoded_len(&info.test_struct), 10);
 }
 
 TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs5, FreeEncode) {
   auto info = get_test_struct_info();
   uint8_t nwritten = 0;
   uint8_t buf[10];
-  EXPECT_EQ(sbp_v4_gps_time_encode(&buf[0], sizeof(buf), &nwritten,
-                                   &info.test_struct),
-            SBP_OK);
+  EXPECT_EQ(
+      sbp_gps_time_encode(&buf[0], sizeof(buf), &nwritten, &info.test_struct),
+      SBP_OK);
   EXPECT_EQ(nwritten, 10);
   EXPECT_EQ(memcmp(&buf[0], info.encoded_data, nwritten), 0);
 }
@@ -532,7 +530,7 @@ TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs5,
   auto info = get_test_struct_info();
   uint8_t buf[10];
   EXPECT_EQ(
-      sbp_v4_gps_time_encode(&buf[0], sizeof(buf), nullptr, &info.test_struct),
+      sbp_gps_time_encode(&buf[0], sizeof(buf), nullptr, &info.test_struct),
       SBP_OK);
   EXPECT_EQ(memcmp(&buf[0], info.encoded_data, 10), 0);
 }
@@ -541,7 +539,7 @@ TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs5, FreeEncodeUnderflow) {
   auto info = get_test_struct_info();
   uint8_t buf[10];
   for (uint8_t i = 0; i < 10; i++) {
-    EXPECT_EQ(sbp_v4_gps_time_encode(&buf[0], i, nullptr, &info.test_struct),
+    EXPECT_EQ(sbp_gps_time_encode(&buf[0], i, nullptr, &info.test_struct),
               SBP_ENCODE_ERROR);
   }
 }
@@ -549,25 +547,25 @@ TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs5, FreeEncodeUnderflow) {
 TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs5, FreeDecode) {
   auto info = get_test_struct_info();
   uint8_t nread = 0;
-  sbp_v4_gps_time_t t{};
-  EXPECT_EQ(sbp_v4_gps_time_decode(info.encoded_data, 10, &nread, &t), SBP_OK);
+  sbp_gps_time_t t{};
+  EXPECT_EQ(sbp_gps_time_decode(info.encoded_data, 10, &nread, &t), SBP_OK);
   EXPECT_EQ(nread, info.encoded_len);
-  EXPECT_EQ(sbp_v4_gps_time_cmp(&t, &info.test_struct), 0);
+  EXPECT_EQ(sbp_gps_time_cmp(&t, &info.test_struct), 0);
 }
 
 TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs5, FreeDecodeWithoutNread) {
   auto info = get_test_struct_info();
-  sbp_v4_gps_time_t t{};
-  EXPECT_EQ(sbp_v4_gps_time_decode(info.encoded_data, 10, nullptr, &t), SBP_OK);
-  EXPECT_EQ(sbp_v4_gps_time_cmp(&t, &info.test_struct), 0);
+  sbp_gps_time_t t{};
+  EXPECT_EQ(sbp_gps_time_decode(info.encoded_data, 10, nullptr, &t), SBP_OK);
+  EXPECT_EQ(sbp_gps_time_cmp(&t, &info.test_struct), 0);
 }
 
 TEST_F(Test_Struct_auto_check_sbp_gnss_gnss_structs5, FreeDecodeUnderflow) {
   auto info = get_test_struct_info();
-  sbp_v4_gps_time_t t{};
+  sbp_gps_time_t t{};
 
   for (uint8_t i = 0; i < 10; i++) {
-    EXPECT_EQ(sbp_v4_gps_time_decode(info.encoded_data, i, nullptr, &t),
+    EXPECT_EQ(sbp_gps_time_decode(info.encoded_data, i, nullptr, &t),
               SBP_DECODE_ERROR);
   }
 }
