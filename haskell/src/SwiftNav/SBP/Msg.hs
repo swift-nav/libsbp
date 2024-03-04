@@ -206,6 +206,9 @@ data SBPMsg =
    | SBPMsgPoseRelative MsgPoseRelative Msg
    | SBPMsgPpsTime MsgPpsTime Msg
    | SBPMsgPrintDep MsgPrintDep Msg
+   | SBPMsgProfilingResourceCounter MsgProfilingResourceCounter Msg
+   | SBPMsgProfilingSystemInfo MsgProfilingSystemInfo Msg
+   | SBPMsgProfilingThreadInfo MsgProfilingThreadInfo Msg
    | SBPMsgProtectionLevel MsgProtectionLevel Msg
    | SBPMsgProtectionLevelDepA MsgProtectionLevelDepA Msg
    | SBPMsgReferenceFrameParam MsgReferenceFrameParam Msg
@@ -453,6 +456,9 @@ instance Binary SBPMsg where
           | _msgSBPType == msgPoseRelative = SBPMsgPoseRelative (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPpsTime = SBPMsgPpsTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgProfilingResourceCounter = SBPMsgProfilingResourceCounter (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgProfilingSystemInfo = SBPMsgProfilingSystemInfo (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgProfilingThreadInfo = SBPMsgProfilingThreadInfo (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgProtectionLevel = SBPMsgProtectionLevel (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgProtectionLevelDepA = SBPMsgProtectionLevelDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgReferenceFrameParam = SBPMsgReferenceFrameParam (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -692,6 +698,9 @@ instance Binary SBPMsg where
       encoder (SBPMsgPoseRelative _ m) = put m
       encoder (SBPMsgPpsTime _ m) = put m
       encoder (SBPMsgPrintDep _ m) = put m
+      encoder (SBPMsgProfilingResourceCounter _ m) = put m
+      encoder (SBPMsgProfilingSystemInfo _ m) = put m
+      encoder (SBPMsgProfilingThreadInfo _ m) = put m
       encoder (SBPMsgProtectionLevel _ m) = put m
       encoder (SBPMsgProtectionLevelDepA _ m) = put m
       encoder (SBPMsgReferenceFrameParam _ m) = put m
@@ -935,6 +944,9 @@ instance FromJSON SBPMsg where
         | msgType == msgPoseRelative = SBPMsgPoseRelative <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPpsTime = SBPMsgPpsTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPrintDep = SBPMsgPrintDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgProfilingResourceCounter = SBPMsgProfilingResourceCounter <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgProfilingSystemInfo = SBPMsgProfilingSystemInfo <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgProfilingThreadInfo = SBPMsgProfilingThreadInfo <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgProtectionLevel = SBPMsgProtectionLevel <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgProtectionLevelDepA = SBPMsgProtectionLevelDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgReferenceFrameParam = SBPMsgReferenceFrameParam <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1179,6 +1191,9 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgPoseRelative n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPpsTime n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPrintDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgProfilingResourceCounter n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgProfilingSystemInfo n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgProfilingThreadInfo n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgProtectionLevel n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgProtectionLevelDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgReferenceFrameParam n m) = toJSON n <<>> toJSON m
@@ -1417,6 +1432,9 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgPoseRelative n m) = SBPMsgPoseRelative n <$> f m
   msg f (SBPMsgPpsTime n m) = SBPMsgPpsTime n <$> f m
   msg f (SBPMsgPrintDep n m) = SBPMsgPrintDep n <$> f m
+  msg f (SBPMsgProfilingResourceCounter n m) = SBPMsgProfilingResourceCounter n <$> f m
+  msg f (SBPMsgProfilingSystemInfo n m) = SBPMsgProfilingSystemInfo n <$> f m
+  msg f (SBPMsgProfilingThreadInfo n m) = SBPMsgProfilingThreadInfo n <$> f m
   msg f (SBPMsgProtectionLevel n m) = SBPMsgProtectionLevel n <$> f m
   msg f (SBPMsgProtectionLevelDepA n m) = SBPMsgProtectionLevelDepA n <$> f m
   msg f (SBPMsgReferenceFrameParam n m) = SBPMsgReferenceFrameParam n <$> f m

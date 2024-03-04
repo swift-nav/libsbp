@@ -225,6 +225,9 @@ TABLE = {
     191: Piksi.MsgFrontEndGain,
   
     52992: Profiling.MsgMeasurementPoint,
+    52993: Profiling.MsgProfilingSystemInfo,
+    52994: Profiling.MsgProfilingThreadInfo,
+    52995: Profiling.MsgProfilingResourceCounter,
   
     30583: Sbas.MsgSbasRaw,
   

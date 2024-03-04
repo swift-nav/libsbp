@@ -98,7 +98,8 @@ describe('test packages based on YAML descriptors, through the dispatcher', func
             if (filename.indexOf('test_MsgFlashDone.yaml') === -1 &&
                 filename.indexOf('test_MsgM25FlashWriteStatus.yaml') === -1 &&
                 filename.indexOf('test_MsgBootloaderJumptoApp.yaml') === -1 &&
-                filename.indexOf('test_MsgMeasurementPoint.yaml') === -1) {
+                filename.indexOf('test_MsgMeasurementPoint.yaml') === -1 &&
+                filename.indexOf('test_MsgProfilingResourceCounter.yaml') === -1) {
               it('should parse binary sbp and payload with leading truncated message', function (done) {
                 var rs = new Readable();
                 var packetBuf = new Buffer(testSpec['raw_packet'], 'base64');

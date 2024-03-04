@@ -264,6 +264,9 @@ our $MSG_IDS_MSG_LINUX_CPU_STATE = 32520;
 our $MSG_IDS_MSG_LINUX_MEM_STATE = 32521;
 our $MSG_IDS_MSG_LINUX_SYS_STATE = 32522;
 our $MSG_IDS_MSG_MEASUREMENT_POINT = 52992;
+our $MSG_IDS_MSG_PROFILING_SYSTEM_INFO = 52993;
+our $MSG_IDS_MSG_PROFILING_THREAD_INFO = 52994;
+our $MSG_IDS_MSG_PROFILING_RESOURCE_COUNTER = 52995;
 our $MSG_IDS_MSG_STARTUP = 65280;
 our $MSG_IDS_MSG_DGNSS_STATUS = 65282;
 our $MSG_IDS_MSG_INS_STATUS = 65283;
@@ -596,6 +599,11 @@ sub _read {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Logging::MsgFwd->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 52993) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Profiling::MsgProfilingSystemInfo->new($io__raw_payload, $self, $self->{_root});
     }
     elsif ($_on == 65286) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
@@ -987,6 +995,11 @@ sub _read {
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Piksi::MsgDeviceMonitor->new($io__raw_payload, $self, $self->{_root});
     }
+    elsif ($_on == 52995) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Profiling::MsgProfilingResourceCounter->new($io__raw_payload, $self, $self->{_root});
+    }
     elsif ($_on == 521) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
@@ -1166,6 +1179,11 @@ sub _read {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Navigation::MsgDopsDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 52994) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Profiling::MsgProfilingThreadInfo->new($io__raw_payload, $self, $self->{_root});
     }
     elsif ($_on == 553) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());

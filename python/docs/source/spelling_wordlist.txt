@@ -75,6 +75,7 @@ getifaddrs
 glonass
 gnss
 gridded
+highwater
 html
 http
 hydrostatic
@@ -100,6 +101,7 @@ lon
 mesid
 msg
 msgs
+mutexes
 nd
 ndb
 netlink

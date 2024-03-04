@@ -127,6 +127,9 @@
 //   const msgPosLLHGnss = Convert.toMsgPosLLHGnss(json);
 //   const msgPoseRelative = Convert.toMsgPoseRelative(json);
 //   const msgPpsTime = Convert.toMsgPpsTime(json);
+//   const msgProfilingResourceCounter = Convert.toMsgProfilingResourceCounter(json);
+//   const msgProfilingSystemInfo = Convert.toMsgProfilingSystemInfo(json);
+//   const msgProfilingThreadInfo = Convert.toMsgProfilingThreadInfo(json);
 //   const msgProtectionLevel = Convert.toMsgProtectionLevel(json);
 //   const msgReferenceFrameParam = Convert.toMsgReferenceFrameParam(json);
 //   const msgReset = Convert.toMsgReset(json);
@@ -200,6 +203,7 @@
 //   const packedOsrContent = Convert.toPackedOsrContent(json);
 //   const period = Convert.toPeriod(json);
 //   const phaseBiasesContent = Convert.toPhaseBiasesContent(json);
+//   const resourceBucket = Convert.toResourceBucket(json);
 //   const sTECHeader = Convert.toSTECHeader(json);
 //   const sTECResidual = Convert.toSTECResidual(json);
 //   const sTECResidualNoStd = Convert.toSTECResidualNoStd(json);
@@ -1224,6 +1228,30 @@ function msgPpsTimeToJson(value) {
     return JSON.stringify(uncast(value, r("MsgPpsTime")), null, 2);
 }
 
+function toMsgProfilingResourceCounter(json) {
+    return cast(JSON.parse(json), r("MsgProfilingResourceCounter"));
+}
+
+function msgProfilingResourceCounterToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgProfilingResourceCounter")), null, 2);
+}
+
+function toMsgProfilingSystemInfo(json) {
+    return cast(JSON.parse(json), r("MsgProfilingSystemInfo"));
+}
+
+function msgProfilingSystemInfoToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgProfilingSystemInfo")), null, 2);
+}
+
+function toMsgProfilingThreadInfo(json) {
+    return cast(JSON.parse(json), r("MsgProfilingThreadInfo"));
+}
+
+function msgProfilingThreadInfoToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgProfilingThreadInfo")), null, 2);
+}
+
 function toMsgProtectionLevel(json) {
     return cast(JSON.parse(json), r("MsgProtectionLevel"));
 }
@@ -1806,6 +1834,14 @@ function toPhaseBiasesContent(json) {
 
 function phaseBiasesContentToJson(value) {
     return JSON.stringify(uncast(value, r("PhaseBiasesContent")), null, 2);
+}
+
+function toResourceBucket(json) {
+    return cast(JSON.parse(json), r("ResourceBucket"));
+}
+
+function resourceBucketToJson(value) {
+    return JSON.stringify(uncast(value, r("ResourceBucket")), null, 2);
 }
 
 function toSTECHeader(json) {
@@ -3002,6 +3038,36 @@ const typeMap = {
         { json: "flags", js: "flags", typ: 0 },
         { json: "time", js: "time", typ: 0 },
     ], "any"),
+    "MsgProfilingResourceCounter": o([
+        { json: "buckets", js: "buckets", typ: a(r("ResourceBucket")) },
+        { json: "seq_len", js: "seq_len", typ: 0 },
+        { json: "seq_no", js: "seq_no", typ: 0 },
+    ], "any"),
+    "ResourceBucket": o([
+        { json: "cv", js: "cv", typ: 0 },
+        { json: "heap_bytes_alloc", js: "heap_bytes_alloc", typ: 0 },
+        { json: "heap_bytes_free", js: "heap_bytes_free", typ: 0 },
+        { json: "io", js: "io", typ: 0 },
+        { json: "io_read", js: "io_read", typ: 0 },
+        { json: "io_write", js: "io_write", typ: 0 },
+        { json: "mutex", js: "mutex", typ: 0 },
+        { json: "name", js: "name", typ: "" },
+        { json: "thread", js: "thread", typ: 0 },
+    ], "any"),
+    "MsgProfilingSystemInfo": o([
+        { json: "age", js: "age", typ: 0 },
+        { json: "heap_usage", js: "heap_usage", typ: 0 },
+        { json: "n_threads", js: "n_threads", typ: 0 },
+        { json: "total_cpu_time", js: "total_cpu_time", typ: 0 },
+    ], "any"),
+    "MsgProfilingThreadInfo": o([
+        { json: "age", js: "age", typ: 0 },
+        { json: "name", js: "name", typ: "" },
+        { json: "stack_size", js: "stack_size", typ: 0 },
+        { json: "stack_usage", js: "stack_usage", typ: 0 },
+        { json: "state", js: "state", typ: 0 },
+        { json: "total_cpu_time", js: "total_cpu_time", typ: 0 },
+    ], "any"),
     "MsgProtectionLevel": o([
         { json: "atpl", js: "atpl", typ: 0 },
         { json: "ctpl", js: "ctpl", typ: 0 },
@@ -3886,6 +3952,12 @@ module.exports = {
     "toMsgPoseRelative": toMsgPoseRelative,
     "msgPpsTimeToJson": msgPpsTimeToJson,
     "toMsgPpsTime": toMsgPpsTime,
+    "msgProfilingResourceCounterToJson": msgProfilingResourceCounterToJson,
+    "toMsgProfilingResourceCounter": toMsgProfilingResourceCounter,
+    "msgProfilingSystemInfoToJson": msgProfilingSystemInfoToJson,
+    "toMsgProfilingSystemInfo": toMsgProfilingSystemInfo,
+    "msgProfilingThreadInfoToJson": msgProfilingThreadInfoToJson,
+    "toMsgProfilingThreadInfo": toMsgProfilingThreadInfo,
     "msgProtectionLevelToJson": msgProtectionLevelToJson,
     "toMsgProtectionLevel": toMsgProtectionLevel,
     "msgReferenceFrameParamToJson": msgReferenceFrameParamToJson,
@@ -4032,6 +4104,8 @@ module.exports = {
     "toPeriod": toPeriod,
     "phaseBiasesContentToJson": phaseBiasesContentToJson,
     "toPhaseBiasesContent": toPhaseBiasesContent,
+    "resourceBucketToJson": resourceBucketToJson,
+    "toResourceBucket": toResourceBucket,
     "sTECHeaderToJson": sTECHeaderToJson,
     "toSTECHeader": toSTECHeader,
     "sTECResidualToJson": sTECResidualToJson,

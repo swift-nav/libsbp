@@ -179,6 +179,9 @@ import com.swiftnav.sbp.piksi.MsgThreadState;
 import com.swiftnav.sbp.piksi.MsgUartState;
 import com.swiftnav.sbp.piksi.MsgUartStateDepa;
 import com.swiftnav.sbp.profiling.MsgMeasurementPoint;
+import com.swiftnav.sbp.profiling.MsgProfilingResourceCounter;
+import com.swiftnav.sbp.profiling.MsgProfilingSystemInfo;
+import com.swiftnav.sbp.profiling.MsgProfilingThreadInfo;
 import com.swiftnav.sbp.sbas.MsgSbasRaw;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexDone;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexReq;
@@ -583,6 +586,12 @@ final class MessageTable {
                 return new MsgFrontEndGain(msg);
             case MsgMeasurementPoint.TYPE:
                 return new MsgMeasurementPoint(msg);
+            case MsgProfilingSystemInfo.TYPE:
+                return new MsgProfilingSystemInfo(msg);
+            case MsgProfilingThreadInfo.TYPE:
+                return new MsgProfilingThreadInfo(msg);
+            case MsgProfilingResourceCounter.TYPE:
+                return new MsgProfilingResourceCounter(msg);
             case MsgSbasRaw.TYPE:
                 return new MsgSbasRaw(msg);
             case MsgSettingsSave.TYPE:

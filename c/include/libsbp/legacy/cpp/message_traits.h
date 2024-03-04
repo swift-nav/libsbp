@@ -1307,6 +1307,24 @@ struct MessageTraits<msg_measurement_point_t> {
 
 
 template<>
+struct MessageTraits<msg_profiling_system_info_t> {
+  static constexpr u16 id = 52993;
+};
+
+
+template<>
+struct MessageTraits<msg_profiling_thread_info_t> {
+  static constexpr u16 id = 52994;
+};
+
+
+template<>
+struct MessageTraits<msg_profiling_resource_counter_t> {
+  static constexpr u16 id = 52995;
+};
+
+
+template<>
 struct MessageTraits<msg_startup_t> {
   static constexpr u16 id = 65280;
 };
