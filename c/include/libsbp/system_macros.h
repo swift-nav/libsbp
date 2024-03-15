@@ -856,6 +856,38 @@
 #define SBP_MSG_INS_UPDATES_ENCODED_LEN 10u
 
 #define SBP_MSG_GNSS_TIME_OFFSET 0xFF07
+#define SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_MASK (0x7fu)
+#define SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_SHIFT (1u)
+#define SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_SHIFT) & \
+        SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_MASK))
+#define SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_SET(flags, val)           \
+  do {                                                                      \
+    (flags) = (u8)(                                                         \
+        (flags & (~(SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_MASK          \
+                    << SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_SHIFT))) | \
+        (((val) & (SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_MASK))         \
+         << (SBP_GNSS_TIME_OFFSET_RESERVED_SET_TO_ZERO_SHIFT)));            \
+  } while (0)
+
+#define SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_MASK (0x1u)
+#define SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_SHIFT (0u)
+#define SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_SHIFT) & \
+        SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_MASK))
+#define SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_SET(flags, val)                \
+  do {                                                                     \
+    (flags) =                                                              \
+        (u8)((flags & (~(SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_MASK          \
+                         << SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_SHIFT))) | \
+             (((val) & (SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_MASK))         \
+              << (SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_SHIFT)));            \
+  } while (0)
+
+#define SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_NOT_AFFECTED_ON_LOCAL_TIMESTAMP_ROLLOVER \
+  (0)
+#define SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_INCREMENTED_ON_LOCAL_TIMESTAMP_ROLLOVER \
+  (1)
 /**
  * Encoded length of sbp_msg_gnss_time_offset_t (V4 API) and
  * msg_gnss_time_offset_t (legacy API)

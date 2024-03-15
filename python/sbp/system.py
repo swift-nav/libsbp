@@ -1120,7 +1120,7 @@ class MsgGnssTimeOffset(SBP):
   microseconds : int
     Microseconds portion of the time offset
   flags : int
-    Status flags (reserved)
+    Status flags
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

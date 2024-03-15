@@ -61,7 +61,7 @@ typedef struct {
   s16 microseconds;
 
   /**
-   * Status flags (reserved)
+   * Status flags
    */
   u8 flags;
 } sbp_msg_gnss_time_offset_t;

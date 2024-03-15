@@ -426,7 +426,7 @@ data MsgGnssTimeOffset = MsgGnssTimeOffset
   , _msgGnssTimeOffset_microseconds :: !Int16
     -- ^ Microseconds portion of the time offset
   , _msgGnssTimeOffset_flags      :: !Word8
-    -- ^ Status flags (reserved)
+    -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgGnssTimeOffset where

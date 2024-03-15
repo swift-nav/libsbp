@@ -444,7 +444,15 @@ definitions:
             desc: Microseconds portion of the time offset
         - flags:
             type: u8
-            desc: Status flags (reserved)
+            desc: Status flags
+            fields:
+              - 1-7:
+                  desc: Reserved, set to zero
+              - 0:
+                  desc: Weeks behavior
+                  values:
+                    - 0: Not affected on local timestamp rollover
+                    - 1: Incremented on local timestamp rollover
 
  - MSG_PPS_TIME:
     id: 0xFF08

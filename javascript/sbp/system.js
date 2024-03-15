@@ -428,7 +428,7 @@ MsgInsUpdates.prototype.fieldSpec.push(['zerovel', 'writeUInt8', 1]);
  * @field weeks number (signed 16-bit int, 2 bytes) Weeks portion of the time offset
  * @field milliseconds number (signed 32-bit int, 4 bytes) Milliseconds portion of the time offset
  * @field microseconds number (signed 16-bit int, 2 bytes) Microseconds portion of the time offset
- * @field flags number (unsigned 8-bit int, 1 byte) Status flags (reserved)
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
