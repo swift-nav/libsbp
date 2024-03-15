@@ -210,7 +210,7 @@ typedef struct SBP_ATTR_PACKED SBP_DEPRECATED {
   s32 milliseconds; /**< Milliseconds portion of the time offset [ms] */
   s16 microseconds; /**< Microseconds portion of the time offset [microseconds]
                      */
-  u8 flags;         /**< Status flags (reserved) */
+  u8 flags;         /**< Status flags */
 } msg_gnss_time_offset_t;
 
 /** Local time at detection of PPS pulse
