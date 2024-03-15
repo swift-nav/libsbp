@@ -401,9 +401,35 @@ pub mod msg_gnss_time_offset {
         /// Microseconds portion of the time offset
         #[cfg_attr(feature = "serde", serde(rename = "microseconds"))]
         pub microseconds: i16,
-        /// Status flags (reserved)
+        /// Status flags
         #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
+    }
+
+    impl MsgGnssTimeOffset {
+        /// Gets the `reserved_set_to_zero` stored in `flags`.
+        pub fn reserved_set_to_zero(&self) -> u8 {
+            get_bit_range!(self.flags, u8, u8, 7, 1)
+        }
+
+        /// Sets the `reserved_set_to_zero` bitrange of `flags`.
+        pub fn set_reserved_set_to_zero(&mut self, reserved_set_to_zero: u8) {
+            set_bit_range!(&mut self.flags, reserved_set_to_zero, u8, u8, 7, 1);
+        }
+
+        /// Gets the [WeeksBehavior][self::WeeksBehavior] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `WeeksBehavior` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `WeeksBehavior` were added.
+        pub fn weeks_behavior(&self) -> Result<WeeksBehavior, u8> {
+            get_bit_range!(self.flags, u8, u8, 0, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [WeeksBehavior][WeeksBehavior] of the `flags` bitfield.
+        pub fn set_weeks_behavior(&mut self, weeks_behavior: WeeksBehavior) {
+            set_bit_range!(&mut self.flags, weeks_behavior, u8, u8, 0, 0);
+        }
     }
 
     impl ConcreteMessage for MsgGnssTimeOffset {
@@ -475,6 +501,40 @@ pub mod msg_gnss_time_offset {
                 milliseconds: WireFormat::parse_unchecked(buf),
                 microseconds: WireFormat::parse_unchecked(buf),
                 flags: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Weeks behavior
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum WeeksBehavior {
+        /// Not affected on local timestamp rollover
+        NotAffectedOnLocalTimestampRollover = 0,
+
+        /// Incremented on local timestamp rollover
+        IncrementedOnLocalTimestampRollover = 1,
+    }
+
+    impl std::fmt::Display for WeeksBehavior {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                WeeksBehavior::NotAffectedOnLocalTimestampRollover => {
+                    f.write_str("Not affected on local timestamp rollover")
+                }
+                WeeksBehavior::IncrementedOnLocalTimestampRollover => {
+                    f.write_str("Incremented on local timestamp rollover")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for WeeksBehavior {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(WeeksBehavior::NotAffectedOnLocalTimestampRollover),
+                1 => Ok(WeeksBehavior::IncrementedOnLocalTimestampRollover),
+                i => Err(i),
             }
         }
     }
