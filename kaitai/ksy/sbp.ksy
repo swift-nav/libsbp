@@ -8,7 +8,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 #
-# Kaitai Struct definition file for Swift Binary Protocol 5.0.7
+# Kaitai Struct definition file for Swift Binary Protocol 5.0.8-alpha
 #
 # Automatically generated with generate.py.  Do not hand edit!
 
