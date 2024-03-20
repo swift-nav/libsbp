@@ -1267,6 +1267,12 @@ definitions:
        - const_id:
            type: u8
            desc: Constellation ID to which the SVs belong.
+           fields:
+           - 0-7:
+               values:
+                   - 0: GPS
+                   - 3: BDS
+                   - 5: GAL
        - n_sats:
            type: u8
            desc: Number of satellites.
@@ -1328,6 +1334,12 @@ definitions:
        - const_id:
            type: u8
            desc: Constellation ID to which the SVs belong.
+           fields:
+           - 0-7:
+               values:
+                   - 0: GPS
+                   - 3: BDS
+                   - 5: GAL
        - n_sats_signals:
            type: u8
            desc: Number of satellite-signal couples.
@@ -1403,6 +1415,12 @@ definitions:
        - const_id:
            type: u8
            desc: Constellation ID to which the SVs belong.
+           fields:
+           - 0-7:
+               values:
+                   - 0: GPS
+                   - 3: BDS
+                   - 5: GAL
        - sat_bitmask:
            type: u64
            desc: >
