@@ -608,6 +608,22 @@ pub mod msg_ssr_code_phase_biases_bounds {
         pub satellites_signals: Vec<CodePhaseBiasesSatSig>,
     }
 
+    impl MsgSsrCodePhaseBiasesBounds {
+        /// Gets the [ConstId][self::ConstId] stored in the `const_id` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ConstId` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ConstId` were added.
+        pub fn const_id(&self) -> Result<ConstId, u8> {
+            get_bit_range!(self.const_id, u8, u8, 7, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [ConstId][ConstId] of the `const_id` bitfield.
+        pub fn set_const_id(&mut self, const_id: ConstId) {
+            set_bit_range!(&mut self.const_id, const_id, u8, u8, 7, 0);
+        }
+    }
+
     impl ConcreteMessage for MsgSsrCodePhaseBiasesBounds {
         const MESSAGE_TYPE: u16 = 1516;
         const MESSAGE_NAME: &'static str = "MSG_SSR_CODE_PHASE_BIASES_BOUNDS";
@@ -681,6 +697,40 @@ pub mod msg_ssr_code_phase_biases_bounds {
                 const_id: WireFormat::parse_unchecked(buf),
                 n_sats_signals: WireFormat::parse_unchecked(buf),
                 satellites_signals: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum ConstId {
+        /// GPS
+        Gps = 0,
+
+        /// BDS
+        Bds = 3,
+
+        /// GAL
+        Gal = 5,
+    }
+
+    impl std::fmt::Display for ConstId {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                ConstId::Gps => f.write_str("GPS"),
+                ConstId::Bds => f.write_str("BDS"),
+                ConstId::Gal => f.write_str("GAL"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for ConstId {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(ConstId::Gps),
+                3 => Ok(ConstId::Bds),
+                5 => Ok(ConstId::Gal),
+                i => Err(i),
             }
         }
     }
@@ -1490,6 +1540,22 @@ pub mod msg_ssr_orbit_clock_bounds {
         pub orbit_clock_bounds: Vec<OrbitClockBound>,
     }
 
+    impl MsgSsrOrbitClockBounds {
+        /// Gets the [ConstId][self::ConstId] stored in the `const_id` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ConstId` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ConstId` were added.
+        pub fn const_id(&self) -> Result<ConstId, u8> {
+            get_bit_range!(self.const_id, u8, u8, 7, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [ConstId][ConstId] of the `const_id` bitfield.
+        pub fn set_const_id(&mut self, const_id: ConstId) {
+            set_bit_range!(&mut self.const_id, const_id, u8, u8, 7, 0);
+        }
+    }
+
     impl ConcreteMessage for MsgSsrOrbitClockBounds {
         const MESSAGE_TYPE: u16 = 1502;
         const MESSAGE_NAME: &'static str = "MSG_SSR_ORBIT_CLOCK_BOUNDS";
@@ -1566,6 +1632,40 @@ pub mod msg_ssr_orbit_clock_bounds {
             }
         }
     }
+
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum ConstId {
+        /// GPS
+        Gps = 0,
+
+        /// BDS
+        Bds = 3,
+
+        /// GAL
+        Gal = 5,
+    }
+
+    impl std::fmt::Display for ConstId {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                ConstId::Gps => f.write_str("GPS"),
+                ConstId::Bds => f.write_str("BDS"),
+                ConstId::Gal => f.write_str("GAL"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for ConstId {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(ConstId::Gps),
+                3 => Ok(ConstId::Bds),
+                5 => Ok(ConstId::Gal),
+                i => Err(i),
+            }
+        }
+    }
 }
 
 pub mod msg_ssr_orbit_clock_bounds_degradation {
@@ -1599,6 +1699,22 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
         /// Orbit and Clock Bounds Degradation Parameters
         #[cfg_attr(feature = "serde", serde(rename = "orbit_clock_bounds_degradation"))]
         pub orbit_clock_bounds_degradation: OrbitClockBoundDegradation,
+    }
+
+    impl MsgSsrOrbitClockBoundsDegradation {
+        /// Gets the [ConstId][self::ConstId] stored in the `const_id` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ConstId` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ConstId` were added.
+        pub fn const_id(&self) -> Result<ConstId, u8> {
+            get_bit_range!(self.const_id, u8, u8, 7, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [ConstId][ConstId] of the `const_id` bitfield.
+        pub fn set_const_id(&mut self, const_id: ConstId) {
+            set_bit_range!(&mut self.const_id, const_id, u8, u8, 7, 0);
+        }
     }
 
     impl ConcreteMessage for MsgSsrOrbitClockBoundsDegradation {
@@ -1674,6 +1790,40 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
                 const_id: WireFormat::parse_unchecked(buf),
                 sat_bitmask: WireFormat::parse_unchecked(buf),
                 orbit_clock_bounds_degradation: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum ConstId {
+        /// GPS
+        Gps = 0,
+
+        /// BDS
+        Bds = 3,
+
+        /// GAL
+        Gal = 5,
+    }
+
+    impl std::fmt::Display for ConstId {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                ConstId::Gps => f.write_str("GPS"),
+                ConstId::Bds => f.write_str("BDS"),
+                ConstId::Gal => f.write_str("GAL"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for ConstId {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(ConstId::Gps),
+                3 => Ok(ConstId::Bds),
+                5 => Ok(ConstId::Gal),
+                i => Err(i),
             }
         }
     }
