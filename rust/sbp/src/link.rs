@@ -353,17 +353,17 @@ mod tests {
 
     #[test]
     fn test_custom_event() {
-        enum ObsMsg {
-            Obs(MsgObs),
-            DepA(MsgObsDepA),
+        enum ObsMsgEvent {
+            Obs,
+            DepA,
         }
 
-        impl Event for ObsMsg {
+        impl Event for ObsMsgEvent {
             const MESSAGE_TYPES: &'static [u16] = &[MsgObs::MESSAGE_TYPE, MsgObsDepA::MESSAGE_TYPE];
             fn from_sbp(msg: Sbp) -> Self {
                 match msg {
-                    Sbp::MsgObs(m) => ObsMsg::Obs(m),
-                    Sbp::MsgObsDepA(m) => ObsMsg::DepA(m),
+                    Sbp::MsgObs(_m) => ObsMsgEvent::Obs,
+                    Sbp::MsgObsDepA(_m) => ObsMsgEvent::DepA,
                     _ => unreachable!("wrong event keys"),
                 }
             }
@@ -373,7 +373,7 @@ mod tests {
         let link = source.link();
         let count = RefCell::new(0);
 
-        link.register(|count: &RefCell<usize>, _: ObsMsg| {
+        link.register(|count: &RefCell<usize>, _: ObsMsgEvent| {
             *count.borrow_mut() += 1;
         });
 
