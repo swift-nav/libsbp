@@ -362,8 +362,8 @@ mod tests {
             const MESSAGE_TYPES: &'static [u16] = &[MsgObs::MESSAGE_TYPE, MsgObsDepA::MESSAGE_TYPE];
             fn from_sbp(msg: Sbp) -> Self {
                 match msg {
-                    Sbp::MsgObs(m) => ObsMsg::Obs,
-                    Sbp::MsgObsDepA(m) => ObsMsg::DepA,
+                    Sbp::MsgObs(_m) => ObsMsg::Obs,
+                    Sbp::MsgObsDepA(_m) => ObsMsg::DepA,
                     _ => unreachable!("wrong event keys"),
                 }
             }
