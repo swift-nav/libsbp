@@ -354,16 +354,16 @@ mod tests {
     #[test]
     fn test_custom_event() {
         enum ObsMsg {
-            Obs(MsgObs),
-            DepA(MsgObsDepA),
+            Obs,
+            DepA,
         }
 
         impl Event for ObsMsg {
             const MESSAGE_TYPES: &'static [u16] = &[MsgObs::MESSAGE_TYPE, MsgObsDepA::MESSAGE_TYPE];
             fn from_sbp(msg: Sbp) -> Self {
                 match msg {
-                    Sbp::MsgObs(m) => ObsMsg::Obs(m),
-                    Sbp::MsgObsDepA(m) => ObsMsg::DepA(m),
+                    Sbp::MsgObs(m) => ObsMsg::Obs,
+                    Sbp::MsgObsDepA(m) => ObsMsg::DepA,
                     _ => unreachable!("wrong event keys"),
                 }
             }
