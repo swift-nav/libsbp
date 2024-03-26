@@ -351,7 +351,6 @@ mod tests {
         assert_eq!(*count.borrow(), 1);
     }
 
-    #[allow(dead_code)]
     #[test]
     fn test_custom_event() {
         enum ObsMsg {
