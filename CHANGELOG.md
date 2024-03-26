@@ -1,6 +1,15 @@
 # Changelog
 
-## v5.0.6 (2024-01-16)
+## [v5.0.7](https://github.com/swift-nav/libsbp/tree/v5.0.7) (2024-03-18)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.6...v5.0.7)
+
+**Merged pull requests:**
+
+- Add ASAN and UBSAN stages to CI, fix various errors [\#1403](https://github.com/swift-nav/libsbp/pull/1403) ([woodfell](https://github.com/woodfell))
+- Disable Java sonar stage [\#1402](https://github.com/swift-nav/libsbp/pull/1402) ([woodfell](https://github.com/woodfell))
+
+## [v5.0.6](https://github.com/swift-nav/libsbp/tree/v5.0.6) (2024-01-16)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.5...v5.0.6)
 
