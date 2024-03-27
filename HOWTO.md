@@ -409,8 +409,14 @@ SonaType open source repo requires a GPG key for signatures.  Generate GPG key v
 ```shell
 gpg --gen-key
 gpg --export-secret-keys >keys.gpg
-gpg --keyserver keyserver.ubuntu.com --send-keys <KEY_ID>
 ```
+
+Export your public key
+```
+gpg --export -a > pub.key
+```
+
+Go to [https://keyserver.ubuntu.com/#submitKey](https://keyserver.ubuntu.com/#submitKey) and upload your PUBLIC key
 
 To locate the value for `signing.keyId` (needed below) run:
 
@@ -464,7 +470,8 @@ staging repository and release to finish it off.
 Follow the instructions here for how to "close" and then "release" and staging
 repository on SonaType's repository manager:
 
-- <https://central.sonatype.org/publish/release>
+- [Documentation](https://central.sonatype.org/publish/release)
+- [Nexus Repository Manager](https://s01.oss.sonatype.org/#welcome)
 
 # Contributions
 
