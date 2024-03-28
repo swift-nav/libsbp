@@ -495,6 +495,22 @@
 #define SBP_ORBIT_CLOCK_BOUND_ENCODED_LEN 9u
 
 #define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS 0x05DE
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS__MASK (0xffu)
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS__SHIFT (0u)
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS__GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SSR_ORBIT_CLOCK_BOUNDS__SHIFT) & \
+        SBP_SSR_ORBIT_CLOCK_BOUNDS__MASK))
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS__SET(flags, val)                      \
+  do {                                                                   \
+    (flags) = (u8)((flags & (~(SBP_SSR_ORBIT_CLOCK_BOUNDS__MASK          \
+                               << SBP_SSR_ORBIT_CLOCK_BOUNDS__SHIFT))) | \
+                   (((val) & (SBP_SSR_ORBIT_CLOCK_BOUNDS__MASK))         \
+                    << (SBP_SSR_ORBIT_CLOCK_BOUNDS__SHIFT)));            \
+  } while (0)
+
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_GPS (0)
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_BDS (3)
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_GAL (5)
 /**
  * The maximum number of items that can be stored in
  * sbp_msg_ssr_orbit_clock_bounds_t::orbit_clock_bounds (V4 API) or
@@ -525,6 +541,22 @@
 #define SBP_CODE_PHASE_BIASES_SAT_SIG_ENCODED_LEN 6u
 
 #define SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS 0x05EC
+#define SBP_SSR_CODE_PHASE_BIASES_BOUNDS__MASK (0xffu)
+#define SBP_SSR_CODE_PHASE_BIASES_BOUNDS__SHIFT (0u)
+#define SBP_SSR_CODE_PHASE_BIASES_BOUNDS__GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SSR_CODE_PHASE_BIASES_BOUNDS__SHIFT) & \
+        SBP_SSR_CODE_PHASE_BIASES_BOUNDS__MASK))
+#define SBP_SSR_CODE_PHASE_BIASES_BOUNDS__SET(flags, val)                      \
+  do {                                                                         \
+    (flags) = (u8)((flags & (~(SBP_SSR_CODE_PHASE_BIASES_BOUNDS__MASK          \
+                               << SBP_SSR_CODE_PHASE_BIASES_BOUNDS__SHIFT))) | \
+                   (((val) & (SBP_SSR_CODE_PHASE_BIASES_BOUNDS__MASK))         \
+                    << (SBP_SSR_CODE_PHASE_BIASES_BOUNDS__SHIFT)));            \
+  } while (0)
+
+#define SBP_SSR_CODE_PHASE_BIASES_BOUNDS_GPS (0)
+#define SBP_SSR_CODE_PHASE_BIASES_BOUNDS_BDS (3)
+#define SBP_SSR_CODE_PHASE_BIASES_BOUNDS_GAL (5)
 /**
  * The maximum number of items that can be stored in
  * sbp_msg_ssr_code_phase_biases_bounds_t::satellites_signals (V4 API) or
@@ -555,6 +587,23 @@
 #define SBP_ORBIT_CLOCK_BOUND_DEGRADATION_ENCODED_LEN 8u
 
 #define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION 0x05DF
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__MASK (0xffu)
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__SHIFT (0u)
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__SHIFT) & \
+        SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__MASK))
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__SET(flags, val)                \
+  do {                                                                         \
+    (flags) =                                                                  \
+        (u8)((flags & (~(SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__MASK          \
+                         << SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__SHIFT))) | \
+             (((val) & (SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__MASK))         \
+              << (SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__SHIFT)));            \
+  } while (0)
+
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_GPS (0)
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_BDS (3)
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_GAL (5)
 /**
  * Encoded length of sbp_msg_ssr_orbit_clock_bounds_degradation_t (V4 API) and
  * msg_ssr_orbit_clock_bounds_degradation_t (legacy API)
