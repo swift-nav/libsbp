@@ -40,7 +40,7 @@ public class MsgGnssTimeOffset extends SBPMessage {
     /** Microseconds portion of the time offset */
     public int microseconds;
 
-    /** Status flags (reserved) */
+    /** Status flags */
     public int flags;
 
     public MsgGnssTimeOffset(int sender) {

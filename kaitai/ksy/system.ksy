@@ -276,7 +276,7 @@ types:
         type: s2
       - id: flags
         doc: |
-          Status flags (reserved)
+          Status flags
         type: u1
   
   msg_pps_time:
