@@ -1,5 +1,15 @@
 # Changelog
 
+## [v5.0.8](https://github.com/swift-nav/libsbp/tree/v5.0.8) (2024-03-29)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.7...v5.0.8)
+
+**Merged pull requests:**
+
+- Fix new clippy lints [\#1408](https://github.com/swift-nav/libsbp/pull/1408) ([pcrumley](https://github.com/pcrumley))
+- Add description for constellation identifier to bounds messages [\#1407](https://github.com/swift-nav/libsbp/pull/1407) ([IsakTjernberg](https://github.com/IsakTjernberg))
+- Add weeks behavior flag to MSG\_GNSS\_TIME\_OFFSET [\#1405](https://github.com/swift-nav/libsbp/pull/1405) ([jakalm](https://github.com/jakalm))
+
 ## [v5.0.7](https://github.com/swift-nav/libsbp/tree/v5.0.7) (2024-03-18)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.6...v5.0.7)
