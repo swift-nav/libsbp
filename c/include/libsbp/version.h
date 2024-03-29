@@ -28,7 +28,7 @@
 #define SBP_PATCH_VERSION 8
 
 /** Full SBP version string. */
-#define SBP_VERSION "5.0.8"
+#define SBP_VERSION "5.0.9-alpha"
 
 /** Is this a staging branch? */
 #define SBP_STAGING 0
