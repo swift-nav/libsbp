@@ -427,6 +427,7 @@ test-protobuf:
 	$(call announce-begin,"Running Protocol Buffer tests")
 	$(call announce-end,"Finished running Protocol Buffer tests")
 
+# remove me
 test-kaitai:
 	$(call announce-begin,"Running Kaitai Struct Python tests")
 	cd $(SWIFTNAV_ROOT) && tox -c kaitai/python/kaitai_sbp/tests/tox.ini kaitai/python/kaitai_sbp/tests/test_*.py
