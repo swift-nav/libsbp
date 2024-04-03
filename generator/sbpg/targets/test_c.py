@@ -104,11 +104,6 @@ def render_check_suites(output_dir, all_package_specs):
     py_template = JENV.get_template(CHECK_SUITES_TEMPLATE_NAME)
     with open(destination_filename, "w") as f:
         f.write(py_template.render(package_suites=all_package_specs, test_type="new"))
-    destination_filename = "%s/%s.h" % (output_dir, "check_suites_legacy")
-    with open(destination_filename, "w") as f:
-        f.write(
-            py_template.render(package_suites=all_package_specs, test_type="legacy")
-        )
 
 
 def render_check_main(output_dir, all_package_specs):
@@ -116,8 +111,3 @@ def render_check_main(output_dir, all_package_specs):
     py_template = JENV.get_template(CHECK_MAIN_TEMPLATE_NAME)
     with open(destination_filename, "w") as f:
         f.write(py_template.render(package_suites=all_package_specs, test_type="new"))
-    destination_filename = "%s/%s.c" % (output_dir, "check_main_legacy")
-    with open(destination_filename, "w") as f:
-        f.write(
-            py_template.render(package_suites=all_package_specs, test_type="legacy")
-        )
