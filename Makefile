@@ -214,7 +214,7 @@ gen-c:
 	$(call announce-begin,"Formatting C code")
 
 	cd $(SWIFTNAV_ROOT)/c; \
-	mkdir -p build.format/ && cd build.format/; \
+	mkdir -p build/ && cd build/; \
 	cmake $(CMAKEFLAGS) ../; \
 	$(MAKE) clang-format-all
 
