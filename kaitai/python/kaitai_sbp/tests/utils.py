@@ -7,7 +7,7 @@ from kaitaistruct import KaitaiStream, KaitaiStruct
 import sys
 import sbp.msg as msg_construct
 import sbp.table as table_construct
-from sbp.sbp2json import iter_messages_unbuffered as parse_file_construct
+from sbp.sbp2json import iter_messages_buffered as parse_file_construct
 from subprocess import Popen, PIPE
 
 SBP_HEADER_LEN = 6
