@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_PHASEBIASESCONTENT_H
-#define LIBSBP_V4_SSR_PHASEBIASESCONTENT_H
+#ifndef LIBSBP_SSR_PHASEBIASESCONTENT_H
+#define LIBSBP_SSR_PHASEBIASESCONTENT_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -178,4 +178,4 @@ static inline bool operator>=(const sbp_phase_biases_content_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SSR_PHASEBIASESCONTENT_H */
+#endif /* LIBSBP_SSR_PHASEBIASESCONTENT_H */

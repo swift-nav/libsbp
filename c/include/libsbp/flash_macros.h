@@ -48,10 +48,10 @@
 #define SBP_MSG_FLASH_PROGRAM_DATA_MAX 250u
 
 /**
- * Encoded length of sbp_msg_flash_program_t (V4 API)
+ * Encoded length of sbp_msg_flash_program_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_flash_program_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -80,7 +80,7 @@
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_RANGE (4)
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_SECTOR (5)
 /**
- * Encoded length of sbp_msg_flash_done_t (V4 API)
+ * Encoded length of sbp_msg_flash_done_t
  */
 #define SBP_MSG_FLASH_DONE_ENCODED_LEN 1u
 
@@ -108,7 +108,7 @@
 #define SBP_MSG_FLASH_READ_REQ_ADDR_START_MAX 3u
 
 /**
- * Encoded length of sbp_msg_flash_read_req_t (V4 API)
+ * Encoded length of sbp_msg_flash_read_req_t
  */
 #define SBP_MSG_FLASH_READ_REQ_ENCODED_LEN 5u
 
@@ -136,7 +136,7 @@
 #define SBP_MSG_FLASH_READ_RESP_ADDR_START_MAX 3u
 
 /**
- * Encoded length of sbp_msg_flash_read_resp_t (V4 API)
+ * Encoded length of sbp_msg_flash_read_resp_t
  */
 #define SBP_MSG_FLASH_READ_RESP_ENCODED_LEN 5u
 
@@ -157,22 +157,22 @@
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_M25 (1)
 /**
- * Encoded length of sbp_msg_flash_erase_t (V4 API)
+ * Encoded length of sbp_msg_flash_erase_t
  */
 #define SBP_MSG_FLASH_ERASE_ENCODED_LEN 5u
 
 /**
- * Encoded length of sbp_msg_stm_flash_lock_sector_t (V4 API)
+ * Encoded length of sbp_msg_stm_flash_lock_sector_t
  */
 #define SBP_MSG_STM_FLASH_LOCK_SECTOR_ENCODED_LEN 4u
 
 /**
- * Encoded length of sbp_msg_stm_flash_unlock_sector_t (V4 API)
+ * Encoded length of sbp_msg_stm_flash_unlock_sector_t
  */
 #define SBP_MSG_STM_FLASH_UNLOCK_SECTOR_ENCODED_LEN 4u
 
 /**
- * Encoded length of sbp_msg_stm_unique_id_req_t (V4 API)
+ * Encoded length of sbp_msg_stm_unique_id_req_t
  */
 #define SBP_MSG_STM_UNIQUE_ID_REQ_ENCODED_LEN 0u
 
@@ -184,7 +184,7 @@
 #define SBP_MSG_STM_UNIQUE_ID_RESP_STM_ID_MAX 12u
 
 /**
- * Encoded length of sbp_msg_stm_unique_id_resp_t (V4 API)
+ * Encoded length of sbp_msg_stm_unique_id_resp_t
  */
 #define SBP_MSG_STM_UNIQUE_ID_RESP_ENCODED_LEN 12u
 
@@ -196,7 +196,7 @@
 #define SBP_MSG_M25_FLASH_WRITE_STATUS_STATUS_MAX 1u
 
 /**
- * Encoded length of sbp_msg_m25_flash_write_status_t (V4 API)
+ * Encoded length of sbp_msg_m25_flash_write_status_t
  */
 #define SBP_MSG_M25_FLASH_WRITE_STATUS_ENCODED_LEN 1u
 

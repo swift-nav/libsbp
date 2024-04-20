@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_TROPOSPHERICDELAYCORRECTION_H
-#define LIBSBP_V4_SSR_TROPOSPHERICDELAYCORRECTION_H
+#ifndef LIBSBP_SSR_TROPOSPHERICDELAYCORRECTION_H
+#define LIBSBP_SSR_TROPOSPHERICDELAYCORRECTION_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -171,4 +171,4 @@ static inline bool operator>=(const sbp_tropospheric_delay_correction_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SSR_TROPOSPHERICDELAYCORRECTION_H */
+#endif /* LIBSBP_SSR_TROPOSPHERICDELAYCORRECTION_H */

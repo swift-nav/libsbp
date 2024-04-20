@@ -33,10 +33,10 @@
 #define SBP_MSG_LINUX_CPU_STATE_DEP_A_CMDLINE_MAX 236u
 
 /**
- * Encoded length of sbp_msg_linux_cpu_state_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_linux_cpu_state_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_linux_cpu_state_dep_a_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -60,10 +60,10 @@
 #define SBP_MSG_LINUX_MEM_STATE_DEP_A_CMDLINE_MAX 236u
 
 /**
- * Encoded length of sbp_msg_linux_mem_state_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_linux_mem_state_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_linux_mem_state_dep_a_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -73,7 +73,7 @@
 #define SBP_MSG_LINUX_MEM_STATE_DEP_A_ENCODED_OVERHEAD 19u
 
 /**
- * Encoded length of sbp_msg_linux_sys_state_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_linux_sys_state_dep_a_t
  */
 #define SBP_MSG_LINUX_SYS_STATE_DEP_A_ENCODED_LEN 10u
 
@@ -85,10 +85,10 @@
 #define SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS_CMDLINE_MAX 246u
 
 /**
- * Encoded length of sbp_msg_linux_process_socket_counts_t (V4 API)
+ * Encoded length of sbp_msg_linux_process_socket_counts_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_linux_process_socket_counts_encoded_len to determine the actual size
  * of an instance of this message.
  *
@@ -112,10 +112,10 @@
 #define SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES_CMDLINE_MAX 180u
 
 /**
- * Encoded length of sbp_msg_linux_process_socket_queues_t (V4 API)
+ * Encoded length of sbp_msg_linux_process_socket_queues_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_linux_process_socket_queues_encoded_len to determine the actual size
  * of an instance of this message.
  *
@@ -139,7 +139,7 @@
 #define SBP_MSG_LINUX_SOCKET_USAGE_SOCKET_TYPE_COUNTS_MAX 16u
 
 /**
- * Encoded length of sbp_msg_linux_socket_usage_t (V4 API)
+ * Encoded length of sbp_msg_linux_socket_usage_t
  */
 #define SBP_MSG_LINUX_SOCKET_USAGE_ENCODED_LEN 72u
 
@@ -151,10 +151,10 @@
 #define SBP_MSG_LINUX_PROCESS_FD_COUNT_CMDLINE_MAX 250u
 
 /**
- * Encoded length of sbp_msg_linux_process_fd_count_t (V4 API)
+ * Encoded length of sbp_msg_linux_process_fd_count_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_linux_process_fd_count_encoded_len to determine the actual size of
  * an instance of this message.
  *
@@ -171,10 +171,10 @@
 #define SBP_MSG_LINUX_PROCESS_FD_SUMMARY_MOST_OPENED_MAX 251u
 
 /**
- * Encoded length of sbp_msg_linux_process_fd_summary_t (V4 API)
+ * Encoded length of sbp_msg_linux_process_fd_summary_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_linux_process_fd_summary_encoded_len to determine the actual size of
  * an instance of this message.
  *
@@ -214,10 +214,10 @@
 #define SBP_MSG_LINUX_CPU_STATE_CMDLINE_MAX 231u
 
 /**
- * Encoded length of sbp_msg_linux_cpu_state_t (V4 API)
+ * Encoded length of sbp_msg_linux_cpu_state_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_linux_cpu_state_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -257,10 +257,10 @@
 #define SBP_MSG_LINUX_MEM_STATE_CMDLINE_MAX 231u
 
 /**
- * Encoded length of sbp_msg_linux_mem_state_t (V4 API)
+ * Encoded length of sbp_msg_linux_mem_state_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_linux_mem_state_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -286,7 +286,7 @@
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
 /**
- * Encoded length of sbp_msg_linux_sys_state_t (V4 API)
+ * Encoded length of sbp_msg_linux_sys_state_t
  */
 #define SBP_MSG_LINUX_SYS_STATE_ENCODED_LEN 15u
 

@@ -97,7 +97,7 @@
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_RECEIVER (2)
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_SBP (3)
 /**
- * Encoded length of sbp_msg_ndb_event_t (V4 API)
+ * Encoded length of sbp_msg_ndb_event_t
  */
 #define SBP_MSG_NDB_EVENT_ENCODED_LEN 18u
 

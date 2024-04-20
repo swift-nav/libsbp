@@ -50,7 +50,7 @@
 #define SBP_STARTUP_HOT_START (2)
 #define SBP_STARTUP_HOT_START (2)
 /**
- * Encoded length of sbp_msg_startup_t (V4 API)
+ * Encoded length of sbp_msg_startup_t
  */
 #define SBP_MSG_STARTUP_ENCODED_LEN 4u
 
@@ -79,10 +79,10 @@
 #define SBP_MSG_DGNSS_STATUS_SOURCE_MAX 251u
 
 /**
- * Encoded length of sbp_msg_dgnss_status_t (V4 API)
+ * Encoded length of sbp_msg_dgnss_status_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_dgnss_status_encoded_len to determine the actual size of an instance
  * of this message.
  *
@@ -201,7 +201,7 @@
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_SYSTEM_HEALTHY (0)
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_AN_ERROR_HAS_OCCURRED (1)
 /**
- * Encoded length of sbp_msg_heartbeat_t (V4 API)
+ * Encoded length of sbp_msg_heartbeat_t
  */
 #define SBP_MSG_HEARTBEAT_ENCODED_LEN 4u
 
@@ -244,7 +244,7 @@
 #define SBP_SUBSYSTEMREPORT_GENERIC_DEGRADED (3)
 #define SBP_SUBSYSTEMREPORT_GENERIC_UNUSABLE (4)
 /**
- * Encoded length of sbp_sub_system_report_t (V4 API)
+ * Encoded length of sbp_sub_system_report_t
  */
 #define SBP_SUB_SYSTEM_REPORT_ENCODED_LEN 4u
 
@@ -303,10 +303,10 @@
 #define SBP_MSG_STATUS_REPORT_STATUS_MAX 60u
 
 /**
- * Encoded length of sbp_msg_status_report_t (V4 API)
+ * Encoded length of sbp_msg_status_report_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_status_report_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -316,7 +316,7 @@
 #define SBP_MSG_STATUS_REPORT_ENCODED_OVERHEAD 12u
 
 /**
- * Encoded length of sbp_status_journal_item_t (V4 API)
+ * Encoded length of sbp_status_journal_item_t
  */
 #define SBP_STATUS_JOURNAL_ITEM_ENCODED_LEN 8u
 
@@ -375,10 +375,10 @@
 #define SBP_MSG_STATUS_JOURNAL_JOURNAL_MAX 30u
 
 /**
- * Encoded length of sbp_msg_status_journal_t (V4 API)
+ * Encoded length of sbp_msg_status_journal_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_status_journal_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -503,7 +503,7 @@
 #define SBP_INS_STATUS_MODE_FASTSTART_VALIDATING (5)
 #define SBP_INS_STATUS_MODE_VALIDATING_UNSAFE_FAST_START_SEED (6)
 /**
- * Encoded length of sbp_msg_ins_status_t (V4 API)
+ * Encoded length of sbp_msg_ins_status_t
  */
 #define SBP_MSG_INS_STATUS_ENCODED_LEN 4u
 
@@ -515,10 +515,10 @@
 #define SBP_MSG_CSAC_TELEMETRY_TELEMETRY_MAX 254u
 
 /**
- * Encoded length of sbp_msg_csac_telemetry_t (V4 API)
+ * Encoded length of sbp_msg_csac_telemetry_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_csac_telemetry_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -535,10 +535,10 @@
 #define SBP_MSG_CSAC_TELEMETRY_LABELS_TELEMETRY_LABELS_MAX 254u
 
 /**
- * Encoded length of sbp_msg_csac_telemetry_labels_t (V4 API)
+ * Encoded length of sbp_msg_csac_telemetry_labels_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_csac_telemetry_labels_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -824,7 +824,7 @@
   } while (0)
 
 /**
- * Encoded length of sbp_msg_ins_updates_t (V4 API)
+ * Encoded length of sbp_msg_ins_updates_t
  */
 #define SBP_MSG_INS_UPDATES_ENCODED_LEN 10u
 
@@ -861,7 +861,7 @@
 #define SBP_GNSS_TIME_OFFSET_WEEKS_BEHAVIOR_INCREMENTED_ON_LOCAL_TIMESTAMP_ROLLOVER \
   (1)
 /**
- * Encoded length of sbp_msg_gnss_time_offset_t (V4 API)
+ * Encoded length of sbp_msg_gnss_time_offset_t
  */
 #define SBP_MSG_GNSS_TIME_OFFSET_ENCODED_LEN 9u
 
@@ -900,7 +900,7 @@
 #define SBP_PPS_TIME_TIME_UNCERTAINTY__1_MICROSECONDS (3)
 #define SBP_PPS_TIME_TIME_UNCERTAINTY_1_MICROSECONDS (3)
 /**
- * Encoded length of sbp_msg_pps_time_t (V4 API)
+ * Encoded length of sbp_msg_pps_time_t
  */
 #define SBP_MSG_PPS_TIME_ENCODED_LEN 9u
 
@@ -927,7 +927,7 @@
 #define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_TIME_DIFFERENCES_OF_CARRIER_PHASE \
   (6)
 /**
- * Encoded length of sbp_msg_sensor_aid_event_t (V4 API)
+ * Encoded length of sbp_msg_sensor_aid_event_t
  */
 #define SBP_MSG_SENSOR_AID_EVENT_ENCODED_LEN 15u
 
@@ -956,10 +956,10 @@
 #define SBP_MSG_GROUP_META_GROUP_MSGS_MAX 126u
 
 /**
- * Encoded length of sbp_msg_group_meta_t (V4 API)
+ * Encoded length of sbp_msg_group_meta_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_group_meta_encoded_len to determine the actual size of an instance
  * of this message.
  *

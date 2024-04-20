@@ -46,10 +46,10 @@
 #define SBP_MSG_LOG_TEXT_MAX 254u
 
 /**
- * Encoded length of sbp_msg_log_t (V4 API)
+ * Encoded length of sbp_msg_log_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_log_encoded_len to determine the actual size of an instance
  * of this message.
  *
@@ -65,10 +65,10 @@
 #define SBP_MSG_FWD_FWD_PAYLOAD_MAX 253u
 
 /**
- * Encoded length of sbp_msg_fwd_t (V4 API)
+ * Encoded length of sbp_msg_fwd_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_fwd_encoded_len to determine the actual size of an instance
  * of this message.
  *
@@ -84,10 +84,10 @@
 #define SBP_MSG_PRINT_DEP_TEXT_MAX 255u
 
 /**
- * Encoded length of sbp_msg_print_dep_t (V4 API)
+ * Encoded length of sbp_msg_print_dep_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_print_dep_encoded_len to determine the actual size of an instance
  * of this message.
  *

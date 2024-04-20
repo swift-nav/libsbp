@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_TRACKING_MSG_TRACKING_IQ_DEP_B_H
-#define LIBSBP_V4_TRACKING_MSG_TRACKING_IQ_DEP_B_H
+#ifndef LIBSBP_TRACKING_MSG_TRACKING_IQ_DEP_B_H
+#define LIBSBP_TRACKING_MSG_TRACKING_IQ_DEP_B_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -188,4 +188,4 @@ static inline bool operator>=(const sbp_msg_tracking_iq_dep_b_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_TRACKING_MSG_TRACKING_IQ_DEP_B_H */
+#endif /* LIBSBP_TRACKING_MSG_TRACKING_IQ_DEP_B_H */

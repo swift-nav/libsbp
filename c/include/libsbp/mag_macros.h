@@ -19,7 +19,7 @@
 #define LIBSBP_MAG_MACROS_H
 
 /**
- * Encoded length of sbp_msg_mag_raw_t (V4 API)
+ * Encoded length of sbp_msg_mag_raw_t
  */
 #define SBP_MSG_MAG_RAW_ENCODED_LEN 11u
 

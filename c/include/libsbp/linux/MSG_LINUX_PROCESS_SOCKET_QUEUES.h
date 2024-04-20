@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_SOCKET_QUEUES_H
-#define LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_SOCKET_QUEUES_H
+#ifndef LIBSBP_LINUX_MSG_LINUX_PROCESS_SOCKET_QUEUES_H
+#define LIBSBP_LINUX_MSG_LINUX_PROCESS_SOCKET_QUEUES_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -426,4 +426,4 @@ static inline bool operator>=(
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_SOCKET_QUEUES_H */
+#endif /* LIBSBP_LINUX_MSG_LINUX_PROCESS_SOCKET_QUEUES_H */

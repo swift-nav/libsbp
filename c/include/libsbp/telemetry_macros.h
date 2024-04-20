@@ -171,7 +171,7 @@
 #define SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_VALID_EPHEMERIS_AVAILABLE (0)
 #define SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_NO_VALID_EPHEMERIS_AVAILABLE (1)
 /**
- * Encoded length of sbp_telemetry_sv_t (V4 API)
+ * Encoded length of sbp_telemetry_sv_t
  */
 #define SBP_TELEMETRY_SV_ENCODED_LEN 12u
 
@@ -197,10 +197,10 @@
 #define SBP_MSG_TEL_SV_SV_TEL_MAX 20u
 
 /**
- * Encoded length of sbp_msg_tel_sv_t (V4 API)
+ * Encoded length of sbp_msg_tel_sv_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_tel_sv_encoded_len to determine the actual size of an instance
  * of this message.
  *

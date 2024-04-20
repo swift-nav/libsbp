@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_H
-#define LIBSBP_V4_SSR_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_H
+#ifndef LIBSBP_SSR_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_H
+#define LIBSBP_SSR_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -209,4 +209,4 @@ static inline bool operator>=(
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SSR_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_H */
+#endif /* LIBSBP_SSR_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_H */

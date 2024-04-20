@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_PIKSI_MSG_UART_STATE_DEPA_H
-#define LIBSBP_V4_PIKSI_MSG_UART_STATE_DEPA_H
+#ifndef LIBSBP_PIKSI_MSG_UART_STATE_DEPA_H
+#define LIBSBP_PIKSI_MSG_UART_STATE_DEPA_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -192,4 +192,4 @@ static inline bool operator>=(const sbp_msg_uart_state_depa_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_PIKSI_MSG_UART_STATE_DEPA_H */
+#endif /* LIBSBP_PIKSI_MSG_UART_STATE_DEPA_H */

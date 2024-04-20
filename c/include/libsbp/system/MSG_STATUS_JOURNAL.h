@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SYSTEM_MSG_STATUS_JOURNAL_H
-#define LIBSBP_V4_SYSTEM_MSG_STATUS_JOURNAL_H
+#ifndef LIBSBP_SYSTEM_MSG_STATUS_JOURNAL_H
+#define LIBSBP_SYSTEM_MSG_STATUS_JOURNAL_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -211,4 +211,4 @@ static inline bool operator>=(const sbp_msg_status_journal_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SYSTEM_MSG_STATUS_JOURNAL_H */
+#endif /* LIBSBP_SYSTEM_MSG_STATUS_JOURNAL_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_INTEGRITY_H
-#define LIBSBP_INTERNAL_V4_INTEGRITY_H
+#ifndef LIBSBP_INTERNAL_INTEGRITY_H
+#define LIBSBP_INTERNAL_INTEGRITY_H
 
 #include <stdbool.h>
 
@@ -193,4 +193,4 @@ bool sbp_msg_acknowledge_decode_internal(sbp_decode_ctx_t *ctx,
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_INTEGRITY_H */
+#endif /* LIBSBP_INTERNAL_INTEGRITY_H */

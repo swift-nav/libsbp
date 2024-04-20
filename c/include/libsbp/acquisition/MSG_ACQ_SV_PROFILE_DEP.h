@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_ACQUISITION_MSG_ACQ_SV_PROFILE_DEP_H
-#define LIBSBP_V4_ACQUISITION_MSG_ACQ_SV_PROFILE_DEP_H
+#ifndef LIBSBP_ACQUISITION_MSG_ACQ_SV_PROFILE_DEP_H
+#define LIBSBP_ACQUISITION_MSG_ACQ_SV_PROFILE_DEP_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -190,4 +190,4 @@ static inline bool operator>=(const sbp_msg_acq_sv_profile_dep_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_ACQUISITION_MSG_ACQ_SV_PROFILE_DEP_H */
+#endif /* LIBSBP_ACQUISITION_MSG_ACQ_SV_PROFILE_DEP_H */

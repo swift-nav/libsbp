@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_MSG_SSR_TILE_DEFINITION_DEP_A_H
-#define LIBSBP_V4_SSR_MSG_SSR_TILE_DEFINITION_DEP_A_H
+#ifndef LIBSBP_SSR_MSG_SSR_TILE_DEFINITION_DEP_A_H
+#define LIBSBP_SSR_MSG_SSR_TILE_DEFINITION_DEP_A_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -259,4 +259,4 @@ static inline bool operator>=(const sbp_msg_ssr_tile_definition_dep_a_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SSR_MSG_SSR_TILE_DEFINITION_DEP_A_H */
+#endif /* LIBSBP_SSR_MSG_SSR_TILE_DEFINITION_DEP_A_H */

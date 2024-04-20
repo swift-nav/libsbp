@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_NAVIGATION_MSG_POS_ECEF_H
-#define LIBSBP_V4_NAVIGATION_MSG_POS_ECEF_H
+#ifndef LIBSBP_NAVIGATION_MSG_POS_ECEF_H
+#define LIBSBP_NAVIGATION_MSG_POS_ECEF_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -211,4 +211,4 @@ static inline bool operator>=(const sbp_msg_pos_ecef_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_NAVIGATION_MSG_POS_ECEF_H */
+#endif /* LIBSBP_NAVIGATION_MSG_POS_ECEF_H */

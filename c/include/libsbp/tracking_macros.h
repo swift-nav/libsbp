@@ -365,7 +365,7 @@
   (0)
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_RUNNING (1)
 /**
- * Encoded length of sbp_msg_tracking_state_detailed_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_tracking_state_detailed_dep_a_t
  */
 #define SBP_MSG_TRACKING_STATE_DETAILED_DEP_A_ENCODED_LEN 57u
 
@@ -699,12 +699,12 @@
   (0)
 #define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_RUNNING (1)
 /**
- * Encoded length of sbp_msg_tracking_state_detailed_dep_t (V4 API)
+ * Encoded length of sbp_msg_tracking_state_detailed_dep_t
  */
 #define SBP_MSG_TRACKING_STATE_DETAILED_DEP_ENCODED_LEN 55u
 
 /**
- * Encoded length of sbp_tracking_channel_state_t (V4 API)
+ * Encoded length of sbp_tracking_channel_state_t
  */
 #define SBP_TRACKING_CHANNEL_STATE_ENCODED_LEN 4u
 
@@ -716,10 +716,10 @@
 #define SBP_MSG_TRACKING_STATE_STATES_MAX 63u
 
 /**
- * Encoded length of sbp_msg_tracking_state_t (V4 API)
+ * Encoded length of sbp_msg_tracking_state_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_tracking_state_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -729,7 +729,7 @@
 #define SBP_MSG_TRACKING_STATE_ENCODED_OVERHEAD 0u
 
 /**
- * Encoded length of sbp_measurement_state_t (V4 API)
+ * Encoded length of sbp_measurement_state_t
  */
 #define SBP_MEASUREMENT_STATE_ENCODED_LEN 3u
 
@@ -741,10 +741,10 @@
 #define SBP_MSG_MEASUREMENT_STATE_STATES_MAX 85u
 
 /**
- * Encoded length of sbp_msg_measurement_state_t (V4 API)
+ * Encoded length of sbp_msg_measurement_state_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_measurement_state_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -754,7 +754,7 @@
 #define SBP_MSG_MEASUREMENT_STATE_ENCODED_OVERHEAD 0u
 
 /**
- * Encoded length of sbp_tracking_channel_correlation_t (V4 API)
+ * Encoded length of sbp_tracking_channel_correlation_t
  */
 #define SBP_TRACKING_CHANNEL_CORRELATION_ENCODED_LEN 4u
 
@@ -765,12 +765,12 @@
 #define SBP_MSG_TRACKING_IQ_CORRS_MAX 3u
 
 /**
- * Encoded length of sbp_msg_tracking_iq_t (V4 API)
+ * Encoded length of sbp_msg_tracking_iq_t
  */
 #define SBP_MSG_TRACKING_IQ_ENCODED_LEN 15u
 
 /**
- * Encoded length of sbp_tracking_channel_correlation_dep_t (V4 API)
+ * Encoded length of sbp_tracking_channel_correlation_dep_t
  */
 #define SBP_TRACKING_CHANNEL_CORRELATION_DEP_ENCODED_LEN 8u
 
@@ -782,7 +782,7 @@
 #define SBP_MSG_TRACKING_IQ_DEP_B_CORRS_MAX 3u
 
 /**
- * Encoded length of sbp_msg_tracking_iq_dep_b_t (V4 API)
+ * Encoded length of sbp_msg_tracking_iq_dep_b_t
  */
 #define SBP_MSG_TRACKING_IQ_DEP_B_ENCODED_LEN 27u
 
@@ -794,7 +794,7 @@
 #define SBP_MSG_TRACKING_IQ_DEP_A_CORRS_MAX 3u
 
 /**
- * Encoded length of sbp_msg_tracking_iq_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_tracking_iq_dep_a_t
  */
 #define SBP_MSG_TRACKING_IQ_DEP_A_ENCODED_LEN 29u
 
@@ -815,7 +815,7 @@
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_DISABLED (0)
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_RUNNING (1)
 /**
- * Encoded length of sbp_tracking_channel_state_dep_a_t (V4 API)
+ * Encoded length of sbp_tracking_channel_state_dep_a_t
  */
 #define SBP_TRACKING_CHANNEL_STATE_DEP_A_ENCODED_LEN 6u
 
@@ -827,10 +827,10 @@
 #define SBP_MSG_TRACKING_STATE_DEP_A_STATES_MAX 42u
 
 /**
- * Encoded length of sbp_msg_tracking_state_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_tracking_state_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_tracking_state_dep_a_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -856,7 +856,7 @@
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_DISABLED (0)
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_RUNNING (1)
 /**
- * Encoded length of sbp_tracking_channel_state_dep_b_t (V4 API)
+ * Encoded length of sbp_tracking_channel_state_dep_b_t
  */
 #define SBP_TRACKING_CHANNEL_STATE_DEP_B_ENCODED_LEN 9u
 
@@ -868,10 +868,10 @@
 #define SBP_MSG_TRACKING_STATE_DEP_B_STATES_MAX 28u
 
 /**
- * Encoded length of sbp_msg_tracking_state_dep_b_t (V4 API)
+ * Encoded length of sbp_msg_tracking_state_dep_b_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_tracking_state_dep_b_encoded_len to determine the actual size of an
  * instance of this message.
  *

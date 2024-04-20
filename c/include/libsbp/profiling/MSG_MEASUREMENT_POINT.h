@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_PROFILING_MSG_MEASUREMENT_POINT_H
-#define LIBSBP_V4_PROFILING_MSG_MEASUREMENT_POINT_H
+#ifndef LIBSBP_PROFILING_MSG_MEASUREMENT_POINT_H
+#define LIBSBP_PROFILING_MSG_MEASUREMENT_POINT_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -410,4 +410,4 @@ static inline bool operator>=(const sbp_msg_measurement_point_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_PROFILING_MSG_MEASUREMENT_POINT_H */
+#endif /* LIBSBP_PROFILING_MSG_MEASUREMENT_POINT_H */

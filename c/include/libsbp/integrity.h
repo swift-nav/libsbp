@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_INTEGRITY_MESSAGES_H
-#define LIBSBP_V4_INTEGRITY_MESSAGES_H
+#ifndef LIBSBP_INTEGRITY_MESSAGES_H
+#define LIBSBP_INTEGRITY_MESSAGES_H
 #include <libsbp/integrity/IntegritySSRHeader.h>
 #include <libsbp/integrity/MSG_ACKNOWLEDGE.h>
 #include <libsbp/integrity/MSG_SSR_FLAG_HIGH_LEVEL.h>
@@ -26,4 +26,4 @@
 #include <libsbp/integrity/MSG_SSR_FLAG_SATELLITES.h>
 #include <libsbp/integrity/MSG_SSR_FLAG_TROPO_GRID_POINTS.h>
 
-#endif /* LIBSBP_V4_INTEGRITY_MESSAGES_H */
+#endif /* LIBSBP_INTEGRITY_MESSAGES_H */

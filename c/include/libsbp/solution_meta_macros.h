@@ -56,7 +56,7 @@
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_ODOMETRY_SPEED (5)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_IMU_SENSOR (6)
 /**
- * Encoded length of sbp_solution_input_type_t (V4 API)
+ * Encoded length of sbp_solution_input_type_t
  */
 #define SBP_SOLUTION_INPUT_TYPE_ENCODED_LEN 2u
 
@@ -92,10 +92,10 @@
 #define SBP_MSG_SOLN_META_DEP_A_SOL_IN_MAX 118u
 
 /**
- * Encoded length of sbp_msg_soln_meta_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_soln_meta_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_soln_meta_dep_a_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -147,10 +147,10 @@
 #define SBP_MSG_SOLN_META_SOL_IN_MAX 119u
 
 /**
- * Encoded length of sbp_msg_soln_meta_t (V4 API)
+ * Encoded length of sbp_msg_soln_meta_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_soln_meta_encoded_len to determine the actual size of an instance
  * of this message.
  *
@@ -178,7 +178,7 @@
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GNSS_VELOCITY_DISPLACEMENT \
   (2)
 /**
- * Encoded length of sbp_gnss_input_type_t (V4 API)
+ * Encoded length of sbp_gnss_input_type_t
  */
 #define SBP_GNSS_INPUT_TYPE_ENCODED_LEN 1u
 
@@ -234,7 +234,7 @@
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_6_AXIS_MEMS (0)
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_OTHER_TYPE (1)
 /**
- * Encoded length of sbp_imu_input_type_t (V4 API)
+ * Encoded length of sbp_imu_input_type_t
  */
 #define SBP_IMU_INPUT_TYPE_ENCODED_LEN 1u
 
@@ -287,7 +287,7 @@
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MULTI_DIMENSIONAL_TICKS (2)
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MULTI_DIMENSIONAL_SPEED (3)
 /**
- * Encoded length of sbp_odo_input_type_t (V4 API)
+ * Encoded length of sbp_odo_input_type_t
  */
 #define SBP_ODO_INPUT_TYPE_ENCODED_LEN 1u
 

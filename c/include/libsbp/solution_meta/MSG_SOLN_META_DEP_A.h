@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SOLUTION_META_MSG_SOLN_META_DEP_A_H
-#define LIBSBP_V4_SOLUTION_META_MSG_SOLN_META_DEP_A_H
+#ifndef LIBSBP_SOLUTION_META_MSG_SOLN_META_DEP_A_H
+#define LIBSBP_SOLUTION_META_MSG_SOLN_META_DEP_A_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -234,4 +234,4 @@ static inline bool operator>=(const sbp_msg_soln_meta_dep_a_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SOLUTION_META_MSG_SOLN_META_DEP_A_H */
+#endif /* LIBSBP_SOLUTION_META_MSG_SOLN_META_DEP_A_H */

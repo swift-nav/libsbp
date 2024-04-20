@@ -54,7 +54,7 @@
   } while (0)
 
 /**
- * Encoded length of sbp_msg_imu_raw_t (V4 API)
+ * Encoded length of sbp_msg_imu_raw_t
  */
 #define SBP_MSG_IMU_RAW_ENCODED_LEN 17u
 
@@ -125,7 +125,7 @@
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__6G (4)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE_6G (4)
 /**
- * Encoded length of sbp_msg_imu_aux_t (V4 API)
+ * Encoded length of sbp_msg_imu_aux_t
  */
 #define SBP_MSG_IMU_AUX_ENCODED_LEN 4u
 

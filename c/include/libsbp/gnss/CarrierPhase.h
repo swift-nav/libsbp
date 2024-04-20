@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_GNSS_CARRIERPHASE_H
-#define LIBSBP_V4_GNSS_CARRIERPHASE_H
+#ifndef LIBSBP_GNSS_CARRIERPHASE_H
+#define LIBSBP_GNSS_CARRIERPHASE_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -163,4 +163,4 @@ static inline bool operator>=(const sbp_carrier_phase_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_GNSS_CARRIERPHASE_H */
+#endif /* LIBSBP_GNSS_CARRIERPHASE_H */

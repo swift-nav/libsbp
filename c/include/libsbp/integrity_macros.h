@@ -19,7 +19,7 @@
 #define LIBSBP_INTEGRITY_MACROS_H
 
 /**
- * Encoded length of sbp_integrity_ssr_header_t (V4 API)
+ * Encoded length of sbp_integrity_ssr_header_t
  */
 #define SBP_INTEGRITY_SSR_HEADER_ENCODED_LEN 14u
 
@@ -166,7 +166,7 @@
 #define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_NOT_MONITORED \
   (3)
 /**
- * Encoded length of sbp_msg_ssr_flag_high_level_t (V4 API)
+ * Encoded length of sbp_msg_ssr_flag_high_level_t
  */
 #define SBP_MSG_SSR_FLAG_HIGH_LEVEL_ENCODED_LEN 31u
 
@@ -178,10 +178,10 @@
 #define SBP_MSG_SSR_FLAG_SATELLITES_FAULTY_SATS_MAX 243u
 
 /**
- * Encoded length of sbp_msg_ssr_flag_satellites_t (V4 API)
+ * Encoded length of sbp_msg_ssr_flag_satellites_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_flag_satellites_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -198,10 +198,10 @@
 #define SBP_MSG_SSR_FLAG_TROPO_GRID_POINTS_FAULTY_POINTS_MAX 120u
 
 /**
- * Encoded length of sbp_msg_ssr_flag_tropo_grid_points_t (V4 API)
+ * Encoded length of sbp_msg_ssr_flag_tropo_grid_points_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_flag_tropo_grid_points_encoded_len to determine the actual size
  * of an instance of this message.
  *
@@ -218,10 +218,10 @@
 #define SBP_MSG_SSR_FLAG_IONO_GRID_POINTS_FAULTY_POINTS_MAX 120u
 
 /**
- * Encoded length of sbp_msg_ssr_flag_iono_grid_points_t (V4 API)
+ * Encoded length of sbp_msg_ssr_flag_iono_grid_points_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_flag_iono_grid_points_encoded_len to determine the actual size
  * of an instance of this message.
  *
@@ -238,10 +238,10 @@
 #define SBP_MSG_SSR_FLAG_IONO_TILE_SAT_LOS_FAULTY_LOS_MAX 120u
 
 /**
- * Encoded length of sbp_msg_ssr_flag_iono_tile_sat_los_t (V4 API)
+ * Encoded length of sbp_msg_ssr_flag_iono_tile_sat_los_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_flag_iono_tile_sat_los_encoded_len to determine the actual size
  * of an instance of this message.
  *
@@ -258,10 +258,10 @@
 #define SBP_MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS_FAULTY_LOS_MAX 119u
 
 /**
- * Encoded length of sbp_msg_ssr_flag_iono_grid_point_sat_los_t (V4 API)
+ * Encoded length of sbp_msg_ssr_flag_iono_grid_point_sat_los_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_flag_iono_grid_point_sat_los_encoded_len to determine the actual
  * size of an instance of this message.
  *
@@ -460,7 +460,7 @@
 #define SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_NOT_REQUESTED (0)
 #define SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_REQUESTED (1)
 /**
- * Encoded length of sbp_msg_acknowledge_t (V4 API)
+ * Encoded length of sbp_msg_acknowledge_t
  */
 #define SBP_MSG_ACKNOWLEDGE_ENCODED_LEN 11u
 

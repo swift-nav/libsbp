@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_OBSERVATION_PACKEDOSRCONTENT_H
-#define LIBSBP_V4_OBSERVATION_PACKEDOSRCONTENT_H
+#ifndef LIBSBP_OBSERVATION_PACKEDOSRCONTENT_H
+#define LIBSBP_OBSERVATION_PACKEDOSRCONTENT_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -197,4 +197,4 @@ static inline bool operator>=(const sbp_packed_osr_content_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_OBSERVATION_PACKEDOSRCONTENT_H */
+#endif /* LIBSBP_OBSERVATION_PACKEDOSRCONTENT_H */

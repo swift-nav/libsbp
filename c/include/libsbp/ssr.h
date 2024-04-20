@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_MESSAGES_H
-#define LIBSBP_V4_SSR_MESSAGES_H
+#ifndef LIBSBP_SSR_MESSAGES_H
+#define LIBSBP_SSR_MESSAGES_H
 #include <libsbp/ssr/BoundsHeader.h>
 #include <libsbp/ssr/CodeBiasesContent.h>
 #include <libsbp/ssr/CodePhaseBiasesSatSig.h>
@@ -56,4 +56,4 @@
 #include <libsbp/ssr/TroposphericDelayCorrection.h>
 #include <libsbp/ssr/TroposphericDelayCorrectionNoStd.h>
 
-#endif /* LIBSBP_V4_SSR_MESSAGES_H */
+#endif /* LIBSBP_SSR_MESSAGES_H */

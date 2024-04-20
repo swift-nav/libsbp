@@ -19,7 +19,7 @@
 #define LIBSBP_SETTINGS_MACROS_H
 
 /**
- * Encoded length of sbp_msg_settings_save_t (V4 API)
+ * Encoded length of sbp_msg_settings_save_t
  */
 #define SBP_MSG_SETTINGS_SAVE_ENCODED_LEN 0u
 
@@ -31,10 +31,10 @@
 #define SBP_MSG_SETTINGS_WRITE_SETTING_MAX 255u
 
 /**
- * Encoded length of sbp_msg_settings_write_t (V4 API)
+ * Encoded length of sbp_msg_settings_write_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_settings_write_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -76,10 +76,10 @@
 #define SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX 254u
 
 /**
- * Encoded length of sbp_msg_settings_write_resp_t (V4 API)
+ * Encoded length of sbp_msg_settings_write_resp_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_settings_write_resp_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -96,10 +96,10 @@
 #define SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX 255u
 
 /**
- * Encoded length of sbp_msg_settings_read_req_t (V4 API)
+ * Encoded length of sbp_msg_settings_read_req_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_settings_read_req_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -116,10 +116,10 @@
 #define SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX 255u
 
 /**
- * Encoded length of sbp_msg_settings_read_resp_t (V4 API)
+ * Encoded length of sbp_msg_settings_read_resp_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_settings_read_resp_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -129,7 +129,7 @@
 #define SBP_MSG_SETTINGS_READ_RESP_ENCODED_OVERHEAD 0u
 
 /**
- * Encoded length of sbp_msg_settings_read_by_index_req_t (V4 API)
+ * Encoded length of sbp_msg_settings_read_by_index_req_t
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ_ENCODED_LEN 2u
 
@@ -141,10 +141,10 @@
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX 253u
 
 /**
- * Encoded length of sbp_msg_settings_read_by_index_resp_t (V4 API)
+ * Encoded length of sbp_msg_settings_read_by_index_resp_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_settings_read_by_index_resp_encoded_len to determine the actual size
  * of an instance of this message.
  *
@@ -154,7 +154,7 @@
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_ENCODED_OVERHEAD 2u
 
 /**
- * Encoded length of sbp_msg_settings_read_by_index_done_t (V4 API)
+ * Encoded length of sbp_msg_settings_read_by_index_done_t
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE_ENCODED_LEN 0u
 
@@ -166,10 +166,10 @@
 #define SBP_MSG_SETTINGS_REGISTER_SETTING_MAX 255u
 
 /**
- * Encoded length of sbp_msg_settings_register_t (V4 API)
+ * Encoded length of sbp_msg_settings_register_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_settings_register_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -208,10 +208,10 @@
 #define SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX 254u
 
 /**
- * Encoded length of sbp_msg_settings_register_resp_t (V4 API)
+ * Encoded length of sbp_msg_settings_register_resp_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_settings_register_resp_encoded_len to determine the actual size of
  * an instance of this message.
  *

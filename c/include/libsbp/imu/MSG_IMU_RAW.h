@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_IMU_MSG_IMU_RAW_H
-#define LIBSBP_V4_IMU_MSG_IMU_RAW_H
+#ifndef LIBSBP_IMU_MSG_IMU_RAW_H
+#define LIBSBP_IMU_MSG_IMU_RAW_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -216,4 +216,4 @@ static inline bool operator>=(const sbp_msg_imu_raw_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_IMU_MSG_IMU_RAW_H */
+#endif /* LIBSBP_IMU_MSG_IMU_RAW_H */

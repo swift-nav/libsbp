@@ -25,7 +25,7 @@
 #define SBP_MSG_SBAS_RAW_DATA_MAX 27u
 
 /**
- * Encoded length of sbp_msg_sbas_raw_t (V4 API)
+ * Encoded length of sbp_msg_sbas_raw_t
  */
 #define SBP_MSG_SBAS_RAW_ENCODED_LEN 34u
 

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_GNSS_H
-#define LIBSBP_INTERNAL_V4_GNSS_H
+#ifndef LIBSBP_INTERNAL_GNSS_H
+#define LIBSBP_INTERNAL_GNSS_H
 
 #include <stdbool.h>
 
@@ -168,4 +168,4 @@ bool sbp_carrier_phase_decode_internal(sbp_decode_ctx_t *ctx,
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_GNSS_H */
+#endif /* LIBSBP_INTERNAL_GNSS_H */

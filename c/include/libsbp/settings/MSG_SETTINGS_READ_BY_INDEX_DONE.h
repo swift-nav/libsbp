@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_H
-#define LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_H
+#ifndef LIBSBP_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_H
+#define LIBSBP_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -186,4 +186,4 @@ static inline bool operator>=(
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_H */
+#endif /* LIBSBP_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_H */

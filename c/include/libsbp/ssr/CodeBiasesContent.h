@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_CODEBIASESCONTENT_H
-#define LIBSBP_V4_SSR_CODEBIASESCONTENT_H
+#ifndef LIBSBP_SSR_CODEBIASESCONTENT_H
+#define LIBSBP_SSR_CODEBIASESCONTENT_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -163,4 +163,4 @@ static inline bool operator>=(const sbp_code_biases_content_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SSR_CODEBIASESCONTENT_H */
+#endif /* LIBSBP_SSR_CODEBIASESCONTENT_H */

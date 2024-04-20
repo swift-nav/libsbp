@@ -19,7 +19,7 @@
 #define LIBSBP_SIGNING_MACROS_H
 
 /**
- * Encoded length of sbp_utc_time_t (V4 API)
+ * Encoded length of sbp_utc_time_t
  */
 #define SBP_UTC_TIME_ENCODED_LEN 11u
 
@@ -30,7 +30,7 @@
 #define SBP_ECDSA_SIGNATURE_DATA_MAX 72u
 
 /**
- * Encoded length of sbp_ecdsa_signature_t (V4 API)
+ * Encoded length of sbp_ecdsa_signature_t
  */
 #define SBP_ECDSA_SIGNATURE_ENCODED_LEN 73u
 
@@ -66,10 +66,10 @@
 #define SBP_MSG_ECDSA_CERTIFICATE_CERTIFICATE_BYTES_MAX 249u
 
 /**
- * Encoded length of sbp_msg_ecdsa_certificate_t (V4 API)
+ * Encoded length of sbp_msg_ecdsa_certificate_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ecdsa_certificate_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -100,7 +100,7 @@
 #define SBP_MSG_CERTIFICATE_CHAIN_CORRECTIONS_CERTIFICATE_MAX 20u
 
 /**
- * Encoded length of sbp_msg_certificate_chain_t (V4 API)
+ * Encoded length of sbp_msg_certificate_chain_t
  */
 #define SBP_MSG_CERTIFICATE_CHAIN_ENCODED_LEN 144u
 
@@ -133,7 +133,7 @@
 #define SBP_MSG_CERTIFICATE_CHAIN_DEP_SIGNATURE_MAX 64u
 
 /**
- * Encoded length of sbp_msg_certificate_chain_dep_t (V4 API)
+ * Encoded length of sbp_msg_certificate_chain_dep_t
  */
 #define SBP_MSG_CERTIFICATE_CHAIN_DEP_ENCODED_LEN 135u
 
@@ -167,10 +167,10 @@
 #define SBP_MSG_ECDSA_SIGNATURE_SIGNED_MESSAGES_MAX 175u
 
 /**
- * Encoded length of sbp_msg_ecdsa_signature_t (V4 API)
+ * Encoded length of sbp_msg_ecdsa_signature_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ecdsa_signature_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -217,10 +217,10 @@
 #define SBP_MSG_ECDSA_SIGNATURE_DEP_B_SIGNED_MESSAGES_MAX 175u
 
 /**
- * Encoded length of sbp_msg_ecdsa_signature_dep_b_t (V4 API)
+ * Encoded length of sbp_msg_ecdsa_signature_dep_b_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ecdsa_signature_dep_b_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -267,10 +267,10 @@
 #define SBP_MSG_ECDSA_SIGNATURE_DEP_A_SIGNED_MESSAGES_MAX 184u
 
 /**
- * Encoded length of sbp_msg_ecdsa_signature_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_ecdsa_signature_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ecdsa_signature_dep_a_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -294,10 +294,10 @@
 #define SBP_MSG_ED25519_CERTIFICATE_DEP_CERTIFICATE_BYTES_MAX 234u
 
 /**
- * Encoded length of sbp_msg_ed25519_certificate_dep_t (V4 API)
+ * Encoded length of sbp_msg_ed25519_certificate_dep_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ed25519_certificate_dep_encoded_len to determine the actual size of
  * an instance of this message.
  *
@@ -328,10 +328,10 @@
 #define SBP_MSG_ED25519_SIGNATURE_DEP_A_SIGNED_MESSAGES_MAX 42u
 
 /**
- * Encoded length of sbp_msg_ed25519_signature_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_ed25519_signature_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ed25519_signature_dep_a_encoded_len to determine the actual size of
  * an instance of this message.
  *
@@ -362,10 +362,10 @@
 #define SBP_MSG_ED25519_SIGNATURE_DEP_B_SIGNED_MESSAGES_MAX 42u
 
 /**
- * Encoded length of sbp_msg_ed25519_signature_dep_b_t (V4 API)
+ * Encoded length of sbp_msg_ed25519_signature_dep_b_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ed25519_signature_dep_b_encoded_len to determine the actual size of
  * an instance of this message.
  *

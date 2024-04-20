@@ -19,12 +19,12 @@
 #define LIBSBP_PIKSI_MACROS_H
 
 /**
- * Encoded length of sbp_msg_almanac_t (V4 API)
+ * Encoded length of sbp_msg_almanac_t
  */
 #define SBP_MSG_ALMANAC_ENCODED_LEN 0u
 
 /**
- * Encoded length of sbp_msg_set_time_t (V4 API)
+ * Encoded length of sbp_msg_set_time_t
  */
 #define SBP_MSG_SET_TIME_ENCODED_LEN 0u
 
@@ -44,22 +44,22 @@
 #define SBP_RESET_DEFAULT_SETTINGS_PRESERVE_EXISTING_SETTINGS (0)
 #define SBP_RESET_DEFAULT_SETTINGS_RESORE_DEFAULT_SETTINGS (1)
 /**
- * Encoded length of sbp_msg_reset_t (V4 API)
+ * Encoded length of sbp_msg_reset_t
  */
 #define SBP_MSG_RESET_ENCODED_LEN 4u
 
 /**
- * Encoded length of sbp_msg_reset_dep_t (V4 API)
+ * Encoded length of sbp_msg_reset_dep_t
  */
 #define SBP_MSG_RESET_DEP_ENCODED_LEN 0u
 
 /**
- * Encoded length of sbp_msg_cw_results_t (V4 API)
+ * Encoded length of sbp_msg_cw_results_t
  */
 #define SBP_MSG_CW_RESULTS_ENCODED_LEN 0u
 
 /**
- * Encoded length of sbp_msg_cw_start_t (V4 API)
+ * Encoded length of sbp_msg_cw_start_t
  */
 #define SBP_MSG_CW_START_ENCODED_LEN 0u
 
@@ -81,12 +81,12 @@
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_IAR_PROCESS (1)
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_INERTIAL_FILTER (2)
 /**
- * Encoded length of sbp_msg_reset_filters_t (V4 API)
+ * Encoded length of sbp_msg_reset_filters_t
  */
 #define SBP_MSG_RESET_FILTERS_ENCODED_LEN 1u
 
 /**
- * Encoded length of sbp_msg_init_base_dep_t (V4 API)
+ * Encoded length of sbp_msg_init_base_dep_t
  */
 #define SBP_MSG_INIT_BASE_DEP_ENCODED_LEN 0u
 
@@ -97,37 +97,37 @@
 #define SBP_MSG_THREAD_STATE_NAME_MAX 20u
 
 /**
- * Encoded length of sbp_msg_thread_state_t (V4 API)
+ * Encoded length of sbp_msg_thread_state_t
  */
 #define SBP_MSG_THREAD_STATE_ENCODED_LEN 26u
 
 /**
- * Encoded length of sbp_uart_channel_t (V4 API)
+ * Encoded length of sbp_uart_channel_t
  */
 #define SBP_UART_CHANNEL_ENCODED_LEN 14u
 
 /**
- * Encoded length of sbp_period_t (V4 API)
+ * Encoded length of sbp_period_t
  */
 #define SBP_PERIOD_ENCODED_LEN 16u
 
 /**
- * Encoded length of sbp_latency_t (V4 API)
+ * Encoded length of sbp_latency_t
  */
 #define SBP_LATENCY_ENCODED_LEN 16u
 
 /**
- * Encoded length of sbp_msg_uart_state_t (V4 API)
+ * Encoded length of sbp_msg_uart_state_t
  */
 #define SBP_MSG_UART_STATE_ENCODED_LEN 74u
 
 /**
- * Encoded length of sbp_msg_uart_state_depa_t (V4 API)
+ * Encoded length of sbp_msg_uart_state_depa_t
  */
 #define SBP_MSG_UART_STATE_DEPA_ENCODED_LEN 58u
 
 /**
- * Encoded length of sbp_msg_iar_state_t (V4 API)
+ * Encoded length of sbp_msg_iar_state_t
  */
 #define SBP_MSG_IAR_STATE_ENCODED_LEN 4u
 
@@ -166,7 +166,7 @@
 #define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS \
   (1)
 /**
- * Encoded length of sbp_msg_mask_satellite_t (V4 API)
+ * Encoded length of sbp_msg_mask_satellite_t
  */
 #define SBP_MSG_MASK_SATELLITE_ENCODED_LEN 3u
 
@@ -205,12 +205,12 @@
 #define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS \
   (1)
 /**
- * Encoded length of sbp_msg_mask_satellite_dep_t (V4 API)
+ * Encoded length of sbp_msg_mask_satellite_dep_t
  */
 #define SBP_MSG_MASK_SATELLITE_DEP_ENCODED_LEN 5u
 
 /**
- * Encoded length of sbp_msg_device_monitor_t (V4 API)
+ * Encoded length of sbp_msg_device_monitor_t
  */
 #define SBP_MSG_DEVICE_MONITOR_ENCODED_LEN 10u
 
@@ -222,10 +222,10 @@
 #define SBP_MSG_COMMAND_REQ_COMMAND_MAX 251u
 
 /**
- * Encoded length of sbp_msg_command_req_t (V4 API)
+ * Encoded length of sbp_msg_command_req_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_command_req_encoded_len to determine the actual size of an instance
  * of this message.
  *
@@ -235,7 +235,7 @@
 #define SBP_MSG_COMMAND_REQ_ENCODED_OVERHEAD 4u
 
 /**
- * Encoded length of sbp_msg_command_resp_t (V4 API)
+ * Encoded length of sbp_msg_command_resp_t
  */
 #define SBP_MSG_COMMAND_RESP_ENCODED_LEN 8u
 
@@ -247,10 +247,10 @@
 #define SBP_MSG_COMMAND_OUTPUT_LINE_MAX 251u
 
 /**
- * Encoded length of sbp_msg_command_output_t (V4 API)
+ * Encoded length of sbp_msg_command_output_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_command_output_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -260,7 +260,7 @@
 #define SBP_MSG_COMMAND_OUTPUT_ENCODED_OVERHEAD 4u
 
 /**
- * Encoded length of sbp_msg_network_state_req_t (V4 API)
+ * Encoded length of sbp_msg_network_state_req_t
  */
 #define SBP_MSG_NETWORK_STATE_REQ_ENCODED_LEN 0u
 
@@ -614,7 +614,7 @@
   } while (0)
 
 /**
- * Encoded length of sbp_msg_network_state_resp_t (V4 API)
+ * Encoded length of sbp_msg_network_state_resp_t
  */
 #define SBP_MSG_NETWORK_STATE_RESP_ENCODED_LEN 50u
 
@@ -626,7 +626,7 @@
 #define SBP_NETWORK_USAGE_INTERFACE_NAME_MAX 16u
 
 /**
- * Encoded length of sbp_network_usage_t (V4 API)
+ * Encoded length of sbp_network_usage_t
  */
 #define SBP_NETWORK_USAGE_ENCODED_LEN 40u
 
@@ -638,10 +638,10 @@
 #define SBP_MSG_NETWORK_BANDWIDTH_USAGE_INTERFACES_MAX 6u
 
 /**
- * Encoded length of sbp_msg_network_bandwidth_usage_t (V4 API)
+ * Encoded length of sbp_msg_network_bandwidth_usage_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_network_bandwidth_usage_encoded_len to determine the actual size of
  * an instance of this message.
  *
@@ -658,10 +658,10 @@
 #define SBP_MSG_CELL_MODEM_STATUS_RESERVED_MAX 250u
 
 /**
- * Encoded length of sbp_msg_cell_modem_status_t (V4 API)
+ * Encoded length of sbp_msg_cell_modem_status_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_cell_modem_status_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -678,10 +678,10 @@
 #define SBP_MSG_SPECAN_DEP_AMPLITUDE_VALUE_MAX 231u
 
 /**
- * Encoded length of sbp_msg_specan_dep_t (V4 API)
+ * Encoded length of sbp_msg_specan_dep_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_specan_dep_encoded_len to determine the actual size of an instance
  * of this message.
  *
@@ -698,10 +698,10 @@
 #define SBP_MSG_SPECAN_AMPLITUDE_VALUE_MAX 227u
 
 /**
- * Encoded length of sbp_msg_specan_t (V4 API)
+ * Encoded length of sbp_msg_specan_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_specan_encoded_len to determine the actual size of an instance
  * of this message.
  *
@@ -725,7 +725,7 @@
 #define SBP_MSG_FRONT_END_GAIN_IF_GAIN_MAX 8u
 
 /**
- * Encoded length of sbp_msg_front_end_gain_t (V4 API)
+ * Encoded length of sbp_msg_front_end_gain_t
  */
 #define SBP_MSG_FRONT_END_GAIN_ENCODED_LEN 16u
 

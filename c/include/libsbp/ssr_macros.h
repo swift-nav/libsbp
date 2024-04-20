@@ -19,22 +19,22 @@
 #define LIBSBP_SSR_MACROS_H
 
 /**
- * Encoded length of sbp_code_biases_content_t (V4 API)
+ * Encoded length of sbp_code_biases_content_t
  */
 #define SBP_CODE_BIASES_CONTENT_ENCODED_LEN 3u
 
 /**
- * Encoded length of sbp_phase_biases_content_t (V4 API)
+ * Encoded length of sbp_phase_biases_content_t
  */
 #define SBP_PHASE_BIASES_CONTENT_ENCODED_LEN 8u
 
 /**
- * Encoded length of sbp_stec_header_t (V4 API)
+ * Encoded length of sbp_stec_header_t
  */
 #define SBP_STEC_HEADER_ENCODED_LEN 14u
 
 /**
- * Encoded length of sbp_gridded_correction_header_t (V4 API)
+ * Encoded length of sbp_gridded_correction_header_t
  */
 #define SBP_GRIDDED_CORRECTION_HEADER_ENCODED_LEN 17u
 
@@ -46,32 +46,32 @@
 #define SBP_STEC_SAT_ELEMENT_STEC_COEFF_MAX 4u
 
 /**
- * Encoded length of sbp_stec_sat_element_t (V4 API)
+ * Encoded length of sbp_stec_sat_element_t
  */
 #define SBP_STEC_SAT_ELEMENT_ENCODED_LEN 11u
 
 /**
- * Encoded length of sbp_tropospheric_delay_correction_no_std_t (V4 API)
+ * Encoded length of sbp_tropospheric_delay_correction_no_std_t
  */
 #define SBP_TROPOSPHERIC_DELAY_CORRECTION_NO_STD_ENCODED_LEN 3u
 
 /**
- * Encoded length of sbp_tropospheric_delay_correction_t (V4 API)
+ * Encoded length of sbp_tropospheric_delay_correction_t
  */
 #define SBP_TROPOSPHERIC_DELAY_CORRECTION_ENCODED_LEN 4u
 
 /**
- * Encoded length of sbp_stec_residual_no_std_t (V4 API)
+ * Encoded length of sbp_stec_residual_no_std_t
  */
 #define SBP_STEC_RESIDUAL_NO_STD_ENCODED_LEN 4u
 
 /**
- * Encoded length of sbp_stec_residual_t (V4 API)
+ * Encoded length of sbp_stec_residual_t
  */
 #define SBP_STEC_RESIDUAL_ENCODED_LEN 5u
 
 /**
- * Encoded length of sbp_msg_ssr_orbit_clock_t (V4 API)
+ * Encoded length of sbp_msg_ssr_orbit_clock_t
  */
 #define SBP_MSG_SSR_ORBIT_CLOCK_ENCODED_LEN 50u
 
@@ -83,10 +83,10 @@
 #define SBP_MSG_SSR_CODE_BIASES_BIASES_MAX 81u
 
 /**
- * Encoded length of sbp_msg_ssr_code_biases_t (V4 API)
+ * Encoded length of sbp_msg_ssr_code_biases_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_code_biases_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -103,10 +103,10 @@
 #define SBP_MSG_SSR_PHASE_BIASES_BIASES_MAX 30u
 
 /**
- * Encoded length of sbp_msg_ssr_phase_biases_t (V4 API)
+ * Encoded length of sbp_msg_ssr_phase_biases_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_phase_biases_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -123,10 +123,10 @@
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_STEC_SAT_LIST_MAX 21u
 
 /**
- * Encoded length of sbp_msg_ssr_stec_correction_dep_t (V4 API)
+ * Encoded length of sbp_msg_ssr_stec_correction_dep_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_stec_correction_dep_encoded_len to determine the actual size of
  * an instance of this message.
  *
@@ -136,7 +136,7 @@
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_ENCODED_OVERHEAD 14u
 
 /**
- * Encoded length of sbp_bounds_header_t (V4 API)
+ * Encoded length of sbp_bounds_header_t
  */
 #define SBP_BOUNDS_HEADER_ENCODED_LEN 10u
 
@@ -148,10 +148,10 @@
 #define SBP_MSG_SSR_STEC_CORRECTION_STEC_SAT_LIST_MAX 21u
 
 /**
- * Encoded length of sbp_msg_ssr_stec_correction_t (V4 API)
+ * Encoded length of sbp_msg_ssr_stec_correction_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_stec_correction_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -168,10 +168,10 @@
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_STEC_RESIDUALS_MAX 46u
 
 /**
- * Encoded length of sbp_msg_ssr_gridded_correction_t (V4 API)
+ * Encoded length of sbp_msg_ssr_gridded_correction_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_gridded_correction_encoded_len to determine the actual size of
  * an instance of this message.
  *
@@ -181,7 +181,7 @@
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_ENCODED_OVERHEAD 23u
 
 /**
- * Encoded length of sbp_stec_sat_element_integrity_t (V4 API)
+ * Encoded length of sbp_stec_sat_element_integrity_t
  */
 #define SBP_STEC_SAT_ELEMENT_INTEGRITY_ENCODED_LEN 9u
 
@@ -193,10 +193,10 @@
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_STEC_SAT_LIST_MAX 25u
 
 /**
- * Encoded length of sbp_msg_ssr_gridded_correction_bounds_t (V4 API)
+ * Encoded length of sbp_msg_ssr_gridded_correction_bounds_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_gridded_correction_bounds_encoded_len to determine the actual
  * size of an instance of this message.
  *
@@ -206,17 +206,17 @@
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_ENCODED_OVERHEAD 27u
 
 /**
- * Encoded length of sbp_msg_ssr_tile_definition_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_ssr_tile_definition_dep_a_t
  */
 #define SBP_MSG_SSR_TILE_DEFINITION_DEP_A_ENCODED_LEN 24u
 
 /**
- * Encoded length of sbp_msg_ssr_tile_definition_dep_b_t (V4 API)
+ * Encoded length of sbp_msg_ssr_tile_definition_dep_b_t
  */
 #define SBP_MSG_SSR_TILE_DEFINITION_DEP_B_ENCODED_LEN 25u
 
 /**
- * Encoded length of sbp_msg_ssr_tile_definition_t (V4 API)
+ * Encoded length of sbp_msg_ssr_tile_definition_t
  */
 #define SBP_MSG_SSR_TILE_DEFINITION_ENCODED_LEN 33u
 
@@ -271,7 +271,7 @@
 #define SBP_SATELLITE_APC_PCV_MAX 21u
 
 /**
- * Encoded length of sbp_satellite_apc_t (V4 API)
+ * Encoded length of sbp_satellite_apc_t
  */
 #define SBP_SATELLITE_APC_ENCODED_LEN 32u
 
@@ -283,10 +283,10 @@
 #define SBP_MSG_SSR_SATELLITE_APC_DEP_APC_MAX 7u
 
 /**
- * Encoded length of sbp_msg_ssr_satellite_apc_dep_t (V4 API)
+ * Encoded length of sbp_msg_ssr_satellite_apc_dep_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_satellite_apc_dep_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -303,10 +303,10 @@
 #define SBP_MSG_SSR_SATELLITE_APC_APC_MAX 7u
 
 /**
- * Encoded length of sbp_msg_ssr_satellite_apc_t (V4 API)
+ * Encoded length of sbp_msg_ssr_satellite_apc_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_satellite_apc_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -316,22 +316,22 @@
 #define SBP_MSG_SSR_SATELLITE_APC_ENCODED_OVERHEAD 9u
 
 /**
- * Encoded length of sbp_msg_ssr_orbit_clock_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_ssr_orbit_clock_dep_a_t
  */
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A_ENCODED_LEN 47u
 
 /**
- * Encoded length of sbp_stec_header_dep_a_t (V4 API)
+ * Encoded length of sbp_stec_header_dep_a_t
  */
 #define SBP_STEC_HEADER_DEP_A_ENCODED_LEN 10u
 
 /**
- * Encoded length of sbp_gridded_correction_header_dep_a_t (V4 API)
+ * Encoded length of sbp_gridded_correction_header_dep_a_t
  */
 #define SBP_GRIDDED_CORRECTION_HEADER_DEP_A_ENCODED_LEN 13u
 
 /**
- * Encoded length of sbp_grid_definition_header_dep_a_t (V4 API)
+ * Encoded length of sbp_grid_definition_header_dep_a_t
  */
 #define SBP_GRID_DEFINITION_HEADER_DEP_A_ENCODED_LEN 9u
 
@@ -343,10 +343,10 @@
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A_STEC_SAT_LIST_MAX 22u
 
 /**
- * Encoded length of sbp_msg_ssr_stec_correction_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_ssr_stec_correction_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_stec_correction_dep_a_encoded_len to determine the actual size
  * of an instance of this message.
  *
@@ -363,10 +363,10 @@
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_STEC_RESIDUALS_MAX 59u
 
 /**
- * Encoded length of sbp_msg_ssr_gridded_correction_no_std_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_ssr_gridded_correction_no_std_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_gridded_correction_no_std_dep_a_encoded_len to determine the
  * actual size of an instance of this message.
  *
@@ -383,10 +383,10 @@
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A_STEC_RESIDUALS_MAX 47u
 
 /**
- * Encoded length of sbp_msg_ssr_gridded_correction_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_ssr_gridded_correction_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_gridded_correction_dep_a_encoded_len to determine the actual
  * size of an instance of this message.
  *
@@ -403,10 +403,10 @@
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A_RLE_LIST_MAX 246u
 
 /**
- * Encoded length of sbp_msg_ssr_grid_definition_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_ssr_grid_definition_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_grid_definition_dep_a_encoded_len to determine the actual size
  * of an instance of this message.
  *
@@ -416,7 +416,7 @@
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A_ENCODED_OVERHEAD 9u
 
 /**
- * Encoded length of sbp_orbit_clock_bound_t (V4 API)
+ * Encoded length of sbp_orbit_clock_bound_t
  */
 #define SBP_ORBIT_CLOCK_BOUND_ENCODED_LEN 9u
 
@@ -444,10 +444,10 @@
 #define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_ORBIT_CLOCK_BOUNDS_MAX 26u
 
 /**
- * Encoded length of sbp_msg_ssr_orbit_clock_bounds_t (V4 API)
+ * Encoded length of sbp_msg_ssr_orbit_clock_bounds_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_orbit_clock_bounds_encoded_len to determine the actual size of
  * an instance of this message.
  *
@@ -457,7 +457,7 @@
 #define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_ENCODED_OVERHEAD 13u
 
 /**
- * Encoded length of sbp_code_phase_biases_sat_sig_t (V4 API)
+ * Encoded length of sbp_code_phase_biases_sat_sig_t
  */
 #define SBP_CODE_PHASE_BIASES_SAT_SIG_ENCODED_LEN 6u
 
@@ -485,10 +485,10 @@
 #define SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS_SATELLITES_SIGNALS_MAX 40u
 
 /**
- * Encoded length of sbp_msg_ssr_code_phase_biases_bounds_t (V4 API)
+ * Encoded length of sbp_msg_ssr_code_phase_biases_bounds_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_code_phase_biases_bounds_encoded_len to determine the actual
  * size of an instance of this message.
  *
@@ -498,7 +498,7 @@
 #define SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS_ENCODED_OVERHEAD 13u
 
 /**
- * Encoded length of sbp_orbit_clock_bound_degradation_t (V4 API)
+ * Encoded length of sbp_orbit_clock_bound_degradation_t
  */
 #define SBP_ORBIT_CLOCK_BOUND_DEGRADATION_ENCODED_LEN 8u
 
@@ -520,7 +520,7 @@
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_BDS (3)
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_GAL (5)
 /**
- * Encoded length of sbp_msg_ssr_orbit_clock_bounds_degradation_t (V4 API)
+ * Encoded length of sbp_msg_ssr_orbit_clock_bounds_degradation_t
  */
 #define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_ENCODED_LEN 28u
 

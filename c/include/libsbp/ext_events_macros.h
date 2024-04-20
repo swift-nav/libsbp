@@ -49,7 +49,7 @@
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_LOW (0)
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_HIGH (1)
 /**
- * Encoded length of sbp_msg_ext_event_t (V4 API)
+ * Encoded length of sbp_msg_ext_event_t
  */
 #define SBP_MSG_EXT_EVENT_ENCODED_LEN 12u
 

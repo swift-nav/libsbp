@@ -19,32 +19,32 @@
 #define LIBSBP_ACQUISITION_MACROS_H
 
 /**
- * Encoded length of sbp_msg_acq_result_t (V4 API)
+ * Encoded length of sbp_msg_acq_result_t
  */
 #define SBP_MSG_ACQ_RESULT_ENCODED_LEN 14u
 
 /**
- * Encoded length of sbp_msg_acq_result_dep_c_t (V4 API)
+ * Encoded length of sbp_msg_acq_result_dep_c_t
  */
 #define SBP_MSG_ACQ_RESULT_DEP_C_ENCODED_LEN 16u
 
 /**
- * Encoded length of sbp_msg_acq_result_dep_b_t (V4 API)
+ * Encoded length of sbp_msg_acq_result_dep_b_t
  */
 #define SBP_MSG_ACQ_RESULT_DEP_B_ENCODED_LEN 16u
 
 /**
- * Encoded length of sbp_msg_acq_result_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_acq_result_dep_a_t
  */
 #define SBP_MSG_ACQ_RESULT_DEP_A_ENCODED_LEN 13u
 
 /**
- * Encoded length of sbp_acq_sv_profile_t (V4 API)
+ * Encoded length of sbp_acq_sv_profile_t
  */
 #define SBP_ACQ_SV_PROFILE_ENCODED_LEN 33u
 
 /**
- * Encoded length of sbp_acq_sv_profile_dep_t (V4 API)
+ * Encoded length of sbp_acq_sv_profile_dep_t
  */
 #define SBP_ACQ_SV_PROFILE_DEP_ENCODED_LEN 35u
 
@@ -56,10 +56,10 @@
 #define SBP_MSG_ACQ_SV_PROFILE_ACQ_SV_PROFILE_MAX 7u
 
 /**
- * Encoded length of sbp_msg_acq_sv_profile_t (V4 API)
+ * Encoded length of sbp_msg_acq_sv_profile_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_acq_sv_profile_encoded_len to determine the actual size of an
  * instance of this message.
  *
@@ -76,10 +76,10 @@
 #define SBP_MSG_ACQ_SV_PROFILE_DEP_ACQ_SV_PROFILE_MAX 7u
 
 /**
- * Encoded length of sbp_msg_acq_sv_profile_dep_t (V4 API)
+ * Encoded length of sbp_msg_acq_sv_profile_dep_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_acq_sv_profile_dep_encoded_len to determine the actual size of an
  * instance of this message.
  *

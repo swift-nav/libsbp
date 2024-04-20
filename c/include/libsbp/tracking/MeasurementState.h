@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_TRACKING_MEASUREMENTSTATE_H
-#define LIBSBP_V4_TRACKING_MEASUREMENTSTATE_H
+#ifndef LIBSBP_TRACKING_MEASUREMENTSTATE_H
+#define LIBSBP_TRACKING_MEASUREMENTSTATE_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -165,4 +165,4 @@ static inline bool operator>=(const sbp_measurement_state_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_TRACKING_MEASUREMENTSTATE_H */
+#endif /* LIBSBP_TRACKING_MEASUREMENTSTATE_H */

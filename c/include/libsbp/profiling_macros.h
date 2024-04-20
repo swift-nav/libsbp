@@ -26,10 +26,10 @@
 #define SBP_MSG_MEASUREMENT_POINT_FUNC_MAX 215u
 
 /**
- * Encoded length of sbp_msg_measurement_point_t (V4 API)
+ * Encoded length of sbp_msg_measurement_point_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_measurement_point_encoded_len to determine the actual size of an
  * instance of this message.
  *

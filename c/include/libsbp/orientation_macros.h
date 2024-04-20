@@ -36,7 +36,7 @@
 #define SBP_BASELINE_HEADING_FIX_MODE_FLOAT_RTK (3)
 #define SBP_BASELINE_HEADING_FIX_MODE_FIXED_RTK (4)
 /**
- * Encoded length of sbp_msg_baseline_heading_t (V4 API)
+ * Encoded length of sbp_msg_baseline_heading_t
  */
 #define SBP_MSG_BASELINE_HEADING_ENCODED_LEN 10u
 
@@ -57,7 +57,7 @@
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_VALID (1)
 /**
- * Encoded length of sbp_msg_orient_quat_t (V4 API)
+ * Encoded length of sbp_msg_orient_quat_t
  */
 #define SBP_MSG_ORIENT_QUAT_ENCODED_LEN 37u
 
@@ -78,7 +78,7 @@
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_VALID (1)
 /**
- * Encoded length of sbp_msg_orient_euler_t (V4 API)
+ * Encoded length of sbp_msg_orient_euler_t
  */
 #define SBP_MSG_ORIENT_EULER_ENCODED_LEN 29u
 
@@ -99,7 +99,7 @@
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_INVALID (0)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_VALID (1)
 /**
- * Encoded length of sbp_msg_angular_rate_t (V4 API)
+ * Encoded length of sbp_msg_angular_rate_t
  */
 #define SBP_MSG_ANGULAR_RATE_ENCODED_LEN 17u
 

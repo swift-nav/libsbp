@@ -19,7 +19,7 @@
 #define LIBSBP_BOOTLOAD_MACROS_H
 
 /**
- * Encoded length of sbp_msg_bootloader_handshake_req_t (V4 API)
+ * Encoded length of sbp_msg_bootloader_handshake_req_t
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_REQ_ENCODED_LEN 0u
 
@@ -77,10 +77,10 @@
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX 251u
 
 /**
- * Encoded length of sbp_msg_bootloader_handshake_resp_t (V4 API)
+ * Encoded length of sbp_msg_bootloader_handshake_resp_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_bootloader_handshake_resp_encoded_len to determine the actual size
  * of an instance of this message.
  *
@@ -90,12 +90,12 @@
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_ENCODED_OVERHEAD 4u
 
 /**
- * Encoded length of sbp_msg_bootloader_jump_to_app_t (V4 API)
+ * Encoded length of sbp_msg_bootloader_jump_to_app_t
  */
 #define SBP_MSG_BOOTLOADER_JUMP_TO_APP_ENCODED_LEN 1u
 
 /**
- * Encoded length of sbp_msg_nap_device_dna_req_t (V4 API)
+ * Encoded length of sbp_msg_nap_device_dna_req_t
  */
 #define SBP_MSG_NAP_DEVICE_DNA_REQ_ENCODED_LEN 0u
 
@@ -107,7 +107,7 @@
 #define SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX 8u
 
 /**
- * Encoded length of sbp_msg_nap_device_dna_resp_t (V4 API)
+ * Encoded length of sbp_msg_nap_device_dna_resp_t
  */
 #define SBP_MSG_NAP_DEVICE_DNA_RESP_ENCODED_LEN 8u
 
@@ -119,10 +119,10 @@
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX 255u
 
 /**
- * Encoded length of sbp_msg_bootloader_handshake_dep_a_t (V4 API)
+ * Encoded length of sbp_msg_bootloader_handshake_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_bootloader_handshake_dep_a_encoded_len to determine the actual size
  * of an instance of this message.
  *

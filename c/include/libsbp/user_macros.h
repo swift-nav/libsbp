@@ -25,10 +25,10 @@
 #define SBP_MSG_USER_DATA_CONTENTS_MAX 255u
 
 /**
- * Encoded length of sbp_msg_user_data_t (V4 API)
+ * Encoded length of sbp_msg_user_data_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_user_data_encoded_len to determine the actual size of an instance
  * of this message.
  *

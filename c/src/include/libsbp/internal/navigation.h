@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_NAVIGATION_H
-#define LIBSBP_INTERNAL_V4_NAVIGATION_H
+#ifndef LIBSBP_INTERNAL_NAVIGATION_H
+#define LIBSBP_INTERNAL_NAVIGATION_H
 
 #include <stdbool.h>
 
@@ -870,4 +870,4 @@ bool sbp_msg_pose_relative_decode_internal(sbp_decode_ctx_t *ctx,
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_NAVIGATION_H */
+#endif /* LIBSBP_INTERNAL_NAVIGATION_H */

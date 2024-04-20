@@ -69,7 +69,7 @@
 #define SBP_ODOMETRY_TIME_SOURCE_GPS_SOLUTION (1)
 #define SBP_ODOMETRY_TIME_SOURCE_PROCESSOR_TIME (2)
 /**
- * Encoded length of sbp_msg_odometry_t (V4 API)
+ * Encoded length of sbp_msg_odometry_t
  */
 #define SBP_MSG_ODOMETRY_ENCODED_LEN 9u
 
@@ -109,7 +109,7 @@
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_LOCAL_CPU_TIME_IN_NOMINAL_MICROSECONDS \
   (2)
 /**
- * Encoded length of sbp_msg_wheeltick_t (V4 API)
+ * Encoded length of sbp_msg_wheeltick_t
  */
 #define SBP_MSG_WHEELTICK_ENCODED_LEN 14u
 

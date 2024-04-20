@@ -32,13 +32,13 @@
 ((* endif *))
 ((*- endfor *))
 /**
- * Encoded length of (((m.type_name))) (V4 API)
+ * Encoded length of (((m.type_name)))
 ((*- if not m.is_fixed_size *))
  *
  * This type is not fixed size and an instance of this message may be longer 
- * than the value indicated by this symbol. Users of the V4 API should call 
+ * than the value indicated by this symbol. Users call
  * #(((m.encoded_len_fn))) to determine the actual size of an instance 
- * of this message. 
+ * of this message.
  *
  * See the documentation for libsbp for more details regarding the message 
  * structure and its variable length component(s)
