@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -140,29 +140,29 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
     ck_assert_msg(
         last_msg.msg.device_monitor.cpu_temperature == 6165,
         "incorrect value for last_msg.msg.device_monitor.cpu_temperature, "
-        "expected 6165, is %d",
-        last_msg.msg.device_monitor.cpu_temperature);
+        "expected 6165, is %" PRId64,
+        (int64_t)last_msg.msg.device_monitor.cpu_temperature);
 
     ck_assert_msg(last_msg.msg.device_monitor.cpu_vaux == 1789,
                   "incorrect value for last_msg.msg.device_monitor.cpu_vaux, "
-                  "expected 1789, is %d",
-                  last_msg.msg.device_monitor.cpu_vaux);
+                  "expected 1789, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.cpu_vaux);
 
     ck_assert_msg(last_msg.msg.device_monitor.cpu_vint == 987,
                   "incorrect value for last_msg.msg.device_monitor.cpu_vint, "
-                  "expected 987, is %d",
-                  last_msg.msg.device_monitor.cpu_vint);
+                  "expected 987, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.cpu_vint);
 
     ck_assert_msg(last_msg.msg.device_monitor.dev_vin == -9999,
                   "incorrect value for last_msg.msg.device_monitor.dev_vin, "
-                  "expected -9999, is %d",
-                  last_msg.msg.device_monitor.dev_vin);
+                  "expected -9999, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.dev_vin);
 
     ck_assert_msg(
         last_msg.msg.device_monitor.fe_temperature == 4776,
         "incorrect value for last_msg.msg.device_monitor.fe_temperature, "
-        "expected 4776, is %d",
-        last_msg.msg.device_monitor.fe_temperature);
+        "expected 4776, is %" PRId64,
+        (int64_t)last_msg.msg.device_monitor.fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -226,29 +226,29 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
     ck_assert_msg(
         last_msg.msg.device_monitor.cpu_temperature == 6168,
         "incorrect value for last_msg.msg.device_monitor.cpu_temperature, "
-        "expected 6168, is %d",
-        last_msg.msg.device_monitor.cpu_temperature);
+        "expected 6168, is %" PRId64,
+        (int64_t)last_msg.msg.device_monitor.cpu_temperature);
 
     ck_assert_msg(last_msg.msg.device_monitor.cpu_vaux == 1790,
                   "incorrect value for last_msg.msg.device_monitor.cpu_vaux, "
-                  "expected 1790, is %d",
-                  last_msg.msg.device_monitor.cpu_vaux);
+                  "expected 1790, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.cpu_vaux);
 
     ck_assert_msg(last_msg.msg.device_monitor.cpu_vint == 987,
                   "incorrect value for last_msg.msg.device_monitor.cpu_vint, "
-                  "expected 987, is %d",
-                  last_msg.msg.device_monitor.cpu_vint);
+                  "expected 987, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.cpu_vint);
 
     ck_assert_msg(last_msg.msg.device_monitor.dev_vin == -9999,
                   "incorrect value for last_msg.msg.device_monitor.dev_vin, "
-                  "expected -9999, is %d",
-                  last_msg.msg.device_monitor.dev_vin);
+                  "expected -9999, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.dev_vin);
 
     ck_assert_msg(
         last_msg.msg.device_monitor.fe_temperature == 4776,
         "incorrect value for last_msg.msg.device_monitor.fe_temperature, "
-        "expected 4776, is %d",
-        last_msg.msg.device_monitor.fe_temperature);
+        "expected 4776, is %" PRId64,
+        (int64_t)last_msg.msg.device_monitor.fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -312,29 +312,29 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
     ck_assert_msg(
         last_msg.msg.device_monitor.cpu_temperature == 6166,
         "incorrect value for last_msg.msg.device_monitor.cpu_temperature, "
-        "expected 6166, is %d",
-        last_msg.msg.device_monitor.cpu_temperature);
+        "expected 6166, is %" PRId64,
+        (int64_t)last_msg.msg.device_monitor.cpu_temperature);
 
     ck_assert_msg(last_msg.msg.device_monitor.cpu_vaux == 1789,
                   "incorrect value for last_msg.msg.device_monitor.cpu_vaux, "
-                  "expected 1789, is %d",
-                  last_msg.msg.device_monitor.cpu_vaux);
+                  "expected 1789, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.cpu_vaux);
 
     ck_assert_msg(last_msg.msg.device_monitor.cpu_vint == 987,
                   "incorrect value for last_msg.msg.device_monitor.cpu_vint, "
-                  "expected 987, is %d",
-                  last_msg.msg.device_monitor.cpu_vint);
+                  "expected 987, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.cpu_vint);
 
     ck_assert_msg(last_msg.msg.device_monitor.dev_vin == -9999,
                   "incorrect value for last_msg.msg.device_monitor.dev_vin, "
-                  "expected -9999, is %d",
-                  last_msg.msg.device_monitor.dev_vin);
+                  "expected -9999, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.dev_vin);
 
     ck_assert_msg(
         last_msg.msg.device_monitor.fe_temperature == 4776,
         "incorrect value for last_msg.msg.device_monitor.fe_temperature, "
-        "expected 4776, is %d",
-        last_msg.msg.device_monitor.fe_temperature);
+        "expected 4776, is %" PRId64,
+        (int64_t)last_msg.msg.device_monitor.fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -398,29 +398,29 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
     ck_assert_msg(
         last_msg.msg.device_monitor.cpu_temperature == 6150,
         "incorrect value for last_msg.msg.device_monitor.cpu_temperature, "
-        "expected 6150, is %d",
-        last_msg.msg.device_monitor.cpu_temperature);
+        "expected 6150, is %" PRId64,
+        (int64_t)last_msg.msg.device_monitor.cpu_temperature);
 
     ck_assert_msg(last_msg.msg.device_monitor.cpu_vaux == 1788,
                   "incorrect value for last_msg.msg.device_monitor.cpu_vaux, "
-                  "expected 1788, is %d",
-                  last_msg.msg.device_monitor.cpu_vaux);
+                  "expected 1788, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.cpu_vaux);
 
     ck_assert_msg(last_msg.msg.device_monitor.cpu_vint == 986,
                   "incorrect value for last_msg.msg.device_monitor.cpu_vint, "
-                  "expected 986, is %d",
-                  last_msg.msg.device_monitor.cpu_vint);
+                  "expected 986, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.cpu_vint);
 
     ck_assert_msg(last_msg.msg.device_monitor.dev_vin == -9999,
                   "incorrect value for last_msg.msg.device_monitor.dev_vin, "
-                  "expected -9999, is %d",
-                  last_msg.msg.device_monitor.dev_vin);
+                  "expected -9999, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.dev_vin);
 
     ck_assert_msg(
         last_msg.msg.device_monitor.fe_temperature == 4776,
         "incorrect value for last_msg.msg.device_monitor.fe_temperature, "
-        "expected 4776, is %d",
-        last_msg.msg.device_monitor.fe_temperature);
+        "expected 4776, is %" PRId64,
+        (int64_t)last_msg.msg.device_monitor.fe_temperature);
   }
   // Test successful parsing of a message
   {
@@ -484,29 +484,29 @@ START_TEST(test_auto_check_sbp_piksi_MsgDeviceMonitor) {
     ck_assert_msg(
         last_msg.msg.device_monitor.cpu_temperature == 6123,
         "incorrect value for last_msg.msg.device_monitor.cpu_temperature, "
-        "expected 6123, is %d",
-        last_msg.msg.device_monitor.cpu_temperature);
+        "expected 6123, is %" PRId64,
+        (int64_t)last_msg.msg.device_monitor.cpu_temperature);
 
     ck_assert_msg(last_msg.msg.device_monitor.cpu_vaux == 1789,
                   "incorrect value for last_msg.msg.device_monitor.cpu_vaux, "
-                  "expected 1789, is %d",
-                  last_msg.msg.device_monitor.cpu_vaux);
+                  "expected 1789, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.cpu_vaux);
 
     ck_assert_msg(last_msg.msg.device_monitor.cpu_vint == 988,
                   "incorrect value for last_msg.msg.device_monitor.cpu_vint, "
-                  "expected 988, is %d",
-                  last_msg.msg.device_monitor.cpu_vint);
+                  "expected 988, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.cpu_vint);
 
     ck_assert_msg(last_msg.msg.device_monitor.dev_vin == -9999,
                   "incorrect value for last_msg.msg.device_monitor.dev_vin, "
-                  "expected -9999, is %d",
-                  last_msg.msg.device_monitor.dev_vin);
+                  "expected -9999, is %" PRId64,
+                  (int64_t)last_msg.msg.device_monitor.dev_vin);
 
     ck_assert_msg(
         last_msg.msg.device_monitor.fe_temperature == 4776,
         "incorrect value for last_msg.msg.device_monitor.fe_temperature, "
-        "expected 4776, is %d",
-        last_msg.msg.device_monitor.fe_temperature);
+        "expected 4776, is %" PRId64,
+        (int64_t)last_msg.msg.device_monitor.fe_temperature);
   }
 }
 END_TEST

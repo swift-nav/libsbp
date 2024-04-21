@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -143,45 +143,45 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNedGnss) {
         sbp_message_cmp(SbpMsgVelNedGnss, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned_gnss.d == -10,
-        "incorrect value for last_msg.msg.vel_ned_gnss.d, expected -10, is %d",
-        last_msg.msg.vel_ned_gnss.d);
+    ck_assert_msg(last_msg.msg.vel_ned_gnss.d == -10,
+                  "incorrect value for last_msg.msg.vel_ned_gnss.d, expected "
+                  "-10, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_gnss.d);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned_gnss.e == 0,
-        "incorrect value for last_msg.msg.vel_ned_gnss.e, expected 0, is %d",
-        last_msg.msg.vel_ned_gnss.e);
+    ck_assert_msg(last_msg.msg.vel_ned_gnss.e == 0,
+                  "incorrect value for last_msg.msg.vel_ned_gnss.e, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_gnss.e);
 
     ck_assert_msg(last_msg.msg.vel_ned_gnss.flags == 2,
                   "incorrect value for last_msg.msg.vel_ned_gnss.flags, "
-                  "expected 2, is %d",
-                  last_msg.msg.vel_ned_gnss.flags);
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_gnss.flags);
 
     ck_assert_msg(last_msg.msg.vel_ned_gnss.h_accuracy == 40,
                   "incorrect value for last_msg.msg.vel_ned_gnss.h_accuracy, "
-                  "expected 40, is %d",
-                  last_msg.msg.vel_ned_gnss.h_accuracy);
+                  "expected 40, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_gnss.h_accuracy);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned_gnss.n == -5,
-        "incorrect value for last_msg.msg.vel_ned_gnss.n, expected -5, is %d",
-        last_msg.msg.vel_ned_gnss.n);
+    ck_assert_msg(last_msg.msg.vel_ned_gnss.n == -5,
+                  "incorrect value for last_msg.msg.vel_ned_gnss.n, expected "
+                  "-5, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_gnss.n);
 
     ck_assert_msg(last_msg.msg.vel_ned_gnss.n_sats == 21,
                   "incorrect value for last_msg.msg.vel_ned_gnss.n_sats, "
-                  "expected 21, is %d",
-                  last_msg.msg.vel_ned_gnss.n_sats);
+                  "expected 21, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_gnss.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ned_gnss.tow == 501868200,
                   "incorrect value for last_msg.msg.vel_ned_gnss.tow, expected "
-                  "501868200, is %d",
-                  last_msg.msg.vel_ned_gnss.tow);
+                  "501868200, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_gnss.tow);
 
     ck_assert_msg(last_msg.msg.vel_ned_gnss.v_accuracy == 89,
                   "incorrect value for last_msg.msg.vel_ned_gnss.v_accuracy, "
-                  "expected 89, is %d",
-                  last_msg.msg.vel_ned_gnss.v_accuracy);
+                  "expected 89, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned_gnss.v_accuracy);
   }
 }
 END_TEST

@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -145,48 +145,49 @@ START_TEST(test_auto_check_sbp_system_MsgSensorAidEvent) {
 
     ck_assert_msg(last_msg.msg.sensor_aid_event.flags == 0,
                   "incorrect value for last_msg.msg.sensor_aid_event.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.sensor_aid_event.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.sensor_aid_event.flags);
 
     ck_assert_msg(
         last_msg.msg.sensor_aid_event.n_accepted_meas == 0,
         "incorrect value for last_msg.msg.sensor_aid_event.n_accepted_meas, "
-        "expected 0, is %d",
-        last_msg.msg.sensor_aid_event.n_accepted_meas);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.sensor_aid_event.n_accepted_meas);
 
     ck_assert_msg(
         last_msg.msg.sensor_aid_event.n_attempted_meas == 0,
         "incorrect value for last_msg.msg.sensor_aid_event.n_attempted_meas, "
-        "expected 0, is %d",
-        last_msg.msg.sensor_aid_event.n_attempted_meas);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.sensor_aid_event.n_attempted_meas);
 
     ck_assert_msg(
         last_msg.msg.sensor_aid_event.n_available_meas == 0,
         "incorrect value for last_msg.msg.sensor_aid_event.n_available_meas, "
-        "expected 0, is %d",
-        last_msg.msg.sensor_aid_event.n_available_meas);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.sensor_aid_event.n_available_meas);
 
-    ck_assert_msg(last_msg.msg.sensor_aid_event.sensor_id == 0,
-                  "incorrect value for "
-                  "last_msg.msg.sensor_aid_event.sensor_id, expected 0, is %d",
-                  last_msg.msg.sensor_aid_event.sensor_id);
+    ck_assert_msg(
+        last_msg.msg.sensor_aid_event.sensor_id == 0,
+        "incorrect value for last_msg.msg.sensor_aid_event.sensor_id, expected "
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.sensor_aid_event.sensor_id);
 
     ck_assert_msg(
         last_msg.msg.sensor_aid_event.sensor_state == 0,
         "incorrect value for last_msg.msg.sensor_aid_event.sensor_state, "
-        "expected 0, is %d",
-        last_msg.msg.sensor_aid_event.sensor_state);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.sensor_aid_event.sensor_state);
 
     ck_assert_msg(
         last_msg.msg.sensor_aid_event.sensor_type == 0,
         "incorrect value for last_msg.msg.sensor_aid_event.sensor_type, "
-        "expected 0, is %d",
-        last_msg.msg.sensor_aid_event.sensor_type);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.sensor_aid_event.sensor_type);
 
     ck_assert_msg(last_msg.msg.sensor_aid_event.time == 326825520,
                   "incorrect value for last_msg.msg.sensor_aid_event.time, "
-                  "expected 326825520, is %d",
-                  last_msg.msg.sensor_aid_event.time);
+                  "expected 326825520, is %" PRId64,
+                  (int64_t)last_msg.msg.sensor_aid_event.time);
   }
 }
 END_TEST

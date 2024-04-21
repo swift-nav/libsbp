@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -140,29 +140,29 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResult) {
     ck_assert_msg(
         (last_msg.msg.acq_result.cf * 100 - 8241.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result.cf, expected "
-        "8241.20019531, is %s",
+        "8241.20019531, is %f",
         last_msg.msg.acq_result.cf);
 
     ck_assert_msg(
         (last_msg.msg.acq_result.cn0 * 100 - 14.5 * 100) < 0.05,
-        "incorrect value for last_msg.msg.acq_result.cn0, expected 14.5, is %s",
+        "incorrect value for last_msg.msg.acq_result.cn0, expected 14.5, is %f",
         last_msg.msg.acq_result.cn0);
 
     ck_assert_msg(
         (last_msg.msg.acq_result.cp * 100 - 72.1999969482 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result.cp, expected "
-        "72.1999969482, is %s",
+        "72.1999969482, is %f",
         last_msg.msg.acq_result.cp);
 
     ck_assert_msg(last_msg.msg.acq_result.sid.code == 0,
                   "incorrect value for last_msg.msg.acq_result.sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.acq_result.sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result.sid.code);
 
     ck_assert_msg(last_msg.msg.acq_result.sid.sat == 8,
                   "incorrect value for last_msg.msg.acq_result.sid.sat, "
-                  "expected 8, is %d",
-                  last_msg.msg.acq_result.sid.sat);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result.sid.sat);
   }
 }
 END_TEST

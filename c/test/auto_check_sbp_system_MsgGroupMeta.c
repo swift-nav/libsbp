@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -138,33 +138,33 @@ START_TEST(test_auto_check_sbp_system_MsgGroupMeta) {
         sbp_message_cmp(SbpMsgGroupMeta, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.group_meta.flags == 2,
-        "incorrect value for last_msg.msg.group_meta.flags, expected 2, is %d",
-        last_msg.msg.group_meta.flags);
+    ck_assert_msg(last_msg.msg.group_meta.flags == 2,
+                  "incorrect value for last_msg.msg.group_meta.flags, expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.flags);
 
     ck_assert_msg(last_msg.msg.group_meta.group_id == 1,
                   "incorrect value for last_msg.msg.group_meta.group_id, "
-                  "expected 1, is %d",
-                  last_msg.msg.group_meta.group_id);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_id);
 
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[0] == 65290,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[0], "
-                  "expected 65290, is %d",
-                  last_msg.msg.group_meta.group_msgs[0]);
+                  "expected 65290, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[0]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[1] == 522,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[1], "
-                  "expected 522, is %d",
-                  last_msg.msg.group_meta.group_msgs[1]);
+                  "expected 522, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[1]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[2] == 65282,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[2], "
-                  "expected 65282, is %d",
-                  last_msg.msg.group_meta.group_msgs[2]);
+                  "expected 65282, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[2]);
 
     ck_assert_msg(last_msg.msg.group_meta.n_group_msgs == 3,
                   "incorrect value for last_msg.msg.group_meta.n_group_msgs, "
-                  "expected 3, is %d",
-                  last_msg.msg.group_meta.n_group_msgs);
+                  "expected 3, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.n_group_msgs);
   }
   // Test successful parsing of a message
   {
@@ -249,77 +249,77 @@ START_TEST(test_auto_check_sbp_system_MsgGroupMeta) {
         sbp_message_cmp(SbpMsgGroupMeta, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.group_meta.flags == 1,
-        "incorrect value for last_msg.msg.group_meta.flags, expected 1, is %d",
-        last_msg.msg.group_meta.flags);
+    ck_assert_msg(last_msg.msg.group_meta.flags == 1,
+                  "incorrect value for last_msg.msg.group_meta.flags, expected "
+                  "1, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.flags);
 
     ck_assert_msg(last_msg.msg.group_meta.group_id == 1,
                   "incorrect value for last_msg.msg.group_meta.group_id, "
-                  "expected 1, is %d",
-                  last_msg.msg.group_meta.group_id);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_id);
 
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[0] == 258,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[0], "
-                  "expected 258, is %d",
-                  last_msg.msg.group_meta.group_msgs[0]);
+                  "expected 258, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[0]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[1] == 259,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[1], "
-                  "expected 259, is %d",
-                  last_msg.msg.group_meta.group_msgs[1]);
+                  "expected 259, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[1]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[2] == 522,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[2], "
-                  "expected 522, is %d",
-                  last_msg.msg.group_meta.group_msgs[2]);
+                  "expected 522, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[2]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[3] == 529,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[3], "
-                  "expected 529, is %d",
-                  last_msg.msg.group_meta.group_msgs[3]);
+                  "expected 529, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[3]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[4] == 521,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[4], "
-                  "expected 521, is %d",
-                  last_msg.msg.group_meta.group_msgs[4]);
+                  "expected 521, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[4]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[5] == 532,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[5], "
-                  "expected 532, is %d",
-                  last_msg.msg.group_meta.group_msgs[5]);
+                  "expected 532, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[5]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[6] == 526,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[6], "
-                  "expected 526, is %d",
-                  last_msg.msg.group_meta.group_msgs[6]);
+                  "expected 526, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[6]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[7] == 530,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[7], "
-                  "expected 530, is %d",
-                  last_msg.msg.group_meta.group_msgs[7]);
+                  "expected 530, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[7]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[8] == 525,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[8], "
-                  "expected 525, is %d",
-                  last_msg.msg.group_meta.group_msgs[8]);
+                  "expected 525, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[8]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[9] == 533,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[9], "
-                  "expected 533, is %d",
-                  last_msg.msg.group_meta.group_msgs[9]);
+                  "expected 533, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[9]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[10] == 545,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[10], "
-                  "expected 545, is %d",
-                  last_msg.msg.group_meta.group_msgs[10]);
+                  "expected 545, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[10]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[11] == 65283,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[11], "
-                  "expected 65283, is %d",
-                  last_msg.msg.group_meta.group_msgs[11]);
+                  "expected 65283, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[11]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[12] == 65286,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[12], "
-                  "expected 65286, is %d",
-                  last_msg.msg.group_meta.group_msgs[12]);
+                  "expected 65286, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[12]);
     ck_assert_msg(last_msg.msg.group_meta.group_msgs[13] == 65294,
                   "incorrect value for last_msg.msg.group_meta.group_msgs[13], "
-                  "expected 65294, is %d",
-                  last_msg.msg.group_meta.group_msgs[13]);
+                  "expected 65294, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.group_msgs[13]);
 
     ck_assert_msg(last_msg.msg.group_meta.n_group_msgs == 14,
                   "incorrect value for last_msg.msg.group_meta.n_group_msgs, "
-                  "expected 14, is %d",
-                  last_msg.msg.group_meta.n_group_msgs);
+                  "expected 14, is %" PRId64,
+                  (int64_t)last_msg.msg.group_meta.n_group_msgs);
   }
 }
 END_TEST

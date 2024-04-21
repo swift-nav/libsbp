@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -164,47 +164,47 @@ START_TEST(test_auto_check_sbp_profiling_MsgMeasurementPoint) {
 
     ck_assert_msg(last_msg.msg.measurement_point.id == 2496234002,
                   "incorrect value for last_msg.msg.measurement_point.id, "
-                  "expected 2496234002, is %d",
-                  last_msg.msg.measurement_point.id);
+                  "expected 2496234002, is %" PRId64,
+                  (int64_t)last_msg.msg.measurement_point.id);
 
     ck_assert_msg(last_msg.msg.measurement_point.line == 18,
                   "incorrect value for last_msg.msg.measurement_point.line, "
-                  "expected 18, is %d",
-                  last_msg.msg.measurement_point.line);
+                  "expected 18, is %" PRId64,
+                  (int64_t)last_msg.msg.measurement_point.line);
 
     ck_assert_msg(last_msg.msg.measurement_point.max == 40,
                   "incorrect value for last_msg.msg.measurement_point.max, "
-                  "expected 40, is %d",
-                  last_msg.msg.measurement_point.max);
+                  "expected 40, is %" PRId64,
+                  (int64_t)last_msg.msg.measurement_point.max);
 
     ck_assert_msg(last_msg.msg.measurement_point.min == 2,
                   "incorrect value for last_msg.msg.measurement_point.min, "
-                  "expected 2, is %d",
-                  last_msg.msg.measurement_point.min);
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.measurement_point.min);
 
     ck_assert_msg(
         last_msg.msg.measurement_point.num_executions == 180,
         "incorrect value for last_msg.msg.measurement_point.num_executions, "
-        "expected 180, is %d",
-        last_msg.msg.measurement_point.num_executions);
+        "expected 180, is %" PRId64,
+        (int64_t)last_msg.msg.measurement_point.num_executions);
 
     ck_assert_msg(
         last_msg.msg.measurement_point.return_addr == 93877475527042,
         "incorrect value for last_msg.msg.measurement_point.return_addr, "
-        "expected 93877475527042, is %d",
-        last_msg.msg.measurement_point.return_addr);
+        "expected 93877475527042, is %" PRId64,
+        (int64_t)last_msg.msg.measurement_point.return_addr);
 
     ck_assert_msg(
         last_msg.msg.measurement_point.slice_time == 261963842,
         "incorrect value for last_msg.msg.measurement_point.slice_time, "
-        "expected 261963842, is %d",
-        last_msg.msg.measurement_point.slice_time);
+        "expected 261963842, is %" PRId64,
+        (int64_t)last_msg.msg.measurement_point.slice_time);
 
     ck_assert_msg(
         last_msg.msg.measurement_point.total_time == 2042,
         "incorrect value for last_msg.msg.measurement_point.total_time, "
-        "expected 2042, is %d",
-        last_msg.msg.measurement_point.total_time);
+        "expected 2042, is %" PRId64,
+        (int64_t)last_msg.msg.measurement_point.total_time);
   }
 }
 END_TEST

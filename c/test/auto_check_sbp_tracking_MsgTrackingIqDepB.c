@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -148,55 +148,55 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingIqDepB) {
 
     ck_assert_msg(last_msg.msg.tracking_iq_dep_b.channel == 45,
                   "incorrect value for last_msg.msg.tracking_iq_dep_b.channel, "
-                  "expected 45, is %d",
-                  last_msg.msg.tracking_iq_dep_b.channel);
+                  "expected 45, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_iq_dep_b.channel);
 
     ck_assert_msg(
         last_msg.msg.tracking_iq_dep_b.corrs[0].I == 261994824,
         "incorrect value for last_msg.msg.tracking_iq_dep_b.corrs[0].I, "
-        "expected 261994824, is %d",
-        last_msg.msg.tracking_iq_dep_b.corrs[0].I);
+        "expected 261994824, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_iq_dep_b.corrs[0].I);
 
     ck_assert_msg(
         last_msg.msg.tracking_iq_dep_b.corrs[0].Q == 409336251,
         "incorrect value for last_msg.msg.tracking_iq_dep_b.corrs[0].Q, "
-        "expected 409336251, is %d",
-        last_msg.msg.tracking_iq_dep_b.corrs[0].Q);
+        "expected 409336251, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_iq_dep_b.corrs[0].Q);
 
     ck_assert_msg(
         last_msg.msg.tracking_iq_dep_b.corrs[1].I == -525036921,
         "incorrect value for last_msg.msg.tracking_iq_dep_b.corrs[1].I, "
-        "expected -525036921, is %d",
-        last_msg.msg.tracking_iq_dep_b.corrs[1].I);
+        "expected -525036921, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_iq_dep_b.corrs[1].I);
 
     ck_assert_msg(
         last_msg.msg.tracking_iq_dep_b.corrs[1].Q == -795939973,
         "incorrect value for last_msg.msg.tracking_iq_dep_b.corrs[1].Q, "
-        "expected -795939973, is %d",
-        last_msg.msg.tracking_iq_dep_b.corrs[1].Q);
+        "expected -795939973, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_iq_dep_b.corrs[1].Q);
 
     ck_assert_msg(
         last_msg.msg.tracking_iq_dep_b.corrs[2].I == 353988710,
         "incorrect value for last_msg.msg.tracking_iq_dep_b.corrs[2].I, "
-        "expected 353988710, is %d",
-        last_msg.msg.tracking_iq_dep_b.corrs[2].I);
+        "expected 353988710, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_iq_dep_b.corrs[2].I);
 
     ck_assert_msg(
         last_msg.msg.tracking_iq_dep_b.corrs[2].Q == 1148477617,
         "incorrect value for last_msg.msg.tracking_iq_dep_b.corrs[2].Q, "
-        "expected 1148477617, is %d",
-        last_msg.msg.tracking_iq_dep_b.corrs[2].Q);
+        "expected 1148477617, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_iq_dep_b.corrs[2].Q);
 
     ck_assert_msg(
         last_msg.msg.tracking_iq_dep_b.sid.code == 183,
         "incorrect value for last_msg.msg.tracking_iq_dep_b.sid.code, expected "
-        "183, is %d",
-        last_msg.msg.tracking_iq_dep_b.sid.code);
+        "183, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_iq_dep_b.sid.code);
 
     ck_assert_msg(last_msg.msg.tracking_iq_dep_b.sid.sat == 188,
                   "incorrect value for last_msg.msg.tracking_iq_dep_b.sid.sat, "
-                  "expected 188, is %d",
-                  last_msg.msg.tracking_iq_dep_b.sid.sat);
+                  "expected 188, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_iq_dep_b.sid.sat);
   }
 }
 END_TEST

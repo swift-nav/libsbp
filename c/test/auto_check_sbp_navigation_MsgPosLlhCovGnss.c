@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -157,71 +157,71 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLlhCovGnss) {
     ck_assert_msg((last_msg.msg.pos_llh_cov_gnss.cov_d_d * 100 -
                    0.0328813754022 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov_gnss.cov_d_d, "
-                  "expected 0.0328813754022, is %s",
+                  "expected 0.0328813754022, is %f",
                   last_msg.msg.pos_llh_cov_gnss.cov_d_d);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov_gnss.cov_e_d * 100 -
                    -0.000843927089591 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov_gnss.cov_e_d, "
-                  "expected -0.000843927089591, is %s",
+                  "expected -0.000843927089591, is %f",
                   last_msg.msg.pos_llh_cov_gnss.cov_e_d);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov_gnss.cov_e_e * 100 -
                    0.00452379882336 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov_gnss.cov_e_e, "
-                  "expected 0.00452379882336, is %s",
+                  "expected 0.00452379882336, is %f",
                   last_msg.msg.pos_llh_cov_gnss.cov_e_e);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov_gnss.cov_n_d * 100 -
                    0.00185631681234 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov_gnss.cov_n_d, "
-                  "expected 0.00185631681234, is %s",
+                  "expected 0.00185631681234, is %f",
                   last_msg.msg.pos_llh_cov_gnss.cov_n_d);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov_gnss.cov_n_e * 100 -
                    -0.000367559667211 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov_gnss.cov_n_e, "
-                  "expected -0.000367559667211, is %s",
+                  "expected -0.000367559667211, is %f",
                   last_msg.msg.pos_llh_cov_gnss.cov_n_e);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov_gnss.cov_n_n * 100 -
                    0.00748897157609 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov_gnss.cov_n_n, "
-                  "expected 0.00748897157609, is %s",
+                  "expected 0.00748897157609, is %f",
                   last_msg.msg.pos_llh_cov_gnss.cov_n_n);
 
     ck_assert_msg(last_msg.msg.pos_llh_cov_gnss.flags == 4,
                   "incorrect value for last_msg.msg.pos_llh_cov_gnss.flags, "
-                  "expected 4, is %d",
-                  last_msg.msg.pos_llh_cov_gnss.flags);
+                  "expected 4, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_cov_gnss.flags);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov_gnss.height * 100 -
                    -17.3938212478 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov_gnss.height, "
-                  "expected -17.3938212478, is %s",
+                  "expected -17.3938212478, is %f",
                   last_msg.msg.pos_llh_cov_gnss.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_cov_gnss.lat * 100 - 37.831231965 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_cov_gnss.lat, expected "
-        "37.831231965, is %s",
+        "37.831231965, is %f",
         last_msg.msg.pos_llh_cov_gnss.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_cov_gnss.lon * 100 - -122.28650381 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_cov_gnss.lon, expected "
-        "-122.28650381, is %s",
+        "-122.28650381, is %f",
         last_msg.msg.pos_llh_cov_gnss.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_cov_gnss.n_sats == 18,
                   "incorrect value for last_msg.msg.pos_llh_cov_gnss.n_sats, "
-                  "expected 18, is %d",
-                  last_msg.msg.pos_llh_cov_gnss.n_sats);
+                  "expected 18, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_cov_gnss.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_cov_gnss.tow == 501867800,
                   "incorrect value for last_msg.msg.pos_llh_cov_gnss.tow, "
-                  "expected 501867800, is %d",
-                  last_msg.msg.pos_llh_cov_gnss.tow);
+                  "expected 501867800, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_cov_gnss.tow);
   }
 }
 END_TEST

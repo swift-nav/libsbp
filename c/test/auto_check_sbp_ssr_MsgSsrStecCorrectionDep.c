@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -483,106 +483,113 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrStecCorrectionDep) {
                                   &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.header.iod_atmo == 60,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.header.iod_atmo, "
-                  "expected 60, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.header.iod_atmo);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.header.iod_atmo == 60,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.header.iod_atmo, expected 60, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.header.iod_atmo);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.header.num_msgs == 157,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.header.num_msgs, "
-                  "expected 157, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.header.num_msgs);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.header.num_msgs == 157,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.header.num_msgs, expected 157, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.header.num_msgs);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.header.seq_num == 112,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.header.seq_num, "
-                  "expected 112, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.header.seq_num);
+                  "expected 112, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.header.seq_num);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.header.tile_id == 30066,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.header.tile_id, "
-                  "expected 30066, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.header.tile_id);
+                  "expected 30066, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.header.tile_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.header.tile_set_id == 58526,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.header.tile_set_id, expected "
-        "58526, is %d",
-        last_msg.msg.ssr_stec_correction_dep.header.tile_set_id);
+        "58526, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.header.tile_set_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.header.time.tow == 714907186,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.header.time.tow, expected "
-        "714907186, is %d",
-        last_msg.msg.ssr_stec_correction_dep.header.time.tow);
+        "714907186, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.header.time.tow);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.header.time.wn == 40055,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.header.time.wn, "
-                  "expected 40055, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.header.time.wn);
+                  "expected 40055, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.header.time.wn);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.header.update_interval == 47,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.header.update_interval, expected "
-        "47, is %d",
-        last_msg.msg.ssr_stec_correction_dep.header.update_interval);
+        "47, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.header.update_interval);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.n_stec_sat_list == 21,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.n_stec_sat_list, "
-                  "expected 21, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.n_stec_sat_list);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.n_stec_sat_list == 21,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.n_stec_sat_list, expected 21, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.n_stec_sat_list);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[0] ==
             -5289,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[0], "
-        "expected -5289, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[0]);
+        "expected -5289, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[1] ==
             -20141,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[1], "
-        "expected -20141, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[1]);
+        "expected -20141, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[2] ==
             966,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[2], "
-        "expected 966, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[2]);
+        "expected 966, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[3] ==
             2062,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[3], "
-        "expected 2062, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_coeff[3]);
+        "expected 2062, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
+            .stec_coeff[3]);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
                           .stec_quality_indicator == 70,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].stec_"
-                  "quality_indicator, expected 70, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
+                  "quality_indicator, expected 70, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
                       .stec_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
                           .sv_id.constellation == 40,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].sv_id."
-                  "constellation, expected 40, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
+                  "constellation, expected 40, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
                       .sv_id.constellation);
 
     ck_assert_msg(
@@ -590,104 +597,114 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrStecCorrectionDep) {
             132,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].sv_id.satId, "
-        "expected 132, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0].sv_id.satId);
+        "expected 132, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[0]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[0] ==
             -19147,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[0], "
-        "expected -19147, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[0]);
+        "expected -19147, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[1] ==
             -20902,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[1], "
-        "expected -20902, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[1]);
+        "expected -20902, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[2] ==
             -26889,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[2], "
-        "expected -26889, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[2]);
+        "expected -26889, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[3] ==
             -21446,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[3], "
-        "expected -21446, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_coeff[3]);
+        "expected -21446, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
+            .stec_coeff[3]);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
                           .stec_quality_indicator == 44,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].stec_"
-                  "quality_indicator, expected 44, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
+                  "quality_indicator, expected 44, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
                       .stec_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
                           .sv_id.constellation == 12,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].sv_id."
-                  "constellation, expected 12, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
+                  "constellation, expected 12, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].sv_id.satId == 70,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].sv_id.satId, "
-        "expected 70, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1].sv_id.satId);
+        "expected 70, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[1]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[0] ==
             32176,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[0], "
-        "expected 32176, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[0]);
+        "expected 32176, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[1] ==
             -20220,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[1], "
-        "expected -20220, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[1]);
+        "expected -20220, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[2] ==
             29157,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[2], "
-        "expected 29157, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[2]);
+        "expected 29157, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[3] ==
             19726,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[3], "
-        "expected 19726, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_coeff[3]);
+        "expected 19726, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
+            .stec_coeff[3]);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
                           .stec_quality_indicator == 119,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].stec_"
-                  "quality_indicator, expected 119, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
+                  "quality_indicator, expected 119, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
                       .stec_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
                           .sv_id.constellation == 179,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].sv_id."
-                  "constellation, expected 179, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
+                  "constellation, expected 179, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
                       .sv_id.constellation);
 
     ck_assert_msg(
@@ -695,52 +712,57 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrStecCorrectionDep) {
             247,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].sv_id.satId, "
-        "expected 247, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2].sv_id.satId);
+        "expected 247, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[2]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[0] ==
             -8651,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[0], "
-        "expected -8651, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[0]);
+        "expected -8651, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[1] ==
             -27973,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[1], "
-        "expected -27973, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[1]);
+        "expected -27973, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[2] ==
             23546,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[2], "
-        "expected 23546, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[2]);
+        "expected 23546, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[3] ==
             -10284,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[3], "
-        "expected -10284, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_coeff[3]);
+        "expected -10284, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
+            .stec_coeff[3]);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
                           .stec_quality_indicator == 23,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].stec_"
-                  "quality_indicator, expected 23, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
+                  "quality_indicator, expected 23, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
                       .stec_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
                           .sv_id.constellation == 185,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].sv_id."
-                  "constellation, expected 185, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
+                  "constellation, expected 185, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
                       .sv_id.constellation);
 
     ck_assert_msg(
@@ -748,902 +770,1010 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrStecCorrectionDep) {
             153,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].sv_id.satId, "
-        "expected 153, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3].sv_id.satId);
+        "expected 153, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[3]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[0] ==
             27486,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[0], "
-        "expected 27486, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[0]);
+        "expected 27486, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[1] ==
             23329,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[1], "
-        "expected 23329, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[1]);
+        "expected 23329, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[2] ==
             234,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[2], "
-        "expected 234, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[2]);
+        "expected 234, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[3] ==
             -29739,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[3], "
-        "expected -29739, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_coeff[3]);
+        "expected -29739, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
+            .stec_coeff[3]);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
                           .stec_quality_indicator == 250,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].stec_"
-                  "quality_indicator, expected 250, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
+                  "quality_indicator, expected 250, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
                       .stec_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
                           .sv_id.constellation == 107,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].sv_id."
-                  "constellation, expected 107, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
+                  "constellation, expected 107, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].sv_id.satId == 14,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].sv_id.satId, "
-        "expected 14, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4].sv_id.satId);
+        "expected 14, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[4]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[0] ==
             18965,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[0], "
-        "expected 18965, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[0]);
+        "expected 18965, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[1] ==
             -22098,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[1], "
-        "expected -22098, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[1]);
+        "expected -22098, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[2] ==
             22077,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[2], "
-        "expected 22077, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[2]);
+        "expected 22077, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[3] ==
             -29093,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[3], "
-        "expected -29093, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_coeff[3]);
+        "expected -29093, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
+            .stec_coeff[3]);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
                           .stec_quality_indicator == 50,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].stec_"
-                  "quality_indicator, expected 50, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
+                  "quality_indicator, expected 50, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
                       .stec_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
                           .sv_id.constellation == 179,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].sv_id."
-                  "constellation, expected 179, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
+                  "constellation, expected 179, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].sv_id.satId == 95,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].sv_id.satId, "
-        "expected 95, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5].sv_id.satId);
+        "expected 95, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[5]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[0] ==
             -7898,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[0], "
-        "expected -7898, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[0]);
+        "expected -7898, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[1] ==
             26002,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[1], "
-        "expected 26002, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[1]);
+        "expected 26002, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[2] ==
             -29879,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[2], "
-        "expected -29879, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[2]);
+        "expected -29879, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[3] ==
             30008,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[3], "
-        "expected 30008, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_coeff[3]);
+        "expected 30008, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
+            .stec_coeff[3]);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
                           .stec_quality_indicator == 9,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].stec_"
-                  "quality_indicator, expected 9, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
+                  "quality_indicator, expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
                       .stec_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
                           .sv_id.constellation == 108,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].sv_id."
-                  "constellation, expected 108, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
+                  "constellation, expected 108, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].sv_id.satId == 51,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].sv_id.satId, "
-        "expected 51, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6].sv_id.satId);
+        "expected 51, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[6]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[0] ==
             -12948,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[0], "
-        "expected -12948, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[0]);
+        "expected -12948, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[1] ==
             4701,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[1], "
-        "expected 4701, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[1]);
+        "expected 4701, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[2] ==
             -15597,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[2], "
-        "expected -15597, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[2]);
+        "expected -15597, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[3] ==
             -13791,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[3], "
-        "expected -13791, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_coeff[3]);
+        "expected -13791, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
+            .stec_coeff[3]);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
                           .stec_quality_indicator == 213,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].stec_"
-                  "quality_indicator, expected 213, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
+                  "quality_indicator, expected 213, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
                       .stec_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
                           .sv_id.constellation == 37,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].sv_id."
-                  "constellation, expected 37, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
+                  "constellation, expected 37, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].sv_id.satId == 82,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].sv_id.satId, "
-        "expected 82, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7].sv_id.satId);
+        "expected 82, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[7]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[0] ==
             -17283,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[0], "
-        "expected -17283, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[0]);
+        "expected -17283, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[1] ==
             14455,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[1], "
-        "expected 14455, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[1]);
+        "expected 14455, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[2] ==
             -27067,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[2], "
-        "expected -27067, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[2]);
+        "expected -27067, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[3] ==
             19606,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[3], "
-        "expected 19606, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_coeff[3]);
+        "expected 19606, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
+            .stec_coeff[3]);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
                           .stec_quality_indicator == 178,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].stec_"
-                  "quality_indicator, expected 178, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
+                  "quality_indicator, expected 178, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
                       .stec_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
                           .sv_id.constellation == 206,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].sv_id."
-                  "constellation, expected 206, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
+                  "constellation, expected 206, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].sv_id.satId == 87,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].sv_id.satId, "
-        "expected 87, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8].sv_id.satId);
+        "expected 87, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[8]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[0] ==
             -12215,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[0], "
-        "expected -12215, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[0]);
+        "expected -12215, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[1] ==
             -6072,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[1], "
-        "expected -6072, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[1]);
+        "expected -6072, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[2] ==
             -1528,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[2], "
-        "expected -1528, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[2]);
+        "expected -1528, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[3] ==
             -19765,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[3], "
-        "expected -19765, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_coeff[3]);
+        "expected -19765, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
+            .stec_coeff[3]);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
                           .stec_quality_indicator == 18,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].stec_"
-                  "quality_indicator, expected 18, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
+                  "quality_indicator, expected 18, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
                       .stec_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
                           .sv_id.constellation == 131,
                   "incorrect value for "
                   "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].sv_id."
-                  "constellation, expected 131, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
+                  "constellation, expected 131, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].sv_id.satId == 3,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].sv_id.satId, "
-        "expected 3, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9].sv_id.satId);
+        "expected 3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[9]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[0] ==
             12630,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[0], "
-        "expected 12630, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[0]);
+        "expected 12630, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[1] ==
             -19721,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[1], "
-        "expected -19721, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[1]);
+        "expected -19721, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[2] ==
             14502,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[2], "
-        "expected 14502, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[2]);
+        "expected 14502, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[3] ==
             2591,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[3], "
-        "expected 2591, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_coeff[3]);
+        "expected 2591, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
-                          .stec_quality_indicator == 252,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_"
-                  "quality_indicator, expected 252, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
+                .stec_quality_indicator == 252,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].stec_quality_"
+        "indicator, expected 252, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
-                          .sv_id.constellation == 163,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].sv_"
-                  "id.constellation, expected 163, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
+                .sv_id.constellation == 163,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].sv_id."
+        "constellation, expected 163, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].sv_id.satId ==
             170,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].sv_id.satId, "
-        "expected 170, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10].sv_id.satId);
+        "expected 170, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[10]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[0] ==
             -23340,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[0], "
-        "expected -23340, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[0]);
+        "expected -23340, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[1] ==
             -24063,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[1], "
-        "expected -24063, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[1]);
+        "expected -24063, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[2] ==
             4650,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[2], "
-        "expected 4650, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[2]);
+        "expected 4650, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[3] ==
             -22148,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[3], "
-        "expected -22148, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_coeff[3]);
+        "expected -22148, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
-                          .stec_quality_indicator == 241,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_"
-                  "quality_indicator, expected 241, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
+                .stec_quality_indicator == 241,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].stec_quality_"
+        "indicator, expected 241, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
-                          .sv_id.constellation == 213,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].sv_"
-                  "id.constellation, expected 213, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
+                .sv_id.constellation == 213,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].sv_id."
+        "constellation, expected 213, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].sv_id.satId ==
             119,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].sv_id.satId, "
-        "expected 119, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11].sv_id.satId);
+        "expected 119, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[11]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[0] ==
             5944,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[0], "
-        "expected 5944, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[0]);
+        "expected 5944, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[1] ==
             32142,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[1], "
-        "expected 32142, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[1]);
+        "expected 32142, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[2] ==
             30760,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[2], "
-        "expected 30760, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[2]);
+        "expected 30760, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[3] ==
             11587,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[3], "
-        "expected 11587, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_coeff[3]);
+        "expected 11587, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
-                          .stec_quality_indicator == 26,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_"
-                  "quality_indicator, expected 26, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
+                .stec_quality_indicator == 26,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].stec_quality_"
+        "indicator, expected 26, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
-                          .sv_id.constellation == 158,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].sv_"
-                  "id.constellation, expected 158, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
+                .sv_id.constellation == 158,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].sv_id."
+        "constellation, expected 158, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].sv_id.satId ==
             121,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].sv_id.satId, "
-        "expected 121, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12].sv_id.satId);
+        "expected 121, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[12]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[0] ==
             3095,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[0], "
-        "expected 3095, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[0]);
+        "expected 3095, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[1] ==
             22769,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[1], "
-        "expected 22769, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[1]);
+        "expected 22769, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[2] ==
             -4283,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[2], "
-        "expected -4283, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[2]);
+        "expected -4283, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[3] ==
             14844,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[3], "
-        "expected 14844, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_coeff[3]);
+        "expected 14844, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
-                          .stec_quality_indicator == 110,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_"
-                  "quality_indicator, expected 110, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
+                .stec_quality_indicator == 110,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].stec_quality_"
+        "indicator, expected 110, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
-                          .sv_id.constellation == 235,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].sv_"
-                  "id.constellation, expected 235, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
+                .sv_id.constellation == 235,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].sv_id."
+        "constellation, expected 235, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].sv_id.satId ==
             126,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].sv_id.satId, "
-        "expected 126, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13].sv_id.satId);
+        "expected 126, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[13]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[0] ==
             -21032,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[0], "
-        "expected -21032, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[0]);
+        "expected -21032, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[1] ==
             -19726,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[1], "
-        "expected -19726, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[1]);
+        "expected -19726, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[2] ==
             1297,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[2], "
-        "expected 1297, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[2]);
+        "expected 1297, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[3] ==
             -22049,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[3], "
-        "expected -22049, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_coeff[3]);
+        "expected -22049, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
-                          .stec_quality_indicator == 201,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_"
-                  "quality_indicator, expected 201, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
+                .stec_quality_indicator == 201,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].stec_quality_"
+        "indicator, expected 201, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
-                          .sv_id.constellation == 44,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].sv_"
-                  "id.constellation, expected 44, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
+                .sv_id.constellation == 44,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].sv_id."
+        "constellation, expected 44, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].sv_id.satId ==
             93,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].sv_id.satId, "
-        "expected 93, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14].sv_id.satId);
+        "expected 93, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[14]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[0] ==
             619,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[0], "
-        "expected 619, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[0]);
+        "expected 619, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[1] ==
             -5744,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[1], "
-        "expected -5744, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[1]);
+        "expected -5744, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[2] ==
             22542,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[2], "
-        "expected 22542, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[2]);
+        "expected 22542, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[3] ==
             -12000,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[3], "
-        "expected -12000, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_coeff[3]);
+        "expected -12000, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
-                          .stec_quality_indicator == 77,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_"
-                  "quality_indicator, expected 77, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
+                .stec_quality_indicator == 77,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].stec_quality_"
+        "indicator, expected 77, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
-                          .sv_id.constellation == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].sv_"
-                  "id.constellation, expected 3, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
+                .sv_id.constellation == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].sv_id."
+        "constellation, expected 3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].sv_id.satId ==
             192,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].sv_id.satId, "
-        "expected 192, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15].sv_id.satId);
+        "expected 192, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[15]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[0] ==
             10651,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[0], "
-        "expected 10651, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[0]);
+        "expected 10651, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[1] ==
             -2889,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[1], "
-        "expected -2889, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[1]);
+        "expected -2889, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[2] ==
             21150,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[2], "
-        "expected 21150, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[2]);
+        "expected 21150, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[3] ==
             26421,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[3], "
-        "expected 26421, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_coeff[3]);
+        "expected 26421, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
-                          .stec_quality_indicator == 123,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_"
-                  "quality_indicator, expected 123, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
+                .stec_quality_indicator == 123,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].stec_quality_"
+        "indicator, expected 123, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
-                          .sv_id.constellation == 17,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].sv_"
-                  "id.constellation, expected 17, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
+                .sv_id.constellation == 17,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].sv_id."
+        "constellation, expected 17, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].sv_id.satId == 1,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].sv_id.satId, "
-        "expected 1, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16].sv_id.satId);
+        "expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[16]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[0] ==
             -19165,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[0], "
-        "expected -19165, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[0]);
+        "expected -19165, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[1] ==
             30229,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[1], "
-        "expected 30229, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[1]);
+        "expected 30229, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[2] ==
             -1282,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[2], "
-        "expected -1282, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[2]);
+        "expected -1282, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[3] ==
             -18382,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[3], "
-        "expected -18382, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_coeff[3]);
+        "expected -18382, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
-                          .stec_quality_indicator == 185,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_"
-                  "quality_indicator, expected 185, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
+                .stec_quality_indicator == 185,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].stec_quality_"
+        "indicator, expected 185, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
-                          .sv_id.constellation == 202,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].sv_"
-                  "id.constellation, expected 202, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
+                .sv_id.constellation == 202,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].sv_id."
+        "constellation, expected 202, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].sv_id.satId ==
             14,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].sv_id.satId, "
-        "expected 14, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17].sv_id.satId);
+        "expected 14, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[17]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[0] ==
             -23752,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[0], "
-        "expected -23752, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[0]);
+        "expected -23752, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[1] ==
             32433,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[1], "
-        "expected 32433, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[1]);
+        "expected 32433, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[2] ==
             20441,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[2], "
-        "expected 20441, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[2]);
+        "expected 20441, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[3] ==
             -4181,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[3], "
-        "expected -4181, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_coeff[3]);
+        "expected -4181, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
-                          .stec_quality_indicator == 45,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_"
-                  "quality_indicator, expected 45, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
+                .stec_quality_indicator == 45,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].stec_quality_"
+        "indicator, expected 45, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
-                          .sv_id.constellation == 31,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].sv_"
-                  "id.constellation, expected 31, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
+                .sv_id.constellation == 31,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].sv_id."
+        "constellation, expected 31, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].sv_id.satId ==
             50,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].sv_id.satId, "
-        "expected 50, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18].sv_id.satId);
+        "expected 50, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[18]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[0] ==
             -13968,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[0], "
-        "expected -13968, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[0]);
+        "expected -13968, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[1] ==
             -29322,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[1], "
-        "expected -29322, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[1]);
+        "expected -29322, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[2] ==
             -23790,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[2], "
-        "expected -23790, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[2]);
+        "expected -23790, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[3] ==
             9063,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[3], "
-        "expected 9063, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_coeff[3]);
+        "expected 9063, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
-                          .stec_quality_indicator == 238,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_"
-                  "quality_indicator, expected 238, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
+                .stec_quality_indicator == 238,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].stec_quality_"
+        "indicator, expected 238, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
-                          .sv_id.constellation == 188,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].sv_"
-                  "id.constellation, expected 188, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
+                .sv_id.constellation == 188,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].sv_id."
+        "constellation, expected 188, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].sv_id.satId ==
             237,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].sv_id.satId, "
-        "expected 237, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19].sv_id.satId);
+        "expected 237, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[19]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[0] ==
             4737,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[0], "
-        "expected 4737, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[0]);
+        "expected 4737, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
+            .stec_coeff[0]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[1] ==
             21877,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[1], "
-        "expected 21877, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[1]);
+        "expected 21877, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
+            .stec_coeff[1]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[2] ==
             20414,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[2], "
-        "expected 20414, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[2]);
+        "expected 20414, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
+            .stec_coeff[2]);
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[3] ==
             -10286,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[3], "
-        "expected -10286, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_coeff[3]);
+        "expected -10286, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
+            .stec_coeff[3]);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
-                          .stec_quality_indicator == 82,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_"
-                  "quality_indicator, expected 82, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
-                      .stec_quality_indicator);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
+                .stec_quality_indicator == 82,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].stec_quality_"
+        "indicator, expected 82, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
+            .stec_quality_indicator);
 
-    ck_assert_msg(last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
-                          .sv_id.constellation == 21,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].sv_"
-                  "id.constellation, expected 21, is %d",
-                  last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
+                .sv_id.constellation == 21,
+        "incorrect value for "
+        "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].sv_id."
+        "constellation, expected 21, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].sv_id.satId ==
             63,
         "incorrect value for "
         "last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].sv_id.satId, "
-        "expected 63, is %d",
-        last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20].sv_id.satId);
+        "expected 63, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_stec_correction_dep.stec_sat_list[20]
+            .sv_id.satId);
   }
 }
 END_TEST

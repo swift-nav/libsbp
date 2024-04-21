@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -136,23 +136,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
-    ck_assert_msg(last_msg.msg.gps_time_dep_a.ns_residual == 0,
-                  "incorrect value for "
-                  "last_msg.msg.gps_time_dep_a.ns_residual, expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.ns_residual);
+    ck_assert_msg(
+        last_msg.msg.gps_time_dep_a.ns_residual == 0,
+        "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 2567800,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 2567800, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 2567800, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1787,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1787, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1787, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -212,23 +213,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
-    ck_assert_msg(last_msg.msg.gps_time_dep_a.ns_residual == 0,
-                  "incorrect value for "
-                  "last_msg.msg.gps_time_dep_a.ns_residual, expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.ns_residual);
+    ck_assert_msg(
+        last_msg.msg.gps_time_dep_a.ns_residual == 0,
+        "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 2567900,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 2567900, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 2567900, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1787,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1787, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1787, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -288,23 +290,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
-    ck_assert_msg(last_msg.msg.gps_time_dep_a.ns_residual == 0,
-                  "incorrect value for "
-                  "last_msg.msg.gps_time_dep_a.ns_residual, expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.ns_residual);
+    ck_assert_msg(
+        last_msg.msg.gps_time_dep_a.ns_residual == 0,
+        "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 2568000,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 2568000, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 2568000, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1787,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1787, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1787, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -364,23 +367,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
-    ck_assert_msg(last_msg.msg.gps_time_dep_a.ns_residual == 0,
-                  "incorrect value for "
-                  "last_msg.msg.gps_time_dep_a.ns_residual, expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.ns_residual);
+    ck_assert_msg(
+        last_msg.msg.gps_time_dep_a.ns_residual == 0,
+        "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 2568100,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 2568100, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 2568100, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1787,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1787, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1787, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -440,23 +444,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
-    ck_assert_msg(last_msg.msg.gps_time_dep_a.ns_residual == 0,
-                  "incorrect value for "
-                  "last_msg.msg.gps_time_dep_a.ns_residual, expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.ns_residual);
+    ck_assert_msg(
+        last_msg.msg.gps_time_dep_a.ns_residual == 0,
+        "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 2568200,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 2568200, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 2568200, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1787,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1787, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1787, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -517,24 +522,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
     ck_assert_msg(
         last_msg.msg.gps_time_dep_a.ns_residual == -224401,
         "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
-        "-224401, is %d",
-        last_msg.msg.gps_time_dep_a.ns_residual);
+        "-224401, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 407084500,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 407084500, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 407084500, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1838,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1838, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1838, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -595,24 +600,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
     ck_assert_msg(
         last_msg.msg.gps_time_dep_a.ns_residual == 223085,
         "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
-        "223085, is %d",
-        last_msg.msg.gps_time_dep_a.ns_residual);
+        "223085, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 407084600,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 407084600, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 407084600, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1838,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1838, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1838, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -673,24 +678,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
     ck_assert_msg(
         last_msg.msg.gps_time_dep_a.ns_residual == -222999,
         "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
-        "-222999, is %d",
-        last_msg.msg.gps_time_dep_a.ns_residual);
+        "-222999, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 407084700,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 407084700, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 407084700, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1838,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1838, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1838, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -750,24 +755,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
     ck_assert_msg(
         last_msg.msg.gps_time_dep_a.ns_residual == 236272,
         "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
-        "236272, is %d",
-        last_msg.msg.gps_time_dep_a.ns_residual);
+        "236272, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 407084800,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 407084800, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 407084800, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1838,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1838, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1838, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -828,24 +833,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
     ck_assert_msg(
         last_msg.msg.gps_time_dep_a.ns_residual == -236144,
         "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
-        "-236144, is %d",
-        last_msg.msg.gps_time_dep_a.ns_residual);
+        "-236144, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 407084900,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 407084900, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 407084900, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1838,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1838, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1838, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
   // Test successful parsing of a message
   {
@@ -906,24 +911,24 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSTimeDepA) {
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.gps_time_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.gps_time_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.flags);
 
     ck_assert_msg(
         last_msg.msg.gps_time_dep_a.ns_residual == -334131,
         "incorrect value for last_msg.msg.gps_time_dep_a.ns_residual, expected "
-        "-334131, is %d",
-        last_msg.msg.gps_time_dep_a.ns_residual);
+        "-334131, is %" PRId64,
+        (int64_t)last_msg.msg.gps_time_dep_a.ns_residual);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.tow == 407151150,
                   "incorrect value for last_msg.msg.gps_time_dep_a.tow, "
-                  "expected 407151150, is %d",
-                  last_msg.msg.gps_time_dep_a.tow);
+                  "expected 407151150, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.gps_time_dep_a.wn == 1838,
                   "incorrect value for last_msg.msg.gps_time_dep_a.wn, "
-                  "expected 1838, is %d",
-                  last_msg.msg.gps_time_dep_a.wn);
+                  "expected 1838, is %" PRId64,
+                  (int64_t)last_msg.msg.gps_time_dep_a.wn);
   }
 }
 END_TEST

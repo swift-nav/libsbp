@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -194,78 +194,79 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
     ck_assert_msg(
         last_msg.msg.reference_frame_param.delta_X0 == 7,
         "incorrect value for last_msg.msg.reference_frame_param.delta_X0, "
-        "expected 7, is %d",
-        last_msg.msg.reference_frame_param.delta_X0);
+        "expected 7, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.delta_X0);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.delta_Y0 == 8,
         "incorrect value for last_msg.msg.reference_frame_param.delta_Y0, "
-        "expected 8, is %d",
-        last_msg.msg.reference_frame_param.delta_Y0);
+        "expected 8, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.delta_Y0);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.delta_Z0 == 9,
         "incorrect value for last_msg.msg.reference_frame_param.delta_Z0, "
-        "expected 9, is %d",
-        last_msg.msg.reference_frame_param.delta_Z0);
+        "expected 9, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.delta_Z0);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.dot_delta_X0 == 14,
         "incorrect value for last_msg.msg.reference_frame_param.dot_delta_X0, "
-        "expected 14, is %d",
-        last_msg.msg.reference_frame_param.dot_delta_X0);
+        "expected 14, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.dot_delta_X0);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.dot_delta_Y0 == 15,
         "incorrect value for last_msg.msg.reference_frame_param.dot_delta_Y0, "
-        "expected 15, is %d",
-        last_msg.msg.reference_frame_param.dot_delta_Y0);
+        "expected 15, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.dot_delta_Y0);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.dot_delta_Z0 == 16,
         "incorrect value for last_msg.msg.reference_frame_param.dot_delta_Z0, "
-        "expected 16, is %d",
-        last_msg.msg.reference_frame_param.dot_delta_Z0);
+        "expected 16, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.dot_delta_Z0);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.dot_scale == 20,
         "incorrect value for last_msg.msg.reference_frame_param.dot_scale, "
-        "expected 20, is %d",
-        last_msg.msg.reference_frame_param.dot_scale);
+        "expected 20, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.dot_scale);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.dot_theta_01 == 17,
         "incorrect value for last_msg.msg.reference_frame_param.dot_theta_01, "
-        "expected 17, is %d",
-        last_msg.msg.reference_frame_param.dot_theta_01);
+        "expected 17, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.dot_theta_01);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.dot_theta_02 == 18,
         "incorrect value for last_msg.msg.reference_frame_param.dot_theta_02, "
-        "expected 18, is %d",
-        last_msg.msg.reference_frame_param.dot_theta_02);
+        "expected 18, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.dot_theta_02);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.dot_theta_03 == 19,
         "incorrect value for last_msg.msg.reference_frame_param.dot_theta_03, "
-        "expected 19, is %d",
-        last_msg.msg.reference_frame_param.dot_theta_03);
+        "expected 19, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.dot_theta_03);
 
-    ck_assert_msg(last_msg.msg.reference_frame_param.re_t0 == 6,
-                  "incorrect value for "
-                  "last_msg.msg.reference_frame_param.re_t0, expected 6, is %d",
-                  last_msg.msg.reference_frame_param.re_t0);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.re_t0 == 6,
+        "incorrect value for last_msg.msg.reference_frame_param.re_t0, "
+        "expected 6, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.re_t0);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.scale == 13,
         "incorrect value for last_msg.msg.reference_frame_param.scale, "
-        "expected 13, is %d",
-        last_msg.msg.reference_frame_param.scale);
+        "expected 13, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.scale);
 
     ck_assert_msg(last_msg.msg.reference_frame_param.sin == 4,
                   "incorrect value for last_msg.msg.reference_frame_param.sin, "
-                  "expected 4, is %d",
-                  last_msg.msg.reference_frame_param.sin);
+                  "expected 4, is %" PRId64,
+                  (int64_t)last_msg.msg.reference_frame_param.sin);
 
     {
       const char check_string[] = {
@@ -285,26 +286,26 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
     ck_assert_msg(
         last_msg.msg.reference_frame_param.ssr_iod == 1,
         "incorrect value for last_msg.msg.reference_frame_param.ssr_iod, "
-        "expected 1, is %d",
-        last_msg.msg.reference_frame_param.ssr_iod);
+        "expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.ssr_iod);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.theta_01 == 10,
         "incorrect value for last_msg.msg.reference_frame_param.theta_01, "
-        "expected 10, is %d",
-        last_msg.msg.reference_frame_param.theta_01);
+        "expected 10, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.theta_01);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.theta_02 == 11,
         "incorrect value for last_msg.msg.reference_frame_param.theta_02, "
-        "expected 11, is %d",
-        last_msg.msg.reference_frame_param.theta_02);
+        "expected 11, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.theta_02);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.theta_03 == 12,
         "incorrect value for last_msg.msg.reference_frame_param.theta_03, "
-        "expected 12, is %d",
-        last_msg.msg.reference_frame_param.theta_03);
+        "expected 12, is %" PRId64,
+        (int64_t)last_msg.msg.reference_frame_param.theta_03);
 
     {
       const char check_string[] = {
@@ -323,8 +324,8 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
 
     ck_assert_msg(last_msg.msg.reference_frame_param.utn == 5,
                   "incorrect value for last_msg.msg.reference_frame_param.utn, "
-                  "expected 5, is %d",
-                  last_msg.msg.reference_frame_param.utn);
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.reference_frame_param.utn);
   }
 }
 END_TEST

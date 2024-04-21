@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -136,25 +136,25 @@ START_TEST(test_auto_check_sbp_system_MsgGnssTimeOffset) {
 
     ck_assert_msg(last_msg.msg.gnss_time_offset.flags == 221,
                   "incorrect value for last_msg.msg.gnss_time_offset.flags, "
-                  "expected 221, is %d",
-                  last_msg.msg.gnss_time_offset.flags);
+                  "expected 221, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_time_offset.flags);
 
     ck_assert_msg(
         last_msg.msg.gnss_time_offset.microseconds == 9494,
         "incorrect value for last_msg.msg.gnss_time_offset.microseconds, "
-        "expected 9494, is %d",
-        last_msg.msg.gnss_time_offset.microseconds);
+        "expected 9494, is %" PRId64,
+        (int64_t)last_msg.msg.gnss_time_offset.microseconds);
 
     ck_assert_msg(
         last_msg.msg.gnss_time_offset.milliseconds == 1728664402,
         "incorrect value for last_msg.msg.gnss_time_offset.milliseconds, "
-        "expected 1728664402, is %d",
-        last_msg.msg.gnss_time_offset.milliseconds);
+        "expected 1728664402, is %" PRId64,
+        (int64_t)last_msg.msg.gnss_time_offset.milliseconds);
 
     ck_assert_msg(last_msg.msg.gnss_time_offset.weeks == 14857,
                   "incorrect value for last_msg.msg.gnss_time_offset.weeks, "
-                  "expected 14857, is %d",
-                  last_msg.msg.gnss_time_offset.weeks);
+                  "expected 14857, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_time_offset.weeks);
   }
 }
 END_TEST

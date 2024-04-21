@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -161,69 +161,69 @@ START_TEST(test_auto_check_sbp_piksi_MsgFrontEndGain) {
 
     ck_assert_msg(last_msg.msg.front_end_gain.if_gain[0] == -10,
                   "incorrect value for last_msg.msg.front_end_gain.if_gain[0], "
-                  "expected -10, is %d",
-                  last_msg.msg.front_end_gain.if_gain[0]);
+                  "expected -10, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.if_gain[0]);
     ck_assert_msg(last_msg.msg.front_end_gain.if_gain[1] == -23,
                   "incorrect value for last_msg.msg.front_end_gain.if_gain[1], "
-                  "expected -23, is %d",
-                  last_msg.msg.front_end_gain.if_gain[1]);
+                  "expected -23, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.if_gain[1]);
     ck_assert_msg(last_msg.msg.front_end_gain.if_gain[2] == -40,
                   "incorrect value for last_msg.msg.front_end_gain.if_gain[2], "
-                  "expected -40, is %d",
-                  last_msg.msg.front_end_gain.if_gain[2]);
+                  "expected -40, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.if_gain[2]);
     ck_assert_msg(last_msg.msg.front_end_gain.if_gain[3] == 80,
                   "incorrect value for last_msg.msg.front_end_gain.if_gain[3], "
-                  "expected 80, is %d",
-                  last_msg.msg.front_end_gain.if_gain[3]);
+                  "expected 80, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.if_gain[3]);
     ck_assert_msg(last_msg.msg.front_end_gain.if_gain[4] == -69,
                   "incorrect value for last_msg.msg.front_end_gain.if_gain[4], "
-                  "expected -69, is %d",
-                  last_msg.msg.front_end_gain.if_gain[4]);
+                  "expected -69, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.if_gain[4]);
     ck_assert_msg(last_msg.msg.front_end_gain.if_gain[5] == -43,
                   "incorrect value for last_msg.msg.front_end_gain.if_gain[5], "
-                  "expected -43, is %d",
-                  last_msg.msg.front_end_gain.if_gain[5]);
+                  "expected -43, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.if_gain[5]);
     ck_assert_msg(last_msg.msg.front_end_gain.if_gain[6] == 85,
                   "incorrect value for last_msg.msg.front_end_gain.if_gain[6], "
-                  "expected 85, is %d",
-                  last_msg.msg.front_end_gain.if_gain[6]);
+                  "expected 85, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.if_gain[6]);
     ck_assert_msg(last_msg.msg.front_end_gain.if_gain[7] == 2,
                   "incorrect value for last_msg.msg.front_end_gain.if_gain[7], "
-                  "expected 2, is %d",
-                  last_msg.msg.front_end_gain.if_gain[7]);
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.if_gain[7]);
 
     ck_assert_msg(last_msg.msg.front_end_gain.rf_gain[0] == 41,
                   "incorrect value for last_msg.msg.front_end_gain.rf_gain[0], "
-                  "expected 41, is %d",
-                  last_msg.msg.front_end_gain.rf_gain[0]);
+                  "expected 41, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.rf_gain[0]);
     ck_assert_msg(last_msg.msg.front_end_gain.rf_gain[1] == -123,
                   "incorrect value for last_msg.msg.front_end_gain.rf_gain[1], "
-                  "expected -123, is %d",
-                  last_msg.msg.front_end_gain.rf_gain[1]);
+                  "expected -123, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.rf_gain[1]);
     ck_assert_msg(last_msg.msg.front_end_gain.rf_gain[2] == -122,
                   "incorrect value for last_msg.msg.front_end_gain.rf_gain[2], "
-                  "expected -122, is %d",
-                  last_msg.msg.front_end_gain.rf_gain[2]);
+                  "expected -122, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.rf_gain[2]);
     ck_assert_msg(last_msg.msg.front_end_gain.rf_gain[3] == 10,
                   "incorrect value for last_msg.msg.front_end_gain.rf_gain[3], "
-                  "expected 10, is %d",
-                  last_msg.msg.front_end_gain.rf_gain[3]);
+                  "expected 10, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.rf_gain[3]);
     ck_assert_msg(last_msg.msg.front_end_gain.rf_gain[4] == 105,
                   "incorrect value for last_msg.msg.front_end_gain.rf_gain[4], "
-                  "expected 105, is %d",
-                  last_msg.msg.front_end_gain.rf_gain[4]);
+                  "expected 105, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.rf_gain[4]);
     ck_assert_msg(last_msg.msg.front_end_gain.rf_gain[5] == 20,
                   "incorrect value for last_msg.msg.front_end_gain.rf_gain[5], "
-                  "expected 20, is %d",
-                  last_msg.msg.front_end_gain.rf_gain[5]);
+                  "expected 20, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.rf_gain[5]);
     ck_assert_msg(last_msg.msg.front_end_gain.rf_gain[6] == 38,
                   "incorrect value for last_msg.msg.front_end_gain.rf_gain[6], "
-                  "expected 38, is %d",
-                  last_msg.msg.front_end_gain.rf_gain[6]);
+                  "expected 38, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.rf_gain[6]);
     ck_assert_msg(last_msg.msg.front_end_gain.rf_gain[7] == 38,
                   "incorrect value for last_msg.msg.front_end_gain.rf_gain[7], "
-                  "expected 38, is %d",
-                  last_msg.msg.front_end_gain.rf_gain[7]);
+                  "expected 38, is %" PRId64,
+                  (int64_t)last_msg.msg.front_end_gain.rf_gain[7]);
   }
 }
 END_TEST

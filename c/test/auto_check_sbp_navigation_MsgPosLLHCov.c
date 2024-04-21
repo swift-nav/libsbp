@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -154,63 +154,63 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHCov) {
 
     ck_assert_msg((last_msg.msg.pos_llh_cov.cov_d_d * 100 - 2.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov.cov_d_d, "
-                  "expected 2.0, is %s",
+                  "expected 2.0, is %f",
                   last_msg.msg.pos_llh_cov.cov_d_d);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov.cov_e_d * 100 - 1.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov.cov_e_d, "
-                  "expected 1.0, is %s",
+                  "expected 1.0, is %f",
                   last_msg.msg.pos_llh_cov.cov_e_d);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov.cov_e_e * 100 - 6.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov.cov_e_e, "
-                  "expected 6.0, is %s",
+                  "expected 6.0, is %f",
                   last_msg.msg.pos_llh_cov.cov_e_e);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov.cov_n_d * 100 - 8.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov.cov_n_d, "
-                  "expected 8.0, is %s",
+                  "expected 8.0, is %f",
                   last_msg.msg.pos_llh_cov.cov_n_d);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov.cov_n_e * 100 - 5.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov.cov_n_e, "
-                  "expected 5.0, is %s",
+                  "expected 5.0, is %f",
                   last_msg.msg.pos_llh_cov.cov_n_e);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov.cov_n_n * 100 - 7.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov.cov_n_n, "
-                  "expected 7.0, is %s",
+                  "expected 7.0, is %f",
                   last_msg.msg.pos_llh_cov.cov_n_n);
 
-    ck_assert_msg(
-        last_msg.msg.pos_llh_cov.flags == 5,
-        "incorrect value for last_msg.msg.pos_llh_cov.flags, expected 5, is %d",
-        last_msg.msg.pos_llh_cov.flags);
+    ck_assert_msg(last_msg.msg.pos_llh_cov.flags == 5,
+                  "incorrect value for last_msg.msg.pos_llh_cov.flags, "
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_cov.flags);
 
     ck_assert_msg((last_msg.msg.pos_llh_cov.height * 100 - 0.0 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_cov.height, "
-                  "expected 0.0, is %s",
+                  "expected 0.0, is %f",
                   last_msg.msg.pos_llh_cov.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_cov.lat * 100 - 0.0 * 100) < 0.05,
-        "incorrect value for last_msg.msg.pos_llh_cov.lat, expected 0.0, is %s",
+        "incorrect value for last_msg.msg.pos_llh_cov.lat, expected 0.0, is %f",
         last_msg.msg.pos_llh_cov.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_cov.lon * 100 - 7.0 * 100) < 0.05,
-        "incorrect value for last_msg.msg.pos_llh_cov.lon, expected 7.0, is %s",
+        "incorrect value for last_msg.msg.pos_llh_cov.lon, expected 7.0, is %f",
         last_msg.msg.pos_llh_cov.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_cov.n_sats == 5,
                   "incorrect value for last_msg.msg.pos_llh_cov.n_sats, "
-                  "expected 5, is %d",
-                  last_msg.msg.pos_llh_cov.n_sats);
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_cov.n_sats);
 
-    ck_assert_msg(
-        last_msg.msg.pos_llh_cov.tow == 7,
-        "incorrect value for last_msg.msg.pos_llh_cov.tow, expected 7, is %d",
-        last_msg.msg.pos_llh_cov.tow);
+    ck_assert_msg(last_msg.msg.pos_llh_cov.tow == 7,
+                  "incorrect value for last_msg.msg.pos_llh_cov.tow, expected "
+                  "7, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_cov.tow);
   }
 }
 END_TEST

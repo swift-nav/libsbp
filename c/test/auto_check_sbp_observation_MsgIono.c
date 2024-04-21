@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -150,55 +150,55 @@ START_TEST(test_auto_check_sbp_observation_MsgIono) {
 
     ck_assert_msg((last_msg.msg.iono.a0 * 100 - 4.65661287308e-09 * 100) < 0.05,
                   "incorrect value for last_msg.msg.iono.a0, expected "
-                  "4.65661287308e-09, is %s",
+                  "4.65661287308e-09, is %f",
                   last_msg.msg.iono.a0);
 
     ck_assert_msg((last_msg.msg.iono.a1 * 100 - 1.49011611938e-08 * 100) < 0.05,
                   "incorrect value for last_msg.msg.iono.a1, expected "
-                  "1.49011611938e-08, is %s",
+                  "1.49011611938e-08, is %f",
                   last_msg.msg.iono.a1);
 
     ck_assert_msg(
         (last_msg.msg.iono.a2 * 100 - -5.96046447754e-08 * 100) < 0.05,
         "incorrect value for last_msg.msg.iono.a2, expected "
-        "-5.96046447754e-08, is %s",
+        "-5.96046447754e-08, is %f",
         last_msg.msg.iono.a2);
 
     ck_assert_msg(
         (last_msg.msg.iono.a3 * 100 - -5.96046447754e-08 * 100) < 0.05,
         "incorrect value for last_msg.msg.iono.a3, expected "
-        "-5.96046447754e-08, is %s",
+        "-5.96046447754e-08, is %f",
         last_msg.msg.iono.a3);
 
     ck_assert_msg(
         (last_msg.msg.iono.b0 * 100 - 77824.0 * 100) < 0.05,
-        "incorrect value for last_msg.msg.iono.b0, expected 77824.0, is %s",
+        "incorrect value for last_msg.msg.iono.b0, expected 77824.0, is %f",
         last_msg.msg.iono.b0);
 
     ck_assert_msg(
         (last_msg.msg.iono.b1 * 100 - 49152.0 * 100) < 0.05,
-        "incorrect value for last_msg.msg.iono.b1, expected 49152.0, is %s",
+        "incorrect value for last_msg.msg.iono.b1, expected 49152.0, is %f",
         last_msg.msg.iono.b1);
 
     ck_assert_msg(
         (last_msg.msg.iono.b2 * 100 - -65536.0 * 100) < 0.05,
-        "incorrect value for last_msg.msg.iono.b2, expected -65536.0, is %s",
+        "incorrect value for last_msg.msg.iono.b2, expected -65536.0, is %f",
         last_msg.msg.iono.b2);
 
     ck_assert_msg(
         (last_msg.msg.iono.b3 * 100 - -327680.0 * 100) < 0.05,
-        "incorrect value for last_msg.msg.iono.b3, expected -327680.0, is %s",
+        "incorrect value for last_msg.msg.iono.b3, expected -327680.0, is %f",
         last_msg.msg.iono.b3);
 
-    ck_assert_msg(
-        last_msg.msg.iono.t_nmct.tow == 0,
-        "incorrect value for last_msg.msg.iono.t_nmct.tow, expected 0, is %d",
-        last_msg.msg.iono.t_nmct.tow);
+    ck_assert_msg(last_msg.msg.iono.t_nmct.tow == 0,
+                  "incorrect value for last_msg.msg.iono.t_nmct.tow, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.iono.t_nmct.tow);
 
-    ck_assert_msg(
-        last_msg.msg.iono.t_nmct.wn == 0,
-        "incorrect value for last_msg.msg.iono.t_nmct.wn, expected 0, is %d",
-        last_msg.msg.iono.t_nmct.wn);
+    ck_assert_msg(last_msg.msg.iono.t_nmct.wn == 0,
+                  "incorrect value for last_msg.msg.iono.t_nmct.wn, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.iono.t_nmct.wn);
   }
 }
 END_TEST

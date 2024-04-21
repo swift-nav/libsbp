@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -211,40 +211,42 @@ START_TEST(test_auto_check_sbp_linux_MsgLinuxProcessSocketQueues) {
     ck_assert_msg(
         last_msg.msg.linux_process_socket_queues.index == 181,
         "incorrect value for last_msg.msg.linux_process_socket_queues.index, "
-        "expected 181, is %d",
-        last_msg.msg.linux_process_socket_queues.index);
+        "expected 181, is %" PRId64,
+        (int64_t)last_msg.msg.linux_process_socket_queues.index);
 
     ck_assert_msg(
         last_msg.msg.linux_process_socket_queues.pid == 19335,
         "incorrect value for last_msg.msg.linux_process_socket_queues.pid, "
-        "expected 19335, is %d",
-        last_msg.msg.linux_process_socket_queues.pid);
+        "expected 19335, is %" PRId64,
+        (int64_t)last_msg.msg.linux_process_socket_queues.pid);
 
-    ck_assert_msg(last_msg.msg.linux_process_socket_queues.recv_queued == 54265,
-                  "incorrect value for "
-                  "last_msg.msg.linux_process_socket_queues.recv_queued, "
-                  "expected 54265, is %d",
-                  last_msg.msg.linux_process_socket_queues.recv_queued);
+    ck_assert_msg(
+        last_msg.msg.linux_process_socket_queues.recv_queued == 54265,
+        "incorrect value for "
+        "last_msg.msg.linux_process_socket_queues.recv_queued, expected 54265, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.linux_process_socket_queues.recv_queued);
 
-    ck_assert_msg(last_msg.msg.linux_process_socket_queues.send_queued == 64547,
-                  "incorrect value for "
-                  "last_msg.msg.linux_process_socket_queues.send_queued, "
-                  "expected 64547, is %d",
-                  last_msg.msg.linux_process_socket_queues.send_queued);
+    ck_assert_msg(
+        last_msg.msg.linux_process_socket_queues.send_queued == 64547,
+        "incorrect value for "
+        "last_msg.msg.linux_process_socket_queues.send_queued, expected 64547, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.linux_process_socket_queues.send_queued);
 
     ck_assert_msg(
         last_msg.msg.linux_process_socket_queues.socket_states == 57103,
         "incorrect value for "
         "last_msg.msg.linux_process_socket_queues.socket_states, expected "
-        "57103, is %d",
-        last_msg.msg.linux_process_socket_queues.socket_states);
+        "57103, is %" PRId64,
+        (int64_t)last_msg.msg.linux_process_socket_queues.socket_states);
 
     ck_assert_msg(
         last_msg.msg.linux_process_socket_queues.socket_types == 27984,
         "incorrect value for "
         "last_msg.msg.linux_process_socket_queues.socket_types, expected "
-        "27984, is %d",
-        last_msg.msg.linux_process_socket_queues.socket_types);
+        "27984, is %" PRId64,
+        (int64_t)last_msg.msg.linux_process_socket_queues.socket_types);
   }
 }
 END_TEST
