@@ -14,7 +14,6 @@
 #define LIBSBP_SBP_H
 
 #include <libsbp/common.h>
-#include <libsbp/legacy/callbacks.h>
 #include <libsbp/sbp_msg_type.h>
 #include <libsbp/sbp_msg.h>
 
@@ -74,39 +73,8 @@ extern "C" {
 /** Get message payload pointer from frame */
 #define SBP_FRAME_MSG_PAYLOAD(frame_ptr) (&((frame_ptr)[SBP_FRAME_OFFSET_MSG]))
 
-typedef void (*sbp_decoded_callback_t)(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg, void *context);
+typedef void (*sbp_callback_t)(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg, void *context);
 
-/** SBP callback function prototype definitions. */
-typedef union {
-  sbp_msg_callback_t msg;
-  sbp_frame_callback_t frame;
-  sbp_decoded_callback_t decoded;
-} sbp_callback_t;
-
-/** SBP callback type enum:
- * SBP_PAYLOAD_CALLBACK are the original callbacks in libsbp without framing args
- * SBP_FRAME_CALLBACK are raw frame callbacks that include framing data as args.
- * SBP_DECODED_CALLBACK are callbacks which receive decoded (ie, not raw) messages
- *
- * This enum is stored on each sbp_msg_callback_node struct to identify how
- * to cast the callback function pointer stored within.
- *
- * SBP_PAYLOAD_CALLBACK and SBP_FRAME_CALLBACK are part of the legacy libsbp API. They
- * are both deprecated and should not be used in new code. SBP_DECODED_CALLBACK should
- * be used for all new development.
- */
-enum sbp_cb_type {
-  SBP_MSG_CALLBACK = 0,
-  SBP_FRAME_CALLBACK = 1,
-  SBP_DECODED_CALLBACK = 2,
-  SBP_CALLBACK_TYPE_COUNT = 3,
-};
-
-#define SBP_CALLBACK_FLAG(cb_type) (1u << (cb_type))
-#define SBP_CALLBACK_ALL_MASK \
-  ((SBP_CALLBACK_FLAG(SBP_CALLBACK_TYPE_COUNT)) - 1)
-
-typedef enum sbp_cb_type sbp_cb_type;
 /** SBP callback node.
  * Forms a linked list of callbacks.
  * \note Must be statically allocated for use with sbp_register_callback()
@@ -117,7 +85,6 @@ struct sbp_msg_callbacks_node {
   sbp_callback_t cb; /**< Pointer to callback function. */
   void *context;     /**< Pointer to a context */
   struct sbp_msg_callbacks_node *next; /**< Pointer to next node in list. */
-  sbp_cb_type cb_type;                 /**< Enum that holds the type of callback. */
 };
 
 /** State structure for processing SBP messages. */
@@ -150,9 +117,9 @@ SBP_EXPORT void sbp_state_init(sbp_state_t *s);
 SBP_EXPORT void sbp_state_set_io_context(sbp_state_t *s, void* context);
 SBP_EXPORT s8 sbp_process(sbp_state_t *s, sbp_read_fn_t read);
 
-SBP_EXPORT s8 sbp_callback_register(sbp_state_t* s, sbp_msg_type_t msg_type, sbp_decoded_callback_t cb, void* context,
+SBP_EXPORT s8 sbp_callback_register(sbp_state_t* s, sbp_msg_type_t msg_type, sbp_callback_t cb, void* context,
                          sbp_msg_callbacks_node_t *node);
-SBP_EXPORT s8 sbp_all_message_callback_register(sbp_state_t *s, sbp_decoded_callback_t cb, void* context,
+SBP_EXPORT s8 sbp_all_message_callback_register(sbp_state_t *s, sbp_callback_t cb, void* context,
                                  sbp_msg_callbacks_node_t *node);
 SBP_EXPORT s8 sbp_message_process(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg);
 SBP_EXPORT s8 sbp_message_send(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, const sbp_msg_t *msg,

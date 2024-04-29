@@ -18,23 +18,19 @@
 #ifndef LIBSBP_USER_MACROS_H
 #define LIBSBP_USER_MACROS_H
 
-#define SBP_MSG_USER_DATA 0x0800
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_user_data_t::contents (V4 API) or msg_user_data_t::contents (legacy
- * API) before the maximum SBP message size is exceeded
+ * sbp_msg_user_data_t::contents before the maximum SBP message size is exceeded
  */
 #define SBP_MSG_USER_DATA_CONTENTS_MAX 255u
 
 /**
- * Encoded length of sbp_msg_user_data_t (V4 API) and
- * msg_user_data_t (legacy API)
+ * Encoded length of sbp_msg_user_data_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_user_data_encoded_len to determine the actual size of an instance
- * of this message. Users of the legacy API are required to track the encoded
- * message length when interacting with the legacy type.
+ * of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_MSG_SSR_SATELLITE_APC_H
-#define LIBSBP_V4_SSR_MSG_SSR_SATELLITE_APC_H
+#ifndef LIBSBP_SSR_MSG_SSR_SATELLITE_APC_H
+#define LIBSBP_SSR_MSG_SSR_SATELLITE_APC_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -206,4 +206,4 @@ static inline bool operator>=(const sbp_msg_ssr_satellite_apc_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SSR_MSG_SSR_SATELLITE_APC_H */
+#endif /* LIBSBP_SSR_MSG_SSR_SATELLITE_APC_H */

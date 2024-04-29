@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -154,63 +154,63 @@ START_TEST(test_auto_check_sbp_flash_MsgStmUniqueIdResp) {
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[0] == 196,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[0], "
-        "expected 196, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[0]);
+        "expected 196, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[0]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[1] == 16,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[1], "
-        "expected 16, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[1]);
+        "expected 16, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[1]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[2] == 15,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[2], "
-        "expected 15, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[2]);
+        "expected 15, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[2]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[3] == 163,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[3], "
-        "expected 163, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[3]);
+        "expected 163, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[3]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[4] == 85,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[4], "
-        "expected 85, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[4]);
+        "expected 85, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[4]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[5] == 221,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[5], "
-        "expected 221, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[5]);
+        "expected 221, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[5]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[6] == 119,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[6], "
-        "expected 119, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[6]);
+        "expected 119, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[6]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[7] == 102,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[7], "
-        "expected 102, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[7]);
+        "expected 102, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[7]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[8] == 32,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[8], "
-        "expected 32, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[8]);
+        "expected 32, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[8]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[9] == 194,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[9], "
-        "expected 194, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[9]);
+        "expected 194, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[9]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[10] == 56,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[10], "
-        "expected 56, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[10]);
+        "expected 56, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[10]);
     ck_assert_msg(
         last_msg.msg.stm_unique_id_resp.stm_id[11] == 144,
         "incorrect value for last_msg.msg.stm_unique_id_resp.stm_id[11], "
-        "expected 144, is %d",
-        last_msg.msg.stm_unique_id_resp.stm_id[11]);
+        "expected 144, is %" PRId64,
+        (int64_t)last_msg.msg.stm_unique_id_resp.stm_id[11]);
   }
 }
 END_TEST

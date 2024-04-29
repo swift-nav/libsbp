@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -146,46 +146,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLlhGnss) {
 
     ck_assert_msg(last_msg.msg.pos_llh_gnss.flags == 4,
                   "incorrect value for last_msg.msg.pos_llh_gnss.flags, "
-                  "expected 4, is %d",
-                  last_msg.msg.pos_llh_gnss.flags);
+                  "expected 4, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_gnss.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_gnss.h_accuracy == 87,
                   "incorrect value for last_msg.msg.pos_llh_gnss.h_accuracy, "
-                  "expected 87, is %d",
-                  last_msg.msg.pos_llh_gnss.h_accuracy);
+                  "expected 87, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_gnss.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_gnss.height * 100 - -17.3938212478 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_gnss.height, expected "
-        "-17.3938212478, is %s",
+        "-17.3938212478, is %f",
         last_msg.msg.pos_llh_gnss.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_gnss.lat * 100 - 37.831231965 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_gnss.lat, expected "
-        "37.831231965, is %s",
+        "37.831231965, is %f",
         last_msg.msg.pos_llh_gnss.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_gnss.lon * 100 - -122.28650381 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_gnss.lon, expected "
-        "-122.28650381, is %s",
+        "-122.28650381, is %f",
         last_msg.msg.pos_llh_gnss.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_gnss.n_sats == 18,
                   "incorrect value for last_msg.msg.pos_llh_gnss.n_sats, "
-                  "expected 18, is %d",
-                  last_msg.msg.pos_llh_gnss.n_sats);
+                  "expected 18, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_gnss.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_gnss.tow == 501867800,
                   "incorrect value for last_msg.msg.pos_llh_gnss.tow, expected "
-                  "501867800, is %d",
-                  last_msg.msg.pos_llh_gnss.tow);
+                  "501867800, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_gnss.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_gnss.v_accuracy == 181,
                   "incorrect value for last_msg.msg.pos_llh_gnss.v_accuracy, "
-                  "expected 181, is %d",
-                  last_msg.msg.pos_llh_gnss.v_accuracy);
+                  "expected 181, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_gnss.v_accuracy);
   }
 }
 END_TEST

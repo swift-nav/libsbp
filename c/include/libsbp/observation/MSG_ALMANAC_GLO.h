@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_OBSERVATION_MSG_ALMANAC_GLO_H
-#define LIBSBP_V4_OBSERVATION_MSG_ALMANAC_GLO_H
+#ifndef LIBSBP_OBSERVATION_MSG_ALMANAC_GLO_H
+#define LIBSBP_OBSERVATION_MSG_ALMANAC_GLO_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -215,4 +215,4 @@ static inline bool operator>=(const sbp_msg_almanac_glo_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_OBSERVATION_MSG_ALMANAC_GLO_H */
+#endif /* LIBSBP_OBSERVATION_MSG_ALMANAC_GLO_H */

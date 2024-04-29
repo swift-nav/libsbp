@@ -15,9 +15,9 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_TELEMETRY_MESSAGES_H
-#define LIBSBP_V4_TELEMETRY_MESSAGES_H
+#ifndef LIBSBP_TELEMETRY_MESSAGES_H
+#define LIBSBP_TELEMETRY_MESSAGES_H
 #include <libsbp/telemetry/MSG_TEL_SV.h>
 #include <libsbp/telemetry/TelemetrySV.h>
 
-#endif /* LIBSBP_V4_TELEMETRY_MESSAGES_H */
+#endif /* LIBSBP_TELEMETRY_MESSAGES_H */

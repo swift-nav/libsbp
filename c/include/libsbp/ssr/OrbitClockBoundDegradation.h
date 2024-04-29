@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_ORBITCLOCKBOUNDDEGRADATION_H
-#define LIBSBP_V4_SSR_ORBITCLOCKBOUNDDEGRADATION_H
+#ifndef LIBSBP_SSR_ORBITCLOCKBOUNDDEGRADATION_H
+#define LIBSBP_SSR_ORBITCLOCKBOUNDDEGRADATION_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -201,4 +201,4 @@ static inline bool operator>=(const sbp_orbit_clock_bound_degradation_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SSR_ORBITCLOCKBOUNDDEGRADATION_H */
+#endif /* LIBSBP_SSR_ORBITCLOCKBOUNDDEGRADATION_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_SIGNING_H
-#define LIBSBP_INTERNAL_V4_SIGNING_H
+#ifndef LIBSBP_INTERNAL_SIGNING_H
+#define LIBSBP_INTERNAL_SIGNING_H
 
 #include <stdbool.h>
 
@@ -250,4 +250,4 @@ bool sbp_msg_ed25519_signature_dep_b_decode_internal(
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_SIGNING_H */
+#endif /* LIBSBP_INTERNAL_SIGNING_H */

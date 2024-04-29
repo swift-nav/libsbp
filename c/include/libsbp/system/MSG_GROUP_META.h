@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SYSTEM_MSG_GROUP_META_H
-#define LIBSBP_V4_SYSTEM_MSG_GROUP_META_H
+#ifndef LIBSBP_SYSTEM_MSG_GROUP_META_H
+#define LIBSBP_SYSTEM_MSG_GROUP_META_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -193,4 +193,4 @@ static inline bool operator>=(const sbp_msg_group_meta_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SYSTEM_MSG_GROUP_META_H */
+#endif /* LIBSBP_SYSTEM_MSG_GROUP_META_H */

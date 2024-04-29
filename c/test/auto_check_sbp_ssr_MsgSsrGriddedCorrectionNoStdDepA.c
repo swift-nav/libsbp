@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -704,77 +704,84 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
         last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.iod_atmo == 236,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.iod_atmo, "
-        "expected 236, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.iod_atmo);
+        "expected 236, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.iod_atmo);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.num_msgs ==
             62837,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.num_msgs, "
-        "expected 62837, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.num_msgs);
+        "expected 62837, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.num_msgs);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.seq_num ==
             63555,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.seq_num, "
-        "expected 63555, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.seq_num);
+        "expected 63555, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.seq_num);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.time.tow ==
             2837573811,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.time.tow, "
-        "expected 2837573811, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.time.tow);
+        "expected 2837573811, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.time.tow);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.time.wn == 8940,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.time.wn, "
-        "expected 8940, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.time.wn);
+        "expected 8940, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_no_std_dep_a.header.time.wn);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_no_std_dep_a.header
                           .tropo_quality_indicator == 230,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_no_std_dep_a.header."
-                  "tropo_quality_indicator, expected 230, is %d",
-                  last_msg.msg.ssr_gridded_correction_no_std_dep_a.header
-                      .tropo_quality_indicator);
+                  "tropo_quality_indicator, expected 230, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+                      .header.tropo_quality_indicator);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_no_std_dep_a.header
                           .update_interval == 233,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_no_std_dep_a.header."
-                  "update_interval, expected 233, is %d",
-                  last_msg.msg.ssr_gridded_correction_no_std_dep_a.header
-                      .update_interval);
+                  "update_interval, expected 233, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+                      .header.update_interval);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_no_std_dep_a.index == 26598,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.index, expected "
-        "26598, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.index);
+        "26598, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a.index);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_no_std_dep_a.n_stec_residuals == 59,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.n_stec_residuals, "
-        "expected 59, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.n_stec_residuals);
+        "expected 59, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction_no_std_dep_a.n_stec_residuals);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[0]
                 .residual == -23949,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[0]."
-        "residual, expected -23949, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[0]
+        "residual, expected -23949, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[0]
             .residual);
 
     ck_assert_msg(
@@ -782,8 +789,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 157,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[0].sv_"
-        "id.constellation, expected 157, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[0]
+        "id.constellation, expected 157, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[0]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -791,8 +799,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 231,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[0].sv_"
-        "id.satId, expected 231, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[0]
+        "id.satId, expected 231, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[0]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -800,8 +809,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 27427,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[1]."
-        "residual, expected 27427, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[1]
+        "residual, expected 27427, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[1]
             .residual);
 
     ck_assert_msg(
@@ -809,8 +819,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 146,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[1].sv_"
-        "id.constellation, expected 146, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[1]
+        "id.constellation, expected 146, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[1]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -818,8 +829,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 197,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[1].sv_"
-        "id.satId, expected 197, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[1]
+        "id.satId, expected 197, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[1]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -827,8 +839,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 10548,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[2]."
-        "residual, expected 10548, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[2]
+        "residual, expected 10548, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[2]
             .residual);
 
     ck_assert_msg(
@@ -836,8 +849,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 109,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[2].sv_"
-        "id.constellation, expected 109, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[2]
+        "id.constellation, expected 109, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[2]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -845,8 +859,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 222,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[2].sv_"
-        "id.satId, expected 222, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[2]
+        "id.satId, expected 222, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[2]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -854,8 +869,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -18195,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[3]."
-        "residual, expected -18195, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[3]
+        "residual, expected -18195, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[3]
             .residual);
 
     ck_assert_msg(
@@ -863,8 +879,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 12,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[3].sv_"
-        "id.constellation, expected 12, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[3]
+        "id.constellation, expected 12, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[3]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -872,8 +889,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 86,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[3].sv_"
-        "id.satId, expected 86, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[3]
+        "id.satId, expected 86, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[3]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -881,8 +899,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -27511,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[4]."
-        "residual, expected -27511, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[4]
+        "residual, expected -27511, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[4]
             .residual);
 
     ck_assert_msg(
@@ -890,8 +909,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 204,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[4].sv_"
-        "id.constellation, expected 204, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[4]
+        "id.constellation, expected 204, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[4]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -899,8 +919,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 65,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[4].sv_"
-        "id.satId, expected 65, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[4]
+        "id.satId, expected 65, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[4]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -908,8 +929,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 11,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[5]."
-        "residual, expected 11, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[5]
+        "residual, expected 11, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[5]
             .residual);
 
     ck_assert_msg(
@@ -917,8 +939,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 183,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[5].sv_"
-        "id.constellation, expected 183, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[5]
+        "id.constellation, expected 183, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[5]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -926,8 +949,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 171,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[5].sv_"
-        "id.satId, expected 171, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[5]
+        "id.satId, expected 171, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[5]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -935,8 +959,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 13740,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[6]."
-        "residual, expected 13740, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[6]
+        "residual, expected 13740, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[6]
             .residual);
 
     ck_assert_msg(
@@ -944,8 +969,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 203,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[6].sv_"
-        "id.constellation, expected 203, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[6]
+        "id.constellation, expected 203, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[6]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -953,8 +979,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 180,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[6].sv_"
-        "id.satId, expected 180, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[6]
+        "id.satId, expected 180, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[6]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -962,8 +989,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 29626,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[7]."
-        "residual, expected 29626, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[7]
+        "residual, expected 29626, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[7]
             .residual);
 
     ck_assert_msg(
@@ -971,8 +999,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 85,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[7].sv_"
-        "id.constellation, expected 85, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[7]
+        "id.constellation, expected 85, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[7]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -980,8 +1009,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 196,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[7].sv_"
-        "id.satId, expected 196, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[7]
+        "id.satId, expected 196, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[7]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -989,8 +1019,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 7846,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[8]."
-        "residual, expected 7846, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[8]
+        "residual, expected 7846, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[8]
             .residual);
 
     ck_assert_msg(
@@ -998,8 +1029,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 92,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[8].sv_"
-        "id.constellation, expected 92, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[8]
+        "id.constellation, expected 92, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[8]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1007,8 +1039,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 203,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[8].sv_"
-        "id.satId, expected 203, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[8]
+        "id.satId, expected 203, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[8]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1016,8 +1049,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 18376,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[9]."
-        "residual, expected 18376, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[9]
+        "residual, expected 18376, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[9]
             .residual);
 
     ck_assert_msg(
@@ -1025,8 +1059,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 13,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[9].sv_"
-        "id.constellation, expected 13, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[9]
+        "id.constellation, expected 13, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[9]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1034,8 +1069,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 42,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[9].sv_"
-        "id.satId, expected 42, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[9]
+        "id.satId, expected 42, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[9]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1043,8 +1079,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -24357,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[10]."
-        "residual, expected -24357, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[10]
+        "residual, expected -24357, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[10]
             .residual);
 
     ck_assert_msg(
@@ -1052,8 +1089,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 137,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[10]."
-        "sv_id.constellation, expected 137, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[10]
+        "sv_id.constellation, expected 137, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[10]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1061,8 +1099,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 98,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[10]."
-        "sv_id.satId, expected 98, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[10]
+        "sv_id.satId, expected 98, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[10]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1070,8 +1109,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -1441,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[11]."
-        "residual, expected -1441, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[11]
+        "residual, expected -1441, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[11]
             .residual);
 
     ck_assert_msg(
@@ -1079,8 +1119,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 216,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[11]."
-        "sv_id.constellation, expected 216, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[11]
+        "sv_id.constellation, expected 216, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[11]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1088,8 +1129,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 95,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[11]."
-        "sv_id.satId, expected 95, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[11]
+        "sv_id.satId, expected 95, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[11]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1097,8 +1139,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -10660,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[12]."
-        "residual, expected -10660, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[12]
+        "residual, expected -10660, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[12]
             .residual);
 
     ck_assert_msg(
@@ -1106,8 +1149,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 196,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[12]."
-        "sv_id.constellation, expected 196, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[12]
+        "sv_id.constellation, expected 196, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[12]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1115,8 +1159,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 99,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[12]."
-        "sv_id.satId, expected 99, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[12]
+        "sv_id.satId, expected 99, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[12]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1124,8 +1169,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -8509,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[13]."
-        "residual, expected -8509, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[13]
+        "residual, expected -8509, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[13]
             .residual);
 
     ck_assert_msg(
@@ -1133,8 +1179,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 253,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[13]."
-        "sv_id.constellation, expected 253, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[13]
+        "sv_id.constellation, expected 253, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[13]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1142,8 +1189,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 159,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[13]."
-        "sv_id.satId, expected 159, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[13]
+        "sv_id.satId, expected 159, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[13]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1151,8 +1199,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 16361,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[14]."
-        "residual, expected 16361, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[14]
+        "residual, expected 16361, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[14]
             .residual);
 
     ck_assert_msg(
@@ -1160,8 +1209,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 146,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[14]."
-        "sv_id.constellation, expected 146, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[14]
+        "sv_id.constellation, expected 146, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[14]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1169,8 +1219,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 233,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[14]."
-        "sv_id.satId, expected 233, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[14]
+        "sv_id.satId, expected 233, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[14]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1178,8 +1229,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 10346,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[15]."
-        "residual, expected 10346, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[15]
+        "residual, expected 10346, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[15]
             .residual);
 
     ck_assert_msg(
@@ -1187,8 +1239,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 24,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[15]."
-        "sv_id.constellation, expected 24, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[15]
+        "sv_id.constellation, expected 24, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[15]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1196,8 +1249,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 76,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[15]."
-        "sv_id.satId, expected 76, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[15]
+        "sv_id.satId, expected 76, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[15]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1205,8 +1259,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -18679,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[16]."
-        "residual, expected -18679, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[16]
+        "residual, expected -18679, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[16]
             .residual);
 
     ck_assert_msg(
@@ -1214,8 +1269,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 65,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[16]."
-        "sv_id.constellation, expected 65, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[16]
+        "sv_id.constellation, expected 65, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[16]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1223,8 +1279,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 253,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[16]."
-        "sv_id.satId, expected 253, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[16]
+        "sv_id.satId, expected 253, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[16]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1232,8 +1289,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 15292,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[17]."
-        "residual, expected 15292, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[17]
+        "residual, expected 15292, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[17]
             .residual);
 
     ck_assert_msg(
@@ -1241,8 +1299,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 215,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[17]."
-        "sv_id.constellation, expected 215, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[17]
+        "sv_id.constellation, expected 215, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[17]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1250,8 +1309,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 40,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[17]."
-        "sv_id.satId, expected 40, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[17]
+        "sv_id.satId, expected 40, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[17]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1259,8 +1319,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 29537,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[18]."
-        "residual, expected 29537, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[18]
+        "residual, expected 29537, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[18]
             .residual);
 
     ck_assert_msg(
@@ -1268,8 +1329,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 69,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[18]."
-        "sv_id.constellation, expected 69, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[18]
+        "sv_id.constellation, expected 69, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[18]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1277,8 +1339,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 117,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[18]."
-        "sv_id.satId, expected 117, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[18]
+        "sv_id.satId, expected 117, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[18]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1286,8 +1349,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -29440,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[19]."
-        "residual, expected -29440, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[19]
+        "residual, expected -29440, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[19]
             .residual);
 
     ck_assert_msg(
@@ -1295,8 +1359,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 56,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[19]."
-        "sv_id.constellation, expected 56, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[19]
+        "sv_id.constellation, expected 56, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[19]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1304,8 +1369,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 60,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[19]."
-        "sv_id.satId, expected 60, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[19]
+        "sv_id.satId, expected 60, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[19]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1313,8 +1379,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -24266,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[20]."
-        "residual, expected -24266, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[20]
+        "residual, expected -24266, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[20]
             .residual);
 
     ck_assert_msg(
@@ -1322,8 +1389,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 171,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[20]."
-        "sv_id.constellation, expected 171, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[20]
+        "sv_id.constellation, expected 171, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[20]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1331,8 +1399,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 207,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[20]."
-        "sv_id.satId, expected 207, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[20]
+        "sv_id.satId, expected 207, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[20]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1340,8 +1409,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 22272,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[21]."
-        "residual, expected 22272, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[21]
+        "residual, expected 22272, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[21]
             .residual);
 
     ck_assert_msg(
@@ -1349,8 +1419,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 61,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[21]."
-        "sv_id.constellation, expected 61, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[21]
+        "sv_id.constellation, expected 61, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[21]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1358,8 +1429,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 23,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[21]."
-        "sv_id.satId, expected 23, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[21]
+        "sv_id.satId, expected 23, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[21]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1367,8 +1439,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 9303,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[22]."
-        "residual, expected 9303, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[22]
+        "residual, expected 9303, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[22]
             .residual);
 
     ck_assert_msg(
@@ -1376,8 +1449,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 123,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[22]."
-        "sv_id.constellation, expected 123, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[22]
+        "sv_id.constellation, expected 123, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[22]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1385,8 +1459,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 230,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[22]."
-        "sv_id.satId, expected 230, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[22]
+        "sv_id.satId, expected 230, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[22]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1394,8 +1469,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -23794,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[23]."
-        "residual, expected -23794, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[23]
+        "residual, expected -23794, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[23]
             .residual);
 
     ck_assert_msg(
@@ -1403,8 +1479,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 255,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[23]."
-        "sv_id.constellation, expected 255, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[23]
+        "sv_id.constellation, expected 255, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[23]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1412,8 +1489,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 184,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[23]."
-        "sv_id.satId, expected 184, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[23]
+        "sv_id.satId, expected 184, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[23]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1421,8 +1499,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -26837,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[24]."
-        "residual, expected -26837, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[24]
+        "residual, expected -26837, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[24]
             .residual);
 
     ck_assert_msg(
@@ -1430,8 +1509,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 224,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[24]."
-        "sv_id.constellation, expected 224, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[24]
+        "sv_id.constellation, expected 224, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[24]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1439,8 +1519,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 187,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[24]."
-        "sv_id.satId, expected 187, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[24]
+        "sv_id.satId, expected 187, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[24]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1448,8 +1529,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 14631,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[25]."
-        "residual, expected 14631, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[25]
+        "residual, expected 14631, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[25]
             .residual);
 
     ck_assert_msg(
@@ -1457,8 +1539,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 104,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[25]."
-        "sv_id.constellation, expected 104, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[25]
+        "sv_id.constellation, expected 104, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[25]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1466,8 +1549,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 151,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[25]."
-        "sv_id.satId, expected 151, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[25]
+        "sv_id.satId, expected 151, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[25]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1475,8 +1559,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -8144,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[26]."
-        "residual, expected -8144, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[26]
+        "residual, expected -8144, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[26]
             .residual);
 
     ck_assert_msg(
@@ -1484,8 +1569,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 54,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[26]."
-        "sv_id.constellation, expected 54, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[26]
+        "sv_id.constellation, expected 54, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[26]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1493,8 +1579,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 5,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[26]."
-        "sv_id.satId, expected 5, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[26]
+        "sv_id.satId, expected 5, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[26]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1502,8 +1589,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 23612,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[27]."
-        "residual, expected 23612, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[27]
+        "residual, expected 23612, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[27]
             .residual);
 
     ck_assert_msg(
@@ -1511,8 +1599,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 129,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[27]."
-        "sv_id.constellation, expected 129, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[27]
+        "sv_id.constellation, expected 129, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[27]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1520,8 +1609,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 181,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[27]."
-        "sv_id.satId, expected 181, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[27]
+        "sv_id.satId, expected 181, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[27]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1529,8 +1619,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 28013,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[28]."
-        "residual, expected 28013, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[28]
+        "residual, expected 28013, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[28]
             .residual);
 
     ck_assert_msg(
@@ -1538,8 +1629,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 114,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[28]."
-        "sv_id.constellation, expected 114, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[28]
+        "sv_id.constellation, expected 114, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[28]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1547,8 +1639,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 171,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[28]."
-        "sv_id.satId, expected 171, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[28]
+        "sv_id.satId, expected 171, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[28]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1556,8 +1649,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 2166,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[29]."
-        "residual, expected 2166, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[29]
+        "residual, expected 2166, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[29]
             .residual);
 
     ck_assert_msg(
@@ -1565,8 +1659,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 23,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[29]."
-        "sv_id.constellation, expected 23, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[29]
+        "sv_id.constellation, expected 23, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[29]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1574,8 +1669,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 12,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[29]."
-        "sv_id.satId, expected 12, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[29]
+        "sv_id.satId, expected 12, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[29]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1583,8 +1679,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -10186,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[30]."
-        "residual, expected -10186, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[30]
+        "residual, expected -10186, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[30]
             .residual);
 
     ck_assert_msg(
@@ -1592,8 +1689,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 159,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[30]."
-        "sv_id.constellation, expected 159, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[30]
+        "sv_id.constellation, expected 159, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[30]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1601,8 +1699,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 64,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[30]."
-        "sv_id.satId, expected 64, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[30]
+        "sv_id.satId, expected 64, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[30]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1610,8 +1709,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 17432,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[31]."
-        "residual, expected 17432, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[31]
+        "residual, expected 17432, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[31]
             .residual);
 
     ck_assert_msg(
@@ -1619,8 +1719,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 20,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[31]."
-        "sv_id.constellation, expected 20, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[31]
+        "sv_id.constellation, expected 20, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[31]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1628,8 +1729,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 33,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[31]."
-        "sv_id.satId, expected 33, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[31]
+        "sv_id.satId, expected 33, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[31]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1637,8 +1739,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -8666,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[32]."
-        "residual, expected -8666, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[32]
+        "residual, expected -8666, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[32]
             .residual);
 
     ck_assert_msg(
@@ -1646,8 +1749,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 36,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[32]."
-        "sv_id.constellation, expected 36, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[32]
+        "sv_id.constellation, expected 36, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[32]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1655,8 +1759,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 160,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[32]."
-        "sv_id.satId, expected 160, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[32]
+        "sv_id.satId, expected 160, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[32]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1664,8 +1769,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 25436,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[33]."
-        "residual, expected 25436, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[33]
+        "residual, expected 25436, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[33]
             .residual);
 
     ck_assert_msg(
@@ -1673,8 +1779,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 190,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[33]."
-        "sv_id.constellation, expected 190, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[33]
+        "sv_id.constellation, expected 190, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[33]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1682,8 +1789,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 145,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[33]."
-        "sv_id.satId, expected 145, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[33]
+        "sv_id.satId, expected 145, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[33]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1691,8 +1799,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -3864,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[34]."
-        "residual, expected -3864, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[34]
+        "residual, expected -3864, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[34]
             .residual);
 
     ck_assert_msg(
@@ -1700,8 +1809,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 159,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[34]."
-        "sv_id.constellation, expected 159, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[34]
+        "sv_id.constellation, expected 159, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[34]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1709,8 +1819,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 108,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[34]."
-        "sv_id.satId, expected 108, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[34]
+        "sv_id.satId, expected 108, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[34]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1718,8 +1829,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 4093,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[35]."
-        "residual, expected 4093, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[35]
+        "residual, expected 4093, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[35]
             .residual);
 
     ck_assert_msg(
@@ -1727,8 +1839,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 221,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[35]."
-        "sv_id.constellation, expected 221, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[35]
+        "sv_id.constellation, expected 221, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[35]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1736,8 +1849,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 227,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[35]."
-        "sv_id.satId, expected 227, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[35]
+        "sv_id.satId, expected 227, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[35]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1745,8 +1859,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -18055,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[36]."
-        "residual, expected -18055, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[36]
+        "residual, expected -18055, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[36]
             .residual);
 
     ck_assert_msg(
@@ -1754,8 +1869,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 23,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[36]."
-        "sv_id.constellation, expected 23, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[36]
+        "sv_id.constellation, expected 23, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[36]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1763,8 +1879,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 62,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[36]."
-        "sv_id.satId, expected 62, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[36]
+        "sv_id.satId, expected 62, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[36]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1772,8 +1889,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -27900,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[37]."
-        "residual, expected -27900, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[37]
+        "residual, expected -27900, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[37]
             .residual);
 
     ck_assert_msg(
@@ -1781,8 +1899,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 116,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[37]."
-        "sv_id.constellation, expected 116, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[37]
+        "sv_id.constellation, expected 116, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[37]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1790,8 +1909,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 168,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[37]."
-        "sv_id.satId, expected 168, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[37]
+        "sv_id.satId, expected 168, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[37]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1799,8 +1919,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 30687,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[38]."
-        "residual, expected 30687, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[38]
+        "residual, expected 30687, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[38]
             .residual);
 
     ck_assert_msg(
@@ -1808,8 +1929,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 72,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[38]."
-        "sv_id.constellation, expected 72, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[38]
+        "sv_id.constellation, expected 72, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[38]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1817,8 +1939,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 123,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[38]."
-        "sv_id.satId, expected 123, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[38]
+        "sv_id.satId, expected 123, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[38]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1826,8 +1949,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -13151,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[39]."
-        "residual, expected -13151, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[39]
+        "residual, expected -13151, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[39]
             .residual);
 
     ck_assert_msg(
@@ -1835,8 +1959,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 242,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[39]."
-        "sv_id.constellation, expected 242, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[39]
+        "sv_id.constellation, expected 242, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[39]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1844,8 +1969,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 226,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[39]."
-        "sv_id.satId, expected 226, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[39]
+        "sv_id.satId, expected 226, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[39]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1853,8 +1979,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -22903,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[40]."
-        "residual, expected -22903, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[40]
+        "residual, expected -22903, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[40]
             .residual);
 
     ck_assert_msg(
@@ -1862,8 +1989,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 202,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[40]."
-        "sv_id.constellation, expected 202, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[40]
+        "sv_id.constellation, expected 202, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[40]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1871,8 +1999,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 180,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[40]."
-        "sv_id.satId, expected 180, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[40]
+        "sv_id.satId, expected 180, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[40]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1880,8 +2009,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 4988,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[41]."
-        "residual, expected 4988, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[41]
+        "residual, expected 4988, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[41]
             .residual);
 
     ck_assert_msg(
@@ -1889,8 +2019,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 24,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[41]."
-        "sv_id.constellation, expected 24, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[41]
+        "sv_id.constellation, expected 24, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[41]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1898,8 +2029,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 58,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[41]."
-        "sv_id.satId, expected 58, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[41]
+        "sv_id.satId, expected 58, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[41]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1907,8 +2039,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 27408,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[42]."
-        "residual, expected 27408, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[42]
+        "residual, expected 27408, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[42]
             .residual);
 
     ck_assert_msg(
@@ -1916,8 +2049,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 188,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[42]."
-        "sv_id.constellation, expected 188, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[42]
+        "sv_id.constellation, expected 188, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[42]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1925,8 +2059,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 181,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[42]."
-        "sv_id.satId, expected 181, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[42]
+        "sv_id.satId, expected 181, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[42]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1934,8 +2069,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 319,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[43]."
-        "residual, expected 319, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[43]
+        "residual, expected 319, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[43]
             .residual);
 
     ck_assert_msg(
@@ -1943,8 +2079,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 231,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[43]."
-        "sv_id.constellation, expected 231, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[43]
+        "sv_id.constellation, expected 231, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[43]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1952,8 +2089,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 66,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[43]."
-        "sv_id.satId, expected 66, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[43]
+        "sv_id.satId, expected 66, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[43]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1961,8 +2099,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 15987,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[44]."
-        "residual, expected 15987, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[44]
+        "residual, expected 15987, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[44]
             .residual);
 
     ck_assert_msg(
@@ -1970,8 +2109,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 252,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[44]."
-        "sv_id.constellation, expected 252, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[44]
+        "sv_id.constellation, expected 252, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[44]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -1979,8 +2119,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 64,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[44]."
-        "sv_id.satId, expected 64, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[44]
+        "sv_id.satId, expected 64, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[44]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -1988,8 +2129,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 22266,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[45]."
-        "residual, expected 22266, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[45]
+        "residual, expected 22266, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[45]
             .residual);
 
     ck_assert_msg(
@@ -1997,8 +2139,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 97,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[45]."
-        "sv_id.constellation, expected 97, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[45]
+        "sv_id.constellation, expected 97, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[45]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2006,8 +2149,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 233,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[45]."
-        "sv_id.satId, expected 233, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[45]
+        "sv_id.satId, expected 233, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[45]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2015,8 +2159,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -19919,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[46]."
-        "residual, expected -19919, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[46]
+        "residual, expected -19919, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[46]
             .residual);
 
     ck_assert_msg(
@@ -2024,8 +2169,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 221,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[46]."
-        "sv_id.constellation, expected 221, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[46]
+        "sv_id.constellation, expected 221, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[46]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2033,8 +2179,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 156,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[46]."
-        "sv_id.satId, expected 156, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[46]
+        "sv_id.satId, expected 156, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[46]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2042,8 +2189,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 17350,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[47]."
-        "residual, expected 17350, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[47]
+        "residual, expected 17350, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[47]
             .residual);
 
     ck_assert_msg(
@@ -2051,8 +2199,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 73,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[47]."
-        "sv_id.constellation, expected 73, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[47]
+        "sv_id.constellation, expected 73, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[47]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2060,8 +2209,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 32,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[47]."
-        "sv_id.satId, expected 32, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[47]
+        "sv_id.satId, expected 32, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[47]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2069,8 +2219,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 14410,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[48]."
-        "residual, expected 14410, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[48]
+        "residual, expected 14410, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[48]
             .residual);
 
     ck_assert_msg(
@@ -2078,8 +2229,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 253,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[48]."
-        "sv_id.constellation, expected 253, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[48]
+        "sv_id.constellation, expected 253, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[48]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2087,8 +2239,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 249,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[48]."
-        "sv_id.satId, expected 249, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[48]
+        "sv_id.satId, expected 249, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[48]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2096,8 +2249,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 23671,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[49]."
-        "residual, expected 23671, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[49]
+        "residual, expected 23671, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[49]
             .residual);
 
     ck_assert_msg(
@@ -2105,8 +2259,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 165,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[49]."
-        "sv_id.constellation, expected 165, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[49]
+        "sv_id.constellation, expected 165, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[49]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2114,8 +2269,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 38,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[49]."
-        "sv_id.satId, expected 38, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[49]
+        "sv_id.satId, expected 38, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[49]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2123,8 +2279,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -31905,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[50]."
-        "residual, expected -31905, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[50]
+        "residual, expected -31905, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[50]
             .residual);
 
     ck_assert_msg(
@@ -2132,8 +2289,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 44,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[50]."
-        "sv_id.constellation, expected 44, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[50]
+        "sv_id.constellation, expected 44, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[50]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2141,8 +2299,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 99,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[50]."
-        "sv_id.satId, expected 99, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[50]
+        "sv_id.satId, expected 99, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[50]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2150,8 +2309,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 14305,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[51]."
-        "residual, expected 14305, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[51]
+        "residual, expected 14305, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[51]
             .residual);
 
     ck_assert_msg(
@@ -2159,8 +2319,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 192,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[51]."
-        "sv_id.constellation, expected 192, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[51]
+        "sv_id.constellation, expected 192, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[51]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2168,8 +2329,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 89,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[51]."
-        "sv_id.satId, expected 89, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[51]
+        "sv_id.satId, expected 89, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[51]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2177,8 +2339,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -12968,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[52]."
-        "residual, expected -12968, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[52]
+        "residual, expected -12968, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[52]
             .residual);
 
     ck_assert_msg(
@@ -2186,8 +2349,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 171,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[52]."
-        "sv_id.constellation, expected 171, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[52]
+        "sv_id.constellation, expected 171, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[52]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2195,8 +2359,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 95,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[52]."
-        "sv_id.satId, expected 95, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[52]
+        "sv_id.satId, expected 95, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[52]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2204,8 +2369,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 21479,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[53]."
-        "residual, expected 21479, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[53]
+        "residual, expected 21479, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[53]
             .residual);
 
     ck_assert_msg(
@@ -2213,8 +2379,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 116,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[53]."
-        "sv_id.constellation, expected 116, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[53]
+        "sv_id.constellation, expected 116, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[53]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2222,8 +2389,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 21,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[53]."
-        "sv_id.satId, expected 21, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[53]
+        "sv_id.satId, expected 21, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[53]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2231,8 +2399,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == 28260,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[54]."
-        "residual, expected 28260, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[54]
+        "residual, expected 28260, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[54]
             .residual);
 
     ck_assert_msg(
@@ -2240,8 +2409,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 71,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[54]."
-        "sv_id.constellation, expected 71, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[54]
+        "sv_id.constellation, expected 71, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[54]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2249,8 +2419,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 71,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[54]."
-        "sv_id.satId, expected 71, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[54]
+        "sv_id.satId, expected 71, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[54]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2258,8 +2429,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -11112,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[55]."
-        "residual, expected -11112, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[55]
+        "residual, expected -11112, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[55]
             .residual);
 
     ck_assert_msg(
@@ -2267,8 +2439,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 254,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[55]."
-        "sv_id.constellation, expected 254, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[55]
+        "sv_id.constellation, expected 254, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[55]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2276,8 +2449,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 217,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[55]."
-        "sv_id.satId, expected 217, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[55]
+        "sv_id.satId, expected 217, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[55]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2285,8 +2459,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -25304,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[56]."
-        "residual, expected -25304, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[56]
+        "residual, expected -25304, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[56]
             .residual);
 
     ck_assert_msg(
@@ -2294,8 +2469,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 8,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[56]."
-        "sv_id.constellation, expected 8, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[56]
+        "sv_id.constellation, expected 8, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[56]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2303,8 +2479,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 18,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[56]."
-        "sv_id.satId, expected 18, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[56]
+        "sv_id.satId, expected 18, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[56]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2312,8 +2489,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -4024,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[57]."
-        "residual, expected -4024, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[57]
+        "residual, expected -4024, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[57]
             .residual);
 
     ck_assert_msg(
@@ -2321,8 +2499,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 54,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[57]."
-        "sv_id.constellation, expected 54, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[57]
+        "sv_id.constellation, expected 54, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[57]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2330,8 +2509,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 244,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[57]."
-        "sv_id.satId, expected 244, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[57]
+        "sv_id.satId, expected 244, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[57]
             .sv_id.satId);
 
     ck_assert_msg(
@@ -2339,8 +2519,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .residual == -15505,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[58]."
-        "residual, expected -15505, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[58]
+        "residual, expected -15505, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[58]
             .residual);
 
     ck_assert_msg(
@@ -2348,8 +2529,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.constellation == 189,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[58]."
-        "sv_id.constellation, expected 189, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[58]
+        "sv_id.constellation, expected 189, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[58]
             .sv_id.constellation);
 
     ck_assert_msg(
@@ -2357,24 +2539,25 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionNoStdDepA) {
                 .sv_id.satId == 231,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[58]."
-        "sv_id.satId, expected 231, is %d",
-        last_msg.msg.ssr_gridded_correction_no_std_dep_a.stec_residuals[58]
+        "sv_id.satId, expected 231, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
+            .stec_residuals[58]
             .sv_id.satId);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_no_std_dep_a
                           .tropo_delay_correction.hydro == 16250,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_no_std_dep_a.tropo_"
-                  "delay_correction.hydro, expected 16250, is %d",
-                  last_msg.msg.ssr_gridded_correction_no_std_dep_a
+                  "delay_correction.hydro, expected 16250, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
                       .tropo_delay_correction.hydro);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_no_std_dep_a
                           .tropo_delay_correction.wet == 101,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction_no_std_dep_a.tropo_"
-                  "delay_correction.wet, expected 101, is %d",
-                  last_msg.msg.ssr_gridded_correction_no_std_dep_a
+                  "delay_correction.wet, expected 101, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction_no_std_dep_a
                       .tropo_delay_correction.wet);
   }
 }

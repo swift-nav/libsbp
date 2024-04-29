@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -165,83 +165,83 @@ START_TEST(test_auto_check_sbp_logging_MsgFwd) {
 
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[0] == 86,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[0], "
-                  "expected 86, is %d",
-                  last_msg.msg.fwd.fwd_payload[0]);
+                  "expected 86, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[0]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[1] == 81,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[1], "
-                  "expected 81, is %d",
-                  last_msg.msg.fwd.fwd_payload[1]);
+                  "expected 81, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[1]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[2] == 68,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[2], "
-                  "expected 68, is %d",
-                  last_msg.msg.fwd.fwd_payload[2]);
+                  "expected 68, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[2]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[3] == 47,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[3], "
-                  "expected 47, is %d",
-                  last_msg.msg.fwd.fwd_payload[3]);
+                  "expected 47, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[3]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[4] == 81,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[4], "
-                  "expected 81, is %d",
-                  last_msg.msg.fwd.fwd_payload[4]);
+                  "expected 81, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[4]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[5] == 103,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[5], "
-                  "expected 103, is %d",
-                  last_msg.msg.fwd.fwd_payload[5]);
+                  "expected 103, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[5]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[6] == 65,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[6], "
-                  "expected 65, is %d",
-                  last_msg.msg.fwd.fwd_payload[6]);
+                  "expected 65, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[6]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[7] == 69,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[7], "
-                  "expected 69, is %d",
-                  last_msg.msg.fwd.fwd_payload[7]);
+                  "expected 69, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[7]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[8] == 65,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[8], "
-                  "expected 65, is %d",
-                  last_msg.msg.fwd.fwd_payload[8]);
+                  "expected 65, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[8]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[9] == 65,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[9], "
-                  "expected 65, is %d",
-                  last_msg.msg.fwd.fwd_payload[9]);
+                  "expected 65, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[9]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[10] == 65,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[10], "
-                  "expected 65, is %d",
-                  last_msg.msg.fwd.fwd_payload[10]);
+                  "expected 65, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[10]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[11] == 65,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[11], "
-                  "expected 65, is %d",
-                  last_msg.msg.fwd.fwd_payload[11]);
+                  "expected 65, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[11]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[12] == 65,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[12], "
-                  "expected 65, is %d",
-                  last_msg.msg.fwd.fwd_payload[12]);
+                  "expected 65, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[12]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[13] == 69,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[13], "
-                  "expected 69, is %d",
-                  last_msg.msg.fwd.fwd_payload[13]);
+                  "expected 69, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[13]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[14] == 97,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[14], "
-                  "expected 97, is %d",
-                  last_msg.msg.fwd.fwd_payload[14]);
+                  "expected 97, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[14]);
     ck_assert_msg(last_msg.msg.fwd.fwd_payload[15] == 103,
                   "incorrect value for last_msg.msg.fwd.fwd_payload[15], "
-                  "expected 103, is %d",
-                  last_msg.msg.fwd.fwd_payload[15]);
+                  "expected 103, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.fwd_payload[15]);
 
     ck_assert_msg(last_msg.msg.fwd.n_fwd_payload == 16,
                   "incorrect value for last_msg.msg.fwd.n_fwd_payload, "
-                  "expected 16, is %d",
-                  last_msg.msg.fwd.n_fwd_payload);
+                  "expected 16, is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.n_fwd_payload);
 
-    ck_assert_msg(
-        last_msg.msg.fwd.protocol == 0,
-        "incorrect value for last_msg.msg.fwd.protocol, expected 0, is %d",
-        last_msg.msg.fwd.protocol);
+    ck_assert_msg(last_msg.msg.fwd.protocol == 0,
+                  "incorrect value for last_msg.msg.fwd.protocol, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.fwd.protocol);
 
     ck_assert_msg(
         last_msg.msg.fwd.source == 0,
-        "incorrect value for last_msg.msg.fwd.source, expected 0, is %d",
-        last_msg.msg.fwd.source);
+        "incorrect value for last_msg.msg.fwd.source, expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.fwd.source);
   }
 }
 END_TEST

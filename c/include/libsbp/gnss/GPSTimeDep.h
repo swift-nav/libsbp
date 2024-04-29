@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_GNSS_GPSTIMEDEP_H
-#define LIBSBP_V4_GNSS_GPSTIMEDEP_H
+#ifndef LIBSBP_GNSS_GPSTIMEDEP_H
+#define LIBSBP_GNSS_GPSTIMEDEP_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -161,4 +161,4 @@ static inline bool operator>=(const sbp_gps_time_dep_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_GNSS_GPSTIMEDEP_H */
+#endif /* LIBSBP_GNSS_GPSTIMEDEP_H */

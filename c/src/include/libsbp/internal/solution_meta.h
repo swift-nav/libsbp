@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_SOLUTION_META_H
-#define LIBSBP_INTERNAL_V4_SOLUTION_META_H
+#ifndef LIBSBP_INTERNAL_SOLUTION_META_H
+#define LIBSBP_INTERNAL_SOLUTION_META_H
 
 #include <stdbool.h>
 
@@ -151,4 +151,4 @@ bool sbp_odo_input_type_decode_internal(sbp_decode_ctx_t *ctx,
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_SOLUTION_META_H */
+#endif /* LIBSBP_INTERNAL_SOLUTION_META_H */

@@ -18,7 +18,6 @@
 #ifndef LIBSBP_IMU_MACROS_H
 #define LIBSBP_IMU_MACROS_H
 
-#define SBP_MSG_IMU_RAW 0x0900
 #define SBP_IMU_RAW_TIME_STATUS_MASK (0x3u)
 #define SBP_IMU_RAW_TIME_STATUS_SHIFT (30u)
 #define SBP_IMU_RAW_TIME_STATUS_GET(flags)                 \
@@ -55,12 +54,10 @@
   } while (0)
 
 /**
- * Encoded length of sbp_msg_imu_raw_t (V4 API) and
- * msg_imu_raw_t (legacy API)
+ * Encoded length of sbp_msg_imu_raw_t
  */
 #define SBP_MSG_IMU_RAW_ENCODED_LEN 17u
 
-#define SBP_MSG_IMU_AUX 0x0901
 #define SBP_IMU_AUX_IMU_TYPE_MASK (0xffu)
 #define SBP_IMU_AUX_IMU_TYPE_SHIFT (0u)
 #define SBP_IMU_AUX_IMU_TYPE_GET(flags)               \
@@ -128,8 +125,7 @@
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__6G (4)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE_6G (4)
 /**
- * Encoded length of sbp_msg_imu_aux_t (V4 API) and
- * msg_imu_aux_t (legacy API)
+ * Encoded length of sbp_msg_imu_aux_t
  */
 #define SBP_MSG_IMU_AUX_ENCODED_LEN 4u
 

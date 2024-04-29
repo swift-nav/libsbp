@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_OBSERVATION_GNSSCAPB_H
-#define LIBSBP_V4_OBSERVATION_GNSSCAPB_H
+#ifndef LIBSBP_OBSERVATION_GNSSCAPB_H
+#define LIBSBP_OBSERVATION_GNSSCAPB_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -222,4 +222,4 @@ static inline bool operator>=(const sbp_gnss_capb_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_OBSERVATION_GNSSCAPB_H */
+#endif /* LIBSBP_OBSERVATION_GNSSCAPB_H */

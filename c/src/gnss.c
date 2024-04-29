@@ -17,8 +17,8 @@
 #include <libsbp/internal/string/unterminated.h>
 #include <libsbp/sbp.h>
 
-bool sbp_v4_gnss_signal_encode_internal(sbp_encode_ctx_t *ctx,
-                                        const sbp_v4_gnss_signal_t *msg) {
+bool sbp_gnss_signal_encode_internal(sbp_encode_ctx_t *ctx,
+                                     const sbp_gnss_signal_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->sat)) {
     return false;
   }
@@ -28,13 +28,13 @@ bool sbp_v4_gnss_signal_encode_internal(sbp_encode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_v4_gnss_signal_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                             const sbp_v4_gnss_signal_t *msg) {
+s8 sbp_gnss_signal_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                          const sbp_gnss_signal_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_v4_gnss_signal_encode_internal(&ctx, msg)) {
+  if (!sbp_gnss_signal_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -43,8 +43,8 @@ s8 sbp_v4_gnss_signal_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_v4_gnss_signal_decode_internal(sbp_decode_ctx_t *ctx,
-                                        sbp_v4_gnss_signal_t *msg) {
+bool sbp_gnss_signal_decode_internal(sbp_decode_ctx_t *ctx,
+                                     sbp_gnss_signal_t *msg) {
   if (!sbp_u8_decode(ctx, &msg->sat)) {
     return false;
   }
@@ -54,13 +54,13 @@ bool sbp_v4_gnss_signal_decode_internal(sbp_decode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_v4_gnss_signal_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                             sbp_v4_gnss_signal_t *msg) {
+s8 sbp_gnss_signal_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                          sbp_gnss_signal_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_v4_gnss_signal_decode_internal(&ctx, msg)) {
+  if (!sbp_gnss_signal_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -69,8 +69,8 @@ s8 sbp_v4_gnss_signal_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-int sbp_v4_gnss_signal_cmp(const sbp_v4_gnss_signal_t *a,
-                           const sbp_v4_gnss_signal_t *b) {
+int sbp_gnss_signal_cmp(const sbp_gnss_signal_t *a,
+                        const sbp_gnss_signal_t *b) {
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->sat, &b->sat);
@@ -350,8 +350,8 @@ int sbp_gps_time_sec_cmp(const sbp_gps_time_sec_t *a,
   return ret;
 }
 
-bool sbp_v4_gps_time_encode_internal(sbp_encode_ctx_t *ctx,
-                                     const sbp_v4_gps_time_t *msg) {
+bool sbp_gps_time_encode_internal(sbp_encode_ctx_t *ctx,
+                                  const sbp_gps_time_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->tow)) {
     return false;
   }
@@ -364,13 +364,13 @@ bool sbp_v4_gps_time_encode_internal(sbp_encode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_v4_gps_time_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                          const sbp_v4_gps_time_t *msg) {
+s8 sbp_gps_time_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                       const sbp_gps_time_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_v4_gps_time_encode_internal(&ctx, msg)) {
+  if (!sbp_gps_time_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -379,8 +379,7 @@ s8 sbp_v4_gps_time_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_v4_gps_time_decode_internal(sbp_decode_ctx_t *ctx,
-                                     sbp_v4_gps_time_t *msg) {
+bool sbp_gps_time_decode_internal(sbp_decode_ctx_t *ctx, sbp_gps_time_t *msg) {
   if (!sbp_u32_decode(ctx, &msg->tow)) {
     return false;
   }
@@ -393,13 +392,13 @@ bool sbp_v4_gps_time_decode_internal(sbp_decode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_v4_gps_time_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                          sbp_v4_gps_time_t *msg) {
+s8 sbp_gps_time_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                       sbp_gps_time_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_v4_gps_time_decode_internal(&ctx, msg)) {
+  if (!sbp_gps_time_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -408,8 +407,7 @@ s8 sbp_v4_gps_time_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-int sbp_v4_gps_time_cmp(const sbp_v4_gps_time_t *a,
-                        const sbp_v4_gps_time_t *b) {
+int sbp_gps_time_cmp(const sbp_gps_time_t *a, const sbp_gps_time_t *b) {
   int ret = 0;
 
   ret = sbp_u32_cmp(&a->tow, &b->tow);

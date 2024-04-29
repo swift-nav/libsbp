@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_PIKSI_MSG_CELL_MODEM_STATUS_H
-#define LIBSBP_V4_PIKSI_MSG_CELL_MODEM_STATUS_H
+#ifndef LIBSBP_PIKSI_MSG_CELL_MODEM_STATUS_H
+#define LIBSBP_PIKSI_MSG_CELL_MODEM_STATUS_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -198,4 +198,4 @@ static inline bool operator>=(const sbp_msg_cell_modem_status_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_PIKSI_MSG_CELL_MODEM_STATUS_H */
+#endif /* LIBSBP_PIKSI_MSG_CELL_MODEM_STATUS_H */

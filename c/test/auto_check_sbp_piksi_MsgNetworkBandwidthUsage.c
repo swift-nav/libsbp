@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -227,12 +227,13 @@ START_TEST(test_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
                                   &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.network_bandwidth_usage.interfaces[0].duration ==
-                      2159176030,
-                  "incorrect value for "
-                  "last_msg.msg.network_bandwidth_usage.interfaces[0].duration,"
-                  " expected 2159176030, is %d",
-                  last_msg.msg.network_bandwidth_usage.interfaces[0].duration);
+    ck_assert_msg(
+        last_msg.msg.network_bandwidth_usage.interfaces[0].duration ==
+            2159176030,
+        "incorrect value for "
+        "last_msg.msg.network_bandwidth_usage.interfaces[0].duration, expected "
+        "2159176030, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[0].duration);
 
     {
       const char check_string[] = {(char)99, (char)97, (char)110, (char)48,
@@ -254,29 +255,31 @@ START_TEST(test_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
         last_msg.msg.network_bandwidth_usage.interfaces[0].rx_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[0].rx_bytes, expected "
-        "0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[0].rx_bytes);
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[0].rx_bytes);
 
     ck_assert_msg(
         last_msg.msg.network_bandwidth_usage.interfaces[0].total_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[0].total_bytes, "
-        "expected 0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[0].total_bytes);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[0]
+            .total_bytes);
 
     ck_assert_msg(
         last_msg.msg.network_bandwidth_usage.interfaces[0].tx_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[0].tx_bytes, expected "
-        "0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[0].tx_bytes);
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[0].tx_bytes);
 
-    ck_assert_msg(last_msg.msg.network_bandwidth_usage.interfaces[1].duration ==
-                      2159176030,
-                  "incorrect value for "
-                  "last_msg.msg.network_bandwidth_usage.interfaces[1].duration,"
-                  " expected 2159176030, is %d",
-                  last_msg.msg.network_bandwidth_usage.interfaces[1].duration);
+    ck_assert_msg(
+        last_msg.msg.network_bandwidth_usage.interfaces[1].duration ==
+            2159176030,
+        "incorrect value for "
+        "last_msg.msg.network_bandwidth_usage.interfaces[1].duration, expected "
+        "2159176030, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[1].duration);
 
     {
       const char check_string[] = {(char)99, (char)97, (char)110, (char)49,
@@ -298,29 +301,31 @@ START_TEST(test_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
         last_msg.msg.network_bandwidth_usage.interfaces[1].rx_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[1].rx_bytes, expected "
-        "0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[1].rx_bytes);
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[1].rx_bytes);
 
     ck_assert_msg(
         last_msg.msg.network_bandwidth_usage.interfaces[1].total_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[1].total_bytes, "
-        "expected 0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[1].total_bytes);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[1]
+            .total_bytes);
 
     ck_assert_msg(
         last_msg.msg.network_bandwidth_usage.interfaces[1].tx_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[1].tx_bytes, expected "
-        "0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[1].tx_bytes);
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[1].tx_bytes);
 
-    ck_assert_msg(last_msg.msg.network_bandwidth_usage.interfaces[2].duration ==
-                      2159176030,
-                  "incorrect value for "
-                  "last_msg.msg.network_bandwidth_usage.interfaces[2].duration,"
-                  " expected 2159176030, is %d",
-                  last_msg.msg.network_bandwidth_usage.interfaces[2].duration);
+    ck_assert_msg(
+        last_msg.msg.network_bandwidth_usage.interfaces[2].duration ==
+            2159176030,
+        "incorrect value for "
+        "last_msg.msg.network_bandwidth_usage.interfaces[2].duration, expected "
+        "2159176030, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[2].duration);
 
     {
       const char check_string[] = {(char)101, (char)116, (char)104, (char)48,
@@ -338,34 +343,38 @@ START_TEST(test_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
           last_msg.msg.network_bandwidth_usage.interfaces[2].interface_name);
     }
 
-    ck_assert_msg(last_msg.msg.network_bandwidth_usage.interfaces[2].rx_bytes ==
-                      4036234989,
-                  "incorrect value for "
-                  "last_msg.msg.network_bandwidth_usage.interfaces[2].rx_bytes,"
-                  " expected 4036234989, is %d",
-                  last_msg.msg.network_bandwidth_usage.interfaces[2].rx_bytes);
+    ck_assert_msg(
+        last_msg.msg.network_bandwidth_usage.interfaces[2].rx_bytes ==
+            4036234989,
+        "incorrect value for "
+        "last_msg.msg.network_bandwidth_usage.interfaces[2].rx_bytes, expected "
+        "4036234989, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[2].rx_bytes);
 
     ck_assert_msg(
         last_msg.msg.network_bandwidth_usage.interfaces[2].total_bytes ==
             3411995557,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[2].total_bytes, "
-        "expected 3411995557, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[2].total_bytes);
+        "expected 3411995557, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[2]
+            .total_bytes);
 
-    ck_assert_msg(last_msg.msg.network_bandwidth_usage.interfaces[2].tx_bytes ==
-                      3670727864,
-                  "incorrect value for "
-                  "last_msg.msg.network_bandwidth_usage.interfaces[2].tx_bytes,"
-                  " expected 3670727864, is %d",
-                  last_msg.msg.network_bandwidth_usage.interfaces[2].tx_bytes);
+    ck_assert_msg(
+        last_msg.msg.network_bandwidth_usage.interfaces[2].tx_bytes ==
+            3670727864,
+        "incorrect value for "
+        "last_msg.msg.network_bandwidth_usage.interfaces[2].tx_bytes, expected "
+        "3670727864, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[2].tx_bytes);
 
-    ck_assert_msg(last_msg.msg.network_bandwidth_usage.interfaces[3].duration ==
-                      2159176030,
-                  "incorrect value for "
-                  "last_msg.msg.network_bandwidth_usage.interfaces[3].duration,"
-                  " expected 2159176030, is %d",
-                  last_msg.msg.network_bandwidth_usage.interfaces[3].duration);
+    ck_assert_msg(
+        last_msg.msg.network_bandwidth_usage.interfaces[3].duration ==
+            2159176030,
+        "incorrect value for "
+        "last_msg.msg.network_bandwidth_usage.interfaces[3].duration, expected "
+        "2159176030, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[3].duration);
 
     {
       const char check_string[] = {(char)108, (char)111, (char)0, (char)0,
@@ -387,29 +396,31 @@ START_TEST(test_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
         last_msg.msg.network_bandwidth_usage.interfaces[3].rx_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[3].rx_bytes, expected "
-        "0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[3].rx_bytes);
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[3].rx_bytes);
 
     ck_assert_msg(
         last_msg.msg.network_bandwidth_usage.interfaces[3].total_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[3].total_bytes, "
-        "expected 0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[3].total_bytes);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[3]
+            .total_bytes);
 
     ck_assert_msg(
         last_msg.msg.network_bandwidth_usage.interfaces[3].tx_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[3].tx_bytes, expected "
-        "0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[3].tx_bytes);
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[3].tx_bytes);
 
-    ck_assert_msg(last_msg.msg.network_bandwidth_usage.interfaces[4].duration ==
-                      2159176030,
-                  "incorrect value for "
-                  "last_msg.msg.network_bandwidth_usage.interfaces[4].duration,"
-                  " expected 2159176030, is %d",
-                  last_msg.msg.network_bandwidth_usage.interfaces[4].duration);
+    ck_assert_msg(
+        last_msg.msg.network_bandwidth_usage.interfaces[4].duration ==
+            2159176030,
+        "incorrect value for "
+        "last_msg.msg.network_bandwidth_usage.interfaces[4].duration, expected "
+        "2159176030, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[4].duration);
 
     {
       const char check_string[] = {(char)115, (char)105, (char)116, (char)48,
@@ -431,28 +442,29 @@ START_TEST(test_auto_check_sbp_piksi_MsgNetworkBandwidthUsage) {
         last_msg.msg.network_bandwidth_usage.interfaces[4].rx_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[4].rx_bytes, expected "
-        "0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[4].rx_bytes);
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[4].rx_bytes);
 
     ck_assert_msg(
         last_msg.msg.network_bandwidth_usage.interfaces[4].total_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[4].total_bytes, "
-        "expected 0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[4].total_bytes);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[4]
+            .total_bytes);
 
     ck_assert_msg(
         last_msg.msg.network_bandwidth_usage.interfaces[4].tx_bytes == 0,
         "incorrect value for "
         "last_msg.msg.network_bandwidth_usage.interfaces[4].tx_bytes, expected "
-        "0, is %d",
-        last_msg.msg.network_bandwidth_usage.interfaces[4].tx_bytes);
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.network_bandwidth_usage.interfaces[4].tx_bytes);
 
-    ck_assert_msg(
-        last_msg.msg.network_bandwidth_usage.n_interfaces == 5,
-        "incorrect value for "
-        "last_msg.msg.network_bandwidth_usage.n_interfaces, expected 5, is %d",
-        last_msg.msg.network_bandwidth_usage.n_interfaces);
+    ck_assert_msg(last_msg.msg.network_bandwidth_usage.n_interfaces == 5,
+                  "incorrect value for "
+                  "last_msg.msg.network_bandwidth_usage.n_interfaces, expected "
+                  "5, is %" PRId64,
+                  (int64_t)last_msg.msg.network_bandwidth_usage.n_interfaces);
   }
 }
 END_TEST

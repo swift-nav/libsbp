@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_LOGGING_MSG_LOG_H
-#define LIBSBP_V4_LOGGING_MSG_LOG_H
+#ifndef LIBSBP_LOGGING_MSG_LOG_H
+#define LIBSBP_LOGGING_MSG_LOG_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -366,4 +366,4 @@ static inline bool operator>=(const sbp_msg_log_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_LOGGING_MSG_LOG_H */
+#endif /* LIBSBP_LOGGING_MSG_LOG_H */

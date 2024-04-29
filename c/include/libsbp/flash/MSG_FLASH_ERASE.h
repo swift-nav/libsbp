@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_FLASH_MSG_FLASH_ERASE_H
-#define LIBSBP_V4_FLASH_MSG_FLASH_ERASE_H
+#ifndef LIBSBP_FLASH_MSG_FLASH_ERASE_H
+#define LIBSBP_FLASH_MSG_FLASH_ERASE_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -183,4 +183,4 @@ static inline bool operator>=(const sbp_msg_flash_erase_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_FLASH_MSG_FLASH_ERASE_H */
+#endif /* LIBSBP_FLASH_MSG_FLASH_ERASE_H */

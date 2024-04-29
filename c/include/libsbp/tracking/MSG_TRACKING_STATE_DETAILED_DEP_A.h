@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_TRACKING_MSG_TRACKING_STATE_DETAILED_DEP_A_H
-#define LIBSBP_V4_TRACKING_MSG_TRACKING_STATE_DETAILED_DEP_A_H
+#ifndef LIBSBP_TRACKING_MSG_TRACKING_STATE_DETAILED_DEP_A_H
+#define LIBSBP_TRACKING_MSG_TRACKING_STATE_DETAILED_DEP_A_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -57,7 +57,7 @@ typedef struct {
    * status is decoded or propagated. WN only valid when week number valid flag
    * is set.
    */
-  sbp_v4_gps_time_t tot;
+  sbp_gps_time_t tot;
 
   /**
    * Pseudorange observation. Valid only when pseudorange valid flag is set. [2
@@ -91,7 +91,7 @@ typedef struct {
   /**
    * GNSS signal identifier.
    */
-  sbp_v4_gnss_signal_t sid;
+  sbp_gnss_signal_t sid;
 
   /**
    * Carrier Doppler frequency. [Hz / 16]
@@ -300,4 +300,4 @@ static inline bool operator>=(
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_TRACKING_MSG_TRACKING_STATE_DETAILED_DEP_A_H */
+#endif /* LIBSBP_TRACKING_MSG_TRACKING_STATE_DETAILED_DEP_A_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_TRACKING_MSG_TRACKING_IQ_H
-#define LIBSBP_V4_TRACKING_MSG_TRACKING_IQ_H
+#ifndef LIBSBP_TRACKING_MSG_TRACKING_IQ_H
+#define LIBSBP_TRACKING_MSG_TRACKING_IQ_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -54,7 +54,7 @@ typedef struct {
   /**
    * GNSS signal identifier
    */
-  sbp_v4_gnss_signal_t sid;
+  sbp_gnss_signal_t sid;
 
   /**
    * Early, Prompt and Late correlations
@@ -188,4 +188,4 @@ static inline bool operator>=(const sbp_msg_tracking_iq_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_TRACKING_MSG_TRACKING_IQ_H */
+#endif /* LIBSBP_TRACKING_MSG_TRACKING_IQ_H */

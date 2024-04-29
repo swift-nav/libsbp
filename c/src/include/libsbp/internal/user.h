@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_USER_H
-#define LIBSBP_INTERNAL_V4_USER_H
+#ifndef LIBSBP_INTERNAL_USER_H
+#define LIBSBP_INTERNAL_USER_H
 
 #include <stdbool.h>
 
@@ -51,4 +51,4 @@ bool sbp_msg_user_data_decode_internal(sbp_decode_ctx_t *ctx,
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_USER_H */
+#endif /* LIBSBP_INTERNAL_USER_H */

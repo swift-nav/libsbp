@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_OBSERVATION_H
-#define LIBSBP_INTERNAL_V4_OBSERVATION_H
+#ifndef LIBSBP_INTERNAL_OBSERVATION_H
+#define LIBSBP_INTERNAL_OBSERVATION_H
 
 #include <stdbool.h>
 
@@ -1106,4 +1106,4 @@ bool sbp_msg_osr_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_osr_t *msg);
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_OBSERVATION_H */
+#endif /* LIBSBP_INTERNAL_OBSERVATION_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_GNSS_GNSSSIGNAL_H
-#define LIBSBP_V4_GNSS_GNSSSIGNAL_H
+#ifndef LIBSBP_GNSS_GNSSSIGNAL_H
+#define LIBSBP_GNSS_GNSSSIGNAL_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -53,22 +53,21 @@ typedef struct {
    * Signal constellation, band and code
    */
   u8 code;
-} sbp_v4_gnss_signal_t;
+} sbp_gnss_signal_t;
 
 /**
- * Get encoded size of an instance of sbp_v4_gnss_signal_t
+ * Get encoded size of an instance of sbp_gnss_signal_t
  *
- * @param msg sbp_v4_gnss_signal_t instance
+ * @param msg sbp_gnss_signal_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_v4_gnss_signal_encoded_len(
-    const sbp_v4_gnss_signal_t *msg) {
+static inline size_t sbp_gnss_signal_encoded_len(const sbp_gnss_signal_t *msg) {
   (void)msg;
-  return SBP_V4_GNSS_SIGNAL_ENCODED_LEN;
+  return SBP_GNSS_SIGNAL_ENCODED_LEN;
 }
 
 /**
- * Encode an instance of sbp_v4_gnss_signal_t to wire representation
+ * Encode an instance of sbp_gnss_signal_t to wire representation
  *
  * This function encodes the given instance in to the user provided buffer. The
  * buffer provided to this function must be large enough to store the encoded
@@ -83,34 +82,33 @@ static inline size_t sbp_v4_gnss_signal_encoded_len(
  * @param len Length of \p buf
  * @param n_written If not null, on success will be set to the number of bytes
  * written to \p buf
- * @param msg Instance of sbp_v4_gnss_signal_t to encode
+ * @param msg Instance of sbp_gnss_signal_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_v4_gnss_signal_encode(uint8_t *buf, uint8_t len,
-                                        uint8_t *n_written,
-                                        const sbp_v4_gnss_signal_t *msg);
+SBP_EXPORT s8 sbp_gnss_signal_encode(uint8_t *buf, uint8_t len,
+                                     uint8_t *n_written,
+                                     const sbp_gnss_signal_t *msg);
 
 /**
- * Decode an instance of sbp_v4_gnss_signal_t from wire representation
+ * Decode an instance of sbp_gnss_signal_t from wire representation
  *
- * This function decodes the wire representation of a sbp_v4_gnss_signal_t
- * message to the given instance. The caller must specify the length of the
- * buffer in the \p len parameter. If non-null the number of bytes read from the
- * buffer will be returned in \p n_read.
+ * This function decodes the wire representation of a sbp_gnss_signal_t message
+ * to the given instance. The caller must specify the length of the buffer in
+ * the \p len parameter. If non-null the number of bytes read from the buffer
+ * will be returned in \p n_read.
  *
- * @param buf Wire representation of the sbp_v4_gnss_signal_t instance
+ * @param buf Wire representation of the sbp_gnss_signal_t instance
  * @param len Length of \p buf
  * @param n_read If not null, on success will be set to the number of bytes read
  * from \p buf
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_v4_gnss_signal_decode(const uint8_t *buf, uint8_t len,
-                                        uint8_t *n_read,
-                                        sbp_v4_gnss_signal_t *msg);
+SBP_EXPORT s8 sbp_gnss_signal_decode(const uint8_t *buf, uint8_t len,
+                                     uint8_t *n_read, sbp_gnss_signal_t *msg);
 
 /**
- * Compare two instances of sbp_v4_gnss_signal_t
+ * Compare two instances of sbp_gnss_signal_t
  *
  * The two instances will be compared and a value returned consistent with the
  * return codes of comparison functions from the C standard library
@@ -120,46 +118,46 @@ SBP_EXPORT s8 sbp_v4_gnss_signal_decode(const uint8_t *buf, uint8_t len,
  * b A value greater than 0 will be returned if \p b is considered to be greater
  * than \p b
  *
- * @param a sbp_v4_gnss_signal_t instance
- * @param b sbp_v4_gnss_signal_t instance
+ * @param a sbp_gnss_signal_t instance
+ * @param b sbp_gnss_signal_t instance
  * @return 0, <0, >0
  */
-SBP_EXPORT int sbp_v4_gnss_signal_cmp(const sbp_v4_gnss_signal_t *a,
-                                      const sbp_v4_gnss_signal_t *b);
+SBP_EXPORT int sbp_gnss_signal_cmp(const sbp_gnss_signal_t *a,
+                                   const sbp_gnss_signal_t *b);
 
 #ifdef __cplusplus
 }
 
-static inline bool operator==(const sbp_v4_gnss_signal_t &lhs,
-                              const sbp_v4_gnss_signal_t &rhs) {
-  return sbp_v4_gnss_signal_cmp(&lhs, &rhs) == 0;
+static inline bool operator==(const sbp_gnss_signal_t &lhs,
+                              const sbp_gnss_signal_t &rhs) {
+  return sbp_gnss_signal_cmp(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_v4_gnss_signal_t &lhs,
-                              const sbp_v4_gnss_signal_t &rhs) {
-  return sbp_v4_gnss_signal_cmp(&lhs, &rhs) != 0;
+static inline bool operator!=(const sbp_gnss_signal_t &lhs,
+                              const sbp_gnss_signal_t &rhs) {
+  return sbp_gnss_signal_cmp(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_v4_gnss_signal_t &lhs,
-                             const sbp_v4_gnss_signal_t &rhs) {
-  return sbp_v4_gnss_signal_cmp(&lhs, &rhs) < 0;
+static inline bool operator<(const sbp_gnss_signal_t &lhs,
+                             const sbp_gnss_signal_t &rhs) {
+  return sbp_gnss_signal_cmp(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_v4_gnss_signal_t &lhs,
-                              const sbp_v4_gnss_signal_t &rhs) {
-  return sbp_v4_gnss_signal_cmp(&lhs, &rhs) <= 0;
+static inline bool operator<=(const sbp_gnss_signal_t &lhs,
+                              const sbp_gnss_signal_t &rhs) {
+  return sbp_gnss_signal_cmp(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_v4_gnss_signal_t &lhs,
-                             const sbp_v4_gnss_signal_t &rhs) {
-  return sbp_v4_gnss_signal_cmp(&lhs, &rhs) > 0;
+static inline bool operator>(const sbp_gnss_signal_t &lhs,
+                             const sbp_gnss_signal_t &rhs) {
+  return sbp_gnss_signal_cmp(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_v4_gnss_signal_t &lhs,
-                              const sbp_v4_gnss_signal_t &rhs) {
-  return sbp_v4_gnss_signal_cmp(&lhs, &rhs) >= 0;
+static inline bool operator>=(const sbp_gnss_signal_t &lhs,
+                              const sbp_gnss_signal_t &rhs) {
+  return sbp_gnss_signal_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_GNSS_GNSSSIGNAL_H */
+#endif /* LIBSBP_GNSS_GNSSSIGNAL_H */

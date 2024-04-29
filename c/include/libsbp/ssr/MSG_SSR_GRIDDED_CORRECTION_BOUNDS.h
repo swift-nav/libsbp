@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_H
-#define LIBSBP_V4_SSR_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_H
+#ifndef LIBSBP_SSR_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_H
+#define LIBSBP_SSR_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -253,4 +253,4 @@ static inline bool operator>=(
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SSR_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_H */
+#endif /* LIBSBP_SSR_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_H */

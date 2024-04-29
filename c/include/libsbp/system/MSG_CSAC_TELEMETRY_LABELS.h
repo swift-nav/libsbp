@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SYSTEM_MSG_CSAC_TELEMETRY_LABELS_H
-#define LIBSBP_V4_SYSTEM_MSG_CSAC_TELEMETRY_LABELS_H
+#ifndef LIBSBP_SYSTEM_MSG_CSAC_TELEMETRY_LABELS_H
+#define LIBSBP_SYSTEM_MSG_CSAC_TELEMETRY_LABELS_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -389,4 +389,4 @@ static inline bool operator>=(const sbp_msg_csac_telemetry_labels_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SYSTEM_MSG_CSAC_TELEMETRY_LABELS_H */
+#endif /* LIBSBP_SYSTEM_MSG_CSAC_TELEMETRY_LABELS_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_OBSERVATION_OBSERVATIONHEADER_H
-#define LIBSBP_V4_OBSERVATION_OBSERVATIONHEADER_H
+#ifndef LIBSBP_OBSERVATION_OBSERVATIONHEADER_H
+#define LIBSBP_OBSERVATION_OBSERVATIONHEADER_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -47,7 +47,7 @@ typedef struct {
   /**
    * GNSS time of this observation
    */
-  sbp_v4_gps_time_t t;
+  sbp_gps_time_t t;
 
   /**
    * Total number of observations. First nibble is the size of the sequence (n),
@@ -163,4 +163,4 @@ static inline bool operator>=(const sbp_observation_header_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_OBSERVATION_OBSERVATIONHEADER_H */
+#endif /* LIBSBP_OBSERVATION_OBSERVATIONHEADER_H */

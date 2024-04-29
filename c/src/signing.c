@@ -298,7 +298,7 @@ s8 sbp_msg_ecdsa_certificate_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ECDSA_CERTIFICATE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEcdsaCertificate, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -437,7 +437,7 @@ s8 sbp_msg_certificate_chain_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_CERTIFICATE_CHAIN, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgCertificateChain, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -592,8 +592,8 @@ s8 sbp_msg_certificate_chain_dep_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_CERTIFICATE_CHAIN_DEP,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgCertificateChainDep, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_certificate_chain_dep_cmp(
@@ -750,7 +750,7 @@ s8 sbp_msg_ecdsa_signature_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ECDSA_SIGNATURE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgEcdsaSignature, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -914,8 +914,8 @@ s8 sbp_msg_ecdsa_signature_dep_b_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ECDSA_SIGNATURE_DEP_B,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgEcdsaSignatureDepB, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ecdsa_signature_dep_b_cmp(
@@ -1084,8 +1084,8 @@ s8 sbp_msg_ecdsa_signature_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ECDSA_SIGNATURE_DEP_A,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgEcdsaSignatureDepA, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ecdsa_signature_dep_a_cmp(
@@ -1226,8 +1226,8 @@ s8 sbp_msg_ed25519_certificate_dep_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ED25519_CERTIFICATE_DEP,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgEd25519CertificateDep, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ed25519_certificate_dep_cmp(
@@ -1352,8 +1352,8 @@ s8 sbp_msg_ed25519_signature_dep_a_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ED25519_SIGNATURE_DEP_A,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgEd25519SignatureDepA, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ed25519_signature_dep_a_cmp(
@@ -1495,8 +1495,8 @@ s8 sbp_msg_ed25519_signature_dep_b_send(
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_ED25519_SIGNATURE_DEP_B,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgEd25519SignatureDepB, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_ed25519_signature_dep_b_cmp(

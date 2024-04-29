@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -566,95 +566,98 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrection) {
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.header.iod_atmo == 170,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.header.iod_atmo, "
-                  "expected 170, is %d",
-                  last_msg.msg.ssr_gridded_correction.header.iod_atmo);
+                  "expected 170, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.header.iod_atmo);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.header.num_msgs == 48535,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.header.num_msgs, "
-                  "expected 48535, is %d",
-                  last_msg.msg.ssr_gridded_correction.header.num_msgs);
+                  "expected 48535, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.header.num_msgs);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.header.seq_num == 50380,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.header.seq_num, "
-                  "expected 50380, is %d",
-                  last_msg.msg.ssr_gridded_correction.header.seq_num);
+                  "expected 50380, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.header.seq_num);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.header.tile_id == 12951,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.header.tile_id, "
-                  "expected 12951, is %d",
-                  last_msg.msg.ssr_gridded_correction.header.tile_id);
+                  "expected 12951, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.header.tile_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.header.tile_set_id == 3605,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.header.tile_set_id, expected "
-        "3605, is %d",
-        last_msg.msg.ssr_gridded_correction.header.tile_set_id);
+        "3605, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.header.tile_set_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.header.time.tow == 2535294328,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.header.time.tow, expected "
-        "2535294328, is %d",
-        last_msg.msg.ssr_gridded_correction.header.time.tow);
+        "2535294328, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.header.time.tow);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.header.time.wn == 58798,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.header.time.wn, "
-                  "expected 58798, is %d",
-                  last_msg.msg.ssr_gridded_correction.header.time.wn);
+                  "expected 58798, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.header.time.wn);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.header.tropo_quality_indicator ==
             120,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.header.tropo_quality_indicator, "
-        "expected 120, is %d",
-        last_msg.msg.ssr_gridded_correction.header.tropo_quality_indicator);
+        "expected 120, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction.header.tropo_quality_indicator);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.header.update_interval == 105,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.header.update_interval, expected "
-        "105, is %d",
-        last_msg.msg.ssr_gridded_correction.header.update_interval);
+        "105, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.header.update_interval);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.index == 43413,
         "incorrect value for last_msg.msg.ssr_gridded_correction.index, "
-        "expected 43413, is %d",
-        last_msg.msg.ssr_gridded_correction.index);
+        "expected 43413, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.index);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.n_stec_residuals == 46,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.n_stec_residuals, "
-                  "expected 46, is %d",
-                  last_msg.msg.ssr_gridded_correction.n_stec_residuals);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.n_stec_residuals == 46,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.n_stec_residuals, expected 46, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.n_stec_residuals);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[0].residual ==
             -21246,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[0].residual, "
-        "expected -21246, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[0].residual);
+        "expected -21246, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[0]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[0].stddev == 88,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[0].stddev, "
-        "expected 88, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[0].stddev);
+        "expected 88, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[0].stddev);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[0]
                           .sv_id.constellation == 101,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.stec_residuals[0].sv_id."
-                  "constellation, expected 101, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[0]
+                  "constellation, expected 101, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[0]
                       .sv_id.constellation);
 
     ck_assert_msg(
@@ -662,88 +665,94 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrection) {
             140,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[0].sv_id.satId, "
-        "expected 140, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[0].sv_id.satId);
+        "expected 140, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[0]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[1].residual ==
             -26570,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[1].residual, "
-        "expected -26570, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[1].residual);
+        "expected -26570, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[1]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[1].stddev == 115,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[1].stddev, "
-        "expected 115, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[1].stddev);
+        "expected 115, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[1].stddev);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[1]
                           .sv_id.constellation == 180,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.stec_residuals[1].sv_id."
-                  "constellation, expected 180, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[1]
+                  "constellation, expected 180, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[1]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[1].sv_id.satId == 70,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[1].sv_id.satId, "
-        "expected 70, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[1].sv_id.satId);
+        "expected 70, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[1]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[2].residual == 6049,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[2].residual, "
-        "expected 6049, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[2].residual);
+        "expected 6049, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[2]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[2].stddev == 135,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[2].stddev, "
-        "expected 135, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[2].stddev);
+        "expected 135, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[2].stddev);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[2]
                           .sv_id.constellation == 201,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.stec_residuals[2].sv_id."
-                  "constellation, expected 201, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[2]
+                  "constellation, expected 201, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[2]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[2].sv_id.satId == 78,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[2].sv_id.satId, "
-        "expected 78, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[2].sv_id.satId);
+        "expected 78, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[2]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[3].residual == 19261,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[3].residual, "
-        "expected 19261, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[3].residual);
+        "expected 19261, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[3]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[3].stddev == 178,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[3].stddev, "
-        "expected 178, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[3].stddev);
+        "expected 178, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[3].stddev);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[3]
                           .sv_id.constellation == 98,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.stec_residuals[3].sv_id."
-                  "constellation, expected 98, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[3]
+                  "constellation, expected 98, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[3]
                       .sv_id.constellation);
 
     ck_assert_msg(
@@ -751,29 +760,31 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrection) {
             152,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[3].sv_id.satId, "
-        "expected 152, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[3].sv_id.satId);
+        "expected 152, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[3]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[4].residual == 14226,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[4].residual, "
-        "expected 14226, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[4].residual);
+        "expected 14226, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[4]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[4].stddev == 58,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[4].stddev, "
-        "expected 58, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[4].stddev);
+        "expected 58, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[4].stddev);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[4]
                           .sv_id.constellation == 229,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.stec_residuals[4].sv_id."
-                  "constellation, expected 229, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[4]
+                  "constellation, expected 229, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[4]
                       .sv_id.constellation);
 
     ck_assert_msg(
@@ -781,29 +792,31 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrection) {
             120,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[4].sv_id.satId, "
-        "expected 120, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[4].sv_id.satId);
+        "expected 120, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[4]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[5].residual == 17894,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[5].residual, "
-        "expected 17894, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[5].residual);
+        "expected 17894, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[5]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[5].stddev == 172,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[5].stddev, "
-        "expected 172, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[5].stddev);
+        "expected 172, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[5].stddev);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[5]
                           .sv_id.constellation == 234,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.stec_residuals[5].sv_id."
-                  "constellation, expected 234, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[5]
+                  "constellation, expected 234, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[5]
                       .sv_id.constellation);
 
     ck_assert_msg(
@@ -811,29 +824,31 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrection) {
             169,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[5].sv_id.satId, "
-        "expected 169, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[5].sv_id.satId);
+        "expected 169, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[5]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[6].residual == 22930,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[6].residual, "
-        "expected 22930, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[6].residual);
+        "expected 22930, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[6]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[6].stddev == 150,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[6].stddev, "
-        "expected 150, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[6].stddev);
+        "expected 150, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[6].stddev);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[6]
                           .sv_id.constellation == 127,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.stec_residuals[6].sv_id."
-                  "constellation, expected 127, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[6]
+                  "constellation, expected 127, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[6]
                       .sv_id.constellation);
 
     ck_assert_msg(
@@ -841,59 +856,63 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrection) {
             191,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[6].sv_id.satId, "
-        "expected 191, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[6].sv_id.satId);
+        "expected 191, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[6]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[7].residual == 10721,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[7].residual, "
-        "expected 10721, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[7].residual);
+        "expected 10721, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[7]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[7].stddev == 17,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[7].stddev, "
-        "expected 17, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[7].stddev);
+        "expected 17, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[7].stddev);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[7]
                           .sv_id.constellation == 111,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.stec_residuals[7].sv_id."
-                  "constellation, expected 111, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[7]
+                  "constellation, expected 111, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[7]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[7].sv_id.satId == 91,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[7].sv_id.satId, "
-        "expected 91, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[7].sv_id.satId);
+        "expected 91, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[7]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[8].residual ==
             -22874,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[8].residual, "
-        "expected -22874, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[8].residual);
+        "expected -22874, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[8]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[8].stddev == 120,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[8].stddev, "
-        "expected 120, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[8].stddev);
+        "expected 120, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[8].stddev);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[8]
                           .sv_id.constellation == 52,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.stec_residuals[8].sv_id."
-                  "constellation, expected 52, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[8]
+                  "constellation, expected 52, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[8]
                       .sv_id.constellation);
 
     ck_assert_msg(
@@ -901,1167 +920,1281 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrection) {
             119,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[8].sv_id.satId, "
-        "expected 119, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[8].sv_id.satId);
+        "expected 119, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[8]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[9].residual == 780,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[9].residual, "
-        "expected 780, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[9].residual);
+        "expected 780, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[9]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[9].stddev == 156,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[9].stddev, "
-        "expected 156, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[9].stddev);
+        "expected 156, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[9].stddev);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[9]
                           .sv_id.constellation == 221,
                   "incorrect value for "
                   "last_msg.msg.ssr_gridded_correction.stec_residuals[9].sv_id."
-                  "constellation, expected 221, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[9]
+                  "constellation, expected 221, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[9]
                       .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[9].sv_id.satId == 57,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[9].sv_id.satId, "
-        "expected 57, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[9].sv_id.satId);
+        "expected 57, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[9]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[10].residual ==
             32547,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[10].residual, "
-        "expected 32547, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[10].residual);
+        "expected 32547, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[10]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[10].stddev == 8,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[10].stddev, "
-        "expected 8, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[10].stddev);
+        "expected 8, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[10].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[10]
-                          .sv_id.constellation == 156,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[10].sv_"
-                  "id.constellation, expected 156, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[10]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[10]
+                .sv_id.constellation == 156,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[10].sv_id."
+        "constellation, expected 156, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[10]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[10].sv_id.satId ==
             70,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[10].sv_id.satId, "
-        "expected 70, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[10].sv_id.satId);
+        "expected 70, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[10]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[11].residual ==
             14208,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[11].residual, "
-        "expected 14208, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[11].residual);
+        "expected 14208, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[11]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[11].stddev == 115,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[11].stddev, "
-        "expected 115, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[11].stddev);
+        "expected 115, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[11].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[11]
-                          .sv_id.constellation == 58,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[11].sv_"
-                  "id.constellation, expected 58, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[11]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[11]
+                .sv_id.constellation == 58,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[11].sv_id."
+        "constellation, expected 58, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[11]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[11].sv_id.satId ==
             127,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[11].sv_id.satId, "
-        "expected 127, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[11].sv_id.satId);
+        "expected 127, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[11]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[12].residual ==
             -26246,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[12].residual, "
-        "expected -26246, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[12].residual);
+        "expected -26246, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[12]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[12].stddev == 124,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[12].stddev, "
-        "expected 124, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[12].stddev);
+        "expected 124, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[12].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[12]
-                          .sv_id.constellation == 157,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[12].sv_"
-                  "id.constellation, expected 157, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[12]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[12]
+                .sv_id.constellation == 157,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[12].sv_id."
+        "constellation, expected 157, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[12]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[12].sv_id.satId ==
             80,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[12].sv_id.satId, "
-        "expected 80, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[12].sv_id.satId);
+        "expected 80, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[12]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[13].residual ==
             26466,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[13].residual, "
-        "expected 26466, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[13].residual);
+        "expected 26466, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[13]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[13].stddev == 204,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[13].stddev, "
-        "expected 204, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[13].stddev);
+        "expected 204, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[13].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[13]
-                          .sv_id.constellation == 128,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[13].sv_"
-                  "id.constellation, expected 128, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[13]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[13]
+                .sv_id.constellation == 128,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[13].sv_id."
+        "constellation, expected 128, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[13]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[13].sv_id.satId ==
             27,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[13].sv_id.satId, "
-        "expected 27, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[13].sv_id.satId);
+        "expected 27, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[13]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[14].residual ==
             -7552,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[14].residual, "
-        "expected -7552, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[14].residual);
+        "expected -7552, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[14]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[14].stddev == 148,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[14].stddev, "
-        "expected 148, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[14].stddev);
+        "expected 148, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[14].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[14]
-                          .sv_id.constellation == 238,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[14].sv_"
-                  "id.constellation, expected 238, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[14]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[14]
+                .sv_id.constellation == 238,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[14].sv_id."
+        "constellation, expected 238, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[14]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[14].sv_id.satId ==
             75,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[14].sv_id.satId, "
-        "expected 75, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[14].sv_id.satId);
+        "expected 75, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[14]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[15].residual ==
             -12072,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[15].residual, "
-        "expected -12072, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[15].residual);
+        "expected -12072, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[15]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[15].stddev == 149,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[15].stddev, "
-        "expected 149, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[15].stddev);
+        "expected 149, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[15].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[15]
-                          .sv_id.constellation == 61,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[15].sv_"
-                  "id.constellation, expected 61, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[15]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[15]
+                .sv_id.constellation == 61,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[15].sv_id."
+        "constellation, expected 61, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[15]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[15].sv_id.satId ==
             248,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[15].sv_id.satId, "
-        "expected 248, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[15].sv_id.satId);
+        "expected 248, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[15]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[16].residual ==
             -28632,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[16].residual, "
-        "expected -28632, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[16].residual);
+        "expected -28632, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[16]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[16].stddev == 186,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[16].stddev, "
-        "expected 186, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[16].stddev);
+        "expected 186, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[16].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[16]
-                          .sv_id.constellation == 224,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[16].sv_"
-                  "id.constellation, expected 224, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[16]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[16]
+                .sv_id.constellation == 224,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[16].sv_id."
+        "constellation, expected 224, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[16]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[16].sv_id.satId ==
             167,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[16].sv_id.satId, "
-        "expected 167, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[16].sv_id.satId);
+        "expected 167, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[16]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[17].residual ==
             -4024,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[17].residual, "
-        "expected -4024, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[17].residual);
+        "expected -4024, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[17]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[17].stddev == 100,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[17].stddev, "
-        "expected 100, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[17].stddev);
+        "expected 100, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[17].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[17]
-                          .sv_id.constellation == 227,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[17].sv_"
-                  "id.constellation, expected 227, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[17]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[17]
+                .sv_id.constellation == 227,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[17].sv_id."
+        "constellation, expected 227, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[17]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[17].sv_id.satId ==
             157,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[17].sv_id.satId, "
-        "expected 157, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[17].sv_id.satId);
+        "expected 157, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[17]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[18].residual == 2004,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[18].residual, "
-        "expected 2004, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[18].residual);
+        "expected 2004, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[18]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[18].stddev == 59,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[18].stddev, "
-        "expected 59, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[18].stddev);
+        "expected 59, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[18].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[18]
-                          .sv_id.constellation == 12,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[18].sv_"
-                  "id.constellation, expected 12, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[18]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[18]
+                .sv_id.constellation == 12,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[18].sv_id."
+        "constellation, expected 12, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[18]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[18].sv_id.satId ==
             35,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[18].sv_id.satId, "
-        "expected 35, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[18].sv_id.satId);
+        "expected 35, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[18]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[19].residual == 6998,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[19].residual, "
-        "expected 6998, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[19].residual);
+        "expected 6998, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[19]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[19].stddev == 24,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[19].stddev, "
-        "expected 24, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[19].stddev);
+        "expected 24, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[19].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[19]
-                          .sv_id.constellation == 81,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[19].sv_"
-                  "id.constellation, expected 81, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[19]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[19]
+                .sv_id.constellation == 81,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[19].sv_id."
+        "constellation, expected 81, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[19]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[19].sv_id.satId ==
             176,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[19].sv_id.satId, "
-        "expected 176, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[19].sv_id.satId);
+        "expected 176, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[19]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[20].residual ==
             -31701,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[20].residual, "
-        "expected -31701, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[20].residual);
+        "expected -31701, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[20]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[20].stddev == 45,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[20].stddev, "
-        "expected 45, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[20].stddev);
+        "expected 45, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[20].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[20]
-                          .sv_id.constellation == 67,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[20].sv_"
-                  "id.constellation, expected 67, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[20]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[20]
+                .sv_id.constellation == 67,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[20].sv_id."
+        "constellation, expected 67, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[20]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[20].sv_id.satId ==
             155,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[20].sv_id.satId, "
-        "expected 155, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[20].sv_id.satId);
+        "expected 155, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[20]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[21].residual ==
             28678,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[21].residual, "
-        "expected 28678, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[21].residual);
+        "expected 28678, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[21]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[21].stddev == 183,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[21].stddev, "
-        "expected 183, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[21].stddev);
+        "expected 183, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[21].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[21]
-                          .sv_id.constellation == 44,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[21].sv_"
-                  "id.constellation, expected 44, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[21]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[21]
+                .sv_id.constellation == 44,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[21].sv_id."
+        "constellation, expected 44, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[21]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[21].sv_id.satId ==
             203,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[21].sv_id.satId, "
-        "expected 203, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[21].sv_id.satId);
+        "expected 203, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[21]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[22].residual ==
             -15793,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[22].residual, "
-        "expected -15793, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[22].residual);
+        "expected -15793, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[22]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[22].stddev == 253,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[22].stddev, "
-        "expected 253, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[22].stddev);
+        "expected 253, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[22].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[22]
-                          .sv_id.constellation == 176,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[22].sv_"
-                  "id.constellation, expected 176, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[22]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[22]
+                .sv_id.constellation == 176,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[22].sv_id."
+        "constellation, expected 176, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[22]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[22].sv_id.satId ==
             231,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[22].sv_id.satId, "
-        "expected 231, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[22].sv_id.satId);
+        "expected 231, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[22]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[23].residual ==
             -7589,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[23].residual, "
-        "expected -7589, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[23].residual);
+        "expected -7589, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[23]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[23].stddev == 116,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[23].stddev, "
-        "expected 116, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[23].stddev);
+        "expected 116, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[23].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[23]
-                          .sv_id.constellation == 103,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[23].sv_"
-                  "id.constellation, expected 103, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[23]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[23]
+                .sv_id.constellation == 103,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[23].sv_id."
+        "constellation, expected 103, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[23]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[23].sv_id.satId ==
             247,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[23].sv_id.satId, "
-        "expected 247, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[23].sv_id.satId);
+        "expected 247, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[23]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[24].residual ==
             -7362,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[24].residual, "
-        "expected -7362, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[24].residual);
+        "expected -7362, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[24]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[24].stddev == 240,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[24].stddev, "
-        "expected 240, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[24].stddev);
+        "expected 240, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[24].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[24]
-                          .sv_id.constellation == 23,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[24].sv_"
-                  "id.constellation, expected 23, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[24]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[24]
+                .sv_id.constellation == 23,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[24].sv_id."
+        "constellation, expected 23, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[24]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[24].sv_id.satId ==
             148,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[24].sv_id.satId, "
-        "expected 148, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[24].sv_id.satId);
+        "expected 148, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[24]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[25].residual == 4813,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[25].residual, "
-        "expected 4813, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[25].residual);
+        "expected 4813, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[25]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[25].stddev == 242,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[25].stddev, "
-        "expected 242, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[25].stddev);
+        "expected 242, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[25].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[25]
-                          .sv_id.constellation == 219,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[25].sv_"
-                  "id.constellation, expected 219, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[25]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[25]
+                .sv_id.constellation == 219,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[25].sv_id."
+        "constellation, expected 219, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[25]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[25].sv_id.satId ==
             29,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[25].sv_id.satId, "
-        "expected 29, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[25].sv_id.satId);
+        "expected 29, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[25]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[26].residual ==
             20295,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[26].residual, "
-        "expected 20295, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[26].residual);
+        "expected 20295, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[26]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[26].stddev == 37,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[26].stddev, "
-        "expected 37, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[26].stddev);
+        "expected 37, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[26].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[26]
-                          .sv_id.constellation == 72,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[26].sv_"
-                  "id.constellation, expected 72, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[26]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[26]
+                .sv_id.constellation == 72,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[26].sv_id."
+        "constellation, expected 72, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[26]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[26].sv_id.satId ==
             207,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[26].sv_id.satId, "
-        "expected 207, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[26].sv_id.satId);
+        "expected 207, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[26]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[27].residual ==
             -13623,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[27].residual, "
-        "expected -13623, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[27].residual);
+        "expected -13623, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[27]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[27].stddev == 91,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[27].stddev, "
-        "expected 91, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[27].stddev);
+        "expected 91, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[27].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[27]
-                          .sv_id.constellation == 176,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[27].sv_"
-                  "id.constellation, expected 176, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[27]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[27]
+                .sv_id.constellation == 176,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[27].sv_id."
+        "constellation, expected 176, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[27]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[27].sv_id.satId ==
             42,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[27].sv_id.satId, "
-        "expected 42, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[27].sv_id.satId);
+        "expected 42, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[27]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[28].residual ==
             15250,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[28].residual, "
-        "expected 15250, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[28].residual);
+        "expected 15250, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[28]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[28].stddev == 110,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[28].stddev, "
-        "expected 110, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[28].stddev);
+        "expected 110, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[28].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[28]
-                          .sv_id.constellation == 115,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[28].sv_"
-                  "id.constellation, expected 115, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[28]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[28]
+                .sv_id.constellation == 115,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[28].sv_id."
+        "constellation, expected 115, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[28]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[28].sv_id.satId ==
             105,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[28].sv_id.satId, "
-        "expected 105, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[28].sv_id.satId);
+        "expected 105, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[28]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[29].residual ==
             -18560,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[29].residual, "
-        "expected -18560, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[29].residual);
+        "expected -18560, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[29]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[29].stddev == 185,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[29].stddev, "
-        "expected 185, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[29].stddev);
+        "expected 185, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[29].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[29]
-                          .sv_id.constellation == 109,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[29].sv_"
-                  "id.constellation, expected 109, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[29]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[29]
+                .sv_id.constellation == 109,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[29].sv_id."
+        "constellation, expected 109, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[29]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[29].sv_id.satId ==
             44,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[29].sv_id.satId, "
-        "expected 44, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[29].sv_id.satId);
+        "expected 44, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[29]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[30].residual ==
             23717,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[30].residual, "
-        "expected 23717, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[30].residual);
+        "expected 23717, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[30]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[30].stddev == 79,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[30].stddev, "
-        "expected 79, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[30].stddev);
+        "expected 79, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[30].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[30]
-                          .sv_id.constellation == 31,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[30].sv_"
-                  "id.constellation, expected 31, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[30]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[30]
+                .sv_id.constellation == 31,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[30].sv_id."
+        "constellation, expected 31, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[30]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[30].sv_id.satId ==
             67,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[30].sv_id.satId, "
-        "expected 67, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[30].sv_id.satId);
+        "expected 67, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[30]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[31].residual == 1886,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[31].residual, "
-        "expected 1886, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[31].residual);
+        "expected 1886, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[31]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[31].stddev == 162,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[31].stddev, "
-        "expected 162, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[31].stddev);
+        "expected 162, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[31].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[31]
-                          .sv_id.constellation == 180,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[31].sv_"
-                  "id.constellation, expected 180, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[31]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[31]
+                .sv_id.constellation == 180,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[31].sv_id."
+        "constellation, expected 180, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[31]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[31].sv_id.satId ==
             189,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[31].sv_id.satId, "
-        "expected 189, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[31].sv_id.satId);
+        "expected 189, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[31]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[32].residual ==
             12242,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[32].residual, "
-        "expected 12242, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[32].residual);
+        "expected 12242, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[32]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[32].stddev == 7,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[32].stddev, "
-        "expected 7, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[32].stddev);
+        "expected 7, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[32].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[32]
-                          .sv_id.constellation == 156,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[32].sv_"
-                  "id.constellation, expected 156, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[32]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[32]
+                .sv_id.constellation == 156,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[32].sv_id."
+        "constellation, expected 156, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[32]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[32].sv_id.satId ==
             121,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[32].sv_id.satId, "
-        "expected 121, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[32].sv_id.satId);
+        "expected 121, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[32]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[33].residual ==
             10670,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[33].residual, "
-        "expected 10670, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[33].residual);
+        "expected 10670, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[33]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[33].stddev == 241,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[33].stddev, "
-        "expected 241, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[33].stddev);
+        "expected 241, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[33].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[33]
-                          .sv_id.constellation == 205,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[33].sv_"
-                  "id.constellation, expected 205, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[33]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[33]
+                .sv_id.constellation == 205,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[33].sv_id."
+        "constellation, expected 205, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[33]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[33].sv_id.satId == 7,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[33].sv_id.satId, "
-        "expected 7, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[33].sv_id.satId);
+        "expected 7, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[33]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[34].residual ==
             25899,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[34].residual, "
-        "expected 25899, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[34].residual);
+        "expected 25899, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[34]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[34].stddev == 186,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[34].stddev, "
-        "expected 186, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[34].stddev);
+        "expected 186, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[34].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[34]
-                          .sv_id.constellation == 210,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[34].sv_"
-                  "id.constellation, expected 210, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[34]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[34]
+                .sv_id.constellation == 210,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[34].sv_id."
+        "constellation, expected 210, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[34]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[34].sv_id.satId ==
             129,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[34].sv_id.satId, "
-        "expected 129, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[34].sv_id.satId);
+        "expected 129, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[34]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[35].residual ==
             -2078,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[35].residual, "
-        "expected -2078, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[35].residual);
+        "expected -2078, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[35]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[35].stddev == 187,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[35].stddev, "
-        "expected 187, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[35].stddev);
+        "expected 187, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[35].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[35]
-                          .sv_id.constellation == 195,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[35].sv_"
-                  "id.constellation, expected 195, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[35]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[35]
+                .sv_id.constellation == 195,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[35].sv_id."
+        "constellation, expected 195, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[35]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[35].sv_id.satId ==
             208,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[35].sv_id.satId, "
-        "expected 208, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[35].sv_id.satId);
+        "expected 208, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[35]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[36].residual ==
             -16264,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[36].residual, "
-        "expected -16264, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[36].residual);
+        "expected -16264, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[36]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[36].stddev == 102,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[36].stddev, "
-        "expected 102, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[36].stddev);
+        "expected 102, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[36].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[36]
-                          .sv_id.constellation == 160,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[36].sv_"
-                  "id.constellation, expected 160, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[36]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[36]
+                .sv_id.constellation == 160,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[36].sv_id."
+        "constellation, expected 160, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[36]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[36].sv_id.satId ==
             219,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[36].sv_id.satId, "
-        "expected 219, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[36].sv_id.satId);
+        "expected 219, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[36]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[37].residual ==
             -21002,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[37].residual, "
-        "expected -21002, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[37].residual);
+        "expected -21002, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[37]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[37].stddev == 94,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[37].stddev, "
-        "expected 94, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[37].stddev);
+        "expected 94, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[37].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[37]
-                          .sv_id.constellation == 42,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[37].sv_"
-                  "id.constellation, expected 42, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[37]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[37]
+                .sv_id.constellation == 42,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[37].sv_id."
+        "constellation, expected 42, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[37]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[37].sv_id.satId ==
             166,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[37].sv_id.satId, "
-        "expected 166, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[37].sv_id.satId);
+        "expected 166, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[37]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[38].residual == 7902,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[38].residual, "
-        "expected 7902, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[38].residual);
+        "expected 7902, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[38]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[38].stddev == 35,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[38].stddev, "
-        "expected 35, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[38].stddev);
+        "expected 35, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[38].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[38]
-                          .sv_id.constellation == 156,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[38].sv_"
-                  "id.constellation, expected 156, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[38]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[38]
+                .sv_id.constellation == 156,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[38].sv_id."
+        "constellation, expected 156, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[38]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[38].sv_id.satId ==
             102,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[38].sv_id.satId, "
-        "expected 102, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[38].sv_id.satId);
+        "expected 102, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[38]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[39].residual ==
             -30275,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[39].residual, "
-        "expected -30275, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[39].residual);
+        "expected -30275, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[39]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[39].stddev == 204,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[39].stddev, "
-        "expected 204, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[39].stddev);
+        "expected 204, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[39].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[39]
-                          .sv_id.constellation == 64,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[39].sv_"
-                  "id.constellation, expected 64, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[39]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[39]
+                .sv_id.constellation == 64,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[39].sv_id."
+        "constellation, expected 64, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[39]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[39].sv_id.satId ==
             247,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[39].sv_id.satId, "
-        "expected 247, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[39].sv_id.satId);
+        "expected 247, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[39]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[40].residual ==
             -8633,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[40].residual, "
-        "expected -8633, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[40].residual);
+        "expected -8633, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[40]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[40].stddev == 222,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[40].stddev, "
-        "expected 222, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[40].stddev);
+        "expected 222, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[40].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[40]
-                          .sv_id.constellation == 32,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[40].sv_"
-                  "id.constellation, expected 32, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[40]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[40]
+                .sv_id.constellation == 32,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[40].sv_id."
+        "constellation, expected 32, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[40]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[40].sv_id.satId ==
             220,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[40].sv_id.satId, "
-        "expected 220, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[40].sv_id.satId);
+        "expected 220, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[40]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[41].residual == 6403,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[41].residual, "
-        "expected 6403, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[41].residual);
+        "expected 6403, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[41]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[41].stddev == 45,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[41].stddev, "
-        "expected 45, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[41].stddev);
+        "expected 45, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[41].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[41]
-                          .sv_id.constellation == 246,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[41].sv_"
-                  "id.constellation, expected 246, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[41]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[41]
+                .sv_id.constellation == 246,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[41].sv_id."
+        "constellation, expected 246, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[41]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[41].sv_id.satId ==
             201,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[41].sv_id.satId, "
-        "expected 201, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[41].sv_id.satId);
+        "expected 201, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[41]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[42].residual ==
             22643,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[42].residual, "
-        "expected 22643, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[42].residual);
+        "expected 22643, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[42]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[42].stddev == 218,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[42].stddev, "
-        "expected 218, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[42].stddev);
+        "expected 218, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[42].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[42]
-                          .sv_id.constellation == 239,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[42].sv_"
-                  "id.constellation, expected 239, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[42]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[42]
+                .sv_id.constellation == 239,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[42].sv_id."
+        "constellation, expected 239, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[42]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[42].sv_id.satId ==
             251,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[42].sv_id.satId, "
-        "expected 251, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[42].sv_id.satId);
+        "expected 251, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[42]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[43].residual ==
             16760,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[43].residual, "
-        "expected 16760, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[43].residual);
+        "expected 16760, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[43]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[43].stddev == 175,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[43].stddev, "
-        "expected 175, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[43].stddev);
+        "expected 175, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[43].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[43]
-                          .sv_id.constellation == 209,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[43].sv_"
-                  "id.constellation, expected 209, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[43]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[43]
+                .sv_id.constellation == 209,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[43].sv_id."
+        "constellation, expected 209, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[43]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[43].sv_id.satId ==
             10,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[43].sv_id.satId, "
-        "expected 10, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[43].sv_id.satId);
+        "expected 10, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[43]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[44].residual ==
             -20951,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[44].residual, "
-        "expected -20951, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[44].residual);
+        "expected -20951, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[44]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[44].stddev == 137,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[44].stddev, "
-        "expected 137, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[44].stddev);
+        "expected 137, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[44].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[44]
-                          .sv_id.constellation == 194,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[44].sv_"
-                  "id.constellation, expected 194, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[44]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[44]
+                .sv_id.constellation == 194,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[44].sv_id."
+        "constellation, expected 194, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[44]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[44].sv_id.satId ==
             131,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[44].sv_id.satId, "
-        "expected 131, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[44].sv_id.satId);
+        "expected 131, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[44]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[45].residual == -740,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[45].residual, "
-        "expected -740, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[45].residual);
+        "expected -740, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[45]
+            .residual);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[45].stddev == 42,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[45].stddev, "
-        "expected 42, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[45].stddev);
+        "expected 42, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[45].stddev);
 
-    ck_assert_msg(last_msg.msg.ssr_gridded_correction.stec_residuals[45]
-                          .sv_id.constellation == 68,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_gridded_correction.stec_residuals[45].sv_"
-                  "id.constellation, expected 68, is %d",
-                  last_msg.msg.ssr_gridded_correction.stec_residuals[45]
-                      .sv_id.constellation);
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction.stec_residuals[45]
+                .sv_id.constellation == 68,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction.stec_residuals[45].sv_id."
+        "constellation, expected 68, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[45]
+            .sv_id.constellation);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.stec_residuals[45].sv_id.satId ==
             17,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.stec_residuals[45].sv_id.satId, "
-        "expected 17, is %d",
-        last_msg.msg.ssr_gridded_correction.stec_residuals[45].sv_id.satId);
+        "expected 17, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_gridded_correction.stec_residuals[45]
+            .sv_id.satId);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.tropo_delay_correction.hydro ==
             -3035,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.tropo_delay_correction.hydro, "
-        "expected -3035, is %d",
-        last_msg.msg.ssr_gridded_correction.tropo_delay_correction.hydro);
+        "expected -3035, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction.tropo_delay_correction.hydro);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.tropo_delay_correction.stddev == 72,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.tropo_delay_correction.stddev, "
-        "expected 72, is %d",
-        last_msg.msg.ssr_gridded_correction.tropo_delay_correction.stddev);
+        "expected 72, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction.tropo_delay_correction.stddev);
 
     ck_assert_msg(
         last_msg.msg.ssr_gridded_correction.tropo_delay_correction.wet == 78,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction.tropo_delay_correction.wet, "
-        "expected 78, is %d",
-        last_msg.msg.ssr_gridded_correction.tropo_delay_correction.wet);
+        "expected 78, is %" PRId64,
+        (int64_t)
+            last_msg.msg.ssr_gridded_correction.tropo_delay_correction.wet);
   }
 }
 END_TEST

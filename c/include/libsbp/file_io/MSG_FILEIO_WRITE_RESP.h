@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_FILE_IO_MSG_FILEIO_WRITE_RESP_H
-#define LIBSBP_V4_FILE_IO_MSG_FILEIO_WRITE_RESP_H
+#ifndef LIBSBP_FILE_IO_MSG_FILEIO_WRITE_RESP_H
+#define LIBSBP_FILE_IO_MSG_FILEIO_WRITE_RESP_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -178,4 +178,4 @@ static inline bool operator>=(const sbp_msg_fileio_write_resp_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_FILE_IO_MSG_FILEIO_WRITE_RESP_H */
+#endif /* LIBSBP_FILE_IO_MSG_FILEIO_WRITE_RESP_H */

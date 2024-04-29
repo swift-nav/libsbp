@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -149,58 +149,58 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrTileDefinitionDepA) {
     ck_assert_msg(
         last_msg.msg.ssr_tile_definition_dep_a.bitmask == 11259375,
         "incorrect value for last_msg.msg.ssr_tile_definition_dep_a.bitmask, "
-        "expected 11259375, is %d",
-        last_msg.msg.ssr_tile_definition_dep_a.bitmask);
+        "expected 11259375, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_tile_definition_dep_a.bitmask);
 
     ck_assert_msg(
         last_msg.msg.ssr_tile_definition_dep_a.cols == 48917,
         "incorrect value for last_msg.msg.ssr_tile_definition_dep_a.cols, "
-        "expected 48917, is %d",
-        last_msg.msg.ssr_tile_definition_dep_a.cols);
+        "expected 48917, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_tile_definition_dep_a.cols);
 
     ck_assert_msg(
         last_msg.msg.ssr_tile_definition_dep_a.corner_nw_lat == -18168,
         "incorrect value for "
         "last_msg.msg.ssr_tile_definition_dep_a.corner_nw_lat, expected "
-        "-18168, is %d",
-        last_msg.msg.ssr_tile_definition_dep_a.corner_nw_lat);
+        "-18168, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_tile_definition_dep_a.corner_nw_lat);
 
     ck_assert_msg(
         last_msg.msg.ssr_tile_definition_dep_a.corner_nw_lon == -19191,
         "incorrect value for "
         "last_msg.msg.ssr_tile_definition_dep_a.corner_nw_lon, expected "
-        "-19191, is %d",
-        last_msg.msg.ssr_tile_definition_dep_a.corner_nw_lon);
+        "-19191, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_tile_definition_dep_a.corner_nw_lon);
 
     ck_assert_msg(
         last_msg.msg.ssr_tile_definition_dep_a.rows == 36863,
         "incorrect value for last_msg.msg.ssr_tile_definition_dep_a.rows, "
-        "expected 36863, is %d",
-        last_msg.msg.ssr_tile_definition_dep_a.rows);
+        "expected 36863, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_tile_definition_dep_a.rows);
 
     ck_assert_msg(last_msg.msg.ssr_tile_definition_dep_a.spacing_lat == 61602,
                   "incorrect value for "
                   "last_msg.msg.ssr_tile_definition_dep_a.spacing_lat, "
-                  "expected 61602, is %d",
-                  last_msg.msg.ssr_tile_definition_dep_a.spacing_lat);
+                  "expected 61602, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_tile_definition_dep_a.spacing_lat);
 
     ck_assert_msg(last_msg.msg.ssr_tile_definition_dep_a.spacing_lon == 4929,
                   "incorrect value for "
                   "last_msg.msg.ssr_tile_definition_dep_a.spacing_lon, "
-                  "expected 4929, is %d",
-                  last_msg.msg.ssr_tile_definition_dep_a.spacing_lon);
+                  "expected 4929, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_tile_definition_dep_a.spacing_lon);
 
     ck_assert_msg(
         last_msg.msg.ssr_tile_definition_dep_a.tile_id == 63410,
         "incorrect value for last_msg.msg.ssr_tile_definition_dep_a.tile_id, "
-        "expected 63410, is %d",
-        last_msg.msg.ssr_tile_definition_dep_a.tile_id);
+        "expected 63410, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_tile_definition_dep_a.tile_id);
 
     ck_assert_msg(last_msg.msg.ssr_tile_definition_dep_a.tile_set_id == 48697,
                   "incorrect value for "
                   "last_msg.msg.ssr_tile_definition_dep_a.tile_set_id, "
-                  "expected 48697, is %d",
-                  last_msg.msg.ssr_tile_definition_dep_a.tile_set_id);
+                  "expected 48697, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_tile_definition_dep_a.tile_set_id);
   }
 }
 END_TEST

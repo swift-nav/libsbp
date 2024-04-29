@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_SYSTEM_H
-#define LIBSBP_INTERNAL_V4_SYSTEM_H
+#ifndef LIBSBP_INTERNAL_SYSTEM_H
+#define LIBSBP_INTERNAL_SYSTEM_H
 
 #include <stdbool.h>
 
@@ -331,4 +331,4 @@ bool sbp_msg_group_meta_decode_internal(sbp_decode_ctx_t *ctx,
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_SYSTEM_H */
+#endif /* LIBSBP_INTERNAL_SYSTEM_H */

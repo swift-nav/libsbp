@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -148,50 +148,51 @@ START_TEST(test_auto_check_sbp_observation_MsgGroupDelayDepB) {
     ck_assert_msg(
         last_msg.msg.group_delay_dep_b.isc_l1ca == -91,
         "incorrect value for last_msg.msg.group_delay_dep_b.isc_l1ca, expected "
-        "-91, is %d",
-        last_msg.msg.group_delay_dep_b.isc_l1ca);
+        "-91, is %" PRId64,
+        (int64_t)last_msg.msg.group_delay_dep_b.isc_l1ca);
 
     ck_assert_msg(last_msg.msg.group_delay_dep_b.isc_l2c == 6125,
                   "incorrect value for last_msg.msg.group_delay_dep_b.isc_l2c, "
-                  "expected 6125, is %d",
-                  last_msg.msg.group_delay_dep_b.isc_l2c);
+                  "expected 6125, is %" PRId64,
+                  (int64_t)last_msg.msg.group_delay_dep_b.isc_l2c);
 
-    ck_assert_msg(last_msg.msg.group_delay_dep_b.sid.code == 0,
-                  "incorrect value for "
-                  "last_msg.msg.group_delay_dep_b.sid.code, expected 0, is %d",
-                  last_msg.msg.group_delay_dep_b.sid.code);
+    ck_assert_msg(
+        last_msg.msg.group_delay_dep_b.sid.code == 0,
+        "incorrect value for last_msg.msg.group_delay_dep_b.sid.code, expected "
+        "0, is %" PRId64,
+        (int64_t)last_msg.msg.group_delay_dep_b.sid.code);
 
     ck_assert_msg(
         last_msg.msg.group_delay_dep_b.sid.reserved == 0,
         "incorrect value for last_msg.msg.group_delay_dep_b.sid.reserved, "
-        "expected 0, is %d",
-        last_msg.msg.group_delay_dep_b.sid.reserved);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.group_delay_dep_b.sid.reserved);
 
     ck_assert_msg(last_msg.msg.group_delay_dep_b.sid.sat == 22,
                   "incorrect value for last_msg.msg.group_delay_dep_b.sid.sat, "
-                  "expected 22, is %d",
-                  last_msg.msg.group_delay_dep_b.sid.sat);
+                  "expected 22, is %" PRId64,
+                  (int64_t)last_msg.msg.group_delay_dep_b.sid.sat);
 
     ck_assert_msg(
         last_msg.msg.group_delay_dep_b.t_op.tow == 446384,
         "incorrect value for last_msg.msg.group_delay_dep_b.t_op.tow, expected "
-        "446384, is %d",
-        last_msg.msg.group_delay_dep_b.t_op.tow);
+        "446384, is %" PRId64,
+        (int64_t)last_msg.msg.group_delay_dep_b.t_op.tow);
 
     ck_assert_msg(last_msg.msg.group_delay_dep_b.t_op.wn == 2154,
                   "incorrect value for last_msg.msg.group_delay_dep_b.t_op.wn, "
-                  "expected 2154, is %d",
-                  last_msg.msg.group_delay_dep_b.t_op.wn);
+                  "expected 2154, is %" PRId64,
+                  (int64_t)last_msg.msg.group_delay_dep_b.t_op.wn);
 
     ck_assert_msg(last_msg.msg.group_delay_dep_b.tgd == -514,
                   "incorrect value for last_msg.msg.group_delay_dep_b.tgd, "
-                  "expected -514, is %d",
-                  last_msg.msg.group_delay_dep_b.tgd);
+                  "expected -514, is %" PRId64,
+                  (int64_t)last_msg.msg.group_delay_dep_b.tgd);
 
     ck_assert_msg(last_msg.msg.group_delay_dep_b.valid == 1,
                   "incorrect value for last_msg.msg.group_delay_dep_b.valid, "
-                  "expected 1, is %d",
-                  last_msg.msg.group_delay_dep_b.valid);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.group_delay_dep_b.valid);
   }
 }
 END_TEST

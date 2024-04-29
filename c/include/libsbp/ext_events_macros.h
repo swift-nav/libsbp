@@ -18,7 +18,6 @@
 #ifndef LIBSBP_EXT_EVENTS_MACROS_H
 #define LIBSBP_EXT_EVENTS_MACROS_H
 
-#define SBP_MSG_EXT_EVENT 0x0101
 #define SBP_EXT_EVENT_TIME_QUALITY_MASK (0x1u)
 #define SBP_EXT_EVENT_TIME_QUALITY_SHIFT (1u)
 #define SBP_EXT_EVENT_TIME_QUALITY_GET(flags)               \
@@ -50,8 +49,7 @@
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_LOW (0)
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_HIGH (1)
 /**
- * Encoded length of sbp_msg_ext_event_t (V4 API) and
- * msg_ext_event_t (legacy API)
+ * Encoded length of sbp_msg_ext_event_t
  */
 #define SBP_MSG_EXT_EVENT_ENCODED_LEN 12u
 

@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -175,111 +175,111 @@ START_TEST(test_auto_check_sbp_navigation_MsgProtectionLevel) {
 
     ck_assert_msg(last_msg.msg.protection_level.atpl == 10663,
                   "incorrect value for last_msg.msg.protection_level.atpl, "
-                  "expected 10663, is %d",
-                  last_msg.msg.protection_level.atpl);
+                  "expected 10663, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.atpl);
 
     ck_assert_msg(last_msg.msg.protection_level.ctpl == 5433,
                   "incorrect value for last_msg.msg.protection_level.ctpl, "
-                  "expected 5433, is %d",
-                  last_msg.msg.protection_level.ctpl);
+                  "expected 5433, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.ctpl);
 
     ck_assert_msg(last_msg.msg.protection_level.flags == 555755625,
                   "incorrect value for last_msg.msg.protection_level.flags, "
-                  "expected 555755625, is %d",
-                  last_msg.msg.protection_level.flags);
+                  "expected 555755625, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.flags);
 
     ck_assert_msg(last_msg.msg.protection_level.heading == -529244741,
                   "incorrect value for last_msg.msg.protection_level.heading, "
-                  "expected -529244741, is %d",
-                  last_msg.msg.protection_level.heading);
+                  "expected -529244741, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.heading);
 
     ck_assert_msg(
         (last_msg.msg.protection_level.height * 100 - 412.2 * 100) < 0.05,
         "incorrect value for last_msg.msg.protection_level.height, expected "
-        "412.2, is %s",
+        "412.2, is %f",
         last_msg.msg.protection_level.height);
 
     ck_assert_msg(last_msg.msg.protection_level.hopl == 26707,
                   "incorrect value for last_msg.msg.protection_level.hopl, "
-                  "expected 26707, is %d",
-                  last_msg.msg.protection_level.hopl);
+                  "expected 26707, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.hopl);
 
     ck_assert_msg(last_msg.msg.protection_level.hpl == 41013,
                   "incorrect value for last_msg.msg.protection_level.hpl, "
-                  "expected 41013, is %d",
-                  last_msg.msg.protection_level.hpl);
+                  "expected 41013, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.hpl);
 
     ck_assert_msg(last_msg.msg.protection_level.hvpl == 62681,
                   "incorrect value for last_msg.msg.protection_level.hvpl, "
-                  "expected 62681, is %d",
-                  last_msg.msg.protection_level.hvpl);
+                  "expected 62681, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.hvpl);
 
     ck_assert_msg(
         (last_msg.msg.protection_level.lat * 100 - 5290.2 * 100) < 0.05,
         "incorrect value for last_msg.msg.protection_level.lat, expected "
-        "5290.2, is %s",
+        "5290.2, is %f",
         last_msg.msg.protection_level.lat);
 
     ck_assert_msg(
         (last_msg.msg.protection_level.lon * 100 - 9904.2 * 100) < 0.05,
         "incorrect value for last_msg.msg.protection_level.lon, expected "
-        "9904.2, is %s",
+        "9904.2, is %f",
         last_msg.msg.protection_level.lon);
 
     ck_assert_msg(last_msg.msg.protection_level.pitch == -1598561301,
                   "incorrect value for last_msg.msg.protection_level.pitch, "
-                  "expected -1598561301, is %d",
-                  last_msg.msg.protection_level.pitch);
+                  "expected -1598561301, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.pitch);
 
     ck_assert_msg(last_msg.msg.protection_level.popl == 35212,
                   "incorrect value for last_msg.msg.protection_level.popl, "
-                  "expected 35212, is %d",
-                  last_msg.msg.protection_level.popl);
+                  "expected 35212, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.popl);
 
     ck_assert_msg(last_msg.msg.protection_level.roll == 1018834477,
                   "incorrect value for last_msg.msg.protection_level.roll, "
-                  "expected 1018834477, is %d",
-                  last_msg.msg.protection_level.roll);
+                  "expected 1018834477, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.roll);
 
     ck_assert_msg(last_msg.msg.protection_level.ropl == 63066,
                   "incorrect value for last_msg.msg.protection_level.ropl, "
-                  "expected 63066, is %d",
-                  last_msg.msg.protection_level.ropl);
+                  "expected 63066, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.ropl);
 
     ck_assert_msg(last_msg.msg.protection_level.tow == 4060370030,
                   "incorrect value for last_msg.msg.protection_level.tow, "
-                  "expected 4060370030, is %d",
-                  last_msg.msg.protection_level.tow);
+                  "expected 4060370030, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.tow);
 
     ck_assert_msg(last_msg.msg.protection_level.v_x == -584647705,
                   "incorrect value for last_msg.msg.protection_level.v_x, "
-                  "expected -584647705, is %d",
-                  last_msg.msg.protection_level.v_x);
+                  "expected -584647705, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.v_x);
 
     ck_assert_msg(last_msg.msg.protection_level.v_y == 1353168848,
                   "incorrect value for last_msg.msg.protection_level.v_y, "
-                  "expected 1353168848, is %d",
-                  last_msg.msg.protection_level.v_y);
+                  "expected 1353168848, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.v_y);
 
     ck_assert_msg(last_msg.msg.protection_level.v_z == -1537140001,
                   "incorrect value for last_msg.msg.protection_level.v_z, "
-                  "expected -1537140001, is %d",
-                  last_msg.msg.protection_level.v_z);
+                  "expected -1537140001, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.v_z);
 
     ck_assert_msg(last_msg.msg.protection_level.vpl == 21593,
                   "incorrect value for last_msg.msg.protection_level.vpl, "
-                  "expected 21593, is %d",
-                  last_msg.msg.protection_level.vpl);
+                  "expected 21593, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.vpl);
 
     ck_assert_msg(last_msg.msg.protection_level.vvpl == 41277,
                   "incorrect value for last_msg.msg.protection_level.vvpl, "
-                  "expected 41277, is %d",
-                  last_msg.msg.protection_level.vvpl);
+                  "expected 41277, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.vvpl);
 
     ck_assert_msg(last_msg.msg.protection_level.wn == 13102,
                   "incorrect value for last_msg.msg.protection_level.wn, "
-                  "expected 13102, is %d",
-                  last_msg.msg.protection_level.wn);
+                  "expected 13102, is %" PRId64,
+                  (int64_t)last_msg.msg.protection_level.wn);
   }
 }
 END_TEST

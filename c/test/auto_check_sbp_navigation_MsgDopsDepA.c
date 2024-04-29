@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -139,35 +139,35 @@ START_TEST(test_auto_check_sbp_navigation_MsgDopsDepA) {
         sbp_message_cmp(SbpMsgDopsDepA, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.gdop == 180,
-        "incorrect value for last_msg.msg.dops_dep_a.gdop, expected 180, is %d",
-        last_msg.msg.dops_dep_a.gdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.gdop == 180,
+                  "incorrect value for last_msg.msg.dops_dep_a.gdop, expected "
+                  "180, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.gdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.hdop == 160,
-        "incorrect value for last_msg.msg.dops_dep_a.hdop, expected 160, is %d",
-        last_msg.msg.dops_dep_a.hdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.hdop == 160,
+                  "incorrect value for last_msg.msg.dops_dep_a.hdop, expected "
+                  "160, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.hdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.pdop == 190,
-        "incorrect value for last_msg.msg.dops_dep_a.pdop, expected 190, is %d",
-        last_msg.msg.dops_dep_a.pdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.pdop == 190,
+                  "incorrect value for last_msg.msg.dops_dep_a.pdop, expected "
+                  "190, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.pdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.tdop == 170,
-        "incorrect value for last_msg.msg.dops_dep_a.tdop, expected 170, is %d",
-        last_msg.msg.dops_dep_a.tdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.tdop == 170,
+                  "incorrect value for last_msg.msg.dops_dep_a.tdop, expected "
+                  "170, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tdop);
 
     ck_assert_msg(last_msg.msg.dops_dep_a.tow == 2568200,
                   "incorrect value for last_msg.msg.dops_dep_a.tow, expected "
-                  "2568200, is %d",
-                  last_msg.msg.dops_dep_a.tow);
+                  "2568200, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.vdop == 150,
-        "incorrect value for last_msg.msg.dops_dep_a.vdop, expected 150, is %d",
-        last_msg.msg.dops_dep_a.vdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.vdop == 150,
+                  "incorrect value for last_msg.msg.dops_dep_a.vdop, expected "
+                  "150, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -230,35 +230,35 @@ START_TEST(test_auto_check_sbp_navigation_MsgDopsDepA) {
         sbp_message_cmp(SbpMsgDopsDepA, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.gdop == 180,
-        "incorrect value for last_msg.msg.dops_dep_a.gdop, expected 180, is %d",
-        last_msg.msg.dops_dep_a.gdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.gdop == 180,
+                  "incorrect value for last_msg.msg.dops_dep_a.gdop, expected "
+                  "180, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.gdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.hdop == 160,
-        "incorrect value for last_msg.msg.dops_dep_a.hdop, expected 160, is %d",
-        last_msg.msg.dops_dep_a.hdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.hdop == 160,
+                  "incorrect value for last_msg.msg.dops_dep_a.hdop, expected "
+                  "160, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.hdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.pdop == 190,
-        "incorrect value for last_msg.msg.dops_dep_a.pdop, expected 190, is %d",
-        last_msg.msg.dops_dep_a.pdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.pdop == 190,
+                  "incorrect value for last_msg.msg.dops_dep_a.pdop, expected "
+                  "190, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.pdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.tdop == 170,
-        "incorrect value for last_msg.msg.dops_dep_a.tdop, expected 170, is %d",
-        last_msg.msg.dops_dep_a.tdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.tdop == 170,
+                  "incorrect value for last_msg.msg.dops_dep_a.tdop, expected "
+                  "170, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tdop);
 
     ck_assert_msg(last_msg.msg.dops_dep_a.tow == 2569200,
                   "incorrect value for last_msg.msg.dops_dep_a.tow, expected "
-                  "2569200, is %d",
-                  last_msg.msg.dops_dep_a.tow);
+                  "2569200, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.vdop == 150,
-        "incorrect value for last_msg.msg.dops_dep_a.vdop, expected 150, is %d",
-        last_msg.msg.dops_dep_a.vdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.vdop == 150,
+                  "incorrect value for last_msg.msg.dops_dep_a.vdop, expected "
+                  "150, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -321,35 +321,35 @@ START_TEST(test_auto_check_sbp_navigation_MsgDopsDepA) {
         sbp_message_cmp(SbpMsgDopsDepA, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.gdop == 180,
-        "incorrect value for last_msg.msg.dops_dep_a.gdop, expected 180, is %d",
-        last_msg.msg.dops_dep_a.gdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.gdop == 180,
+                  "incorrect value for last_msg.msg.dops_dep_a.gdop, expected "
+                  "180, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.gdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.hdop == 160,
-        "incorrect value for last_msg.msg.dops_dep_a.hdop, expected 160, is %d",
-        last_msg.msg.dops_dep_a.hdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.hdop == 160,
+                  "incorrect value for last_msg.msg.dops_dep_a.hdop, expected "
+                  "160, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.hdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.pdop == 190,
-        "incorrect value for last_msg.msg.dops_dep_a.pdop, expected 190, is %d",
-        last_msg.msg.dops_dep_a.pdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.pdop == 190,
+                  "incorrect value for last_msg.msg.dops_dep_a.pdop, expected "
+                  "190, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.pdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.tdop == 170,
-        "incorrect value for last_msg.msg.dops_dep_a.tdop, expected 170, is %d",
-        last_msg.msg.dops_dep_a.tdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.tdop == 170,
+                  "incorrect value for last_msg.msg.dops_dep_a.tdop, expected "
+                  "170, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tdop);
 
     ck_assert_msg(last_msg.msg.dops_dep_a.tow == 2570200,
                   "incorrect value for last_msg.msg.dops_dep_a.tow, expected "
-                  "2570200, is %d",
-                  last_msg.msg.dops_dep_a.tow);
+                  "2570200, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.vdop == 150,
-        "incorrect value for last_msg.msg.dops_dep_a.vdop, expected 150, is %d",
-        last_msg.msg.dops_dep_a.vdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.vdop == 150,
+                  "incorrect value for last_msg.msg.dops_dep_a.vdop, expected "
+                  "150, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -411,35 +411,35 @@ START_TEST(test_auto_check_sbp_navigation_MsgDopsDepA) {
         sbp_message_cmp(SbpMsgDopsDepA, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.gdop == 247,
-        "incorrect value for last_msg.msg.dops_dep_a.gdop, expected 247, is %d",
-        last_msg.msg.dops_dep_a.gdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.gdop == 247,
+                  "incorrect value for last_msg.msg.dops_dep_a.gdop, expected "
+                  "247, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.gdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.hdop == 273,
-        "incorrect value for last_msg.msg.dops_dep_a.hdop, expected 273, is %d",
-        last_msg.msg.dops_dep_a.hdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.hdop == 273,
+                  "incorrect value for last_msg.msg.dops_dep_a.hdop, expected "
+                  "273, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.hdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.pdop == 215,
-        "incorrect value for last_msg.msg.dops_dep_a.pdop, expected 215, is %d",
-        last_msg.msg.dops_dep_a.pdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.pdop == 215,
+                  "incorrect value for last_msg.msg.dops_dep_a.pdop, expected "
+                  "215, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.pdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.tdop == 123,
-        "incorrect value for last_msg.msg.dops_dep_a.tdop, expected 123, is %d",
-        last_msg.msg.dops_dep_a.tdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.tdop == 123,
+                  "incorrect value for last_msg.msg.dops_dep_a.tdop, expected "
+                  "123, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tdop);
 
     ck_assert_msg(last_msg.msg.dops_dep_a.tow == 407084500,
                   "incorrect value for last_msg.msg.dops_dep_a.tow, expected "
-                  "407084500, is %d",
-                  last_msg.msg.dops_dep_a.tow);
+                  "407084500, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.vdop == 44,
-        "incorrect value for last_msg.msg.dops_dep_a.vdop, expected 44, is %d",
-        last_msg.msg.dops_dep_a.vdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.vdop == 44,
+                  "incorrect value for last_msg.msg.dops_dep_a.vdop, expected "
+                  "44, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -503,33 +503,33 @@ START_TEST(test_auto_check_sbp_navigation_MsgDopsDepA) {
 
     ck_assert_msg(last_msg.msg.dops_dep_a.gdop == 65535,
                   "incorrect value for last_msg.msg.dops_dep_a.gdop, expected "
-                  "65535, is %d",
-                  last_msg.msg.dops_dep_a.gdop);
+                  "65535, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.gdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.hdop == 0,
-        "incorrect value for last_msg.msg.dops_dep_a.hdop, expected 0, is %d",
-        last_msg.msg.dops_dep_a.hdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.hdop == 0,
+                  "incorrect value for last_msg.msg.dops_dep_a.hdop, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.hdop);
 
     ck_assert_msg(last_msg.msg.dops_dep_a.pdop == 65535,
                   "incorrect value for last_msg.msg.dops_dep_a.pdop, expected "
-                  "65535, is %d",
-                  last_msg.msg.dops_dep_a.pdop);
+                  "65535, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.pdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.tdop == 0,
-        "incorrect value for last_msg.msg.dops_dep_a.tdop, expected 0, is %d",
-        last_msg.msg.dops_dep_a.tdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.tdop == 0,
+                  "incorrect value for last_msg.msg.dops_dep_a.tdop, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.tow == 0,
-        "incorrect value for last_msg.msg.dops_dep_a.tow, expected 0, is %d",
-        last_msg.msg.dops_dep_a.tow);
+    ck_assert_msg(last_msg.msg.dops_dep_a.tow == 0,
+                  "incorrect value for last_msg.msg.dops_dep_a.tow, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.vdop == 0,
-        "incorrect value for last_msg.msg.dops_dep_a.vdop, expected 0, is %d",
-        last_msg.msg.dops_dep_a.vdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.vdop == 0,
+                  "incorrect value for last_msg.msg.dops_dep_a.vdop, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -591,35 +591,35 @@ START_TEST(test_auto_check_sbp_navigation_MsgDopsDepA) {
         sbp_message_cmp(SbpMsgDopsDepA, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.gdop == 348,
-        "incorrect value for last_msg.msg.dops_dep_a.gdop, expected 348, is %d",
-        last_msg.msg.dops_dep_a.gdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.gdop == 348,
+                  "incorrect value for last_msg.msg.dops_dep_a.gdop, expected "
+                  "348, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.gdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.hdop == 637,
-        "incorrect value for last_msg.msg.dops_dep_a.hdop, expected 637, is %d",
-        last_msg.msg.dops_dep_a.hdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.hdop == 637,
+                  "incorrect value for last_msg.msg.dops_dep_a.hdop, expected "
+                  "637, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.hdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.pdop == 312,
-        "incorrect value for last_msg.msg.dops_dep_a.pdop, expected 312, is %d",
-        last_msg.msg.dops_dep_a.pdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.pdop == 312,
+                  "incorrect value for last_msg.msg.dops_dep_a.pdop, expected "
+                  "312, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.pdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.tdop == 155,
-        "incorrect value for last_msg.msg.dops_dep_a.tdop, expected 155, is %d",
-        last_msg.msg.dops_dep_a.tdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.tdop == 155,
+                  "incorrect value for last_msg.msg.dops_dep_a.tdop, expected "
+                  "155, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tdop);
 
     ck_assert_msg(last_msg.msg.dops_dep_a.tow == 407152000,
                   "incorrect value for last_msg.msg.dops_dep_a.tow, expected "
-                  "407152000, is %d",
-                  last_msg.msg.dops_dep_a.tow);
+                  "407152000, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.vdop == 113,
-        "incorrect value for last_msg.msg.dops_dep_a.vdop, expected 113, is %d",
-        last_msg.msg.dops_dep_a.vdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.vdop == 113,
+                  "incorrect value for last_msg.msg.dops_dep_a.vdop, expected "
+                  "113, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -681,35 +681,35 @@ START_TEST(test_auto_check_sbp_navigation_MsgDopsDepA) {
         sbp_message_cmp(SbpMsgDopsDepA, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.gdop == 348,
-        "incorrect value for last_msg.msg.dops_dep_a.gdop, expected 348, is %d",
-        last_msg.msg.dops_dep_a.gdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.gdop == 348,
+                  "incorrect value for last_msg.msg.dops_dep_a.gdop, expected "
+                  "348, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.gdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.hdop == 637,
-        "incorrect value for last_msg.msg.dops_dep_a.hdop, expected 637, is %d",
-        last_msg.msg.dops_dep_a.hdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.hdop == 637,
+                  "incorrect value for last_msg.msg.dops_dep_a.hdop, expected "
+                  "637, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.hdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.pdop == 311,
-        "incorrect value for last_msg.msg.dops_dep_a.pdop, expected 311, is %d",
-        last_msg.msg.dops_dep_a.pdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.pdop == 311,
+                  "incorrect value for last_msg.msg.dops_dep_a.pdop, expected "
+                  "311, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.pdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.tdop == 155,
-        "incorrect value for last_msg.msg.dops_dep_a.tdop, expected 155, is %d",
-        last_msg.msg.dops_dep_a.tdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.tdop == 155,
+                  "incorrect value for last_msg.msg.dops_dep_a.tdop, expected "
+                  "155, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tdop);
 
     ck_assert_msg(last_msg.msg.dops_dep_a.tow == 407153000,
                   "incorrect value for last_msg.msg.dops_dep_a.tow, expected "
-                  "407153000, is %d",
-                  last_msg.msg.dops_dep_a.tow);
+                  "407153000, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.vdop == 113,
-        "incorrect value for last_msg.msg.dops_dep_a.vdop, expected 113, is %d",
-        last_msg.msg.dops_dep_a.vdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.vdop == 113,
+                  "incorrect value for last_msg.msg.dops_dep_a.vdop, expected "
+                  "113, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -771,35 +771,35 @@ START_TEST(test_auto_check_sbp_navigation_MsgDopsDepA) {
         sbp_message_cmp(SbpMsgDopsDepA, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.gdop == 348,
-        "incorrect value for last_msg.msg.dops_dep_a.gdop, expected 348, is %d",
-        last_msg.msg.dops_dep_a.gdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.gdop == 348,
+                  "incorrect value for last_msg.msg.dops_dep_a.gdop, expected "
+                  "348, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.gdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.hdop == 637,
-        "incorrect value for last_msg.msg.dops_dep_a.hdop, expected 637, is %d",
-        last_msg.msg.dops_dep_a.hdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.hdop == 637,
+                  "incorrect value for last_msg.msg.dops_dep_a.hdop, expected "
+                  "637, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.hdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.pdop == 311,
-        "incorrect value for last_msg.msg.dops_dep_a.pdop, expected 311, is %d",
-        last_msg.msg.dops_dep_a.pdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.pdop == 311,
+                  "incorrect value for last_msg.msg.dops_dep_a.pdop, expected "
+                  "311, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.pdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.tdop == 155,
-        "incorrect value for last_msg.msg.dops_dep_a.tdop, expected 155, is %d",
-        last_msg.msg.dops_dep_a.tdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.tdop == 155,
+                  "incorrect value for last_msg.msg.dops_dep_a.tdop, expected "
+                  "155, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tdop);
 
     ck_assert_msg(last_msg.msg.dops_dep_a.tow == 407154000,
                   "incorrect value for last_msg.msg.dops_dep_a.tow, expected "
-                  "407154000, is %d",
-                  last_msg.msg.dops_dep_a.tow);
+                  "407154000, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.vdop == 112,
-        "incorrect value for last_msg.msg.dops_dep_a.vdop, expected 112, is %d",
-        last_msg.msg.dops_dep_a.vdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.vdop == 112,
+                  "incorrect value for last_msg.msg.dops_dep_a.vdop, expected "
+                  "112, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.vdop);
   }
   // Test successful parsing of a message
   {
@@ -861,35 +861,35 @@ START_TEST(test_auto_check_sbp_navigation_MsgDopsDepA) {
         sbp_message_cmp(SbpMsgDopsDepA, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.gdop == 348,
-        "incorrect value for last_msg.msg.dops_dep_a.gdop, expected 348, is %d",
-        last_msg.msg.dops_dep_a.gdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.gdop == 348,
+                  "incorrect value for last_msg.msg.dops_dep_a.gdop, expected "
+                  "348, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.gdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.hdop == 637,
-        "incorrect value for last_msg.msg.dops_dep_a.hdop, expected 637, is %d",
-        last_msg.msg.dops_dep_a.hdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.hdop == 637,
+                  "incorrect value for last_msg.msg.dops_dep_a.hdop, expected "
+                  "637, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.hdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.pdop == 311,
-        "incorrect value for last_msg.msg.dops_dep_a.pdop, expected 311, is %d",
-        last_msg.msg.dops_dep_a.pdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.pdop == 311,
+                  "incorrect value for last_msg.msg.dops_dep_a.pdop, expected "
+                  "311, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.pdop);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.tdop == 155,
-        "incorrect value for last_msg.msg.dops_dep_a.tdop, expected 155, is %d",
-        last_msg.msg.dops_dep_a.tdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.tdop == 155,
+                  "incorrect value for last_msg.msg.dops_dep_a.tdop, expected "
+                  "155, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tdop);
 
     ck_assert_msg(last_msg.msg.dops_dep_a.tow == 407155000,
                   "incorrect value for last_msg.msg.dops_dep_a.tow, expected "
-                  "407155000, is %d",
-                  last_msg.msg.dops_dep_a.tow);
+                  "407155000, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.tow);
 
-    ck_assert_msg(
-        last_msg.msg.dops_dep_a.vdop == 112,
-        "incorrect value for last_msg.msg.dops_dep_a.vdop, expected 112, is %d",
-        last_msg.msg.dops_dep_a.vdop);
+    ck_assert_msg(last_msg.msg.dops_dep_a.vdop == 112,
+                  "incorrect value for last_msg.msg.dops_dep_a.vdop, expected "
+                  "112, is %" PRId64,
+                  (int64_t)last_msg.msg.dops_dep_a.vdop);
   }
 }
 END_TEST

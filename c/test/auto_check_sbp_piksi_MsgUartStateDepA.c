@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -177,139 +177,143 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.avg == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.avg, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.avg);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.avg);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.current == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.current, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.current);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.current);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmax == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmax, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmax);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmax);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmin == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmin, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmin);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmin);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_a.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_a.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_a.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_a.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.tx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.tx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_a.tx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_b.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_b.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_b.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_b.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.tx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.tx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_b.tx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, expected 0, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput, "
-                  "expected 0.0, is %s",
+                  "expected 0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 15,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, "
-                  "expected 15, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 15,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, expected 15, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput * 100 -
                    11.6000003815 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput, "
-                  "expected 11.6000003815, is %s",
+                  "expected 11.6000003815, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput);
   }
   // Test successful parsing of a message
@@ -411,139 +415,143 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.avg == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.avg, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.avg);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.avg);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.current == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.current, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.current);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.current);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmax == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmax, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmax);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmax);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmin == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmin, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmin);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmin);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_a.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_a.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_a.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_a.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.tx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.tx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_a.tx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_b.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_b.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_b.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_b.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.tx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.tx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_b.tx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, expected 0, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput, "
-                  "expected 0.0, is %s",
+                  "expected 0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput * 100 -
                    0.0659999996424 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput, "
-                  "expected 0.0659999996424, is %s",
+                  "expected 0.0659999996424, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput);
   }
   // Test successful parsing of a message
@@ -645,139 +653,143 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.avg == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.avg, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.avg);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.avg);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.current == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.current, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.current);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.current);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmax == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmax, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmax);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmax);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmin == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmin, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmin);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmin);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_a.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_a.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_a.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_a.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.tx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.tx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_a.tx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_b.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_b.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_b.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_b.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.tx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.tx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_b.tx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, expected 0, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput, "
-                  "expected 0.0, is %s",
+                  "expected 0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 10,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, "
-                  "expected 10, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 10,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, expected 10, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput * 100 -
                    0.138999998569 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput, "
-                  "expected 0.138999998569, is %s",
+                  "expected 0.138999998569, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput);
   }
   // Test successful parsing of a message
@@ -879,139 +891,143 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.avg == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.avg, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.avg);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.avg);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.current == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.current, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.current);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.current);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmax == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmax, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmax);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmax);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmin == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmin, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmin);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmin);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_a.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_a.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_a.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_a.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.tx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.tx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_a.tx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_b.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_b.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_b.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_b.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.tx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.tx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_b.tx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, expected 0, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput, "
-                  "expected 0.0, is %s",
+                  "expected 0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput * 100 -
                    0.0659999996424 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput, "
-                  "expected 0.0659999996424, is %s",
+                  "expected 0.0659999996424, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput);
   }
   // Test successful parsing of a message
@@ -1113,139 +1129,143 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.avg == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.avg, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.avg);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.avg);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.current == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.current, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.current);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.current);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmax == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmax, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmax);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmax);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmin == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmin, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmin);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmin);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_a.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_a.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_a.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.rx_throughput * 100 -
                    0.00819672085345 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_throughput, expected "
-                  "0.00819672085345, is %s",
+                  "0.00819672085345, is %f",
                   last_msg.msg.uart_state_depa.uart_a.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.tx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.tx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_a.tx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_b.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_b.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_b.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_b.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.tx_buffer_level == 2,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_buffer_level, "
-                  "expected 2, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.tx_throughput * 100 -
                    0.098360657692 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_throughput, expected "
-                  "0.098360657692, is %s",
+                  "0.098360657692, is %f",
                   last_msg.msg.uart_state_depa.uart_b.tx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, expected 0, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput, "
-                  "expected 0.0, is %s",
+                  "expected 0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 38,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, "
-                  "expected 38, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 38,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, expected 38, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput * 100 -
                    0.493999987841 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput, "
-                  "expected 0.493999987841, is %s",
+                  "expected 0.493999987841, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput);
   }
   // Test successful parsing of a message
@@ -1347,139 +1367,143 @@ START_TEST(test_auto_check_sbp_piksi_MsgUartStateDepA) {
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.avg == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.avg, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.avg);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.avg);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.current == -1,
         "incorrect value for last_msg.msg.uart_state_depa.latency.current, "
-        "expected -1, is %d",
-        last_msg.msg.uart_state_depa.latency.current);
+        "expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.current);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmax == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmax, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmax);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmax);
 
     ck_assert_msg(
         last_msg.msg.uart_state_depa.latency.lmin == 0,
         "incorrect value for last_msg.msg.uart_state_depa.latency.lmin, "
-        "expected 0, is %d",
-        last_msg.msg.uart_state_depa.latency.lmin);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.latency.lmin);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_a.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_a.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_a.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_a.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_a.tx_buffer_level == 2,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_buffer_level, "
-                  "expected 2, is %d",
-                  last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_a.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_a.tx_throughput * 100 -
                    0.0120000001043 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_a.tx_throughput, expected "
-                  "0.0120000001043, is %s",
+                  "0.0120000001043, is %f",
                   last_msg.msg.uart_state_depa.uart_a.tx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.crc_error_count == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.crc_error_count);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.crc_error_count);
 
-    ck_assert_msg(
-        last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
-        "incorrect value for "
-        "last_msg.msg.uart_state_depa.uart_b.io_error_count, expected 0, is %d",
-        last_msg.msg.uart_state_depa.uart_b.io_error_count);
+    ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.io_error_count == 0,
+                  "incorrect value for "
+                  "last_msg.msg.uart_state_depa.uart_b.io_error_count, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.io_error_count);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.rx_buffer_level == 0,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.rx_throughput, expected "
-                  "0.0, is %s",
+                  "0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_b.rx_throughput);
 
     ck_assert_msg(last_msg.msg.uart_state_depa.uart_b.tx_buffer_level == 2,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_buffer_level, "
-                  "expected 2, is %d",
-                  last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
+                  "expected 2, is %" PRId64,
+                  (int64_t)last_msg.msg.uart_state_depa.uart_b.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_b.tx_throughput * 100 -
                    0.0120000001043 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_b.tx_throughput, expected "
-                  "0.0120000001043, is %s",
+                  "0.0120000001043, is %f",
                   last_msg.msg.uart_state_depa.uart_b.tx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.crc_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.io_error_count == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.io_error_count, expected 0, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.io_error_count);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, "
-                  "expected 0, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level == 0,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.rx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput * 100 -
                    0.0 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput, "
-                  "expected 0.0, is %s",
+                  "expected 0.0, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.rx_throughput);
 
-    ck_assert_msg(last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 50,
-                  "incorrect value for "
-                  "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, "
-                  "expected 50, is %d",
-                  last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
+    ck_assert_msg(
+        last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level == 50,
+        "incorrect value for "
+        "last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level, expected 50, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.uart_state_depa.uart_ftdi.tx_buffer_level);
 
     ck_assert_msg((last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput * 100 -
                    1.31500005722 * 100) < 0.05,
                   "incorrect value for "
                   "last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput, "
-                  "expected 1.31500005722, is %s",
+                  "expected 1.31500005722, is %f",
                   last_msg.msg.uart_state_depa.uart_ftdi.tx_throughput);
   }
 }

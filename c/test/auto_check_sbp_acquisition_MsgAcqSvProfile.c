@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -217,248 +217,271 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqSvProfile) {
         last_msg.msg.acq_sv_profile.acq_sv_profile[0].bin_width == 174,
         "incorrect value for "
         "last_msg.msg.acq_sv_profile.acq_sv_profile[0].bin_width, expected "
-        "174, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[0].bin_width);
+        "174, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].bin_width);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf == 47,
         "incorrect value for last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf, "
-        "expected 47, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf);
-
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_max == 147,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_max, "
-                  "expected 147, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_max);
-
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_min == 61,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_min, "
-                  "expected 61, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_min);
+        "expected 47, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf);
 
     ck_assert_msg(
-        last_msg.msg.acq_sv_profile.acq_sv_profile[0].cn0 == 38,
+        last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_max == 147,
         "incorrect value for "
-        "last_msg.msg.acq_sv_profile.acq_sv_profile[0].cn0, expected 38, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[0].cn0);
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_max, expected 147, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_max);
+
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_min == 61,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_min, expected 61, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].cf_min);
+
+    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[0].cn0 == 38,
+                  "incorrect value for "
+                  "last_msg.msg.acq_sv_profile.acq_sv_profile[0].cn0, expected "
+                  "38, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].cn0);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[0].cp == 140,
         "incorrect value for last_msg.msg.acq_sv_profile.acq_sv_profile[0].cp, "
-        "expected 140, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[0].cp);
+        "expected 140, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].cp);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[0].int_time == 97,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[0].int_time, "
-                  "expected 97, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[0].int_time);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[0].int_time == 97,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[0].int_time, expected 97, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].int_time);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[0].job_type == 7,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[0].job_type, "
-                  "expected 7, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[0].job_type);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[0].job_type == 7,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[0].job_type, expected 7, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].job_type);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.code == 0,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.code);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.code == 0,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.code, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.code);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.sat == 22,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.sat, "
-                  "expected 22, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.sat == 22,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.sat, expected 22, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].sid.sat);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[0].status == 13,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[0].status, "
-                  "expected 13, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[0].status);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[0].status == 13,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[0].status, expected 13, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].status);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[0].time_spent == 49,
         "incorrect value for "
         "last_msg.msg.acq_sv_profile.acq_sv_profile[0].time_spent, expected "
-        "49, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[0].time_spent);
+        "49, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].time_spent);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[0].timestamp == 52,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[0].timestamp, "
-                  "expected 52, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[0].timestamp);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[0].timestamp == 52,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[0].timestamp, expected 52, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[0].timestamp);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[1].bin_width == 121,
         "incorrect value for "
         "last_msg.msg.acq_sv_profile.acq_sv_profile[1].bin_width, expected "
-        "121, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[1].bin_width);
+        "121, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].bin_width);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf == 237,
         "incorrect value for last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf, "
-        "expected 237, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf);
-
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_max == 142,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_max, "
-                  "expected 142, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_max);
-
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_min == 175,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_min, "
-                  "expected 175, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_min);
+        "expected 237, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf);
 
     ck_assert_msg(
-        last_msg.msg.acq_sv_profile.acq_sv_profile[1].cn0 == 59,
+        last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_max == 142,
         "incorrect value for "
-        "last_msg.msg.acq_sv_profile.acq_sv_profile[1].cn0, expected 59, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[1].cn0);
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_max, expected 142, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_max);
+
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_min == 175,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_min, expected 175, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].cf_min);
+
+    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[1].cn0 == 59,
+                  "incorrect value for "
+                  "last_msg.msg.acq_sv_profile.acq_sv_profile[1].cn0, expected "
+                  "59, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].cn0);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[1].cp == 12,
         "incorrect value for last_msg.msg.acq_sv_profile.acq_sv_profile[1].cp, "
-        "expected 12, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[1].cp);
+        "expected 12, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].cp);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[1].int_time == 253,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[1].int_time, "
-                  "expected 253, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[1].int_time);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[1].int_time == 253,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[1].int_time, expected 253, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].int_time);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[1].job_type == 166,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[1].job_type, "
-                  "expected 166, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[1].job_type);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[1].job_type == 166,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[1].job_type, expected 166, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].job_type);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.code == 1,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.code, "
-                  "expected 1, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.code);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.code == 1,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.code, expected 1, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.code);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.sat == 23,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.sat, "
-                  "expected 23, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.sat == 23,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.sat, expected 23, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].sid.sat);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[1].status == 210,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[1].status, "
-                  "expected 210, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[1].status);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[1].status == 210,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[1].status, expected 210, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].status);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[1].time_spent == 175,
         "incorrect value for "
         "last_msg.msg.acq_sv_profile.acq_sv_profile[1].time_spent, expected "
-        "175, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[1].time_spent);
+        "175, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].time_spent);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[1].timestamp == 190,
         "incorrect value for "
         "last_msg.msg.acq_sv_profile.acq_sv_profile[1].timestamp, expected "
-        "190, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[1].timestamp);
+        "190, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[1].timestamp);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[2].bin_width == 8,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[2].bin_width, "
-                  "expected 8, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[2].bin_width);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[2].bin_width == 8,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[2].bin_width, expected 8, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].bin_width);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf == 84,
         "incorrect value for last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf, "
-        "expected 84, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf);
-
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_max == 191,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_max, "
-                  "expected 191, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_max);
-
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_min == 91,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_min, "
-                  "expected 91, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_min);
+        "expected 84, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf);
 
     ck_assert_msg(
-        last_msg.msg.acq_sv_profile.acq_sv_profile[2].cn0 == 21,
+        last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_max == 191,
         "incorrect value for "
-        "last_msg.msg.acq_sv_profile.acq_sv_profile[2].cn0, expected 21, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[2].cn0);
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_max, expected 191, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_max);
+
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_min == 91,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_min, expected 91, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].cf_min);
+
+    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[2].cn0 == 21,
+                  "incorrect value for "
+                  "last_msg.msg.acq_sv_profile.acq_sv_profile[2].cn0, expected "
+                  "21, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].cn0);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[2].cp == 82,
         "incorrect value for last_msg.msg.acq_sv_profile.acq_sv_profile[2].cp, "
-        "expected 82, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[2].cp);
+        "expected 82, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].cp);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[2].int_time == 153,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[2].int_time, "
-                  "expected 153, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[2].int_time);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[2].int_time == 153,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[2].int_time, expected 153, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].int_time);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[2].job_type == 126,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[2].job_type, "
-                  "expected 126, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[2].job_type);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[2].job_type == 126,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[2].job_type, expected 126, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].job_type);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.code == 0,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.code);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.code == 0,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.code, expected 0, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.code);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.sat == 24,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.sat, "
-                  "expected 24, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.sat == 24,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.sat, expected 24, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].sid.sat);
 
-    ck_assert_msg(last_msg.msg.acq_sv_profile.acq_sv_profile[2].status == 88,
-                  "incorrect value for "
-                  "last_msg.msg.acq_sv_profile.acq_sv_profile[2].status, "
-                  "expected 88, is %d",
-                  last_msg.msg.acq_sv_profile.acq_sv_profile[2].status);
+    ck_assert_msg(
+        last_msg.msg.acq_sv_profile.acq_sv_profile[2].status == 88,
+        "incorrect value for "
+        "last_msg.msg.acq_sv_profile.acq_sv_profile[2].status, expected 88, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].status);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[2].time_spent == 172,
         "incorrect value for "
         "last_msg.msg.acq_sv_profile.acq_sv_profile[2].time_spent, expected "
-        "172, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[2].time_spent);
+        "172, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].time_spent);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.acq_sv_profile[2].timestamp == 130,
         "incorrect value for "
         "last_msg.msg.acq_sv_profile.acq_sv_profile[2].timestamp, expected "
-        "130, is %d",
-        last_msg.msg.acq_sv_profile.acq_sv_profile[2].timestamp);
+        "130, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.acq_sv_profile[2].timestamp);
 
     ck_assert_msg(
         last_msg.msg.acq_sv_profile.n_acq_sv_profile == 3,
         "incorrect value for last_msg.msg.acq_sv_profile.n_acq_sv_profile, "
-        "expected 3, is %d",
-        last_msg.msg.acq_sv_profile.n_acq_sv_profile);
+        "expected 3, is %" PRId64,
+        (int64_t)last_msg.msg.acq_sv_profile.n_acq_sv_profile);
   }
 }
 END_TEST

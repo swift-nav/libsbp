@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -202,206 +202,208 @@ START_TEST(test_auto_check_sbp_linux_MsgLinuxSocketUsage) {
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.avg_queue_depth == 2907030541,
         "incorrect value for last_msg.msg.linux_socket_usage.avg_queue_depth, "
-        "expected 2907030541, is %d",
-        last_msg.msg.linux_socket_usage.avg_queue_depth);
+        "expected 2907030541, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.avg_queue_depth);
 
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.max_queue_depth == 3048922691,
         "incorrect value for last_msg.msg.linux_socket_usage.max_queue_depth, "
-        "expected 3048922691, is %d",
-        last_msg.msg.linux_socket_usage.max_queue_depth);
+        "expected 3048922691, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.max_queue_depth);
 
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[0] == 39670,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[0], expected "
-        "39670, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[0]);
+        "39670, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[0]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[1] == 4603,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[1], expected "
-        "4603, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[1]);
+        "4603, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[1]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[2] == 46048,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[2], expected "
-        "46048, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[2]);
+        "46048, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[2]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[3] == 43290,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[3], expected "
-        "43290, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[3]);
+        "43290, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[3]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[4] == 23217,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[4], expected "
-        "23217, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[4]);
+        "23217, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[4]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[5] == 54677,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[5], expected "
-        "54677, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[5]);
+        "54677, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[5]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[6] == 1750,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[6], expected "
-        "1750, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[6]);
+        "1750, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[6]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[7] == 16510,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[7], expected "
-        "16510, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[7]);
+        "16510, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[7]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[8] == 47480,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[8], expected "
-        "47480, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[8]);
+        "47480, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[8]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[9] == 33620,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[9], expected "
-        "33620, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[9]);
+        "33620, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[9]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[10] == 28616,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[10], expected "
-        "28616, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[10]);
+        "28616, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[10]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[11] == 36128,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[11], expected "
-        "36128, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[11]);
+        "36128, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[11]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[12] == 53721,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[12], expected "
-        "53721, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[12]);
+        "53721, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[12]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[13] == 3636,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[13], expected "
-        "3636, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[13]);
+        "3636, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[13]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[14] == 37822,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[14], expected "
-        "37822, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[14]);
+        "37822, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[14]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_state_counts[15] == 63135,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_state_counts[15], expected "
-        "63135, is %d",
-        last_msg.msg.linux_socket_usage.socket_state_counts[15]);
+        "63135, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_state_counts[15]);
 
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[0] == 31373,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[0], expected "
-        "31373, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[0]);
+        "31373, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[0]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[1] == 30676,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[1], expected "
-        "30676, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[1]);
-    ck_assert_msg(last_msg.msg.linux_socket_usage.socket_type_counts[2] == 7811,
-                  "incorrect value for "
-                  "last_msg.msg.linux_socket_usage.socket_type_counts[2], "
-                  "expected 7811, is %d",
-                  last_msg.msg.linux_socket_usage.socket_type_counts[2]);
+        "30676, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[1]);
+    ck_assert_msg(
+        last_msg.msg.linux_socket_usage.socket_type_counts[2] == 7811,
+        "incorrect value for "
+        "last_msg.msg.linux_socket_usage.socket_type_counts[2], expected 7811, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[2]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[3] == 12152,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[3], expected "
-        "12152, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[3]);
+        "12152, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[3]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[4] == 27929,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[4], expected "
-        "27929, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[4]);
+        "27929, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[4]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[5] == 16794,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[5], expected "
-        "16794, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[5]);
+        "16794, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[5]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[6] == 42116,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[6], expected "
-        "42116, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[6]);
-    ck_assert_msg(last_msg.msg.linux_socket_usage.socket_type_counts[7] == 7719,
-                  "incorrect value for "
-                  "last_msg.msg.linux_socket_usage.socket_type_counts[7], "
-                  "expected 7719, is %d",
-                  last_msg.msg.linux_socket_usage.socket_type_counts[7]);
+        "42116, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[6]);
+    ck_assert_msg(
+        last_msg.msg.linux_socket_usage.socket_type_counts[7] == 7719,
+        "incorrect value for "
+        "last_msg.msg.linux_socket_usage.socket_type_counts[7], expected 7719, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[7]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[8] == 44830,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[8], expected "
-        "44830, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[8]);
+        "44830, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[8]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[9] == 11272,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[9], expected "
-        "11272, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[9]);
+        "11272, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[9]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[10] == 28444,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[10], expected "
-        "28444, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[10]);
+        "28444, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[10]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[11] == 61676,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[11], expected "
-        "61676, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[11]);
+        "61676, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[11]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[12] == 19120,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[12], expected "
-        "19120, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[12]);
+        "19120, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[12]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[13] == 33183,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[13], expected "
-        "33183, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[13]);
+        "33183, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[13]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[14] == 39322,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[14], expected "
-        "39322, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[14]);
+        "39322, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[14]);
     ck_assert_msg(
         last_msg.msg.linux_socket_usage.socket_type_counts[15] == 58786,
         "incorrect value for "
         "last_msg.msg.linux_socket_usage.socket_type_counts[15], expected "
-        "58786, is %d",
-        last_msg.msg.linux_socket_usage.socket_type_counts[15]);
+        "58786, is %" PRId64,
+        (int64_t)last_msg.msg.linux_socket_usage.socket_type_counts[15]);
   }
 }
 END_TEST

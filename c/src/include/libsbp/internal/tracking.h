@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_TRACKING_H
-#define LIBSBP_INTERNAL_V4_TRACKING_H
+#ifndef LIBSBP_INTERNAL_TRACKING_H
+#define LIBSBP_INTERNAL_TRACKING_H
 
 #include <stdbool.h>
 
@@ -332,4 +332,4 @@ bool sbp_msg_tracking_state_dep_b_decode_internal(
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_TRACKING_H */
+#endif /* LIBSBP_INTERNAL_TRACKING_H */

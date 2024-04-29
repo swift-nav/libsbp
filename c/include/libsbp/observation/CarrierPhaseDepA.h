@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_OBSERVATION_CARRIERPHASEDEPA_H
-#define LIBSBP_V4_OBSERVATION_CARRIERPHASEDEPA_H
+#ifndef LIBSBP_OBSERVATION_CARRIERPHASEDEPA_H
+#define LIBSBP_OBSERVATION_CARRIERPHASEDEPA_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -164,4 +164,4 @@ static inline bool operator>=(const sbp_carrier_phase_dep_a_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_OBSERVATION_CARRIERPHASEDEPA_H */
+#endif /* LIBSBP_OBSERVATION_CARRIERPHASEDEPA_H */

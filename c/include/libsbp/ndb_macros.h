@@ -18,7 +18,6 @@
 #ifndef LIBSBP_NDB_MACROS_H
 #define LIBSBP_NDB_MACROS_H
 
-#define SBP_MSG_NDB_EVENT 0x0400
 #define SBP_NDB_EVENT_EVENT_TYPE_MASK (0x3u)
 #define SBP_NDB_EVENT_EVENT_TYPE_SHIFT (0u)
 #define SBP_NDB_EVENT_EVENT_TYPE_GET(flags)               \
@@ -98,8 +97,7 @@
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_RECEIVER (2)
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_SBP (3)
 /**
- * Encoded length of sbp_msg_ndb_event_t (V4 API) and
- * msg_ndb_event_t (legacy API)
+ * Encoded length of sbp_msg_ndb_event_t
  */
 #define SBP_MSG_NDB_EVENT_ENCODED_LEN 18u
 

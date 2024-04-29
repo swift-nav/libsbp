@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -146,46 +146,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 69.8043767518 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "69.8043767518, is %s",
+        "69.8043767518, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.4290689091 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.4290689091, is %s",
+        "37.4290689091, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.173386622 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.173386622, is %s",
+        "-122.173386622, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 9,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 9, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 2567700,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 2567700, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 2567700, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -255,46 +255,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 1,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 1, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 69.6881406772 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "69.6881406772, is %s",
+        "69.6881406772, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.4290643089 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.4290643089, is %s",
+        "37.4290643089, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.173408261 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.173408261, is %s",
+        "-122.173408261, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 9,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 9, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 2567700,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 2567700, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 2567700, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -364,46 +364,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 69.4960885482 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "69.4960885482, is %s",
+        "69.4960885482, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.4290544776 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.4290544776, is %s",
+        "37.4290544776, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.173420075 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.173420075, is %s",
+        "-122.173420075, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 9,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 9, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 2567800,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 2567800, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 2567800, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -473,46 +473,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 1,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 1, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 69.6878045882 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "69.6878045882, is %s",
+        "69.6878045882, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.4290633739 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.4290633739, is %s",
+        "37.4290633739, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.173403896 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.173403896, is %s",
+        "-122.173403896, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 9,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 9, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 2567800,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 2567800, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 2567800, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -582,46 +582,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 70.5249547318 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "70.5249547318, is %s",
+        "70.5249547318, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.4290765936 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.4290765936, is %s",
+        "37.4290765936, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.173404926 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.173404926, is %s",
+        "-122.173404926, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 9,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 9, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 2567900,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 2567900, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 2567900, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -691,46 +691,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 4.03981088521 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "4.03981088521, is %s",
+        "4.03981088521, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.7624217142 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.7624217142, is %s",
+        "37.7624217142, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.389084379 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.389084379, is %s",
+        "-122.389084379, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 8,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 8, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 407084500,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 407084500, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 407084500, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -800,46 +800,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 2.92671408701 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "2.92671408701, is %s",
+        "2.92671408701, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.7624236142 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.7624236142, is %s",
+        "37.7624236142, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.389090537 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.389090537, is %s",
+        "-122.389090537, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 8,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 8, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 407084600,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 407084600, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 407084600, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -909,46 +909,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 0.95121466474 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "0.95121466474, is %s",
+        "0.95121466474, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.7624220761 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.7624220761, is %s",
+        "37.7624220761, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.389090734 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.389090734, is %s",
+        "-122.389090734, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 8,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 8, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 407084700,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 407084700, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 407084700, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1018,46 +1018,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 2.35413575205 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "2.35413575205, is %s",
+        "2.35413575205, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.7624216106 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.7624216106, is %s",
+        "37.7624216106, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.389098544 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.389098544, is %s",
+        "-122.389098544, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 8,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 8, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 407084800,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 407084800, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 407084800, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1127,46 +1127,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 1.08767631816 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "1.08767631816, is %s",
+        "1.08767631816, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.762423345 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.762423345, is %s",
+        "37.762423345, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.389092305 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.389092305, is %s",
+        "-122.389092305, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 8,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 8, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 407084900,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 407084900, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 407084900, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1236,46 +1236,46 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLLHDepA) {
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.flags == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.flags, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.flags);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.flags);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.h_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.height * 100 - 5.17153384465 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.height, expected "
-        "5.17153384465, is %s",
+        "5.17153384465, is %f",
         last_msg.msg.pos_llh_dep_a.height);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lat * 100 - 37.7624408225 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lat, expected "
-        "37.7624408225, is %s",
+        "37.7624408225, is %f",
         last_msg.msg.pos_llh_dep_a.lat);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_dep_a.lon * 100 - -122.389082889 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_dep_a.lon, expected "
-        "-122.389082889, is %s",
+        "-122.389082889, is %f",
         last_msg.msg.pos_llh_dep_a.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.n_sats == 5,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.n_sats, "
-                  "expected 5, is %d",
-                  last_msg.msg.pos_llh_dep_a.n_sats);
+                  "expected 5, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.tow == 407151150,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.tow, "
-                  "expected 407151150, is %d",
-                  last_msg.msg.pos_llh_dep_a.tow);
+                  "expected 407151150, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.tow);
 
     ck_assert_msg(last_msg.msg.pos_llh_dep_a.v_accuracy == 0,
                   "incorrect value for last_msg.msg.pos_llh_dep_a.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.pos_llh_dep_a.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_dep_a.v_accuracy);
   }
 }
 END_TEST

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_FD_COUNT_H
-#define LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_FD_COUNT_H
+#ifndef LIBSBP_LINUX_MSG_LINUX_PROCESS_FD_COUNT_H
+#define LIBSBP_LINUX_MSG_LINUX_PROCESS_FD_COUNT_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -389,4 +389,4 @@ static inline bool operator>=(const sbp_msg_linux_process_fd_count_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_LINUX_MSG_LINUX_PROCESS_FD_COUNT_H */
+#endif /* LIBSBP_LINUX_MSG_LINUX_PROCESS_FD_COUNT_H */
