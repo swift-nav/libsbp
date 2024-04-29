@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_REQ_H
-#define LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_REQ_H
+#ifndef LIBSBP_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_REQ_H
+#define LIBSBP_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_REQ_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -183,4 +183,4 @@ static inline bool operator>=(const sbp_msg_bootloader_handshake_req_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_REQ_H */
+#endif /* LIBSBP_BOOTLOAD_MSG_BOOTLOADER_HANDSHAKE_REQ_H */

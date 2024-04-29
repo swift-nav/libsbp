@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_PROFILING_H
-#define LIBSBP_INTERNAL_V4_PROFILING_H
+#ifndef LIBSBP_INTERNAL_PROFILING_H
+#define LIBSBP_INTERNAL_PROFILING_H
 
 #include <stdbool.h>
 
@@ -51,4 +51,4 @@ bool sbp_msg_measurement_point_decode_internal(
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_PROFILING_H */
+#endif /* LIBSBP_INTERNAL_PROFILING_H */

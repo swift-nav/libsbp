@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -136,19 +136,19 @@ START_TEST(test_auto_check_sbp_observation_MsgBasePosLLH) {
     ck_assert_msg(
         (last_msg.msg.base_pos_llh.height * 100 - 37.9395123109 * 100) < 0.05,
         "incorrect value for last_msg.msg.base_pos_llh.height, expected "
-        "37.9395123109, is %s",
+        "37.9395123109, is %f",
         last_msg.msg.base_pos_llh.height);
 
     ck_assert_msg(
         (last_msg.msg.base_pos_llh.lat * 100 - 37.2512925784 * 100) < 0.05,
         "incorrect value for last_msg.msg.base_pos_llh.lat, expected "
-        "37.2512925784, is %s",
+        "37.2512925784, is %f",
         last_msg.msg.base_pos_llh.lat);
 
     ck_assert_msg(
         (last_msg.msg.base_pos_llh.lon * 100 - -121.875056094 * 100) < 0.05,
         "incorrect value for last_msg.msg.base_pos_llh.lon, expected "
-        "-121.875056094, is %s",
+        "-121.875056094, is %f",
         last_msg.msg.base_pos_llh.lon);
   }
 }

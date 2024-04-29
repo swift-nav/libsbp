@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -142,43 +142,46 @@ START_TEST(test_auto_check_sbp_bootload_MsgNapDeviceDnaResp) {
         sbp_message_cmp(SbpMsgNapDeviceDnaResp, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.nap_device_dna_resp.dna[0] == 2,
-                  "incorrect value for "
-                  "last_msg.msg.nap_device_dna_resp.dna[0], expected 2, is %d",
-                  last_msg.msg.nap_device_dna_resp.dna[0]);
+    ck_assert_msg(
+        last_msg.msg.nap_device_dna_resp.dna[0] == 2,
+        "incorrect value for last_msg.msg.nap_device_dna_resp.dna[0], expected "
+        "2, is %" PRId64,
+        (int64_t)last_msg.msg.nap_device_dna_resp.dna[0]);
     ck_assert_msg(
         last_msg.msg.nap_device_dna_resp.dna[1] == 187,
         "incorrect value for last_msg.msg.nap_device_dna_resp.dna[1], expected "
-        "187, is %d",
-        last_msg.msg.nap_device_dna_resp.dna[1]);
-    ck_assert_msg(last_msg.msg.nap_device_dna_resp.dna[2] == 1,
-                  "incorrect value for "
-                  "last_msg.msg.nap_device_dna_resp.dna[2], expected 1, is %d",
-                  last_msg.msg.nap_device_dna_resp.dna[2]);
+        "187, is %" PRId64,
+        (int64_t)last_msg.msg.nap_device_dna_resp.dna[1]);
+    ck_assert_msg(
+        last_msg.msg.nap_device_dna_resp.dna[2] == 1,
+        "incorrect value for last_msg.msg.nap_device_dna_resp.dna[2], expected "
+        "1, is %" PRId64,
+        (int64_t)last_msg.msg.nap_device_dna_resp.dna[2]);
     ck_assert_msg(
         last_msg.msg.nap_device_dna_resp.dna[3] == 130,
         "incorrect value for last_msg.msg.nap_device_dna_resp.dna[3], expected "
-        "130, is %d",
-        last_msg.msg.nap_device_dna_resp.dna[3]);
+        "130, is %" PRId64,
+        (int64_t)last_msg.msg.nap_device_dna_resp.dna[3]);
     ck_assert_msg(
         last_msg.msg.nap_device_dna_resp.dna[4] == 173,
         "incorrect value for last_msg.msg.nap_device_dna_resp.dna[4], expected "
-        "173, is %d",
-        last_msg.msg.nap_device_dna_resp.dna[4]);
+        "173, is %" PRId64,
+        (int64_t)last_msg.msg.nap_device_dna_resp.dna[4]);
     ck_assert_msg(
         last_msg.msg.nap_device_dna_resp.dna[5] == 244,
         "incorrect value for last_msg.msg.nap_device_dna_resp.dna[5], expected "
-        "244, is %d",
-        last_msg.msg.nap_device_dna_resp.dna[5]);
-    ck_assert_msg(last_msg.msg.nap_device_dna_resp.dna[6] == 67,
-                  "incorrect value for "
-                  "last_msg.msg.nap_device_dna_resp.dna[6], expected 67, is %d",
-                  last_msg.msg.nap_device_dna_resp.dna[6]);
+        "244, is %" PRId64,
+        (int64_t)last_msg.msg.nap_device_dna_resp.dna[5]);
+    ck_assert_msg(
+        last_msg.msg.nap_device_dna_resp.dna[6] == 67,
+        "incorrect value for last_msg.msg.nap_device_dna_resp.dna[6], expected "
+        "67, is %" PRId64,
+        (int64_t)last_msg.msg.nap_device_dna_resp.dna[6]);
     ck_assert_msg(
         last_msg.msg.nap_device_dna_resp.dna[7] == 122,
         "incorrect value for last_msg.msg.nap_device_dna_resp.dna[7], expected "
-        "122, is %d",
-        last_msg.msg.nap_device_dna_resp.dna[7]);
+        "122, is %" PRId64,
+        (int64_t)last_msg.msg.nap_device_dna_resp.dna[7]);
   }
 }
 END_TEST

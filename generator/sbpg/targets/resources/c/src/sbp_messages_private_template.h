@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_(((package.name|upper)))_H
-#define LIBSBP_INTERNAL_V4_(((package.name|upper)))_H
+#ifndef LIBSBP_INTERNAL_(((package.name|upper)))_H
+#define LIBSBP_INTERNAL_(((package.name|upper)))_H
 
 #include <stdbool.h>
 
@@ -56,5 +56,5 @@ bool (((m.internal_decode_fn)))(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg);
   }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_(((package.name|upper)))_H */
+#endif /* LIBSBP_INTERNAL_(((package.name|upper)))_H */
 

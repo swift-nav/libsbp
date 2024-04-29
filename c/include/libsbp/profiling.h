@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_PROFILING_MESSAGES_H
-#define LIBSBP_V4_PROFILING_MESSAGES_H
+#ifndef LIBSBP_PROFILING_MESSAGES_H
+#define LIBSBP_PROFILING_MESSAGES_H
 #include <libsbp/profiling/MSG_MEASUREMENT_POINT.h>
 
-#endif /* LIBSBP_V4_PROFILING_MESSAGES_H */
+#endif /* LIBSBP_PROFILING_MESSAGES_H */

@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -168,88 +168,88 @@ START_TEST(test_auto_check_sbp_observation_MsgGnssCapb) {
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.bds_active == 1929005864,
                   "incorrect value for last_msg.msg.gnss_capb.gc.bds_active, "
-                  "expected 1929005864, is %d",
-                  last_msg.msg.gnss_capb.gc.bds_active);
+                  "expected 1929005864, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.bds_active);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.bds_b2 == 33839445,
                   "incorrect value for last_msg.msg.gnss_capb.gc.bds_b2, "
-                  "expected 33839445, is %d",
-                  last_msg.msg.gnss_capb.gc.bds_b2);
+                  "expected 33839445, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.bds_b2);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.bds_b2a == 378107113,
                   "incorrect value for last_msg.msg.gnss_capb.gc.bds_b2a, "
-                  "expected 378107113, is %d",
-                  last_msg.msg.gnss_capb.gc.bds_b2a);
+                  "expected 378107113, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.bds_b2a);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.bds_d2nav == 1367053175,
                   "incorrect value for last_msg.msg.gnss_capb.gc.bds_d2nav, "
-                  "expected 1367053175, is %d",
-                  last_msg.msg.gnss_capb.gc.bds_d2nav);
+                  "expected 1367053175, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.bds_d2nav);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.gal_active == 1392028637,
                   "incorrect value for last_msg.msg.gnss_capb.gc.gal_active, "
-                  "expected 1392028637, is %d",
-                  last_msg.msg.gnss_capb.gc.gal_active);
+                  "expected 1392028637, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.gal_active);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.gal_e5 == 484261628,
                   "incorrect value for last_msg.msg.gnss_capb.gc.gal_e5, "
-                  "expected 484261628, is %d",
-                  last_msg.msg.gnss_capb.gc.gal_e5);
+                  "expected 484261628, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.gal_e5);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.glo_active == 13159676,
                   "incorrect value for last_msg.msg.gnss_capb.gc.glo_active, "
-                  "expected 13159676, is %d",
-                  last_msg.msg.gnss_capb.gc.glo_active);
+                  "expected 13159676, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.glo_active);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.glo_l2of == 824073421,
                   "incorrect value for last_msg.msg.gnss_capb.gc.glo_l2of, "
-                  "expected 824073421, is %d",
-                  last_msg.msg.gnss_capb.gc.glo_l2of);
+                  "expected 824073421, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.glo_l2of);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.glo_l3 == 404081648,
                   "incorrect value for last_msg.msg.gnss_capb.gc.glo_l3, "
-                  "expected 404081648, is %d",
-                  last_msg.msg.gnss_capb.gc.glo_l3);
+                  "expected 404081648, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.glo_l3);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.gps_active == 1079028506,
                   "incorrect value for last_msg.msg.gnss_capb.gc.gps_active, "
-                  "expected 1079028506, is %d",
-                  last_msg.msg.gnss_capb.gc.gps_active);
+                  "expected 1079028506, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.gps_active);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.gps_l2c == 781233489,
                   "incorrect value for last_msg.msg.gnss_capb.gc.gps_l2c, "
-                  "expected 781233489, is %d",
-                  last_msg.msg.gnss_capb.gc.gps_l2c);
+                  "expected 781233489, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.gps_l2c);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.gps_l5 == 1818069969,
                   "incorrect value for last_msg.msg.gnss_capb.gc.gps_l5, "
-                  "expected 1818069969, is %d",
-                  last_msg.msg.gnss_capb.gc.gps_l5);
+                  "expected 1818069969, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.gps_l5);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.qzss_active == 198929863,
                   "incorrect value for last_msg.msg.gnss_capb.gc.qzss_active, "
-                  "expected 198929863, is %d",
-                  last_msg.msg.gnss_capb.gc.qzss_active);
+                  "expected 198929863, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.qzss_active);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.sbas_active == 548822484,
                   "incorrect value for last_msg.msg.gnss_capb.gc.sbas_active, "
-                  "expected 548822484, is %d",
-                  last_msg.msg.gnss_capb.gc.sbas_active);
+                  "expected 548822484, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.sbas_active);
 
     ck_assert_msg(last_msg.msg.gnss_capb.gc.sbas_l5 == 465576041,
                   "incorrect value for last_msg.msg.gnss_capb.gc.sbas_l5, "
-                  "expected 465576041, is %d",
-                  last_msg.msg.gnss_capb.gc.sbas_l5);
+                  "expected 465576041, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.gc.sbas_l5);
 
     ck_assert_msg(last_msg.msg.gnss_capb.t_nmct.tow == 446384,
                   "incorrect value for last_msg.msg.gnss_capb.t_nmct.tow, "
-                  "expected 446384, is %d",
-                  last_msg.msg.gnss_capb.t_nmct.tow);
+                  "expected 446384, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.t_nmct.tow);
 
     ck_assert_msg(last_msg.msg.gnss_capb.t_nmct.wn == 2154,
                   "incorrect value for last_msg.msg.gnss_capb.t_nmct.wn, "
-                  "expected 2154, is %d",
-                  last_msg.msg.gnss_capb.t_nmct.wn);
+                  "expected 2154, is %" PRId64,
+                  (int64_t)last_msg.msg.gnss_capb.t_nmct.wn);
   }
 }
 END_TEST

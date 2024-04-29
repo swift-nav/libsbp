@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_FLASH_H
-#define LIBSBP_INTERNAL_V4_FLASH_H
+#ifndef LIBSBP_INTERNAL_FLASH_H
+#define LIBSBP_INTERNAL_FLASH_H
 
 #include <stdbool.h>
 
@@ -231,4 +231,4 @@ bool sbp_msg_m25_flash_write_status_decode_internal(
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_FLASH_H */
+#endif /* LIBSBP_INTERNAL_FLASH_H */

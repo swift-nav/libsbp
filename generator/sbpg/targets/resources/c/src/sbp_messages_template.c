@@ -253,7 +253,7 @@ s8 (((m.send_fn)))(sbp_state_t *s, u16 sender_id, const (((m.type_name))) *msg, 
   uint8_t payload_len;
   s8 ret = (((m.public_encode_fn)))(payload, sizeof(payload), &payload_len, msg);
   if (ret != SBP_OK) { return ret; }
-  return sbp_internal_forward_payload(s, (((m.legacy_msg_type))), sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, (((m.msg_type))), sender_id, payload_len, payload, write);
 }
 ((*- endif *))
 

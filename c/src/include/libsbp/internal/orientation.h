@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_ORIENTATION_H
-#define LIBSBP_INTERNAL_V4_ORIENTATION_H
+#ifndef LIBSBP_INTERNAL_ORIENTATION_H
+#define LIBSBP_INTERNAL_ORIENTATION_H
 
 #include <stdbool.h>
 
@@ -111,4 +111,4 @@ bool sbp_msg_angular_rate_decode_internal(sbp_decode_ctx_t *ctx,
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_ORIENTATION_H */
+#endif /* LIBSBP_INTERNAL_ORIENTATION_H */

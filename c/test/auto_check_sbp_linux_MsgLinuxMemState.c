@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -173,28 +173,28 @@ START_TEST(test_auto_check_sbp_linux_MsgLinuxMemState) {
 
     ck_assert_msg(last_msg.msg.linux_mem_state.flags == 76,
                   "incorrect value for last_msg.msg.linux_mem_state.flags, "
-                  "expected 76, is %d",
-                  last_msg.msg.linux_mem_state.flags);
+                  "expected 76, is %" PRId64,
+                  (int64_t)last_msg.msg.linux_mem_state.flags);
 
     ck_assert_msg(last_msg.msg.linux_mem_state.index == 154,
                   "incorrect value for last_msg.msg.linux_mem_state.index, "
-                  "expected 154, is %d",
-                  last_msg.msg.linux_mem_state.index);
+                  "expected 154, is %" PRId64,
+                  (int64_t)last_msg.msg.linux_mem_state.index);
 
     ck_assert_msg(last_msg.msg.linux_mem_state.pid == 57279,
                   "incorrect value for last_msg.msg.linux_mem_state.pid, "
-                  "expected 57279, is %d",
-                  last_msg.msg.linux_mem_state.pid);
+                  "expected 57279, is %" PRId64,
+                  (int64_t)last_msg.msg.linux_mem_state.pid);
 
     ck_assert_msg(last_msg.msg.linux_mem_state.pmem == 19,
                   "incorrect value for last_msg.msg.linux_mem_state.pmem, "
-                  "expected 19, is %d",
-                  last_msg.msg.linux_mem_state.pmem);
+                  "expected 19, is %" PRId64,
+                  (int64_t)last_msg.msg.linux_mem_state.pmem);
 
     ck_assert_msg(last_msg.msg.linux_mem_state.time == 3139057143,
                   "incorrect value for last_msg.msg.linux_mem_state.time, "
-                  "expected 3139057143, is %d",
-                  last_msg.msg.linux_mem_state.time);
+                  "expected 3139057143, is %" PRId64,
+                  (int64_t)last_msg.msg.linux_mem_state.time);
 
     {
       const char check_string[] = {(char)112, (char)114, (char)111, (char)99,

@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -142,38 +142,38 @@ START_TEST(test_auto_check_sbp_linux_MsgLinuxSysStateDepA) {
     ck_assert_msg(
         last_msg.msg.linux_sys_state_dep_a.mem_total == 41916,
         "incorrect value for last_msg.msg.linux_sys_state_dep_a.mem_total, "
-        "expected 41916, is %d",
-        last_msg.msg.linux_sys_state_dep_a.mem_total);
+        "expected 41916, is %" PRId64,
+        (int64_t)last_msg.msg.linux_sys_state_dep_a.mem_total);
 
     ck_assert_msg(
         last_msg.msg.linux_sys_state_dep_a.pcpu == 211,
         "incorrect value for last_msg.msg.linux_sys_state_dep_a.pcpu, expected "
-        "211, is %d",
-        last_msg.msg.linux_sys_state_dep_a.pcpu);
+        "211, is %" PRId64,
+        (int64_t)last_msg.msg.linux_sys_state_dep_a.pcpu);
 
     ck_assert_msg(
         last_msg.msg.linux_sys_state_dep_a.pid_count == 51580,
         "incorrect value for last_msg.msg.linux_sys_state_dep_a.pid_count, "
-        "expected 51580, is %d",
-        last_msg.msg.linux_sys_state_dep_a.pid_count);
+        "expected 51580, is %" PRId64,
+        (int64_t)last_msg.msg.linux_sys_state_dep_a.pid_count);
 
     ck_assert_msg(
         last_msg.msg.linux_sys_state_dep_a.pmem == 194,
         "incorrect value for last_msg.msg.linux_sys_state_dep_a.pmem, expected "
-        "194, is %d",
-        last_msg.msg.linux_sys_state_dep_a.pmem);
+        "194, is %" PRId64,
+        (int64_t)last_msg.msg.linux_sys_state_dep_a.pmem);
 
     ck_assert_msg(last_msg.msg.linux_sys_state_dep_a.procs_starting == 18291,
                   "incorrect value for "
                   "last_msg.msg.linux_sys_state_dep_a.procs_starting, expected "
-                  "18291, is %d",
-                  last_msg.msg.linux_sys_state_dep_a.procs_starting);
+                  "18291, is %" PRId64,
+                  (int64_t)last_msg.msg.linux_sys_state_dep_a.procs_starting);
 
     ck_assert_msg(last_msg.msg.linux_sys_state_dep_a.procs_stopping == 26469,
                   "incorrect value for "
                   "last_msg.msg.linux_sys_state_dep_a.procs_stopping, expected "
-                  "26469, is %d",
-                  last_msg.msg.linux_sys_state_dep_a.procs_stopping);
+                  "26469, is %" PRId64,
+                  (int64_t)last_msg.msg.linux_sys_state_dep_a.procs_stopping);
   }
 }
 END_TEST

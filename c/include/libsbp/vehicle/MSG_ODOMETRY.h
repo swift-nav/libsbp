@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_VEHICLE_MSG_ODOMETRY_H
-#define LIBSBP_V4_VEHICLE_MSG_ODOMETRY_H
+#ifndef LIBSBP_VEHICLE_MSG_ODOMETRY_H
+#define LIBSBP_VEHICLE_MSG_ODOMETRY_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -191,4 +191,4 @@ static inline bool operator>=(const sbp_msg_odometry_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_VEHICLE_MSG_ODOMETRY_H */
+#endif /* LIBSBP_VEHICLE_MSG_ODOMETRY_H */

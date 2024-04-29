@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SBAS_MSG_SBAS_RAW_H
-#define LIBSBP_V4_SBAS_MSG_SBAS_RAW_H
+#ifndef LIBSBP_SBAS_MSG_SBAS_RAW_H
+#define LIBSBP_SBAS_MSG_SBAS_RAW_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -48,7 +48,7 @@ typedef struct {
   /**
    * GNSS signal identifier.
    */
-  sbp_v4_gnss_signal_t sid;
+  sbp_gnss_signal_t sid;
 
   /**
    * GPS time-of-week at the start of the data block. [ms]
@@ -191,4 +191,4 @@ static inline bool operator>=(const sbp_msg_sbas_raw_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SBAS_MSG_SBAS_RAW_H */
+#endif /* LIBSBP_SBAS_MSG_SBAS_RAW_H */

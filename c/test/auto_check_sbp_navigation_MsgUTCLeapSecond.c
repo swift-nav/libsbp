@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -144,51 +144,57 @@ START_TEST(test_auto_check_sbp_navigation_MsgUTCLeapSecond) {
         sbp_message_cmp(SbpMsgUtcLeapSecond, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.utc_leap_second.count_after == 9,
-                  "incorrect value for "
-                  "last_msg.msg.utc_leap_second.count_after, expected 9, is %d",
-                  last_msg.msg.utc_leap_second.count_after);
+    ck_assert_msg(
+        last_msg.msg.utc_leap_second.count_after == 9,
+        "incorrect value for last_msg.msg.utc_leap_second.count_after, "
+        "expected 9, is %" PRId64,
+        (int64_t)last_msg.msg.utc_leap_second.count_after);
 
     ck_assert_msg(
         last_msg.msg.utc_leap_second.count_before == 4,
         "incorrect value for last_msg.msg.utc_leap_second.count_before, "
-        "expected 4, is %d",
-        last_msg.msg.utc_leap_second.count_before);
+        "expected 4, is %" PRId64,
+        (int64_t)last_msg.msg.utc_leap_second.count_before);
 
     ck_assert_msg(last_msg.msg.utc_leap_second.ref_dn == 8,
                   "incorrect value for last_msg.msg.utc_leap_second.ref_dn, "
-                  "expected 8, is %d",
-                  last_msg.msg.utc_leap_second.ref_dn);
+                  "expected 8, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_leap_second.ref_dn);
 
     ck_assert_msg(last_msg.msg.utc_leap_second.ref_wn == 7,
                   "incorrect value for last_msg.msg.utc_leap_second.ref_wn, "
-                  "expected 7, is %d",
-                  last_msg.msg.utc_leap_second.ref_wn);
+                  "expected 7, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_leap_second.ref_wn);
 
-    ck_assert_msg(last_msg.msg.utc_leap_second.reserved_0 == 1,
-                  "incorrect value for "
-                  "last_msg.msg.utc_leap_second.reserved_0, expected 1, is %d",
-                  last_msg.msg.utc_leap_second.reserved_0);
+    ck_assert_msg(
+        last_msg.msg.utc_leap_second.reserved_0 == 1,
+        "incorrect value for last_msg.msg.utc_leap_second.reserved_0, expected "
+        "1, is %" PRId64,
+        (int64_t)last_msg.msg.utc_leap_second.reserved_0);
 
-    ck_assert_msg(last_msg.msg.utc_leap_second.reserved_1 == 2,
-                  "incorrect value for "
-                  "last_msg.msg.utc_leap_second.reserved_1, expected 2, is %d",
-                  last_msg.msg.utc_leap_second.reserved_1);
+    ck_assert_msg(
+        last_msg.msg.utc_leap_second.reserved_1 == 2,
+        "incorrect value for last_msg.msg.utc_leap_second.reserved_1, expected "
+        "2, is %" PRId64,
+        (int64_t)last_msg.msg.utc_leap_second.reserved_1);
 
-    ck_assert_msg(last_msg.msg.utc_leap_second.reserved_2 == 3,
-                  "incorrect value for "
-                  "last_msg.msg.utc_leap_second.reserved_2, expected 3, is %d",
-                  last_msg.msg.utc_leap_second.reserved_2);
+    ck_assert_msg(
+        last_msg.msg.utc_leap_second.reserved_2 == 3,
+        "incorrect value for last_msg.msg.utc_leap_second.reserved_2, expected "
+        "3, is %" PRId64,
+        (int64_t)last_msg.msg.utc_leap_second.reserved_2);
 
-    ck_assert_msg(last_msg.msg.utc_leap_second.reserved_3 == 5,
-                  "incorrect value for "
-                  "last_msg.msg.utc_leap_second.reserved_3, expected 5, is %d",
-                  last_msg.msg.utc_leap_second.reserved_3);
+    ck_assert_msg(
+        last_msg.msg.utc_leap_second.reserved_3 == 5,
+        "incorrect value for last_msg.msg.utc_leap_second.reserved_3, expected "
+        "5, is %" PRId64,
+        (int64_t)last_msg.msg.utc_leap_second.reserved_3);
 
-    ck_assert_msg(last_msg.msg.utc_leap_second.reserved_4 == 6,
-                  "incorrect value for "
-                  "last_msg.msg.utc_leap_second.reserved_4, expected 6, is %d",
-                  last_msg.msg.utc_leap_second.reserved_4);
+    ck_assert_msg(
+        last_msg.msg.utc_leap_second.reserved_4 == 6,
+        "incorrect value for last_msg.msg.utc_leap_second.reserved_4, expected "
+        "6, is %" PRId64,
+        (int64_t)last_msg.msg.utc_leap_second.reserved_4);
   }
 }
 END_TEST

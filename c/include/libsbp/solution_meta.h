@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SOLUTION_META_MESSAGES_H
-#define LIBSBP_V4_SOLUTION_META_MESSAGES_H
+#ifndef LIBSBP_SOLUTION_META_MESSAGES_H
+#define LIBSBP_SOLUTION_META_MESSAGES_H
 #include <libsbp/solution_meta/GNSSInputType.h>
 #include <libsbp/solution_meta/IMUInputType.h>
 #include <libsbp/solution_meta/MSG_SOLN_META.h>
@@ -24,4 +24,4 @@
 #include <libsbp/solution_meta/OdoInputType.h>
 #include <libsbp/solution_meta/SolutionInputType.h>
 
-#endif /* LIBSBP_V4_SOLUTION_META_MESSAGES_H */
+#endif /* LIBSBP_SOLUTION_META_MESSAGES_H */

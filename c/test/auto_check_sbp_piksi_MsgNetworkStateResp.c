@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -191,8 +191,8 @@ START_TEST(test_auto_check_sbp_piksi_MsgNetworkStateResp) {
 
     ck_assert_msg(last_msg.msg.network_state_resp.flags == 2471552451,
                   "incorrect value for last_msg.msg.network_state_resp.flags, "
-                  "expected 2471552451, is %d",
-                  last_msg.msg.network_state_resp.flags);
+                  "expected 2471552451, is %" PRId64,
+                  (int64_t)last_msg.msg.network_state_resp.flags);
 
     {
       const char check_string[] = {(char)105, (char)102, (char)48, (char)0,
@@ -210,128 +210,128 @@ START_TEST(test_auto_check_sbp_piksi_MsgNetworkStateResp) {
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv4_address[0] == 143,
         "incorrect value for last_msg.msg.network_state_resp.ipv4_address[0], "
-        "expected 143, is %d",
-        last_msg.msg.network_state_resp.ipv4_address[0]);
+        "expected 143, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv4_address[0]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv4_address[1] == 241,
         "incorrect value for last_msg.msg.network_state_resp.ipv4_address[1], "
-        "expected 241, is %d",
-        last_msg.msg.network_state_resp.ipv4_address[1]);
+        "expected 241, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv4_address[1]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv4_address[2] == 84,
         "incorrect value for last_msg.msg.network_state_resp.ipv4_address[2], "
-        "expected 84, is %d",
-        last_msg.msg.network_state_resp.ipv4_address[2]);
+        "expected 84, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv4_address[2]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv4_address[3] == 180,
         "incorrect value for last_msg.msg.network_state_resp.ipv4_address[3], "
-        "expected 180, is %d",
-        last_msg.msg.network_state_resp.ipv4_address[3]);
+        "expected 180, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv4_address[3]);
 
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv4_mask_size == 152,
         "incorrect value for last_msg.msg.network_state_resp.ipv4_mask_size, "
-        "expected 152, is %d",
-        last_msg.msg.network_state_resp.ipv4_mask_size);
+        "expected 152, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv4_mask_size);
 
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[0] == 194,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[0], "
-        "expected 194, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[0]);
+        "expected 194, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[0]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[1] == 137,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[1], "
-        "expected 137, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[1]);
+        "expected 137, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[1]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[2] == 32,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[2], "
-        "expected 32, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[2]);
+        "expected 32, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[2]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[3] == 44,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[3], "
-        "expected 44, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[3]);
+        "expected 44, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[3]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[4] == 114,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[4], "
-        "expected 114, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[4]);
+        "expected 114, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[4]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[5] == 147,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[5], "
-        "expected 147, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[5]);
+        "expected 147, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[5]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[6] == 68,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[6], "
-        "expected 68, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[6]);
+        "expected 68, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[6]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[7] == 222,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[7], "
-        "expected 222, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[7]);
+        "expected 222, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[7]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[8] == 92,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[8], "
-        "expected 92, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[8]);
+        "expected 92, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[8]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[9] == 192,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[9], "
-        "expected 192, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[9]);
+        "expected 192, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[9]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[10] == 78,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[10], "
-        "expected 78, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[10]);
+        "expected 78, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[10]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[11] == 235,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[11], "
-        "expected 235, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[11]);
+        "expected 235, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[11]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[12] == 63,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[12], "
-        "expected 63, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[12]);
+        "expected 63, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[12]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[13] == 208,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[13], "
-        "expected 208, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[13]);
+        "expected 208, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[13]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[14] == 114,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[14], "
-        "expected 114, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[14]);
+        "expected 114, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[14]);
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_address[15] == 53,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_address[15], "
-        "expected 53, is %d",
-        last_msg.msg.network_state_resp.ipv6_address[15]);
+        "expected 53, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_address[15]);
 
     ck_assert_msg(
         last_msg.msg.network_state_resp.ipv6_mask_size == 183,
         "incorrect value for last_msg.msg.network_state_resp.ipv6_mask_size, "
-        "expected 183, is %d",
-        last_msg.msg.network_state_resp.ipv6_mask_size);
+        "expected 183, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.ipv6_mask_size);
 
     ck_assert_msg(
         last_msg.msg.network_state_resp.rx_bytes == 451408920,
         "incorrect value for last_msg.msg.network_state_resp.rx_bytes, "
-        "expected 451408920, is %d",
-        last_msg.msg.network_state_resp.rx_bytes);
+        "expected 451408920, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.rx_bytes);
 
     ck_assert_msg(
         last_msg.msg.network_state_resp.tx_bytes == 59251049,
         "incorrect value for last_msg.msg.network_state_resp.tx_bytes, "
-        "expected 59251049, is %d",
-        last_msg.msg.network_state_resp.tx_bytes);
+        "expected 59251049, is %" PRId64,
+        (int64_t)last_msg.msg.network_state_resp.tx_bytes);
   }
 }
 END_TEST

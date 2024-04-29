@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_FLASH_MSG_STM_UNIQUE_ID_REQ_H
-#define LIBSBP_V4_FLASH_MSG_STM_UNIQUE_ID_REQ_H
+#ifndef LIBSBP_FLASH_MSG_STM_UNIQUE_ID_REQ_H
+#define LIBSBP_FLASH_MSG_STM_UNIQUE_ID_REQ_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -179,4 +179,4 @@ static inline bool operator>=(const sbp_msg_stm_unique_id_req_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_FLASH_MSG_STM_UNIQUE_ID_REQ_H */
+#endif /* LIBSBP_FLASH_MSG_STM_UNIQUE_ID_REQ_H */

@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_GRIDDEFINITIONHEADERDEPA_H
-#define LIBSBP_V4_SSR_GRIDDEFINITIONHEADERDEPA_H
+#ifndef LIBSBP_SSR_GRIDDEFINITIONHEADERDEPA_H
+#define LIBSBP_SSR_GRIDDEFINITIONHEADERDEPA_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -188,4 +188,4 @@ static inline bool operator>=(const sbp_grid_definition_header_dep_a_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SSR_GRIDDEFINITIONHEADERDEPA_H */
+#endif /* LIBSBP_SSR_GRIDDEFINITIONHEADERDEPA_H */

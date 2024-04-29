@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_INTERNAL_V4_ACQUISITION_H
-#define LIBSBP_INTERNAL_V4_ACQUISITION_H
+#ifndef LIBSBP_INTERNAL_ACQUISITION_H
+#define LIBSBP_INTERNAL_ACQUISITION_H
 
 #include <stdbool.h>
 
@@ -192,4 +192,4 @@ bool sbp_msg_acq_sv_profile_dep_decode_internal(
 }
 #endif
 
-#endif /* LIBSBP_INTERNAL_V4_ACQUISITION_H */
+#endif /* LIBSBP_INTERNAL_ACQUISITION_H */

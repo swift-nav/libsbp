@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_INTEGRITY_MSG_SSR_FLAG_IONO_GRID_POINTS_H
-#define LIBSBP_V4_INTEGRITY_MSG_SSR_FLAG_IONO_GRID_POINTS_H
+#ifndef LIBSBP_INTEGRITY_MSG_SSR_FLAG_IONO_GRID_POINTS_H
+#define LIBSBP_INTEGRITY_MSG_SSR_FLAG_IONO_GRID_POINTS_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -187,4 +187,4 @@ static inline bool operator>=(const sbp_msg_ssr_flag_iono_grid_points_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_INTEGRITY_MSG_SSR_FLAG_IONO_GRID_POINTS_H */
+#endif /* LIBSBP_INTEGRITY_MSG_SSR_FLAG_IONO_GRID_POINTS_H */

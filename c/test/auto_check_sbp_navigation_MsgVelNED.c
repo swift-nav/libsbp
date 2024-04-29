@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -143,43 +143,43 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNED) {
 
     ck_assert_msg(
         last_msg.msg.vel_ned.d == -13,
-        "incorrect value for last_msg.msg.vel_ned.d, expected -13, is %d",
-        last_msg.msg.vel_ned.d);
+        "incorrect value for last_msg.msg.vel_ned.d, expected -13, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.d);
 
     ck_assert_msg(
         last_msg.msg.vel_ned.e == -4,
-        "incorrect value for last_msg.msg.vel_ned.e, expected -4, is %d",
-        last_msg.msg.vel_ned.e);
+        "incorrect value for last_msg.msg.vel_ned.e, expected -4, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.e);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned.flags == 0,
-        "incorrect value for last_msg.msg.vel_ned.flags, expected 0, is %d",
-        last_msg.msg.vel_ned.flags);
+    ck_assert_msg(last_msg.msg.vel_ned.flags == 0,
+                  "incorrect value for last_msg.msg.vel_ned.flags, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.flags);
 
     ck_assert_msg(last_msg.msg.vel_ned.h_accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ned.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.h_accuracy);
 
     ck_assert_msg(
         last_msg.msg.vel_ned.n == 3,
-        "incorrect value for last_msg.msg.vel_ned.n, expected 3, is %d",
-        last_msg.msg.vel_ned.n);
+        "incorrect value for last_msg.msg.vel_ned.n, expected 3, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.n);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned.n_sats == 14,
-        "incorrect value for last_msg.msg.vel_ned.n_sats, expected 14, is %d",
-        last_msg.msg.vel_ned.n_sats);
+    ck_assert_msg(last_msg.msg.vel_ned.n_sats == 14,
+                  "incorrect value for last_msg.msg.vel_ned.n_sats, expected "
+                  "14, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ned.tow == 326825000,
                   "incorrect value for last_msg.msg.vel_ned.tow, expected "
-                  "326825000, is %d",
-                  last_msg.msg.vel_ned.tow);
+                  "326825000, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.tow);
 
     ck_assert_msg(last_msg.msg.vel_ned.v_accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ned.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -247,43 +247,43 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNED) {
 
     ck_assert_msg(
         last_msg.msg.vel_ned.d == -24,
-        "incorrect value for last_msg.msg.vel_ned.d, expected -24, is %d",
-        last_msg.msg.vel_ned.d);
+        "incorrect value for last_msg.msg.vel_ned.d, expected -24, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.d);
 
     ck_assert_msg(
         last_msg.msg.vel_ned.e == -1,
-        "incorrect value for last_msg.msg.vel_ned.e, expected -1, is %d",
-        last_msg.msg.vel_ned.e);
+        "incorrect value for last_msg.msg.vel_ned.e, expected -1, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.e);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned.flags == 0,
-        "incorrect value for last_msg.msg.vel_ned.flags, expected 0, is %d",
-        last_msg.msg.vel_ned.flags);
+    ck_assert_msg(last_msg.msg.vel_ned.flags == 0,
+                  "incorrect value for last_msg.msg.vel_ned.flags, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.flags);
 
     ck_assert_msg(last_msg.msg.vel_ned.h_accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ned.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.h_accuracy);
 
     ck_assert_msg(
         last_msg.msg.vel_ned.n == -4,
-        "incorrect value for last_msg.msg.vel_ned.n, expected -4, is %d",
-        last_msg.msg.vel_ned.n);
+        "incorrect value for last_msg.msg.vel_ned.n, expected -4, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.n);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned.n_sats == 15,
-        "incorrect value for last_msg.msg.vel_ned.n_sats, expected 15, is %d",
-        last_msg.msg.vel_ned.n_sats);
+    ck_assert_msg(last_msg.msg.vel_ned.n_sats == 15,
+                  "incorrect value for last_msg.msg.vel_ned.n_sats, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ned.tow == 326825500,
                   "incorrect value for last_msg.msg.vel_ned.tow, expected "
-                  "326825500, is %d",
-                  last_msg.msg.vel_ned.tow);
+                  "326825500, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.tow);
 
     ck_assert_msg(last_msg.msg.vel_ned.v_accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ned.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -350,43 +350,43 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNED) {
 
     ck_assert_msg(
         last_msg.msg.vel_ned.d == -12,
-        "incorrect value for last_msg.msg.vel_ned.d, expected -12, is %d",
-        last_msg.msg.vel_ned.d);
+        "incorrect value for last_msg.msg.vel_ned.d, expected -12, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.d);
 
     ck_assert_msg(
         last_msg.msg.vel_ned.e == -3,
-        "incorrect value for last_msg.msg.vel_ned.e, expected -3, is %d",
-        last_msg.msg.vel_ned.e);
+        "incorrect value for last_msg.msg.vel_ned.e, expected -3, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.e);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned.flags == 0,
-        "incorrect value for last_msg.msg.vel_ned.flags, expected 0, is %d",
-        last_msg.msg.vel_ned.flags);
+    ck_assert_msg(last_msg.msg.vel_ned.flags == 0,
+                  "incorrect value for last_msg.msg.vel_ned.flags, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.flags);
 
     ck_assert_msg(last_msg.msg.vel_ned.h_accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ned.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.h_accuracy);
 
     ck_assert_msg(
         last_msg.msg.vel_ned.n == 0,
-        "incorrect value for last_msg.msg.vel_ned.n, expected 0, is %d",
-        last_msg.msg.vel_ned.n);
+        "incorrect value for last_msg.msg.vel_ned.n, expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.n);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned.n_sats == 15,
-        "incorrect value for last_msg.msg.vel_ned.n_sats, expected 15, is %d",
-        last_msg.msg.vel_ned.n_sats);
+    ck_assert_msg(last_msg.msg.vel_ned.n_sats == 15,
+                  "incorrect value for last_msg.msg.vel_ned.n_sats, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ned.tow == 326826000,
                   "incorrect value for last_msg.msg.vel_ned.tow, expected "
-                  "326826000, is %d",
-                  last_msg.msg.vel_ned.tow);
+                  "326826000, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.tow);
 
     ck_assert_msg(last_msg.msg.vel_ned.v_accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ned.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -453,43 +453,43 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNED) {
 
     ck_assert_msg(
         last_msg.msg.vel_ned.d == -24,
-        "incorrect value for last_msg.msg.vel_ned.d, expected -24, is %d",
-        last_msg.msg.vel_ned.d);
+        "incorrect value for last_msg.msg.vel_ned.d, expected -24, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.d);
 
     ck_assert_msg(
         last_msg.msg.vel_ned.e == 3,
-        "incorrect value for last_msg.msg.vel_ned.e, expected 3, is %d",
-        last_msg.msg.vel_ned.e);
+        "incorrect value for last_msg.msg.vel_ned.e, expected 3, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.e);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned.flags == 0,
-        "incorrect value for last_msg.msg.vel_ned.flags, expected 0, is %d",
-        last_msg.msg.vel_ned.flags);
+    ck_assert_msg(last_msg.msg.vel_ned.flags == 0,
+                  "incorrect value for last_msg.msg.vel_ned.flags, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.flags);
 
     ck_assert_msg(last_msg.msg.vel_ned.h_accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ned.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.h_accuracy);
 
     ck_assert_msg(
         last_msg.msg.vel_ned.n == 2,
-        "incorrect value for last_msg.msg.vel_ned.n, expected 2, is %d",
-        last_msg.msg.vel_ned.n);
+        "incorrect value for last_msg.msg.vel_ned.n, expected 2, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.n);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned.n_sats == 15,
-        "incorrect value for last_msg.msg.vel_ned.n_sats, expected 15, is %d",
-        last_msg.msg.vel_ned.n_sats);
+    ck_assert_msg(last_msg.msg.vel_ned.n_sats == 15,
+                  "incorrect value for last_msg.msg.vel_ned.n_sats, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ned.tow == 326826500,
                   "incorrect value for last_msg.msg.vel_ned.tow, expected "
-                  "326826500, is %d",
-                  last_msg.msg.vel_ned.tow);
+                  "326826500, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.tow);
 
     ck_assert_msg(last_msg.msg.vel_ned.v_accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ned.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -556,43 +556,43 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelNED) {
 
     ck_assert_msg(
         last_msg.msg.vel_ned.d == -21,
-        "incorrect value for last_msg.msg.vel_ned.d, expected -21, is %d",
-        last_msg.msg.vel_ned.d);
+        "incorrect value for last_msg.msg.vel_ned.d, expected -21, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.d);
 
     ck_assert_msg(
         last_msg.msg.vel_ned.e == 0,
-        "incorrect value for last_msg.msg.vel_ned.e, expected 0, is %d",
-        last_msg.msg.vel_ned.e);
+        "incorrect value for last_msg.msg.vel_ned.e, expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.e);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned.flags == 0,
-        "incorrect value for last_msg.msg.vel_ned.flags, expected 0, is %d",
-        last_msg.msg.vel_ned.flags);
+    ck_assert_msg(last_msg.msg.vel_ned.flags == 0,
+                  "incorrect value for last_msg.msg.vel_ned.flags, expected 0, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.flags);
 
     ck_assert_msg(last_msg.msg.vel_ned.h_accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ned.h_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned.h_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.h_accuracy);
 
     ck_assert_msg(
         last_msg.msg.vel_ned.n == 1,
-        "incorrect value for last_msg.msg.vel_ned.n, expected 1, is %d",
-        last_msg.msg.vel_ned.n);
+        "incorrect value for last_msg.msg.vel_ned.n, expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.vel_ned.n);
 
-    ck_assert_msg(
-        last_msg.msg.vel_ned.n_sats == 15,
-        "incorrect value for last_msg.msg.vel_ned.n_sats, expected 15, is %d",
-        last_msg.msg.vel_ned.n_sats);
+    ck_assert_msg(last_msg.msg.vel_ned.n_sats == 15,
+                  "incorrect value for last_msg.msg.vel_ned.n_sats, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.n_sats);
 
     ck_assert_msg(last_msg.msg.vel_ned.tow == 326827000,
                   "incorrect value for last_msg.msg.vel_ned.tow, expected "
-                  "326827000, is %d",
-                  last_msg.msg.vel_ned.tow);
+                  "326827000, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.tow);
 
     ck_assert_msg(last_msg.msg.vel_ned.v_accuracy == 0,
                   "incorrect value for last_msg.msg.vel_ned.v_accuracy, "
-                  "expected 0, is %d",
-                  last_msg.msg.vel_ned.v_accuracy);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.vel_ned.v_accuracy);
   }
 }
 END_TEST

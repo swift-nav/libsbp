@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -140,39 +140,39 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEF) {
     ck_assert_msg(sbp_message_cmp(SbpMsgPosEcef, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.accuracy == 0,
-        "incorrect value for last_msg.msg.pos_ecef.accuracy, expected 0, is %d",
-        last_msg.msg.pos_ecef.accuracy);
+    ck_assert_msg(last_msg.msg.pos_ecef.accuracy == 0,
+                  "incorrect value for last_msg.msg.pos_ecef.accuracy, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.accuracy);
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.flags == 2,
-        "incorrect value for last_msg.msg.pos_ecef.flags, expected 2, is %d",
-        last_msg.msg.pos_ecef.flags);
+    ck_assert_msg(last_msg.msg.pos_ecef.flags == 2,
+                  "incorrect value for last_msg.msg.pos_ecef.flags, expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.flags);
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.n_sats == 15,
-        "incorrect value for last_msg.msg.pos_ecef.n_sats, expected 15, is %d",
-        last_msg.msg.pos_ecef.n_sats);
+    ck_assert_msg(last_msg.msg.pos_ecef.n_sats == 15,
+                  "incorrect value for last_msg.msg.pos_ecef.n_sats, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_ecef.tow == 326826000,
                   "incorrect value for last_msg.msg.pos_ecef.tow, expected "
-                  "326826000, is %d",
-                  last_msg.msg.pos_ecef.tow);
+                  "326826000, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.tow);
 
     ck_assert_msg((last_msg.msg.pos_ecef.x * 100 - -2684269.03266 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.x, expected "
-                  "-2684269.03266, is %s",
+                  "-2684269.03266, is %f",
                   last_msg.msg.pos_ecef.x);
 
     ck_assert_msg((last_msg.msg.pos_ecef.y * 100 - -4316646.75182 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.y, expected "
-                  "-4316646.75182, is %s",
+                  "-4316646.75182, is %f",
                   last_msg.msg.pos_ecef.y);
 
     ck_assert_msg((last_msg.msg.pos_ecef.z * 100 - 3839646.70954 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.z, expected "
-                  "3839646.70954, is %s",
+                  "3839646.70954, is %f",
                   last_msg.msg.pos_ecef.z);
   }
   // Test successful parsing of a message
@@ -237,39 +237,39 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEF) {
     ck_assert_msg(sbp_message_cmp(SbpMsgPosEcef, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.accuracy == 0,
-        "incorrect value for last_msg.msg.pos_ecef.accuracy, expected 0, is %d",
-        last_msg.msg.pos_ecef.accuracy);
+    ck_assert_msg(last_msg.msg.pos_ecef.accuracy == 0,
+                  "incorrect value for last_msg.msg.pos_ecef.accuracy, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.accuracy);
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.flags == 2,
-        "incorrect value for last_msg.msg.pos_ecef.flags, expected 2, is %d",
-        last_msg.msg.pos_ecef.flags);
+    ck_assert_msg(last_msg.msg.pos_ecef.flags == 2,
+                  "incorrect value for last_msg.msg.pos_ecef.flags, expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.flags);
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.n_sats == 15,
-        "incorrect value for last_msg.msg.pos_ecef.n_sats, expected 15, is %d",
-        last_msg.msg.pos_ecef.n_sats);
+    ck_assert_msg(last_msg.msg.pos_ecef.n_sats == 15,
+                  "incorrect value for last_msg.msg.pos_ecef.n_sats, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_ecef.tow == 326827000,
                   "incorrect value for last_msg.msg.pos_ecef.tow, expected "
-                  "326827000, is %d",
-                  last_msg.msg.pos_ecef.tow);
+                  "326827000, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.tow);
 
     ck_assert_msg((last_msg.msg.pos_ecef.x * 100 - -2684269.06425 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.x, expected "
-                  "-2684269.06425, is %s",
+                  "-2684269.06425, is %f",
                   last_msg.msg.pos_ecef.x);
 
     ck_assert_msg((last_msg.msg.pos_ecef.y * 100 - -4316646.76226 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.y, expected "
-                  "-4316646.76226, is %s",
+                  "-4316646.76226, is %f",
                   last_msg.msg.pos_ecef.y);
 
     ck_assert_msg((last_msg.msg.pos_ecef.z * 100 - 3839646.46391 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.z, expected "
-                  "3839646.46391, is %s",
+                  "3839646.46391, is %f",
                   last_msg.msg.pos_ecef.z);
   }
   // Test successful parsing of a message
@@ -334,39 +334,39 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEF) {
     ck_assert_msg(sbp_message_cmp(SbpMsgPosEcef, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.accuracy == 0,
-        "incorrect value for last_msg.msg.pos_ecef.accuracy, expected 0, is %d",
-        last_msg.msg.pos_ecef.accuracy);
+    ck_assert_msg(last_msg.msg.pos_ecef.accuracy == 0,
+                  "incorrect value for last_msg.msg.pos_ecef.accuracy, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.accuracy);
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.flags == 2,
-        "incorrect value for last_msg.msg.pos_ecef.flags, expected 2, is %d",
-        last_msg.msg.pos_ecef.flags);
+    ck_assert_msg(last_msg.msg.pos_ecef.flags == 2,
+                  "incorrect value for last_msg.msg.pos_ecef.flags, expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.flags);
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.n_sats == 15,
-        "incorrect value for last_msg.msg.pos_ecef.n_sats, expected 15, is %d",
-        last_msg.msg.pos_ecef.n_sats);
+    ck_assert_msg(last_msg.msg.pos_ecef.n_sats == 15,
+                  "incorrect value for last_msg.msg.pos_ecef.n_sats, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_ecef.tow == 326828000,
                   "incorrect value for last_msg.msg.pos_ecef.tow, expected "
-                  "326828000, is %d",
-                  last_msg.msg.pos_ecef.tow);
+                  "326828000, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.tow);
 
     ck_assert_msg((last_msg.msg.pos_ecef.x * 100 - -2684269.42928 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.x, expected "
-                  "-2684269.42928, is %s",
+                  "-2684269.42928, is %f",
                   last_msg.msg.pos_ecef.x);
 
     ck_assert_msg((last_msg.msg.pos_ecef.y * 100 - -4316647.11827 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.y, expected "
-                  "-4316647.11827, is %s",
+                  "-4316647.11827, is %f",
                   last_msg.msg.pos_ecef.y);
 
     ck_assert_msg((last_msg.msg.pos_ecef.z * 100 - 3839646.12491 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.z, expected "
-                  "3839646.12491, is %s",
+                  "3839646.12491, is %f",
                   last_msg.msg.pos_ecef.z);
   }
   // Test successful parsing of a message
@@ -431,39 +431,39 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosECEF) {
     ck_assert_msg(sbp_message_cmp(SbpMsgPosEcef, &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.accuracy == 0,
-        "incorrect value for last_msg.msg.pos_ecef.accuracy, expected 0, is %d",
-        last_msg.msg.pos_ecef.accuracy);
+    ck_assert_msg(last_msg.msg.pos_ecef.accuracy == 0,
+                  "incorrect value for last_msg.msg.pos_ecef.accuracy, "
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.accuracy);
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.flags == 2,
-        "incorrect value for last_msg.msg.pos_ecef.flags, expected 2, is %d",
-        last_msg.msg.pos_ecef.flags);
+    ck_assert_msg(last_msg.msg.pos_ecef.flags == 2,
+                  "incorrect value for last_msg.msg.pos_ecef.flags, expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.flags);
 
-    ck_assert_msg(
-        last_msg.msg.pos_ecef.n_sats == 15,
-        "incorrect value for last_msg.msg.pos_ecef.n_sats, expected 15, is %d",
-        last_msg.msg.pos_ecef.n_sats);
+    ck_assert_msg(last_msg.msg.pos_ecef.n_sats == 15,
+                  "incorrect value for last_msg.msg.pos_ecef.n_sats, expected "
+                  "15, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.n_sats);
 
     ck_assert_msg(last_msg.msg.pos_ecef.tow == 326829000,
                   "incorrect value for last_msg.msg.pos_ecef.tow, expected "
-                  "326829000, is %d",
-                  last_msg.msg.pos_ecef.tow);
+                  "326829000, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_ecef.tow);
 
     ck_assert_msg((last_msg.msg.pos_ecef.x * 100 - -2684269.68374 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.x, expected "
-                  "-2684269.68374, is %s",
+                  "-2684269.68374, is %f",
                   last_msg.msg.pos_ecef.x);
 
     ck_assert_msg((last_msg.msg.pos_ecef.y * 100 - -4316647.36238 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.y, expected "
-                  "-4316647.36238, is %s",
+                  "-4316647.36238, is %f",
                   last_msg.msg.pos_ecef.y);
 
     ck_assert_msg((last_msg.msg.pos_ecef.z * 100 - 3839645.9018 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_ecef.z, expected "
-                  "3839645.9018, is %s",
+                  "3839645.9018, is %f",
                   last_msg.msg.pos_ecef.z);
   }
 }

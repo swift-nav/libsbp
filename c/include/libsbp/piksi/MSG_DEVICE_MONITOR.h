@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_PIKSI_MSG_DEVICE_MONITOR_H
-#define LIBSBP_V4_PIKSI_MSG_DEVICE_MONITOR_H
+#ifndef LIBSBP_PIKSI_MSG_DEVICE_MONITOR_H
+#define LIBSBP_PIKSI_MSG_DEVICE_MONITOR_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -197,4 +197,4 @@ static inline bool operator>=(const sbp_msg_device_monitor_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_PIKSI_MSG_DEVICE_MONITOR_H */
+#endif /* LIBSBP_PIKSI_MSG_DEVICE_MONITOR_H */

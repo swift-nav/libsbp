@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -362,581 +362,592 @@ START_TEST(test_auto_check_sbp_signing_MsgEd25519SignatureDepA) {
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[0] == 100,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.fingerprint[0], "
-                  "expected 100, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[0]);
+                  "expected 100, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[0]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[1] == 101,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.fingerprint[1], "
-                  "expected 101, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[1]);
+                  "expected 101, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[1]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[2] == 102,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.fingerprint[2], "
-                  "expected 102, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[2]);
+                  "expected 102, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[2]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[3] == 103,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.fingerprint[3], "
-                  "expected 103, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[3]);
+                  "expected 103, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[3]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[4] == 104,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.fingerprint[4], "
-                  "expected 104, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[4]);
+                  "expected 104, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[4]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[5] == 105,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.fingerprint[5], "
-                  "expected 105, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[5]);
+                  "expected 105, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[5]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[6] == 106,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.fingerprint[6], "
-                  "expected 106, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[6]);
+                  "expected 106, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[6]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[7] == 107,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.fingerprint[7], "
-                  "expected 107, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[7]);
+                  "expected 107, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[7]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[8] == 108,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.fingerprint[8], "
-                  "expected 108, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[8]);
+                  "expected 108, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[8]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[9] == 109,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.fingerprint[9], "
-                  "expected 109, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[9]);
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[10] == 110,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.fingerprint[10], "
-                  "expected 110, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[10]);
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[11] == 111,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.fingerprint[11], "
-                  "expected 111, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[11]);
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[12] == 112,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.fingerprint[12], "
-                  "expected 112, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[12]);
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[13] == 113,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.fingerprint[13], "
-                  "expected 113, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[13]);
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[14] == 114,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.fingerprint[14], "
-                  "expected 114, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[14]);
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[15] == 115,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.fingerprint[15], "
-                  "expected 115, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[15]);
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[16] == 116,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.fingerprint[16], "
-                  "expected 116, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[16]);
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[17] == 117,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.fingerprint[17], "
-                  "expected 117, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[17]);
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[18] == 118,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.fingerprint[18], "
-                  "expected 118, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[18]);
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.fingerprint[19] == 119,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.fingerprint[19], "
-                  "expected 119, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.fingerprint[19]);
+                  "expected 109, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[9]);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.fingerprint[10] == 110,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.fingerprint[10], expected 110, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[10]);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.fingerprint[11] == 111,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.fingerprint[11], expected 111, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[11]);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.fingerprint[12] == 112,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.fingerprint[12], expected 112, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[12]);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.fingerprint[13] == 113,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.fingerprint[13], expected 113, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[13]);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.fingerprint[14] == 114,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.fingerprint[14], expected 114, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[14]);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.fingerprint[15] == 115,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.fingerprint[15], expected 115, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[15]);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.fingerprint[16] == 116,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.fingerprint[16], expected 116, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[16]);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.fingerprint[17] == 117,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.fingerprint[17], expected 117, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[17]);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.fingerprint[18] == 118,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.fingerprint[18], expected 118, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[18]);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.fingerprint[19] == 119,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.fingerprint[19], expected 119, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.fingerprint[19]);
 
-    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.n_signed_messages == 25,
-                  "incorrect value for "
-                  "last_msg.msg.ed25519_signature_dep_a.n_signed_messages, "
-                  "expected 25, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.n_signed_messages);
+    ck_assert_msg(
+        last_msg.msg.ed25519_signature_dep_a.n_signed_messages == 25,
+        "incorrect value for "
+        "last_msg.msg.ed25519_signature_dep_a.n_signed_messages, expected 25, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.n_signed_messages);
 
-    ck_assert_msg(
-        last_msg.msg.ed25519_signature_dep_a.signature[0] == 0,
-        "incorrect value for "
-        "last_msg.msg.ed25519_signature_dep_a.signature[0], expected 0, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signature[0]);
-    ck_assert_msg(
-        last_msg.msg.ed25519_signature_dep_a.signature[1] == 1,
-        "incorrect value for "
-        "last_msg.msg.ed25519_signature_dep_a.signature[1], expected 1, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signature[1]);
-    ck_assert_msg(
-        last_msg.msg.ed25519_signature_dep_a.signature[2] == 2,
-        "incorrect value for "
-        "last_msg.msg.ed25519_signature_dep_a.signature[2], expected 2, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signature[2]);
-    ck_assert_msg(
-        last_msg.msg.ed25519_signature_dep_a.signature[3] == 3,
-        "incorrect value for "
-        "last_msg.msg.ed25519_signature_dep_a.signature[3], expected 3, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signature[3]);
-    ck_assert_msg(
-        last_msg.msg.ed25519_signature_dep_a.signature[4] == 4,
-        "incorrect value for "
-        "last_msg.msg.ed25519_signature_dep_a.signature[4], expected 4, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signature[4]);
-    ck_assert_msg(
-        last_msg.msg.ed25519_signature_dep_a.signature[5] == 5,
-        "incorrect value for "
-        "last_msg.msg.ed25519_signature_dep_a.signature[5], expected 5, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signature[5]);
-    ck_assert_msg(
-        last_msg.msg.ed25519_signature_dep_a.signature[6] == 6,
-        "incorrect value for "
-        "last_msg.msg.ed25519_signature_dep_a.signature[6], expected 6, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signature[6]);
-    ck_assert_msg(
-        last_msg.msg.ed25519_signature_dep_a.signature[7] == 7,
-        "incorrect value for "
-        "last_msg.msg.ed25519_signature_dep_a.signature[7], expected 7, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signature[7]);
-    ck_assert_msg(
-        last_msg.msg.ed25519_signature_dep_a.signature[8] == 8,
-        "incorrect value for "
-        "last_msg.msg.ed25519_signature_dep_a.signature[8], expected 8, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signature[8]);
-    ck_assert_msg(
-        last_msg.msg.ed25519_signature_dep_a.signature[9] == 9,
-        "incorrect value for "
-        "last_msg.msg.ed25519_signature_dep_a.signature[9], expected 9, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signature[9]);
+    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[0] == 0,
+                  "incorrect value for "
+                  "last_msg.msg.ed25519_signature_dep_a.signature[0], expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[0]);
+    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[1] == 1,
+                  "incorrect value for "
+                  "last_msg.msg.ed25519_signature_dep_a.signature[1], expected "
+                  "1, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[1]);
+    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[2] == 2,
+                  "incorrect value for "
+                  "last_msg.msg.ed25519_signature_dep_a.signature[2], expected "
+                  "2, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[2]);
+    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[3] == 3,
+                  "incorrect value for "
+                  "last_msg.msg.ed25519_signature_dep_a.signature[3], expected "
+                  "3, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[3]);
+    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[4] == 4,
+                  "incorrect value for "
+                  "last_msg.msg.ed25519_signature_dep_a.signature[4], expected "
+                  "4, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[4]);
+    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[5] == 5,
+                  "incorrect value for "
+                  "last_msg.msg.ed25519_signature_dep_a.signature[5], expected "
+                  "5, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[5]);
+    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[6] == 6,
+                  "incorrect value for "
+                  "last_msg.msg.ed25519_signature_dep_a.signature[6], expected "
+                  "6, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[6]);
+    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[7] == 7,
+                  "incorrect value for "
+                  "last_msg.msg.ed25519_signature_dep_a.signature[7], expected "
+                  "7, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[7]);
+    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[8] == 8,
+                  "incorrect value for "
+                  "last_msg.msg.ed25519_signature_dep_a.signature[8], expected "
+                  "8, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[8]);
+    ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[9] == 9,
+                  "incorrect value for "
+                  "last_msg.msg.ed25519_signature_dep_a.signature[9], expected "
+                  "9, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[9]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[10] == 10,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[10], "
-                  "expected 10, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[10]);
+                  "expected 10, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[10]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[11] == 11,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[11], "
-                  "expected 11, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[11]);
+                  "expected 11, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[11]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[12] == 12,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[12], "
-                  "expected 12, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[12]);
+                  "expected 12, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[12]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[13] == 13,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[13], "
-                  "expected 13, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[13]);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[13]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[14] == 14,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[14], "
-                  "expected 14, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[14]);
+                  "expected 14, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[14]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[15] == 15,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[15], "
-                  "expected 15, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[15]);
+                  "expected 15, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[15]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[16] == 16,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[16], "
-                  "expected 16, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[16]);
+                  "expected 16, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[16]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[17] == 17,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[17], "
-                  "expected 17, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[17]);
+                  "expected 17, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[17]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[18] == 18,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[18], "
-                  "expected 18, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[18]);
+                  "expected 18, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[18]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[19] == 19,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[19], "
-                  "expected 19, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[19]);
+                  "expected 19, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[19]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[20] == 20,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[20], "
-                  "expected 20, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[20]);
+                  "expected 20, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[20]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[21] == 21,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[21], "
-                  "expected 21, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[21]);
+                  "expected 21, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[21]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[22] == 22,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[22], "
-                  "expected 22, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[22]);
+                  "expected 22, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[22]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[23] == 23,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[23], "
-                  "expected 23, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[23]);
+                  "expected 23, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[23]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[24] == 24,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[24], "
-                  "expected 24, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[24]);
+                  "expected 24, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[24]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[25] == 25,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[25], "
-                  "expected 25, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[25]);
+                  "expected 25, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[25]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[26] == 26,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[26], "
-                  "expected 26, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[26]);
+                  "expected 26, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[26]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[27] == 27,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[27], "
-                  "expected 27, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[27]);
+                  "expected 27, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[27]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[28] == 28,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[28], "
-                  "expected 28, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[28]);
+                  "expected 28, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[28]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[29] == 29,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[29], "
-                  "expected 29, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[29]);
+                  "expected 29, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[29]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[30] == 30,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[30], "
-                  "expected 30, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[30]);
+                  "expected 30, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[30]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[31] == 31,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[31], "
-                  "expected 31, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[31]);
+                  "expected 31, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[31]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[32] == 32,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[32], "
-                  "expected 32, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[32]);
+                  "expected 32, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[32]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[33] == 33,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[33], "
-                  "expected 33, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[33]);
+                  "expected 33, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[33]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[34] == 34,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[34], "
-                  "expected 34, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[34]);
+                  "expected 34, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[34]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[35] == 35,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[35], "
-                  "expected 35, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[35]);
+                  "expected 35, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[35]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[36] == 36,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[36], "
-                  "expected 36, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[36]);
+                  "expected 36, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[36]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[37] == 37,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[37], "
-                  "expected 37, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[37]);
+                  "expected 37, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[37]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[38] == 38,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[38], "
-                  "expected 38, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[38]);
+                  "expected 38, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[38]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[39] == 39,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[39], "
-                  "expected 39, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[39]);
+                  "expected 39, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[39]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[40] == 40,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[40], "
-                  "expected 40, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[40]);
+                  "expected 40, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[40]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[41] == 41,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[41], "
-                  "expected 41, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[41]);
+                  "expected 41, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[41]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[42] == 42,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[42], "
-                  "expected 42, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[42]);
+                  "expected 42, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[42]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[43] == 43,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[43], "
-                  "expected 43, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[43]);
+                  "expected 43, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[43]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[44] == 44,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[44], "
-                  "expected 44, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[44]);
+                  "expected 44, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[44]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[45] == 45,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[45], "
-                  "expected 45, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[45]);
+                  "expected 45, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[45]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[46] == 46,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[46], "
-                  "expected 46, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[46]);
+                  "expected 46, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[46]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[47] == 47,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[47], "
-                  "expected 47, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[47]);
+                  "expected 47, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[47]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[48] == 48,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[48], "
-                  "expected 48, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[48]);
+                  "expected 48, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[48]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[49] == 49,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[49], "
-                  "expected 49, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[49]);
+                  "expected 49, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[49]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[50] == 50,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[50], "
-                  "expected 50, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[50]);
+                  "expected 50, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[50]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[51] == 51,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[51], "
-                  "expected 51, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[51]);
+                  "expected 51, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[51]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[52] == 52,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[52], "
-                  "expected 52, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[52]);
+                  "expected 52, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[52]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[53] == 53,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[53], "
-                  "expected 53, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[53]);
+                  "expected 53, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[53]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[54] == 54,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[54], "
-                  "expected 54, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[54]);
+                  "expected 54, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[54]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[55] == 55,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[55], "
-                  "expected 55, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[55]);
+                  "expected 55, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[55]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[56] == 56,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[56], "
-                  "expected 56, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[56]);
+                  "expected 56, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[56]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[57] == 57,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[57], "
-                  "expected 57, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[57]);
+                  "expected 57, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[57]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[58] == 58,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[58], "
-                  "expected 58, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[58]);
+                  "expected 58, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[58]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[59] == 59,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[59], "
-                  "expected 59, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[59]);
+                  "expected 59, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[59]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[60] == 60,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[60], "
-                  "expected 60, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[60]);
+                  "expected 60, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[60]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[61] == 61,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[61], "
-                  "expected 61, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[61]);
+                  "expected 61, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[61]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[62] == 62,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[62], "
-                  "expected 62, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[62]);
+                  "expected 62, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[62]);
     ck_assert_msg(last_msg.msg.ed25519_signature_dep_a.signature[63] == 63,
                   "incorrect value for "
                   "last_msg.msg.ed25519_signature_dep_a.signature[63], "
-                  "expected 63, is %d",
-                  last_msg.msg.ed25519_signature_dep_a.signature[63]);
+                  "expected 63, is %" PRId64,
+                  (int64_t)last_msg.msg.ed25519_signature_dep_a.signature[63]);
 
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[0] == 5000,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[0], expected "
-        "5000, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[0]);
+        "5000, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[0]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[1] == 5234,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[1], expected "
-        "5234, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[1]);
+        "5234, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[1]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[2] == 5468,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[2], expected "
-        "5468, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[2]);
+        "5468, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[2]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[3] == 5702,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[3], expected "
-        "5702, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[3]);
+        "5702, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[3]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[4] == 5936,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[4], expected "
-        "5936, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[4]);
+        "5936, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[4]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[5] == 6170,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[5], expected "
-        "6170, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[5]);
+        "6170, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[5]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[6] == 6404,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[6], expected "
-        "6404, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[6]);
+        "6404, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[6]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[7] == 6638,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[7], expected "
-        "6638, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[7]);
+        "6638, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[7]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[8] == 6872,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[8], expected "
-        "6872, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[8]);
+        "6872, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[8]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[9] == 7106,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[9], expected "
-        "7106, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[9]);
+        "7106, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[9]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[10] == 7340,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[10], expected "
-        "7340, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[10]);
+        "7340, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[10]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[11] == 7574,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[11], expected "
-        "7574, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[11]);
+        "7574, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[11]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[12] == 7808,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[12], expected "
-        "7808, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[12]);
+        "7808, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[12]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[13] == 8042,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[13], expected "
-        "8042, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[13]);
+        "8042, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[13]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[14] == 8276,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[14], expected "
-        "8276, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[14]);
+        "8276, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[14]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[15] == 8510,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[15], expected "
-        "8510, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[15]);
+        "8510, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[15]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[16] == 8744,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[16], expected "
-        "8744, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[16]);
+        "8744, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[16]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[17] == 8978,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[17], expected "
-        "8978, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[17]);
+        "8978, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[17]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[18] == 9212,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[18], expected "
-        "9212, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[18]);
+        "9212, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[18]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[19] == 9446,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[19], expected "
-        "9446, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[19]);
+        "9446, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[19]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[20] == 9680,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[20], expected "
-        "9680, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[20]);
+        "9680, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[20]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[21] == 9914,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[21], expected "
-        "9914, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[21]);
+        "9914, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[21]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[22] == 10148,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[22], expected "
-        "10148, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[22]);
+        "10148, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[22]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[23] == 10382,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[23], expected "
-        "10382, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[23]);
+        "10382, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[23]);
     ck_assert_msg(
         last_msg.msg.ed25519_signature_dep_a.signed_messages[24] == 10616,
         "incorrect value for "
         "last_msg.msg.ed25519_signature_dep_a.signed_messages[24], expected "
-        "10616, is %d",
-        last_msg.msg.ed25519_signature_dep_a.signed_messages[24]);
+        "10616, is %" PRId64,
+        (int64_t)last_msg.msg.ed25519_signature_dep_a.signed_messages[24]);
   }
 }
 END_TEST

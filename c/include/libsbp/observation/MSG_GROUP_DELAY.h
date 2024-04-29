@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_OBSERVATION_MSG_GROUP_DELAY_H
-#define LIBSBP_V4_OBSERVATION_MSG_GROUP_DELAY_H
+#ifndef LIBSBP_OBSERVATION_MSG_GROUP_DELAY_H
+#define LIBSBP_OBSERVATION_MSG_GROUP_DELAY_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -53,7 +53,7 @@ typedef struct {
   /**
    * GNSS signal identifier
    */
-  sbp_v4_gnss_signal_t sid;
+  sbp_gnss_signal_t sid;
 
   /**
    * bit-field indicating validity of the values, LSB indicating tgd validity
@@ -194,4 +194,4 @@ static inline bool operator>=(const sbp_msg_group_delay_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_OBSERVATION_MSG_GROUP_DELAY_H */
+#endif /* LIBSBP_OBSERVATION_MSG_GROUP_DELAY_H */

@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -147,58 +147,58 @@ START_TEST(test_auto_check_sbp_orientation_MsgOrientQuat) {
         sbp_message_cmp(SbpMsgOrientQuat, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.orient_quat.flags == 1,
-        "incorrect value for last_msg.msg.orient_quat.flags, expected 1, is %d",
-        last_msg.msg.orient_quat.flags);
+    ck_assert_msg(last_msg.msg.orient_quat.flags == 1,
+                  "incorrect value for last_msg.msg.orient_quat.flags, "
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.orient_quat.flags);
 
-    ck_assert_msg(
-        last_msg.msg.orient_quat.tow == 0,
-        "incorrect value for last_msg.msg.orient_quat.tow, expected 0, is %d",
-        last_msg.msg.orient_quat.tow);
+    ck_assert_msg(last_msg.msg.orient_quat.tow == 0,
+                  "incorrect value for last_msg.msg.orient_quat.tow, expected "
+                  "0, is %" PRId64,
+                  (int64_t)last_msg.msg.orient_quat.tow);
 
-    ck_assert_msg(
-        last_msg.msg.orient_quat.w == 3,
-        "incorrect value for last_msg.msg.orient_quat.w, expected 3, is %d",
-        last_msg.msg.orient_quat.w);
+    ck_assert_msg(last_msg.msg.orient_quat.w == 3,
+                  "incorrect value for last_msg.msg.orient_quat.w, expected 3, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.orient_quat.w);
 
     ck_assert_msg(
         (last_msg.msg.orient_quat.w_accuracy * 100 - 3.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.orient_quat.w_accuracy, expected "
-        "3.0, is %s",
+        "3.0, is %f",
         last_msg.msg.orient_quat.w_accuracy);
 
-    ck_assert_msg(
-        last_msg.msg.orient_quat.x == 7,
-        "incorrect value for last_msg.msg.orient_quat.x, expected 7, is %d",
-        last_msg.msg.orient_quat.x);
+    ck_assert_msg(last_msg.msg.orient_quat.x == 7,
+                  "incorrect value for last_msg.msg.orient_quat.x, expected 7, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.orient_quat.x);
 
     ck_assert_msg(
         (last_msg.msg.orient_quat.x_accuracy * 100 - 4.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.orient_quat.x_accuracy, expected "
-        "4.0, is %s",
+        "4.0, is %f",
         last_msg.msg.orient_quat.x_accuracy);
 
-    ck_assert_msg(
-        last_msg.msg.orient_quat.y == 8,
-        "incorrect value for last_msg.msg.orient_quat.y, expected 8, is %d",
-        last_msg.msg.orient_quat.y);
+    ck_assert_msg(last_msg.msg.orient_quat.y == 8,
+                  "incorrect value for last_msg.msg.orient_quat.y, expected 8, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.orient_quat.y);
 
     ck_assert_msg(
         (last_msg.msg.orient_quat.y_accuracy * 100 - 8.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.orient_quat.y_accuracy, expected "
-        "8.0, is %s",
+        "8.0, is %f",
         last_msg.msg.orient_quat.y_accuracy);
 
-    ck_assert_msg(
-        last_msg.msg.orient_quat.z == 4,
-        "incorrect value for last_msg.msg.orient_quat.z, expected 4, is %d",
-        last_msg.msg.orient_quat.z);
+    ck_assert_msg(last_msg.msg.orient_quat.z == 4,
+                  "incorrect value for last_msg.msg.orient_quat.z, expected 4, "
+                  "is %" PRId64,
+                  (int64_t)last_msg.msg.orient_quat.z);
 
     ck_assert_msg(
         (last_msg.msg.orient_quat.z_accuracy * 100 - 3.0 * 100) < 0.05,
         "incorrect value for last_msg.msg.orient_quat.z_accuracy, expected "
-        "3.0, is %s",
+        "3.0, is %f",
         last_msg.msg.orient_quat.z_accuracy);
   }
 }

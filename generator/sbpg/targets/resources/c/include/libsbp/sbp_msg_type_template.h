@@ -26,21 +26,18 @@
 extern "C" {
 #endif
 
-/** SBP_MSG_ID to use to register frame callback for ALL messages. */
-#define SBP_MSG_ALL 0
-
 typedef enum {
 ((*- for m in real_messages *))
-  (((m.v4_msg_type))) = (((m.legacy_msg_type))),
+  (((m.msg_type))) = ((('0x%04X'|format(m.sbp_id)))),
 ((*- endfor *))
-  SbpMsgAll = SBP_MSG_ALL,
-  SbpMsgUnknown = SBP_MSG_ALL,
+  SbpMsgAll = 0,
+  SbpMsgUnknown = 0,
 } sbp_msg_type_t;
 
 static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
   switch(msg_type) {
     ((*- for m in real_messages *))
-    case (((m.v4_msg_type))):
+    case (((m.msg_type))):
       return "(((m.name)))";
     ((*- endfor *))
     case SbpMsgAll:

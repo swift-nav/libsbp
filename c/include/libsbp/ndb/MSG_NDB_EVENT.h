@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_NDB_MSG_NDB_EVENT_H
-#define LIBSBP_V4_NDB_MSG_NDB_EVENT_H
+#ifndef LIBSBP_NDB_MSG_NDB_EVENT_H
+#define LIBSBP_NDB_MSG_NDB_EVENT_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -74,14 +74,14 @@ typedef struct {
    * GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid
    * indicates for which signal the object belongs to. Reserved in other cases.
    */
-  sbp_v4_gnss_signal_t object_sid;
+  sbp_gnss_signal_t object_sid;
 
   /**
    * GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
    * capabilities AND data_source is NDB_DS_RECEIVER sid indicates from which SV
    * data was decoded. Reserved in other cases.
    */
-  sbp_v4_gnss_signal_t src_sid;
+  sbp_gnss_signal_t src_sid;
 
   /**
    * A unique identifier of the sending hardware. For v1.0, set to the 2 least
@@ -217,4 +217,4 @@ static inline bool operator>=(const sbp_msg_ndb_event_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_NDB_MSG_NDB_EVENT_H */
+#endif /* LIBSBP_NDB_MSG_NDB_EVENT_H */

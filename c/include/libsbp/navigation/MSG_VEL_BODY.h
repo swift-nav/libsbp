@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_NAVIGATION_MSG_VEL_BODY_H
-#define LIBSBP_V4_NAVIGATION_MSG_VEL_BODY_H
+#ifndef LIBSBP_NAVIGATION_MSG_VEL_BODY_H
+#define LIBSBP_NAVIGATION_MSG_VEL_BODY_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -238,4 +238,4 @@ static inline bool operator>=(const sbp_msg_vel_body_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_NAVIGATION_MSG_VEL_BODY_H */
+#endif /* LIBSBP_NAVIGATION_MSG_VEL_BODY_H */

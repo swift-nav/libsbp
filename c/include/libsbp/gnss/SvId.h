@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_GNSS_SVID_H
-#define LIBSBP_V4_GNSS_SVID_H
+#ifndef LIBSBP_GNSS_SVID_H
+#define LIBSBP_GNSS_SVID_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -153,4 +153,4 @@ static inline bool operator>=(const sbp_sv_id_t &lhs, const sbp_sv_id_t &rhs) {
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_GNSS_SVID_H */
+#endif /* LIBSBP_GNSS_SVID_H */

@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -165,87 +165,89 @@ START_TEST(test_auto_check_sbp_observation_MsgAlmanacGLO) {
     ck_assert_msg(
         last_msg.msg.almanac_glo.common.fit_interval == 14400,
         "incorrect value for last_msg.msg.almanac_glo.common.fit_interval, "
-        "expected 14400, is %d",
-        last_msg.msg.almanac_glo.common.fit_interval);
+        "expected 14400, is %" PRId64,
+        (int64_t)last_msg.msg.almanac_glo.common.fit_interval);
 
     ck_assert_msg(
         last_msg.msg.almanac_glo.common.health_bits == 0,
         "incorrect value for last_msg.msg.almanac_glo.common.health_bits, "
-        "expected 0, is %d",
-        last_msg.msg.almanac_glo.common.health_bits);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.almanac_glo.common.health_bits);
 
-    ck_assert_msg(last_msg.msg.almanac_glo.common.sid.code == 0,
-                  "incorrect value for "
-                  "last_msg.msg.almanac_glo.common.sid.code, expected 0, is %d",
-                  last_msg.msg.almanac_glo.common.sid.code);
+    ck_assert_msg(
+        last_msg.msg.almanac_glo.common.sid.code == 0,
+        "incorrect value for last_msg.msg.almanac_glo.common.sid.code, "
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.almanac_glo.common.sid.code);
 
-    ck_assert_msg(last_msg.msg.almanac_glo.common.sid.sat == 22,
-                  "incorrect value for "
-                  "last_msg.msg.almanac_glo.common.sid.sat, expected 22, is %d",
-                  last_msg.msg.almanac_glo.common.sid.sat);
+    ck_assert_msg(
+        last_msg.msg.almanac_glo.common.sid.sat == 22,
+        "incorrect value for last_msg.msg.almanac_glo.common.sid.sat, expected "
+        "22, is %" PRId64,
+        (int64_t)last_msg.msg.almanac_glo.common.sid.sat);
 
     ck_assert_msg(
         last_msg.msg.almanac_glo.common.toa.tow == 446384,
         "incorrect value for last_msg.msg.almanac_glo.common.toa.tow, expected "
-        "446384, is %d",
-        last_msg.msg.almanac_glo.common.toa.tow);
+        "446384, is %" PRId64,
+        (int64_t)last_msg.msg.almanac_glo.common.toa.tow);
 
     ck_assert_msg(last_msg.msg.almanac_glo.common.toa.wn == 2154,
                   "incorrect value for last_msg.msg.almanac_glo.common.toa.wn, "
-                  "expected 2154, is %d",
-                  last_msg.msg.almanac_glo.common.toa.wn);
+                  "expected 2154, is %" PRId64,
+                  (int64_t)last_msg.msg.almanac_glo.common.toa.wn);
 
     ck_assert_msg(
         (last_msg.msg.almanac_glo.common.ura * 100 - 2.2 * 100) < 0.05,
         "incorrect value for last_msg.msg.almanac_glo.common.ura, expected "
-        "2.2, is %s",
+        "2.2, is %f",
         last_msg.msg.almanac_glo.common.ura);
 
     ck_assert_msg(last_msg.msg.almanac_glo.common.valid == 1,
                   "incorrect value for last_msg.msg.almanac_glo.common.valid, "
-                  "expected 1, is %d",
-                  last_msg.msg.almanac_glo.common.valid);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.almanac_glo.common.valid);
 
     ck_assert_msg(
         (last_msg.msg.almanac_glo.epsilon * 100 - -0.98930366296 * 100) < 0.05,
         "incorrect value for last_msg.msg.almanac_glo.epsilon, expected "
-        "-0.98930366296, is %s",
+        "-0.98930366296, is %f",
         last_msg.msg.almanac_glo.epsilon);
 
     ck_assert_msg(
         (last_msg.msg.almanac_glo.i * 100 - 5153.55002975 * 100) < 0.05,
         "incorrect value for last_msg.msg.almanac_glo.i, expected "
-        "5153.55002975, is %s",
+        "5153.55002975, is %f",
         last_msg.msg.almanac_glo.i);
 
     ck_assert_msg((last_msg.msg.almanac_glo.lambda_na * 100 -
                    -0.0220007884211 * 100) < 0.05,
                   "incorrect value for last_msg.msg.almanac_glo.lambda_na, "
-                  "expected -0.0220007884211, is %s",
+                  "expected -0.0220007884211, is %f",
                   last_msg.msg.almanac_glo.lambda_na);
 
     ck_assert_msg(
         (last_msg.msg.almanac_glo.omega * 100 - 0.934151448026 * 100) < 0.05,
         "incorrect value for last_msg.msg.almanac_glo.omega, expected "
-        "0.934151448026, is %s",
+        "0.934151448026, is %f",
         last_msg.msg.almanac_glo.omega);
 
     ck_assert_msg(
         (last_msg.msg.almanac_glo.t * 100 - -1.87318184488 * 100) < 0.05,
         "incorrect value for last_msg.msg.almanac_glo.t, expected "
-        "-1.87318184488, is %s",
+        "-1.87318184488, is %f",
         last_msg.msg.almanac_glo.t);
 
     ck_assert_msg((last_msg.msg.almanac_glo.t_dot * 100 -
                    -8.90358515577e-09 * 100) < 0.05,
                   "incorrect value for last_msg.msg.almanac_glo.t_dot, "
-                  "expected -8.90358515577e-09, is %s",
+                  "expected -8.90358515577e-09, is %f",
                   last_msg.msg.almanac_glo.t_dot);
 
     ck_assert_msg((last_msg.msg.almanac_glo.t_lambda_na * 100 -
                    0.00707220705226 * 100) < 0.05,
                   "incorrect value for last_msg.msg.almanac_glo.t_lambda_na, "
-                  "expected 0.00707220705226, is %s",
+                  "expected 0.00707220705226, is %f",
                   last_msg.msg.almanac_glo.t_lambda_na);
   }
 }

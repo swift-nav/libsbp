@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -142,36 +142,36 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cf * 100 - 1769.06591797 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cf, expected "
-        "1769.06591797, is %s",
+        "1769.06591797, is %f",
         last_msg.msg.acq_result_dep_c.cf);
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cn0 * 100 - 40.5090637207 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cn0, expected "
-        "40.5090637207, is %s",
+        "40.5090637207, is %f",
         last_msg.msg.acq_result_dep_c.cn0);
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cp * 100 - 457.192230225 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cp, expected "
-        "457.192230225, is %s",
+        "457.192230225, is %f",
         last_msg.msg.acq_result_dep_c.cp);
 
     ck_assert_msg(last_msg.msg.acq_result_dep_c.sid.code == 0,
                   "incorrect value for last_msg.msg.acq_result_dep_c.sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.acq_result_dep_c.sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result_dep_c.sid.code);
 
     ck_assert_msg(
         last_msg.msg.acq_result_dep_c.sid.reserved == 0,
         "incorrect value for last_msg.msg.acq_result_dep_c.sid.reserved, "
-        "expected 0, is %d",
-        last_msg.msg.acq_result_dep_c.sid.reserved);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.acq_result_dep_c.sid.reserved);
 
     ck_assert_msg(last_msg.msg.acq_result_dep_c.sid.sat == 10,
                   "incorrect value for last_msg.msg.acq_result_dep_c.sid.sat, "
-                  "expected 10, is %d",
-                  last_msg.msg.acq_result_dep_c.sid.sat);
+                  "expected 10, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result_dep_c.sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -237,36 +237,36 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cf * 100 - -505.447387695 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cf, expected "
-        "-505.447387695, is %s",
+        "-505.447387695, is %f",
         last_msg.msg.acq_result_dep_c.cf);
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cn0 * 100 - 43.494644165 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cn0, expected "
-        "43.494644165, is %s",
+        "43.494644165, is %f",
         last_msg.msg.acq_result_dep_c.cn0);
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cp * 100 - 865.465759277 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cp, expected "
-        "865.465759277, is %s",
+        "865.465759277, is %f",
         last_msg.msg.acq_result_dep_c.cp);
 
     ck_assert_msg(last_msg.msg.acq_result_dep_c.sid.code == 0,
                   "incorrect value for last_msg.msg.acq_result_dep_c.sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.acq_result_dep_c.sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result_dep_c.sid.code);
 
     ck_assert_msg(
         last_msg.msg.acq_result_dep_c.sid.reserved == 0,
         "incorrect value for last_msg.msg.acq_result_dep_c.sid.reserved, "
-        "expected 0, is %d",
-        last_msg.msg.acq_result_dep_c.sid.reserved);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.acq_result_dep_c.sid.reserved);
 
     ck_assert_msg(last_msg.msg.acq_result_dep_c.sid.sat == 6,
                   "incorrect value for last_msg.msg.acq_result_dep_c.sid.sat, "
-                  "expected 6, is %d",
-                  last_msg.msg.acq_result_dep_c.sid.sat);
+                  "expected 6, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result_dep_c.sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -332,36 +332,36 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cf * 100 - -1263.6184082 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cf, expected "
-        "-1263.6184082, is %s",
+        "-1263.6184082, is %f",
         last_msg.msg.acq_result_dep_c.cf);
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cn0 * 100 - 38.2183952332 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cn0, expected "
-        "38.2183952332, is %s",
+        "38.2183952332, is %f",
         last_msg.msg.acq_result_dep_c.cn0);
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cp * 100 - 230.356445312 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cp, expected "
-        "230.356445312, is %s",
+        "230.356445312, is %f",
         last_msg.msg.acq_result_dep_c.cp);
 
     ck_assert_msg(last_msg.msg.acq_result_dep_c.sid.code == 0,
                   "incorrect value for last_msg.msg.acq_result_dep_c.sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.acq_result_dep_c.sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result_dep_c.sid.code);
 
     ck_assert_msg(
         last_msg.msg.acq_result_dep_c.sid.reserved == 0,
         "incorrect value for last_msg.msg.acq_result_dep_c.sid.reserved, "
-        "expected 0, is %d",
-        last_msg.msg.acq_result_dep_c.sid.reserved);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.acq_result_dep_c.sid.reserved);
 
     ck_assert_msg(last_msg.msg.acq_result_dep_c.sid.sat == 13,
                   "incorrect value for last_msg.msg.acq_result_dep_c.sid.sat, "
-                  "expected 13, is %d",
-                  last_msg.msg.acq_result_dep_c.sid.sat);
+                  "expected 13, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result_dep_c.sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -427,36 +427,36 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cf * 100 - 3032.68432617 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cf, expected "
-        "3032.68432617, is %s",
+        "3032.68432617, is %f",
         last_msg.msg.acq_result_dep_c.cf);
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cn0 * 100 - 37.3139686584 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cn0, expected "
-        "37.3139686584, is %s",
+        "37.3139686584, is %f",
         last_msg.msg.acq_result_dep_c.cn0);
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cp * 100 - 252.839355469 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cp, expected "
-        "252.839355469, is %s",
+        "252.839355469, is %f",
         last_msg.msg.acq_result_dep_c.cp);
 
     ck_assert_msg(last_msg.msg.acq_result_dep_c.sid.code == 0,
                   "incorrect value for last_msg.msg.acq_result_dep_c.sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.acq_result_dep_c.sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result_dep_c.sid.code);
 
     ck_assert_msg(
         last_msg.msg.acq_result_dep_c.sid.reserved == 0,
         "incorrect value for last_msg.msg.acq_result_dep_c.sid.reserved, "
-        "expected 0, is %d",
-        last_msg.msg.acq_result_dep_c.sid.reserved);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.acq_result_dep_c.sid.reserved);
 
     ck_assert_msg(last_msg.msg.acq_result_dep_c.sid.sat == 1,
                   "incorrect value for last_msg.msg.acq_result_dep_c.sid.sat, "
-                  "expected 1, is %d",
-                  last_msg.msg.acq_result_dep_c.sid.sat);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result_dep_c.sid.sat);
   }
   // Test successful parsing of a message
   {
@@ -522,36 +522,36 @@ START_TEST(test_auto_check_sbp_acquisition_MsgAcqResultDepC) {
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cf * 100 - 2527.23681641 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cf, expected "
-        "2527.23681641, is %s",
+        "2527.23681641, is %f",
         last_msg.msg.acq_result_dep_c.cf);
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cn0 * 100 - 47.5346603394 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cn0, expected "
-        "47.5346603394, is %s",
+        "47.5346603394, is %f",
         last_msg.msg.acq_result_dep_c.cn0);
 
     ck_assert_msg(
         (last_msg.msg.acq_result_dep_c.cp * 100 - 920.591918945 * 100) < 0.05,
         "incorrect value for last_msg.msg.acq_result_dep_c.cp, expected "
-        "920.591918945, is %s",
+        "920.591918945, is %f",
         last_msg.msg.acq_result_dep_c.cp);
 
     ck_assert_msg(last_msg.msg.acq_result_dep_c.sid.code == 0,
                   "incorrect value for last_msg.msg.acq_result_dep_c.sid.code, "
-                  "expected 0, is %d",
-                  last_msg.msg.acq_result_dep_c.sid.code);
+                  "expected 0, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result_dep_c.sid.code);
 
     ck_assert_msg(
         last_msg.msg.acq_result_dep_c.sid.reserved == 0,
         "incorrect value for last_msg.msg.acq_result_dep_c.sid.reserved, "
-        "expected 0, is %d",
-        last_msg.msg.acq_result_dep_c.sid.reserved);
+        "expected 0, is %" PRId64,
+        (int64_t)last_msg.msg.acq_result_dep_c.sid.reserved);
 
     ck_assert_msg(last_msg.msg.acq_result_dep_c.sid.sat == 27,
                   "incorrect value for last_msg.msg.acq_result_dep_c.sid.sat, "
-                  "expected 27, is %d",
-                  last_msg.msg.acq_result_dep_c.sid.sat);
+                  "expected 27, is %" PRId64,
+                  (int64_t)last_msg.msg.acq_result_dep_c.sid.sat);
   }
 }
 END_TEST

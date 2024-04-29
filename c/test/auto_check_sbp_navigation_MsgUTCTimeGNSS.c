@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -145,50 +145,50 @@ START_TEST(test_auto_check_sbp_navigation_MsgUTCTimeGNSS) {
         sbp_message_cmp(SbpMsgUtcTimeGnss, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(
-        last_msg.msg.utc_time_gnss.day == 9,
-        "incorrect value for last_msg.msg.utc_time_gnss.day, expected 9, is %d",
-        last_msg.msg.utc_time_gnss.day);
+    ck_assert_msg(last_msg.msg.utc_time_gnss.day == 9,
+                  "incorrect value for last_msg.msg.utc_time_gnss.day, "
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time_gnss.day);
 
     ck_assert_msg(last_msg.msg.utc_time_gnss.flags == 1,
                   "incorrect value for last_msg.msg.utc_time_gnss.flags, "
-                  "expected 1, is %d",
-                  last_msg.msg.utc_time_gnss.flags);
+                  "expected 1, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time_gnss.flags);
 
     ck_assert_msg(last_msg.msg.utc_time_gnss.hours == 19,
                   "incorrect value for last_msg.msg.utc_time_gnss.hours, "
-                  "expected 19, is %d",
-                  last_msg.msg.utc_time_gnss.hours);
+                  "expected 19, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time_gnss.hours);
 
     ck_assert_msg(last_msg.msg.utc_time_gnss.minutes == 24,
                   "incorrect value for last_msg.msg.utc_time_gnss.minutes, "
-                  "expected 24, is %d",
-                  last_msg.msg.utc_time_gnss.minutes);
+                  "expected 24, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time_gnss.minutes);
 
     ck_assert_msg(last_msg.msg.utc_time_gnss.month == 4,
                   "incorrect value for last_msg.msg.utc_time_gnss.month, "
-                  "expected 4, is %d",
-                  last_msg.msg.utc_time_gnss.month);
+                  "expected 4, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time_gnss.month);
 
     ck_assert_msg(last_msg.msg.utc_time_gnss.ns == 800000000,
                   "incorrect value for last_msg.msg.utc_time_gnss.ns, expected "
-                  "800000000, is %d",
-                  last_msg.msg.utc_time_gnss.ns);
+                  "800000000, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time_gnss.ns);
 
     ck_assert_msg(last_msg.msg.utc_time_gnss.seconds == 9,
                   "incorrect value for last_msg.msg.utc_time_gnss.seconds, "
-                  "expected 9, is %d",
-                  last_msg.msg.utc_time_gnss.seconds);
+                  "expected 9, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time_gnss.seconds);
 
     ck_assert_msg(last_msg.msg.utc_time_gnss.tow == 501867800,
                   "incorrect value for last_msg.msg.utc_time_gnss.tow, "
-                  "expected 501867800, is %d",
-                  last_msg.msg.utc_time_gnss.tow);
+                  "expected 501867800, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time_gnss.tow);
 
     ck_assert_msg(last_msg.msg.utc_time_gnss.year == 2021,
                   "incorrect value for last_msg.msg.utc_time_gnss.year, "
-                  "expected 2021, is %d",
-                  last_msg.msg.utc_time_gnss.year);
+                  "expected 2021, is %" PRId64,
+                  (int64_t)last_msg.msg.utc_time_gnss.year);
   }
 }
 END_TEST

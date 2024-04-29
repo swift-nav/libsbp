@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -152,65 +152,66 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagSatellites) {
     ck_assert_msg(
         last_msg.msg.ssr_flag_satellites.chain_id == 4,
         "incorrect value for last_msg.msg.ssr_flag_satellites.chain_id, "
-        "expected 4, is %d",
-        last_msg.msg.ssr_flag_satellites.chain_id);
+        "expected 4, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.chain_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_satellites.const_id == 5,
         "incorrect value for last_msg.msg.ssr_flag_satellites.const_id, "
-        "expected 5, is %d",
-        last_msg.msg.ssr_flag_satellites.const_id);
+        "expected 5, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.const_id);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_satellites.faulty_sats[0] == 10,
         "incorrect value for last_msg.msg.ssr_flag_satellites.faulty_sats[0], "
-        "expected 10, is %d",
-        last_msg.msg.ssr_flag_satellites.faulty_sats[0]);
+        "expected 10, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.faulty_sats[0]);
     ck_assert_msg(
         last_msg.msg.ssr_flag_satellites.faulty_sats[1] == 11,
         "incorrect value for last_msg.msg.ssr_flag_satellites.faulty_sats[1], "
-        "expected 11, is %d",
-        last_msg.msg.ssr_flag_satellites.faulty_sats[1]);
+        "expected 11, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.faulty_sats[1]);
     ck_assert_msg(
         last_msg.msg.ssr_flag_satellites.faulty_sats[2] == 12,
         "incorrect value for last_msg.msg.ssr_flag_satellites.faulty_sats[2], "
-        "expected 12, is %d",
-        last_msg.msg.ssr_flag_satellites.faulty_sats[2]);
+        "expected 12, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.faulty_sats[2]);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_satellites.n_faulty_sats == 3,
         "incorrect value for last_msg.msg.ssr_flag_satellites.n_faulty_sats, "
-        "expected 3, is %d",
-        last_msg.msg.ssr_flag_satellites.n_faulty_sats);
+        "expected 3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.n_faulty_sats);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_satellites.num_msgs == 1,
         "incorrect value for last_msg.msg.ssr_flag_satellites.num_msgs, "
-        "expected 1, is %d",
-        last_msg.msg.ssr_flag_satellites.num_msgs);
+        "expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.num_msgs);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_satellites.obs_time.tow == 180,
         "incorrect value for last_msg.msg.ssr_flag_satellites.obs_time.tow, "
-        "expected 180, is %d",
-        last_msg.msg.ssr_flag_satellites.obs_time.tow);
+        "expected 180, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.obs_time.tow);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_satellites.obs_time.wn == 3,
         "incorrect value for last_msg.msg.ssr_flag_satellites.obs_time.wn, "
-        "expected 3, is %d",
-        last_msg.msg.ssr_flag_satellites.obs_time.wn);
+        "expected 3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.obs_time.wn);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.seq_num == 2,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.seq_num, expected 2, is %d",
-                  last_msg.msg.ssr_flag_satellites.seq_num);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_satellites.seq_num == 2,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.seq_num, "
+        "expected 2, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.seq_num);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_satellites.ssr_sol_id == 3,
         "incorrect value for last_msg.msg.ssr_flag_satellites.ssr_sol_id, "
-        "expected 3, is %d",
-        last_msg.msg.ssr_flag_satellites.ssr_sol_id);
+        "expected 3, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_satellites.ssr_sol_id);
   }
 }
 END_TEST

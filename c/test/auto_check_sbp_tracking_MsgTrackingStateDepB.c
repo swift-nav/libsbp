@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -429,904 +429,950 @@ START_TEST(test_auto_check_sbp_tracking_MsgTrackingStateDepB) {
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.n_states == 28,
         "incorrect value for last_msg.msg.tracking_state_dep_b.n_states, "
-        "expected 28, is %d",
-        last_msg.msg.tracking_state_dep_b.n_states);
+        "expected 28, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.n_states);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[0].cn0 * 100 -
          5856.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[0].cn0, "
-        "expected 5856.20019531, is %s",
+        "expected 5856.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[0].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[0].sid.code == 63,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[0].sid.code, "
-                  "expected 63, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[0].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[0].sid.code == 63,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[0].sid.code, expected 63, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[0].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[0].sid.reserved == 68,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[0].sid.reserved, expected "
-        "68, is %d",
-        last_msg.msg.tracking_state_dep_b.states[0].sid.reserved);
+        "68, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[0].sid.reserved);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[0].sid.sat == 58295,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[0].sid.sat, "
-                  "expected 58295, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[0].sid.sat);
+                  "expected 58295, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[0].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[0].state == 115,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[0].state, expected "
-                  "115, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[0].state);
+                  "115, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[0].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[1].cn0 * 100 -
          2612.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[1].cn0, "
-        "expected 2612.19995117, is %s",
+        "expected 2612.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[1].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[1].sid.code == 43,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[1].sid.code, "
-                  "expected 43, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[1].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[1].sid.code == 43,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[1].sid.code, expected 43, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[1].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[1].sid.reserved == 222,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[1].sid.reserved, expected "
-        "222, is %d",
-        last_msg.msg.tracking_state_dep_b.states[1].sid.reserved);
+        "222, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[1].sid.reserved);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[1].sid.sat == 31151,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[1].sid.sat, "
-                  "expected 31151, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[1].sid.sat);
+                  "expected 31151, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[1].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[1].state == 255,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[1].state, expected "
-                  "255, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[1].state);
+                  "255, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[1].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[2].cn0 * 100 -
          2925.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[2].cn0, "
-        "expected 2925.19995117, is %s",
+        "expected 2925.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[2].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[2].sid.code == 53,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[2].sid.code, "
-                  "expected 53, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[2].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[2].sid.code == 53,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[2].sid.code, expected 53, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[2].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[2].sid.reserved == 20,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[2].sid.reserved, expected "
-        "20, is %d",
-        last_msg.msg.tracking_state_dep_b.states[2].sid.reserved);
+        "20, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[2].sid.reserved);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[2].sid.sat == 1520,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[2].sid.sat, "
-                  "expected 1520, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[2].sid.sat);
+                  "expected 1520, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[2].sid.sat);
 
-    ck_assert_msg(
-        last_msg.msg.tracking_state_dep_b.states[2].state == 78,
-        "incorrect value for "
-        "last_msg.msg.tracking_state_dep_b.states[2].state, expected 78, is %d",
-        last_msg.msg.tracking_state_dep_b.states[2].state);
+    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[2].state == 78,
+                  "incorrect value for "
+                  "last_msg.msg.tracking_state_dep_b.states[2].state, expected "
+                  "78, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[2].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[3].cn0 * 100 -
          3198.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[3].cn0, "
-        "expected 3198.19995117, is %s",
+        "expected 3198.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[3].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[3].sid.code == 66,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[3].sid.code, "
-                  "expected 66, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[3].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[3].sid.code == 66,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[3].sid.code, expected 66, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[3].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[3].sid.reserved == 155,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[3].sid.reserved, expected "
-        "155, is %d",
-        last_msg.msg.tracking_state_dep_b.states[3].sid.reserved);
+        "155, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[3].sid.reserved);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[3].sid.sat == 60802,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[3].sid.sat, "
-                  "expected 60802, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[3].sid.sat);
+                  "expected 60802, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[3].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[3].state == 153,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[3].state, expected "
-                  "153, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[3].state);
+                  "153, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[3].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[4].cn0 * 100 -
          8623.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[4].cn0, "
-        "expected 8623.20019531, is %s",
+        "expected 8623.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[4].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[4].sid.code == 161,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[4].sid.code, "
-                  "expected 161, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[4].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[4].sid.code == 161,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[4].sid.code, expected 161, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[4].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[4].sid.reserved == 190,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[4].sid.reserved, expected "
-        "190, is %d",
-        last_msg.msg.tracking_state_dep_b.states[4].sid.reserved);
+        "190, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[4].sid.reserved);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[4].sid.sat == 35058,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[4].sid.sat, "
-                  "expected 35058, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[4].sid.sat);
+                  "expected 35058, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[4].sid.sat);
 
-    ck_assert_msg(
-        last_msg.msg.tracking_state_dep_b.states[4].state == 53,
-        "incorrect value for "
-        "last_msg.msg.tracking_state_dep_b.states[4].state, expected 53, is %d",
-        last_msg.msg.tracking_state_dep_b.states[4].state);
+    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[4].state == 53,
+                  "incorrect value for "
+                  "last_msg.msg.tracking_state_dep_b.states[4].state, expected "
+                  "53, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[4].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[5].cn0 * 100 -
          5915.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[5].cn0, "
-        "expected 5915.20019531, is %s",
+        "expected 5915.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[5].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[5].sid.code == 142,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[5].sid.code, "
-                  "expected 142, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[5].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[5].sid.code == 142,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[5].sid.code, expected 142, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[5].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[5].sid.reserved == 149,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[5].sid.reserved, expected "
-        "149, is %d",
-        last_msg.msg.tracking_state_dep_b.states[5].sid.reserved);
+        "149, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[5].sid.reserved);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[5].sid.sat == 65405,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[5].sid.sat, "
-                  "expected 65405, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[5].sid.sat);
+                  "expected 65405, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[5].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[5].state == 153,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[5].state, expected "
-                  "153, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[5].state);
+                  "153, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[5].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[6].cn0 * 100 -
          5412.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[6].cn0, "
-        "expected 5412.20019531, is %s",
+        "expected 5412.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[6].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[6].sid.code == 31,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[6].sid.code, "
-                  "expected 31, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[6].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[6].sid.code == 31,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[6].sid.code, expected 31, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[6].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[6].sid.reserved == 76,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[6].sid.reserved, expected "
-        "76, is %d",
-        last_msg.msg.tracking_state_dep_b.states[6].sid.reserved);
+        "76, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[6].sid.reserved);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[6].sid.sat == 24422,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[6].sid.sat, "
-                  "expected 24422, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[6].sid.sat);
+                  "expected 24422, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[6].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[6].state == 248,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[6].state, expected "
-                  "248, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[6].state);
+                  "248, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[6].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[7].cn0 * 100 -
          6428.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[7].cn0, "
-        "expected 6428.20019531, is %s",
+        "expected 6428.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[7].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[7].sid.code == 27,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[7].sid.code, "
-                  "expected 27, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[7].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[7].sid.code == 27,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[7].sid.code, expected 27, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[7].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[7].sid.reserved == 12,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[7].sid.reserved, expected "
-        "12, is %d",
-        last_msg.msg.tracking_state_dep_b.states[7].sid.reserved);
+        "12, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[7].sid.reserved);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[7].sid.sat == 36211,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[7].sid.sat, "
-                  "expected 36211, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[7].sid.sat);
+                  "expected 36211, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[7].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[7].state == 131,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[7].state, expected "
-                  "131, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[7].state);
+                  "131, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[7].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[8].cn0 * 100 -
          3104.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[8].cn0, "
-        "expected 3104.19995117, is %s",
+        "expected 3104.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[8].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[8].sid.code == 39,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[8].sid.code, "
-                  "expected 39, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[8].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[8].sid.code == 39,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[8].sid.code, expected 39, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[8].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[8].sid.reserved == 23,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[8].sid.reserved, expected "
-        "23, is %d",
-        last_msg.msg.tracking_state_dep_b.states[8].sid.reserved);
+        "23, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[8].sid.reserved);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[8].sid.sat == 37676,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[8].sid.sat, "
-                  "expected 37676, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[8].sid.sat);
+                  "expected 37676, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[8].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[8].state == 208,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[8].state, expected "
-                  "208, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[8].state);
+                  "208, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[8].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[9].cn0 * 100 -
          3686.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[9].cn0, "
-        "expected 3686.19995117, is %s",
+        "expected 3686.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[9].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[9].sid.code == 49,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[9].sid.code, "
-                  "expected 49, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[9].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[9].sid.code == 49,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[9].sid.code, expected 49, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[9].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[9].sid.reserved == 203,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[9].sid.reserved, expected "
-        "203, is %d",
-        last_msg.msg.tracking_state_dep_b.states[9].sid.reserved);
+        "203, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[9].sid.reserved);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[9].sid.sat == 64415,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[9].sid.sat, "
-                  "expected 64415, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[9].sid.sat);
+                  "expected 64415, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[9].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[9].state == 237,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[9].state, expected "
-                  "237, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[9].state);
+                  "237, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[9].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[10].cn0 * 100 -
          5967.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[10].cn0, "
-        "expected 5967.20019531, is %s",
+        "expected 5967.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[10].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[10].sid.code == 128,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[10].sid.code, "
-                  "expected 128, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[10].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[10].sid.code == 128,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[10].sid.code, expected 128, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[10].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[10].sid.reserved == 206,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[10].sid.reserved, expected "
-        "206, is %d",
-        last_msg.msg.tracking_state_dep_b.states[10].sid.reserved);
+        "206, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[10].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[10].sid.sat == 22486,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[10].sid.sat, "
-                  "expected 22486, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[10].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[10].sid.sat == 22486,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[10].sid.sat, expected 22486, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[10].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[10].state == 70,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[10].state, "
-                  "expected 70, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[10].state);
+                  "expected 70, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[10].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[11].cn0 * 100 -
          5423.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[11].cn0, "
-        "expected 5423.20019531, is %s",
+        "expected 5423.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[11].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[11].sid.code == 218,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[11].sid.code, "
-                  "expected 218, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[11].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[11].sid.code == 218,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[11].sid.code, expected 218, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[11].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[11].sid.reserved == 19,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[11].sid.reserved, expected "
-        "19, is %d",
-        last_msg.msg.tracking_state_dep_b.states[11].sid.reserved);
+        "19, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[11].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[11].sid.sat == 28622,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[11].sid.sat, "
-                  "expected 28622, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[11].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[11].sid.sat == 28622,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[11].sid.sat, expected 28622, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[11].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[11].state == 14,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[11].state, "
-                  "expected 14, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[11].state);
+                  "expected 14, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[11].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[12].cn0 * 100 -
          438.200012207 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[12].cn0, "
-        "expected 438.200012207, is %s",
+        "expected 438.200012207, is %f",
         last_msg.msg.tracking_state_dep_b.states[12].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[12].sid.code == 54,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[12].sid.code, "
-                  "expected 54, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[12].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[12].sid.code == 54,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[12].sid.code, expected 54, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[12].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[12].sid.reserved == 2,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[12].sid.reserved, expected "
-        "2, is %d",
-        last_msg.msg.tracking_state_dep_b.states[12].sid.reserved);
+        "2, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[12].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[12].sid.sat == 53602,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[12].sid.sat, "
-                  "expected 53602, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[12].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[12].sid.sat == 53602,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[12].sid.sat, expected 53602, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[12].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[12].state == 216,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[12].state, "
-                  "expected 216, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[12].state);
+                  "expected 216, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[12].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[13].cn0 * 100 -
          1862.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[13].cn0, "
-        "expected 1862.19995117, is %s",
+        "expected 1862.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[13].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[13].sid.code == 7,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[13].sid.code, "
-                  "expected 7, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[13].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[13].sid.code == 7,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[13].sid.code, expected 7, is "
+        "%" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[13].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[13].sid.reserved == 34,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[13].sid.reserved, expected "
-        "34, is %d",
-        last_msg.msg.tracking_state_dep_b.states[13].sid.reserved);
+        "34, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[13].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[13].sid.sat == 25477,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[13].sid.sat, "
-                  "expected 25477, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[13].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[13].sid.sat == 25477,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[13].sid.sat, expected 25477, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[13].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[13].state == 200,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[13].state, "
-                  "expected 200, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[13].state);
+                  "expected 200, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[13].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[14].cn0 * 100 -
          5462.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[14].cn0, "
-        "expected 5462.20019531, is %s",
+        "expected 5462.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[14].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[14].sid.code == 135,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[14].sid.code, "
-                  "expected 135, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[14].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[14].sid.code == 135,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[14].sid.code, expected 135, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[14].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[14].sid.reserved == 46,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[14].sid.reserved, expected "
-        "46, is %d",
-        last_msg.msg.tracking_state_dep_b.states[14].sid.reserved);
+        "46, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[14].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[14].sid.sat == 21803,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[14].sid.sat, "
-                  "expected 21803, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[14].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[14].sid.sat == 21803,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[14].sid.sat, expected 21803, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[14].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[14].state == 155,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[14].state, "
-                  "expected 155, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[14].state);
+                  "expected 155, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[14].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[15].cn0 * 100 -
          7454.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[15].cn0, "
-        "expected 7454.20019531, is %s",
+        "expected 7454.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[15].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[15].sid.code == 171,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[15].sid.code, "
-                  "expected 171, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[15].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[15].sid.code == 171,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[15].sid.code, expected 171, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[15].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[15].sid.reserved == 201,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[15].sid.reserved, expected "
-        "201, is %d",
-        last_msg.msg.tracking_state_dep_b.states[15].sid.reserved);
+        "201, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[15].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[15].sid.sat == 21251,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[15].sid.sat, "
-                  "expected 21251, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[15].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[15].sid.sat == 21251,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[15].sid.sat, expected 21251, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[15].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[15].state == 155,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[15].state, "
-                  "expected 155, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[15].state);
+                  "expected 155, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[15].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[16].cn0 * 100 -
          7134.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[16].cn0, "
-        "expected 7134.20019531, is %s",
+        "expected 7134.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[16].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[16].sid.code == 16,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[16].sid.code, "
-                  "expected 16, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[16].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[16].sid.code == 16,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[16].sid.code, expected 16, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[16].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[16].sid.reserved == 19,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[16].sid.reserved, expected "
-        "19, is %d",
-        last_msg.msg.tracking_state_dep_b.states[16].sid.reserved);
+        "19, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[16].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[16].sid.sat == 50475,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[16].sid.sat, "
-                  "expected 50475, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[16].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[16].sid.sat == 50475,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[16].sid.sat, expected 50475, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[16].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[16].state == 121,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[16].state, "
-                  "expected 121, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[16].state);
+                  "expected 121, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[16].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[17].cn0 * 100 -
          3111.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[17].cn0, "
-        "expected 3111.19995117, is %s",
+        "expected 3111.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[17].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[17].sid.code == 63,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[17].sid.code, "
-                  "expected 63, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[17].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[17].sid.code == 63,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[17].sid.code, expected 63, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[17].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[17].sid.reserved == 176,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[17].sid.reserved, expected "
-        "176, is %d",
-        last_msg.msg.tracking_state_dep_b.states[17].sid.reserved);
+        "176, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[17].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[17].sid.sat == 13813,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[17].sid.sat, "
-                  "expected 13813, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[17].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[17].sid.sat == 13813,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[17].sid.sat, expected 13813, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[17].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[17].state == 128,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[17].state, "
-                  "expected 128, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[17].state);
+                  "expected 128, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[17].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[18].cn0 * 100 -
          4297.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[18].cn0, "
-        "expected 4297.20019531, is %s",
+        "expected 4297.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[18].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[18].sid.code == 153,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[18].sid.code, "
-                  "expected 153, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[18].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[18].sid.code == 153,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[18].sid.code, expected 153, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[18].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[18].sid.reserved == 51,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[18].sid.reserved, expected "
-        "51, is %d",
-        last_msg.msg.tracking_state_dep_b.states[18].sid.reserved);
+        "51, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[18].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[18].sid.sat == 15636,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[18].sid.sat, "
-                  "expected 15636, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[18].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[18].sid.sat == 15636,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[18].sid.sat, expected 15636, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[18].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[18].state == 36,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[18].state, "
-                  "expected 36, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[18].state);
+                  "expected 36, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[18].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[19].cn0 * 100 -
          2649.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[19].cn0, "
-        "expected 2649.19995117, is %s",
+        "expected 2649.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[19].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[19].sid.code == 140,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[19].sid.code, "
-                  "expected 140, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[19].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[19].sid.code == 140,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[19].sid.code, expected 140, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[19].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[19].sid.reserved == 22,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[19].sid.reserved, expected "
-        "22, is %d",
-        last_msg.msg.tracking_state_dep_b.states[19].sid.reserved);
+        "22, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[19].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[19].sid.sat == 29778,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[19].sid.sat, "
-                  "expected 29778, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[19].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[19].sid.sat == 29778,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[19].sid.sat, expected 29778, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[19].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[19].state == 46,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[19].state, "
-                  "expected 46, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[19].state);
+                  "expected 46, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[19].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[20].cn0 * 100 -
          941.200012207 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[20].cn0, "
-        "expected 941.200012207, is %s",
+        "expected 941.200012207, is %f",
         last_msg.msg.tracking_state_dep_b.states[20].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[20].sid.code == 96,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[20].sid.code, "
-                  "expected 96, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[20].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[20].sid.code == 96,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[20].sid.code, expected 96, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[20].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[20].sid.reserved == 143,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[20].sid.reserved, expected "
-        "143, is %d",
-        last_msg.msg.tracking_state_dep_b.states[20].sid.reserved);
+        "143, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[20].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[20].sid.sat == 37443,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[20].sid.sat, "
-                  "expected 37443, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[20].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[20].sid.sat == 37443,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[20].sid.sat, expected 37443, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[20].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[20].state == 177,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[20].state, "
-                  "expected 177, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[20].state);
+                  "expected 177, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[20].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[21].cn0 * 100 -
          1539.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[21].cn0, "
-        "expected 1539.19995117, is %s",
+        "expected 1539.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[21].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[21].sid.code == 201,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[21].sid.code, "
-                  "expected 201, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[21].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[21].sid.code == 201,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[21].sid.code, expected 201, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[21].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[21].sid.reserved == 251,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[21].sid.reserved, expected "
-        "251, is %d",
-        last_msg.msg.tracking_state_dep_b.states[21].sid.reserved);
+        "251, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[21].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[21].sid.sat == 41011,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[21].sid.sat, "
-                  "expected 41011, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[21].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[21].sid.sat == 41011,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[21].sid.sat, expected 41011, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[21].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[21].state == 220,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[21].state, "
-                  "expected 220, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[21].state);
+                  "expected 220, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[21].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[22].cn0 * 100 -
          1443.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[22].cn0, "
-        "expected 1443.19995117, is %s",
+        "expected 1443.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[22].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[22].sid.code == 161,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[22].sid.code, "
-                  "expected 161, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[22].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[22].sid.code == 161,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[22].sid.code, expected 161, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[22].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[22].sid.reserved == 220,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[22].sid.reserved, expected "
-        "220, is %d",
-        last_msg.msg.tracking_state_dep_b.states[22].sid.reserved);
+        "220, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[22].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[22].sid.sat == 706,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[22].sid.sat, "
-                  "expected 706, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[22].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[22].sid.sat == 706,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[22].sid.sat, expected 706, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[22].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[22].state == 168,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[22].state, "
-                  "expected 168, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[22].state);
+                  "expected 168, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[22].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[23].cn0 * 100 -
          1074.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[23].cn0, "
-        "expected 1074.19995117, is %s",
+        "expected 1074.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[23].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[23].sid.code == 125,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[23].sid.code, "
-                  "expected 125, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[23].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[23].sid.code == 125,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[23].sid.code, expected 125, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[23].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[23].sid.reserved == 178,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[23].sid.reserved, expected "
-        "178, is %d",
-        last_msg.msg.tracking_state_dep_b.states[23].sid.reserved);
+        "178, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[23].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[23].sid.sat == 2312,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[23].sid.sat, "
-                  "expected 2312, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[23].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[23].sid.sat == 2312,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[23].sid.sat, expected 2312, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[23].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[23].state == 69,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[23].state, "
-                  "expected 69, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[23].state);
+                  "expected 69, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[23].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[24].cn0 * 100 -
          2122.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[24].cn0, "
-        "expected 2122.19995117, is %s",
+        "expected 2122.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[24].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[24].sid.code == 186,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[24].sid.code, "
-                  "expected 186, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[24].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[24].sid.code == 186,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[24].sid.code, expected 186, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[24].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[24].sid.reserved == 171,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[24].sid.reserved, expected "
-        "171, is %d",
-        last_msg.msg.tracking_state_dep_b.states[24].sid.reserved);
+        "171, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[24].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[24].sid.sat == 34580,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[24].sid.sat, "
-                  "expected 34580, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[24].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[24].sid.sat == 34580,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[24].sid.sat, expected 34580, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[24].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[24].state == 185,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[24].state, "
-                  "expected 185, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[24].state);
+                  "expected 185, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[24].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[25].cn0 * 100 -
          9076.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[25].cn0, "
-        "expected 9076.20019531, is %s",
+        "expected 9076.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[25].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[25].sid.code == 85,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[25].sid.code, "
-                  "expected 85, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[25].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[25].sid.code == 85,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[25].sid.code, expected 85, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[25].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[25].sid.reserved == 170,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[25].sid.reserved, expected "
-        "170, is %d",
-        last_msg.msg.tracking_state_dep_b.states[25].sid.reserved);
+        "170, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[25].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[25].sid.sat == 39804,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[25].sid.sat, "
-                  "expected 39804, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[25].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[25].sid.sat == 39804,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[25].sid.sat, expected 39804, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[25].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[25].state == 18,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[25].state, "
-                  "expected 18, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[25].state);
+                  "expected 18, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[25].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[26].cn0 * 100 -
          4781.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[26].cn0, "
-        "expected 4781.20019531, is %s",
+        "expected 4781.20019531, is %f",
         last_msg.msg.tracking_state_dep_b.states[26].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[26].sid.code == 255,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[26].sid.code, "
-                  "expected 255, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[26].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[26].sid.code == 255,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[26].sid.code, expected 255, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[26].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[26].sid.reserved == 186,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[26].sid.reserved, expected "
-        "186, is %d",
-        last_msg.msg.tracking_state_dep_b.states[26].sid.reserved);
+        "186, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[26].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[26].sid.sat == 52980,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[26].sid.sat, "
-                  "expected 52980, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[26].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[26].sid.sat == 52980,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[26].sid.sat, expected 52980, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[26].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[26].state == 57,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[26].state, "
-                  "expected 57, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[26].state);
+                  "expected 57, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[26].state);
 
     ck_assert_msg(
         (last_msg.msg.tracking_state_dep_b.states[27].cn0 * 100 -
          3076.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.tracking_state_dep_b.states[27].cn0, "
-        "expected 3076.19995117, is %s",
+        "expected 3076.19995117, is %f",
         last_msg.msg.tracking_state_dep_b.states[27].cn0);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[27].sid.code == 181,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[27].sid.code, "
-                  "expected 181, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[27].sid.code);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[27].sid.code == 181,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[27].sid.code, expected 181, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[27].sid.code);
 
     ck_assert_msg(
         last_msg.msg.tracking_state_dep_b.states[27].sid.reserved == 175,
         "incorrect value for "
         "last_msg.msg.tracking_state_dep_b.states[27].sid.reserved, expected "
-        "175, is %d",
-        last_msg.msg.tracking_state_dep_b.states[27].sid.reserved);
+        "175, is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[27].sid.reserved);
 
-    ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[27].sid.sat == 24007,
-                  "incorrect value for "
-                  "last_msg.msg.tracking_state_dep_b.states[27].sid.sat, "
-                  "expected 24007, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[27].sid.sat);
+    ck_assert_msg(
+        last_msg.msg.tracking_state_dep_b.states[27].sid.sat == 24007,
+        "incorrect value for "
+        "last_msg.msg.tracking_state_dep_b.states[27].sid.sat, expected 24007, "
+        "is %" PRId64,
+        (int64_t)last_msg.msg.tracking_state_dep_b.states[27].sid.sat);
 
     ck_assert_msg(last_msg.msg.tracking_state_dep_b.states[27].state == 165,
                   "incorrect value for "
                   "last_msg.msg.tracking_state_dep_b.states[27].state, "
-                  "expected 165, is %d",
-                  last_msg.msg.tracking_state_dep_b.states[27].state);
+                  "expected 165, is %" PRId64,
+                  (int64_t)last_msg.msg.tracking_state_dep_b.states[27].state);
   }
 }
 END_TEST

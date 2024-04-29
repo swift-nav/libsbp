@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_FLASH_MESSAGES_H
-#define LIBSBP_V4_FLASH_MESSAGES_H
+#ifndef LIBSBP_FLASH_MESSAGES_H
+#define LIBSBP_FLASH_MESSAGES_H
 #include <libsbp/flash/MSG_FLASH_DONE.h>
 #include <libsbp/flash/MSG_FLASH_ERASE.h>
 #include <libsbp/flash/MSG_FLASH_PROGRAM.h>
@@ -28,4 +28,4 @@
 #include <libsbp/flash/MSG_STM_UNIQUE_ID_REQ.h>
 #include <libsbp/flash/MSG_STM_UNIQUE_ID_RESP.h>
 
-#endif /* LIBSBP_V4_FLASH_MESSAGES_H */
+#endif /* LIBSBP_FLASH_MESSAGES_H */

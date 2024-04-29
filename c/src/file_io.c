@@ -194,7 +194,7 @@ s8 sbp_msg_fileio_read_req_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FILEIO_READ_REQ, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFileioReadReq, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -294,7 +294,7 @@ s8 sbp_msg_fileio_read_resp_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FILEIO_READ_RESP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFileioReadResp, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -490,7 +490,7 @@ s8 sbp_msg_fileio_read_dir_req_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FILEIO_READ_DIR_REQ, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFileioReadDirReq, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -669,8 +669,8 @@ s8 sbp_msg_fileio_read_dir_resp_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FILEIO_READ_DIR_RESP,
-                                      sender_id, payload_len, payload, write);
+  return sbp_internal_forward_payload(s, SbpMsgFileioReadDirResp, sender_id,
+                                      payload_len, payload, write);
 }
 
 int sbp_msg_fileio_read_dir_resp_cmp(const sbp_msg_fileio_read_dir_resp_t *a,
@@ -844,7 +844,7 @@ s8 sbp_msg_fileio_remove_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FILEIO_REMOVE, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFileioRemove, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1042,7 +1042,7 @@ s8 sbp_msg_fileio_write_req_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FILEIO_WRITE_REQ, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFileioWriteReq, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1136,7 +1136,7 @@ s8 sbp_msg_fileio_write_resp_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FILEIO_WRITE_RESP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFileioWriteResp, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1206,7 +1206,7 @@ s8 sbp_msg_fileio_config_req_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FILEIO_CONFIG_REQ, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFileioConfigReq, sender_id,
                                       payload_len, payload, write);
 }
 
@@ -1294,7 +1294,7 @@ s8 sbp_msg_fileio_config_resp_send(sbp_state_t *s, u16 sender_id,
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_internal_forward_payload(s, SBP_MSG_FILEIO_CONFIG_RESP, sender_id,
+  return sbp_internal_forward_payload(s, SbpMsgFileioConfigResp, sender_id,
                                       payload_len, payload, write);
 }
 

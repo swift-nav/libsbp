@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_BOOTLOAD_MESSAGES_H
-#define LIBSBP_V4_BOOTLOAD_MESSAGES_H
+#ifndef LIBSBP_BOOTLOAD_MESSAGES_H
+#define LIBSBP_BOOTLOAD_MESSAGES_H
 #include <libsbp/bootload/MSG_BOOTLOADER_HANDSHAKE_DEP_A.h>
 #include <libsbp/bootload/MSG_BOOTLOADER_HANDSHAKE_REQ.h>
 #include <libsbp/bootload/MSG_BOOTLOADER_HANDSHAKE_RESP.h>
@@ -24,4 +24,4 @@
 #include <libsbp/bootload/MSG_NAP_DEVICE_DNA_REQ.h>
 #include <libsbp/bootload/MSG_NAP_DEVICE_DNA_RESP.h>
 
-#endif /* LIBSBP_V4_BOOTLOAD_MESSAGES_H */
+#endif /* LIBSBP_BOOTLOAD_MESSAGES_H */

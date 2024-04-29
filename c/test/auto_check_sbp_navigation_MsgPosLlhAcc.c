@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -164,89 +164,89 @@ START_TEST(test_auto_check_sbp_navigation_MsgPosLlhAcc) {
     ck_assert_msg((last_msg.msg.pos_llh_acc.at_accuracy * 100 -
                    6297.20019531 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_acc.at_accuracy, "
-                  "expected 6297.20019531, is %s",
+                  "expected 6297.20019531, is %f",
                   last_msg.msg.pos_llh_acc.at_accuracy);
 
     ck_assert_msg(
         last_msg.msg.pos_llh_acc.confidence_and_geoid == 95,
         "incorrect value for last_msg.msg.pos_llh_acc.confidence_and_geoid, "
-        "expected 95, is %d",
-        last_msg.msg.pos_llh_acc.confidence_and_geoid);
+        "expected 95, is %" PRId64,
+        (int64_t)last_msg.msg.pos_llh_acc.confidence_and_geoid);
 
     ck_assert_msg((last_msg.msg.pos_llh_acc.ct_accuracy * 100 -
                    1948.19995117 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_acc.ct_accuracy, "
-                  "expected 1948.19995117, is %s",
+                  "expected 1948.19995117, is %f",
                   last_msg.msg.pos_llh_acc.ct_accuracy);
 
     ck_assert_msg(last_msg.msg.pos_llh_acc.flags == 72,
                   "incorrect value for last_msg.msg.pos_llh_acc.flags, "
-                  "expected 72, is %d",
-                  last_msg.msg.pos_llh_acc.flags);
+                  "expected 72, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_acc.flags);
 
     ck_assert_msg((last_msg.msg.pos_llh_acc.h_accuracy * 100 -
                    2410.19995117 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_acc.h_accuracy, "
-                  "expected 2410.19995117, is %s",
+                  "expected 2410.19995117, is %f",
                   last_msg.msg.pos_llh_acc.h_accuracy);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_acc.h_ellipse.orientation * 100 -
          2550.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_acc.h_ellipse.orientation, "
-        "expected 2550.19995117, is %s",
+        "expected 2550.19995117, is %f",
         last_msg.msg.pos_llh_acc.h_ellipse.orientation);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_acc.h_ellipse.semi_major * 100 -
          8248.20019531 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_acc.h_ellipse.semi_major, "
-        "expected 8248.20019531, is %s",
+        "expected 8248.20019531, is %f",
         last_msg.msg.pos_llh_acc.h_ellipse.semi_major);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_acc.h_ellipse.semi_minor * 100 -
          3202.19995117 * 100) < 0.05,
         "incorrect value for last_msg.msg.pos_llh_acc.h_ellipse.semi_minor, "
-        "expected 3202.19995117, is %s",
+        "expected 3202.19995117, is %f",
         last_msg.msg.pos_llh_acc.h_ellipse.semi_minor);
 
     ck_assert_msg((last_msg.msg.pos_llh_acc.height * 100 - 4257.2 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_acc.height, "
-                  "expected 4257.2, is %s",
+                  "expected 4257.2, is %f",
                   last_msg.msg.pos_llh_acc.height);
 
     ck_assert_msg((last_msg.msg.pos_llh_acc.lat * 100 - 7563.2 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_acc.lat, expected "
-                  "7563.2, is %s",
+                  "7563.2, is %f",
                   last_msg.msg.pos_llh_acc.lat);
 
     ck_assert_msg((last_msg.msg.pos_llh_acc.lon * 100 - 8494.2 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_acc.lon, expected "
-                  "8494.2, is %s",
+                  "8494.2, is %f",
                   last_msg.msg.pos_llh_acc.lon);
 
     ck_assert_msg(last_msg.msg.pos_llh_acc.n_sats == 27,
                   "incorrect value for last_msg.msg.pos_llh_acc.n_sats, "
-                  "expected 27, is %d",
-                  last_msg.msg.pos_llh_acc.n_sats);
+                  "expected 27, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_acc.n_sats);
 
     ck_assert_msg(
         (last_msg.msg.pos_llh_acc.orthometric_height * 100 - 4965.2 * 100) <
             0.05,
         "incorrect value for last_msg.msg.pos_llh_acc.orthometric_height, "
-        "expected 4965.2, is %s",
+        "expected 4965.2, is %f",
         last_msg.msg.pos_llh_acc.orthometric_height);
 
     ck_assert_msg(last_msg.msg.pos_llh_acc.tow == 309229607,
                   "incorrect value for last_msg.msg.pos_llh_acc.tow, expected "
-                  "309229607, is %d",
-                  last_msg.msg.pos_llh_acc.tow);
+                  "309229607, is %" PRId64,
+                  (int64_t)last_msg.msg.pos_llh_acc.tow);
 
     ck_assert_msg((last_msg.msg.pos_llh_acc.v_accuracy * 100 -
                    5539.20019531 * 100) < 0.05,
                   "incorrect value for last_msg.msg.pos_llh_acc.v_accuracy, "
-                  "expected 5539.20019531, is %s",
+                  "expected 5539.20019531, is %f",
                   last_msg.msg.pos_llh_acc.v_accuracy);
   }
 }

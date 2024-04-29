@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SBP_MSG_H
-#define LIBSBP_V4_SBP_MSG_H
+#ifndef LIBSBP_SBP_MSG_H
+#define LIBSBP_SBP_MSG_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -2777,4 +2777,4 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
 }
 #endif
 
-#endif /* LIBSBP_V4_SBP_MSG_H */
+#endif /* LIBSBP_SBP_MSG_H */

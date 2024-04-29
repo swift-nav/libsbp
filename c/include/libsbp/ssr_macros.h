@@ -19,137 +19,116 @@
 #define LIBSBP_SSR_MACROS_H
 
 /**
- * Encoded length of sbp_code_biases_content_t (V4 API) and
- * code_biases_content_t (legacy API)
+ * Encoded length of sbp_code_biases_content_t
  */
 #define SBP_CODE_BIASES_CONTENT_ENCODED_LEN 3u
 
 /**
- * Encoded length of sbp_phase_biases_content_t (V4 API) and
- * phase_biases_content_t (legacy API)
+ * Encoded length of sbp_phase_biases_content_t
  */
 #define SBP_PHASE_BIASES_CONTENT_ENCODED_LEN 8u
 
 /**
- * Encoded length of sbp_stec_header_t (V4 API) and
- * stec_header_t (legacy API)
+ * Encoded length of sbp_stec_header_t
  */
 #define SBP_STEC_HEADER_ENCODED_LEN 14u
 
 /**
- * Encoded length of sbp_gridded_correction_header_t (V4 API) and
- * gridded_correction_header_t (legacy API)
+ * Encoded length of sbp_gridded_correction_header_t
  */
 #define SBP_GRIDDED_CORRECTION_HEADER_ENCODED_LEN 17u
 
 /**
  * The maximum number of items that can be stored in
- * sbp_stec_sat_element_t::stec_coeff (V4 API) or stec_sat_element_t::stec_coeff
- * (legacy API) before the maximum SBP message size is exceeded
+ * sbp_stec_sat_element_t::stec_coeff before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_STEC_SAT_ELEMENT_STEC_COEFF_MAX 4u
 
 /**
- * Encoded length of sbp_stec_sat_element_t (V4 API) and
- * stec_sat_element_t (legacy API)
+ * Encoded length of sbp_stec_sat_element_t
  */
 #define SBP_STEC_SAT_ELEMENT_ENCODED_LEN 11u
 
 /**
- * Encoded length of sbp_tropospheric_delay_correction_no_std_t (V4 API) and
- * tropospheric_delay_correction_no_std_t (legacy API)
+ * Encoded length of sbp_tropospheric_delay_correction_no_std_t
  */
 #define SBP_TROPOSPHERIC_DELAY_CORRECTION_NO_STD_ENCODED_LEN 3u
 
 /**
- * Encoded length of sbp_tropospheric_delay_correction_t (V4 API) and
- * tropospheric_delay_correction_t (legacy API)
+ * Encoded length of sbp_tropospheric_delay_correction_t
  */
 #define SBP_TROPOSPHERIC_DELAY_CORRECTION_ENCODED_LEN 4u
 
 /**
- * Encoded length of sbp_stec_residual_no_std_t (V4 API) and
- * stec_residual_no_std_t (legacy API)
+ * Encoded length of sbp_stec_residual_no_std_t
  */
 #define SBP_STEC_RESIDUAL_NO_STD_ENCODED_LEN 4u
 
 /**
- * Encoded length of sbp_stec_residual_t (V4 API) and
- * stec_residual_t (legacy API)
+ * Encoded length of sbp_stec_residual_t
  */
 #define SBP_STEC_RESIDUAL_ENCODED_LEN 5u
 
-#define SBP_MSG_SSR_ORBIT_CLOCK 0x05DD
 /**
- * Encoded length of sbp_msg_ssr_orbit_clock_t (V4 API) and
- * msg_ssr_orbit_clock_t (legacy API)
+ * Encoded length of sbp_msg_ssr_orbit_clock_t
  */
 #define SBP_MSG_SSR_ORBIT_CLOCK_ENCODED_LEN 50u
 
-#define SBP_MSG_SSR_CODE_BIASES 0x05E1
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_code_biases_t::biases (V4 API) or msg_ssr_code_biases_t::biases
- * (legacy API) before the maximum SBP message size is exceeded
+ * sbp_msg_ssr_code_biases_t::biases before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_MSG_SSR_CODE_BIASES_BIASES_MAX 81u
 
 /**
- * Encoded length of sbp_msg_ssr_code_biases_t (V4 API) and
- * msg_ssr_code_biases_t (legacy API)
+ * Encoded length of sbp_msg_ssr_code_biases_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_code_biases_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
+ * instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SSR_CODE_BIASES_ENCODED_OVERHEAD 10u
 
-#define SBP_MSG_SSR_PHASE_BIASES 0x05E6
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_phase_biases_t::biases (V4 API) or msg_ssr_phase_biases_t::biases
- * (legacy API) before the maximum SBP message size is exceeded
+ * sbp_msg_ssr_phase_biases_t::biases before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_MSG_SSR_PHASE_BIASES_BIASES_MAX 30u
 
 /**
- * Encoded length of sbp_msg_ssr_phase_biases_t (V4 API) and
- * msg_ssr_phase_biases_t (legacy API)
+ * Encoded length of sbp_msg_ssr_phase_biases_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_phase_biases_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
+ * instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SSR_PHASE_BIASES_ENCODED_OVERHEAD 15u
 
-#define SBP_MSG_SSR_STEC_CORRECTION_DEP 0x05FB
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_stec_correction_dep_t::stec_sat_list (V4 API) or
- * msg_ssr_stec_correction_dep_t::stec_sat_list (legacy API) before the maximum
- * SBP message size is exceeded
+ * sbp_msg_ssr_stec_correction_dep_t::stec_sat_list before the maximum SBP
+ * message size is exceeded
  */
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_STEC_SAT_LIST_MAX 21u
 
 /**
- * Encoded length of sbp_msg_ssr_stec_correction_dep_t (V4 API) and
- * msg_ssr_stec_correction_dep_t (legacy API)
+ * Encoded length of sbp_msg_ssr_stec_correction_dep_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_stec_correction_dep_encoded_len to determine the actual size of
- * an instance of this message. Users of the legacy API are required to track
- * the encoded message length when interacting with the legacy type.
+ * an instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
@@ -157,53 +136,44 @@
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_ENCODED_OVERHEAD 14u
 
 /**
- * Encoded length of sbp_bounds_header_t (V4 API) and
- * bounds_header_t (legacy API)
+ * Encoded length of sbp_bounds_header_t
  */
 #define SBP_BOUNDS_HEADER_ENCODED_LEN 10u
 
-#define SBP_MSG_SSR_STEC_CORRECTION 0x05FD
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_stec_correction_t::stec_sat_list (V4 API) or
- * msg_ssr_stec_correction_t::stec_sat_list (legacy API) before the maximum SBP
- * message size is exceeded
+ * sbp_msg_ssr_stec_correction_t::stec_sat_list before the maximum SBP message
+ * size is exceeded
  */
 #define SBP_MSG_SSR_STEC_CORRECTION_STEC_SAT_LIST_MAX 21u
 
 /**
- * Encoded length of sbp_msg_ssr_stec_correction_t (V4 API) and
- * msg_ssr_stec_correction_t (legacy API)
+ * Encoded length of sbp_msg_ssr_stec_correction_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_stec_correction_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
+ * instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SSR_STEC_CORRECTION_ENCODED_OVERHEAD 16u
 
-#define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05FC
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_gridded_correction_t::stec_residuals (V4 API) or
- * msg_ssr_gridded_correction_t::stec_residuals (legacy API) before the maximum
- * SBP message size is exceeded
+ * sbp_msg_ssr_gridded_correction_t::stec_residuals before the maximum SBP
+ * message size is exceeded
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_STEC_RESIDUALS_MAX 46u
 
 /**
- * Encoded length of sbp_msg_ssr_gridded_correction_t (V4 API) and
- * msg_ssr_gridded_correction_t (legacy API)
+ * Encoded length of sbp_msg_ssr_gridded_correction_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_gridded_correction_encoded_len to determine the actual size of
- * an instance of this message. Users of the legacy API are required to track
- * the encoded message length when interacting with the legacy type.
+ * an instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
@@ -211,53 +181,42 @@
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_ENCODED_OVERHEAD 23u
 
 /**
- * Encoded length of sbp_stec_sat_element_integrity_t (V4 API) and
- * stec_sat_element_integrity_t (legacy API)
+ * Encoded length of sbp_stec_sat_element_integrity_t
  */
 #define SBP_STEC_SAT_ELEMENT_INTEGRITY_ENCODED_LEN 9u
 
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS 0x05FE
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_gridded_correction_bounds_t::stec_sat_list (V4 API) or
- * msg_ssr_gridded_correction_bounds_t::stec_sat_list (legacy API) before the
- * maximum SBP message size is exceeded
+ * sbp_msg_ssr_gridded_correction_bounds_t::stec_sat_list before the maximum SBP
+ * message size is exceeded
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_STEC_SAT_LIST_MAX 25u
 
 /**
- * Encoded length of sbp_msg_ssr_gridded_correction_bounds_t (V4 API) and
- * msg_ssr_gridded_correction_bounds_t (legacy API)
+ * Encoded length of sbp_msg_ssr_gridded_correction_bounds_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_gridded_correction_bounds_encoded_len to determine the actual
- * size of an instance of this message. Users of the legacy API are required to
- * track the encoded message length when interacting with the legacy type.
+ * size of an instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_ENCODED_OVERHEAD 27u
 
-#define SBP_MSG_SSR_TILE_DEFINITION_DEP_A 0x05F6
 /**
- * Encoded length of sbp_msg_ssr_tile_definition_dep_a_t (V4 API) and
- * msg_ssr_tile_definition_dep_a_t (legacy API)
+ * Encoded length of sbp_msg_ssr_tile_definition_dep_a_t
  */
 #define SBP_MSG_SSR_TILE_DEFINITION_DEP_A_ENCODED_LEN 24u
 
-#define SBP_MSG_SSR_TILE_DEFINITION_DEP_B 0x05F7
 /**
- * Encoded length of sbp_msg_ssr_tile_definition_dep_b_t (V4 API) and
- * msg_ssr_tile_definition_dep_b_t (legacy API)
+ * Encoded length of sbp_msg_ssr_tile_definition_dep_b_t
  */
 #define SBP_MSG_SSR_TILE_DEFINITION_DEP_B_ENCODED_LEN 25u
 
-#define SBP_MSG_SSR_TILE_DEFINITION 0x05F8
 /**
- * Encoded length of sbp_msg_ssr_tile_definition_t (V4 API) and
- * msg_ssr_tile_definition_t (legacy API)
+ * Encoded length of sbp_msg_ssr_tile_definition_t
  */
 #define SBP_MSG_SSR_TILE_DEFINITION_ENCODED_LEN 33u
 
@@ -301,187 +260,155 @@
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_BEIDOU_3SI_SECM (24)
 /**
  * The maximum number of items that can be stored in sbp_satellite_apc_t::pco
- * (V4 API) or satellite_apc_t::pco (legacy API) before the maximum SBP message
- * size is exceeded
+ * before the maximum SBP message size is exceeded
  */
 #define SBP_SATELLITE_APC_PCO_MAX 3u
 
 /**
  * The maximum number of items that can be stored in sbp_satellite_apc_t::pcv
- * (V4 API) or satellite_apc_t::pcv (legacy API) before the maximum SBP message
- * size is exceeded
+ * before the maximum SBP message size is exceeded
  */
 #define SBP_SATELLITE_APC_PCV_MAX 21u
 
 /**
- * Encoded length of sbp_satellite_apc_t (V4 API) and
- * satellite_apc_t (legacy API)
+ * Encoded length of sbp_satellite_apc_t
  */
 #define SBP_SATELLITE_APC_ENCODED_LEN 32u
 
-#define SBP_MSG_SSR_SATELLITE_APC_DEP 0x0604
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_satellite_apc_dep_t::apc (V4 API) or
- * msg_ssr_satellite_apc_dep_t::apc (legacy API) before the maximum SBP message
- * size is exceeded
+ * sbp_msg_ssr_satellite_apc_dep_t::apc before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_MSG_SSR_SATELLITE_APC_DEP_APC_MAX 7u
 
 /**
- * Encoded length of sbp_msg_ssr_satellite_apc_dep_t (V4 API) and
- * msg_ssr_satellite_apc_dep_t (legacy API)
+ * Encoded length of sbp_msg_ssr_satellite_apc_dep_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_satellite_apc_dep_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
+ * instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SSR_SATELLITE_APC_DEP_ENCODED_OVERHEAD 0u
 
-#define SBP_MSG_SSR_SATELLITE_APC 0x0605
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_satellite_apc_t::apc (V4 API) or msg_ssr_satellite_apc_t::apc
- * (legacy API) before the maximum SBP message size is exceeded
+ * sbp_msg_ssr_satellite_apc_t::apc before the maximum SBP message size is
+ * exceeded
  */
 #define SBP_MSG_SSR_SATELLITE_APC_APC_MAX 7u
 
 /**
- * Encoded length of sbp_msg_ssr_satellite_apc_t (V4 API) and
- * msg_ssr_satellite_apc_t (legacy API)
+ * Encoded length of sbp_msg_ssr_satellite_apc_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_satellite_apc_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
+ * instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SSR_SATELLITE_APC_ENCODED_OVERHEAD 9u
 
-#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A 0x05DC
 /**
- * Encoded length of sbp_msg_ssr_orbit_clock_dep_a_t (V4 API) and
- * msg_ssr_orbit_clock_dep_a_t (legacy API)
+ * Encoded length of sbp_msg_ssr_orbit_clock_dep_a_t
  */
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A_ENCODED_LEN 47u
 
 /**
- * Encoded length of sbp_stec_header_dep_a_t (V4 API) and
- * stec_header_dep_a_t (legacy API)
+ * Encoded length of sbp_stec_header_dep_a_t
  */
 #define SBP_STEC_HEADER_DEP_A_ENCODED_LEN 10u
 
 /**
- * Encoded length of sbp_gridded_correction_header_dep_a_t (V4 API) and
- * gridded_correction_header_dep_a_t (legacy API)
+ * Encoded length of sbp_gridded_correction_header_dep_a_t
  */
 #define SBP_GRIDDED_CORRECTION_HEADER_DEP_A_ENCODED_LEN 13u
 
 /**
- * Encoded length of sbp_grid_definition_header_dep_a_t (V4 API) and
- * grid_definition_header_dep_a_t (legacy API)
+ * Encoded length of sbp_grid_definition_header_dep_a_t
  */
 #define SBP_GRID_DEFINITION_HEADER_DEP_A_ENCODED_LEN 9u
 
-#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A 0x05EB
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_stec_correction_dep_a_t::stec_sat_list (V4 API) or
- * msg_ssr_stec_correction_dep_a_t::stec_sat_list (legacy API) before the
- * maximum SBP message size is exceeded
+ * sbp_msg_ssr_stec_correction_dep_a_t::stec_sat_list before the maximum SBP
+ * message size is exceeded
  */
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A_STEC_SAT_LIST_MAX 22u
 
 /**
- * Encoded length of sbp_msg_ssr_stec_correction_dep_a_t (V4 API) and
- * msg_ssr_stec_correction_dep_a_t (legacy API)
+ * Encoded length of sbp_msg_ssr_stec_correction_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_stec_correction_dep_a_encoded_len to determine the actual size
- * of an instance of this message. Users of the legacy API are required to track
- * the encoded message length when interacting with the legacy type.
+ * of an instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A_ENCODED_OVERHEAD 10u
 
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_gridded_correction_no_std_dep_a_t::stec_residuals (V4 API) or
- * msg_ssr_gridded_correction_no_std_dep_a_t::stec_residuals (legacy API) before
- * the maximum SBP message size is exceeded
+ * sbp_msg_ssr_gridded_correction_no_std_dep_a_t::stec_residuals before the
+ * maximum SBP message size is exceeded
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_STEC_RESIDUALS_MAX 59u
 
 /**
- * Encoded length of sbp_msg_ssr_gridded_correction_no_std_dep_a_t (V4 API) and
- * msg_ssr_gridded_correction_no_std_dep_a_t (legacy API)
+ * Encoded length of sbp_msg_ssr_gridded_correction_no_std_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_gridded_correction_no_std_dep_a_encoded_len to determine the
- * actual size of an instance of this message. Users of the legacy API are
- * required to track the encoded message length when interacting with the legacy
- * type.
+ * actual size of an instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A_ENCODED_OVERHEAD 18u
 
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A 0x05FA
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_gridded_correction_dep_a_t::stec_residuals (V4 API) or
- * msg_ssr_gridded_correction_dep_a_t::stec_residuals (legacy API) before the
- * maximum SBP message size is exceeded
+ * sbp_msg_ssr_gridded_correction_dep_a_t::stec_residuals before the maximum SBP
+ * message size is exceeded
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A_STEC_RESIDUALS_MAX 47u
 
 /**
- * Encoded length of sbp_msg_ssr_gridded_correction_dep_a_t (V4 API) and
- * msg_ssr_gridded_correction_dep_a_t (legacy API)
+ * Encoded length of sbp_msg_ssr_gridded_correction_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_gridded_correction_dep_a_encoded_len to determine the actual
- * size of an instance of this message. Users of the legacy API are required to
- * track the encoded message length when interacting with the legacy type.
+ * size of an instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A_ENCODED_OVERHEAD 19u
 
-#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A 0x05F5
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_grid_definition_dep_a_t::rle_list (V4 API) or
- * msg_ssr_grid_definition_dep_a_t::rle_list (legacy API) before the maximum SBP
- * message size is exceeded
+ * sbp_msg_ssr_grid_definition_dep_a_t::rle_list before the maximum SBP message
+ * size is exceeded
  */
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A_RLE_LIST_MAX 246u
 
 /**
- * Encoded length of sbp_msg_ssr_grid_definition_dep_a_t (V4 API) and
- * msg_ssr_grid_definition_dep_a_t (legacy API)
+ * Encoded length of sbp_msg_ssr_grid_definition_dep_a_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_grid_definition_dep_a_encoded_len to determine the actual size
- * of an instance of this message. Users of the legacy API are required to track
- * the encoded message length when interacting with the legacy type.
+ * of an instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
@@ -489,12 +416,10 @@
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A_ENCODED_OVERHEAD 9u
 
 /**
- * Encoded length of sbp_orbit_clock_bound_t (V4 API) and
- * orbit_clock_bound_t (legacy API)
+ * Encoded length of sbp_orbit_clock_bound_t
  */
 #define SBP_ORBIT_CLOCK_BOUND_ENCODED_LEN 9u
 
-#define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS 0x05DE
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS__MASK (0xffu)
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS__SHIFT (0u)
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS__GET(flags)               \
@@ -513,21 +438,18 @@
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_GAL (5)
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_orbit_clock_bounds_t::orbit_clock_bounds (V4 API) or
- * msg_ssr_orbit_clock_bounds_t::orbit_clock_bounds (legacy API) before the
- * maximum SBP message size is exceeded
+ * sbp_msg_ssr_orbit_clock_bounds_t::orbit_clock_bounds before the maximum SBP
+ * message size is exceeded
  */
 #define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_ORBIT_CLOCK_BOUNDS_MAX 26u
 
 /**
- * Encoded length of sbp_msg_ssr_orbit_clock_bounds_t (V4 API) and
- * msg_ssr_orbit_clock_bounds_t (legacy API)
+ * Encoded length of sbp_msg_ssr_orbit_clock_bounds_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_orbit_clock_bounds_encoded_len to determine the actual size of
- * an instance of this message. Users of the legacy API are required to track
- * the encoded message length when interacting with the legacy type.
+ * an instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
@@ -535,12 +457,10 @@
 #define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_ENCODED_OVERHEAD 13u
 
 /**
- * Encoded length of sbp_code_phase_biases_sat_sig_t (V4 API) and
- * code_phase_biases_sat_sig_t (legacy API)
+ * Encoded length of sbp_code_phase_biases_sat_sig_t
  */
 #define SBP_CODE_PHASE_BIASES_SAT_SIG_ENCODED_LEN 6u
 
-#define SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS 0x05EC
 #define SBP_SSR_CODE_PHASE_BIASES_BOUNDS__MASK (0xffu)
 #define SBP_SSR_CODE_PHASE_BIASES_BOUNDS__SHIFT (0u)
 #define SBP_SSR_CODE_PHASE_BIASES_BOUNDS__GET(flags)               \
@@ -559,21 +479,18 @@
 #define SBP_SSR_CODE_PHASE_BIASES_BOUNDS_GAL (5)
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ssr_code_phase_biases_bounds_t::satellites_signals (V4 API) or
- * msg_ssr_code_phase_biases_bounds_t::satellites_signals (legacy API) before
- * the maximum SBP message size is exceeded
+ * sbp_msg_ssr_code_phase_biases_bounds_t::satellites_signals before the maximum
+ * SBP message size is exceeded
  */
 #define SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS_SATELLITES_SIGNALS_MAX 40u
 
 /**
- * Encoded length of sbp_msg_ssr_code_phase_biases_bounds_t (V4 API) and
- * msg_ssr_code_phase_biases_bounds_t (legacy API)
+ * Encoded length of sbp_msg_ssr_code_phase_biases_bounds_t
  *
  * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
+ * than the value indicated by this symbol. Users call
  * #sbp_msg_ssr_code_phase_biases_bounds_encoded_len to determine the actual
- * size of an instance of this message. Users of the legacy API are required to
- * track the encoded message length when interacting with the legacy type.
+ * size of an instance of this message.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
@@ -581,12 +498,10 @@
 #define SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS_ENCODED_OVERHEAD 13u
 
 /**
- * Encoded length of sbp_orbit_clock_bound_degradation_t (V4 API) and
- * orbit_clock_bound_degradation_t (legacy API)
+ * Encoded length of sbp_orbit_clock_bound_degradation_t
  */
 #define SBP_ORBIT_CLOCK_BOUND_DEGRADATION_ENCODED_LEN 8u
 
-#define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION 0x05DF
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__MASK (0xffu)
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__SHIFT (0u)
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION__GET(flags)               \
@@ -605,8 +520,7 @@
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_BDS (3)
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_GAL (5)
 /**
- * Encoded length of sbp_msg_ssr_orbit_clock_bounds_degradation_t (V4 API) and
- * msg_ssr_orbit_clock_bounds_degradation_t (legacy API)
+ * Encoded length of sbp_msg_ssr_orbit_clock_bounds_degradation_t
  */
 #define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_ENCODED_LEN 28u
 

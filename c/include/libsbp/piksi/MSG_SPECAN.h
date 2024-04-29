@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_PIKSI_MSG_SPECAN_H
-#define LIBSBP_V4_PIKSI_MSG_SPECAN_H
+#ifndef LIBSBP_PIKSI_MSG_SPECAN_H
+#define LIBSBP_PIKSI_MSG_SPECAN_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -52,7 +52,7 @@ typedef struct {
   /**
    * Receiver time of this observation
    */
-  sbp_v4_gps_time_t t;
+  sbp_gps_time_t t;
 
   /**
    * Reference frequency of this packet [MHz]
@@ -215,4 +215,4 @@ static inline bool operator>=(const sbp_msg_specan_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_PIKSI_MSG_SPECAN_H */
+#endif /* LIBSBP_PIKSI_MSG_SPECAN_H */

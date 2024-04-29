@@ -28,8 +28,8 @@ static struct {
   void *context;
 } last_msg;
 
-static u32 dummy_wr = 0;
-static u32 dummy_rd = 0;
+static size_t dummy_wr = 0;
+static size_t dummy_rd = 0;
 static u8 dummy_buff[1024];
 static void *last_io_context;
 
@@ -43,7 +43,7 @@ static void dummy_reset() {
 
 static s32 dummy_write(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(dummy_buff + dummy_wr, buff, real_n);
   dummy_wr += real_n;
   return (s32)real_n;
@@ -51,7 +51,7 @@ static s32 dummy_write(u8 *buff, u32 n, void *context) {
 
 static s32 dummy_read(u8 *buff, u32 n, void *context) {
   last_io_context = context;
-  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  size_t real_n = n;  //(dummy_n > n) ? n : dummy_n;
   memcpy(buff, dummy_buff + dummy_rd, real_n);
   dummy_rd += real_n;
   return (s32)real_n;
@@ -164,94 +164,94 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrOrbitClockDepA) {
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.along == 132661048,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.along, "
-        "expected 132661048, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.along);
+        "expected 132661048, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.along);
 
     ck_assert_msg(last_msg.msg.ssr_orbit_clock_dep_a.c0 == -970026069,
                   "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.c0, "
-                  "expected -970026069, is %d",
-                  last_msg.msg.ssr_orbit_clock_dep_a.c0);
+                  "expected -970026069, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.c0);
 
     ck_assert_msg(last_msg.msg.ssr_orbit_clock_dep_a.c1 == -503975083,
                   "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.c1, "
-                  "expected -503975083, is %d",
-                  last_msg.msg.ssr_orbit_clock_dep_a.c1);
+                  "expected -503975083, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.c1);
 
     ck_assert_msg(last_msg.msg.ssr_orbit_clock_dep_a.c2 == -759858197,
                   "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.c2, "
-                  "expected -759858197, is %d",
-                  last_msg.msg.ssr_orbit_clock_dep_a.c2);
+                  "expected -759858197, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.c2);
 
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.cross == 1845577176,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.cross, "
-        "expected 1845577176, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.cross);
+        "expected 1845577176, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.cross);
 
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.dot_along == 72905755,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.dot_along, "
-        "expected 72905755, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.dot_along);
+        "expected 72905755, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.dot_along);
 
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.dot_cross == 311886653,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.dot_cross, "
-        "expected 311886653, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.dot_cross);
+        "expected 311886653, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.dot_cross);
 
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.dot_radial == -1111196507,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.dot_radial, "
-        "expected -1111196507, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.dot_radial);
+        "expected -1111196507, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.dot_radial);
 
     ck_assert_msg(last_msg.msg.ssr_orbit_clock_dep_a.iod == 193,
                   "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.iod, "
-                  "expected 193, is %d",
-                  last_msg.msg.ssr_orbit_clock_dep_a.iod);
+                  "expected 193, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.iod);
 
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.iod_ssr == 211,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.iod_ssr, "
-        "expected 211, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.iod_ssr);
+        "expected 211, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.iod_ssr);
 
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.radial == -24141393,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.radial, "
-        "expected -24141393, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.radial);
+        "expected -24141393, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.radial);
 
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.sid.code == 30,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.sid.code, "
-        "expected 30, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.sid.code);
+        "expected 30, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.sid.code);
 
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.sid.sat == 1,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.sid.sat, "
-        "expected 1, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.sid.sat);
+        "expected 1, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.sid.sat);
 
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.time.tow == 3172954849,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.time.tow, "
-        "expected 3172954849, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.time.tow);
+        "expected 3172954849, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.time.tow);
 
     ck_assert_msg(
         last_msg.msg.ssr_orbit_clock_dep_a.time.wn == 7723,
         "incorrect value for last_msg.msg.ssr_orbit_clock_dep_a.time.wn, "
-        "expected 7723, is %d",
-        last_msg.msg.ssr_orbit_clock_dep_a.time.wn);
+        "expected 7723, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.time.wn);
 
     ck_assert_msg(last_msg.msg.ssr_orbit_clock_dep_a.update_interval == 194,
                   "incorrect value for "
                   "last_msg.msg.ssr_orbit_clock_dep_a.update_interval, "
-                  "expected 194, is %d",
-                  last_msg.msg.ssr_orbit_clock_dep_a.update_interval);
+                  "expected 194, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_orbit_clock_dep_a.update_interval);
   }
 }
 END_TEST

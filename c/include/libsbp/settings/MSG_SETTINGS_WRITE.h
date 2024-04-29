@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SETTINGS_MSG_SETTINGS_WRITE_H
-#define LIBSBP_V4_SETTINGS_MSG_SETTINGS_WRITE_H
+#ifndef LIBSBP_SETTINGS_MSG_SETTINGS_WRITE_H
+#define LIBSBP_SETTINGS_MSG_SETTINGS_WRITE_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -380,4 +380,4 @@ static inline bool operator>=(const sbp_msg_settings_write_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SETTINGS_MSG_SETTINGS_WRITE_H */
+#endif /* LIBSBP_SETTINGS_MSG_SETTINGS_WRITE_H */
