@@ -171,6 +171,13 @@ this process is performed using the above docker container.  You'll likely want
 to run the git commands outside of the container and the `make ...` commands
 inside the container (so you don't have to setup git inside the docker container).
 
+This process describes running `make <language>` in multiple places. These targets will
+both regenerate the language bindings and then build and run any test suites.
+Skipping tests should not be done by default, but most languages have a "gen" target 
+available - `make gen-<language>` - which will only regenerate the bindings without 
+running tests. This can be used to split or speed up the process should any errors occur
+and something needs to be repeated.
+
 1. It's easiest to do this on the master branch. Start by tagging the release version:
 
     ```shell
@@ -213,13 +220,29 @@ inside the container (so you don't have to setup git inside the docker container
 
     ```shell
     make c haskell javascript rust
-    make javascript
-    git add c/include/libsbp/version.h haskell/sbp.cabal javascript/sbp/RELEASE-VERSION package.json package-lock.json rust/sbp/Cargo.toml
+    git add c/include/libsbp/version.h haskell/sbp.cabal rust/sbp/Cargo.toml
     git commit --amend -a -m 'Release <INCREMENTED_TAG>'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
 
-4. Finally, build the docs:
+
+    For JavaScript, needs to be run twice to update the package information
+    ```shell
+    make javascript
+    make javascript
+    git add javascript/sbp/RELEASE-VERSION package.json package-lock.json
+    git commit --amend -a -m 'Release <INCREMENTED_TAG>'
+    ```
+
+    For Kaitai
+
+    ```shell
+    make kaitai
+    git add kaitai/ksy/sbp.ksy
+    git commit --amend -a -m 'Release <INCREMENTED_TAG>'
+    ```
+
+4. Build the docs:
 
     ```shell
     make docs
@@ -237,24 +260,24 @@ inside the container (so you don't have to setup git inside the docker container
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
 
-5. Verify that package dependencies, their version numbers, and the
-   libsbp version number in the C, Python, JavaScript, and LaTeX developer
-   documentation are consistent.
-
-6. Push the release to GitHub:
-    ```shell
-    git push origin master <INCREMENTED_TAG>
-    ```
-
-7. Update the CHANGELOG details with `make release`. Submit a pull request and
+5. Update the CHANGELOG details with `make release`. Submit a pull request and
    get it merged. This requires a GitHub token to be loaded into your environment
    at `CHANGELOG_GITHUB_TOKEN`.  The Makefile will use docker to run the
    tool that generates a `DRAFT_CHANGELOG.md`.
 
    It's generally a good idea to scrub any internal ticket numbers from
-   `DRAFT_CHANGELOG.md` as they add uncessary noise for customers.
+   `DRAFT_CHANGELOG.md` as they add unnecessary noise for customers.
 
-7. Create a release on
+6. Verify that package dependencies, their version numbers, and the
+   libsbp version number in the C, Python, JavaScript, and LaTeX developer
+   documentation are consistent.
+
+7. Push the release to GitHub:
+    ```shell
+    git push origin master <INCREMENTED_TAG>
+    ```
+
+8. Create a release on
    [GitHub](https://github.com/swift-nav/libsbp/releases) and add the
    section for the new release from `DRAFT_CHANGELOG.md` to the release
    notes.
@@ -266,15 +289,17 @@ inside the container (so you don't have to setup git inside the docker container
    [Protocol Documentation](https://github.com/swift-nav/libsbp/blob/v3.4.6/docs/sbp.pdf)
    ```
 
-8. Prep for the next development cycle.  Add the new release section from
-   `DRAFT_CHANGELOG.md` to `CHANGELOG.md` and re-run `make release`.
+9. Prep for the next development cycle.  Create an empty commit so that version numbers
+   get regenerated with the `-alpha` tag of the next release, then rebuild all languages
+
+   Again, javascript needs to be built twice to get the correct package versions
 
     ```
-    vim/emacs/nano CHANGELOG.md  # add new change log entries
-    git add CHANGELOG.md
+    git commit --allow-empty -m "prep for next release #no_auto_pr"
     make all
-    git add python/sbp/RELEASE-VERSION c/include/libsbp/version.h haskell/sbp.cabal javascript/sbp/RELEASE-VERSION package.json package-lock.json rust/sbp/Cargo.toml docs/sbp.pdf
-    git commit -m 'update CHANGELOG.md, prep for next release #no_auto_pr'
+    make javascript
+    git add python/sbp/RELEASE-VERSION c/include/libsbp/version.h haskell/sbp.cabal javascript/sbp/RELEASE-VERSION package.json package-lock.json rust/sbp/Cargo.toml docs/sbp.pdf kaitai/ksy/sbp.ksy
+    git commit -m 'prep for next release #no_auto_pr'
     git push origin master
     ```
 
@@ -318,37 +343,10 @@ To distribute Rust.  Use the `cargo-release` tool:
 cargo install cargo-release
 ```
 
-**FIRST** just try running the `dist-rust` target:
+Once you have logged in to crates.io with `cargo`:
 
-```
-make dist-rust
-```
-
-If that doesn't work (**status** it don't work, consider fixing the make target),
-otherwise try releasing `sbp` and `sbp2json` crates separately, first `sbp`,
-this will do a dry run first:
-
-```
-cargo release --exclude sbp2json <INCREMENTED_TAG>
-```
-
-Then use `--execute` to actually run the release:
-
-```
-cargo release --exclude sbp2json <INCREMENTED_TAG> --execute
-```
-
-Next, release `sbp2son`, first do a dry-run:
-
-```
-cargo release --exclude sbp <INCREMENTED_TAG>
-```
-
-Then, reset any modifications from the dry run, and then actually release `sbp2son`:
-
-```
-git checkout .
-cargo release --exclude sbp <INCREMENTED_TAG> --execute
+```shell
+cargo release <INCREMENTED_TAG> --allow-branch HEAD --execute
 ```
 
 Then rollback any commits that are created:
@@ -361,6 +359,8 @@ git reset --hard v<INCREMENTED_TAG>
 
 The build of the libsbp wheel can be done via the `libsbp-build` container
 described above.
+
+You must have the correct token set in your environment to publish to PyPI.
 
 ## Troubleshooting
 
@@ -409,8 +409,14 @@ SonaType open source repo requires a GPG key for signatures.  Generate GPG key v
 ```shell
 gpg --gen-key
 gpg --export-secret-keys >keys.gpg
-gpg --keyserver keyserver.ubuntu.com --send-keys <KEY_ID>
 ```
+
+Export your public key
+```
+gpg --export -a > pub.key
+```
+
+Go to [https://keyserver.ubuntu.com/#submitKey](https://keyserver.ubuntu.com/#submitKey) and upload your PUBLIC key
 
 To locate the value for `signing.keyId` (needed below) run:
 
@@ -464,7 +470,8 @@ staging repository and release to finish it off.
 Follow the instructions here for how to "close" and then "release" and staging
 repository on SonaType's repository manager:
 
-- <https://central.sonatype.org/publish/release>
+- [Documentation](https://central.sonatype.org/publish/release)
+- [Nexus Repository Manager](https://s01.oss.sonatype.org/#welcome)
 
 # Contributions
 
