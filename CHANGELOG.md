@@ -1,5 +1,17 @@
 # Changelog
 
+## [v6.0.0](https://github.com/swift-nav/libsbp/tree/v6.0.0) (2024-05-07)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.8...v6.0.0)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - enable c++20 \(\#173\) [\#1411](https://github.com/swift-nav/libsbp/pull/1411) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Fix kaitai py tests [\#1410](https://github.com/swift-nav/libsbp/pull/1410) ([woodfell](https://github.com/woodfell))
+- Alter release process in line with recent observations [\#1406](https://github.com/swift-nav/libsbp/pull/1406) ([woodfell](https://github.com/woodfell))
+- Remove legacy C API [\#1404](https://github.com/swift-nav/libsbp/pull/1404) ([woodfell](https://github.com/woodfell))
+
+
 ## [v5.0.8](https://github.com/swift-nav/libsbp/tree/v5.0.8) (2024-03-29)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.7...v5.0.8)
