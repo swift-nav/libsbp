@@ -1,0 +1,92 @@
+---
+description: Unit tests for swiftnav.sbp.profiling MSgProfilingResourceCounter
+generated_on: 2024-02-01 00:00:00.00 # manually generated
+package: sbp.profiling
+tests:
+
+
+  - msg:
+      c_decoded_fields:
+        n_buckets:
+          handle_as: vararray-len
+          relates_to: buckets
+          value: 6
+      fields:
+        seq_no: 1
+        seq_len: 3
+        buckets:
+          - name: "Fusion engine\0\0\0\0\0\0\0\0"
+            thread: 1
+            mutex: 2
+            cv: 2
+            io: 0
+            heap_bytes_alloc: 927480
+            heap_bytes_free: 0
+            io_write: 0
+            io_read: 0
+          - name: "NTRIP client\0\0\0\0\0\0\0\0\0"
+            thread: 1
+            mutex: 1
+            cv: 1
+            io: 1
+            heap_bytes_alloc: 84454
+            heap_bytes_free: 0
+            io_write: 879
+            io_read: 19520
+          - name: "SSR2OSR\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+            thread: 1
+            mutex: 1
+            cv: 1
+            io: 0
+            heap_bytes_alloc: 4328776
+            heap_bytes_free: 0
+            io_write: 0
+            io_read: 0
+          - name: "Periodic\0\0\0\0\0\0\0\0\0\0\0\0\0"
+            thread: 1
+            mutex: 2
+            cv: 1
+            io: 0
+            heap_bytes_alloc: 247112
+            heap_bytes_free: 0
+            io_write: 0
+            io_read: 0
+          - name: "IMU\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+            thread: 1
+            mutex: 1
+            cv: 1
+            io: 1
+            heap_bytes_alloc: 18305
+            heap_bytes_free: 0
+            io_write: 0
+            io_read: 26207
+          - name: "sbp\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+            thread: 5
+            mutex: 2
+            cv: 2
+            io: 2
+            heap_bytes_alloc: 43507
+            heap_bytes_free: 0
+            io_write: 235451
+            io_read: 498
+      module: sbp.profiling
+      name: MsgProfilingResourceCounter
+    msg_type: '0xcf03'
+    raw_json: >
+      {"crc": 39349, "preamble": 85, "sender": 4096, "length": 248, "msg_type": 52995, 
+      "seq_no": 1, "seq_len": 3, "buckets": [
+      {"name": "Fusion engine\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "thread": 1, "mutex": 2, "cv": 2, "io": 0, "heap_bytes_alloc": 927480, "heap_bytes_free": 0, "io_write": 0, "io_read": 0}, 
+      {"name": "NTRIP client\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "thread": 1, "mutex": 1, "cv": 1, "io": 1, "heap_bytes_alloc": 84454, "heap_bytes_free": 0, "io_write": 879, "io_read": 19520}, 
+      {"name": "SSR2OSR\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "thread": 1, "mutex": 1, "cv": 1, "io": 0, "heap_bytes_alloc": 4328776, "heap_bytes_free": 0, "io_write": 0, "io_read": 0}, 
+      {"name": "Periodic\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "thread": 1, "mutex": 2, "cv": 1, "io": 0, "heap_bytes_alloc": 247112, "heap_bytes_free": 0, "io_write": 0, "io_read": 0}, 
+      {"name": "IMU\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "thread": 1, "mutex": 1, "cv": 1, "io": 1, "heap_bytes_alloc": 18305, "heap_bytes_free": 0, "io_write": 0, "io_read": 26207}, 
+      {"name": "sbp\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "thread": 5, "mutex": 2, "cv": 2, "io": 2, "heap_bytes_alloc": 43507, "heap_bytes_free": 0, "io_write": 235451, "io_read": 498}],
+      "payload": "AQNGdXNpb24gZW5naW5lAAAAAAAAAAABAgIA+CYOAAAAAAAAAAAAAAAAAE5UUklQIGNsaWVudAAAAAAAAAAAAAEBAQHmSQEAAAAAAG8DAABATAAAU1NSMk9TUgAAAAAAAAAAAAAAAAAAAQEBAEgNQgAAAAAAAAAAAAAAAABQZXJpb2RpYwAAAAAAAAAAAAAAAAABAgEASMUDAAAAAAAAAAAAAAAAAElNVQAAAAAAAAAAAAAAAAAAAAAAAAEBAQGBRwAAAAAAAAAAAABfZgAAc2JwAAAAAAAAAAAAAAAAAAAAAAAABQICAvOpAAAAAAAAu5cDAPIBAAA="}
+    raw_packet: VQPPABD4AQNGdXNpb24gZW5naW5lAAAAAAAAAAABAgIA+CYOAAAAAAAAAAAAAAAAAE5UUklQIGNsaWVudAAAAAAAAAAAAAEBAQHmSQEAAAAAAG8DAABATAAAU1NSMk9TUgAAAAAAAAAAAAAAAAAAAQEBAEgNQgAAAAAAAAAAAAAAAABQZXJpb2RpYwAAAAAAAAAAAAAAAAABAgEASMUDAAAAAAAAAAAAAAAAAElNVQAAAAAAAAAAAAAAAAAAAAAAAAEBAQGBRwAAAAAAAAAAAABfZgAAc2JwAAAAAAAAAAAAAAAAAAAAAAAABQICAvOpAAAAAAAAu5cDAPIBAAC1mQ==
+    sbp:
+      crc: '0x99b5'
+      length: 248
+      msg_type: '0xcf03'
+      payload: AQNGdXNpb24gZW5naW5lAAAAAAAAAAABAgIA+CYOAAAAAAAAAAAAAAAAAE5UUklQIGNsaWVudAAAAAAAAAAAAAEBAQHmSQEAAAAAAG8DAABATAAAU1NSMk9TUgAAAAAAAAAAAAAAAAAAAQEBAEgNQgAAAAAAAAAAAAAAAABQZXJpb2RpYwAAAAAAAAAAAAAAAAABAgEASMUDAAAAAAAAAAAAAAAAAElNVQAAAAAAAAAAAAAAAAAAAAAAAAEBAQGBRwAAAAAAAAAAAABfZgAAc2JwAAAAAAAAAAAAAAAAAAAAAAAABQICAvOpAAAAAAAAu5cDAPIBAAA=
+      preamble: '0x55'
+      sender: '0x1000'

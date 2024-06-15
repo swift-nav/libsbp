@@ -1,0 +1,29 @@
+---
+description: Unit tests for swiftnav.sbp.profiling MsgProfilingSystemInfo
+generated_on: 2024-02-01 00:00:00.00 # manually generated
+package: sbp.profiling
+tests:
+
+
+  - msg:
+      fields:
+        total_cpu_time: 3418210
+        age: 10292338
+        n_threads: 27
+        heap_usage: 14861128
+      module: sbp.profiling
+      name: MsgProfilingSystemInfo
+
+    msg_type: '0xcf01'
+    raw_json: >
+      {"crc": 16892, "preamble": 85, "sender": 4096, "length": 21, "msg_type": 52993, 
+      "total_cpu_time": 3418210, "age": 10292338, "n_threads": 27, "heap_usage": 14861128,
+      "payload": "Yig0AAAAAAByDJ0AAAAAABtIw+IA"}
+    raw_packet: VQHPABAVYig0AAAAAAByDJ0AAAAAABtIw+IA/EE=
+    sbp:
+      crc: '0x41fc'
+      length: 21
+      msg_type: '0xcf01'
+      payload: Yig0AAAAAAByDJ0AAAAAABtIw+IA
+      preamble: '0x55'
+      sender: '0x1000'
