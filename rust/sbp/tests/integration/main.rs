@@ -12,6 +12,7 @@
 // This file was auto-generated. Do not modify by hand!
 
 #![allow(clippy::excessive_precision)]
+#![allow(clippy::legacy_numeric_constants)]
 mod auto_check_sbp_acquisition_msg_acq_result;
 mod auto_check_sbp_acquisition_msg_acq_result_dep_a;
 mod auto_check_sbp_acquisition_msg_acq_result_dep_b;
