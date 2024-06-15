@@ -207,6 +207,9 @@ typedef union {
   sbp_msg_pose_relative_t pose_relative;
   sbp_msg_pps_time_t pps_time;
   sbp_msg_print_dep_t print_dep;
+  sbp_msg_profiling_resource_counter_t profiling_resource_counter;
+  sbp_msg_profiling_system_info_t profiling_system_info;
+  sbp_msg_profiling_thread_info_t profiling_thread_info;
   sbp_msg_protection_level_dep_a_t protection_level_dep_a;
   sbp_msg_protection_level_t protection_level;
   sbp_msg_reference_frame_param_t reference_frame_param;
@@ -713,6 +716,15 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
       return sbp_msg_pps_time_encode(buf, len, n_written, &msg->pps_time);
     case SbpMsgPrintDep:
       return sbp_msg_print_dep_encode(buf, len, n_written, &msg->print_dep);
+    case SbpMsgProfilingResourceCounter:
+      return sbp_msg_profiling_resource_counter_encode(
+          buf, len, n_written, &msg->profiling_resource_counter);
+    case SbpMsgProfilingSystemInfo:
+      return sbp_msg_profiling_system_info_encode(buf, len, n_written,
+                                                  &msg->profiling_system_info);
+    case SbpMsgProfilingThreadInfo:
+      return sbp_msg_profiling_thread_info_encode(buf, len, n_written,
+                                                  &msg->profiling_thread_info);
     case SbpMsgProtectionLevelDepA:
       return sbp_msg_protection_level_dep_a_encode(
           buf, len, n_written, &msg->protection_level_dep_a);
@@ -1368,6 +1380,15 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_pps_time_decode(buf, len, n_read, &msg->pps_time);
     case SbpMsgPrintDep:
       return sbp_msg_print_dep_decode(buf, len, n_read, &msg->print_dep);
+    case SbpMsgProfilingResourceCounter:
+      return sbp_msg_profiling_resource_counter_decode(
+          buf, len, n_read, &msg->profiling_resource_counter);
+    case SbpMsgProfilingSystemInfo:
+      return sbp_msg_profiling_system_info_decode(buf, len, n_read,
+                                                  &msg->profiling_system_info);
+    case SbpMsgProfilingThreadInfo:
+      return sbp_msg_profiling_thread_info_decode(buf, len, n_read,
+                                                  &msg->profiling_thread_info);
     case SbpMsgProtectionLevelDepA:
       return sbp_msg_protection_level_dep_a_decode(
           buf, len, n_read, &msg->protection_level_dep_a);
@@ -1942,6 +1963,15 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_pps_time_encoded_len(&msg->pps_time);
     case SbpMsgPrintDep:
       return sbp_msg_print_dep_encoded_len(&msg->print_dep);
+    case SbpMsgProfilingResourceCounter:
+      return sbp_msg_profiling_resource_counter_encoded_len(
+          &msg->profiling_resource_counter);
+    case SbpMsgProfilingSystemInfo:
+      return sbp_msg_profiling_system_info_encoded_len(
+          &msg->profiling_system_info);
+    case SbpMsgProfilingThreadInfo:
+      return sbp_msg_profiling_thread_info_encoded_len(
+          &msg->profiling_thread_info);
     case SbpMsgProtectionLevelDepA:
       return sbp_msg_protection_level_dep_a_encoded_len(
           &msg->protection_level_dep_a);
@@ -2534,6 +2564,15 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_pps_time_cmp(&a->pps_time, &b->pps_time);
     case SbpMsgPrintDep:
       return sbp_msg_print_dep_cmp(&a->print_dep, &b->print_dep);
+    case SbpMsgProfilingResourceCounter:
+      return sbp_msg_profiling_resource_counter_cmp(
+          &a->profiling_resource_counter, &b->profiling_resource_counter);
+    case SbpMsgProfilingSystemInfo:
+      return sbp_msg_profiling_system_info_cmp(&a->profiling_system_info,
+                                               &b->profiling_system_info);
+    case SbpMsgProfilingThreadInfo:
+      return sbp_msg_profiling_thread_info_cmp(&a->profiling_thread_info,
+                                               &b->profiling_thread_info);
     case SbpMsgProtectionLevelDepA:
       return sbp_msg_protection_level_dep_a_cmp(&a->protection_level_dep_a,
                                                 &b->protection_level_dep_a);

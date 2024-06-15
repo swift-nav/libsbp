@@ -5358,6 +5358,118 @@ struct MessageTraits<sbp_msg_print_dep_t> {
 };
 
 template <>
+struct MessageTraits<sbp_msg_profiling_resource_counter_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgProfilingResourceCounter;
+  static constexpr const char *name = "MSG_PROFILING_RESOURCE_COUNTER";
+  static const sbp_msg_profiling_resource_counter_t &get(const sbp_msg_t &msg) {
+    return msg.profiling_resource_counter;
+  }
+  static sbp_msg_profiling_resource_counter_t &get(sbp_msg_t &msg) {
+    return msg.profiling_resource_counter;
+  }
+  static void to_sbp_msg(const sbp_msg_profiling_resource_counter_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->profiling_resource_counter = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_profiling_resource_counter_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.profiling_resource_counter = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_profiling_resource_counter_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_profiling_resource_counter_send(state, sender_id, &msg,
+                                                   write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_profiling_resource_counter_t &msg) {
+    return sbp_msg_profiling_resource_counter_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_profiling_resource_counter_t *msg) {
+    return sbp_msg_profiling_resource_counter_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_profiling_resource_counter_t &msg) {
+    return sbp_msg_profiling_resource_counter_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_profiling_system_info_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgProfilingSystemInfo;
+  static constexpr const char *name = "MSG_PROFILING_SYSTEM_INFO";
+  static const sbp_msg_profiling_system_info_t &get(const sbp_msg_t &msg) {
+    return msg.profiling_system_info;
+  }
+  static sbp_msg_profiling_system_info_t &get(sbp_msg_t &msg) {
+    return msg.profiling_system_info;
+  }
+  static void to_sbp_msg(const sbp_msg_profiling_system_info_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->profiling_system_info = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_profiling_system_info_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.profiling_system_info = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_profiling_system_info_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_profiling_system_info_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_profiling_system_info_t &msg) {
+    return sbp_msg_profiling_system_info_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_profiling_system_info_t *msg) {
+    return sbp_msg_profiling_system_info_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_profiling_system_info_t &msg) {
+    return sbp_msg_profiling_system_info_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_profiling_thread_info_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgProfilingThreadInfo;
+  static constexpr const char *name = "MSG_PROFILING_THREAD_INFO";
+  static const sbp_msg_profiling_thread_info_t &get(const sbp_msg_t &msg) {
+    return msg.profiling_thread_info;
+  }
+  static sbp_msg_profiling_thread_info_t &get(sbp_msg_t &msg) {
+    return msg.profiling_thread_info;
+  }
+  static void to_sbp_msg(const sbp_msg_profiling_thread_info_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->profiling_thread_info = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_profiling_thread_info_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.profiling_thread_info = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_profiling_thread_info_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_profiling_thread_info_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_profiling_thread_info_t &msg) {
+    return sbp_msg_profiling_thread_info_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_profiling_thread_info_t *msg) {
+    return sbp_msg_profiling_thread_info_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_profiling_thread_info_t &msg) {
+    return sbp_msg_profiling_thread_info_encoded_len(&msg);
+  }
+};
+
+template <>
 struct MessageTraits<sbp_msg_protection_level_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgProtectionLevelDepA;
   static constexpr const char *name = "MSG_PROTECTION_LEVEL_DEP_A";

@@ -37,3 +37,61 @@ message MsgMeasurementPoint {
     uint32 line = 8;
     string func = 9;
 }
+
+/** System Profiling Information
+ *
+ * Contains basic information about system resource usage. System is defined
+ * in terms of the source of this message and may vary from  sender to sender.
+ * Refer to product documentation to understand the exact scope and meaning of
+ * this message.
+ */
+message MsgProfilingSystemInfo {
+    uint64 total_cpu_time = 1;
+    uint64 age = 2;
+    uint32 n_threads = 3;
+    uint32 heap_usage = 4;
+}
+
+/** Thread Profiling Information
+ *
+ * Contains profiling information related to a single thread being tracked by
+ * the producing system. Refer to product documentation to understand the
+ * exact scope and meaning of this message.
+ */
+message MsgProfilingThreadInfo {
+    uint64 total_cpu_time = 1;
+    uint64 age = 2;
+    uint32 state = 3;
+    uint32 stack_size = 4;
+    uint32 stack_usage = 5;
+    string name = 6;
+}
+
+/** A bucket containing various resources
+ *
+ * Information about allocation of various resources grouped by buckets. Refer
+ * to product documentation to understand the meaning and values in this
+ * message.
+ */
+message ResourceBucket {
+    string name = 1;
+    uint32 thread = 2;
+    uint32 mutex = 3;
+    uint32 cv = 4;
+    uint32 io = 5;
+    uint32 heap_bytes_alloc = 6;
+    uint32 heap_bytes_free = 7;
+    uint32 io_write = 8;
+    uint32 io_read = 9;
+}
+
+/** Information about resource buckets
+ *
+ * Information about resource buckets. Refer to product documentation to
+ * understand the meaning and values in this message.
+ */
+message MsgProfilingResourceCounter {
+    uint32 seq_no = 1;
+    uint32 seq_len = 2;
+    repeated ResourceBucket buckets = 3;
+}

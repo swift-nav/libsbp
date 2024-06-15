@@ -1,0 +1,30 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgProfilingSystemInfo",
+  "title":"MsgProfilingSystemInfo",
+  "description":"Contains basic information about system resource usage. System is defined in terms of the source of this message and may vary from  sender to sender. Refer to product documentation to understand the exact scope and meaning of this message.\n",
+  "type": "object",
+  "properties": {
+    "total_cpu_time": {"type": "integer"},
+    "age": {"type": "integer"},
+    "n_threads": {"type": "integer"},
+    "heap_usage": {"type": "integer"}
+  },
+  "required": [
+    "total_cpu_time",
+    "age",
+    "n_threads",
+    "heap_usage"
+  ]
+}
