@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, ECDSASignature, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, IntegritySSRHeader, Latency, MeasurementState, MsgAcknowledge, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCertificateChain, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEcdsaCertificate, MsgEcdsaSignature, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementPoint, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPoseRelative, MsgPpsTime, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgTelSv, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TelemetrySV, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel, UTCTime } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, ECDSASignature, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, IntegritySSRHeader, Latency, MeasurementState, MsgAcknowledge, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCertificateChain, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEcdsaCertificate, MsgEcdsaSignature, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementPoint, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPoseRelative, MsgPpsTime, MsgProfilingResourceCounter, MsgProfilingSystemInfo, MsgProfilingThreadInfo, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgTelSv, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, ResourceBucket, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TelemetrySV, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel, UTCTime } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -127,6 +127,9 @@
 //   const msgPosLLHGnss = Convert.toMsgPosLLHGnss(json);
 //   const msgPoseRelative = Convert.toMsgPoseRelative(json);
 //   const msgPpsTime = Convert.toMsgPpsTime(json);
+//   const msgProfilingResourceCounter = Convert.toMsgProfilingResourceCounter(json);
+//   const msgProfilingSystemInfo = Convert.toMsgProfilingSystemInfo(json);
+//   const msgProfilingThreadInfo = Convert.toMsgProfilingThreadInfo(json);
 //   const msgProtectionLevel = Convert.toMsgProtectionLevel(json);
 //   const msgReferenceFrameParam = Convert.toMsgReferenceFrameParam(json);
 //   const msgReset = Convert.toMsgReset(json);
@@ -200,6 +203,7 @@
 //   const packedOsrContent = Convert.toPackedOsrContent(json);
 //   const period = Convert.toPeriod(json);
 //   const phaseBiasesContent = Convert.toPhaseBiasesContent(json);
+//   const resourceBucket = Convert.toResourceBucket(json);
 //   const sTECHeader = Convert.toSTECHeader(json);
 //   const sTECResidual = Convert.toSTECResidual(json);
 //   const sTECResidualNoStd = Convert.toSTECResidualNoStd(json);
@@ -2023,6 +2027,62 @@ export interface MsgPoseRelative {
 export interface MsgPpsTime {
     flags: number;
     time:  number;
+    [property: string]: any;
+}
+
+/**
+ * Information about resource buckets. Refer to product documentation to understand the
+ * meaning and values in this message.
+ */
+export interface MsgProfilingResourceCounter {
+    buckets: ResourceBucket[];
+    seq_len: number;
+    seq_no:  number;
+    [property: string]: any;
+}
+
+/**
+ * Information about allocation of various resources grouped by buckets. Refer to product
+ * documentation to understand the meaning and values in this message.
+ */
+export interface ResourceBucket {
+    cv:               number;
+    heap_bytes_alloc: number;
+    heap_bytes_free:  number;
+    io:               number;
+    io_read:          number;
+    io_write:         number;
+    mutex:            number;
+    name:             string;
+    thread:           number;
+    [property: string]: any;
+}
+
+/**
+ * Contains basic information about system resource usage. System is defined in terms of the
+ * source of this message and may vary from  sender to sender. Refer to product
+ * documentation to understand the exact scope and meaning of this message.
+ */
+export interface MsgProfilingSystemInfo {
+    age:            number;
+    heap_usage:     number;
+    n_threads:      number;
+    total_cpu_time: number;
+    [property: string]: any;
+}
+
+/**
+ * Contains profiling information related to a single thread being tracked by the producing
+ * system. Refer to product documentation to understand the exact scope and meaning of this
+ * message.
+ */
+export interface MsgProfilingThreadInfo {
+    age:            number;
+    name:           string;
+    stack_size:     number;
+    stack_usage:    number;
+    state:          number;
+    total_cpu_time: number;
     [property: string]: any;
 }
 
@@ -4245,6 +4305,30 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgPpsTime")), null, 2);
     }
 
+    public static toMsgProfilingResourceCounter(json: string): MsgProfilingResourceCounter {
+        return cast(JSON.parse(json), r("MsgProfilingResourceCounter"));
+    }
+
+    public static msgProfilingResourceCounterToJson(value: MsgProfilingResourceCounter): string {
+        return JSON.stringify(uncast(value, r("MsgProfilingResourceCounter")), null, 2);
+    }
+
+    public static toMsgProfilingSystemInfo(json: string): MsgProfilingSystemInfo {
+        return cast(JSON.parse(json), r("MsgProfilingSystemInfo"));
+    }
+
+    public static msgProfilingSystemInfoToJson(value: MsgProfilingSystemInfo): string {
+        return JSON.stringify(uncast(value, r("MsgProfilingSystemInfo")), null, 2);
+    }
+
+    public static toMsgProfilingThreadInfo(json: string): MsgProfilingThreadInfo {
+        return cast(JSON.parse(json), r("MsgProfilingThreadInfo"));
+    }
+
+    public static msgProfilingThreadInfoToJson(value: MsgProfilingThreadInfo): string {
+        return JSON.stringify(uncast(value, r("MsgProfilingThreadInfo")), null, 2);
+    }
+
     public static toMsgProtectionLevel(json: string): MsgProtectionLevel {
         return cast(JSON.parse(json), r("MsgProtectionLevel"));
     }
@@ -4827,6 +4911,14 @@ export class Convert {
 
     public static phaseBiasesContentToJson(value: PhaseBiasesContent): string {
         return JSON.stringify(uncast(value, r("PhaseBiasesContent")), null, 2);
+    }
+
+    public static toResourceBucket(json: string): ResourceBucket {
+        return cast(JSON.parse(json), r("ResourceBucket"));
+    }
+
+    public static resourceBucketToJson(value: ResourceBucket): string {
+        return JSON.stringify(uncast(value, r("ResourceBucket")), null, 2);
     }
 
     public static toSTECHeader(json: string): STECHeader {
@@ -6023,6 +6115,36 @@ const typeMap: any = {
     "MsgPpsTime": o([
         { json: "flags", js: "flags", typ: 0 },
         { json: "time", js: "time", typ: 0 },
+    ], "any"),
+    "MsgProfilingResourceCounter": o([
+        { json: "buckets", js: "buckets", typ: a(r("ResourceBucket")) },
+        { json: "seq_len", js: "seq_len", typ: 0 },
+        { json: "seq_no", js: "seq_no", typ: 0 },
+    ], "any"),
+    "ResourceBucket": o([
+        { json: "cv", js: "cv", typ: 0 },
+        { json: "heap_bytes_alloc", js: "heap_bytes_alloc", typ: 0 },
+        { json: "heap_bytes_free", js: "heap_bytes_free", typ: 0 },
+        { json: "io", js: "io", typ: 0 },
+        { json: "io_read", js: "io_read", typ: 0 },
+        { json: "io_write", js: "io_write", typ: 0 },
+        { json: "mutex", js: "mutex", typ: 0 },
+        { json: "name", js: "name", typ: "" },
+        { json: "thread", js: "thread", typ: 0 },
+    ], "any"),
+    "MsgProfilingSystemInfo": o([
+        { json: "age", js: "age", typ: 0 },
+        { json: "heap_usage", js: "heap_usage", typ: 0 },
+        { json: "n_threads", js: "n_threads", typ: 0 },
+        { json: "total_cpu_time", js: "total_cpu_time", typ: 0 },
+    ], "any"),
+    "MsgProfilingThreadInfo": o([
+        { json: "age", js: "age", typ: 0 },
+        { json: "name", js: "name", typ: "" },
+        { json: "stack_size", js: "stack_size", typ: 0 },
+        { json: "stack_usage", js: "stack_usage", typ: 0 },
+        { json: "state", js: "state", typ: 0 },
+        { json: "total_cpu_time", js: "total_cpu_time", typ: 0 },
     ], "any"),
     "MsgProtectionLevel": o([
         { json: "atpl", js: "atpl", typ: 0 },

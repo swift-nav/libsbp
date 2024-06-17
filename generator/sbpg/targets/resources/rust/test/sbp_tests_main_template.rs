@@ -12,6 +12,7 @@
 // This file was auto-generated. Do not modify by hand!
 
 #![allow(clippy::excessive_precision)]
+#![allow(clippy::legacy_numeric_constants)]
 
 ((*- for test_name in test_names *))
 mod (((test_name)));

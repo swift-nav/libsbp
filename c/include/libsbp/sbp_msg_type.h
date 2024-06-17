@@ -198,6 +198,9 @@ typedef enum {
   SbpMsgPoseRelative = 0x0245,
   SbpMsgPpsTime = 0xFF08,
   SbpMsgPrintDep = 0x0010,
+  SbpMsgProfilingResourceCounter = 0xCF03,
+  SbpMsgProfilingSystemInfo = 0xCF01,
+  SbpMsgProfilingThreadInfo = 0xCF02,
   SbpMsgProtectionLevelDepA = 0x0216,
   SbpMsgProtectionLevel = 0x0217,
   SbpMsgReferenceFrameParam = 0x0244,
@@ -585,6 +588,12 @@ static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
       return "MSG_PPS_TIME";
     case SbpMsgPrintDep:
       return "MSG_PRINT_DEP";
+    case SbpMsgProfilingResourceCounter:
+      return "MSG_PROFILING_RESOURCE_COUNTER";
+    case SbpMsgProfilingSystemInfo:
+      return "MSG_PROFILING_SYSTEM_INFO";
+    case SbpMsgProfilingThreadInfo:
+      return "MSG_PROFILING_THREAD_INFO";
     case SbpMsgProtectionLevelDepA:
       return "MSG_PROTECTION_LEVEL_DEP_A";
     case SbpMsgProtectionLevel:

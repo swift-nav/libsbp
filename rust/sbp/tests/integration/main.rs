@@ -12,6 +12,7 @@
 // This file was auto-generated. Do not modify by hand!
 
 #![allow(clippy::excessive_precision)]
+#![allow(clippy::legacy_numeric_constants)]
 mod auto_check_sbp_acquisition_msg_acq_result;
 mod auto_check_sbp_acquisition_msg_acq_result_dep_a;
 mod auto_check_sbp_acquisition_msg_acq_result_dep_b;
@@ -176,6 +177,9 @@ mod auto_check_sbp_piksi_msg_thread_state;
 mod auto_check_sbp_piksi_msg_uart_state;
 mod auto_check_sbp_piksi_msg_uart_state_dep_a;
 mod auto_check_sbp_profiling_msg_measurement_point;
+mod auto_check_sbp_profiling_msg_profiling_resource_counter;
+mod auto_check_sbp_profiling_msg_profiling_system_info;
+mod auto_check_sbp_profiling_msg_profiling_thread_info;
 mod auto_check_sbp_sbas_msg_sbas_raw;
 mod auto_check_sbp_settings_msg_settings_read_by_index_done;
 mod auto_check_sbp_settings_msg_settings_read_by_index_req;
