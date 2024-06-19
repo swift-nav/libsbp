@@ -148,7 +148,7 @@ data MsgProfilingThreadInfo = MsgProfilingThreadInfo
   , _msgProfilingThreadInfo_stack_size   :: !Word32
     -- ^ Stack size in bytes
   , _msgProfilingThreadInfo_stack_usage  :: !Word32
-    -- ^ Stack highwater usage in bytes
+    -- ^ Stack high water usage in bytes
   , _msgProfilingThreadInfo_name         :: !Text
     -- ^ Thread name
   } deriving ( Show, Read, Eq )

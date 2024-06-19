@@ -399,7 +399,7 @@ pub mod msg_profiling_thread_info {
         /// Stack size in bytes
         #[cfg_attr(feature = "serde", serde(rename = "stack_size"))]
         pub stack_size: u32,
-        /// Stack highwater usage in bytes
+        /// Stack high water usage in bytes
         #[cfg_attr(feature = "serde", serde(rename = "stack_usage"))]
         pub stack_usage: u32,
         /// Thread name

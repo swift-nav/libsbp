@@ -66,7 +66,7 @@ typedef struct {
   u32 stack_size;
 
   /**
-   * Stack highwater usage in bytes
+   * Stack high water usage in bytes
    */
   u32 stack_usage;
 

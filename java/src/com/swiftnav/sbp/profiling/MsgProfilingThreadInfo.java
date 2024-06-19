@@ -43,7 +43,7 @@ public class MsgProfilingThreadInfo extends SBPMessage {
     /** Stack size in bytes */
     public long stack_size;
 
-    /** Stack highwater usage in bytes */
+    /** Stack high water usage in bytes */
     public long stack_usage;
 
     /** Thread name */

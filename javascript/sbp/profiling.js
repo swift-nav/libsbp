@@ -127,7 +127,7 @@ MsgProfilingSystemInfo.prototype.fieldSpec.push(['heap_usage', 'writeUInt32LE', 
  * @field age number (unsigned 64-bit int, 8 bytes) Age of the thread in microseconds
  * @field state number (unsigned 8-bit int, 1 byte) Thread state
  * @field stack_size number (unsigned 32-bit int, 4 bytes) Stack size in bytes
- * @field stack_usage number (unsigned 32-bit int, 4 bytes) Stack highwater usage in bytes
+ * @field stack_usage number (unsigned 32-bit int, 4 bytes) Stack high water usage in bytes
  * @field name string Thread name
  *
  * @param sbp An SBP object with a payload to be decoded.
