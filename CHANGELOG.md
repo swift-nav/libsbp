@@ -1,5 +1,15 @@
 # Changelog
 
+## [v6.0.1](https://github.com/swift-nav/libsbp/tree/v6.0.1)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.0.0...v6.0.1)
+
+**Merged pull requests:**
+
+- Change highwater -\> high water, add mutexes to spelling wordlist [\#1413](https://github.com/swift-nav/libsbp/pull/1413) ([woodfell](https://github.com/woodfell))
+- Auto submodule update: cmake - ASIO gRPC boost container fix \(\#174\) [\#1412](https://github.com/swift-nav/libsbp/pull/1412) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Add profiling messages [\#1401](https://github.com/swift-nav/libsbp/pull/1401) ([woodfell](https://github.com/woodfell))
+
 ## [v6.0.0](https://github.com/swift-nav/libsbp/tree/v6.0.0) (2024-05-07)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v5.0.8...v6.0.0)
