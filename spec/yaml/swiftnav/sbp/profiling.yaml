@@ -105,7 +105,7 @@ definitions:
           desc: Stack size in bytes
       - stack_usage:
           type: u32
-          desc: Stack highwater usage in bytes
+          desc: Stack high water usage in bytes
       - name:
           type: string
           encoding: null_terminated

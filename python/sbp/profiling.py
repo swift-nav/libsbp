@@ -374,7 +374,7 @@ class MsgProfilingThreadInfo(SBP):
   stack_size : int
     Stack size in bytes
   stack_usage : int
-    Stack highwater usage in bytes
+    Stack high water usage in bytes
   name : string
     Thread name
   sender : int

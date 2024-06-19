@@ -113,7 +113,7 @@ types:
         type: u4
       - id: stack_usage
         doc: |
-          Stack highwater usage in bytes
+          Stack high water usage in bytes
         type: u4
       - id: name
         doc: |
