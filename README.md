@@ -18,7 +18,7 @@
 - [Kaitai Struct Format Descriptions](#kaitai-struct-format-descriptions)
 - [LICENSE](#license)
 
-<!-- tocstop --> 
+<!-- tocstop -->
 
 The Swift Navigation Binary Protocol (SBP) is a fast, simple, and minimal
 binary protocol for communicating with Swift devices. It is the native binary

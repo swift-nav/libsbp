@@ -18,7 +18,7 @@ sudo apt-get install build-essential pkg-config cmake doxygen check clang-format
 On Mac:
 
 ```shell
-brew tap swift-nav/swift-devs
+brew tap swift-nav/swift-devs 
 brew install check cmake pkg-config doxygen clang-tools-6.0
 ```
 
