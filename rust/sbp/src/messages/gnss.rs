@@ -289,6 +289,15 @@ pub mod gnss_signal {
         /// GAL E7I
         GalE7I = 20,
 
+        /// QZS L1CA
+        QzsL1Ca = 31,
+
+        /// QZS L2CL
+        QzsL2Cl = 36,
+
+        /// QZS L5Q
+        QzsL5Q = 39,
+
         /// BDS3 B2a
         Bds3B2A = 47,
     }
@@ -307,6 +316,9 @@ pub mod gnss_signal {
                 Code::Bds2B2 => f.write_str("BDS2 B2"),
                 Code::GalE1B => f.write_str("GAL E1B"),
                 Code::GalE7I => f.write_str("GAL E7I"),
+                Code::QzsL1Ca => f.write_str("QZS L1CA"),
+                Code::QzsL2Cl => f.write_str("QZS L2CL"),
+                Code::QzsL5Q => f.write_str("QZS L5Q"),
                 Code::Bds3B2A => f.write_str("BDS3 B2a"),
             }
         }
@@ -327,6 +339,9 @@ pub mod gnss_signal {
                 13 => Ok(Code::Bds2B2),
                 14 => Ok(Code::GalE1B),
                 20 => Ok(Code::GalE7I),
+                31 => Ok(Code::QzsL1Ca),
+                36 => Ok(Code::QzsL2Cl),
+                39 => Ok(Code::QzsL5Q),
                 47 => Ok(Code::Bds3B2A),
                 i => Err(i),
             }
@@ -521,6 +536,9 @@ pub mod sv_id {
         /// BDS
         Bds = 3,
 
+        /// QZS
+        Qzs = 4,
+
         /// GAL
         Gal = 5,
     }
@@ -530,6 +548,7 @@ pub mod sv_id {
             match self {
                 Constellation::Gps => f.write_str("GPS"),
                 Constellation::Bds => f.write_str("BDS"),
+                Constellation::Qzs => f.write_str("QZS"),
                 Constellation::Gal => f.write_str("GAL"),
             }
         }
@@ -541,6 +560,7 @@ pub mod sv_id {
             match i {
                 0 => Ok(Constellation::Gps),
                 3 => Ok(Constellation::Bds),
+                4 => Ok(Constellation::Qzs),
                 5 => Ok(Constellation::Gal),
                 i => Err(i),
             }

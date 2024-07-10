@@ -45,7 +45,7 @@ extern "C" {
  * be a satellite, SSR grid point, or SSR tile. A group of aggregated elements
  * being monitored for integrity could refer to:
  *
- * - Satellites in a particular {GPS, GAL, BDS} constellation.
+ * - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
  *
  * - Satellites in the line-of-sight of a particular SSR tile.
  *
@@ -110,6 +110,11 @@ typedef struct {
    * Use BDS satellites.
    */
   u8 use_bds_sat;
+
+  /**
+   * Use QZSS satellites.
+   */
+  u8 use_qzss_sat;
 
   /**
    * Reserved

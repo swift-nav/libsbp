@@ -99,7 +99,7 @@ class MsgSsrFlagHighLevel(SBP):
   could be a satellite, SSR grid point, or SSR tile. A group of aggregated
   elements being monitored for integrity could refer to:
 
-  - Satellites in a particular {GPS, GAL, BDS} constellation.
+  - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
 
   - Satellites in the line-of-sight of a particular SSR tile.
 
@@ -143,6 +143,8 @@ class MsgSsrFlagHighLevel(SBP):
     Use GAL satellites.
   use_bds_sat : int
     Use BDS satellites.
+  use_qzss_sat : int
+    Use QZSS satellites.
   reserved : array
     Reserved
   use_tropo_grid_points : int
@@ -167,7 +169,8 @@ class MsgSsrFlagHighLevel(SBP):
                    'use_gps_sat' / construct.Int8ul,
                    'use_gal_sat' / construct.Int8ul,
                    'use_bds_sat' / construct.Int8ul,
-                   'reserved' / construct.Array(6, construct.Int8ul),
+                   'use_qzss_sat' / construct.Int8ul,
+                   'reserved' / construct.Array(5, construct.Int8ul),
                    'use_tropo_grid_points' / construct.Int8ul,
                    'use_iono_grid_points' / construct.Int8ul,
                    'use_iono_tile_sat_los' / construct.Int8ul,
@@ -182,6 +185,7 @@ class MsgSsrFlagHighLevel(SBP):
                'use_gps_sat',
                'use_gal_sat',
                'use_bds_sat',
+               'use_qzss_sat',
                'reserved',
                'use_tropo_grid_points',
                'use_iono_grid_points',
@@ -208,6 +212,7 @@ class MsgSsrFlagHighLevel(SBP):
       self.use_gps_sat = kwargs.pop('use_gps_sat')
       self.use_gal_sat = kwargs.pop('use_gal_sat')
       self.use_bds_sat = kwargs.pop('use_bds_sat')
+      self.use_qzss_sat = kwargs.pop('use_qzss_sat')
       self.reserved = kwargs.pop('reserved')
       self.use_tropo_grid_points = kwargs.pop('use_tropo_grid_points')
       self.use_iono_grid_points = kwargs.pop('use_iono_grid_points')

@@ -152,7 +152,7 @@ class Integrity(KaitaiStruct):
         could be a satellite, SSR grid point, or SSR tile. A group of aggregated
         elements being monitored for integrity could refer to:
         
-        - Satellites in a particular {GPS, GAL, BDS} constellation.
+        - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
         
         - Satellites in the line-of-sight of a particular SSR tile.
         
@@ -190,8 +190,9 @@ class Integrity(KaitaiStruct):
             self.use_gps_sat = self._io.read_u1()
             self.use_gal_sat = self._io.read_u1()
             self.use_bds_sat = self._io.read_u1()
+            self.use_qzss_sat = self._io.read_u1()
             self.reserved = []
-            for i in range(6):
+            for i in range(5):
                 self.reserved.append(self._io.read_u1())
 
             self.use_tropo_grid_points = self._io.read_u1()

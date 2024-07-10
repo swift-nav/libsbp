@@ -2389,7 +2389,7 @@ export interface CodePhaseBiasesSatSig {
  * satellite, SSR grid point, or SSR tile. A group of aggregated elements being monitored
  * for integrity could refer to:,
  * ,
- * - Satellites in a particular {GPS, GAL, BDS} constellation.,
+ * - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.,
  * ,
  * - Satellites in the line-of-sight of a particular SSR tile.,
  * ,
@@ -2424,6 +2424,7 @@ export interface MsgSsrFlagHighLevel {
     use_iono_grid_point_sat_los: number;
     use_iono_grid_points:        number;
     use_iono_tile_sat_los:       number;
+    use_qzss_sat:                number;
     use_tropo_grid_points:       number;
     [property: string]: any;
 }
@@ -6308,6 +6309,7 @@ const typeMap: any = {
         { json: "use_iono_grid_point_sat_los", js: "use_iono_grid_point_sat_los", typ: 0 },
         { json: "use_iono_grid_points", js: "use_iono_grid_points", typ: 0 },
         { json: "use_iono_tile_sat_los", js: "use_iono_tile_sat_los", typ: 0 },
+        { json: "use_qzss_sat", js: "use_qzss_sat", typ: 0 },
         { json: "use_tropo_grid_points", js: "use_tropo_grid_points", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoGridPointSatLos": o([

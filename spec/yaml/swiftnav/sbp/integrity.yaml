@@ -50,7 +50,7 @@ definitions:
         A group of aggregated elements being monitored for integrity could refer to:
 
 
-        - Satellites in a particular {GPS, GAL, BDS} constellation.
+        - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
 
 
         - Satellites in the line-of-sight of a particular SSR tile.
@@ -130,9 +130,20 @@ definitions:
                     - 1: Warning
                     - 2: Alert
                     - 3: Not monitored
+        - use_qzss_sat:
+            type: u8
+            desc: Use QZSS satellites.
+            fields:
+              - 0-2:
+                  desc: Use QZSS satellites.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
         - reserved:
             type: array
-            size: 6
+            size: 5
             fill: u8
             desc: Reserved
         - use_tropo_grid_points:

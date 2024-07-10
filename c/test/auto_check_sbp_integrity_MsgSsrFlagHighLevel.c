@@ -96,7 +96,7 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
     u8 encoded_frame[] = {
         85, 185, 11, 66, 0, 31, 180, 0, 0,  0, 3,  0,   104,
         1,  0,   0,  6,  0, 10, 20,  0, 30, 0, 40, 1,   2,
-        3,  0,   0,  0,  0, 0,  0,   4, 5,  6, 7,  102, 67,
+        3,  4,   0,  0,  0, 0,  0,   5, 6,  7, 8,  105, 3,
     };
 
     dummy_reset();
@@ -124,8 +124,6 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
 
     test_msg.ssr_flag_high_level.reserved[4] = 0;
 
-    test_msg.ssr_flag_high_level.reserved[5] = 0;
-
     test_msg.ssr_flag_high_level.ssr_sol_id = 10;
 
     test_msg.ssr_flag_high_level.tile_id = 30;
@@ -138,13 +136,15 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
 
     test_msg.ssr_flag_high_level.use_gps_sat = 1;
 
-    test_msg.ssr_flag_high_level.use_iono_grid_point_sat_los = 7;
+    test_msg.ssr_flag_high_level.use_iono_grid_point_sat_los = 8;
 
-    test_msg.ssr_flag_high_level.use_iono_grid_points = 5;
+    test_msg.ssr_flag_high_level.use_iono_grid_points = 6;
 
-    test_msg.ssr_flag_high_level.use_iono_tile_sat_los = 6;
+    test_msg.ssr_flag_high_level.use_iono_tile_sat_los = 7;
 
-    test_msg.ssr_flag_high_level.use_tropo_grid_points = 4;
+    test_msg.ssr_flag_high_level.use_qzss_sat = 4;
+
+    test_msg.ssr_flag_high_level.use_tropo_grid_points = 5;
 
     sbp_message_send(&sbp_state, SbpMsgSsrFlagHighLevel, 66, &test_msg,
                      &dummy_write);
@@ -225,11 +225,6 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
         "incorrect value for last_msg.msg.ssr_flag_high_level.reserved[4], "
         "expected 0, is %" PRId64,
         (int64_t)last_msg.msg.ssr_flag_high_level.reserved[4]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.reserved[5] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.reserved[5], "
-        "expected 0, is %" PRId64,
-        (int64_t)last_msg.msg.ssr_flag_high_level.reserved[5]);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_high_level.ssr_sol_id == 10,
@@ -268,30 +263,36 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
         (int64_t)last_msg.msg.ssr_flag_high_level.use_gps_sat);
 
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.use_iono_grid_point_sat_los == 7,
+        last_msg.msg.ssr_flag_high_level.use_iono_grid_point_sat_los == 8,
         "incorrect value for "
         "last_msg.msg.ssr_flag_high_level.use_iono_grid_point_sat_los, "
-        "expected 7, is %" PRId64,
+        "expected 8, is %" PRId64,
         (int64_t)last_msg.msg.ssr_flag_high_level.use_iono_grid_point_sat_los);
 
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.use_iono_grid_points == 5,
+        last_msg.msg.ssr_flag_high_level.use_iono_grid_points == 6,
         "incorrect value for "
-        "last_msg.msg.ssr_flag_high_level.use_iono_grid_points, expected 5, is "
+        "last_msg.msg.ssr_flag_high_level.use_iono_grid_points, expected 6, is "
         "%" PRId64,
         (int64_t)last_msg.msg.ssr_flag_high_level.use_iono_grid_points);
 
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.use_iono_tile_sat_los == 6,
+        last_msg.msg.ssr_flag_high_level.use_iono_tile_sat_los == 7,
         "incorrect value for "
-        "last_msg.msg.ssr_flag_high_level.use_iono_tile_sat_los, expected 6, "
+        "last_msg.msg.ssr_flag_high_level.use_iono_tile_sat_los, expected 7, "
         "is %" PRId64,
         (int64_t)last_msg.msg.ssr_flag_high_level.use_iono_tile_sat_los);
 
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.use_tropo_grid_points == 4,
+        last_msg.msg.ssr_flag_high_level.use_qzss_sat == 4,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.use_qzss_sat, "
+        "expected 4, is %" PRId64,
+        (int64_t)last_msg.msg.ssr_flag_high_level.use_qzss_sat);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_high_level.use_tropo_grid_points == 5,
         "incorrect value for "
-        "last_msg.msg.ssr_flag_high_level.use_tropo_grid_points, expected 4, "
+        "last_msg.msg.ssr_flag_high_level.use_tropo_grid_points, expected 5, "
         "is %" PRId64,
         (int64_t)last_msg.msg.ssr_flag_high_level.use_tropo_grid_points);
   }

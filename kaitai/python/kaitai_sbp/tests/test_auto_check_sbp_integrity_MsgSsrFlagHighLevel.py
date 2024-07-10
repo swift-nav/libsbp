@@ -19,7 +19,7 @@ import io
 import base64
 
 def test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1():
-    buf = base64.standard_b64decode("VbkLQgAftAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGB2ZD")
+    buf = base64.standard_b64decode("VbkLQgAftAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCGkD")
 
     stream = KaitaiStream(io.BytesIO(buf))
     msg = get_flattened_msg(sbp.Sbp.SbpMessage(stream))
@@ -32,9 +32,9 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1():
     
     assert msg.length == 31
     
-    assert msg.payload == "tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw=="
+    assert msg.payload == "tAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA=="
     
-    assert msg.crc == 0x4366
+    assert msg.crc == 0x0369
     
     assert dictify(msg.chain_id) == 40
     
@@ -42,7 +42,7 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1():
     
     assert dictify(msg.obs_time) == {'tow': 180, 'wn': 3}
     
-    assert dictify(msg.reserved) == [0, 0, 0, 0, 0, 0]
+    assert dictify(msg.reserved) == [0, 0, 0, 0, 0]
     
     assert dictify(msg.ssr_sol_id) == 10
     
@@ -56,12 +56,14 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1():
     
     assert dictify(msg.use_gps_sat) == 1
     
-    assert dictify(msg.use_iono_grid_point_sat_los) == 7
+    assert dictify(msg.use_iono_grid_point_sat_los) == 8
     
-    assert dictify(msg.use_iono_grid_points) == 5
+    assert dictify(msg.use_iono_grid_points) == 6
     
-    assert dictify(msg.use_iono_tile_sat_los) == 6
+    assert dictify(msg.use_iono_tile_sat_los) == 7
     
-    assert dictify(msg.use_tropo_grid_points) == 4
+    assert dictify(msg.use_qzss_sat) == 4
+    
+    assert dictify(msg.use_tropo_grid_points) == 5
 
-    assert dictify(msg) == {'obs_time': {'tow': 180, 'wn': 3}, 'corr_time': {'tow': 360, 'wn': 6}, 'ssr_sol_id': 10, 'tile_set_id': 20, 'tile_id': 30, 'chain_id': 40, 'use_gps_sat': 1, 'use_gal_sat': 2, 'use_bds_sat': 3, 'reserved': [0, 0, 0, 0, 0, 0], 'use_tropo_grid_points': 4, 'use_iono_grid_points': 5, 'use_iono_tile_sat_los': 6, 'use_iono_grid_point_sat_los': 7, 'preamble': 85, 'msg_type': 3001, 'sender': 66, 'length': 31, 'payload': 'tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw==', 'crc': 17254}
+    assert dictify(msg) == {'obs_time': {'tow': 180, 'wn': 3}, 'corr_time': {'tow': 360, 'wn': 6}, 'ssr_sol_id': 10, 'tile_set_id': 20, 'tile_id': 30, 'chain_id': 40, 'use_gps_sat': 1, 'use_gal_sat': 2, 'use_bds_sat': 3, 'use_qzss_sat': 4, 'reserved': [0, 0, 0, 0, 0], 'use_tropo_grid_points': 5, 'use_iono_grid_points': 6, 'use_iono_tile_sat_los': 7, 'use_iono_grid_point_sat_los': 8, 'preamble': 85, 'msg_type': 3001, 'sender': 66, 'length': 31, 'payload': 'tAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==', 'crc': 873}

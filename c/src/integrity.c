@@ -168,6 +168,9 @@ bool sbp_msg_ssr_flag_high_level_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->use_bds_sat)) {
     return false;
   }
+  if (!sbp_u8_encode(ctx, &msg->use_qzss_sat)) {
+    return false;
+  }
   for (size_t i = 0; i < SBP_MSG_SSR_FLAG_HIGH_LEVEL_RESERVED_MAX; i++) {
     if (!sbp_u8_encode(ctx, &msg->reserved[i])) {
       return false;
@@ -231,6 +234,9 @@ bool sbp_msg_ssr_flag_high_level_decode_internal(
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->use_bds_sat)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->use_qzss_sat)) {
     return false;
   }
   for (uint8_t i = 0; i < SBP_MSG_SSR_FLAG_HIGH_LEVEL_RESERVED_MAX; i++) {
@@ -328,6 +334,11 @@ int sbp_msg_ssr_flag_high_level_cmp(const sbp_msg_ssr_flag_high_level_t *a,
   }
 
   ret = sbp_u8_cmp(&a->use_bds_sat, &b->use_bds_sat);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->use_qzss_sat, &b->use_qzss_sat);
   if (ret != 0) {
     return ret;
   }

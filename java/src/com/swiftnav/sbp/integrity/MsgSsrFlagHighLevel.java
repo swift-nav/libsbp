@@ -30,7 +30,7 @@ import org.json.JSONObject;
  * SSR grid point, or SSR tile. A group of aggregated elements being monitored for integrity could
  * refer to:
  *
- * <p>- Satellites in a particular {GPS, GAL, BDS} constellation.
+ * <p>- Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
  *
  * <p>- Satellites in the line-of-sight of a particular SSR tile.
  *
@@ -81,6 +81,9 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
     /** Use BDS satellites. */
     public int use_bds_sat;
 
+    /** Use QZSS satellites. */
+    public int use_qzss_sat;
+
     /** Reserved */
     public int[] reserved;
 
@@ -123,7 +126,8 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
         use_gps_sat = parser.getU8();
         use_gal_sat = parser.getU8();
         use_bds_sat = parser.getU8();
-        reserved = parser.getArrayofU8(6);
+        use_qzss_sat = parser.getU8();
+        reserved = parser.getArrayofU8(5);
         use_tropo_grid_points = parser.getU8();
         use_iono_grid_points = parser.getU8();
         use_iono_tile_sat_los = parser.getU8();
@@ -141,7 +145,8 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
         builder.putU8(use_gps_sat);
         builder.putU8(use_gal_sat);
         builder.putU8(use_bds_sat);
-        builder.putArrayofU8(reserved, 6);
+        builder.putU8(use_qzss_sat);
+        builder.putArrayofU8(reserved, 5);
         builder.putU8(use_tropo_grid_points);
         builder.putU8(use_iono_grid_points);
         builder.putU8(use_iono_tile_sat_los);
@@ -160,6 +165,7 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
         obj.put("use_gps_sat", use_gps_sat);
         obj.put("use_gal_sat", use_gal_sat);
         obj.put("use_bds_sat", use_bds_sat);
+        obj.put("use_qzss_sat", use_qzss_sat);
         obj.put("reserved", new JSONArray(reserved));
         obj.put("use_tropo_grid_points", use_tropo_grid_points);
         obj.put("use_iono_grid_points", use_iono_grid_points);

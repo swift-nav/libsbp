@@ -856,7 +856,7 @@ pub mod msg_ssr_flag_high_level {
     /// could be a satellite, SSR grid point, or SSR tile. A group of aggregated
     /// elements being monitored for integrity could refer to:
     ///
-    /// - Satellites in a particular {GPS, GAL, BDS} constellation.
+    /// - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
     ///
     /// - Satellites in the line-of-sight of a particular SSR tile.
     ///
@@ -912,9 +912,12 @@ pub mod msg_ssr_flag_high_level {
         /// Use BDS satellites.
         #[cfg_attr(feature = "serde", serde(rename = "use_bds_sat"))]
         pub use_bds_sat: u8,
+        /// Use QZSS satellites.
+        #[cfg_attr(feature = "serde", serde(rename = "use_qzss_sat"))]
+        pub use_qzss_sat: u8,
         /// Reserved
         #[cfg_attr(feature = "serde", serde(rename = "reserved"))]
-        pub reserved: [u8; 6],
+        pub reserved: [u8; 5],
         /// Use tropo grid points.
         #[cfg_attr(feature = "serde", serde(rename = "use_tropo_grid_points"))]
         pub use_tropo_grid_points: u8,
@@ -970,6 +973,20 @@ pub mod msg_ssr_flag_high_level {
         /// Set the bitrange corresponding to the [UseBdsSatellites][UseBdsSatellites] of the `use_bds_sat` bitfield.
         pub fn set_use_bds_satellites(&mut self, use_bds_satellites: UseBdsSatellites) {
             set_bit_range!(&mut self.use_bds_sat, use_bds_satellites, u8, u8, 2, 0);
+        }
+
+        /// Gets the [UseQzssSatellites][self::UseQzssSatellites] stored in the `use_qzss_sat` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UseQzssSatellites` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UseQzssSatellites` were added.
+        pub fn use_qzss_satellites(&self) -> Result<UseQzssSatellites, u8> {
+            get_bit_range!(self.use_qzss_sat, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [UseQzssSatellites][UseQzssSatellites] of the `use_qzss_sat` bitfield.
+        pub fn set_use_qzss_satellites(&mut self, use_qzss_satellites: UseQzssSatellites) {
+            set_bit_range!(&mut self.use_qzss_sat, use_qzss_satellites, u8, u8, 2, 0);
         }
 
         /// Gets the [UseTropoGridPoints][self::UseTropoGridPoints] stored in the `use_tropo_grid_points` bitfield.
@@ -1120,7 +1137,8 @@ pub mod msg_ssr_flag_high_level {
             + <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
-            + <[u8; 6] as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <[u8; 5] as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -1135,6 +1153,7 @@ pub mod msg_ssr_flag_high_level {
                 + WireFormat::len(&self.use_gps_sat)
                 + WireFormat::len(&self.use_gal_sat)
                 + WireFormat::len(&self.use_bds_sat)
+                + WireFormat::len(&self.use_qzss_sat)
                 + WireFormat::len(&self.reserved)
                 + WireFormat::len(&self.use_tropo_grid_points)
                 + WireFormat::len(&self.use_iono_grid_points)
@@ -1151,6 +1170,7 @@ pub mod msg_ssr_flag_high_level {
             WireFormat::write(&self.use_gps_sat, buf);
             WireFormat::write(&self.use_gal_sat, buf);
             WireFormat::write(&self.use_bds_sat, buf);
+            WireFormat::write(&self.use_qzss_sat, buf);
             WireFormat::write(&self.reserved, buf);
             WireFormat::write(&self.use_tropo_grid_points, buf);
             WireFormat::write(&self.use_iono_grid_points, buf);
@@ -1169,6 +1189,7 @@ pub mod msg_ssr_flag_high_level {
                 use_gps_sat: WireFormat::parse_unchecked(buf),
                 use_gal_sat: WireFormat::parse_unchecked(buf),
                 use_bds_sat: WireFormat::parse_unchecked(buf),
+                use_qzss_sat: WireFormat::parse_unchecked(buf),
                 reserved: WireFormat::parse_unchecked(buf),
                 use_tropo_grid_points: WireFormat::parse_unchecked(buf),
                 use_iono_grid_points: WireFormat::parse_unchecked(buf),
@@ -1293,6 +1314,46 @@ pub mod msg_ssr_flag_high_level {
                 1 => Ok(UseBdsSatellites::Warning),
                 2 => Ok(UseBdsSatellites::Alert),
                 3 => Ok(UseBdsSatellites::NotMonitored),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Use QZSS satellites.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum UseQzssSatellites {
+        /// Nominal
+        Nominal = 0,
+
+        /// Warning
+        Warning = 1,
+
+        /// Alert
+        Alert = 2,
+
+        /// Not monitored
+        NotMonitored = 3,
+    }
+
+    impl std::fmt::Display for UseQzssSatellites {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                UseQzssSatellites::Nominal => f.write_str("Nominal"),
+                UseQzssSatellites::Warning => f.write_str("Warning"),
+                UseQzssSatellites::Alert => f.write_str("Alert"),
+                UseQzssSatellites::NotMonitored => f.write_str("Not monitored"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for UseQzssSatellites {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(UseQzssSatellites::Nominal),
+                1 => Ok(UseQzssSatellites::Warning),
+                2 => Ok(UseQzssSatellites::Alert),
+                3 => Ok(UseQzssSatellites::NotMonitored),
                 i => Err(i),
             }
         }

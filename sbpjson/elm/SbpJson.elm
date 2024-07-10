@@ -2772,7 +2772,7 @@ type alias CodePhaseBiasesSatSig =
 satellite, SSR grid point, or SSR tile. A group of aggregated elements being monitored
 for integrity could refer to:,
 ,
-- Satellites in a particular {GPS, GAL, BDS} constellation.,
+- Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.,
 ,
 - Satellites in the line-of-sight of a particular SSR tile.,
 ,
@@ -2807,6 +2807,7 @@ type alias MsgSsrFlagHighLevel =
     , useIonoGridPointSatLos : Int
     , useIonoGridPoints : Int
     , useIonoTileSatLos : Int
+    , useQzssSat : Int
     , useTropoGridPoints : Int
     }
 
@@ -7168,6 +7169,7 @@ msgSsrFlagHighLevel =
         |> Jpipe.required "use_iono_grid_point_sat_los" Jdec.int
         |> Jpipe.required "use_iono_grid_points" Jdec.int
         |> Jpipe.required "use_iono_tile_sat_los" Jdec.int
+        |> Jpipe.required "use_qzss_sat" Jdec.int
         |> Jpipe.required "use_tropo_grid_points" Jdec.int
 
 encodeMsgSsrFlagHighLevel : MsgSsrFlagHighLevel -> Jenc.Value
@@ -7185,6 +7187,7 @@ encodeMsgSsrFlagHighLevel x =
         , ("use_iono_grid_point_sat_los", Jenc.int x.useIonoGridPointSatLos)
         , ("use_iono_grid_points", Jenc.int x.useIonoGridPoints)
         , ("use_iono_tile_sat_los", Jenc.int x.useIonoTileSatLos)
+        , ("use_qzss_sat", Jenc.int x.useQzssSat)
         , ("use_tropo_grid_points", Jenc.int x.useTropoGridPoints)
         ]
 

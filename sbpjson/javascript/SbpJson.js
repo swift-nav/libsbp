@@ -3230,6 +3230,7 @@ const typeMap = {
         { json: "use_iono_grid_point_sat_los", js: "use_iono_grid_point_sat_los", typ: 0 },
         { json: "use_iono_grid_points", js: "use_iono_grid_points", typ: 0 },
         { json: "use_iono_tile_sat_los", js: "use_iono_tile_sat_los", typ: 0 },
+        { json: "use_qzss_sat", js: "use_qzss_sat", typ: 0 },
         { json: "use_tropo_grid_points", js: "use_tropo_grid_points", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoGridPointSatLos": o([
