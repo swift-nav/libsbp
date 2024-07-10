@@ -1272,6 +1272,7 @@ definitions:
                values:
                    - 0: GPS
                    - 3: BDS
+                   - 4: QZS
                    - 5: GAL
        - n_sats:
            type: u8
@@ -1339,6 +1340,7 @@ definitions:
                values:
                    - 0: GPS
                    - 3: BDS
+                   - 4: QZS
                    - 5: GAL
        - n_sats_signals:
            type: u8
@@ -1420,6 +1422,7 @@ definitions:
                values:
                    - 0: GPS
                    - 3: BDS
+                   - 4: QZS
                    - 5: GAL
        - sat_bitmask:
            type: u64

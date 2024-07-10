@@ -45,6 +45,9 @@ definitions:
                       - 13: BDS2 B2
                       - 14: GAL E1B
                       - 20: GAL E7I
+                      - 31: QZS L1CA
+                      - 36: QZS L2CL
+                      - 39: QZS L5Q
                       - 47: BDS3 B2a
 
  - SvId:
@@ -67,6 +70,7 @@ definitions:
               values:
                 - 0: GPS
                 - 3: BDS
+                - 4: QZS
                 - 5: GAL
 
  - GnssSignalDep:
