@@ -77,12 +77,30 @@
 #define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_WARNING (1)
 #define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_ALERT (2)
 #define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_NOT_MONITORED (3)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_MASK (0x7u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_SHIFT (0u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_SHIFT) & \
+        SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_MASK))
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_SET(flags, val)           \
+  do {                                                                        \
+    (flags) = (u8)(                                                           \
+        (flags & (~(SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_MASK          \
+                    << SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_SHIFT))) | \
+        (((val) & (SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_MASK))         \
+         << (SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_SHIFT)));            \
+  } while (0)
+
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_NOMINAL (0)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_WARNING (1)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_ALERT (2)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_QZSS_SATELLITES_NOT_MONITORED (3)
 /**
  * The maximum number of items that can be stored in
  * sbp_msg_ssr_flag_high_level_t::reserved before the maximum SBP message size
  * is exceeded
  */
-#define SBP_MSG_SSR_FLAG_HIGH_LEVEL_RESERVED_MAX 6u
+#define SBP_MSG_SSR_FLAG_HIGH_LEVEL_RESERVED_MAX 5u
 
 #define SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_MASK (0x7u)
 #define SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_SHIFT (0u)

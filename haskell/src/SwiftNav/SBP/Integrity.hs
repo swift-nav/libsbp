@@ -85,7 +85,7 @@ msgSsrFlagHighLevel = 0x0BB9
 -- could be a satellite, SSR grid point, or SSR tile. A group of aggregated
 -- elements being monitored for integrity could refer to:
 --
--- - Satellites in a particular {GPS, GAL, BDS} constellation.
+-- - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
 --
 -- - Satellites in the line-of-sight of a particular SSR tile.
 --
@@ -125,6 +125,8 @@ data MsgSsrFlagHighLevel = MsgSsrFlagHighLevel
     -- ^ Use GAL satellites.
   , _msgSsrFlagHighLevel_use_bds_sat               :: !Word8
     -- ^ Use BDS satellites.
+  , _msgSsrFlagHighLevel_use_qzss_sat              :: !Word8
+    -- ^ Use QZSS satellites.
   , _msgSsrFlagHighLevel_reserved                  :: ![Word8]
     -- ^ Reserved
   , _msgSsrFlagHighLevel_use_tropo_grid_points     :: !Word8
@@ -148,7 +150,8 @@ instance Binary MsgSsrFlagHighLevel where
     _msgSsrFlagHighLevel_use_gps_sat <- getWord8
     _msgSsrFlagHighLevel_use_gal_sat <- getWord8
     _msgSsrFlagHighLevel_use_bds_sat <- getWord8
-    _msgSsrFlagHighLevel_reserved <- replicateM 6 getWord8
+    _msgSsrFlagHighLevel_use_qzss_sat <- getWord8
+    _msgSsrFlagHighLevel_reserved <- replicateM 5 getWord8
     _msgSsrFlagHighLevel_use_tropo_grid_points <- getWord8
     _msgSsrFlagHighLevel_use_iono_grid_points <- getWord8
     _msgSsrFlagHighLevel_use_iono_tile_sat_los <- getWord8
@@ -165,6 +168,7 @@ instance Binary MsgSsrFlagHighLevel where
     putWord8 _msgSsrFlagHighLevel_use_gps_sat
     putWord8 _msgSsrFlagHighLevel_use_gal_sat
     putWord8 _msgSsrFlagHighLevel_use_bds_sat
+    putWord8 _msgSsrFlagHighLevel_use_qzss_sat
     mapM_ putWord8 _msgSsrFlagHighLevel_reserved
     putWord8 _msgSsrFlagHighLevel_use_tropo_grid_points
     putWord8 _msgSsrFlagHighLevel_use_iono_grid_points

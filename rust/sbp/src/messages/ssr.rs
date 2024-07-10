@@ -709,6 +709,9 @@ pub mod msg_ssr_code_phase_biases_bounds {
         /// BDS
         Bds = 3,
 
+        /// QZS
+        Qzs = 4,
+
         /// GAL
         Gal = 5,
     }
@@ -718,6 +721,7 @@ pub mod msg_ssr_code_phase_biases_bounds {
             match self {
                 ConstId::Gps => f.write_str("GPS"),
                 ConstId::Bds => f.write_str("BDS"),
+                ConstId::Qzs => f.write_str("QZS"),
                 ConstId::Gal => f.write_str("GAL"),
             }
         }
@@ -729,6 +733,7 @@ pub mod msg_ssr_code_phase_biases_bounds {
             match i {
                 0 => Ok(ConstId::Gps),
                 3 => Ok(ConstId::Bds),
+                4 => Ok(ConstId::Qzs),
                 5 => Ok(ConstId::Gal),
                 i => Err(i),
             }
@@ -1641,6 +1646,9 @@ pub mod msg_ssr_orbit_clock_bounds {
         /// BDS
         Bds = 3,
 
+        /// QZS
+        Qzs = 4,
+
         /// GAL
         Gal = 5,
     }
@@ -1650,6 +1658,7 @@ pub mod msg_ssr_orbit_clock_bounds {
             match self {
                 ConstId::Gps => f.write_str("GPS"),
                 ConstId::Bds => f.write_str("BDS"),
+                ConstId::Qzs => f.write_str("QZS"),
                 ConstId::Gal => f.write_str("GAL"),
             }
         }
@@ -1661,6 +1670,7 @@ pub mod msg_ssr_orbit_clock_bounds {
             match i {
                 0 => Ok(ConstId::Gps),
                 3 => Ok(ConstId::Bds),
+                4 => Ok(ConstId::Qzs),
                 5 => Ok(ConstId::Gal),
                 i => Err(i),
             }
@@ -1802,6 +1812,9 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
         /// BDS
         Bds = 3,
 
+        /// QZS
+        Qzs = 4,
+
         /// GAL
         Gal = 5,
     }
@@ -1811,6 +1824,7 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
             match self {
                 ConstId::Gps => f.write_str("GPS"),
                 ConstId::Bds => f.write_str("BDS"),
+                ConstId::Qzs => f.write_str("QZS"),
                 ConstId::Gal => f.write_str("GAL"),
             }
         }
@@ -1822,6 +1836,7 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
             match i {
                 0 => Ok(ConstId::Gps),
                 3 => Ok(ConstId::Bds),
+                4 => Ok(ConstId::Qzs),
                 5 => Ok(ConstId::Gal),
                 i => Err(i),
             }

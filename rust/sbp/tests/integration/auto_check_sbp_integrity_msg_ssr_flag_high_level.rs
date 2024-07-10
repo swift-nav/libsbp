@@ -23,7 +23,7 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
     {
         let mut payload = Cursor::new(vec![
             85, 185, 11, 66, 0, 31, 180, 0, 0, 0, 3, 0, 104, 1, 0, 0, 6, 0, 10, 20, 0, 30, 0, 40,
-            1, 2, 3, 0, 0, 0, 0, 0, 0, 4, 5, 6, 7, 102, 67,
+            1, 2, 3, 4, 0, 0, 0, 0, 0, 5, 6, 7, 8, 105, 3,
         ]);
 
         // Test the round trip payload parsing
@@ -97,11 +97,6 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.reserved[4]
                 );
                 assert_eq!(
-                    msg.reserved[5], 0,
-                    "incorrect value for reserved[5], expected 0, is {}",
-                    msg.reserved[5]
-                );
-                assert_eq!(
                     msg.ssr_sol_id, 10,
                     "incorrect value for ssr_sol_id, expected 10, is {}",
                     msg.ssr_sol_id
@@ -132,23 +127,28 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.use_gps_sat
                 );
                 assert_eq!(
-                    msg.use_iono_grid_point_sat_los, 7,
-                    "incorrect value for use_iono_grid_point_sat_los, expected 7, is {}",
+                    msg.use_iono_grid_point_sat_los, 8,
+                    "incorrect value for use_iono_grid_point_sat_los, expected 8, is {}",
                     msg.use_iono_grid_point_sat_los
                 );
                 assert_eq!(
-                    msg.use_iono_grid_points, 5,
-                    "incorrect value for use_iono_grid_points, expected 5, is {}",
+                    msg.use_iono_grid_points, 6,
+                    "incorrect value for use_iono_grid_points, expected 6, is {}",
                     msg.use_iono_grid_points
                 );
                 assert_eq!(
-                    msg.use_iono_tile_sat_los, 6,
-                    "incorrect value for use_iono_tile_sat_los, expected 6, is {}",
+                    msg.use_iono_tile_sat_los, 7,
+                    "incorrect value for use_iono_tile_sat_los, expected 7, is {}",
                     msg.use_iono_tile_sat_los
                 );
                 assert_eq!(
-                    msg.use_tropo_grid_points, 4,
-                    "incorrect value for use_tropo_grid_points, expected 4, is {}",
+                    msg.use_qzss_sat, 4,
+                    "incorrect value for use_qzss_sat, expected 4, is {}",
+                    msg.use_qzss_sat
+                );
+                assert_eq!(
+                    msg.use_tropo_grid_points, 5,
+                    "incorrect value for use_tropo_grid_points, expected 5, is {}",
                     msg.use_tropo_grid_points
                 );
             }
@@ -170,7 +170,7 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
     {
-        let json_input = r#"{"obs_time": {"tow": 180, "wn": 3}, "corr_time": {"tow": 360, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20, "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "reserved": [0,0,0,0,0,0], "use_tropo_grid_points": 4, "use_iono_grid_points": 5, "use_iono_tile_sat_los": 6, "use_iono_grid_point_sat_los": 7, "preamble": 85, "msg_type": 3001, "sender": 66, "length": 31, "payload": "tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw==", "crc": 17254}"#.as_bytes();
+        let json_input = r#"{"obs_time": {"tow": 180, "wn": 3}, "corr_time": {"tow": 360, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20, "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "use_qzss_sat": 4, "reserved": [0,0,0,0,0], "use_tropo_grid_points": 5, "use_iono_grid_points": 6, "use_iono_tile_sat_los": 7, "use_iono_grid_point_sat_los": 8, "preamble": 85, "msg_type": 3001, "sender": 66, "length": 31, "payload": "tAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==", "crc": 873}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -254,11 +254,6 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.reserved[4]
                 );
                 assert_eq!(
-                    msg.reserved[5], 0,
-                    "incorrect value for reserved[5], expected 0, is {}",
-                    msg.reserved[5]
-                );
-                assert_eq!(
                     msg.ssr_sol_id, 10,
                     "incorrect value for ssr_sol_id, expected 10, is {}",
                     msg.ssr_sol_id
@@ -289,23 +284,28 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.use_gps_sat
                 );
                 assert_eq!(
-                    msg.use_iono_grid_point_sat_los, 7,
-                    "incorrect value for use_iono_grid_point_sat_los, expected 7, is {}",
+                    msg.use_iono_grid_point_sat_los, 8,
+                    "incorrect value for use_iono_grid_point_sat_los, expected 8, is {}",
                     msg.use_iono_grid_point_sat_los
                 );
                 assert_eq!(
-                    msg.use_iono_grid_points, 5,
-                    "incorrect value for use_iono_grid_points, expected 5, is {}",
+                    msg.use_iono_grid_points, 6,
+                    "incorrect value for use_iono_grid_points, expected 6, is {}",
                     msg.use_iono_grid_points
                 );
                 assert_eq!(
-                    msg.use_iono_tile_sat_los, 6,
-                    "incorrect value for use_iono_tile_sat_los, expected 6, is {}",
+                    msg.use_iono_tile_sat_los, 7,
+                    "incorrect value for use_iono_tile_sat_los, expected 7, is {}",
                     msg.use_iono_tile_sat_los
                 );
                 assert_eq!(
-                    msg.use_tropo_grid_points, 4,
-                    "incorrect value for use_tropo_grid_points, expected 4, is {}",
+                    msg.use_qzss_sat, 4,
+                    "incorrect value for use_qzss_sat, expected 4, is {}",
+                    msg.use_qzss_sat
+                );
+                assert_eq!(
+                    msg.use_tropo_grid_points, 5,
+                    "incorrect value for use_tropo_grid_points, expected 5, is {}",
                     msg.use_tropo_grid_points
                 );
             }
@@ -328,7 +328,7 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
     {
         let mut payload = Cursor::new(vec![
             85, 185, 11, 66, 0, 31, 180, 0, 0, 0, 3, 0, 104, 1, 0, 0, 6, 0, 10, 20, 0, 30, 0, 40,
-            1, 2, 3, 0, 0, 0, 0, 0, 0, 4, 5, 6, 7, 102, 67,
+            1, 2, 3, 4, 0, 0, 0, 0, 0, 5, 6, 7, 8, 105, 3,
         ]);
 
         // Construct sbp message
@@ -419,11 +419,6 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.reserved[4]
                 );
                 assert_eq!(
-                    msg.reserved[5], 0,
-                    "incorrect value for reserved[5], expected 0, is {}",
-                    msg.reserved[5]
-                );
-                assert_eq!(
                     msg.ssr_sol_id, 10,
                     "incorrect value for ssr_sol_id, expected 10, is {}",
                     msg.ssr_sol_id
@@ -454,23 +449,28 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.use_gps_sat
                 );
                 assert_eq!(
-                    msg.use_iono_grid_point_sat_los, 7,
-                    "incorrect value for use_iono_grid_point_sat_los, expected 7, is {}",
+                    msg.use_iono_grid_point_sat_los, 8,
+                    "incorrect value for use_iono_grid_point_sat_los, expected 8, is {}",
                     msg.use_iono_grid_point_sat_los
                 );
                 assert_eq!(
-                    msg.use_iono_grid_points, 5,
-                    "incorrect value for use_iono_grid_points, expected 5, is {}",
+                    msg.use_iono_grid_points, 6,
+                    "incorrect value for use_iono_grid_points, expected 6, is {}",
                     msg.use_iono_grid_points
                 );
                 assert_eq!(
-                    msg.use_iono_tile_sat_los, 6,
-                    "incorrect value for use_iono_tile_sat_los, expected 6, is {}",
+                    msg.use_iono_tile_sat_los, 7,
+                    "incorrect value for use_iono_tile_sat_los, expected 7, is {}",
                     msg.use_iono_tile_sat_los
                 );
                 assert_eq!(
-                    msg.use_tropo_grid_points, 4,
-                    "incorrect value for use_tropo_grid_points, expected 4, is {}",
+                    msg.use_qzss_sat, 4,
+                    "incorrect value for use_qzss_sat, expected 4, is {}",
+                    msg.use_qzss_sat
+                );
+                assert_eq!(
+                    msg.use_tropo_grid_points, 5,
+                    "incorrect value for use_tropo_grid_points, expected 5, is {}",
                     msg.use_tropo_grid_points
                 );
             }

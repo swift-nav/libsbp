@@ -57,7 +57,7 @@ types:
       could be a satellite, SSR grid point, or SSR tile. A group of aggregated
       elements being monitored for integrity could refer to:
 
-      - Satellites in a particular {GPS, GAL, BDS} constellation.
+      - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
 
       - Satellites in the line-of-sight of a particular SSR tile.
 
@@ -115,12 +115,16 @@ types:
         doc: |
           Use BDS satellites.
         type: u1
+      - id: use_qzss_sat
+        doc: |
+          Use QZSS satellites.
+        type: u1
       - id: reserved
         doc: |
           Reserved
         type: u1
         repeat: expr
-        repeat-expr: 6
+        repeat-expr: 5
       - id: use_tropo_grid_points
         doc: |
           Use tropo grid points.

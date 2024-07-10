@@ -435,6 +435,7 @@
 
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_GPS (0)
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_BDS (3)
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_QZS (4)
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_GAL (5)
 /**
  * The maximum number of items that can be stored in
@@ -476,6 +477,7 @@
 
 #define SBP_SSR_CODE_PHASE_BIASES_BOUNDS_GPS (0)
 #define SBP_SSR_CODE_PHASE_BIASES_BOUNDS_BDS (3)
+#define SBP_SSR_CODE_PHASE_BIASES_BOUNDS_QZS (4)
 #define SBP_SSR_CODE_PHASE_BIASES_BOUNDS_GAL (5)
 /**
  * The maximum number of items that can be stored in
@@ -518,6 +520,7 @@
 
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_GPS (0)
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_BDS (3)
+#define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_QZS (4)
 #define SBP_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_GAL (5)
 /**
  * Encoded length of sbp_msg_ssr_orbit_clock_bounds_degradation_t

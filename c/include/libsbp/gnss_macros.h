@@ -40,6 +40,9 @@
 #define SBP_GNSSSIGNAL_BDS2_B2 (13)
 #define SBP_GNSSSIGNAL_GAL_E1B (14)
 #define SBP_GNSSSIGNAL_GAL_E7I (20)
+#define SBP_GNSSSIGNAL_QZS_L1CA (31)
+#define SBP_GNSSSIGNAL_QZS_L2CL (36)
+#define SBP_GNSSSIGNAL_QZS_L5Q (39)
 #define SBP_GNSSSIGNAL_BDS3_B2A (47)
 /**
  * Encoded length of sbp_gnss_signal_t
@@ -58,6 +61,7 @@
 
 #define SBP_SVID_GPS (0)
 #define SBP_SVID_BDS (3)
+#define SBP_SVID_QZS (4)
 #define SBP_SVID_GAL (5)
 /**
  * Encoded length of sbp_sv_id_t

@@ -45,18 +45,17 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
     assign(test_msg_.reserved[3], 0);
 
     assign(test_msg_.reserved[4], 0);
-
-    assign(test_msg_.reserved[5], 0);
     assign(test_msg_.ssr_sol_id, 10);
     assign(test_msg_.tile_id, 30);
     assign(test_msg_.tile_set_id, 20);
     assign(test_msg_.use_bds_sat, 3);
     assign(test_msg_.use_gal_sat, 2);
     assign(test_msg_.use_gps_sat, 1);
-    assign(test_msg_.use_iono_grid_point_sat_los, 7);
-    assign(test_msg_.use_iono_grid_points, 5);
-    assign(test_msg_.use_iono_tile_sat_los, 6);
-    assign(test_msg_.use_tropo_grid_points, 4);
+    assign(test_msg_.use_iono_grid_point_sat_los, 8);
+    assign(test_msg_.use_iono_grid_points, 6);
+    assign(test_msg_.use_iono_tile_sat_los, 7);
+    assign(test_msg_.use_qzss_sat, 4);
+    assign(test_msg_.use_tropo_grid_points, 5);
   }
 
   class SlowReader final : public sbp::IReader {
@@ -298,7 +297,7 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
     info.msg_type = static_cast<sbp_msg_type_t>(SbpMsgSsrFlagHighLevel);
     info.sender_id = 66;
     info.preamble = 0x55;
-    info.crc = 0x4366;
+    info.crc = 0x0369;
     info.encoded_frame = encoded_frame_;
     info.frame_len = sizeof(encoded_frame_);
     info.encoded_payload = encoded_payload_;
@@ -404,11 +403,11 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
   sbp_msg_ssr_flag_high_level_t test_msg_{};
   uint8_t encoded_frame_[31 + 8] = {
       85, 185, 11, 66, 0, 31, 180, 0, 0, 0, 3, 0, 104, 1, 0, 0, 6, 0,   10, 20,
-      0,  30,  0,  40, 1, 2,  3,   0, 0, 0, 0, 0, 0,   4, 5, 6, 7, 102, 67,
+      0,  30,  0,  40, 1, 2,  3,   4, 0, 0, 0, 0, 0,   5, 6, 7, 8, 105, 3,
   };
   uint8_t encoded_payload_[31] = {
       180, 0,  0, 0, 3, 0, 104, 1, 0, 0, 6, 0, 10, 20, 0, 30,
-      0,   40, 1, 2, 3, 0, 0,   0, 0, 0, 0, 4, 5,  6,  7,
+      0,   40, 1, 2, 3, 4, 0,   0, 0, 0, 0, 5, 6,  7,  8,
   };
 };
 
@@ -726,13 +725,6 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, Comparison) {
     make_lesser_greater(lesser.reserved[4], greater.reserved[4]);
     comparison_tests(lesser, greater);
   }
-
-  {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
-    make_lesser_greater(lesser.reserved[5], greater.reserved[5]);
-    comparison_tests(lesser, greater);
-  }
   {
     sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
     sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
@@ -788,6 +780,12 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, Comparison) {
     sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
     make_lesser_greater(lesser.use_iono_tile_sat_los,
                         greater.use_iono_tile_sat_los);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.use_qzss_sat, greater.use_qzss_sat);
     comparison_tests(lesser, greater);
   }
   {

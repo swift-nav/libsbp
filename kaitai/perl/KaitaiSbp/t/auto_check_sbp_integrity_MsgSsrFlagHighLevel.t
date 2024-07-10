@@ -29,7 +29,7 @@ use Test::More;
 use JSON::PP;
 use MIME::Base64;
 sub test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1() {
-    my $buf = decode_base64("VbkLQgAftAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGB2ZD");
+    my $buf = decode_base64("VbkLQgAftAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCGkD");
     my $stream = IO::KaitaiStruct::Stream->new($buf);
     my $msg = ParseUtils::get_flattened_msg(Sbp::SbpMessage->new($stream));
     
@@ -41,9 +41,9 @@ sub test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1() {
     
     is($msg->{'length'}, 31, "length");
     
-    is($msg->{'payload'}, "tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw==", "payload");
+    is($msg->{'payload'}, "tAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==", "payload");
     
-    is($msg->{'crc'}, 0x4366, "crc");
+    is($msg->{'crc'}, 0x0369, "crc");
 
     my $json = JSON::PP->new->convert_blessed->canonical;
     
@@ -53,7 +53,7 @@ sub test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1() {
     
     is($json->encode($msg->obs_time()), $json->encode($json->decode(q{{"tow":180,"wn":3}})), "obs_time");
     
-    is($json->encode($msg->reserved()), $json->encode($json->decode(q{[0,0,0,0,0,0]})), "reserved");
+    is($json->encode($msg->reserved()), $json->encode($json->decode(q{[0,0,0,0,0]})), "reserved");
     
     is($msg->ssr_sol_id(), 10, "ssr_sol_id");
     
@@ -67,15 +67,17 @@ sub test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1() {
     
     is($msg->use_gps_sat(), 1, "use_gps_sat");
     
-    is($msg->use_iono_grid_point_sat_los(), 7, "use_iono_grid_point_sat_los");
+    is($msg->use_iono_grid_point_sat_los(), 8, "use_iono_grid_point_sat_los");
     
-    is($msg->use_iono_grid_points(), 5, "use_iono_grid_points");
+    is($msg->use_iono_grid_points(), 6, "use_iono_grid_points");
     
-    is($msg->use_iono_tile_sat_los(), 6, "use_iono_tile_sat_los");
+    is($msg->use_iono_tile_sat_los(), 7, "use_iono_tile_sat_los");
     
-    is($msg->use_tropo_grid_points(), 4, "use_tropo_grid_points");
+    is($msg->use_qzss_sat(), 4, "use_qzss_sat");
+    
+    is($msg->use_tropo_grid_points(), 5, "use_tropo_grid_points");
 
-    is($json->encode($msg), $json->encode($json->decode(q{{"chain_id":40,"corr_time":{"tow":360,"wn":6},"crc":17254,"length":31,"msg_type":3001,"obs_time":{"tow":180,"wn":3},"payload":"tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw==","preamble":85,"reserved":[0,0,0,0,0,0],"sender":66,"ssr_sol_id":10,"tile_id":30,"tile_set_id":20,"use_bds_sat":3,"use_gal_sat":2,"use_gps_sat":1,"use_iono_grid_point_sat_los":7,"use_iono_grid_points":5,"use_iono_tile_sat_los":6,"use_tropo_grid_points":4}})), "raw_json");
+    is($json->encode($msg), $json->encode($json->decode(q{{"chain_id":40,"corr_time":{"tow":360,"wn":6},"crc":873,"length":31,"msg_type":3001,"obs_time":{"tow":180,"wn":3},"payload":"tAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==","preamble":85,"reserved":[0,0,0,0,0],"sender":66,"ssr_sol_id":10,"tile_id":30,"tile_set_id":20,"use_bds_sat":3,"use_gal_sat":2,"use_gps_sat":1,"use_iono_grid_point_sat_los":8,"use_iono_grid_points":6,"use_iono_tile_sat_los":7,"use_qzss_sat":4,"use_tropo_grid_points":5}})), "raw_json");
 }
 test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1();
 

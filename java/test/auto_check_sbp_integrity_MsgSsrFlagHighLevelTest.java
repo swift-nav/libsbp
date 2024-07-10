@@ -53,16 +53,16 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelTest {
                     (byte) 1,
                     (byte) 2,
                     (byte) 3,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
                     (byte) 4,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
+                    (byte) 0,
                     (byte) 5,
                     (byte) 6,
                     (byte) 7,
+                    (byte) 8,
                 };
         SBPMessage sbp = new SBPMessage(0x0042, 0x0BB9, payload);
         MsgSsrFlagHighLevel msg = new MsgSsrFlagHighLevel(sbp);
@@ -169,16 +169,6 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelTest {
             expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.reserved[5];
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved[5] + "' != '" + 0 + "'",
-                    value.equals(BigInteger.valueOf(0L)));
-        } else {
-            value = value.longValue();
-            expected = 0L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
         value = msg.ssr_sol_id;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -241,41 +231,51 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelTest {
         value = msg.use_iono_grid_point_sat_los;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.use_iono_grid_point_sat_los + "' != '" + 7 + "'",
-                    value.equals(BigInteger.valueOf(7L)));
+                    "'" + msg.use_iono_grid_point_sat_los + "' != '" + 8 + "'",
+                    value.equals(BigInteger.valueOf(8L)));
         } else {
             value = value.longValue();
-            expected = 7L;
+            expected = 8L;
             org.junit.Assert.assertEquals(value, expected);
         }
         value = msg.use_iono_grid_points;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.use_iono_grid_points + "' != '" + 5 + "'",
-                    value.equals(BigInteger.valueOf(5L)));
-        } else {
-            value = value.longValue();
-            expected = 5L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.use_iono_tile_sat_los;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.use_iono_tile_sat_los + "' != '" + 6 + "'",
+                    "'" + msg.use_iono_grid_points + "' != '" + 6 + "'",
                     value.equals(BigInteger.valueOf(6L)));
         } else {
             value = value.longValue();
             expected = 6L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.use_tropo_grid_points;
+        value = msg.use_iono_tile_sat_los;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.use_tropo_grid_points + "' != '" + 4 + "'",
+                    "'" + msg.use_iono_tile_sat_los + "' != '" + 7 + "'",
+                    value.equals(BigInteger.valueOf(7L)));
+        } else {
+            value = value.longValue();
+            expected = 7L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.use_qzss_sat;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.use_qzss_sat + "' != '" + 4 + "'",
                     value.equals(BigInteger.valueOf(4L)));
         } else {
             value = value.longValue();
             expected = 4L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.use_tropo_grid_points;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.use_tropo_grid_points + "' != '" + 5 + "'",
+                    value.equals(BigInteger.valueOf(5L)));
+        } else {
+            value = value.longValue();
+            expected = 5L;
             org.junit.Assert.assertEquals(value, expected);
         }
 

@@ -79,17 +79,17 @@ IntegritySSRHeader.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
  * Integrity monitoring flags for multiple aggregated elements. An element could be
  * a satellite, SSR grid point, or SSR tile. A group of aggregated elements being
  * monitored for integrity could refer to:  - Satellites in a particular {GPS, GAL,
- * BDS} constellation.  - Satellites in the line-of-sight of a particular SSR tile.
- * - Satellites in the line-of-sight of a particular SSR grid point.  The integrity
- * usage for a group of aggregated elements varies according to the integrity flag
- * of the satellites comprising that group.  SSR_INTEGRITY_USAGE_NOMINAL: All
- * satellites received passed the integrity check and have flag INTEGRITY_FLAG_OK.
- * SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group failed
- * the integrity check. Refer to more granular integrity messages for details on
- * the specific failing elements.  SSR_INTEGRITY_USAGE_ALERT: Most elements in the
- * group failed the integrity check, do not use for positioning.
- * SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of
- * elements in the group.
+ * BDS, QZSS} constellation.  - Satellites in the line-of-sight of a particular SSR
+ * tile.  - Satellites in the line-of-sight of a particular SSR grid point.  The
+ * integrity usage for a group of aggregated elements varies according to the
+ * integrity flag of the satellites comprising that group.
+ * SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity check
+ * and have flag INTEGRITY_FLAG_OK.  SSR_INTEGRITY_USAGE_WARNING: A limited number
+ * of elements in the group failed the integrity check. Refer to more granular
+ * integrity messages for details on the specific failing elements.
+ * SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity
+ * check, do not use for positioning.  SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to
+ * verify the integrity flag of elements in the group.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field obs_time GPSTimeSec GNSS reference time of the observation used to generate the flag.
@@ -101,6 +101,7 @@ IntegritySSRHeader.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
  * @field use_gps_sat number (unsigned 8-bit int, 1 byte) Use GPS satellites.
  * @field use_gal_sat number (unsigned 8-bit int, 1 byte) Use GAL satellites.
  * @field use_bds_sat number (unsigned 8-bit int, 1 byte) Use BDS satellites.
+ * @field use_qzss_sat number (unsigned 8-bit int, 1 byte) Use QZSS satellites.
  * @field reserved array Reserved
  * @field use_tropo_grid_points number (unsigned 8-bit int, 1 byte) Use tropo grid points.
  * @field use_iono_grid_points number (unsigned 8-bit int, 1 byte) Use iono grid points.
@@ -131,7 +132,8 @@ MsgSsrFlagHighLevel.prototype.parser = new Parser()
   .uint8('use_gps_sat')
   .uint8('use_gal_sat')
   .uint8('use_bds_sat')
-  .array('reserved', { length: 6, type: 'uint8' })
+  .uint8('use_qzss_sat')
+  .array('reserved', { length: 5, type: 'uint8' })
   .uint8('use_tropo_grid_points')
   .uint8('use_iono_grid_points')
   .uint8('use_iono_tile_sat_los')
@@ -146,7 +148,8 @@ MsgSsrFlagHighLevel.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['use_gps_sat', 'writeUInt8', 1]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['use_gal_sat', 'writeUInt8', 1]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['use_bds_sat', 'writeUInt8', 1]);
-MsgSsrFlagHighLevel.prototype.fieldSpec.push(['reserved', 'array', 'writeUInt8', function () { return 1; }, 6]);
+MsgSsrFlagHighLevel.prototype.fieldSpec.push(['use_qzss_sat', 'writeUInt8', 1]);
+MsgSsrFlagHighLevel.prototype.fieldSpec.push(['reserved', 'array', 'writeUInt8', function () { return 1; }, 5]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['use_tropo_grid_points', 'writeUInt8', 1]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['use_iono_grid_points', 'writeUInt8', 1]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['use_iono_tile_sat_los', 'writeUInt8', 1]);

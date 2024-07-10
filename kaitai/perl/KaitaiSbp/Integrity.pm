@@ -519,8 +519,9 @@ sub _read {
     $self->{use_gps_sat} = $self->{_io}->read_u1();
     $self->{use_gal_sat} = $self->{_io}->read_u1();
     $self->{use_bds_sat} = $self->{_io}->read_u1();
+    $self->{use_qzss_sat} = $self->{_io}->read_u1();
     $self->{reserved} = [];
-    my $n_reserved = 6;
+    my $n_reserved = 5;
     for (my $i = 0; $i < $n_reserved; $i++) {
         push @{$self->{reserved}}, $self->{_io}->read_u1();
     }
@@ -573,6 +574,11 @@ sub use_gal_sat {
 sub use_bds_sat {
     my ($self) = @_;
     return $self->{use_bds_sat};
+}
+
+sub use_qzss_sat {
+    my ($self) = @_;
+    return $self->{use_qzss_sat};
 }
 
 sub reserved {
