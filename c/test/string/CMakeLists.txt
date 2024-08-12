@@ -17,7 +17,8 @@ swift_add_test(test-libsbp-string
     ${PROJECT_SOURCE_DIR}/src/include
     ${PROJECT_SOURCE_DIR}/include
   LINK
-    sbp
-    gtest_main)
+    gtest_main
+    swiftnav::sbp
+)
 swift_set_language_standards(test-libsbp-string)
 swift_set_compile_options(test-libsbp-string)
