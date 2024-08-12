@@ -7,8 +7,9 @@ swift_add_test(test-libsbp-cpp
     INCLUDE
         ${PROJECT_SOURCE_DIR}/include/libsbp
     LINK
-        sbp
-        gtest_main)
+        gtest_main
+        swiftnav::sbp
+)
 swift_set_language_standards(test-libsbp-cpp)
 swift_set_compile_options(test-libsbp-cpp)
 

@@ -76,7 +76,7 @@ definitions:
                         - 0: Float RTK
                         - 1: Fixed RTK
 
- # Defitions lacking an id are not treated as SBP messages, but are
+ # Definitions lacking an id are not treated as SBP messages, but are
  # structured types that can be embedded into SBP definitions. Here,
  # UARTChannel is a struct composed of primitive types...
 

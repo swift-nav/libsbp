@@ -1,5 +1,5 @@
 find_package(Threads)
-set(TEST_LIBS ${TEST_LIBS} check Threads::Threads sbp)
+set(TEST_LIBS ${TEST_LIBS} check Threads::Threads swiftnav::sbp)
 
 # Check needs to be linked against Librt on Linux
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
