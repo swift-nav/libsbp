@@ -242,6 +242,7 @@ class Sbp(KaitaiStruct):
         msg_ecdsa_signature_dep_b = 3079
         msg_ecdsa_signature = 3080
         msg_certificate_chain = 3081
+        msg_aes_cmac_signature = 3088
         msg_fileio_config_req = 4097
         msg_fileio_config_resp = 4098
         msg_sbas_raw = 30583
@@ -808,6 +809,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Settings.MsgSettingsReadByIndexDone(_io__raw_payload, self, self._root)
+            elif _on == 3088:
+                self._raw_payload = self._io.read_bytes(self.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Signing.MsgAesCmacSignature(_io__raw_payload, self, self._root)
             elif _on == 114:
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))

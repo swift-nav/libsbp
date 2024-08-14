@@ -245,6 +245,7 @@ TABLE = {
     3076: Signing.MsgEcdsaCertificate,
     3081: Signing.MsgCertificateChain,
     3077: Signing.MsgCertificateChainDep,
+    3088: Signing.MsgAesCmacSignature,
     3080: Signing.MsgEcdsaSignature,
     3079: Signing.MsgEcdsaSignatureDepB,
     3078: Signing.MsgEcdsaSignatureDepA,

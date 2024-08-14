@@ -245,6 +245,85 @@ sub certificate_bytes {
 }
 
 ########################################################################
+package Signing::MsgAesCmacSignature;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{stream_counter} = $self->{_io}->read_u1();
+    $self->{on_demand_counter} = $self->{_io}->read_u1();
+    $self->{certificate_id} = [];
+    my $n_certificate_id = 4;
+    for (my $i = 0; $i < $n_certificate_id; $i++) {
+        push @{$self->{certificate_id}}, $self->{_io}->read_u1();
+    }
+    $self->{signature} = [];
+    my $n_signature = 16;
+    for (my $i = 0; $i < $n_signature; $i++) {
+        push @{$self->{signature}}, $self->{_io}->read_u1();
+    }
+    $self->{flags} = $self->{_io}->read_u1();
+    $self->{signed_messages} = [];
+    while (!$self->{_io}->is_eof()) {
+        push @{$self->{signed_messages}}, $self->{_io}->read_u1();
+    }
+}
+
+sub stream_counter {
+    my ($self) = @_;
+    return $self->{stream_counter};
+}
+
+sub on_demand_counter {
+    my ($self) = @_;
+    return $self->{on_demand_counter};
+}
+
+sub certificate_id {
+    my ($self) = @_;
+    return $self->{certificate_id};
+}
+
+sub signature {
+    my ($self) = @_;
+    return $self->{signature};
+}
+
+sub flags {
+    my ($self) = @_;
+    return $self->{flags};
+}
+
+sub signed_messages {
+    my ($self) = @_;
+    return $self->{signed_messages};
+}
+
+########################################################################
 package Signing::UtcTime;
 
 our @ISA = 'IO::KaitaiStruct::Struct';

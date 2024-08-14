@@ -650,6 +650,167 @@ int sbp_msg_certificate_chain_dep_cmp(
   return ret;
 }
 
+bool sbp_msg_aes_cmac_signature_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_aes_cmac_signature_t *msg) {
+  if (!sbp_u8_encode(ctx, &msg->stream_counter)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->on_demand_counter)) {
+    return false;
+  }
+  for (size_t i = 0; i < SBP_MSG_AES_CMAC_SIGNATURE_CERTIFICATE_ID_MAX; i++) {
+    if (!sbp_u8_encode(ctx, &msg->certificate_id[i])) {
+      return false;
+    }
+  }
+  for (size_t i = 0; i < SBP_MSG_AES_CMAC_SIGNATURE_SIGNATURE_MAX; i++) {
+    if (!sbp_u8_encode(ctx, &msg->signature[i])) {
+      return false;
+    }
+  }
+  if (!sbp_u8_encode(ctx, &msg->flags)) {
+    return false;
+  }
+  for (size_t i = 0; i < msg->n_signed_messages; i++) {
+    if (!sbp_u8_encode(ctx, &msg->signed_messages[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+s8 sbp_msg_aes_cmac_signature_encode(uint8_t *buf, uint8_t len,
+                                     uint8_t *n_written,
+                                     const sbp_msg_aes_cmac_signature_t *msg) {
+  sbp_encode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_aes_cmac_signature_encode_internal(&ctx, msg)) {
+    return SBP_ENCODE_ERROR;
+  }
+  if (n_written != NULL) {
+    *n_written = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+bool sbp_msg_aes_cmac_signature_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_aes_cmac_signature_t *msg) {
+  if (!sbp_u8_decode(ctx, &msg->stream_counter)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->on_demand_counter)) {
+    return false;
+  }
+  for (uint8_t i = 0; i < SBP_MSG_AES_CMAC_SIGNATURE_CERTIFICATE_ID_MAX; i++) {
+    if (!sbp_u8_decode(ctx, &msg->certificate_id[i])) {
+      return false;
+    }
+  }
+  for (uint8_t i = 0; i < SBP_MSG_AES_CMAC_SIGNATURE_SIGNATURE_MAX; i++) {
+    if (!sbp_u8_decode(ctx, &msg->signature[i])) {
+      return false;
+    }
+  }
+  if (!sbp_u8_decode(ctx, &msg->flags)) {
+    return false;
+  }
+  if (((ctx->buf_len - ctx->offset) % SBP_ENCODED_LEN_U8) != 0) {
+    return false;
+  }
+  msg->n_signed_messages =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
+  for (uint8_t i = 0; i < msg->n_signed_messages; i++) {
+    if (!sbp_u8_decode(ctx, &msg->signed_messages[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+s8 sbp_msg_aes_cmac_signature_decode(const uint8_t *buf, uint8_t len,
+                                     uint8_t *n_read,
+                                     sbp_msg_aes_cmac_signature_t *msg) {
+  sbp_decode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_aes_cmac_signature_decode_internal(&ctx, msg)) {
+    return SBP_DECODE_ERROR;
+  }
+  if (n_read != NULL) {
+    *n_read = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+s8 sbp_msg_aes_cmac_signature_send(sbp_state_t *s, u16 sender_id,
+                                   const sbp_msg_aes_cmac_signature_t *msg,
+                                   sbp_write_fn_t write) {
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_msg_aes_cmac_signature_encode(payload, sizeof(payload),
+                                             &payload_len, msg);
+  if (ret != SBP_OK) {
+    return ret;
+  }
+  return sbp_internal_forward_payload(s, SbpMsgAesCmacSignature, sender_id,
+                                      payload_len, payload, write);
+}
+
+int sbp_msg_aes_cmac_signature_cmp(const sbp_msg_aes_cmac_signature_t *a,
+                                   const sbp_msg_aes_cmac_signature_t *b) {
+  int ret = 0;
+
+  ret = sbp_u8_cmp(&a->stream_counter, &b->stream_counter);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->on_demand_counter, &b->on_demand_counter);
+  if (ret != 0) {
+    return ret;
+  }
+
+  for (uint8_t i = 0; i < SBP_MSG_AES_CMAC_SIGNATURE_CERTIFICATE_ID_MAX; i++) {
+    ret = sbp_u8_cmp(&a->certificate_id[i], &b->certificate_id[i]);
+    if (ret != 0) {
+      return ret;
+    }
+  }
+  if (ret != 0) {
+    return ret;
+  }
+
+  for (uint8_t i = 0; i < SBP_MSG_AES_CMAC_SIGNATURE_SIGNATURE_MAX; i++) {
+    ret = sbp_u8_cmp(&a->signature[i], &b->signature[i]);
+    if (ret != 0) {
+      return ret;
+    }
+  }
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->flags, &b->flags);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->n_signed_messages, &b->n_signed_messages);
+  if (ret != 0) {
+    return ret;
+  }
+  for (uint8_t i = 0; i < a->n_signed_messages; i++) {
+    ret = sbp_u8_cmp(&a->signed_messages[i], &b->signed_messages[i]);
+    if (ret != 0) {
+      return ret;
+    }
+  }
+  return ret;
+}
+
 bool sbp_msg_ecdsa_signature_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ecdsa_signature_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->flags)) {

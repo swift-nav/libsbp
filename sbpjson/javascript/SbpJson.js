@@ -27,6 +27,7 @@
 //   const msgAcknowledge = Convert.toMsgAcknowledge(json);
 //   const msgAcqResult = Convert.toMsgAcqResult(json);
 //   const msgAcqSvProfile = Convert.toMsgAcqSvProfile(json);
+//   const msgAESCmacSignature = Convert.toMsgAESCmacSignature(json);
 //   const msgAgeCorrections = Convert.toMsgAgeCorrections(json);
 //   const msgAlmanac = Convert.toMsgAlmanac(json);
 //   const msgAlmanacGPS = Convert.toMsgAlmanacGPS(json);
@@ -426,6 +427,14 @@ function toMsgAcqSvProfile(json) {
 
 function msgAcqSvProfileToJson(value) {
     return JSON.stringify(uncast(value, r("MsgAcqSvProfile")), null, 2);
+}
+
+function toMsgAESCmacSignature(json) {
+    return cast(JSON.parse(json), r("MsgAESCmacSignature"));
+}
+
+function msgAESCmacSignatureToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgAESCmacSignature")), null, 2);
 }
 
 function toMsgAgeCorrections(json) {
@@ -2214,6 +2223,14 @@ const typeMap = {
         { json: "time_spent", js: "time_spent", typ: 0 },
         { json: "timestamp", js: "timestamp", typ: 0 },
     ], "any"),
+    "MsgAESCmacSignature": o([
+        { json: "certificate_id", js: "certificate_id", typ: a(0) },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "on_demand_counter", js: "on_demand_counter", typ: 0 },
+        { json: "signature", js: "signature", typ: a(0) },
+        { json: "signed_messages", js: "signed_messages", typ: a(0) },
+        { json: "stream_counter", js: "stream_counter", typ: 0 },
+    ], "any"),
     "MsgAgeCorrections": o([
         { json: "age", js: "age", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
@@ -3753,6 +3770,8 @@ module.exports = {
     "toMsgAcqResult": toMsgAcqResult,
     "msgAcqSvProfileToJson": msgAcqSvProfileToJson,
     "toMsgAcqSvProfile": toMsgAcqSvProfile,
+    "msgAESCmacSignatureToJson": msgAESCmacSignatureToJson,
+    "toMsgAESCmacSignature": toMsgAESCmacSignature,
     "msgAgeCorrectionsToJson": msgAgeCorrectionsToJson,
     "toMsgAgeCorrections": toMsgAgeCorrections,
     "msgAlmanacToJson": msgAlmanacToJson,

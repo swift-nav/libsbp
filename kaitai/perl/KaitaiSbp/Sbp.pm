@@ -249,6 +249,7 @@ our $MSG_IDS_MSG_ECDSA_SIGNATURE_DEP_A = 3078;
 our $MSG_IDS_MSG_ECDSA_SIGNATURE_DEP_B = 3079;
 our $MSG_IDS_MSG_ECDSA_SIGNATURE = 3080;
 our $MSG_IDS_MSG_CERTIFICATE_CHAIN = 3081;
+our $MSG_IDS_MSG_AES_CMAC_SIGNATURE = 3088;
 our $MSG_IDS_MSG_FILEIO_CONFIG_REQ = 4097;
 our $MSG_IDS_MSG_FILEIO_CONFIG_RESP = 4098;
 our $MSG_IDS_MSG_SBAS_RAW = 30583;
@@ -974,6 +975,11 @@ sub _read {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Settings::MsgSettingsReadByIndexDone->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3088) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Signing::MsgAesCmacSignature->new($io__raw_payload, $self, $self->{_root});
     }
     elsif ($_on == 114) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());

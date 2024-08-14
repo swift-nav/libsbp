@@ -251,6 +251,7 @@ our %TABLE = (
     3076 => sub{Signing::MsgEcdsaCertificate->new(@_)},
     3081 => sub{Signing::MsgCertificateChain->new(@_)},
     3077 => sub{Signing::MsgCertificateChainDep->new(@_)},
+    3088 => sub{Signing::MsgAesCmacSignature->new(@_)},
     3080 => sub{Signing::MsgEcdsaSignature->new(@_)},
     3079 => sub{Signing::MsgEcdsaSignatureDepB->new(@_)},
     3078 => sub{Signing::MsgEcdsaSignatureDepA->new(@_)},

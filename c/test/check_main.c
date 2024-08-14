@@ -225,6 +225,7 @@ int main(void) {
   srunner_add_suite(sr, auto_check_sbp_settings_MsgSettingsSave_suite());
   srunner_add_suite(sr, auto_check_sbp_settings_MsgSettingsWrite_suite());
   srunner_add_suite(sr, auto_check_sbp_settings_MsgSettingsWriteResp_suite());
+  srunner_add_suite(sr, auto_check_sbp_signing_MsgAesCmacSignature_suite());
   srunner_add_suite(sr, auto_check_sbp_signing_MsgCertificateChain_suite());
   srunner_add_suite(sr, auto_check_sbp_signing_MsgCertificateChainDep_suite());
   srunner_add_suite(sr, auto_check_sbp_signing_MsgEcdsaCertificate_suite());

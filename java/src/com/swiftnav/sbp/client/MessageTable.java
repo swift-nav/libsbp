@@ -193,6 +193,7 @@ import com.swiftnav.sbp.settings.MsgSettingsRegisterResp;
 import com.swiftnav.sbp.settings.MsgSettingsSave;
 import com.swiftnav.sbp.settings.MsgSettingsWrite;
 import com.swiftnav.sbp.settings.MsgSettingsWriteResp;
+import com.swiftnav.sbp.signing.MsgAesCmacSignature;
 import com.swiftnav.sbp.signing.MsgCertificateChain;
 import com.swiftnav.sbp.signing.MsgCertificateChainDep;
 import com.swiftnav.sbp.signing.MsgEcdsaCertificate;
@@ -620,6 +621,8 @@ final class MessageTable {
                 return new MsgCertificateChain(msg);
             case MsgCertificateChainDep.TYPE:
                 return new MsgCertificateChainDep(msg);
+            case MsgAesCmacSignature.TYPE:
+                return new MsgAesCmacSignature(msg);
             case MsgEcdsaSignature.TYPE:
                 return new MsgEcdsaSignature(msg);
             case MsgEcdsaSignatureDepB.TYPE:

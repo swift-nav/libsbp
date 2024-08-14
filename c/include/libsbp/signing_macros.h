@@ -137,6 +137,55 @@
  */
 #define SBP_MSG_CERTIFICATE_CHAIN_DEP_ENCODED_LEN 135u
 
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_aes_cmac_signature_t::certificate_id before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_AES_CMAC_SIGNATURE_CERTIFICATE_ID_MAX 4u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_aes_cmac_signature_t::signature before the maximum SBP message size
+ * is exceeded
+ */
+#define SBP_MSG_AES_CMAC_SIGNATURE_SIGNATURE_MAX 16u
+
+#define SBP_AES_CMAC_SIGNATURE_CRC_TYPE_MASK (0x3u)
+#define SBP_AES_CMAC_SIGNATURE_CRC_TYPE_SHIFT (0u)
+#define SBP_AES_CMAC_SIGNATURE_CRC_TYPE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_AES_CMAC_SIGNATURE_CRC_TYPE_SHIFT) & \
+        SBP_AES_CMAC_SIGNATURE_CRC_TYPE_MASK))
+#define SBP_AES_CMAC_SIGNATURE_CRC_TYPE_SET(flags, val)                      \
+  do {                                                                       \
+    (flags) = (u8)((flags & (~(SBP_AES_CMAC_SIGNATURE_CRC_TYPE_MASK          \
+                               << SBP_AES_CMAC_SIGNATURE_CRC_TYPE_SHIFT))) | \
+                   (((val) & (SBP_AES_CMAC_SIGNATURE_CRC_TYPE_MASK))         \
+                    << (SBP_AES_CMAC_SIGNATURE_CRC_TYPE_SHIFT)));            \
+  } while (0)
+
+#define SBP_AES_CMAC_SIGNATURE_CRC_TYPE_24_BIT_CRCS_FROM_RTCM_FRAMING (0)
+#define SBP_AES_CMAC_SIGNATURE_CRC_TYPE_16_BIT_CRCS_FROM_SBP_FRAMING (1)
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_aes_cmac_signature_t::signed_messages before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_AES_CMAC_SIGNATURE_SIGNED_MESSAGES_MAX 232u
+
+/**
+ * Encoded length of sbp_msg_aes_cmac_signature_t
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users call
+ * #sbp_msg_aes_cmac_signature_encoded_len to determine the actual size of an
+ * instance of this message.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_AES_CMAC_SIGNATURE_ENCODED_OVERHEAD 23u
+
 #define SBP_ECDSA_SIGNATURE_CRC_TYPE_MASK (0x3u)
 #define SBP_ECDSA_SIGNATURE_CRC_TYPE_SHIFT (0u)
 #define SBP_ECDSA_SIGNATURE_CRC_TYPE_GET(flags)               \

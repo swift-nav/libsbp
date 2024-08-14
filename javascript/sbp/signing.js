@@ -224,6 +224,58 @@ MsgCertificateChainDep.prototype.fieldSpec.push(['expiration', UtcTime.prototype
 MsgCertificateChainDep.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 64]);
 
 /**
+ * SBP class for message MSG_AES_CMAC_SIGNATURE (0x0C10).
+ *
+ * Digital signature using AES-CMAC 128 algorithm used for data integrity.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field stream_counter number (unsigned 8-bit int, 1 byte) Signature message counter. Zero indexed and incremented with each signature
+ *   message.  The counter will not increment if this message was in response to an
+ *   on demand request.  The counter will roll over after 256 messages. Upon
+ *   connection, the value of the counter may not initially be zero.
+ * @field on_demand_counter number (unsigned 8-bit int, 1 byte) On demand message counter. Zero indexed and incremented with each signature
+ *   message sent in response to an on demand message. The counter will roll over
+ *   after 256 messages.  Upon connection, the value of the counter may not initially
+ *   be zero.
+ * @field certificate_id array The last 4 bytes of the certificate's SHA-1 fingerprint
+ * @field signature array Signature
+ * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the 'signed messages' field below.
+ * @field signed_messages array CRCs of the messages covered by this signature.  For Skylark, which delivers SBP
+ *   messages wrapped in Swift's proprietary RTCM message, these are the 24-bit CRCs
+ *   from the RTCM message framing. For SBP only streams, this will be 16-bit CRCs
+ *   from the SBP framing.  See the `flags` field to determine the type of CRCs
+ *   covered.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let MsgAesCmacSignature = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_AES_CMAC_SIGNATURE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAesCmacSignature.prototype = Object.create(SBP.prototype);
+MsgAesCmacSignature.prototype.messageType = "MSG_AES_CMAC_SIGNATURE";
+MsgAesCmacSignature.prototype.msg_type = 0x0C10;
+MsgAesCmacSignature.prototype.constructor = MsgAesCmacSignature;
+MsgAesCmacSignature.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('stream_counter')
+  .uint8('on_demand_counter')
+  .array('certificate_id', { length: 4, type: 'uint8' })
+  .array('signature', { length: 16, type: 'uint8' })
+  .uint8('flags')
+  .array('signed_messages', { type: 'uint8', readUntil: 'eof' });
+MsgAesCmacSignature.prototype.fieldSpec = [];
+MsgAesCmacSignature.prototype.fieldSpec.push(['stream_counter', 'writeUInt8', 1]);
+MsgAesCmacSignature.prototype.fieldSpec.push(['on_demand_counter', 'writeUInt8', 1]);
+MsgAesCmacSignature.prototype.fieldSpec.push(['certificate_id', 'array', 'writeUInt8', function () { return 1; }, 4]);
+MsgAesCmacSignature.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 16]);
+MsgAesCmacSignature.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgAesCmacSignature.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUInt8', function () { return 1; }, null]);
+
+/**
  * SBP class for message MSG_ECDSA_SIGNATURE (0x0C08).
  *
  * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
@@ -505,6 +557,8 @@ module.exports = {
   MsgCertificateChain: MsgCertificateChain,
   0x0C05: MsgCertificateChainDep,
   MsgCertificateChainDep: MsgCertificateChainDep,
+  0x0C10: MsgAesCmacSignature,
+  MsgAesCmacSignature: MsgAesCmacSignature,
   0x0C08: MsgEcdsaSignature,
   MsgEcdsaSignature: MsgEcdsaSignature,
   0x0C07: MsgEcdsaSignatureDepB,
