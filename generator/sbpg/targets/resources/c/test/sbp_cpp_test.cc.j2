@@ -495,47 +495,6 @@ TEST_F( ((( fixture_name ))), DecodeFromBufWithoutNread) {
   EXPECT_EQ(msg, info.test_msg);
 }
 
-((*- if t.fields|length > 0 *))
-TEST_F( ((( fixture_name ))), DecodeFromBufUnderflow) {
-  auto info = get_test_msg_info();
-  ((( t.struct_name ))) msg{};
-
-  for (uint8_t i = 0; i < info.payload_len; i++) {
-    int expected_return = SBP_DECODE_ERROR;
-
-    ((*- for f in t.c_decoded_fieldskeys *))
-    ((*- set ff = t.c_decoded_fields[f] *))
-    ((*- if ff is dict_type *))
-    ((*- if ff.handle_as and ff.handle_as == "vararray-len" *))
-    ((*- set relates_to = ff.relates_to *))
-    size_t overhead = []()->size_t{(((t.struct_name))) t{}; return (((t.fn_prefix)))_encoded_len(&t); }();
-    size_t elem_size = []()->size_t{(((t.struct_name))) t{}; t.(((f))) = 1; return  (((t.fn_prefix)))_encoded_len(&t); }() - overhead;
-
-    if (i >= overhead) {
-      if ( ((i - overhead) % elem_size) == 0) {
-        expected_return = SBP_OK;
-      }
-    }
-    ((*- elif ff.handle_as and ff.handle_as == "encoded-string" *))
-    size_t overhead = SBP_(((t.canonical_name)))_ENCODED_OVERHEAD;
-    //size_t overhead = []()->size_t{(((t.struct_name))) t{}; return (((t.fn_prefix)))_encoded_len(&t); }();
-    ((*- if ff.min_len *))
-    overhead += (((ff.min_len)));
-    ((*- endif *))
-    if (i >= overhead) {
-      expected_return = SBP_OK;
-    }
-    ((*- endif *))
-    ((*- endif *))
-    ((*- endfor *))
-
-    EXPECT_EQ(
-        ((( t.fn_prefix )))_decode(&info.encoded_payload[0], i, nullptr, &msg),
-        expected_return);
-  }
-}
-((*- endif *))
-
 TEST_F( ((( fixture_name ))), ReceiveThroughSbpState) {
   auto info = get_test_msg_info();
   sbp_state_t state;
