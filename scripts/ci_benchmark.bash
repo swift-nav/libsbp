@@ -2,31 +2,6 @@
 
 set -ex
 
-pushd haskell
-
-docker build --tag haskell-sbp2json .
-
-docker run \
-  -v "$PWD:/work" \
-  -v "$HOME/.docker-cache/stack/work:/work/.stack-work" \
-  -v "$HOME/.docker-cache/stack/home:/root/.stack" \
-  --rm \
-  --name haskell-sbp2json-run \
-  haskell-sbp2json \
-  stack build -j4 --allow-different-user
-
-sudo chown    "$USER:$USER" "$HOME/.docker-cache"
-sudo chown -R "$USER:$USER" "$HOME/.docker-cache/stack"
-sudo chown -R "$USER:$USER" "$PWD"
-
-haskell_bins="$(find "$HOME/.docker-cache/stack/work/install" -name bin)"
-
-cp "$haskell_bins/sbp2json" .
-cp "$haskell_bins/json2sbp" .
-cp "$haskell_bins/json2json" .
-
-popd
-
 pushd rust
 
 docker build --tag rust-sbp2json .
