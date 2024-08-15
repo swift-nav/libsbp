@@ -206,7 +206,7 @@ definitions:
             type: array
             fill: u8
             size: 16
-            desc: Signature
+            desc: Signature (CMAC tag value)
         - flags:
             type: u8
             desc: Describes the format of the 'signed messages' field below.
