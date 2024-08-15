@@ -1,8 +1,8 @@
 files:
   'docs/sbp.pdf':
-    - woodfell
+    - sokhealy
   'spec/yaml/swiftnav/sbp/*.yaml':
-    - woodfell
+    - sokhealy
 
 options:
   ignore_draft: true
