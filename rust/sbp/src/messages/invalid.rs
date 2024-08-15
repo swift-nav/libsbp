@@ -1,9 +1,9 @@
 //! Invalid messages. This message type should be created out of two errors:
 //! The SbpMsgParseError, & the CrcError. They correspond to two cases
-//! 1) the Frame is invalid because either it either has an invalid CRC or
-//! it is missing some metadata like msg_type or similar.
-//! 2) The message is invalid because the payload is not large enough and cannot be
-//! parsed into a message. This is the SbpMsgParseError.
+//!   1. The Frame is invalid because either it either has an invalid CRC or
+//!      it is missing some metadata like msg_type or similar.
+//!   2. The message is invalid because the payload is not large enough and cannot be
+//!      parsed into a message. This is the SbpMsgParseError.
 
 use bytes::{Buf, BufMut};
 

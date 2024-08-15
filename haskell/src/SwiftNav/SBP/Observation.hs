@@ -2731,6 +2731,7 @@ data AlmanacCommonContent = AlmanacCommonContent
     --   - bits 0-4: Signal health status. See IS-GPS-200H
     --     Table 20-VIII. Codes for Health of SV Signal
     --     Components.
+    --
     -- Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
     -- details):
     --   - bit 0: C(n), "unhealthy" flag that is transmitted within
@@ -2781,6 +2782,7 @@ data AlmanacCommonContentDep = AlmanacCommonContentDep
     --   - bits 0-4: Signal health status. See IS-GPS-200H
     --     Table 20-VIII. Codes for Health of SV Signal
     --     Components.
+    --
     -- Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
     -- details):
     --   - bit 0: C(n), "unhealthy" flag that is transmitted within
