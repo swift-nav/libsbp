@@ -168,6 +168,51 @@ types:
         repeat: expr
         repeat-expr: 64
   
+  msg_aes_cmac_signature:
+    doc: |
+      Digital signature using AES-CMAC 128 algorithm used for data integrity.
+    seq:
+      - id: stream_counter
+        doc: |
+          Signature message counter. Zero indexed and incremented with each
+          signature message.  The counter will not increment if this message
+          was in response to an on demand request.  The counter will roll over
+          after 256 messages. Upon connection, the value of the counter may
+          not initially be zero.
+        type: u1
+      - id: on_demand_counter
+        doc: |
+          On demand message counter. Zero indexed and incremented with each
+          signature message sent in response to an on demand message. The
+          counter will roll over after 256 messages.  Upon connection, the
+          value of the counter may not initially be zero.
+        type: u1
+      - id: certificate_id
+        doc: |
+          The last 4 bytes of the certificate's SHA-1 fingerprint
+        type: u1
+        repeat: expr
+        repeat-expr: 4
+      - id: signature
+        doc: |
+          Signature (CMAC tag value)
+        type: u1
+        repeat: expr
+        repeat-expr: 16
+      - id: flags
+        doc: |
+          Describes the format of the 'signed messages' field below.
+        type: u1
+      - id: signed_messages
+        doc: |
+          CRCs of the messages covered by this signature.  For Skylark, which
+          delivers SBP messages wrapped in Swift's proprietary RTCM message,
+          these are the 24-bit CRCs from the RTCM message framing. For SBP
+          only streams, this will be 16-bit CRCs from the SBP framing.  See
+          the `flags` field to determine the type of CRCs covered.
+        type: u1
+        repeat: eos
+  
   msg_ecdsa_signature:
     doc: |
       An ECDSA-256 signature using SHA-256 as the message digest algorithm.

@@ -196,6 +196,7 @@ Suite* auto_check_sbp_settings_MsgSettingsRegisterResp_suite(void);
 Suite* auto_check_sbp_settings_MsgSettingsSave_suite(void);
 Suite* auto_check_sbp_settings_MsgSettingsWrite_suite(void);
 Suite* auto_check_sbp_settings_MsgSettingsWriteResp_suite(void);
+Suite* auto_check_sbp_signing_MsgAesCmacSignature_suite(void);
 Suite* auto_check_sbp_signing_MsgCertificateChain_suite(void);
 Suite* auto_check_sbp_signing_MsgCertificateChainDep_suite(void);
 Suite* auto_check_sbp_signing_MsgEcdsaCertificate_suite(void);

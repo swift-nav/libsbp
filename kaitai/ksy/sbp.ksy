@@ -257,6 +257,7 @@ enums:
     3076: msg_ecdsa_certificate
     3081: msg_certificate_chain
     3077: msg_certificate_chain_dep
+    3088: msg_aes_cmac_signature
     3080: msg_ecdsa_signature
     3079: msg_ecdsa_signature_dep_b
     3078: msg_ecdsa_signature_dep_a
@@ -539,6 +540,7 @@ types:
             3076: signing::msg_ecdsa_certificate
             3081: signing::msg_certificate_chain
             3077: signing::msg_certificate_chain_dep
+            3088: signing::msg_aes_cmac_signature
             3080: signing::msg_ecdsa_signature
             3079: signing::msg_ecdsa_signature_dep_b
             3078: signing::msg_ecdsa_signature_dep_a

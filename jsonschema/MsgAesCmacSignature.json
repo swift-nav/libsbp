@@ -1,0 +1,34 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgAesCmacSignature",
+  "title":"MsgAesCmacSignature",
+  "description":"Digital signature using AES-CMAC 128 algorithm used for data integrity.\n",
+  "type": "object",
+  "properties": {
+    "stream_counter": {"type": "integer"},
+    "on_demand_counter": {"type": "integer"},
+    "certificate_id": {"type": "array", "items": {"type": "integer"}},
+    "signature": {"type": "array", "items": {"type": "integer"}},
+    "flags": {"type": "integer"},
+    "signed_messages": {"type": "array", "items": {"type": "integer"}}
+  },
+  "required": [
+    "stream_counter",
+    "on_demand_counter",
+    "certificate_id",
+    "signature",
+    "flags",
+    "signed_messages"
+  ]
+}

@@ -225,6 +225,7 @@ use self::settings::msg_settings_register_resp::MsgSettingsRegisterResp;
 use self::settings::msg_settings_save::MsgSettingsSave;
 use self::settings::msg_settings_write::MsgSettingsWrite;
 use self::settings::msg_settings_write_resp::MsgSettingsWriteResp;
+use self::signing::msg_aes_cmac_signature::MsgAesCmacSignature;
 use self::signing::msg_certificate_chain::MsgCertificateChain;
 use self::signing::msg_certificate_chain_dep::MsgCertificateChainDep;
 use self::signing::msg_ecdsa_certificate::MsgEcdsaCertificate;
@@ -797,6 +798,8 @@ pub enum Sbp {
     MsgEcdsaSignature(MsgEcdsaSignature),
     /// The certificate chain
     MsgCertificateChain(MsgCertificateChain),
+    /// AES-CMAC 128 digital signature
+    MsgAesCmacSignature(MsgAesCmacSignature),
     /// Request advice on the optimal configuration for FileIO
     MsgFileioConfigReq(MsgFileioConfigReq),
     /// Response with advice on the optimal configuration for FileIO.
@@ -1526,6 +1529,9 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             Some(MsgCertificateChain::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgCertificateChain>(value).map(Sbp::MsgCertificateChain)
             }
+            Some(MsgAesCmacSignature::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAesCmacSignature>(value).map(Sbp::MsgAesCmacSignature)
+            }
             Some(MsgFileioConfigReq::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgFileioConfigReq>(value).map(Sbp::MsgFileioConfigReq)
             }
@@ -2230,6 +2236,9 @@ impl Sbp {
             MsgCertificateChain::MESSAGE_TYPE => {
                 MsgCertificateChain::parse(&mut payload).map(Sbp::MsgCertificateChain)
             }
+            MsgAesCmacSignature::MESSAGE_TYPE => {
+                MsgAesCmacSignature::parse(&mut payload).map(Sbp::MsgAesCmacSignature)
+            }
             MsgFileioConfigReq::MESSAGE_TYPE => {
                 MsgFileioConfigReq::parse(&mut payload).map(Sbp::MsgFileioConfigReq)
             }
@@ -2550,6 +2559,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgEcdsaSignatureDepB(msg) => msg.message_name(),
             Sbp::MsgEcdsaSignature(msg) => msg.message_name(),
             Sbp::MsgCertificateChain(msg) => msg.message_name(),
+            Sbp::MsgAesCmacSignature(msg) => msg.message_name(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_name(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_name(),
             Sbp::MsgSbasRaw(msg) => msg.message_name(),
@@ -2794,6 +2804,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgEcdsaSignatureDepB(msg) => msg.message_type(),
             Sbp::MsgEcdsaSignature(msg) => msg.message_type(),
             Sbp::MsgCertificateChain(msg) => msg.message_type(),
+            Sbp::MsgAesCmacSignature(msg) => msg.message_type(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_type(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_type(),
             Sbp::MsgSbasRaw(msg) => msg.message_type(),
@@ -3038,6 +3049,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgEcdsaSignatureDepB(msg) => msg.sender_id(),
             Sbp::MsgEcdsaSignature(msg) => msg.sender_id(),
             Sbp::MsgCertificateChain(msg) => msg.sender_id(),
+            Sbp::MsgAesCmacSignature(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigReq(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigResp(msg) => msg.sender_id(),
             Sbp::MsgSbasRaw(msg) => msg.sender_id(),
@@ -3282,6 +3294,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgEcdsaSignatureDepB(msg) => msg.set_sender_id(new_id),
             Sbp::MsgEcdsaSignature(msg) => msg.set_sender_id(new_id),
             Sbp::MsgCertificateChain(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgAesCmacSignature(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigReq(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigResp(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSbasRaw(msg) => msg.set_sender_id(new_id),
@@ -3526,6 +3539,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgEcdsaSignatureDepB(msg) => msg.encoded_len(),
             Sbp::MsgEcdsaSignature(msg) => msg.encoded_len(),
             Sbp::MsgCertificateChain(msg) => msg.encoded_len(),
+            Sbp::MsgAesCmacSignature(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigReq(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigResp(msg) => msg.encoded_len(),
             Sbp::MsgSbasRaw(msg) => msg.encoded_len(),
@@ -3773,6 +3787,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgEcdsaSignatureDepB(msg) => msg.gps_time(),
             Sbp::MsgEcdsaSignature(msg) => msg.gps_time(),
             Sbp::MsgCertificateChain(msg) => msg.gps_time(),
+            Sbp::MsgAesCmacSignature(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigReq(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigResp(msg) => msg.gps_time(),
             Sbp::MsgSbasRaw(msg) => msg.gps_time(),
@@ -4017,6 +4032,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgEcdsaSignatureDepB(msg) => msg.friendly_name(),
             Sbp::MsgEcdsaSignature(msg) => msg.friendly_name(),
             Sbp::MsgCertificateChain(msg) => msg.friendly_name(),
+            Sbp::MsgAesCmacSignature(msg) => msg.friendly_name(),
             Sbp::MsgFileioConfigReq(msg) => msg.friendly_name(),
             Sbp::MsgFileioConfigResp(msg) => msg.friendly_name(),
             Sbp::MsgSbasRaw(msg) => msg.friendly_name(),
@@ -4261,6 +4277,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgEcdsaSignatureDepB(msg) => msg.is_valid(),
             Sbp::MsgEcdsaSignature(msg) => msg.is_valid(),
             Sbp::MsgCertificateChain(msg) => msg.is_valid(),
+            Sbp::MsgAesCmacSignature(msg) => msg.is_valid(),
             Sbp::MsgFileioConfigReq(msg) => msg.is_valid(),
             Sbp::MsgFileioConfigResp(msg) => msg.is_valid(),
             Sbp::MsgSbasRaw(msg) => msg.is_valid(),
@@ -4586,6 +4603,7 @@ impl SbpMessage for Sbp {
             }
             Sbp::MsgEcdsaSignature(msg) => Ok(Sbp::MsgEcdsaSignature(msg.into_valid_msg()?)),
             Sbp::MsgCertificateChain(msg) => Ok(Sbp::MsgCertificateChain(msg.into_valid_msg()?)),
+            Sbp::MsgAesCmacSignature(msg) => Ok(Sbp::MsgAesCmacSignature(msg.into_valid_msg()?)),
             Sbp::MsgFileioConfigReq(msg) => Ok(Sbp::MsgFileioConfigReq(msg.into_valid_msg()?)),
             Sbp::MsgFileioConfigResp(msg) => Ok(Sbp::MsgFileioConfigResp(msg.into_valid_msg()?)),
             Sbp::MsgSbasRaw(msg) => Ok(Sbp::MsgSbasRaw(msg.into_valid_msg()?)),
@@ -4859,6 +4877,7 @@ impl WireFormat for Sbp {
             Sbp::MsgEcdsaSignatureDepB(msg) => WireFormat::write(msg, buf),
             Sbp::MsgEcdsaSignature(msg) => WireFormat::write(msg, buf),
             Sbp::MsgCertificateChain(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAesCmacSignature(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSbasRaw(msg) => WireFormat::write(msg, buf),
@@ -5103,6 +5122,7 @@ impl WireFormat for Sbp {
             Sbp::MsgEcdsaSignatureDepB(msg) => WireFormat::len(msg),
             Sbp::MsgEcdsaSignature(msg) => WireFormat::len(msg),
             Sbp::MsgCertificateChain(msg) => WireFormat::len(msg),
+            Sbp::MsgAesCmacSignature(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::len(msg),
             Sbp::MsgSbasRaw(msg) => WireFormat::len(msg),
@@ -6363,6 +6383,12 @@ impl From<MsgEcdsaSignature> for Sbp {
 impl From<MsgCertificateChain> for Sbp {
     fn from(msg: MsgCertificateChain) -> Self {
         Sbp::MsgCertificateChain(msg)
+    }
+}
+
+impl From<MsgAesCmacSignature> for Sbp {
+    fn from(msg: MsgAesCmacSignature) -> Self {
+        Sbp::MsgAesCmacSignature(msg)
     }
 }
 

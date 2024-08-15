@@ -177,6 +177,56 @@ definitions:
              `expiration`.  This certificate chain (allow list) can also be
              validated by fetching it from `http(s)://certs.swiftnav.com/chain`.
 
+  - MSG_AES_CMAC_SIGNATURE:
+      id: 0x0C10
+      short_desc: AES-CMAC 128 digital signature
+      desc: Digital signature using AES-CMAC 128 algorithm used for data integrity.
+      fields:
+        - stream_counter:
+            type: u8
+            desc: >
+              Signature message counter. Zero indexed and incremented with each
+              signature message.  The counter will not increment if this message
+              was in response to an on demand request.  The counter will roll
+              over after 256 messages. Upon connection, the value of the counter
+              may not initially be zero.
+        - on_demand_counter:
+            type: u8
+            desc: >
+              On demand message counter. Zero indexed and incremented with each
+              signature message sent in response to an on demand message. The
+              counter will roll over after 256 messages.  Upon connection, the
+              value of the counter may not initially be zero.
+        - certificate_id:
+            type: array
+            fill: u8
+            size: 4
+            desc: The last 4 bytes of the certificate's SHA-1 fingerprint
+        - signature:
+            type: array
+            fill: u8
+            size: 16
+            desc: Signature (CMAC tag value)
+        - flags:
+            type: u8
+            desc: Describes the format of the 'signed messages' field below.
+            fields:
+              - 0-1:
+                  desc: CRC type
+                  values:
+                    - 0: 24-bit CRCs from RTCM framing
+                    - 1: 16-bit CRCs from SBP framing
+        - signed_messages:
+            type: array
+            fill: u8
+            desc: >
+              CRCs of the messages covered by this signature.  For Skylark,
+              which delivers SBP messages wrapped in Swift's proprietary RTCM
+              message, these are the 24-bit CRCs from the RTCM message framing.
+              For SBP only streams, this will be 16-bit CRCs from the SBP
+              framing.  See the `flags` field to determine the type of CRCs
+              covered.
+
   - MSG_ECDSA_SIGNATURE:
       id: 0x0C08
       short_desc: An ECDSA signature

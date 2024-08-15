@@ -1,0 +1,52 @@
+description: Unit tests for swiftnav.sbp.signing MsgAesCmacSignature
+generated_on: '2023-03-17 19:24:46.292191'
+package: sbp.signing
+tests:
+- msg:
+    c_decoded_fields:
+      n_signed_messages:
+        handle_as: vararray-len
+        relates_to: signed_messages
+        value: 3
+    fields:
+      stream_counter: 1
+      on_demand_counter: 2
+      certificate_id:
+        - 1
+        - 2
+        - 3
+        - 4
+      signature:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+        - 14
+        - 15
+      flags: 0
+      signed_messages:
+      - 11
+      - 22
+      - 33
+    module: sbp.signing
+    name: MsgAesCmacSignature
+  msg_type: '0xC10'
+  raw_json: '{"crc":5568,"length":26,"msg_type":3088,"payload":"AQIBAgMEAAECAwQFBgcICQoLDA0ODwALFiE=","preamble":85,"sender":66,"stream_counter":1,"on_demand_counter":2,"certificate_id":[1,2,3,4],"signature":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"flags":0,"signed_messages":[11,22,33]}'
+  raw_packet: VRAMQgAaAQIBAgMEAAECAwQFBgcICQoLDA0ODwALFiHAFQ==
+  sbp:
+    crc: '0x15C0'
+    length: 26
+    msg_type: '0xC10'
+    payload: AQIBAgMEAAECAwQFBgcICQoLDA0ODwALFiE=
+    preamble: '0x55'
+    sender: '0x42'

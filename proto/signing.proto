@@ -66,6 +66,19 @@ message MsgCertificateChain {
     ECDSASignature signature = 5;
 }
 
+/** AES-CMAC 128 digital signature
+ *
+ * Digital signature using AES-CMAC 128 algorithm used for data integrity.
+ */
+message MsgAesCmacSignature {
+    uint32 stream_counter = 1;
+    uint32 on_demand_counter = 2;
+    repeated uint32 certificate_id = 3;
+    repeated uint32 signature = 4;
+    uint32 flags = 5;
+    repeated uint32 signed_messages = 6;
+}
+
 /** An ECDSA signature
  *
  * An ECDSA-256 signature using SHA-256 as the message digest algorithm.

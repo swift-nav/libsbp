@@ -66,6 +66,7 @@ data SBPMsg =
    | SBPMsgAcqResultDepC MsgAcqResultDepC Msg
    | SBPMsgAcqSvProfile MsgAcqSvProfile Msg
    | SBPMsgAcqSvProfileDep MsgAcqSvProfileDep Msg
+   | SBPMsgAesCmacSignature MsgAesCmacSignature Msg
    | SBPMsgAgeCorrections MsgAgeCorrections Msg
    | SBPMsgAlmanac MsgAlmanac Msg
    | SBPMsgAlmanacGlo MsgAlmanacGlo Msg
@@ -316,6 +317,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgAcqResultDepC = SBPMsgAcqResultDepC (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAcqSvProfile = SBPMsgAcqSvProfile (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAcqSvProfileDep = SBPMsgAcqSvProfileDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgAesCmacSignature = SBPMsgAesCmacSignature (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAgeCorrections = SBPMsgAgeCorrections (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAlmanac = SBPMsgAlmanac (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAlmanacGlo = SBPMsgAlmanacGlo (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -558,6 +560,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgAcqResultDepC _ m) = put m
       encoder (SBPMsgAcqSvProfile _ m) = put m
       encoder (SBPMsgAcqSvProfileDep _ m) = put m
+      encoder (SBPMsgAesCmacSignature _ m) = put m
       encoder (SBPMsgAgeCorrections _ m) = put m
       encoder (SBPMsgAlmanac _ m) = put m
       encoder (SBPMsgAlmanacGlo _ m) = put m
@@ -804,6 +807,7 @@ instance FromJSON SBPMsg where
         | msgType == msgAcqResultDepC = SBPMsgAcqResultDepC <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAcqSvProfile = SBPMsgAcqSvProfile <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAcqSvProfileDep = SBPMsgAcqSvProfileDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgAesCmacSignature = SBPMsgAesCmacSignature <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAgeCorrections = SBPMsgAgeCorrections <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAlmanac = SBPMsgAlmanac <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAlmanacGlo = SBPMsgAlmanacGlo <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1051,6 +1055,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgAcqResultDepC n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAcqSvProfile n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAcqSvProfileDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgAesCmacSignature n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAgeCorrections n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAlmanac _ m) = toJSON m
   toJSON (SBPMsgAlmanacGlo n m) = toJSON n <<>> toJSON m
@@ -1292,6 +1297,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgAcqResultDepC n m) = SBPMsgAcqResultDepC n <$> f m
   msg f (SBPMsgAcqSvProfile n m) = SBPMsgAcqSvProfile n <$> f m
   msg f (SBPMsgAcqSvProfileDep n m) = SBPMsgAcqSvProfileDep n <$> f m
+  msg f (SBPMsgAesCmacSignature n m) = SBPMsgAesCmacSignature n <$> f m
   msg f (SBPMsgAgeCorrections n m) = SBPMsgAgeCorrections n <$> f m
   msg f (SBPMsgAlmanac n m) = SBPMsgAlmanac n <$> f m
   msg f (SBPMsgAlmanacGlo n m) = SBPMsgAlmanacGlo n <$> f m

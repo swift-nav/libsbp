@@ -18,6 +18,7 @@
 #ifndef LIBSBP_SIGNING_MESSAGES_H
 #define LIBSBP_SIGNING_MESSAGES_H
 #include <libsbp/signing/ECDSASignature.h>
+#include <libsbp/signing/MSG_AES_CMAC_SIGNATURE.h>
 #include <libsbp/signing/MSG_CERTIFICATE_CHAIN.h>
 #include <libsbp/signing/MSG_CERTIFICATE_CHAIN_DEP.h>
 #include <libsbp/signing/MSG_ECDSA_CERTIFICATE.h>

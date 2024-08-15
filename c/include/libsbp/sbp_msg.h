@@ -67,6 +67,7 @@ typedef union {
   sbp_msg_acq_result_t acq_result;
   sbp_msg_acq_sv_profile_dep_t acq_sv_profile_dep;
   sbp_msg_acq_sv_profile_t acq_sv_profile;
+  sbp_msg_aes_cmac_signature_t aes_cmac_signature;
   sbp_msg_age_corrections_t age_corrections;
   sbp_msg_almanac_glo_dep_t almanac_glo_dep;
   sbp_msg_almanac_glo_t almanac_glo;
@@ -336,6 +337,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgAcqSvProfile:
       return sbp_msg_acq_sv_profile_encode(buf, len, n_written,
                                            &msg->acq_sv_profile);
+    case SbpMsgAesCmacSignature:
+      return sbp_msg_aes_cmac_signature_encode(buf, len, n_written,
+                                               &msg->aes_cmac_signature);
     case SbpMsgAgeCorrections:
       return sbp_msg_age_corrections_encode(buf, len, n_written,
                                             &msg->age_corrections);
@@ -1008,6 +1012,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgAcqSvProfile:
       return sbp_msg_acq_sv_profile_decode(buf, len, n_read,
                                            &msg->acq_sv_profile);
+    case SbpMsgAesCmacSignature:
+      return sbp_msg_aes_cmac_signature_decode(buf, len, n_read,
+                                               &msg->aes_cmac_signature);
     case SbpMsgAgeCorrections:
       return sbp_msg_age_corrections_decode(buf, len, n_read,
                                             &msg->age_corrections);
@@ -1659,6 +1666,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_acq_sv_profile_dep_encoded_len(&msg->acq_sv_profile_dep);
     case SbpMsgAcqSvProfile:
       return sbp_msg_acq_sv_profile_encoded_len(&msg->acq_sv_profile);
+    case SbpMsgAesCmacSignature:
+      return sbp_msg_aes_cmac_signature_encoded_len(&msg->aes_cmac_signature);
     case SbpMsgAgeCorrections:
       return sbp_msg_age_corrections_encoded_len(&msg->age_corrections);
     case SbpMsgAlmanacGloDep:
@@ -2215,6 +2224,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
                                             &b->acq_sv_profile_dep);
     case SbpMsgAcqSvProfile:
       return sbp_msg_acq_sv_profile_cmp(&a->acq_sv_profile, &b->acq_sv_profile);
+    case SbpMsgAesCmacSignature:
+      return sbp_msg_aes_cmac_signature_cmp(&a->aes_cmac_signature,
+                                            &b->aes_cmac_signature);
     case SbpMsgAgeCorrections:
       return sbp_msg_age_corrections_cmp(&a->age_corrections,
                                          &b->age_corrections);

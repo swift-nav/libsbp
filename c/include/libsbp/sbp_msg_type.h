@@ -58,6 +58,7 @@ typedef enum {
   SbpMsgAcqResult = 0x002F,
   SbpMsgAcqSvProfileDep = 0x001E,
   SbpMsgAcqSvProfile = 0x002E,
+  SbpMsgAesCmacSignature = 0x0C10,
   SbpMsgAgeCorrections = 0x0210,
   SbpMsgAlmanacGloDep = 0x0071,
   SbpMsgAlmanacGlo = 0x0073,
@@ -308,6 +309,8 @@ static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
       return "MSG_ACQ_SV_PROFILE_DEP";
     case SbpMsgAcqSvProfile:
       return "MSG_ACQ_SV_PROFILE";
+    case SbpMsgAesCmacSignature:
+      return "MSG_AES_CMAC_SIGNATURE";
     case SbpMsgAgeCorrections:
       return "MSG_AGE_CORRECTIONS";
     case SbpMsgAlmanacGloDep:

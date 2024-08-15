@@ -476,6 +476,137 @@ class MsgCertificateChainDep(SBP):
     d.update(j)
     return d
     
+SBP_MSG_AES_CMAC_SIGNATURE = 0x0C10
+class MsgAesCmacSignature(SBP):
+  """SBP class for message MSG_AES_CMAC_SIGNATURE (0x0C10).
+
+  You can have MSG_AES_CMAC_SIGNATURE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Digital signature using AES-CMAC 128 algorithm used for data integrity.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  stream_counter : int
+    Signature message counter. Zero indexed and incremented with each
+    signature message.  The counter will not increment if this message was in
+    response to an on demand request.  The counter will roll over after 256
+    messages. Upon connection, the value of the counter may not initially be
+    zero.
+  on_demand_counter : int
+    On demand message counter. Zero indexed and incremented with each
+    signature message sent in response to an on demand message. The counter
+    will roll over after 256 messages.  Upon connection, the value of the
+    counter may not initially be zero.
+  certificate_id : array
+    The last 4 bytes of the certificate's SHA-1 fingerprint
+  signature : array
+    Signature (CMAC tag value)
+  flags : int
+    Describes the format of the 'signed messages' field below.
+  signed_messages : array
+    CRCs of the messages covered by this signature.  For Skylark, which
+    delivers SBP messages wrapped in Swift's proprietary RTCM message, these
+    are the 24-bit CRCs from the RTCM message framing. For SBP only streams,
+    this will be 16-bit CRCs from the SBP framing.  See the `flags` field to
+    determine the type of CRCs covered.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'stream_counter' / construct.Int8ul,
+                   'on_demand_counter' / construct.Int8ul,
+                   'certificate_id' / construct.Array(4, construct.Int8ul),
+                   'signature' / construct.Array(16, construct.Int8ul),
+                   'flags' / construct.Int8ul,
+                   'signed_messages' / construct.GreedyRange(construct.Int8ul),)
+  __slots__ = [
+               'stream_counter',
+               'on_demand_counter',
+               'certificate_id',
+               'signature',
+               'flags',
+               'signed_messages',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgAesCmacSignature,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgAesCmacSignature, self).__init__()
+      self.msg_type = SBP_MSG_AES_CMAC_SIGNATURE
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.stream_counter = kwargs.pop('stream_counter')
+      self.on_demand_counter = kwargs.pop('on_demand_counter')
+      self.certificate_id = kwargs.pop('certificate_id')
+      self.signature = kwargs.pop('signature')
+      self.flags = kwargs.pop('flags')
+      self.signed_messages = kwargs.pop('signed_messages')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgAesCmacSignature.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgAesCmacSignature(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgAesCmacSignature._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgAesCmacSignature._parser.build(c)
+    return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "AES CMAC SIGNATURE"
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgAesCmacSignature._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgAesCmacSignature, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_ECDSA_SIGNATURE = 0x0C08
 class MsgEcdsaSignature(SBP):
   """SBP class for message MSG_ECDSA_SIGNATURE (0x0C08).
@@ -1216,6 +1347,7 @@ msg_classes = {
   0x0C04: MsgEcdsaCertificate,
   0x0C09: MsgCertificateChain,
   0x0C05: MsgCertificateChainDep,
+  0x0C10: MsgAesCmacSignature,
   0x0C08: MsgEcdsaSignature,
   0x0C07: MsgEcdsaSignatureDepB,
   0x0C06: MsgEcdsaSignatureDepA,

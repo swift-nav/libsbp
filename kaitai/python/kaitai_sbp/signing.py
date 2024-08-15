@@ -97,6 +97,35 @@ class Signing(KaitaiStruct):
 
 
 
+    class MsgAesCmacSignature(KaitaiStruct):
+        """Digital signature using AES-CMAC 128 algorithm used for data integrity.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.stream_counter = self._io.read_u1()
+            self.on_demand_counter = self._io.read_u1()
+            self.certificate_id = []
+            for i in range(4):
+                self.certificate_id.append(self._io.read_u1())
+
+            self.signature = []
+            for i in range(16):
+                self.signature.append(self._io.read_u1())
+
+            self.flags = self._io.read_u1()
+            self.signed_messages = []
+            i = 0
+            while not self._io.is_eof():
+                self.signed_messages.append(self._io.read_u1())
+                i += 1
+
+
+
     class UtcTime(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io

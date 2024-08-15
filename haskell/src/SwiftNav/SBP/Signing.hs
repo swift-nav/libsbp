@@ -224,6 +224,60 @@ $(makeSBP 'msgCertificateChainDep ''MsgCertificateChainDep)
 $(makeJSON "_msgCertificateChainDep_" ''MsgCertificateChainDep)
 $(makeLenses ''MsgCertificateChainDep)
 
+msgAesCmacSignature :: Word16
+msgAesCmacSignature = 0x0C10
+
+-- | SBP class for message MSG_AES_CMAC_SIGNATURE (0x0C10).
+--
+-- Digital signature using AES-CMAC 128 algorithm used for data integrity.
+data MsgAesCmacSignature = MsgAesCmacSignature
+  { _msgAesCmacSignature_stream_counter  :: !Word8
+    -- ^ Signature message counter. Zero indexed and incremented with each
+    -- signature message.  The counter will not increment if this message was
+    -- in response to an on demand request.  The counter will roll over after
+    -- 256 messages. Upon connection, the value of the counter may not
+    -- initially be zero.
+  , _msgAesCmacSignature_on_demand_counter :: !Word8
+    -- ^ On demand message counter. Zero indexed and incremented with each
+    -- signature message sent in response to an on demand message. The counter
+    -- will roll over after 256 messages.  Upon connection, the value of the
+    -- counter may not initially be zero.
+  , _msgAesCmacSignature_certificate_id  :: ![Word8]
+    -- ^ The last 4 bytes of the certificate's SHA-1 fingerprint
+  , _msgAesCmacSignature_signature       :: ![Word8]
+    -- ^ Signature (CMAC tag value)
+  , _msgAesCmacSignature_flags           :: !Word8
+    -- ^ Describes the format of the 'signed messages' field below.
+  , _msgAesCmacSignature_signed_messages :: ![Word8]
+    -- ^ CRCs of the messages covered by this signature.  For Skylark, which
+    -- delivers SBP messages wrapped in Swift's proprietary RTCM message,
+    -- these are the 24-bit CRCs from the RTCM message framing. For SBP only
+    -- streams, this will be 16-bit CRCs from the SBP framing.  See the
+    -- `flags` field to determine the type of CRCs covered.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgAesCmacSignature where
+  get = do
+    _msgAesCmacSignature_stream_counter <- getWord8
+    _msgAesCmacSignature_on_demand_counter <- getWord8
+    _msgAesCmacSignature_certificate_id <- replicateM 4 getWord8
+    _msgAesCmacSignature_signature <- replicateM 16 getWord8
+    _msgAesCmacSignature_flags <- getWord8
+    _msgAesCmacSignature_signed_messages <- whileM (not <$> isEmpty) getWord8
+    pure MsgAesCmacSignature {..}
+
+  put MsgAesCmacSignature {..} = do
+    putWord8 _msgAesCmacSignature_stream_counter
+    putWord8 _msgAesCmacSignature_on_demand_counter
+    mapM_ putWord8 _msgAesCmacSignature_certificate_id
+    mapM_ putWord8 _msgAesCmacSignature_signature
+    putWord8 _msgAesCmacSignature_flags
+    mapM_ putWord8 _msgAesCmacSignature_signed_messages
+
+$(makeSBP 'msgAesCmacSignature ''MsgAesCmacSignature)
+$(makeJSON "_msgAesCmacSignature_" ''MsgAesCmacSignature)
+$(makeLenses ''MsgAesCmacSignature)
+
 msgEcdsaSignature :: Word16
 msgEcdsaSignature = 0x0C08
 
