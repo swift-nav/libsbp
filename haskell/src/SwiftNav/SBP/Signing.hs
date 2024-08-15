@@ -245,7 +245,7 @@ data MsgAesCmacSignature = MsgAesCmacSignature
   , _msgAesCmacSignature_certificate_id  :: ![Word8]
     -- ^ The last 4 bytes of the certificate's SHA-1 fingerprint
   , _msgAesCmacSignature_signature       :: ![Word8]
-    -- ^ Signature
+    -- ^ Signature (CMAC tag value)
   , _msgAesCmacSignature_flags           :: !Word8
     -- ^ Describes the format of the 'signed messages' field below.
   , _msgAesCmacSignature_signed_messages :: ![Word8]

@@ -505,7 +505,7 @@ class MsgAesCmacSignature(SBP):
   certificate_id : array
     The last 4 bytes of the certificate's SHA-1 fingerprint
   signature : array
-    Signature
+    Signature (CMAC tag value)
   flags : int
     Describes the format of the 'signed messages' field below.
   signed_messages : array

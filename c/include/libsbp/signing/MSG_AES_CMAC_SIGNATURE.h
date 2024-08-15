@@ -65,7 +65,7 @@ typedef struct {
   u8 certificate_id[SBP_MSG_AES_CMAC_SIGNATURE_CERTIFICATE_ID_MAX];
 
   /**
-   * Signature
+   * Signature (CMAC tag value)
    */
   u8 signature[SBP_MSG_AES_CMAC_SIGNATURE_SIGNATURE_MAX];
 

@@ -238,7 +238,7 @@ MsgCertificateChainDep.prototype.fieldSpec.push(['signature', 'array', 'writeUIn
  *   after 256 messages.  Upon connection, the value of the counter may not initially
  *   be zero.
  * @field certificate_id array The last 4 bytes of the certificate's SHA-1 fingerprint
- * @field signature array Signature
+ * @field signature array Signature (CMAC tag value)
  * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the 'signed messages' field below.
  * @field signed_messages array CRCs of the messages covered by this signature.  For Skylark, which delivers SBP
  *   messages wrapped in Swift's proprietary RTCM message, these are the 24-bit CRCs

@@ -98,7 +98,7 @@ pub mod msg_aes_cmac_signature {
         /// The last 4 bytes of the certificate's SHA-1 fingerprint
         #[cfg_attr(feature = "serde", serde(rename = "certificate_id"))]
         pub certificate_id: [u8; 4],
-        /// Signature
+        /// Signature (CMAC tag value)
         #[cfg_attr(feature = "serde", serde(rename = "signature"))]
         pub signature: [u8; 16],
         /// Describes the format of the 'signed messages' field below.

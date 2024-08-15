@@ -195,7 +195,7 @@ types:
         repeat-expr: 4
       - id: signature
         doc: |
-          Signature
+          Signature (CMAC tag value)
         type: u1
         repeat: expr
         repeat-expr: 16

@@ -48,7 +48,7 @@ public class MsgAesCmacSignature extends SBPMessage {
     /** The last 4 bytes of the certificate's SHA-1 fingerprint */
     public int[] certificate_id;
 
-    /** Signature */
+    /** Signature (CMAC tag value) */
     public int[] signature;
 
     /** Describes the format of the 'signed messages' field below. */
