@@ -2495,7 +2495,7 @@ MsgGroupDelay.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
  * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status for GPS:   - bits 5-7: NAV data health status. See IS-
  *   GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits 0-4: Signal
  *   health status. See IS-GPS-200H     Table 20-VIII. Codes for Health of SV Signal
- *   Components. Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
+ *   Components.  Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
  *   details):   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
  *   immediate data and indicates overall constellation status     at the moment of
  *   almanac uploading.     '0' indicates malfunction of n-satellite.     '1'
@@ -2543,7 +2543,7 @@ AlmanacCommonContent.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]);
  * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status for GPS:   - bits 5-7: NAV data health status. See IS-
  *   GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits 0-4: Signal
  *   health status. See IS-GPS-200H     Table 20-VIII. Codes for Health of SV Signal
- *   Components. Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
+ *   Components.  Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
  *   details):   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
  *   immediate data and indicates overall constellation status     at the moment of
  *   almanac uploading.     '0' indicates malfunction of n-satellite.     '1'
