@@ -1,6 +1,6 @@
 # Description
 
-@swift-nav/devinfra
+@swift-nav/algint-team
 
 <!-- Changes proposed in this PR -->
 
