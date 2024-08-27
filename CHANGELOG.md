@@ -1,5 +1,19 @@
 # Changelog
 
+## [v6.1.0](https://github.com/swift-nav/libsbp/tree/v6.1.0)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.0.1...v6.1.0)
+
+**Merged pull requests:**
+
+- Update libsbp codeowners [\#1427](https://github.com/swift-nav/libsbp/pull/1427) ([reimerix](https://github.com/reimerix))
+- Update Additional Reviewers [\#1425](https://github.com/swift-nav/libsbp/pull/1425) ([pcrumley](https://github.com/pcrumley))
+- fix rust lints [\#1424](https://github.com/swift-nav/libsbp/pull/1424) ([pcrumley](https://github.com/pcrumley))
+- AES-CMAC 128 Message [\#1423](https://github.com/swift-nav/libsbp/pull/1423) ([RReichert](https://github.com/RReichert))
+- Fix license [\#1421](https://github.com/swift-nav/libsbp/pull/1421) ([RReichert](https://github.com/RReichert))
+- Reference only the runner name [\#1416](https://github.com/swift-nav/libsbp/pull/1416) ([fpezzinosn](https://github.com/fpezzinosn))
+- Add support for QZSS constellation [\#1414](https://github.com/swift-nav/libsbp/pull/1414) ([cstolowicz](https://github.com/cstolowicz))
+
 ## [v6.0.1](https://github.com/swift-nav/libsbp/tree/v6.0.1)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.0.0...v6.0.1)
