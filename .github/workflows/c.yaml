@@ -47,7 +47,7 @@ jobs:
           apt-get -qq update
           apt-get -qq install libeigen3-dev libserialport-dev git cmake build-essential ${{ matrix.compiler.package }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
           fetch-depth: 0
