@@ -33,7 +33,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-stack-work-
 
-      - uses: haskell/actions/setup@v1
+      - uses: haskell/actions/setup@v2
         with:
           enable-stack: true
 
