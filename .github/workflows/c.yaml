@@ -47,7 +47,7 @@ jobs:
           apt-get -qq update
           apt-get -qq install libeigen3-dev libserialport-dev git cmake build-essential ${{ matrix.compiler.package }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
           fetch-depth: 0
@@ -84,7 +84,7 @@ jobs:
     name: macOS
     runs-on: macos-12
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
           fetch-depth: 0
@@ -117,7 +117,7 @@ jobs:
     name: Test Big Endian
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
           fetch-depth: 0
@@ -139,7 +139,7 @@ jobs:
     name: Bazel
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
 
@@ -160,7 +160,7 @@ jobs:
     name: ASAN
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
 
@@ -181,7 +181,7 @@ jobs:
     name: UBSAN
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
 
@@ -206,7 +206,7 @@ jobs:
     name: "Windows 2019 (Generator: ${{ matrix.generator }}, Shared Library: ${{ matrix.build_shared_libraries }})"
     runs-on: windows-2019
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
           fetch-depth: 0

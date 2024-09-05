@@ -16,7 +16,7 @@ jobs:
     name: Test
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
       - uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.1.1
@@ -27,7 +27,7 @@ jobs:
 #   name: SonarQube
 #   runs-on: ubuntu-20.04
 #   steps:
-#     - uses: actions/checkout@v4
+#     - uses: actions/checkout@v2
 #       with:
 #         fetch-depth: 0
 #     - uses: gradle/gradle-build-action@v2
