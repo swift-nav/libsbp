@@ -20,7 +20,7 @@ jobs:
     name: Format and lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - run: ./scripts/ci_prepare_rust.bash
         shell: bash
@@ -48,7 +48,7 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - run: ./scripts/ci_prepare_rust.bash
         shell: bash
@@ -73,7 +73,7 @@ jobs:
           - windows-2022
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - run: ./scripts/ci_prepare_rust.bash
         shell: bash

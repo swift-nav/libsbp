@@ -16,7 +16,7 @@ jobs:
     name: Build
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: actions/cache@v3
         name: Cache ~/.stack
@@ -57,7 +57,7 @@ jobs:
             sbp2nmea
           echo "::set-output name=artifact_name::$ARTIFACT_NAME"
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.build.outputs.artifact_name }}
           path: ./haskell/${{ steps.build.outputs.artifact_name }}
@@ -68,9 +68,9 @@ jobs:
     name: Publish github release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4
         with:
           path: artifacts
 
