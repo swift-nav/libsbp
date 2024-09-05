@@ -23,7 +23,7 @@ jobs:
     name: Benchmark
     runs-on: [xlarge]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup
         run: ./scripts/ci_prepare_python.bash
       - name: Run benchmarks
