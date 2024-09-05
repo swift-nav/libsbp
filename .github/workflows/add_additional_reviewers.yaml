@@ -11,7 +11,7 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - name: Request additional reviews based on supplied rules
-        uses: necojackarc/auto-request-review@v0.10.0
+        uses: necojackarc/auto-request-review@v0.13.0
         with:
           token: ${{ secrets.GH_TOKEN }}
           config: .github/additional_reviewers_config.yaml
