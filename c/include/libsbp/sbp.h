@@ -77,8 +77,7 @@ typedef void (*sbp_callback_t)(u16 sender_id, sbp_msg_type_t msg_type, const sbp
 
 /** SBP callback node.
  * Forms a linked list of callbacks.
- * \note Must be statically allocated for use with sbp_register_callback()
- *       and sbp_register_frame_callback().
+ * \note Must be statically allocated for use with sbp_callback_register()
  */
 struct sbp_msg_callbacks_node {
   sbp_msg_type_t msg_type;      /**< Message ID associated with callback. */
