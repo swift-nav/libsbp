@@ -130,18 +130,17 @@ definitions:
             desc: Microseconds since reference epoch
         - flags:
             type: u16
-            desc: >
-              Contains the applied compensation parameters and time synchronization mode
+            desc: Contains the applied compensation parameters and time synchronization mode
             fields:
-              - 0:1:
+              - 2-15: 
+                  desc: Reserved  
+              - 0-1:
                   desc: Time status
                   values:
                     - 0: Reference epoch is start of current GPS week
                     - 1: Reference epoch is time of system startup
                     - 2: Reference epoch is unknown
-                    - 3: Reference epoch is last PPS
-              - 2:15: 
-                  desc: Reserved       
+                    - 3: Reference epoch is last PPS  
         - acc_comp_x:
             type: s32
             units: 1e-2 m/s^2
