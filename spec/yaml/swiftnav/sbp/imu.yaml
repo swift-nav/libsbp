@@ -117,7 +117,7 @@ definitions:
                       - 4: +/- 6g
 
  - MSG_IMU_COMP:
-    id: 0x0902
+    id: 0x0905
     short_desc: Compensated IMU data
     desc: >
       Data from the Inertial Measurement Unit, containing accelerometer and
