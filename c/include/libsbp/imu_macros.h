@@ -129,4 +129,27 @@
  */
 #define SBP_MSG_IMU_AUX_ENCODED_LEN 4u
 
+#define SBP_IMU_COMP_TIME_STATUS_MASK (0x3u)
+#define SBP_IMU_COMP_TIME_STATUS_SHIFT (0u)
+#define SBP_IMU_COMP_TIME_STATUS_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_IMU_COMP_TIME_STATUS_SHIFT) & \
+         SBP_IMU_COMP_TIME_STATUS_MASK))
+#define SBP_IMU_COMP_TIME_STATUS_SET(flags, val)                       \
+  do {                                                                 \
+    (flags) = (u16)((flags & (~(SBP_IMU_COMP_TIME_STATUS_MASK          \
+                                << SBP_IMU_COMP_TIME_STATUS_SHIFT))) | \
+                    (((val) & (SBP_IMU_COMP_TIME_STATUS_MASK))         \
+                     << (SBP_IMU_COMP_TIME_STATUS_SHIFT)));            \
+  } while (0)
+
+#define SBP_IMU_COMP_TIME_STATUS_REFERENCE_EPOCH_IS_START_OF_CURRENT_GPS_WEEK \
+  (0)
+#define SBP_IMU_COMP_TIME_STATUS_REFERENCE_EPOCH_IS_TIME_OF_SYSTEM_STARTUP (1)
+#define SBP_IMU_COMP_TIME_STATUS_REFERENCE_EPOCH_IS_UNKNOWN (2)
+#define SBP_IMU_COMP_TIME_STATUS_REFERENCE_EPOCH_IS_LAST_PPS (3)
+/**
+ * Encoded length of sbp_msg_imu_comp_t
+ */
+#define SBP_MSG_IMU_COMP_ENCODED_LEN 34u
+
 #endif /* LIBSBP_IMU_MACROS_H */

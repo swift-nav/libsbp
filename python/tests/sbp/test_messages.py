@@ -20,7 +20,7 @@ HERE = os.path.dirname(__file__)
 PYTHON_ROOT = os.path.join(HERE, "..", "..")
 ROOTPATH = os.path.join(PYTHON_ROOT, "..", "spec", "tests", "yaml")
 
-EXPECTED_MISSING_MESSAGES = 1
+EXPECTED_MISSING_MESSAGES = 2
 MESSAGES_WITH_TEST_CASES = set()
 
 
