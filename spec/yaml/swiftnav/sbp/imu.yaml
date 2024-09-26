@@ -132,8 +132,18 @@ definitions:
             type: u16
             desc: Contains the applied compensation parameters and time synchronization mode
             fields:
-              - 2-15: 
-                  desc: Reserved  
+              - 7-15: 
+                  desc: Reserved     
+              - 6: 
+                  desc: Gyroscope-errors-compensated      
+              - 5: 
+                  desc: Accelerometer-errors-compensated      
+              - 4: 
+                  desc: Coriolis-effect-compensated     
+              - 3: 
+                  desc: Earth-roration-rate-compensated     
+              - 2: 
+                  desc: Earth-gravity-compensated  
               - 0-1:
                   desc: Time status
                   values:
@@ -143,25 +153,25 @@ definitions:
                     - 3: Reference epoch is last PPS  
         - acc_comp_x:
             type: s32
-            units: 1e-2 m/s^2
+            units: 1e-6 m/s^2
             desc: Compensated acceleration X axis
         - acc_comp_y:
             type: s32
-            units: 1e-2 m/s^2
+            units: 1e-6 m/s^2
             desc: Compensated acceleration Y axis
         - acc_comp_z:
             type: s32
-            units: 1e-2 m/s^2
+            units: 1e-6 m/s^2
             desc: Compensated acceleration Z axis
         - gyr_comp_x:
             type: s32
-            units: 1e-3 deg/s
+            units: 3*1e-6 deg/s
             desc: Compensated angular rate X axis
         - gyr_comp_y:
             type: s32
-            units: 1e-3 deg/s
+            units: 3*1e-6 deg/s
             desc: Compensated angular rate Y axis
         - gyr_comp_z:
             type: s32
-            units: 1e-3 deg/s
+            units: 3*1e-6 deg/s
             desc: Compensated angular rate Z axis                      
