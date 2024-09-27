@@ -122,7 +122,8 @@ definitions:
     desc: >
       Data from the Inertial Measurement Unit, containing accelerometer and
       gyroscope readings compensated for estimated errors and constant 
-      physical effects. The output is valid for the center of navigation.
+      physical effects. The output is valid for inertially referenced center 
+      of navigation (IMU body frame) represented in vehicle body frame.
     fields:
         - time:
             type: u64
@@ -165,13 +166,13 @@ definitions:
             desc: Compensated acceleration Z axis
         - gyr_comp_x:
             type: s32
-            units: 3*1e-6 deg/s
+            units: 1e-6 deg/s
             desc: Compensated angular rate X axis
         - gyr_comp_y:
             type: s32
-            units: 3*1e-6 deg/s
+            units: 1e-6 deg/s
             desc: Compensated angular rate Y axis
         - gyr_comp_z:
             type: s32
-            units: 3*1e-6 deg/s
+            units: 1e-6 deg/s
             desc: Compensated angular rate Z axis                      
