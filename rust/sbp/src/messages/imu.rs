@@ -14,6 +14,7 @@
 //****************************************************************************/
 //! Inertial Measurement Unit (IMU) messages.
 pub use msg_imu_aux::MsgImuAux;
+pub use msg_imu_comp::MsgImuComp;
 pub use msg_imu_raw::MsgImuRaw;
 
 pub mod msg_imu_aux {
@@ -296,6 +297,258 @@ pub mod msg_imu_aux {
                 2 => Ok(AccelerometerRange::_8G),
                 3 => Ok(AccelerometerRange::_16G),
                 4 => Ok(AccelerometerRange::_6G),
+                i => Err(i),
+            }
+        }
+    }
+}
+
+pub mod msg_imu_comp {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Compensated IMU data
+    ///
+    /// Data from the Inertial Measurement Unit, containing accelerometer and
+    /// gyroscope readings compensated for estimated errors and constant  physical
+    /// effects. The output is valid for inertially referenced center  of
+    /// navigation (IMU body frame) represented in vehicle body frame.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgImuComp {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// Microseconds since reference epoch
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
+        pub time: u64,
+        /// Contains the applied compensation parameters and time synchronization
+        /// mode
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
+        pub flags: u16,
+        /// Compensated acceleration X axis
+        #[cfg_attr(feature = "serde", serde(rename = "acc_comp_x"))]
+        pub acc_comp_x: i32,
+        /// Compensated acceleration Y axis
+        #[cfg_attr(feature = "serde", serde(rename = "acc_comp_y"))]
+        pub acc_comp_y: i32,
+        /// Compensated acceleration Z axis
+        #[cfg_attr(feature = "serde", serde(rename = "acc_comp_z"))]
+        pub acc_comp_z: i32,
+        /// Compensated angular rate X axis
+        #[cfg_attr(feature = "serde", serde(rename = "gyr_comp_x"))]
+        pub gyr_comp_x: i32,
+        /// Compensated angular rate Y axis
+        #[cfg_attr(feature = "serde", serde(rename = "gyr_comp_y"))]
+        pub gyr_comp_y: i32,
+        /// Compensated angular rate Z axis
+        #[cfg_attr(feature = "serde", serde(rename = "gyr_comp_z"))]
+        pub gyr_comp_z: i32,
+    }
+
+    impl MsgImuComp {
+        /// Gets the `gyroscopeerrorscompensated` flag.
+        #[allow(clippy::identity_op)]
+        pub fn gyroscopeerrorscompensated(&self) -> bool {
+            ((self.flags >> 6) & 1) == 1
+        }
+
+        /// Sets the `gyroscopeerrorscompensated` flag.
+        pub fn set_gyroscopeerrorscompensated(&mut self, gyroscopeerrorscompensated: bool) {
+            self.flags ^= (!(gyroscopeerrorscompensated as u16)) & (1 << 6)
+        }
+
+        /// Gets the `accelerometererrorscompensated` flag.
+        #[allow(clippy::identity_op)]
+        pub fn accelerometererrorscompensated(&self) -> bool {
+            ((self.flags >> 5) & 1) == 1
+        }
+
+        /// Sets the `accelerometererrorscompensated` flag.
+        pub fn set_accelerometererrorscompensated(&mut self, accelerometererrorscompensated: bool) {
+            self.flags ^= (!(accelerometererrorscompensated as u16)) & (1 << 5)
+        }
+
+        /// Gets the `corioliseffectcompensated` flag.
+        #[allow(clippy::identity_op)]
+        pub fn corioliseffectcompensated(&self) -> bool {
+            ((self.flags >> 4) & 1) == 1
+        }
+
+        /// Sets the `corioliseffectcompensated` flag.
+        pub fn set_corioliseffectcompensated(&mut self, corioliseffectcompensated: bool) {
+            self.flags ^= (!(corioliseffectcompensated as u16)) & (1 << 4)
+        }
+
+        /// Gets the `earthrorationratecompensated` flag.
+        #[allow(clippy::identity_op)]
+        pub fn earthrorationratecompensated(&self) -> bool {
+            ((self.flags >> 3) & 1) == 1
+        }
+
+        /// Sets the `earthrorationratecompensated` flag.
+        pub fn set_earthrorationratecompensated(&mut self, earthrorationratecompensated: bool) {
+            self.flags ^= (!(earthrorationratecompensated as u16)) & (1 << 3)
+        }
+
+        /// Gets the `earthgravitycompensated` flag.
+        #[allow(clippy::identity_op)]
+        pub fn earthgravitycompensated(&self) -> bool {
+            ((self.flags >> 2) & 1) == 1
+        }
+
+        /// Sets the `earthgravitycompensated` flag.
+        pub fn set_earthgravitycompensated(&mut self, earthgravitycompensated: bool) {
+            self.flags ^= (!(earthgravitycompensated as u16)) & (1 << 2)
+        }
+
+        /// Gets the [TimeStatus][self::TimeStatus] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeStatus` were added.
+        pub fn time_status(&self) -> Result<TimeStatus, u8> {
+            get_bit_range!(self.flags, u16, u8, 1, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [TimeStatus][TimeStatus] of the `flags` bitfield.
+        pub fn set_time_status(&mut self, time_status: TimeStatus) {
+            set_bit_range!(&mut self.flags, time_status, u16, u8, 1, 0);
+        }
+    }
+
+    impl ConcreteMessage for MsgImuComp {
+        const MESSAGE_TYPE: u16 = 2309;
+        const MESSAGE_NAME: &'static str = "MSG_IMU_COMP";
+    }
+
+    impl SbpMessage for MsgImuComp {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
+    }
+
+    impl FriendlyName for MsgImuComp {
+        fn friendly_name() -> &'static str {
+            "IMU COMP"
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgImuComp {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgImuComp(m) => Ok(m),
+                _ => Err(TryFromSbpError(msg)),
+            }
+        }
+    }
+
+    impl WireFormat for MsgImuComp {
+        const MIN_LEN: usize = <u64 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.time)
+                + WireFormat::len(&self.flags)
+                + WireFormat::len(&self.acc_comp_x)
+                + WireFormat::len(&self.acc_comp_y)
+                + WireFormat::len(&self.acc_comp_z)
+                + WireFormat::len(&self.gyr_comp_x)
+                + WireFormat::len(&self.gyr_comp_y)
+                + WireFormat::len(&self.gyr_comp_z)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.time, buf);
+            WireFormat::write(&self.flags, buf);
+            WireFormat::write(&self.acc_comp_x, buf);
+            WireFormat::write(&self.acc_comp_y, buf);
+            WireFormat::write(&self.acc_comp_z, buf);
+            WireFormat::write(&self.gyr_comp_x, buf);
+            WireFormat::write(&self.gyr_comp_y, buf);
+            WireFormat::write(&self.gyr_comp_z, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgImuComp {
+                sender_id: None,
+                time: WireFormat::parse_unchecked(buf),
+                flags: WireFormat::parse_unchecked(buf),
+                acc_comp_x: WireFormat::parse_unchecked(buf),
+                acc_comp_y: WireFormat::parse_unchecked(buf),
+                acc_comp_z: WireFormat::parse_unchecked(buf),
+                gyr_comp_x: WireFormat::parse_unchecked(buf),
+                gyr_comp_y: WireFormat::parse_unchecked(buf),
+                gyr_comp_z: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Time status
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum TimeStatus {
+        /// Reference epoch is start of current GPS week
+        ReferenceEpochIsStartOfCurrentGpsWeek = 0,
+
+        /// Reference epoch is time of system startup
+        ReferenceEpochIsTimeOfSystemStartup = 1,
+
+        /// Reference epoch is unknown
+        ReferenceEpochIsUnknown = 2,
+
+        /// Reference epoch is last PPS
+        ReferenceEpochIsLastPps = 3,
+    }
+
+    impl std::fmt::Display for TimeStatus {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                TimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek => {
+                    f.write_str("Reference epoch is start of current GPS week")
+                }
+                TimeStatus::ReferenceEpochIsTimeOfSystemStartup => {
+                    f.write_str("Reference epoch is time of system startup")
+                }
+                TimeStatus::ReferenceEpochIsUnknown => f.write_str("Reference epoch is unknown"),
+                TimeStatus::ReferenceEpochIsLastPps => f.write_str("Reference epoch is last PPS"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TimeStatus {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(TimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek),
+                1 => Ok(TimeStatus::ReferenceEpochIsTimeOfSystemStartup),
+                2 => Ok(TimeStatus::ReferenceEpochIsUnknown),
+                3 => Ok(TimeStatus::ReferenceEpochIsLastPps),
                 i => Err(i),
             }
         }
