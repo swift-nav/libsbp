@@ -77,6 +77,7 @@ use self::flash::msg_stm_flash_unlock_sector::MsgStmFlashUnlockSector;
 use self::flash::msg_stm_unique_id_req::MsgStmUniqueIdReq;
 use self::flash::msg_stm_unique_id_resp::MsgStmUniqueIdResp;
 use self::imu::msg_imu_aux::MsgImuAux;
+use self::imu::msg_imu_comp::MsgImuComp;
 use self::imu::msg_imu_raw::MsgImuRaw;
 use self::integrity::msg_acknowledge::MsgAcknowledge;
 use self::integrity::msg_ssr_flag_high_level::MsgSsrFlagHighLevel;
@@ -766,6 +767,8 @@ pub enum Sbp {
     MsgOdometry(MsgOdometry),
     /// Accumulated wheeltick count message
     MsgWheeltick(MsgWheeltick),
+    /// Compensated IMU data
+    MsgImuComp(MsgImuComp),
     /// High level integrity flags
     MsgSsrFlagHighLevel(MsgSsrFlagHighLevel),
     /// List of satellites which are faulty, per constellation
@@ -1470,6 +1473,9 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             }
             Some(MsgWheeltick::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgWheeltick>(value).map(Sbp::MsgWheeltick)
+            }
+            Some(MsgImuComp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgImuComp>(value).map(Sbp::MsgImuComp)
             }
             Some(MsgSsrFlagHighLevel::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgSsrFlagHighLevel>(value).map(Sbp::MsgSsrFlagHighLevel)
@@ -2187,6 +2193,7 @@ impl Sbp {
             MsgMagRaw::MESSAGE_TYPE => MsgMagRaw::parse(&mut payload).map(Sbp::MsgMagRaw),
             MsgOdometry::MESSAGE_TYPE => MsgOdometry::parse(&mut payload).map(Sbp::MsgOdometry),
             MsgWheeltick::MESSAGE_TYPE => MsgWheeltick::parse(&mut payload).map(Sbp::MsgWheeltick),
+            MsgImuComp::MESSAGE_TYPE => MsgImuComp::parse(&mut payload).map(Sbp::MsgImuComp),
             MsgSsrFlagHighLevel::MESSAGE_TYPE => {
                 MsgSsrFlagHighLevel::parse(&mut payload).map(Sbp::MsgSsrFlagHighLevel)
             }
@@ -2543,6 +2550,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.message_name(),
             Sbp::MsgOdometry(msg) => msg.message_name(),
             Sbp::MsgWheeltick(msg) => msg.message_name(),
+            Sbp::MsgImuComp(msg) => msg.message_name(),
             Sbp::MsgSsrFlagHighLevel(msg) => msg.message_name(),
             Sbp::MsgSsrFlagSatellites(msg) => msg.message_name(),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.message_name(),
@@ -2788,6 +2796,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.message_type(),
             Sbp::MsgOdometry(msg) => msg.message_type(),
             Sbp::MsgWheeltick(msg) => msg.message_type(),
+            Sbp::MsgImuComp(msg) => msg.message_type(),
             Sbp::MsgSsrFlagHighLevel(msg) => msg.message_type(),
             Sbp::MsgSsrFlagSatellites(msg) => msg.message_type(),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.message_type(),
@@ -3033,6 +3042,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.sender_id(),
             Sbp::MsgOdometry(msg) => msg.sender_id(),
             Sbp::MsgWheeltick(msg) => msg.sender_id(),
+            Sbp::MsgImuComp(msg) => msg.sender_id(),
             Sbp::MsgSsrFlagHighLevel(msg) => msg.sender_id(),
             Sbp::MsgSsrFlagSatellites(msg) => msg.sender_id(),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.sender_id(),
@@ -3278,6 +3288,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.set_sender_id(new_id),
             Sbp::MsgOdometry(msg) => msg.set_sender_id(new_id),
             Sbp::MsgWheeltick(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgImuComp(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrFlagHighLevel(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrFlagSatellites(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.set_sender_id(new_id),
@@ -3523,6 +3534,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.encoded_len(),
             Sbp::MsgOdometry(msg) => msg.encoded_len(),
             Sbp::MsgWheeltick(msg) => msg.encoded_len(),
+            Sbp::MsgImuComp(msg) => msg.encoded_len(),
             Sbp::MsgSsrFlagHighLevel(msg) => msg.encoded_len(),
             Sbp::MsgSsrFlagSatellites(msg) => msg.encoded_len(),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.encoded_len(),
@@ -3771,6 +3783,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.gps_time(),
             Sbp::MsgOdometry(msg) => msg.gps_time(),
             Sbp::MsgWheeltick(msg) => msg.gps_time(),
+            Sbp::MsgImuComp(msg) => msg.gps_time(),
             Sbp::MsgSsrFlagHighLevel(msg) => msg.gps_time(),
             Sbp::MsgSsrFlagSatellites(msg) => msg.gps_time(),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.gps_time(),
@@ -4016,6 +4029,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.friendly_name(),
             Sbp::MsgOdometry(msg) => msg.friendly_name(),
             Sbp::MsgWheeltick(msg) => msg.friendly_name(),
+            Sbp::MsgImuComp(msg) => msg.friendly_name(),
             Sbp::MsgSsrFlagHighLevel(msg) => msg.friendly_name(),
             Sbp::MsgSsrFlagSatellites(msg) => msg.friendly_name(),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.friendly_name(),
@@ -4261,6 +4275,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.is_valid(),
             Sbp::MsgOdometry(msg) => msg.is_valid(),
             Sbp::MsgWheeltick(msg) => msg.is_valid(),
+            Sbp::MsgImuComp(msg) => msg.is_valid(),
             Sbp::MsgSsrFlagHighLevel(msg) => msg.is_valid(),
             Sbp::MsgSsrFlagSatellites(msg) => msg.is_valid(),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.is_valid(),
@@ -4567,6 +4582,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => Ok(Sbp::MsgMagRaw(msg.into_valid_msg()?)),
             Sbp::MsgOdometry(msg) => Ok(Sbp::MsgOdometry(msg.into_valid_msg()?)),
             Sbp::MsgWheeltick(msg) => Ok(Sbp::MsgWheeltick(msg.into_valid_msg()?)),
+            Sbp::MsgImuComp(msg) => Ok(Sbp::MsgImuComp(msg.into_valid_msg()?)),
             Sbp::MsgSsrFlagHighLevel(msg) => Ok(Sbp::MsgSsrFlagHighLevel(msg.into_valid_msg()?)),
             Sbp::MsgSsrFlagSatellites(msg) => Ok(Sbp::MsgSsrFlagSatellites(msg.into_valid_msg()?)),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => {
@@ -4861,6 +4877,7 @@ impl WireFormat for Sbp {
             Sbp::MsgMagRaw(msg) => WireFormat::write(msg, buf),
             Sbp::MsgOdometry(msg) => WireFormat::write(msg, buf),
             Sbp::MsgWheeltick(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgImuComp(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrFlagHighLevel(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrFlagSatellites(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => WireFormat::write(msg, buf),
@@ -5106,6 +5123,7 @@ impl WireFormat for Sbp {
             Sbp::MsgMagRaw(msg) => WireFormat::len(msg),
             Sbp::MsgOdometry(msg) => WireFormat::len(msg),
             Sbp::MsgWheeltick(msg) => WireFormat::len(msg),
+            Sbp::MsgImuComp(msg) => WireFormat::len(msg),
             Sbp::MsgSsrFlagHighLevel(msg) => WireFormat::len(msg),
             Sbp::MsgSsrFlagSatellites(msg) => WireFormat::len(msg),
             Sbp::MsgSsrFlagTropoGridPoints(msg) => WireFormat::len(msg),
@@ -6287,6 +6305,12 @@ impl From<MsgOdometry> for Sbp {
 impl From<MsgWheeltick> for Sbp {
     fn from(msg: MsgWheeltick) -> Self {
         Sbp::MsgWheeltick(msg)
+    }
+}
+
+impl From<MsgImuComp> for Sbp {
+    fn from(msg: MsgImuComp) -> Self {
+        Sbp::MsgImuComp(msg)
     }
 }
 

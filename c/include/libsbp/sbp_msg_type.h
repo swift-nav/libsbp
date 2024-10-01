@@ -148,6 +148,7 @@ typedef enum {
   SbpMsgHeartbeat = 0xFFFF,
   SbpMsgIarState = 0x0019,
   SbpMsgImuAux = 0x0901,
+  SbpMsgImuComp = 0x0905,
   SbpMsgImuRaw = 0x0900,
   SbpMsgInitBaseDep = 0x0023,
   SbpMsgInsStatus = 0xFF03,
@@ -489,6 +490,8 @@ static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
       return "MSG_IAR_STATE";
     case SbpMsgImuAux:
       return "MSG_IMU_AUX";
+    case SbpMsgImuComp:
+      return "MSG_IMU_COMP";
     case SbpMsgImuRaw:
       return "MSG_IMU_RAW";
     case SbpMsgInitBaseDep:

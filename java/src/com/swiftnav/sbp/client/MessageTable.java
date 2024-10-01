@@ -46,6 +46,7 @@ import com.swiftnav.sbp.flash.MsgStmFlashUnlockSector;
 import com.swiftnav.sbp.flash.MsgStmUniqueIdReq;
 import com.swiftnav.sbp.flash.MsgStmUniqueIdResp;
 import com.swiftnav.sbp.imu.MsgImuAux;
+import com.swiftnav.sbp.imu.MsgImuComp;
 import com.swiftnav.sbp.imu.MsgImuRaw;
 import com.swiftnav.sbp.integrity.MsgAcknowledge;
 import com.swiftnav.sbp.integrity.MsgSsrFlagHighLevel;
@@ -323,6 +324,8 @@ final class MessageTable {
                 return new MsgImuRaw(msg);
             case MsgImuAux.TYPE:
                 return new MsgImuAux(msg);
+            case MsgImuComp.TYPE:
+                return new MsgImuComp(msg);
             case MsgSsrFlagHighLevel.TYPE:
                 return new MsgSsrFlagHighLevel(msg);
             case MsgSsrFlagSatellites.TYPE:
