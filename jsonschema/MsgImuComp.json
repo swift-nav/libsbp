@@ -1,0 +1,38 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgImuComp",
+  "title":"MsgImuComp",
+  "description":"Data from the Inertial Measurement Unit, containing accelerometer and gyroscope readings compensated for estimated errors and constant  physical effects. The output is valid for inertially referenced center  of navigation (IMU body frame) represented in vehicle body frame.\n",
+  "type": "object",
+  "properties": {
+    "time": {"type": "integer"},
+    "flags": {"type": "integer"},
+    "acc_comp_x": {"type": "integer"},
+    "acc_comp_y": {"type": "integer"},
+    "acc_comp_z": {"type": "integer"},
+    "gyr_comp_x": {"type": "integer"},
+    "gyr_comp_y": {"type": "integer"},
+    "gyr_comp_z": {"type": "integer"}
+  },
+  "required": [
+    "time",
+    "flags",
+    "acc_comp_x",
+    "acc_comp_y",
+    "acc_comp_z",
+    "gyr_comp_x",
+    "gyr_comp_y",
+    "gyr_comp_z"
+  ]
+}
