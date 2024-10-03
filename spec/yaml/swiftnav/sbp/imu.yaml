@@ -115,3 +115,64 @@ definitions:
                       - 2: +/- 8g
                       - 3: +/- 16g
                       - 4: +/- 6g
+
+ - MSG_IMU_COMP:
+    id: 0x0905
+    short_desc: Compensated IMU data
+    desc: >
+      Data from the Inertial Measurement Unit, containing accelerometer and
+      gyroscope readings compensated for estimated errors and constant 
+      physical effects. The output is valid for inertially referenced center 
+      of navigation (IMU body frame) represented in vehicle body frame.
+    fields:
+        - time:
+            type: u64
+            units: microseconds
+            desc: Microseconds since reference epoch
+        - flags:
+            type: u16
+            desc: Contains the applied compensation parameters and time synchronization mode
+            fields:
+              - 7-15: 
+                  desc: Reserved     
+              - 6: 
+                  desc: Gyroscope-errors-compensated      
+              - 5: 
+                  desc: Accelerometer-errors-compensated      
+              - 4: 
+                  desc: Coriolis-effect-compensated     
+              - 3: 
+                  desc: Earth-roration-rate-compensated     
+              - 2: 
+                  desc: Earth-gravity-compensated  
+              - 0-1:
+                  desc: Time status
+                  values:
+                    - 0: Reference epoch is start of current GPS week
+                    - 1: Reference epoch is time of system startup
+                    - 2: Reference epoch is unknown
+                    - 3: Reference epoch is last PPS  
+        - acc_comp_x:
+            type: s32
+            units: 1e-6 m/s^2
+            desc: Compensated acceleration X axis
+        - acc_comp_y:
+            type: s32
+            units: 1e-6 m/s^2
+            desc: Compensated acceleration Y axis
+        - acc_comp_z:
+            type: s32
+            units: 1e-6 m/s^2
+            desc: Compensated acceleration Z axis
+        - gyr_comp_x:
+            type: s32
+            units: 1e-6 deg/s
+            desc: Compensated angular rate X axis
+        - gyr_comp_y:
+            type: s32
+            units: 1e-6 deg/s
+            desc: Compensated angular rate Y axis
+        - gyr_comp_z:
+            type: s32
+            units: 1e-6 deg/s
+            desc: Compensated angular rate Z axis                      

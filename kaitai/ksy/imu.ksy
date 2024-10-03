@@ -86,3 +86,44 @@ types:
           IMU configuration
         type: u1
   
+  msg_imu_comp:
+    doc: |
+      Data from the Inertial Measurement Unit, containing accelerometer and
+      gyroscope readings compensated for estimated errors and constant
+      physical effects. The output is valid for inertially referenced center
+      of navigation (IMU body frame) represented in vehicle body frame.
+    seq:
+      - id: time
+        doc: |
+          Microseconds since reference epoch
+        type: u8
+      - id: flags
+        doc: |
+          Contains the applied compensation parameters and time
+          synchronization mode
+        type: u2
+      - id: acc_comp_x
+        doc: |
+          Compensated acceleration X axis
+        type: s4
+      - id: acc_comp_y
+        doc: |
+          Compensated acceleration Y axis
+        type: s4
+      - id: acc_comp_z
+        doc: |
+          Compensated acceleration Z axis
+        type: s4
+      - id: gyr_comp_x
+        doc: |
+          Compensated angular rate X axis
+        type: s4
+      - id: gyr_comp_y
+        doc: |
+          Compensated angular rate Y axis
+        type: s4
+      - id: gyr_comp_z
+        doc: |
+          Compensated angular rate Z axis
+        type: s4
+  

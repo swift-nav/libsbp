@@ -115,9 +115,62 @@ MsgImuAux.prototype.fieldSpec.push(['imu_type', 'writeUInt8', 1]);
 MsgImuAux.prototype.fieldSpec.push(['temp', 'writeInt16LE', 2]);
 MsgImuAux.prototype.fieldSpec.push(['imu_conf', 'writeUInt8', 1]);
 
+/**
+ * SBP class for message MSG_IMU_COMP (0x0905).
+ *
+ * Data from the Inertial Measurement Unit, containing accelerometer and gyroscope
+ * readings compensated for estimated errors and constant  physical effects. The
+ * output is valid for inertially referenced center  of navigation (IMU body frame)
+ * represented in vehicle body frame.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time number (unsigned 64-bit int, 8 bytes) Microseconds since reference epoch
+ * @field flags number (unsigned 16-bit int, 2 bytes) Contains the applied compensation parameters and time synchronization mode
+ * @field acc_comp_x number (signed 32-bit int, 4 bytes) Compensated acceleration X axis
+ * @field acc_comp_y number (signed 32-bit int, 4 bytes) Compensated acceleration Y axis
+ * @field acc_comp_z number (signed 32-bit int, 4 bytes) Compensated acceleration Z axis
+ * @field gyr_comp_x number (signed 32-bit int, 4 bytes) Compensated angular rate X axis
+ * @field gyr_comp_y number (signed 32-bit int, 4 bytes) Compensated angular rate Y axis
+ * @field gyr_comp_z number (signed 32-bit int, 4 bytes) Compensated angular rate Z axis
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let MsgImuComp = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_IMU_COMP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgImuComp.prototype = Object.create(SBP.prototype);
+MsgImuComp.prototype.messageType = "MSG_IMU_COMP";
+MsgImuComp.prototype.msg_type = 0x0905;
+MsgImuComp.prototype.constructor = MsgImuComp;
+MsgImuComp.prototype.parser = new Parser()
+  .endianess('little')
+  .uint64('time')
+  .uint16('flags')
+  .int32('acc_comp_x')
+  .int32('acc_comp_y')
+  .int32('acc_comp_z')
+  .int32('gyr_comp_x')
+  .int32('gyr_comp_y')
+  .int32('gyr_comp_z');
+MsgImuComp.prototype.fieldSpec = [];
+MsgImuComp.prototype.fieldSpec.push(['time', 'writeUInt64LE', 8]);
+MsgImuComp.prototype.fieldSpec.push(['flags', 'writeUInt16LE', 2]);
+MsgImuComp.prototype.fieldSpec.push(['acc_comp_x', 'writeInt32LE', 4]);
+MsgImuComp.prototype.fieldSpec.push(['acc_comp_y', 'writeInt32LE', 4]);
+MsgImuComp.prototype.fieldSpec.push(['acc_comp_z', 'writeInt32LE', 4]);
+MsgImuComp.prototype.fieldSpec.push(['gyr_comp_x', 'writeInt32LE', 4]);
+MsgImuComp.prototype.fieldSpec.push(['gyr_comp_y', 'writeInt32LE', 4]);
+MsgImuComp.prototype.fieldSpec.push(['gyr_comp_z', 'writeInt32LE', 4]);
+
 module.exports = {
   0x0900: MsgImuRaw,
   MsgImuRaw: MsgImuRaw,
   0x0901: MsgImuAux,
   MsgImuAux: MsgImuAux,
+  0x0905: MsgImuComp,
+  MsgImuComp: MsgImuComp,
 }

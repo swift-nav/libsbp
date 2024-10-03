@@ -64,4 +64,27 @@ class Imu(KaitaiStruct):
             self.imu_conf = self._io.read_u1()
 
 
+    class MsgImuComp(KaitaiStruct):
+        """Data from the Inertial Measurement Unit, containing accelerometer and
+        gyroscope readings compensated for estimated errors and constant
+        physical effects. The output is valid for inertially referenced center
+        of navigation (IMU body frame) represented in vehicle body frame.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.time = self._io.read_u8le()
+            self.flags = self._io.read_u2le()
+            self.acc_comp_x = self._io.read_s4le()
+            self.acc_comp_y = self._io.read_s4le()
+            self.acc_comp_z = self._io.read_s4le()
+            self.gyr_comp_x = self._io.read_s4le()
+            self.gyr_comp_y = self._io.read_s4le()
+            self.gyr_comp_z = self._io.read_s4le()
+
+
 

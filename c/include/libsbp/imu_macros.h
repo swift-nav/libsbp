@@ -129,4 +129,97 @@
  */
 #define SBP_MSG_IMU_AUX_ENCODED_LEN 4u
 
+#define SBP_IMU_COMP_GYROSCOPEERRORSCOMPENSATED_MASK (0x1u)
+#define SBP_IMU_COMP_GYROSCOPEERRORSCOMPENSATED_SHIFT (6u)
+#define SBP_IMU_COMP_GYROSCOPEERRORSCOMPENSATED_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_IMU_COMP_GYROSCOPEERRORSCOMPENSATED_SHIFT) & \
+         SBP_IMU_COMP_GYROSCOPEERRORSCOMPENSATED_MASK))
+#define SBP_IMU_COMP_GYROSCOPEERRORSCOMPENSATED_SET(flags, val)           \
+  do {                                                                    \
+    (flags) = (u16)(                                                      \
+        (flags & (~(SBP_IMU_COMP_GYROSCOPEERRORSCOMPENSATED_MASK          \
+                    << SBP_IMU_COMP_GYROSCOPEERRORSCOMPENSATED_SHIFT))) | \
+        (((val) & (SBP_IMU_COMP_GYROSCOPEERRORSCOMPENSATED_MASK))         \
+         << (SBP_IMU_COMP_GYROSCOPEERRORSCOMPENSATED_SHIFT)));            \
+  } while (0)
+
+#define SBP_IMU_COMP_ACCELEROMETERERRORSCOMPENSATED_MASK (0x1u)
+#define SBP_IMU_COMP_ACCELEROMETERERRORSCOMPENSATED_SHIFT (5u)
+#define SBP_IMU_COMP_ACCELEROMETERERRORSCOMPENSATED_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_IMU_COMP_ACCELEROMETERERRORSCOMPENSATED_SHIFT) & \
+         SBP_IMU_COMP_ACCELEROMETERERRORSCOMPENSATED_MASK))
+#define SBP_IMU_COMP_ACCELEROMETERERRORSCOMPENSATED_SET(flags, val)           \
+  do {                                                                        \
+    (flags) = (u16)(                                                          \
+        (flags & (~(SBP_IMU_COMP_ACCELEROMETERERRORSCOMPENSATED_MASK          \
+                    << SBP_IMU_COMP_ACCELEROMETERERRORSCOMPENSATED_SHIFT))) | \
+        (((val) & (SBP_IMU_COMP_ACCELEROMETERERRORSCOMPENSATED_MASK))         \
+         << (SBP_IMU_COMP_ACCELEROMETERERRORSCOMPENSATED_SHIFT)));            \
+  } while (0)
+
+#define SBP_IMU_COMP_CORIOLISEFFECTCOMPENSATED_MASK (0x1u)
+#define SBP_IMU_COMP_CORIOLISEFFECTCOMPENSATED_SHIFT (4u)
+#define SBP_IMU_COMP_CORIOLISEFFECTCOMPENSATED_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_IMU_COMP_CORIOLISEFFECTCOMPENSATED_SHIFT) & \
+         SBP_IMU_COMP_CORIOLISEFFECTCOMPENSATED_MASK))
+#define SBP_IMU_COMP_CORIOLISEFFECTCOMPENSATED_SET(flags, val)                 \
+  do {                                                                         \
+    (flags) =                                                                  \
+        (u16)((flags & (~(SBP_IMU_COMP_CORIOLISEFFECTCOMPENSATED_MASK          \
+                          << SBP_IMU_COMP_CORIOLISEFFECTCOMPENSATED_SHIFT))) | \
+              (((val) & (SBP_IMU_COMP_CORIOLISEFFECTCOMPENSATED_MASK))         \
+               << (SBP_IMU_COMP_CORIOLISEFFECTCOMPENSATED_SHIFT)));            \
+  } while (0)
+
+#define SBP_IMU_COMP_EARTHRORATIONRATECOMPENSATED_MASK (0x1u)
+#define SBP_IMU_COMP_EARTHRORATIONRATECOMPENSATED_SHIFT (3u)
+#define SBP_IMU_COMP_EARTHRORATIONRATECOMPENSATED_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_IMU_COMP_EARTHRORATIONRATECOMPENSATED_SHIFT) & \
+         SBP_IMU_COMP_EARTHRORATIONRATECOMPENSATED_MASK))
+#define SBP_IMU_COMP_EARTHRORATIONRATECOMPENSATED_SET(flags, val)           \
+  do {                                                                      \
+    (flags) = (u16)(                                                        \
+        (flags & (~(SBP_IMU_COMP_EARTHRORATIONRATECOMPENSATED_MASK          \
+                    << SBP_IMU_COMP_EARTHRORATIONRATECOMPENSATED_SHIFT))) | \
+        (((val) & (SBP_IMU_COMP_EARTHRORATIONRATECOMPENSATED_MASK))         \
+         << (SBP_IMU_COMP_EARTHRORATIONRATECOMPENSATED_SHIFT)));            \
+  } while (0)
+
+#define SBP_IMU_COMP_EARTHGRAVITYCOMPENSATED_MASK (0x1u)
+#define SBP_IMU_COMP_EARTHGRAVITYCOMPENSATED_SHIFT (2u)
+#define SBP_IMU_COMP_EARTHGRAVITYCOMPENSATED_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_IMU_COMP_EARTHGRAVITYCOMPENSATED_SHIFT) & \
+         SBP_IMU_COMP_EARTHGRAVITYCOMPENSATED_MASK))
+#define SBP_IMU_COMP_EARTHGRAVITYCOMPENSATED_SET(flags, val)                 \
+  do {                                                                       \
+    (flags) =                                                                \
+        (u16)((flags & (~(SBP_IMU_COMP_EARTHGRAVITYCOMPENSATED_MASK          \
+                          << SBP_IMU_COMP_EARTHGRAVITYCOMPENSATED_SHIFT))) | \
+              (((val) & (SBP_IMU_COMP_EARTHGRAVITYCOMPENSATED_MASK))         \
+               << (SBP_IMU_COMP_EARTHGRAVITYCOMPENSATED_SHIFT)));            \
+  } while (0)
+
+#define SBP_IMU_COMP_TIME_STATUS_MASK (0x3u)
+#define SBP_IMU_COMP_TIME_STATUS_SHIFT (0u)
+#define SBP_IMU_COMP_TIME_STATUS_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_IMU_COMP_TIME_STATUS_SHIFT) & \
+         SBP_IMU_COMP_TIME_STATUS_MASK))
+#define SBP_IMU_COMP_TIME_STATUS_SET(flags, val)                       \
+  do {                                                                 \
+    (flags) = (u16)((flags & (~(SBP_IMU_COMP_TIME_STATUS_MASK          \
+                                << SBP_IMU_COMP_TIME_STATUS_SHIFT))) | \
+                    (((val) & (SBP_IMU_COMP_TIME_STATUS_MASK))         \
+                     << (SBP_IMU_COMP_TIME_STATUS_SHIFT)));            \
+  } while (0)
+
+#define SBP_IMU_COMP_TIME_STATUS_REFERENCE_EPOCH_IS_START_OF_CURRENT_GPS_WEEK \
+  (0)
+#define SBP_IMU_COMP_TIME_STATUS_REFERENCE_EPOCH_IS_TIME_OF_SYSTEM_STARTUP (1)
+#define SBP_IMU_COMP_TIME_STATUS_REFERENCE_EPOCH_IS_UNKNOWN (2)
+#define SBP_IMU_COMP_TIME_STATUS_REFERENCE_EPOCH_IS_LAST_PPS (3)
+/**
+ * Encoded length of sbp_msg_imu_comp_t
+ */
+#define SBP_MSG_IMU_COMP_ENCODED_LEN 34u
+
 #endif /* LIBSBP_IMU_MACROS_H */

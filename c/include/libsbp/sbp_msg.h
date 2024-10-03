@@ -157,6 +157,7 @@ typedef union {
   sbp_msg_heartbeat_t heartbeat;
   sbp_msg_iar_state_t iar_state;
   sbp_msg_imu_aux_t imu_aux;
+  sbp_msg_imu_comp_t imu_comp;
   sbp_msg_imu_raw_t imu_raw;
   sbp_msg_init_base_dep_t init_base_dep;
   sbp_msg_ins_status_t ins_status;
@@ -587,6 +588,8 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
       return sbp_msg_iar_state_encode(buf, len, n_written, &msg->iar_state);
     case SbpMsgImuAux:
       return sbp_msg_imu_aux_encode(buf, len, n_written, &msg->imu_aux);
+    case SbpMsgImuComp:
+      return sbp_msg_imu_comp_encode(buf, len, n_written, &msg->imu_comp);
     case SbpMsgImuRaw:
       return sbp_msg_imu_raw_encode(buf, len, n_written, &msg->imu_raw);
     case SbpMsgInitBaseDep:
@@ -1257,6 +1260,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_iar_state_decode(buf, len, n_read, &msg->iar_state);
     case SbpMsgImuAux:
       return sbp_msg_imu_aux_decode(buf, len, n_read, &msg->imu_aux);
+    case SbpMsgImuComp:
+      return sbp_msg_imu_comp_decode(buf, len, n_read, &msg->imu_comp);
     case SbpMsgImuRaw:
       return sbp_msg_imu_raw_decode(buf, len, n_read, &msg->imu_raw);
     case SbpMsgInitBaseDep:
@@ -1861,6 +1866,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_iar_state_encoded_len(&msg->iar_state);
     case SbpMsgImuAux:
       return sbp_msg_imu_aux_encoded_len(&msg->imu_aux);
+    case SbpMsgImuComp:
+      return sbp_msg_imu_comp_encoded_len(&msg->imu_comp);
     case SbpMsgImuRaw:
       return sbp_msg_imu_raw_encoded_len(&msg->imu_raw);
     case SbpMsgInitBaseDep:
@@ -2452,6 +2459,8 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_iar_state_cmp(&a->iar_state, &b->iar_state);
     case SbpMsgImuAux:
       return sbp_msg_imu_aux_cmp(&a->imu_aux, &b->imu_aux);
+    case SbpMsgImuComp:
+      return sbp_msg_imu_comp_cmp(&a->imu_comp, &b->imu_comp);
     case SbpMsgImuRaw:
       return sbp_msg_imu_raw_cmp(&a->imu_raw, &b->imu_raw);
     case SbpMsgInitBaseDep:
