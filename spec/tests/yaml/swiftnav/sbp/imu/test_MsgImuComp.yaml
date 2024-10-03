@@ -1,0 +1,27 @@
+---
+description: Unit tests for swiftnav.sbp.imu MsgImuCmp
+generated_on: 2024-10-03 01:03:00.00 # manually generated
+package: sbp.imu
+tests:
+  - msg:
+      fields:
+        time: 3221225754
+        flags: 206
+        acc_comp_x: 96
+        acc_comp_y: -33
+        acc_comp_z: 4140
+        gyr_comp_x: 60
+        gyr_comp_y: -304
+        gyr_comp_z: -18
+      module: sbp.imu
+      name: MsgImuComp
+    msg_type: "0x905"
+    raw_json: '{"time":3221225754,"flags":206,"acc_comp_x":96,"acc_comp_y":-33,"acc_comp_z":4140,"gyr_comp_x":60,"gyr_comp_y":-304,"gyr_comp_z":-18,"preamble":85,"msg_type":2309,"sender":4660,"payload":"GgEAwAAAAADOAGAAAADf////LBAAADwAAADQ/v//7v///w==","crc":22095,"length":34}'
+    raw_packet: VQUJNBIiGgEAwAAAAADOAGAAAADf////LBAAADwAAADQ/v//7v///09W
+    sbp:
+      crc: "0x564f"
+      length: 34
+      msg_type: "0x905"
+      payload: GgEAwAAAAADOAGAAAADf////LBAAADwAAADQ/v//7v///w==
+      preamble: "0x55"
+      sender: "0x1234"
