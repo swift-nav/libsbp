@@ -99,7 +99,7 @@ class TestSpecification(object):
     self.payload = base64.standard_b64decode(self.sbp['payload'])
     self.payload_as_byte_array = list(bytearray(self.payload))
     self.payload_len_for_encoding_buf = len(self.payload) if len(self.payload) > 0 else 1
-    msg_name = msg['name']
+    msg_name = msg.__class__.__name__
     for i in range(0, len(ACRONYMS)):
         msg_name = re.sub(ACRONYMS[i], LOWER_ACRONYMS[i], msg_name)
     self.enum_value = "Sbp" + msg_name
