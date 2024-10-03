@@ -107,18 +107,19 @@ form:
 And then generate a test for using `json2test` with:
 
 ```shell
-uv run json2test.py --input heartbeat.json --output ../spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml
+uv -n run json2test.py --input heartbeat.json --output ../spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml
 ```
 
 *NOTE* because the json2test file imports the local version of sbp & the build
 system of it all is a little slapdash, this command will ONLY work if called from
 inside of `libsbp/generator/` directory because the `${PROJECT_ROOT}` in the script
-declartion of json2test.py is whatever the PWD is when the command is called.
+declartion of json2test.py is whatever the PWD is when the command is called, and
+caching is turned off.
 
 Usage for `json2test`
 
 ```shell
-uv run json2test --input [PATH_TO_JSON_IN] --output [PATH_TO_YAML_OUT]
+uv -n run json2test --input [PATH_TO_JSON_IN] --output [PATH_TO_YAML_OUT]
 ```
 
 * The `msg_type` can also be provided through a CLI parameter, with `--msg-id
