@@ -107,7 +107,7 @@ form:
 And then generate a test for using `json2test` with:
 
 ```shell
-uv run json2test.py --input heartbeat.json --output spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml
+uv run json2test.py --input heartbeat.json --output ../spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml
 ```
 
 *NOTE* because the json2test file imports the local version of sbp & the build
