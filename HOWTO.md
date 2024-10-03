@@ -112,7 +112,8 @@ uv run json2test.py --input heartbeat.json --output ../spec/tests/yaml/swiftnav/
 
 *NOTE* because the json2test file imports the local version of sbp & the build
 system of it all is a little slapdash, this command will ONLY work if called from
-inside of `libsbp/generator/` directory.
+inside of `libsbp/generator/` directory because the `${PROJECT_ROOT}` in the script
+declartion of json2test.py is whatever the PWD is when the command is called.
 
 Usage for `json2test`
 
