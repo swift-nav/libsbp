@@ -4724,6 +4724,9 @@ pub mod msg_pos_llh_acc {
 
         /// 95.45%
         _9545 = 3,
+
+        /// 99.73%
+        _9973 = 4,
     }
 
     impl std::fmt::Display for ConfidenceLevel {
@@ -4732,6 +4735,7 @@ pub mod msg_pos_llh_acc {
                 ConfidenceLevel::_3935 => f.write_str("39.35%"),
                 ConfidenceLevel::_6827 => f.write_str("68.27%"),
                 ConfidenceLevel::_9545 => f.write_str("95.45%"),
+                ConfidenceLevel::_9973 => f.write_str("99.73%"),
             }
         }
     }
@@ -4743,6 +4747,7 @@ pub mod msg_pos_llh_acc {
                 1 => Ok(ConfidenceLevel::_3935),
                 2 => Ok(ConfidenceLevel::_6827),
                 3 => Ok(ConfidenceLevel::_9545),
+                4 => Ok(ConfidenceLevel::_9973),
                 i => Err(i),
             }
         }
