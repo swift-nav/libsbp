@@ -76,3 +76,4 @@ instance Binary MsgExtEvent where
 $(makeSBP 'msgExtEvent ''MsgExtEvent)
 $(makeJSON "_msgExtEvent_" ''MsgExtEvent)
 $(makeLenses ''MsgExtEvent)
+

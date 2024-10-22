@@ -340,3 +340,4 @@ instance Binary MsgSettingsRegisterResp where
 $(makeSBP 'msgSettingsRegisterResp ''MsgSettingsRegisterResp)
 $(makeJSON "_msgSettingsRegisterResp_" ''MsgSettingsRegisterResp)
 $(makeLenses ''MsgSettingsRegisterResp)
+

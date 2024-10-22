@@ -356,3 +356,4 @@ instance Binary MsgAcqSvProfileDep where
 $(makeSBP 'msgAcqSvProfileDep ''MsgAcqSvProfileDep)
 $(makeJSON "_msgAcqSvProfileDep_" ''MsgAcqSvProfileDep)
 $(makeLenses ''MsgAcqSvProfileDep)
+

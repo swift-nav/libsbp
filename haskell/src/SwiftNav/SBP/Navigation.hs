@@ -2618,3 +2618,4 @@ instance Binary MsgPoseRelative where
 $(makeSBP 'msgPoseRelative ''MsgPoseRelative)
 $(makeJSON "_msgPoseRelative_" ''MsgPoseRelative)
 $(makeLenses ''MsgPoseRelative)
+
