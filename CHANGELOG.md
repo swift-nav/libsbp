@@ -1,5 +1,17 @@
 # Changelog
 
+## [v6.2.1](https://github.com/swift-nav/libsbp/tree/v6.2.1)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.2.0...v6.2.1)
+
+**Merged pull requests:**
+
+- put the cargo dep in the right place [\#1456](https://github.com/swift-nav/libsbp/pull/1456) ([pcrumley](https://github.com/pcrumley))
+- Upgrade Haskel version [\#1454](https://github.com/swift-nav/libsbp/pull/1454) ([RReichert](https://github.com/RReichert))
+- cover CI hole which appears to be hiding a proc\_macro bindgen bug [\#1452](https://github.com/swift-nav/libsbp/pull/1452) ([pcrumley](https://github.com/pcrumley))
+- bumping to latest version of libswiftnav [\#1451](https://github.com/swift-nav/libsbp/pull/1451) ([pcrumley](https://github.com/pcrumley))
+
+
 ## [v6.2.0](https://github.com/swift-nav/libsbp/tree/v6.2.0)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.1.0...v6.2.0)
