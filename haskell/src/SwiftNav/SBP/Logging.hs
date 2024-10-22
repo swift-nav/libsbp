@@ -124,3 +124,4 @@ instance Binary MsgPrintDep where
 $(makeSBP 'msgPrintDep ''MsgPrintDep)
 $(makeJSON "_msgPrintDep_" ''MsgPrintDep)
 $(makeLenses ''MsgPrintDep)
+

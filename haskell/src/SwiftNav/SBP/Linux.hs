@@ -511,3 +511,4 @@ instance Binary MsgLinuxSysState where
 $(makeSBP 'msgLinuxSysState ''MsgLinuxSysState)
 $(makeJSON "_msgLinuxSysState_" ''MsgLinuxSysState)
 $(makeLenses ''MsgLinuxSysState)
+

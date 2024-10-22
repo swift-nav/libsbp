@@ -182,3 +182,4 @@ instance Binary MsgImuComp where
 $(makeSBP 'msgImuComp ''MsgImuComp)
 $(makeJSON "_msgImuComp_" ''MsgImuComp)
 $(makeLenses ''MsgImuComp)
+
