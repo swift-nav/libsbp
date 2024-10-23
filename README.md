@@ -12,7 +12,7 @@
   * [Installing development Python versions](#installing-development-python-versions)
   * [Adding development version as a pip dependency](#adding-development-version-as-a-pip-dependency)
   * [Installing from source](#installing-from-source)
-- [SBP Development Procedures](#sbp-development-procedures)  
+- [SBP Development Procedures](#sbp-development-procedures)
 - [SBP Protocol Specification](#sbp-protocol-specification)
 - [JSON Schema Definitions](#json-schema-definitions)
 - [Kaitai Struct Format Descriptions](#kaitai-struct-format-descriptions)
@@ -102,7 +102,7 @@ but works on all platforms that Python itself supports.
 
 ## Building / installing
 
-Before you start, run 
+Before you start, run
 ```
 git pull --tags
 ```
@@ -151,7 +151,9 @@ You can then make this image operate on your local workspace like this:
 
 #### Using the docker image
 
-Once in the image, simply type `make all` to generate all the libsbp bindings.
+Once in the image, to overcome issues with git trying to determine ownership of
+the repository, run `git config --global --add safe.directory /mnt/workspace`.
+Then, simply type `make all` to generate all the libsbp bindings.
 This could take several hours to run.  Alternately, the docker image will run
 the `make all` command by default, so you can kick off the `make all` process
 by simply running the following command:

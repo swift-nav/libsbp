@@ -928,3 +928,4 @@ instance Binary MsgFrontEndGain where
 $(makeSBP 'msgFrontEndGain ''MsgFrontEndGain)
 $(makeJSON "_msgFrontEndGain_" ''MsgFrontEndGain)
 $(makeLenses ''MsgFrontEndGain)
+

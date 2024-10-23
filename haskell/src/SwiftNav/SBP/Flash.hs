@@ -323,3 +323,4 @@ instance Binary MsgM25FlashWriteStatus where
 $(makeSBP 'msgM25FlashWriteStatus ''MsgM25FlashWriteStatus)
 $(makeJSON "_msgM25FlashWriteStatus_" ''MsgM25FlashWriteStatus)
 $(makeLenses ''MsgM25FlashWriteStatus)
+

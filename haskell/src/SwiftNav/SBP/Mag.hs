@@ -74,3 +74,4 @@ instance Binary MsgMagRaw where
 $(makeSBP 'msgMagRaw ''MsgMagRaw)
 $(makeJSON "_msgMagRaw_" ''MsgMagRaw)
 $(makeLenses ''MsgMagRaw)
+

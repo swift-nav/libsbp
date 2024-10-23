@@ -125,3 +125,4 @@ instance Binary MsgWheeltick where
 $(makeSBP 'msgWheeltick ''MsgWheeltick)
 $(makeJSON "_msgWheeltick_" ''MsgWheeltick)
 $(makeLenses ''MsgWheeltick)
+

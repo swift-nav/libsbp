@@ -339,3 +339,4 @@ instance Binary MsgFileioConfigResp where
 $(makeSBP 'msgFileioConfigResp ''MsgFileioConfigResp)
 $(makeJSON "_msgFileioConfigResp_" ''MsgFileioConfigResp)
 $(makeLenses ''MsgFileioConfigResp)
+

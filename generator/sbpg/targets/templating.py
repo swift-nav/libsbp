@@ -25,6 +25,7 @@ JENV = jinja2.Environment(block_start_string = '((*',
                           variable_end_string = ')))',
                           comment_start_string = '((=',
                           comment_end_string = '=))',
+                          keep_trailing_newline=True,
                           loader=jinja2.PackageLoader('sbpg',
                                                       'targets/resources'),
                           )

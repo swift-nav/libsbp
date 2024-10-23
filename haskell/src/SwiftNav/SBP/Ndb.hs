@@ -93,3 +93,4 @@ instance Binary MsgNdbEvent where
 $(makeSBP 'msgNdbEvent ''MsgNdbEvent)
 $(makeJSON "_msgNdbEvent_" ''MsgNdbEvent)
 $(makeLenses ''MsgNdbEvent)
+

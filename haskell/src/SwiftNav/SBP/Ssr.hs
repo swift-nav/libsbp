@@ -1734,3 +1734,4 @@ instance Binary MsgSsrOrbitClockBoundsDegradation where
 $(makeSBP 'msgSsrOrbitClockBoundsDegradation ''MsgSsrOrbitClockBoundsDegradation)
 $(makeJSON "_msgSsrOrbitClockBoundsDegradation_" ''MsgSsrOrbitClockBoundsDegradation)
 $(makeLenses ''MsgSsrOrbitClockBoundsDegradation)
+

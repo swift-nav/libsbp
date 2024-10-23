@@ -556,3 +556,4 @@ instance Binary MsgEd25519SignatureDepB where
 $(makeSBP 'msgEd25519SignatureDepB ''MsgEd25519SignatureDepB)
 $(makeJSON "_msgEd25519SignatureDepB_" ''MsgEd25519SignatureDepB)
 $(makeLenses ''MsgEd25519SignatureDepB)
+

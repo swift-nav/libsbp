@@ -3161,3 +3161,4 @@ instance Binary MsgOsr where
 $(makeSBP 'msgOsr ''MsgOsr)
 $(makeJSON "_msgOsr_" ''MsgOsr)
 $(makeLenses ''MsgOsr)
+
