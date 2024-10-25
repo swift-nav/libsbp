@@ -576,3 +576,4 @@ instance Binary MsgGroupMeta where
 $(makeSBP 'msgGroupMeta ''MsgGroupMeta)
 $(makeJSON "_msgGroupMeta_" ''MsgGroupMeta)
 $(makeLenses ''MsgGroupMeta)
+

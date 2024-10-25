@@ -238,3 +238,4 @@ instance Binary MsgAngularRate where
 $(makeSBP 'msgAngularRate ''MsgAngularRate)
 $(makeJSON "_msgAngularRate_" ''MsgAngularRate)
 $(makeLenses ''MsgAngularRate)
+

@@ -58,3 +58,4 @@ instance Binary MsgUserData where
 $(makeSBP 'msgUserData ''MsgUserData)
 $(makeJSON "_msgUserData_" ''MsgUserData)
 $(makeLenses ''MsgUserData)
+

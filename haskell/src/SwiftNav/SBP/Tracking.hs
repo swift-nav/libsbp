@@ -598,3 +598,4 @@ instance Binary MsgTrackingStateDepB where
 $(makeSBP 'msgTrackingStateDepB ''MsgTrackingStateDepB)
 $(makeJSON "_msgTrackingStateDepB_" ''MsgTrackingStateDepB)
 $(makeLenses ''MsgTrackingStateDepB)
+

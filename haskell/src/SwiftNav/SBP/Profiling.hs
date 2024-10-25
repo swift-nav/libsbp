@@ -259,3 +259,4 @@ instance Binary MsgProfilingResourceCounter where
 $(makeSBP 'msgProfilingResourceCounter ''MsgProfilingResourceCounter)
 $(makeJSON "_msgProfilingResourceCounter_" ''MsgProfilingResourceCounter)
 $(makeLenses ''MsgProfilingResourceCounter)
+

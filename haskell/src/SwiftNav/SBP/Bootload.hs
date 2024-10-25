@@ -187,3 +187,4 @@ instance Binary MsgBootloaderHandshakeDepA where
 $(makeSBP 'msgBootloaderHandshakeDepA ''MsgBootloaderHandshakeDepA)
 $(makeJSON "_msgBootloaderHandshakeDepA_" ''MsgBootloaderHandshakeDepA)
 $(makeLenses ''MsgBootloaderHandshakeDepA)
+
