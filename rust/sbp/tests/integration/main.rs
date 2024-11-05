@@ -44,6 +44,7 @@ mod auto_check_sbp_flash_msg_stm_flash_unlock_sector;
 mod auto_check_sbp_flash_msg_stm_unique_id_req;
 mod auto_check_sbp_flash_msg_stm_unique_id_resp;
 mod auto_check_sbp_imu_msg_imu_aux;
+mod auto_check_sbp_imu_msg_imu_comp;
 mod auto_check_sbp_imu_msg_imu_raw;
 mod auto_check_sbp_integrity_msg_acknowledge;
 mod auto_check_sbp_integrity_msg_ssr_flag_high_level;

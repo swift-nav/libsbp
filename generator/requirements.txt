@@ -13,5 +13,6 @@ pytest~=6.2
 pytest-cov~=3.0
 pytest-xdist~=2.4
 pyyaml            # PyYAML API is very stable
-tox               # Tox is (generally) designed to be very backwards compatible
+tox==3.25.0
+tox-run-command==0.4
 voluptuous~=0.12

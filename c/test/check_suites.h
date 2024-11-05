@@ -49,6 +49,7 @@ Suite* auto_check_sbp_flash_MsgStmFlashUnlockSector_suite(void);
 Suite* auto_check_sbp_flash_MsgStmUniqueIdReq_suite(void);
 Suite* auto_check_sbp_flash_MsgStmUniqueIdResp_suite(void);
 Suite* auto_check_sbp_imu_MsgImuAux_suite(void);
+Suite* auto_check_sbp_imu_MsgImuComp_suite(void);
 Suite* auto_check_sbp_imu_MsgImuRaw_suite(void);
 Suite* auto_check_sbp_integrity_MsgAcknowledge_suite(void);
 Suite* auto_check_sbp_integrity_MsgSsrFlagHighLevel_suite(void);

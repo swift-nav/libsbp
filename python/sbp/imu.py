@@ -271,8 +271,142 @@ class MsgImuAux(SBP):
     d.update(j)
     return d
     
+SBP_MSG_IMU_COMP = 0x0905
+class MsgImuComp(SBP):
+  """SBP class for message MSG_IMU_COMP (0x0905).
+
+  You can have MSG_IMU_COMP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Data from the Inertial Measurement Unit, containing accelerometer and
+  gyroscope readings compensated for estimated errors and constant  physical
+  effects. The output is valid for inertially referenced center  of navigation
+  (IMU body frame) represented in vehicle body frame.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  time : int
+    Microseconds since reference epoch
+  flags : int
+    Contains the applied compensation parameters and time synchronization mode
+  acc_comp_x : int
+    Compensated acceleration X axis
+  acc_comp_y : int
+    Compensated acceleration Y axis
+  acc_comp_z : int
+    Compensated acceleration Z axis
+  gyr_comp_x : int
+    Compensated angular rate X axis
+  gyr_comp_y : int
+    Compensated angular rate Y axis
+  gyr_comp_z : int
+    Compensated angular rate Z axis
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'time' / construct.Int64ul,
+                   'flags' / construct.Int16ul,
+                   'acc_comp_x' / construct.Int32sl,
+                   'acc_comp_y' / construct.Int32sl,
+                   'acc_comp_z' / construct.Int32sl,
+                   'gyr_comp_x' / construct.Int32sl,
+                   'gyr_comp_y' / construct.Int32sl,
+                   'gyr_comp_z' / construct.Int32sl,)
+  __slots__ = [
+               'time',
+               'flags',
+               'acc_comp_x',
+               'acc_comp_y',
+               'acc_comp_z',
+               'gyr_comp_x',
+               'gyr_comp_y',
+               'gyr_comp_z',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgImuComp,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgImuComp, self).__init__()
+      self.msg_type = SBP_MSG_IMU_COMP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.time = kwargs.pop('time')
+      self.flags = kwargs.pop('flags')
+      self.acc_comp_x = kwargs.pop('acc_comp_x')
+      self.acc_comp_y = kwargs.pop('acc_comp_y')
+      self.acc_comp_z = kwargs.pop('acc_comp_z')
+      self.gyr_comp_x = kwargs.pop('gyr_comp_x')
+      self.gyr_comp_y = kwargs.pop('gyr_comp_y')
+      self.gyr_comp_z = kwargs.pop('gyr_comp_z')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgImuComp.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgImuComp(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgImuComp._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgImuComp._parser.build(c)
+    return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "IMU COMP"
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgImuComp._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgImuComp, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0900: MsgImuRaw,
   0x0901: MsgImuAux,
+  0x0905: MsgImuComp,
 }

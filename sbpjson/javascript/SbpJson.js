@@ -88,6 +88,7 @@
 //   const msgHeartbeat = Convert.toMsgHeartbeat(json);
 //   const msgIarState = Convert.toMsgIarState(json);
 //   const msgImuAux = Convert.toMsgImuAux(json);
+//   const msgImuComp = Convert.toMsgImuComp(json);
 //   const msgImuRaw = Convert.toMsgImuRaw(json);
 //   const msgInsStatus = Convert.toMsgInsStatus(json);
 //   const msgInsUpdates = Convert.toMsgInsUpdates(json);
@@ -915,6 +916,14 @@ function toMsgImuAux(json) {
 
 function msgImuAuxToJson(value) {
     return JSON.stringify(uncast(value, r("MsgImuAux")), null, 2);
+}
+
+function toMsgImuComp(json) {
+    return cast(JSON.parse(json), r("MsgImuComp"));
+}
+
+function msgImuCompToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgImuComp")), null, 2);
 }
 
 function toMsgImuRaw(json) {
@@ -2678,6 +2687,16 @@ const typeMap = {
         { json: "imu_type", js: "imu_type", typ: 0 },
         { json: "temp", js: "temp", typ: 0 },
     ], "any"),
+    "MsgImuComp": o([
+        { json: "acc_comp_x", js: "acc_comp_x", typ: 0 },
+        { json: "acc_comp_y", js: "acc_comp_y", typ: 0 },
+        { json: "acc_comp_z", js: "acc_comp_z", typ: 0 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "gyr_comp_x", js: "gyr_comp_x", typ: 0 },
+        { json: "gyr_comp_y", js: "gyr_comp_y", typ: 0 },
+        { json: "gyr_comp_z", js: "gyr_comp_z", typ: 0 },
+        { json: "time", js: "time", typ: 0 },
+    ], "any"),
     "MsgImuRaw": o([
         { json: "acc_x", js: "acc_x", typ: 0 },
         { json: "acc_y", js: "acc_y", typ: 0 },
@@ -3892,6 +3911,8 @@ module.exports = {
     "toMsgIarState": toMsgIarState,
     "msgImuAuxToJson": msgImuAuxToJson,
     "toMsgImuAux": toMsgImuAux,
+    "msgImuCompToJson": msgImuCompToJson,
+    "toMsgImuComp": toMsgImuComp,
     "msgImuRawToJson": msgImuRawToJson,
     "toMsgImuRaw": toMsgImuRaw,
     "msgInsStatusToJson": msgInsStatusToJson,

@@ -1,13 +1,13 @@
 #########################################################################
 ###                                                                   ###
 ### WARNING: This file is generated, please update the template at:   ###
-###            generator/sbpg/targets/resources/rust/sbp-cargo.toml   ###
+###            generator/sbpg/targets/resources/rust/sbp_cargo.toml   ###
 ###                                                                   ###
 #########################################################################
 
 [package]
 name = "sbp"
-version = "6.1.1-alpha"
+version = "6.2.2-alpha"
 description = "Rust native implementation of SBP (Swift Binary Protocol) for communicating with devices made by Swift Navigation"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 repository = "https://github.com/swift-nav/libsbp"
@@ -34,7 +34,7 @@ crc16 = "0.4"
 log = "0.4"
 
 [dependencies.swiftnav]
-version = "0.8"
+version = "0.10"
 optional = true
 
 [dependencies.slotmap]

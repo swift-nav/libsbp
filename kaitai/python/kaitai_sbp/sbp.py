@@ -226,6 +226,7 @@ class Sbp(KaitaiStruct):
         msg_mag_raw = 2306
         msg_odometry = 2307
         msg_wheeltick = 2308
+        msg_imu_comp = 2309
         msg_ssr_flag_high_level = 3001
         msg_ssr_flag_satellites = 3005
         msg_ssr_flag_tropo_grid_points = 3011
@@ -689,6 +690,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Piksi.MsgCwResults(_io__raw_payload, self, self._root)
+            elif _on == 2309:
+                self._raw_payload = self._io.read_bytes(self.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Imu.MsgImuComp(_io__raw_payload, self, self._root)
             elif _on == 165:
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))

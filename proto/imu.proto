@@ -55,3 +55,21 @@ message MsgImuAux {
     sint32 temp = 2;
     uint32 imu_conf = 3;
 }
+
+/** Compensated IMU data
+ *
+ * Data from the Inertial Measurement Unit, containing accelerometer and
+ * gyroscope readings compensated for estimated errors and constant  physical
+ * effects. The output is valid for inertially referenced center  of
+ * navigation (IMU body frame) represented in vehicle body frame.
+ */
+message MsgImuComp {
+    uint64 time = 1;
+    uint32 flags = 2;
+    sint32 acc_comp_x = 3;
+    sint32 acc_comp_y = 4;
+    sint32 acc_comp_z = 5;
+    sint32 gyr_comp_x = 6;
+    sint32 gyr_comp_y = 7;
+    sint32 gyr_comp_z = 8;
+}

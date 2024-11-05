@@ -86,7 +86,7 @@ class TestSpecification(object):
   """A message description to generate tests for.
   """
 
-  def __init__(self, raw_packet, msg_type, raw_json, msg, sbp, test_msg_data=None):
+  def __init__(self, raw_packet, msg_type, raw_json, msg, sbp, test_msg_data=None, msg_name=None):
     self.raw_packet = raw_packet
     self.raw_json = raw_json
     self.raw_json_obj = json.loads(raw_json)
@@ -99,7 +99,8 @@ class TestSpecification(object):
     self.payload = base64.standard_b64decode(self.sbp['payload'])
     self.payload_as_byte_array = list(bytearray(self.payload))
     self.payload_len_for_encoding_buf = len(self.payload) if len(self.payload) > 0 else 1
-    msg_name = msg['name']
+    if msg_name is None:
+        msg_name = msg['name']
     for i in range(0, len(ACRONYMS)):
         msg_name = re.sub(ACRONYMS[i], LOWER_ACRONYMS[i], msg_name)
     self.enum_value = "Sbp" + msg_name
@@ -110,7 +111,7 @@ class TestSpecification(object):
     self.fn_prefix = self.struct_name[:-2]
 
   @classmethod
-  def from_msg(cls, msg_instance, test_msg_data):
+  def from_msg(cls, msg_instance, test_msg_data, name):
     msg = msg_instance
     sbp = {
       "crc": "0x{:X}".format(msg.crc),
@@ -127,6 +128,7 @@ class TestSpecification(object):
       msg,
       sbp,
       test_msg_data=test_msg_data,
+      msg_name=name,
     )
 
   def __repr__(self):

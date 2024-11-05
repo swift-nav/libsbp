@@ -29,19 +29,10 @@
  * ---------
  *
  * First setup a callback for the message you will be receiving. Our callback
- * function must have type #sbp_msg_callback_t or #sbp_frame_callback_t,
- * i.e. it must be of the form:
+ * function must have type #sbp_callback_t i.e. it must be of the form:
  *
  * ~~~
- * void my_callback(u16 sender_id, u8 len, u8 msg[], void *context)
- * {
- *   // Process msg.
- * }
- * ~~~
- * or
- * ~~~
- * void my_frame_callback(u16 sender_id, u16 msg_type, u8 payload_len,
- *                         u8 payload[], u16 frame_len, u8 frame[], void *context)
+ * void my_callback(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg, void *context);
  * {
  *   // Process msg.
  * }
@@ -49,7 +40,7 @@
  *
  * You must also statically allocate a #sbp_msg_callbacks_node_t that will be
  * used to keep track of the callback function. You do not need to initialize
- * it as this will be done by sbp_register_callback().
+ * it as this will be done by sbp_callback_register().
  *
  * ~~~
  * static sbp_msg_callbacks_node_t my_callback_node;
@@ -58,12 +49,7 @@
  * Now register your callback function with the SBP library as follows:
  *
  * ~~~
- * sbp_register_callback(&sbp_state, SBP_MY_MSG_TYPE, &my_callback, &context, &my_callback_node);
- * ~~~
- * or
- * ~~~
- * sbp_register_frame_callback(&sbp_state, SBP_MY_MSG_TYPE, &my_frame_callback,
- *                             &context, &my_callback_node);
+ * sbp_callback_register(&sbp_state, SBP_MY_MSG_TYPE, &my_callback, &context, &my_callback_node);
  * ~~~
  *
  * where `SBP_MY_MSG_TYPE` is the numerical identifier of your message type.
@@ -162,15 +148,13 @@
  *
  * \{ */
 
-/** Register a callback for a particular msg_type, specifying the cb_type.
+/** Register a callback for a particular msg_type
  *
  * \param s        Pointer to sbp_state
  * \param msg_type Message type on which to fire callback.
  *                 SbpMsgAll will fire for every message, but only
  *                 for callbacks of type SBP_FRAME_CALLBACK.
  * \param cb       Pointer to message callback function
- * \param cb_type  sbp_cb_type indicating what kind of cb is in use.
- *                 (e.g SBP_MSG_CALLBACK or SBP_FRAME_CALLBACK)
  * \param context  Pointer to context for callback function
  * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
  * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` on usage errors,

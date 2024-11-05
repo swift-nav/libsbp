@@ -59,6 +59,7 @@ int main(void) {
   srunner_add_suite(sr, auto_check_sbp_flash_MsgStmUniqueIdReq_suite());
   srunner_add_suite(sr, auto_check_sbp_flash_MsgStmUniqueIdResp_suite());
   srunner_add_suite(sr, auto_check_sbp_imu_MsgImuAux_suite());
+  srunner_add_suite(sr, auto_check_sbp_imu_MsgImuComp_suite());
   srunner_add_suite(sr, auto_check_sbp_imu_MsgImuRaw_suite());
   srunner_add_suite(sr, auto_check_sbp_integrity_MsgAcknowledge_suite());
   srunner_add_suite(sr, auto_check_sbp_integrity_MsgSsrFlagHighLevel_suite());

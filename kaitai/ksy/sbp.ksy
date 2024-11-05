@@ -8,7 +8,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 #
-# Kaitai Struct definition file for Swift Binary Protocol 6.1.1-alpha
+# Kaitai Struct definition file for Swift Binary Protocol 6.2.2-alpha
 #
 # Automatically generated with generate.py.  Do not hand edit!
 
@@ -95,6 +95,7 @@ enums:
   
     2304: msg_imu_raw
     2305: msg_imu_aux
+    2309: msg_imu_comp
   
     3001: msg_ssr_flag_high_level
     3005: msg_ssr_flag_satellites
@@ -378,6 +379,7 @@ types:
   
             2304: imu::msg_imu_raw
             2305: imu::msg_imu_aux
+            2309: imu::msg_imu_comp
   
             3001: integrity::msg_ssr_flag_high_level
             3005: integrity::msg_ssr_flag_satellites

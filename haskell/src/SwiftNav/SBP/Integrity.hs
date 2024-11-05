@@ -385,3 +385,4 @@ instance Binary MsgAcknowledge where
 $(makeSBP 'msgAcknowledge ''MsgAcknowledge)
 $(makeJSON "_msgAcknowledge_" ''MsgAcknowledge)
 $(makeLenses ''MsgAcknowledge)
+

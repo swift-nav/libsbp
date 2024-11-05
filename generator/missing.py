@@ -62,7 +62,7 @@ def write_test(msg, test_set_name="swiftnav"):
     )
     filename = os.path.join(*path_parts)
     test_msg_data = msg_reducer(msg)
-    test_data = TestSpecification.from_msg(msg, test_msg_data)
+    test_data = TestSpecification.from_msg(msg, test_msg_data, test_msg_data['name'])
     now_str = datetime.datetime.now().isoformat(" ")
     test_package = PackageTestSpecification(
         package=module,

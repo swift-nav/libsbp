@@ -1,5 +1,32 @@
 # Changelog
 
+## [v6.2.1](https://github.com/swift-nav/libsbp/tree/v6.2.1)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.2.0...v6.2.1)
+
+**Merged pull requests:**
+
+- put the cargo dep in the right place [\#1456](https://github.com/swift-nav/libsbp/pull/1456) ([pcrumley](https://github.com/pcrumley))
+- Upgrade Haskel version [\#1454](https://github.com/swift-nav/libsbp/pull/1454) ([RReichert](https://github.com/RReichert))
+- cover CI hole which appears to be hiding a proc\_macro bindgen bug [\#1452](https://github.com/swift-nav/libsbp/pull/1452) ([pcrumley](https://github.com/pcrumley))
+- bumping to latest version of libswiftnav [\#1451](https://github.com/swift-nav/libsbp/pull/1451) ([pcrumley](https://github.com/pcrumley))
+
+
+## [v6.2.0](https://github.com/swift-nav/libsbp/tree/v6.2.0)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.1.0...v6.2.0)
+
+**Merged pull requests:**
+
+- Add inertially to the spelling wordlist [\#1450](https://github.com/swift-nav/libsbp/pull/1450) ([Madhunika-atmakuri](https://github.com/Madhunika-atmakuri))
+- Add support for 99.73 confidence interval [\#1449](https://github.com/swift-nav/libsbp/pull/1449) ([ismolyakov](https://github.com/ismolyakov))
+- get the automated generation of test cases working again (https://github.com/swift-nav/libsbp/pull/1448) ([pcrumley](https://github.com/pcrumley))
+- Add compensated IMU message [\#1446](https://github.com/swift-nav/libsbp/pull/1446) ([ismolyakov](https://github.com/ismolyakov))
+- Documentation fixes after the removal of the legacy C API [\#1439](https://github.com/swift-nav/libsbp/pull/1439) ([dgburr](https://github.com/dgburr))
+- Pcrumley/update actions [\#1435](https://github.com/swift-nav/libsbp/pull/1435) ([pcrumley](https://github.com/pcrumley))
+- Pcrumley/update actions [\#1428](https://github.com/swift-nav/libsbp/pull/1428) ([pcrumley](https://github.com/pcrumley))
+- Auto submodule update: cmake - Update compiler options to support IAR \(\#175\) [\#1418](https://github.com/swift-nav/libsbp/pull/1418) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+
 ## [v6.1.0](https://github.com/swift-nav/libsbp/tree/v6.1.0)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.0.1...v6.1.0)

@@ -156,6 +156,7 @@ data SBPMsg =
    | SBPMsgHeartbeat MsgHeartbeat Msg
    | SBPMsgIarState MsgIarState Msg
    | SBPMsgImuAux MsgImuAux Msg
+   | SBPMsgImuComp MsgImuComp Msg
    | SBPMsgImuRaw MsgImuRaw Msg
    | SBPMsgInitBaseDep MsgInitBaseDep Msg
    | SBPMsgInsStatus MsgInsStatus Msg
@@ -407,6 +408,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgImuAux = SBPMsgImuAux (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgImuComp = SBPMsgImuComp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgImuRaw = SBPMsgImuRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgInitBaseDep = SBPMsgInitBaseDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgInsStatus = SBPMsgInsStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -650,6 +652,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgHeartbeat _ m) = put m
       encoder (SBPMsgIarState _ m) = put m
       encoder (SBPMsgImuAux _ m) = put m
+      encoder (SBPMsgImuComp _ m) = put m
       encoder (SBPMsgImuRaw _ m) = put m
       encoder (SBPMsgInitBaseDep _ m) = put m
       encoder (SBPMsgInsStatus _ m) = put m
@@ -897,6 +900,7 @@ instance FromJSON SBPMsg where
         | msgType == msgHeartbeat = SBPMsgHeartbeat <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgIarState = SBPMsgIarState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgImuAux = SBPMsgImuAux <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgImuComp = SBPMsgImuComp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgImuRaw = SBPMsgImuRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgInitBaseDep = SBPMsgInitBaseDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgInsStatus = SBPMsgInsStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1145,6 +1149,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgHeartbeat n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgIarState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgImuAux n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgImuComp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgImuRaw n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgInitBaseDep _ m) = toJSON m
   toJSON (SBPMsgInsStatus n m) = toJSON n <<>> toJSON m
@@ -1387,6 +1392,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgHeartbeat n m) = SBPMsgHeartbeat n <$> f m
   msg f (SBPMsgIarState n m) = SBPMsgIarState n <$> f m
   msg f (SBPMsgImuAux n m) = SBPMsgImuAux n <$> f m
+  msg f (SBPMsgImuComp n m) = SBPMsgImuComp n <$> f m
   msg f (SBPMsgImuRaw n m) = SBPMsgImuRaw n <$> f m
   msg f (SBPMsgInitBaseDep n m) = SBPMsgInitBaseDep n <$> f m
   msg f (SBPMsgInsStatus n m) = SBPMsgInsStatus n <$> f m

@@ -22,6 +22,7 @@ else
 fi
 
 cargo build --no-default-features -p sbp
+cargo build --no-default-features -p sbp --features swiftnav
 cargo build --no-default-features -p sbp --features serde
 cargo build --no-default-features -p sbp --features json
 cargo build --no-default-features -p sbp --features async

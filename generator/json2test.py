@@ -1,4 +1,4 @@
-# Copyright (C) 2022 Swift Navigation Inc.
+# Copyright (C) 2024 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -7,6 +7,17 @@
 # THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "jinja2 ~= 3.1",
+#     "pytest ~= 8.3",
+#     "pyyaml ~= 6.0",
+#     "sbp @ file:///${PROJECT_ROOT}/../python",
+# ]
+# ///
+
 """
 Generate test case from json input
 """
@@ -42,7 +53,7 @@ def write_test(msg, output, test_set_name="swiftnav"):
     module = msg.__class__.__module__
     name = msg.__class__.__name__
     test_msg_data = msg_reducer(msg)
-    test_data = TestSpecification.from_msg(msg, test_msg_data)
+    test_data = TestSpecification.from_msg(msg, test_msg_data, test_msg_data['name'])
     now_str = datetime.datetime.now().isoformat(" ")
     test_package = PackageTestSpecification(
         package=module,

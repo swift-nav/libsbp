@@ -216,3 +216,4 @@ instance Binary CarrierPhase where
 
 $(makeJSON "_carrierPhase_" ''CarrierPhase)
 $(makeLenses ''CarrierPhase)
+

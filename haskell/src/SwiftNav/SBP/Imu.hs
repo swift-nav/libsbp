@@ -127,3 +127,59 @@ instance Binary MsgImuAux where
 $(makeSBP 'msgImuAux ''MsgImuAux)
 $(makeJSON "_msgImuAux_" ''MsgImuAux)
 $(makeLenses ''MsgImuAux)
+
+msgImuComp :: Word16
+msgImuComp = 0x0905
+
+-- | SBP class for message MSG_IMU_COMP (0x0905).
+--
+-- Data from the Inertial Measurement Unit, containing accelerometer and
+-- gyroscope readings compensated for estimated errors and constant  physical
+-- effects. The output is valid for inertially referenced center  of
+-- navigation (IMU body frame) represented in vehicle body frame.
+data MsgImuComp = MsgImuComp
+  { _msgImuComp_time     :: !Word64
+    -- ^ Microseconds since reference epoch
+  , _msgImuComp_flags    :: !Word16
+    -- ^ Contains the applied compensation parameters and time synchronization
+    -- mode
+  , _msgImuComp_acc_comp_x :: !Int32
+    -- ^ Compensated acceleration X axis
+  , _msgImuComp_acc_comp_y :: !Int32
+    -- ^ Compensated acceleration Y axis
+  , _msgImuComp_acc_comp_z :: !Int32
+    -- ^ Compensated acceleration Z axis
+  , _msgImuComp_gyr_comp_x :: !Int32
+    -- ^ Compensated angular rate X axis
+  , _msgImuComp_gyr_comp_y :: !Int32
+    -- ^ Compensated angular rate Y axis
+  , _msgImuComp_gyr_comp_z :: !Int32
+    -- ^ Compensated angular rate Z axis
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgImuComp where
+  get = do
+    _msgImuComp_time <- getWord64le
+    _msgImuComp_flags <- getWord16le
+    _msgImuComp_acc_comp_x <- (fromIntegral <$> getWord32le)
+    _msgImuComp_acc_comp_y <- (fromIntegral <$> getWord32le)
+    _msgImuComp_acc_comp_z <- (fromIntegral <$> getWord32le)
+    _msgImuComp_gyr_comp_x <- (fromIntegral <$> getWord32le)
+    _msgImuComp_gyr_comp_y <- (fromIntegral <$> getWord32le)
+    _msgImuComp_gyr_comp_z <- (fromIntegral <$> getWord32le)
+    pure MsgImuComp {..}
+
+  put MsgImuComp {..} = do
+    putWord64le _msgImuComp_time
+    putWord16le _msgImuComp_flags
+    (putWord32le . fromIntegral) _msgImuComp_acc_comp_x
+    (putWord32le . fromIntegral) _msgImuComp_acc_comp_y
+    (putWord32le . fromIntegral) _msgImuComp_acc_comp_z
+    (putWord32le . fromIntegral) _msgImuComp_gyr_comp_x
+    (putWord32le . fromIntegral) _msgImuComp_gyr_comp_y
+    (putWord32le . fromIntegral) _msgImuComp_gyr_comp_z
+
+$(makeSBP 'msgImuComp ''MsgImuComp)
+$(makeJSON "_msgImuComp_" ''MsgImuComp)
+$(makeLenses ''MsgImuComp)
+

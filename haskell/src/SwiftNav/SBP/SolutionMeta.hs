@@ -250,3 +250,4 @@ instance Binary OdoInputType where
 
 $(makeJSON "_odoInputType_" ''OdoInputType)
 $(makeLenses ''OdoInputType)
+
