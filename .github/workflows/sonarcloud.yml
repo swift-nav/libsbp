@@ -38,7 +38,7 @@ jobs:
           submodules: recursive
           fetch-depth: 0
       - name: Install sonar-scanner and build-wrapper
-        uses: SonarSource/sonarcloud-github-c-cpp@v2
+        uses: SonarSource/sonarcloud-github-c-cpp@v3
       - name: Setup
         run: |
           sudo apt-get install llvm -y
