@@ -113,7 +113,7 @@ jobs:
         run: echo "VERSION=${GITHUB_REF##refs/tags/}" >> $GITHUB_ENV
 
       - name: Hook into package registry
-        uses: swift-nav/swift-cli-publisher@v2
+        uses: swift-nav/swift-cli-publisher@v3
         env:
           DL_LINUX: "sbp_tools-${{ env.VERSION }}-x86_64-unknown-linux-musl.zip"
           DL_MAC: "sbp_tools-${{ env.VERSION }}-x86_64-apple-darwin.zip"
