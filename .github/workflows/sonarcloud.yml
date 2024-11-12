@@ -9,7 +9,6 @@ name: SonarCloud
 jobs:
   sonarcloud:
     runs-on: ubuntu-latest
-    if: github.actor != 'dependabot[bot]' # Dependabot can't read the Sonarcloud secret
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,7 +30,6 @@ jobs:
   C:
     name: C Code Coverage
     runs-on: ubuntu-22.04
-    if: github.actor != 'dependabot[bot]' # Dependabot can't read the Sonarcloud secret
     steps:
       - uses: actions/checkout@v4
         with:
