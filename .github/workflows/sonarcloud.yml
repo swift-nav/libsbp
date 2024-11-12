@@ -9,6 +9,7 @@ name: SonarCloud
 jobs:
   sonarcloud:
     runs-on: ubuntu-latest
+    if: github.actor != 'dependabot' # Dependabot can't read the Sonarcloud secret
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,6 +31,7 @@ jobs:
   C:
     name: C Code Coverage
     runs-on: ubuntu-22.04
+    if: github.actor != 'dependabot' # Dependabot can't read the Sonarcloud secret
     steps:
       - uses: actions/checkout@v4
         with:
@@ -52,14 +54,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_C }}
         run: sonar-scanner
-            -X
-            -Dsonar.organization=swift-nav
-            -Dsonar.projectName=libsbp-c
-            -Dsonar.projectKey=swift-nav_libsbp_c
-            -Dsonar.verbose=true
-            -Dsonar.login=${{ secrets.SONAR_TOKEN_C }}
-            -Dsonar.cfamily.threads=4
-            -Dsonar.cfamily.llvm-cov.reportPath=./build/ccov/coverage.txt
-            -Dsonar.sources=c/src/,c/include/
-            -Dsonar.tests=c/test/
-            -Dsonar.cfamily.build-wrapper-output=./bw-output 
+          -X
+          -Dsonar.organization=swift-nav
+          -Dsonar.projectName=libsbp-c
+          -Dsonar.projectKey=swift-nav_libsbp_c
+          -Dsonar.verbose=true
+          -Dsonar.login=${{ secrets.SONAR_TOKEN_C }}
+          -Dsonar.cfamily.threads=4
+          -Dsonar.cfamily.llvm-cov.reportPath=./build/ccov/coverage.txt
+          -Dsonar.sources=c/src/,c/include/
+          -Dsonar.tests=c/test/
+          -Dsonar.cfamily.build-wrapper-output=./bw-output
