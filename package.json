@@ -24,7 +24,7 @@
     "mocha": "^10.1.0",
     "request": "^2.88.0",
     "serialport": "^9.0.7",
-    "webpack": "^4.26.1",
-    "webpack-cli": "^3.3.12"
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
   }
 }
