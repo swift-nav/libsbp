@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.formatOnType": true,
+		"editor.formatOnSave": true,
+		"editor.formatOnPaste": true,
+		"C_Cpp.clang_format_style": "file",
+		"C_Cpp.formatting": "clangFormat",
+		"C_Cpp.codeAnalysis.clangTidy.enabled": true,
+		"C_Cpp.codeAnalysis.runAutomatically": true,
+		"C_Cpp.default.compileCommands": "compile_commands.json",
+		"C_Cpp.clang_format_path": "~/.local/bin/clang-format",
+	}
+}
