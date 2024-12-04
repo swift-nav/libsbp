@@ -69,7 +69,7 @@ jobs:
       matrix:
         os:
           - ubuntu-20.04
-          - macos-12
+          - macos-13
           - windows-2022
     runs-on: ${{ matrix.os }}
     steps:
