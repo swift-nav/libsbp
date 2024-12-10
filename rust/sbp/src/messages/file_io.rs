@@ -124,7 +124,6 @@ pub mod msg_fileio_config_resp {
     use crate::messages::lib::*;
 
     /// Response with advice on the optimal configuration for FileIO.
-
     ///
     /// The advice on the optimal configuration for a FileIO transfer.  Newer
     /// version of FileIO can support greater throughput by supporting a large

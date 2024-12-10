@@ -119,8 +119,8 @@ pub mod imu_input_type {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution
-
+    /// Provides detail about the IMU sensor, its timestamping mode, and its
+    /// quality for input to the fuzed solution
     ///
     /// Metadata around the IMU sensors involved in the fuzed solution. Accessible
     /// through sol_in\[N\].flags in a MSG_SOLN_META.
@@ -755,8 +755,8 @@ pub mod odo_input_type {
     use super::*;
     use crate::messages::lib::*;
 
-    /// Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution
-
+    /// Provides detail about the Odometry sensor, its timestamping mode, and its
+    /// quality for input to the fuzed solution
     ///
     /// Metadata around the Odometry sensors involved in the fuzed solution.
     /// Accessible through sol_in\[N\].flags in a MSG_SOLN_META.
