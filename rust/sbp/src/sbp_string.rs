@@ -165,7 +165,7 @@ impl<'de, E> serde::Deserialize<'de> for SbpString<Vec<u8>, E> {
     {
         struct SbpStringVisitor<E>(PhantomData<SbpString<Vec<u8>, E>>);
 
-        impl<'de, E> Visitor<'de> for SbpStringVisitor<E> {
+        impl<E> Visitor<'_> for SbpStringVisitor<E> {
             type Value = SbpString<Vec<u8>, E>;
 
             fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
@@ -214,7 +214,7 @@ impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], 
 
         struct SbpStringVisitor<E, const LEN: usize>(PhantomData<SbpString<[u8; LEN], E>>);
 
-        impl<'de, E, const LEN: usize> Visitor<'de> for SbpStringVisitor<E, LEN> {
+        impl<E, const LEN: usize> Visitor<'_> for SbpStringVisitor<E, LEN> {
             type Value = SbpString<[u8; LEN], E>;
 
             fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {

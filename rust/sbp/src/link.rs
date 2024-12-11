@@ -68,7 +68,7 @@ where
     }
 }
 
-impl<'link> LinkSource<'link, ()> {
+impl LinkSource<'_, ()> {
     /// Send a message to all the links associated with this source.
     pub fn send<M>(&self, msg: M) -> bool
     where
@@ -129,7 +129,7 @@ impl<'link, S> Link<'link, S> {
     }
 }
 
-impl<'link, S> Clone for Link<'link, S> {
+impl<S> Clone for Link<'_, S> {
     fn clone(&self) -> Self {
         Self {
             inner: Arc::clone(&self.inner),
@@ -148,7 +148,7 @@ pub struct Handler<'link, S> {
     msg_types: Cow<'static, [u16]>,
 }
 
-impl<'link, S> Handler<'link, S> {
+impl<S> Handler<'_, S> {
     fn run(&mut self, state: &S, msg: Sbp) {
         (self.func)(state, msg);
     }

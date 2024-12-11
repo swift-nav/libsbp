@@ -6984,7 +6984,6 @@ pub mod msg_utc_leap_second {
     use crate::messages::lib::*;
 
     /// Leap second SBP message.
-
     ///
     /// UTC-GPST leap seconds before and after the most recent (past, or future,
     /// for announced insertions) UTC leap second insertion.

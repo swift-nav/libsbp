@@ -2671,7 +2671,6 @@ pub mod msg_ssr_tile_definition {
     use crate::messages::lib::*;
 
     /// Definition of a SSR atmospheric correction tile.
-
     ///
     /// Provides the correction point coordinates for the atmospheric correction
     /// values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
@@ -3242,7 +3241,6 @@ pub mod orbit_clock_bound {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// None
     ///
     /// Orbit and clock bound.
     ///
@@ -3335,7 +3333,6 @@ pub mod orbit_clock_bound_degradation {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// None
     ///
     /// Orbit and clock bound degradation.
     ///
@@ -3637,7 +3634,6 @@ pub mod stec_residual {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// None
     ///
     /// STEC residual (mean and standard deviation) for the given satellite at the
     /// grid point.
@@ -3689,7 +3685,6 @@ pub mod stec_residual_no_std {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// None
     ///
     /// STEC residual for the given satellite at the grid point.
     ///
@@ -3730,7 +3725,6 @@ pub mod stec_sat_element {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// None
     ///
     /// STEC polynomial for the given satellite.
     ///
@@ -3782,7 +3776,6 @@ pub mod stec_sat_element_integrity {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// None
     ///
     /// STEC polynomial and bounds for the given satellite.
     ///
@@ -4075,7 +4068,6 @@ pub mod tropospheric_delay_correction {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// None
     ///
     /// Troposphere vertical delays (mean and standard deviation) at the grid
     /// point.
@@ -4127,7 +4119,6 @@ pub mod tropospheric_delay_correction_no_std {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// None
     ///
     /// Troposphere vertical delays at the grid point.
     ///
