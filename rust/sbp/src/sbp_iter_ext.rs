@@ -94,7 +94,7 @@ where
     }
 }
 
-impl<'a, I, E> Iterator for HandleErrorsIter<'a, I, E>
+impl<I, E> Iterator for HandleErrorsIter<'_, I, E>
 where
     I: Iterator<Item = Result<Sbp, E>>,
 {

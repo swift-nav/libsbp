@@ -33,8 +33,9 @@ use crate::messages::(((i)))::*;
 ((*- endfor *))
 
 ((*- if m.desc *))
-
-/// (((m.short_desc)))
+((* if m.short_desc *))
+/// (((m.short_desc | commentify)))
+((*- endif *))
 ///
 /// (((m.desc | commentify)))
 ///
