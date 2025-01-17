@@ -13,16 +13,18 @@ SBP_HEADER_LEN = 6
 
 # wrapper object which allows KaitaiStream to be used with a simple byte array
 class BufferKaitaiStream(KaitaiStream):
-    class IOBytes:
+    class IOBytes: # "inspired by" BytesIO
         def __init__(self, buf):
             self.buf = buf
             self.pos = 0
 
-        def read(self, num):
-            if self.pos + num > len(self.buf):
+        def read(self, size=-1):
+            if size < 0:
+                size = len(self.buf) - self.pos
+            if self.pos + size > len(self.buf):
                 raise EOFError
-            buf = self.buf[self.pos:self.pos + num]
-            self.pos += num
+            buf = self.buf[self.pos:self.pos + size]
+            self.pos += size
             return buf
 
         def seek(self, pos):
