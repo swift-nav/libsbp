@@ -13,7 +13,8 @@ SBP_HEADER_LEN = 6
 
 # wrapper object which allows KaitaiStream to be used with a simple byte array
 class BufferKaitaiStream(KaitaiStream):
-    class IOBytes: # "inspired by" BytesIO
+    # simple emulation of io.BytesIO interface expected by KaitaiStream
+    class IOBytes:
         def __init__(self, buf):
             self.buf = buf
             self.pos = 0
