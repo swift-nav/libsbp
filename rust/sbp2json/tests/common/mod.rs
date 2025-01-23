@@ -76,8 +76,7 @@ pub struct DeleteTestOutput {
 
 impl Drop for DeleteTestOutput {
     fn drop(&mut self) {
-        let skip_delete =
-            env::var("RUST_SKIP_DELETE_TEST_DATA").map_or(false, |var| !var.is_empty());
+        let skip_delete = env::var("RUST_SKIP_DELETE_TEST_DATA").is_ok_and(|var| !var.is_empty());
         if skip_delete {
             return;
         }
