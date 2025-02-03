@@ -8,9 +8,6 @@ on:
     tags:
       - "*"
   pull_request:
-    paths:
-      - "haskell/**"
-      - .github/workflows/haskell.yaml
 jobs:
   build:
     name: Build

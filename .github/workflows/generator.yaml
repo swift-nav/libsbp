@@ -8,19 +8,12 @@ on:
     tags:
       - "*"
   pull_request:
-    paths:
-      - "generator/**"
-      - "spec/**"
-      - "c/test/**"
-      - "java/build.gradle"
-      - "java/test/**"
-      - "rust/sbp/tests/**"
 jobs:
   generation:
     name: Generated artifacts
     runs-on: ubuntu-20.04
     container: 
-      image: swiftnav/libsbp-build:2023-12-18
+      image: swiftnav/libsbp-build:test
       options: --user root
       volumes:
         - ${{ github.workspace }}:/mnt/workspace

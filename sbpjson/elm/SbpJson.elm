@@ -944,6 +944,7 @@ type alias GridElement =
     }
 
 {-| STEC residual (mean and standard deviation) for the given satellite at the grid point. -}
+
 type alias STECResidual =
     { residual : Int
     , stddev : Int
@@ -951,12 +952,14 @@ type alias STECResidual =
     }
 
 {-| A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle. -}
+
 type alias SvID =
     { constellation : Int
     , satID : Int
     }
 
 {-| Troposphere vertical delays (mean and standard deviation) at the grid point. -}
+
 type alias TroposphericDelayCorrection =
     { hydro : Int
     , stddev : Int
@@ -964,6 +967,7 @@ type alias TroposphericDelayCorrection =
     }
 
 {-| Contains one tropo delay, plus STEC residuals for each satellite at the grid point. -}
+
 type alias GridElementNoStd =
     { index : Int
     , stecResiduals : Array STECResidualNoStd
@@ -971,12 +975,14 @@ type alias GridElementNoStd =
     }
 
 {-| STEC residual for the given satellite at the grid point. -}
+
 type alias STECResidualNoStd =
     { residual : Int
     , svID : SvID
     }
 
 {-| Troposphere vertical delays at the grid point. -}
+
 type alias TroposphericDelayCorrectionNoStd =
     { hydro : Int
     , wet : Int
@@ -1010,6 +1016,7 @@ type alias MsgAcqResult =
     }
 
 {-| Signal identifier containing constellation, band, and satellite identifier. -}
+
 type alias GnssSignal =
     { code : Int
     , sat : Int
@@ -1041,6 +1048,7 @@ type alias AcqSvProfile =
     }
 
 {-| Digital signature using AES-CMAC 128 algorithm used for data integrity. -}
+
 type alias MsgAESCmacSignature =
     { certificateID : Array Int
     , flags : Int
@@ -1205,6 +1213,7 @@ type alias MsgBootloaderHandshakeResp =
     }
 
 {-| The host initiates the bootloader to jump to the application. -}
+
 type alias MsgBootloaderJumpToApp =
     { jump : Int
     }
@@ -1321,6 +1330,7 @@ type alias MsgDops =
     }
 
 {-| A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1). -}
+
 type alias MsgEcdsaCertificate =
     { certificateBytes : Array Int
     , certificateID : Array Int
@@ -1329,6 +1339,7 @@ type alias MsgEcdsaCertificate =
     }
 
 {-| An ECDSA-256 signature using SHA-256 as the message digest algorithm. -}
+
 type alias MsgEcdsaSignature =
     { certificateID : Array Int
     , flags : Int
@@ -1775,6 +1786,7 @@ type alias MsgGnssTimeOffset =
     }
 
 {-| Please see ICD-GPS-200 (30.3.3.3.1.1) for more details. -}
+
 type alias MsgGroupDelay =
     { iscL1CA : Int
     , iscL2C : Int
@@ -1925,6 +1937,7 @@ type alias MsgLinuxMemState =
     }
 
 {-| Top 10 list of processes with a large number of open file descriptors. -}
+
 type alias MsgLinuxProcessFdCount =
     { cmdline : String
     , fdCount : Int
@@ -1933,12 +1946,14 @@ type alias MsgLinuxProcessFdCount =
     }
 
 {-| Summary of open file descriptors on the system. -}
+
 type alias MsgLinuxProcessFdSummary =
     { mostOpened : String
     , sysFdCount : Int
     }
 
 {-| Top 10 list of processes with high socket counts. -}
+
 type alias MsgLinuxProcessSocketCounts =
     { cmdline : String
     , index : Int
@@ -1949,6 +1964,7 @@ type alias MsgLinuxProcessSocketCounts =
     }
 
 {-| Top 10 list of sockets with deep queues. -}
+
 type alias MsgLinuxProcessSocketQueues =
     { addressOfLargest : String
     , cmdline : String
@@ -1961,6 +1977,7 @@ type alias MsgLinuxProcessSocketQueues =
     }
 
 {-| Summaries the socket usage across the system. -}
+
 type alias MsgLinuxSocketUsage =
     { avgQueueDepth : Int
     , maxQueueDepth : Int
@@ -1969,6 +1986,7 @@ type alias MsgLinuxSocketUsage =
     }
 
 {-| This presents a summary of CPU and memory utilization, including a timestamp. -}
+
 type alias MsgLinuxSysState =
     { flags : Int
     , memTotal : Int
@@ -1996,6 +2014,7 @@ type alias MsgM25FlashWriteStatus =
     }
 
 {-| Raw data from the magnetometer. -}
+
 type alias MsgMagRaw =
     { magX : Int
     , magY : Int
@@ -2067,6 +2086,7 @@ type alias MsgNdbEvent =
     }
 
 {-| The bandwidth usage, a list of usage by interface. -}
+
 type alias MsgNetworkBandwidthUsage =
     { interfaces : Array NetworkUsage
     }
@@ -2110,6 +2130,7 @@ type alias MsgObs =
     }
 
 {-| Header of a GNSS observation message. -}
+
 type alias ObservationHeader =
     { nObs : Int
     , t : GpsTime
@@ -2212,12 +2233,14 @@ type alias MsgOrientQuat =
     }
 
 {-| The OSR message contains network corrections in an observation-like format. -}
+
 type alias MsgOsr =
     { header : ObservationHeader
     , obs : Array PackedOsrContent
     }
 
 {-| Pseudorange and carrier phase network corrections for a satellite signal. -}
+
 type alias PackedOsrContent =
     { flags : Int
     , ionoStd : Int
@@ -2597,6 +2620,7 @@ type alias MsgReferenceFrameParam =
     }
 
 {-| This message from the host resets the Piksi back into the bootloader. -}
+
 type alias MsgReset =
     { flags : Int
     }
@@ -2747,6 +2771,7 @@ type alias SolutionInputType =
     }
 
 {-| Spectrum analyzer packet. -}
+
 type alias MsgSpecan =
     { amplitudeRef : Float
     , amplitudeUnit : Float
@@ -2936,6 +2961,7 @@ type alias MsgSsrGriddedCorrectionBounds =
     }
 
 {-| STEC polynomial and bounds for the given satellite. -}
+
 type alias STECSatElementIntegrity =
     { stecBoundMu : Int
     , stecBoundMuDot : Int
@@ -2979,6 +3005,7 @@ type alias MsgSsrOrbitClockBounds =
     }
 
 {-| Orbit and clock bound. -}
+
 type alias OrbitClockBound =
     { clockBoundMu : Int
     , clockBoundSig : Int
@@ -3000,6 +3027,7 @@ type alias MsgSsrOrbitClockBoundsDegradation =
     }
 
 {-| Orbit and clock bound degradation. -}
+
 type alias OrbitClockBoundDegradation =
     { clockBoundMuDot : Int
     , clockBoundSigDot : Int
@@ -3029,6 +3057,7 @@ type alias MsgSsrPhaseBiases =
     }
 
 {-| Phase biases are to be added to carrier phase measurements. -}
+
 type alias PhaseBiasesContent =
     { bias : Int
     , code : Int
@@ -3066,6 +3095,7 @@ type alias MsgSsrStecCorrection =
     }
 
 {-| STEC polynomial for the given satellite. -}
+
 type alias STECSatElement =
     { stecCoeff : Array Int
     , stecQualityIndicator : Int
@@ -3179,6 +3209,7 @@ type alias MsgSvAzEl =
     }
 
 {-| Satellite azimuth and elevation. -}
+
 type alias SvAzEl =
     { az : Int
     , el : Int
@@ -3186,6 +3217,7 @@ type alias SvAzEl =
     }
 
 {-| This message includes telemetry pertinent to satellite signals available to Starling. -}
+
 type alias MsgTelSv =
     { nObs : Int
     , originFlags : Int
@@ -3216,6 +3248,7 @@ type alias MsgThreadState =
     }
 
 {-| When enabled, a tracking channel can output the correlations at each update interval. -}
+
 type alias MsgTrackingIq =
     { channel : Int
     , corrs : Array TrackingChannelCorrelation
@@ -3223,6 +3256,7 @@ type alias MsgTrackingIq =
     }
 
 {-| Structure containing in-phase and quadrature correlation components. -}
+
 type alias TrackingChannelCorrelation =
     { i : Int
     , q : Int
@@ -3236,6 +3270,7 @@ type alias MsgTrackingState =
     }
 
 {-| Tracking channel state for a specific satellite signal and measured signal power. -}
+
 type alias TrackingChannelState =
     { cn0 : Int
     , fcn : Int
