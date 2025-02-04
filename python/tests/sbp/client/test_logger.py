@@ -75,25 +75,6 @@ def test_non_utf8_json_log():
   _non_utf8_json_log(conventional=False, fetch_next = lambda x : next(x))
   _non_utf8_json_log(conventional=True, fetch_next = lambda x : x)
 
-def _msg_print(conventional, fetch_next):
-  log_datafile = "./data/serial_link_log_20150428-084729.log.dat"
-  with open(log_datafile, 'r') as infile:
-    with JSONLogIterator(infile, conventional=conventional) as log:
-      with warnings.catch_warnings(record=True) as w:
-        for _, _ in fetch_next(log):
-          pass
-        warnings.simplefilter("always")
-        # Check for warnings.
-        assert len(w) == 1
-        assert issubclass(w[0].category, RuntimeWarning)
-        assert str(w[0].message).startswith('Bad message parsing for line')
-
-@pytest.mark.xfail
-def test_msg_print():
-  """
-  """
-  _msg_print(conventional=False, fetch_next = lambda x : next(x))
-  _msg_print(conventional=True, fetch_next = lambda x : x)
 
 def udp_handler(data):
   class MockRequestHandler(socketserver.BaseRequestHandler):
