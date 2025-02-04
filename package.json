@@ -14,10 +14,13 @@
   "author": "dev@swift-nav.com",
   "license": "MIT",
   "dependencies": {
+    "assert": "^2.1.0",
     "binary-parser": "^1.7.0",
     "cuint": "^0.2.2",
     "js-yaml": "^3.13.1",
-    "node-int64": "^0.4.0"
+    "node-int64": "^0.4.0",
+    "path": "^0.12.7",
+    "stream": "^0.0.3"
   },
   "devDependencies": {
     "benchmark": "^2.1.4",
