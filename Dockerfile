@@ -79,10 +79,10 @@ RUN \
       imagemagick \
       enchant \
       clang-format-6.0 \
-      python3.7 python3.7-dev python3.7-distutils \
       python3 python3-dev python3-distutils \
       python3.9 python3.9-dev python3.9-distutils \
       python3.10 python3.10-dev python3.10-distutils \
+      python3.11 python3.11-dev python3.11-distutils \
       dpkg-dev \
       cmake \
       libjson-perl \
