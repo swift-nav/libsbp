@@ -154,7 +154,7 @@ USER dockerdev
 
 RUN \
   if [ "$(ls /tmp)" ]; then ls /tmp; false; fi \
-  && stack install --resolver lts-23.7 sbp \
+  && stack install --resolver lts-14.9 sbp \
   && rm -rf /tmp/*
 
 CMD ["make", "all"]
