@@ -53,7 +53,7 @@ jobs:
           git config --global --add safe.directory "${PWD}"
           git init
           git remote add origin "https://github.com/${{ github.repository }}"
-          git fetch --no-tags --depth=1 origin "${{ github.ssh }}"
+          git fetch --no-tags --depth=1 origin "${{ github.sha }}"
           git checkout "${{ github.sha }}"
           git submodule update --recursive --init --depth=1
 
