@@ -49,8 +49,8 @@ jobs:
 
       - name: Checkout
         run: |
+          git config --global --add safe.directory "${PWD}"
           git init
-          git config --add safe.directory "${PWD}"
           git remote add origin "https://github.com/${{ github.repository }}"
           git fetch --no-tags --depth=1 origin "${{ github.ssh }}"
           git checkout "${{ github.sha }}""
