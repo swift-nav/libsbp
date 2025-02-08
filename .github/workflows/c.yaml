@@ -49,10 +49,12 @@ jobs:
 
       - name: Checkout
         run: |
-          git clone --depth 1 --filter=blob:none --no-checkout https://github.com/swift-nav/libsbp .
-          git fetch --depth 1 origin ${{ github.sha }}
-          git checkout ${{ github.sha }}
-          git submodule update --depth=1 --recursive --init
+          git config --add safe.directory "${PWD}"
+          git init
+          git remote add origin "https://github.com/${{ github.repository }}"
+          git fetch --no-tags --depth=1 origin "${{ github.ssh }}"
+          git checkout "${{ github.sha }}""
+          git submodule update --recursive --init --depth=1
 
       - name: Configure
         run: |
