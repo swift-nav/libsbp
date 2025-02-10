@@ -31,8 +31,6 @@ jobs:
 
     runs-on: ubuntu-latest
     container: ubuntu:18.04
-    env:
-      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
     steps:
 
@@ -47,10 +45,14 @@ jobs:
           apt-get -qq update
           apt-get -qq install libeigen3-dev libserialport-dev git cmake build-essential ${{ matrix.compiler.package }}
 
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
+      - name: Checkout
+        run: |
+          git config --global --add safe.directory "${PWD}"
+          git init
+          git remote add origin "https://github.com/${{ github.repository }}"
+          git fetch --no-tags --depth=1 origin "${{ github.sha }}"
+          git checkout "${{ github.sha }}"
+          git submodule update --recursive --init --depth=1
 
       - name: Configure
         run: |
