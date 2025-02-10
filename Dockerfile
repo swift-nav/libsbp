@@ -20,7 +20,7 @@ ARG UBUNTU_RELEASE
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV NODE_VERSION=v18.17.0
+ENV NODE_VERSION=v22.13.1
 ENV JAVA_VERSION=11.0.11.hs-adpt
 ENV GRADLE_VERSION=7.1.1
 ENV CC=gcc-7
@@ -79,10 +79,10 @@ RUN \
       imagemagick \
       enchant \
       clang-format-6.0 \
-      python3.7 python3.7-dev python3.7-distutils \
       python3 python3-dev python3-distutils \
       python3.9 python3.9-dev python3.9-distutils \
       python3.10 python3.10-dev python3.10-distutils \
+      python3.11 python3.11-dev python3.11-distutils \
       dpkg-dev \
       cmake \
       libjson-perl \
@@ -108,7 +108,7 @@ ENV NVM_DIR=/opt/nvm
 
 RUN \
      mkdir -p $NVM_DIR \
-  && curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.38.0/install.sh | bash \
+  && curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.40.1/install.sh | bash \
   && . $NVM_DIR/nvm.sh \
   && nvm install $NODE_VERSION
 
@@ -154,7 +154,7 @@ USER dockerdev
 
 RUN \
   if [ "$(ls /tmp)" ]; then ls /tmp; false; fi \
-  && stack install --resolver lts-10.10 sbp \
+  && stack install --resolver lts-14.9 sbp \
   && rm -rf /tmp/*
 
 CMD ["make", "all"]
