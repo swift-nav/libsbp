@@ -22,14 +22,6 @@ jobs:
             { c: "clang-18", cxx: "clang++-18", package: "clang-18" },
           ]
         build_shared_libraries: [true, false]
-        exclude:
-          [
-            {
-              build_type: "Debug",
-              compiler: { c: "gcc-14", cxx: "g++-14" },
-              build_shared_libraries: false,
-            },
-          ]
 
     name: "Ubuntu 24.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
 
