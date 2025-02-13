@@ -18,28 +18,29 @@ jobs:
         build_type: ["Debug", "Release"]
         compiler:
           [
-            { c: "gcc-14", cxx: "g++-14", package: "gcc-14 g++-14" },
-            { c: "clang-18", cxx: "clang++-18", package: "clang-18" },
+            { c: "gcc-7", cxx: "g++-7", package: "gcc-7 g++-7" },
+            { c: "clang-6.0", cxx: "clang++-6.0", package: "clang-6.0" },
           ]
         build_shared_libraries: [true, false]
 
-    name: "Ubuntu 24.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
+    name: "Ubuntu 20.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
 
-    runs-on: ubuntu-24.04
+    # We run on a docker image to avoid being affected from GitHub
+    # decommissioning certain runners
+    runs-on: ubuntu-latest
+    container: ubuntu:20.04
 
     steps:
       - name: Setup
         run: |
-          sudo bash -c '
           apt-get -qq update
           apt-get -qq install software-properties-common gpg wget
           add-apt-repository -y ppa:git-core/ppa
           wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
-          echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ bionic-rc main" \
+          echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ bionic-rc main' \
             | tee -a /etc/apt/sources.list.d/kitware.list >/dev/null
           apt-get -qq update
           apt-get -qq install libeigen3-dev libserialport-dev git cmake build-essential ${{ matrix.compiler.package }}
-          '
 
       - name: Checkout
         run: |
