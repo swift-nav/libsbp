@@ -113,7 +113,7 @@ jobs:
 
   big-endian:
     name: Test Big Endian
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -135,7 +135,7 @@ jobs:
 
   bazel:
     name: Bazel
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -155,7 +155,7 @@ jobs:
 
   asan:
     name: ASAN
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -175,7 +175,7 @@ jobs:
 
   ubsan:
     name: UBSAN
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
