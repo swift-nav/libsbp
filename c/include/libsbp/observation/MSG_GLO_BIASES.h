@@ -47,6 +47,11 @@ extern "C" {
 typedef struct {
   /**
    * GLONASS FDMA signals mask [boolean]
+   * 4-bit mask. Correspond to present of the followed biases as follows:
+   * - bit 3 (MSB): L1CA
+   * - bit 2:       L1P
+   * - bit 1:       L2CA
+   * - bit 0 (LSB): L2P
    */
   u8 mask;
 
