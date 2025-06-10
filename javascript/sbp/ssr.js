@@ -266,7 +266,7 @@ TroposphericDelayCorrectionNoStd.prototype.fieldSpec.push(['wet', 'writeInt8', 1
  * Fields in the SBP payload (`sbp.payload`):
  * @field hydro number (signed 16-bit int, 2 bytes) Hydrostatic vertical delay. Add 2.3 m to get actual value.
  * @field wet number (signed 8-bit int, 1 byte) Wet vertical delay. Add 0.252 m to get actual value.
- * @field stddev number (unsigned 8-bit int, 1 byte) Encoded standard deviation leaning on RTCM DF389 specification. The upper 3 bit
+ * @field stddev number (unsigned 8-bit int, 1 byte) Standard deviation encoded using a similar method as RTCM DF389. The upper 3 bit
  *   are the class, the lower 5 bits are the value. Standard deviation [mm] =
  *   (3^class * (1 + value/16) - 1)
  *
@@ -330,7 +330,7 @@ STECResidualNoStd.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId space vehicle identifier
  * @field residual number (signed 16-bit int, 2 bytes) STEC residual
- * @field stddev number (unsigned 8-bit int, 1 byte) Encoded standard deviation leaning on RTCM DF389 specification. The upper 3 bit
+ * @field stddev number (unsigned 8-bit int, 1 byte) Standard deviation encoded using a similar method as RTCM DF389. The upper 3 bit
  *   are the class, the lower 5 bits are the value. Standard deviation [TECU] =
  *   (3^class * (1 + value/16) - 1) * 0.1
  *

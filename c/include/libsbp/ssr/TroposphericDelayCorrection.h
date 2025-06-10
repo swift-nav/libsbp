@@ -54,9 +54,9 @@ typedef struct {
   s8 wet;
 
   /**
-   * Encoded standard deviation leaning on RTCM DF389 specification. The upper 3
-   * bit are the class, the lower 5 bits are the value. Standard deviation [mm]
-   * = (3^class * (1 + value/16) - 1) [mm]
+   * Standard deviation encoded using a similar method as RTCM DF389. The upper
+   * 3 bit are the class, the lower 5 bits are the value. Standard deviation
+   * [mm] = (3^class * (1 + value/16) - 1) [mm]
    */
   u8 stddev;
 } sbp_tropospheric_delay_correction_t;

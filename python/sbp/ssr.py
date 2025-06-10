@@ -341,7 +341,7 @@ class TroposphericDelayCorrection(object):
   wet : int
     Wet vertical delay. Add 0.252 m to get actual value.
   stddev : int
-    Encoded standard deviation leaning on RTCM DF389 specification. The upper
+    Standard deviation encoded using a similar method as RTCM DF389. The upper
     3 bit are the class, the lower 5 bits are the value. Standard deviation
     [mm] = (3^class * (1 + value/16) - 1)
 
@@ -421,7 +421,7 @@ class STECResidual(object):
   residual : int
     STEC residual
   stddev : int
-    Encoded standard deviation leaning on RTCM DF389 specification. The upper
+    Standard deviation encoded using a similar method as RTCM DF389. The upper
     3 bit are the class, the lower 5 bits are the value. Standard deviation
     [TECU] = (3^class * (1 + value/16) - 1) * 0.1
 

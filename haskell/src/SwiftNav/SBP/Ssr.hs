@@ -256,7 +256,7 @@ data TroposphericDelayCorrection = TroposphericDelayCorrection
   , _troposphericDelayCorrection_wet  :: !Int8
     -- ^ Wet vertical delay. Add 0.252 m to get actual value.
   , _troposphericDelayCorrection_stddev :: !Word8
-    -- ^ Encoded standard deviation leaning on RTCM DF389 specification. The
+    -- ^ Standard deviation encoded using a similar method as RTCM DF389. The
     -- upper 3 bit are the class, the lower 5 bits are the value. Standard
     -- deviation [mm] = (3^class * (1 + value/16) - 1)
   } deriving ( Show, Read, Eq )
@@ -309,7 +309,7 @@ data STECResidual = STECResidual
   , _sTECResidual_residual :: !Int16
     -- ^ STEC residual
   , _sTECResidual_stddev :: !Word8
-    -- ^ Encoded standard deviation leaning on RTCM DF389 specification. The
+    -- ^ Standard deviation encoded using a similar method as RTCM DF389. The
     -- upper 3 bit are the class, the lower 5 bits are the value. Standard
     -- deviation [TECU] = (3^class * (1 + value/16) - 1) * 0.1
   } deriving ( Show, Read, Eq )
