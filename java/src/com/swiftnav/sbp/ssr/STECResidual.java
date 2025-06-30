@@ -28,7 +28,11 @@ public class STECResidual extends SBPStruct {
     /** STEC residual */
     public int residual;
 
-    /** Modified DF389. class 3 MSB, value 5 LSB. stddev = (3^class * (1 + value/16) - 1) * 10 */
+    /**
+     * Standard deviation encoded using a similar method as RTCM DF389. The upper 3 bit are the
+     * class, the lower 5 bits are the value. Standard deviation [TECU] = (3^class * (1 + value/16)
+     * - 1) * 0.1
+     */
     public int stddev;
 
     public STECResidual() {}
