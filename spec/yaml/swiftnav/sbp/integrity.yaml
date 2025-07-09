@@ -41,8 +41,128 @@ definitions:
             type: u8
             desc: Chain and type of flag.
 
-  - MSG_SSR_FLAG_HIGH_LEVEL:
+  - MSG_SSR_FLAG_HIGH_LEVEL_DEP_A:
       id: 0x0BB9
+      short_desc: Deprecated
+      desc: Deprecated.
+      public: false
+      replaced_by:
+        - MSG_SSR_FLAG_HIGH_LEVEL
+      fields:
+        - obs_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the observation used to generate the flag.
+        - corr_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the correction associated to the flag.
+        - ssr_sol_id:
+            type: u8
+            desc: SSR Solution ID.
+        - tile_set_id:
+            type: u16
+            desc: Unique identifier of the set this tile belongs to.
+        - tile_id:
+            type: u16
+            desc: Unique identifier of this tile in the tile set.
+        - chain_id:
+            type: u8
+            desc: Chain and type of flag.
+        - use_gps_sat:
+            type: u8
+            desc: Use GPS satellites.
+            fields:
+              - 0-2:
+                  desc: Use GPS satellites.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
+        - use_gal_sat:
+            type: u8
+            desc: Use GAL satellites.
+            fields:
+              - 0-2:
+                  desc: Use GAL satellites.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
+        - use_bds_sat:
+            type: u8
+            desc: Use BDS satellites.
+            fields:
+              - 0-2:
+                  desc: Use BDS satellites.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
+        - use_qzss_sat:
+            type: u8
+            desc: Use QZSS satellites.
+            fields:
+              - 0-2:
+                  desc: Use QZSS satellites.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
+        - reserved:
+            type: array
+            size: 5
+            fill: u8
+            desc: Reserved
+        - use_tropo_grid_points:
+            type: u8
+            desc: Use tropo grid points.
+            fields:
+              - 0-2:
+                  desc: Use tropo grid points.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
+        - use_iono_grid_points:
+            type: u8
+            desc: Use iono grid points.
+            fields:
+              - 0-2:
+                  desc: Use iono grid points.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
+        - use_iono_tile_sat_los:
+            type: u8
+            desc: Use iono tile satellite LoS.
+            fields:
+              - 0-2:
+                  desc: Use iono tile satellite LoS.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
+        - use_iono_grid_point_sat_los:
+            type: u8
+            desc: Use iono grid point satellite LoS.
+            fields:
+              - 0-2:
+                  desc: Use iono grid point satellite LoS.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
+
+  - MSG_SSR_FLAG_HIGH_LEVEL:
+      id: 0x0BBA
       short_desc: High level integrity flags
       desc: >
         Integrity monitoring flags for multiple aggregated elements.
@@ -82,9 +202,12 @@ definitions:
         - obs_time:
             type: GPSTimeSec
             desc: GNSS reference time of the observation used to generate the flag.
-        - corr_time:
+        - atmo_corr_time:
             type: GPSTimeSec
-            desc: GNSS reference time of the correction associated to the flag.
+            desc: GNSS reference time of the atmospheric correction associated to the flag.
+        - sat_corr_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the satellite correction associated to the flag.
         - ssr_sol_id:
             type: u8
             desc: SSR Solution ID.
