@@ -21,47 +21,21 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BBA).
+ * SBP class for message MSG_SSR_FLAG_HIGH_LEVEL_DEP_A (0x0BB9).
  *
- * <p>You can have MSG_SSR_FLAG_HIGH_LEVEL inherent its fields directly from an inherited SBP
+ * <p>You can have MSG_SSR_FLAG_HIGH_LEVEL_DEP_A inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>Integrity monitoring flags for multiple aggregated elements. An element could be a satellite,
- * SSR grid point, or SSR tile. A group of aggregated elements being monitored for integrity could
- * refer to:
- *
- * <p>- Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
- *
- * <p>- Satellites in the line-of-sight of a particular SSR tile.
- *
- * <p>- Satellites in the line-of-sight of a particular SSR grid point.
- *
- * <p>The integrity usage for a group of aggregated elements varies according to the integrity flag
- * of the satellites comprising that group.
- *
- * <p>SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity check and have flag
- * INTEGRITY_FLAG_OK.
- *
- * <p>SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group failed the integrity
- * check. Refer to more granular integrity messages for details on the specific failing elements.
- *
- * <p>SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity check, do not use
- * for positioning.
- *
- * <p>SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of elements in the
- * group.
+ * <p>Deprecated.
  */
-public class MsgSsrFlagHighLevel extends SBPMessage {
-    public static final int TYPE = 0x0BBA;
+public class MsgSsrFlagHighLevelDepA extends SBPMessage {
+    public static final int TYPE = 0x0BB9;
 
     /** GNSS reference time of the observation used to generate the flag. */
     public GPSTimeSec obs_time;
 
-    /** GNSS reference time of the atmospheric correction associated to the flag. */
-    public GPSTimeSec atmo_corr_time;
-
-    /** GNSS reference time of the satellite correction associated to the flag. */
-    public GPSTimeSec sat_corr_time;
+    /** GNSS reference time of the correction associated to the flag. */
+    public GPSTimeSec corr_time;
 
     /** SSR Solution ID. */
     public int ssr_sol_id;
@@ -102,27 +76,26 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
     /** Use iono grid point satellite LoS. */
     public int use_iono_grid_point_sat_los;
 
-    public MsgSsrFlagHighLevel(int sender) {
+    public MsgSsrFlagHighLevelDepA(int sender) {
         super(sender, TYPE);
     }
 
-    public MsgSsrFlagHighLevel() {
+    public MsgSsrFlagHighLevelDepA() {
         super(TYPE);
     }
 
-    public MsgSsrFlagHighLevel(SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrFlagHighLevelDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
             throw new SBPBinaryException(
-                    "Type mismatch for MsgSsrFlagHighLevel, expected 3002, actual " + msg.type);
+                    "Type mismatch for MsgSsrFlagHighLevelDepA, expected 3001, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         obs_time = new GPSTimeSec().parse(parser);
-        atmo_corr_time = new GPSTimeSec().parse(parser);
-        sat_corr_time = new GPSTimeSec().parse(parser);
+        corr_time = new GPSTimeSec().parse(parser);
         ssr_sol_id = parser.getU8();
         tile_set_id = parser.getU16();
         tile_id = parser.getU16();
@@ -141,8 +114,7 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
     @Override
     protected void build(Builder builder) {
         obs_time.build(builder);
-        atmo_corr_time.build(builder);
-        sat_corr_time.build(builder);
+        corr_time.build(builder);
         builder.putU8(ssr_sol_id);
         builder.putU16(tile_set_id);
         builder.putU16(tile_id);
@@ -162,8 +134,7 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("obs_time", obs_time.toJSON());
-        obj.put("atmo_corr_time", atmo_corr_time.toJSON());
-        obj.put("sat_corr_time", sat_corr_time.toJSON());
+        obj.put("corr_time", corr_time.toJSON());
         obj.put("ssr_sol_id", ssr_sol_id);
         obj.put("tile_set_id", tile_set_id);
         obj.put("tile_id", tile_id);
@@ -182,6 +153,6 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
 
     @Override
     public String getFriendlyName() {
-        return "SSR FLAG HIGH LEVEL";
+        return "SSR FLAG HIGH LEVEL DEP A";
     }
 }

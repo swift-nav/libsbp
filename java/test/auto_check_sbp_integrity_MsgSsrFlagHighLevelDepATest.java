@@ -11,17 +11,17 @@
 package com.swiftnav.sbp.test;
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/integrity/test_MsgSsrFlagHighLevel.yaml by generate.py. Do not
+// spec/tests/yaml/swiftnav/sbp/integrity/test_MsgSsrFlagHighLevelDepA.yaml by generate.py. Do not
 // modify by hand!
 
 
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.integrity.MsgSsrFlagHighLevel;
+import com.swiftnav.sbp.integrity.MsgSsrFlagHighLevelDepA;
 import java.math.BigInteger;
 import org.json.JSONObject;
 import org.junit.Test;
 
-public class auto_check_sbp_integrity_MsgSsrFlagHighLevelTest {
+public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
 
     public static boolean debug = false;
     private static final double DELTA = 1e-15;
@@ -29,7 +29,8 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelTest {
     @Test
     public void test1() throws Throwable {
         if (debug)
-            System.out.format("%n%s%n", "auto_check_sbp_integrity_MsgSsrFlagHighLevelTest.test1");
+            System.out.format(
+                    "%n%s%n", "auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest.test1");
         byte[] payload =
                 new byte[] {
                     (byte) 180,
@@ -37,12 +38,6 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelTest {
                     (byte) 0,
                     (byte) 0,
                     (byte) 3,
-                    (byte) 0,
-                    (byte) 109,
-                    (byte) 1,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 6,
                     (byte) 0,
                     (byte) 104,
                     (byte) 1,
@@ -70,31 +65,11 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelTest {
                     (byte) 7,
                     (byte) 8,
                 };
-        SBPMessage sbp = new SBPMessage(0x0042, 0x0BBA, payload);
-        MsgSsrFlagHighLevel msg = new MsgSsrFlagHighLevel(sbp);
+        SBPMessage sbp = new SBPMessage(0x0042, 0x0BB9, payload);
+        MsgSsrFlagHighLevelDepA msg = new MsgSsrFlagHighLevelDepA(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
-        value = msg.atmo_corr_time.tow;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.atmo_corr_time.tow + "' != '" + 365 + "'",
-                    value.equals(BigInteger.valueOf(365L)));
-        } else {
-            value = value.longValue();
-            expected = 365L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.atmo_corr_time.wn;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.atmo_corr_time.wn + "' != '" + 6 + "'",
-                    value.equals(BigInteger.valueOf(6L)));
-        } else {
-            value = value.longValue();
-            expected = 6L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
         value = msg.chain_id;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -103,6 +78,26 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelTest {
         } else {
             value = value.longValue();
             expected = 40L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.corr_time.tow;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.corr_time.tow + "' != '" + 360 + "'",
+                    value.equals(BigInteger.valueOf(360L)));
+        } else {
+            value = value.longValue();
+            expected = 360L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.corr_time.wn;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.corr_time.wn + "' != '" + 6 + "'",
+                    value.equals(BigInteger.valueOf(6L)));
+        } else {
+            value = value.longValue();
+            expected = 6L;
             org.junit.Assert.assertEquals(value, expected);
         }
         value = msg.obs_time.tow;
@@ -173,26 +168,6 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelTest {
         } else {
             value = value.longValue();
             expected = 0L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.sat_corr_time.tow;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.sat_corr_time.tow + "' != '" + 360 + "'",
-                    value.equals(BigInteger.valueOf(360L)));
-        } else {
-            value = value.longValue();
-            expected = 360L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.sat_corr_time.wn;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.sat_corr_time.wn + "' != '" + 6 + "'",
-                    value.equals(BigInteger.valueOf(6L)));
-        } else {
-            value = value.longValue();
-            expected = 6L;
             org.junit.Assert.assertEquals(value, expected);
         }
         value = msg.ssr_sol_id;

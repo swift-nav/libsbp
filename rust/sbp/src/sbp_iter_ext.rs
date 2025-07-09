@@ -23,7 +23,7 @@ pub trait SbpIterExt: Iterator {
         Self: Iterator<Item = Result<Sbp, DeserializeError>> + Sized,
     {
         HandleErrorsIter::new(self, move |e| {
-            log::log!(level, "{}", e);
+            log::log!(level, "{e}");
             match e {
                 DeserializeError::IoError(_) => ControlFlow::Break,
                 _ => ControlFlow::Continue,

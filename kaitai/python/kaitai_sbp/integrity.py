@@ -147,6 +147,36 @@ class Integrity(KaitaiStruct):
 
 
 
+    class MsgSsrFlagHighLevelDepA(KaitaiStruct):
+        """Deprecated.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.obs_time = Gnss.GpsTimeSec(self._io, self, self._root)
+            self.corr_time = Gnss.GpsTimeSec(self._io, self, self._root)
+            self.ssr_sol_id = self._io.read_u1()
+            self.tile_set_id = self._io.read_u2le()
+            self.tile_id = self._io.read_u2le()
+            self.chain_id = self._io.read_u1()
+            self.use_gps_sat = self._io.read_u1()
+            self.use_gal_sat = self._io.read_u1()
+            self.use_bds_sat = self._io.read_u1()
+            self.use_qzss_sat = self._io.read_u1()
+            self.reserved = []
+            for i in range(5):
+                self.reserved.append(self._io.read_u1())
+
+            self.use_tropo_grid_points = self._io.read_u1()
+            self.use_iono_grid_points = self._io.read_u1()
+            self.use_iono_tile_sat_los = self._io.read_u1()
+            self.use_iono_grid_point_sat_los = self._io.read_u1()
+
+
     class MsgSsrFlagHighLevel(KaitaiStruct):
         """Integrity monitoring flags for multiple aggregated elements. An element
         could be a satellite, SSR grid point, or SSR tile. A group of aggregated
@@ -182,7 +212,8 @@ class Integrity(KaitaiStruct):
 
         def _read(self):
             self.obs_time = Gnss.GpsTimeSec(self._io, self, self._root)
-            self.corr_time = Gnss.GpsTimeSec(self._io, self, self._root)
+            self.atmo_corr_time = Gnss.GpsTimeSec(self._io, self, self._root)
+            self.sat_corr_time = Gnss.GpsTimeSec(self._io, self, self._root)
             self.ssr_sol_id = self._io.read_u1()
             self.tile_set_id = self._io.read_u2le()
             self.tile_id = self._io.read_u2le()
