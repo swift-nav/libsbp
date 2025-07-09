@@ -2445,9 +2445,10 @@ export interface CodePhaseBiasesSatSig {
  * group.
  */
 export interface MsgSsrFlagHighLevel {
+    atmo_corr_time:              GpsTimeSEC;
     chain_id:                    number;
-    corr_time:                   GpsTimeSEC;
     obs_time:                    GpsTimeSEC;
+    sat_corr_time:               GpsTimeSEC;
     ssr_sol_id:                  number;
     tile_id:                     number;
     tile_set_id:                 number;
@@ -6364,9 +6365,10 @@ const typeMap: any = {
         { json: "signal_id", js: "signal_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagHighLevel": o([
+        { json: "atmo_corr_time", js: "atmo_corr_time", typ: r("GpsTimeSEC") },
         { json: "chain_id", js: "chain_id", typ: 0 },
-        { json: "corr_time", js: "corr_time", typ: r("GpsTimeSEC") },
         { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "sat_corr_time", js: "sat_corr_time", typ: r("GpsTimeSEC") },
         { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
         { json: "tile_id", js: "tile_id", typ: 0 },
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },

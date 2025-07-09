@@ -2854,9 +2854,10 @@ SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of elemen
 group.
 -}
 type alias MsgSsrFlagHighLevel =
-    { chainID : Int
-    , corrTime : GpsTimeSEC
+    { atmoCorrTime : GpsTimeSEC
+    , chainID : Int
     , obsTime : GpsTimeSEC
+    , satCorrTime : GpsTimeSEC
     , ssrSolID : Int
     , tileID : Int
     , tileSetID : Int
@@ -7278,9 +7279,10 @@ encodeCodePhaseBiasesSatSig x =
 msgSsrFlagHighLevel : Jdec.Decoder MsgSsrFlagHighLevel
 msgSsrFlagHighLevel =
     Jpipe.decode MsgSsrFlagHighLevel
+        |> Jpipe.required "atmo_corr_time" gpsTimeSEC
         |> Jpipe.required "chain_id" Jdec.int
-        |> Jpipe.required "corr_time" gpsTimeSEC
         |> Jpipe.required "obs_time" gpsTimeSEC
+        |> Jpipe.required "sat_corr_time" gpsTimeSEC
         |> Jpipe.required "ssr_sol_id" Jdec.int
         |> Jpipe.required "tile_id" Jdec.int
         |> Jpipe.required "tile_set_id" Jdec.int
@@ -7296,9 +7298,10 @@ msgSsrFlagHighLevel =
 encodeMsgSsrFlagHighLevel : MsgSsrFlagHighLevel -> Jenc.Value
 encodeMsgSsrFlagHighLevel x =
     Jenc.object
-        [ ("chain_id", Jenc.int x.chainID)
-        , ("corr_time", encodeGpsTimeSEC x.corrTime)
+        [ ("atmo_corr_time", encodeGpsTimeSEC x.atmoCorrTime)
+        , ("chain_id", Jenc.int x.chainID)
         , ("obs_time", encodeGpsTimeSEC x.obsTime)
+        , ("sat_corr_time", encodeGpsTimeSEC x.satCorrTime)
         , ("ssr_sol_id", Jenc.int x.ssrSolID)
         , ("tile_id", Jenc.int x.tileID)
         , ("tile_set_id", Jenc.int x.tileSetID)

@@ -65,19 +65,20 @@ message IntegritySSRHeader {
  */
 message MsgSsrFlagHighLevel {
     gnss.GpsTimeSec obs_time = 1;
-    gnss.GpsTimeSec corr_time = 2;
-    uint32 ssr_sol_id = 3;
-    uint32 tile_set_id = 4;
-    uint32 tile_id = 5;
-    uint32 chain_id = 6;
-    uint32 use_gps_sat = 7;
-    uint32 use_gal_sat = 8;
-    uint32 use_bds_sat = 9;
-    uint32 use_qzss_sat = 10;
-    uint32 use_tropo_grid_points = 12;
-    uint32 use_iono_grid_points = 13;
-    uint32 use_iono_tile_sat_los = 14;
-    uint32 use_iono_grid_point_sat_los = 15;
+    gnss.GpsTimeSec atmo_corr_time = 2;
+    gnss.GpsTimeSec sat_corr_time = 3;
+    uint32 ssr_sol_id = 4;
+    uint32 tile_set_id = 5;
+    uint32 tile_id = 6;
+    uint32 chain_id = 7;
+    uint32 use_gps_sat = 8;
+    uint32 use_gal_sat = 9;
+    uint32 use_bds_sat = 10;
+    uint32 use_qzss_sat = 11;
+    uint32 use_tropo_grid_points = 13;
+    uint32 use_iono_grid_points = 14;
+    uint32 use_iono_tile_sat_los = 15;
+    uint32 use_iono_grid_point_sat_los = 16;
 }
 
 /** List of satellites which are faulty, per constellation
