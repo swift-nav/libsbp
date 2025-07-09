@@ -18,8 +18,8 @@ on:
 jobs:
   generation:
     name: Generated artifacts
-    runs-on: ubuntu-20.04
-    container: 
+    runs-on: ubuntu-24.04
+    container:
       image: swiftnav/libsbp-build:2025-02-10
       options: --user root
       volumes:
@@ -60,7 +60,6 @@ jobs:
         with:
           name: ${{ steps.pdf.outputs.artifact_name }}
           path: ${{ steps.pdf.outputs.artifact_name }}
-
 #      - name: Check generated pdf
 #        run: |
 #          git diff --name-only --exit-code
