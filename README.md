@@ -1,24 +1,24 @@
-## Specification and Bindings for Swift Binary Protocol
+# Specification and Bindings for Swift Binary Protocol
 
 <!-- toc -->
 
 - [Specification and Bindings for Swift Binary Protocol](#specification-and-bindings-for-swift-binary-protocol)
-- [Installing sbp2json, json2sbp, json2json and related tools](#installing-sbp2json-json2sbp-json2json-and-related-tools)
-- [Building / installing](#building--installing)
-  - [Using Docker](#using-docker)
-    - [Fetching the prebuilt image from DockerHub](#fetching-the-prebuilt-image-from-dockerhub)
-    - [Creating your own image](#creating-your-own-image)
-    - [Using the docker image](#using-the-docker-image)
-  - [Installing from package managers](#installing-from-package-managers)
-  - [Installing development Python versions](#installing-development-python-versions)
-  - [Adding development version as a pip dependency](#adding-development-version-as-a-pip-dependency)
-  - [Installing from source](#installing-from-source)
-- [SBP Development Procedures](#sbp-development-procedures)
-- [SBP Protocol Specification](#sbp-protocol-specification)
-- [JSON Schema Definitions](#json-schema-definitions)
-- [Kaitai Struct Format Descriptions](#kaitai-struct-format-descriptions)
-  - [Notes on python bindings](#notes-on-python-bindings)
-- [LICENSE](#license)
+  - [Installing sbp2json, json2sbp, json2json and related tools](#installing-sbp2json-json2sbp-json2json-and-related-tools)
+  - [Building / installing](#building--installing)
+    - [Using Docker](#using-docker)
+      - [Fetching the prebuilt image from DockerHub](#fetching-the-prebuilt-image-from-dockerhub)
+      - [Creating your own image](#creating-your-own-image)
+      - [Using the docker image](#using-the-docker-image)
+    - [Installing from package managers](#installing-from-package-managers)
+    - [Installing development Python versions](#installing-development-python-versions)
+    - [Adding development version as a pip dependency](#adding-development-version-as-a-pip-dependency)
+    - [Installing from source](#installing-from-source)
+  - [SBP Development Procedures](#sbp-development-procedures)
+  - [SBP Protocol Specification](#sbp-protocol-specification)
+  - [JSON Schema Definitions](#json-schema-definitions)
+  - [Kaitai Struct Format Descriptions](#kaitai-struct-format-descriptions)
+    - [Notes on python bindings](#notes-on-python-bindings)
+  - [LICENSE](#license)
 
 <!-- tocstop -->
 
@@ -129,7 +129,7 @@ docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-02-10 /b
 
 This will mount your local copy of the libsbp repository onto the image.
 
-Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
+Check libsbp-build [dockerhub page](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 Alternatively, you could run
 
 ```sh
@@ -279,7 +279,7 @@ detection.
 
 Please see [the docs](docs/sbp.pdf) for a full description of the packet
 structure and the message types. Developer documentation for the
-language-specific sbp libraries is [here](http://swift-nav.github.io/libsbp/).
+language-specific sbp libraries is available at [http://swift-nav.github.io/libsbp/](http://swift-nav.github.io/libsbp/).
 Please refer to [the changelog](CHANGELOG.md) for more information about the
 evolution of the library and its messages.
 

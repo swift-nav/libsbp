@@ -481,7 +481,7 @@ sub faulty_points {
 }
 
 ########################################################################
-package Integrity::MsgSsrFlagHighLevel;
+package Integrity::MsgSsrFlagHighLevelDepA;
 
 our @ISA = 'IO::KaitaiStruct::Struct';
 
@@ -539,6 +539,138 @@ sub obs_time {
 sub corr_time {
     my ($self) = @_;
     return $self->{corr_time};
+}
+
+sub ssr_sol_id {
+    my ($self) = @_;
+    return $self->{ssr_sol_id};
+}
+
+sub tile_set_id {
+    my ($self) = @_;
+    return $self->{tile_set_id};
+}
+
+sub tile_id {
+    my ($self) = @_;
+    return $self->{tile_id};
+}
+
+sub chain_id {
+    my ($self) = @_;
+    return $self->{chain_id};
+}
+
+sub use_gps_sat {
+    my ($self) = @_;
+    return $self->{use_gps_sat};
+}
+
+sub use_gal_sat {
+    my ($self) = @_;
+    return $self->{use_gal_sat};
+}
+
+sub use_bds_sat {
+    my ($self) = @_;
+    return $self->{use_bds_sat};
+}
+
+sub use_qzss_sat {
+    my ($self) = @_;
+    return $self->{use_qzss_sat};
+}
+
+sub reserved {
+    my ($self) = @_;
+    return $self->{reserved};
+}
+
+sub use_tropo_grid_points {
+    my ($self) = @_;
+    return $self->{use_tropo_grid_points};
+}
+
+sub use_iono_grid_points {
+    my ($self) = @_;
+    return $self->{use_iono_grid_points};
+}
+
+sub use_iono_tile_sat_los {
+    my ($self) = @_;
+    return $self->{use_iono_tile_sat_los};
+}
+
+sub use_iono_grid_point_sat_los {
+    my ($self) = @_;
+    return $self->{use_iono_grid_point_sat_los};
+}
+
+########################################################################
+package Integrity::MsgSsrFlagHighLevel;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{obs_time} = Gnss::GpsTimeSec->new($self->{_io}, $self, $self->{_root});
+    $self->{atmo_corr_time} = Gnss::GpsTimeSec->new($self->{_io}, $self, $self->{_root});
+    $self->{sat_corr_time} = Gnss::GpsTimeSec->new($self->{_io}, $self, $self->{_root});
+    $self->{ssr_sol_id} = $self->{_io}->read_u1();
+    $self->{tile_set_id} = $self->{_io}->read_u2le();
+    $self->{tile_id} = $self->{_io}->read_u2le();
+    $self->{chain_id} = $self->{_io}->read_u1();
+    $self->{use_gps_sat} = $self->{_io}->read_u1();
+    $self->{use_gal_sat} = $self->{_io}->read_u1();
+    $self->{use_bds_sat} = $self->{_io}->read_u1();
+    $self->{use_qzss_sat} = $self->{_io}->read_u1();
+    $self->{reserved} = [];
+    my $n_reserved = 5;
+    for (my $i = 0; $i < $n_reserved; $i++) {
+        push @{$self->{reserved}}, $self->{_io}->read_u1();
+    }
+    $self->{use_tropo_grid_points} = $self->{_io}->read_u1();
+    $self->{use_iono_grid_points} = $self->{_io}->read_u1();
+    $self->{use_iono_tile_sat_los} = $self->{_io}->read_u1();
+    $self->{use_iono_grid_point_sat_los} = $self->{_io}->read_u1();
+}
+
+sub obs_time {
+    my ($self) = @_;
+    return $self->{obs_time};
+}
+
+sub atmo_corr_time {
+    my ($self) = @_;
+    return $self->{atmo_corr_time};
+}
+
+sub sat_corr_time {
+    my ($self) = @_;
+    return $self->{sat_corr_time};
 }
 
 sub ssr_sol_id {

@@ -53,6 +53,7 @@ Suite* auto_check_sbp_imu_MsgImuComp_suite(void);
 Suite* auto_check_sbp_imu_MsgImuRaw_suite(void);
 Suite* auto_check_sbp_integrity_MsgAcknowledge_suite(void);
 Suite* auto_check_sbp_integrity_MsgSsrFlagHighLevel_suite(void);
+Suite* auto_check_sbp_integrity_MsgSsrFlagHighLevelDepA_suite(void);
 Suite* auto_check_sbp_integrity_MsgSsrFlagIonoGridPointSatLos_suite(void);
 Suite* auto_check_sbp_integrity_MsgSsrFlagIonoGridPoints_suite(void);
 Suite* auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos_suite(void);

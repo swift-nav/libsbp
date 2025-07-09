@@ -50,6 +50,7 @@ import com.swiftnav.sbp.imu.MsgImuComp;
 import com.swiftnav.sbp.imu.MsgImuRaw;
 import com.swiftnav.sbp.integrity.MsgAcknowledge;
 import com.swiftnav.sbp.integrity.MsgSsrFlagHighLevel;
+import com.swiftnav.sbp.integrity.MsgSsrFlagHighLevelDepA;
 import com.swiftnav.sbp.integrity.MsgSsrFlagIonoGridPointSatLos;
 import com.swiftnav.sbp.integrity.MsgSsrFlagIonoGridPoints;
 import com.swiftnav.sbp.integrity.MsgSsrFlagIonoTileSatLos;
@@ -326,6 +327,8 @@ final class MessageTable {
                 return new MsgImuAux(msg);
             case MsgImuComp.TYPE:
                 return new MsgImuComp(msg);
+            case MsgSsrFlagHighLevelDepA.TYPE:
+                return new MsgSsrFlagHighLevelDepA(msg);
             case MsgSsrFlagHighLevel.TYPE:
                 return new MsgSsrFlagHighLevel(msg);
             case MsgSsrFlagSatellites.TYPE:
