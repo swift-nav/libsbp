@@ -148,8 +148,7 @@ fn test_json2sbp_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xb4,
-                    "Incorrect message type, expected 0xb4, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xb4, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -198,8 +197,7 @@ fn test_json2sbp_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xb0,
-                    "Incorrect message type, expected 0xb0, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xb0, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -277,8 +275,7 @@ fn test_sbp2json_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xb4,
-                    "Incorrect message type, expected 0xb4, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xb4, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -337,8 +334,7 @@ fn test_sbp2json_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xb0,
-                    "Incorrect message type, expected 0xb0, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xb0, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

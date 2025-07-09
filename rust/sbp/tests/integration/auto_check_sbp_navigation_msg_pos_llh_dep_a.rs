@@ -847,8 +847,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -925,8 +924,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1003,8 +1001,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1081,8 +1078,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1159,8 +1155,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1237,8 +1232,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1315,8 +1309,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1393,8 +1386,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1471,8 +1463,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1549,8 +1540,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1627,8 +1617,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1728,8 +1717,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1819,8 +1807,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -1911,8 +1898,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -2003,8 +1989,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -2095,8 +2080,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -2186,8 +2170,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -2278,8 +2261,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -2370,8 +2352,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -2461,8 +2442,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -2553,8 +2533,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -2645,8 +2624,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x201,
-                    "Incorrect message type, expected 0x201, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x201, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

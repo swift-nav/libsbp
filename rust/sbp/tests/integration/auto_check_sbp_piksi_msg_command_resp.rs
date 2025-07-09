@@ -98,8 +98,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_command_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xb9,
-                    "Incorrect message type, expected 0xb9, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xb9, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -167,8 +166,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_command_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xb9,
-                    "Incorrect message type, expected 0xb9, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xb9, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

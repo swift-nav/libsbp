@@ -226,8 +226,7 @@ fn test_json2sbp_auto_check_sbp_observation_msg_ephemeris_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x1a,
-                    "Incorrect message type, expected 0x1a, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x1a, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -423,8 +422,7 @@ fn test_sbp2json_auto_check_sbp_observation_msg_ephemeris_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x1a,
-                    "Incorrect message type, expected 0x1a, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x1a, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
