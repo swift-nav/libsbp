@@ -21,7 +21,7 @@ on:
 jobs:
   benchmark:
     name: Benchmark
-    runs-on: [xlarge]
+    runs-on: [xlarge-24.04]
     steps:
       - uses: actions/checkout@v4
       - name: Setup
