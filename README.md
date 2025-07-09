@@ -2,20 +2,22 @@
 
 <!-- toc -->
 
+- [Specification and Bindings for Swift Binary Protocol](#specification-and-bindings-for-swift-binary-protocol)
 - [Installing sbp2json, json2sbp, json2json and related tools](#installing-sbp2json-json2sbp-json2json-and-related-tools)
 - [Building / installing](#building--installing)
-  * [Using Docker](#using-docker)
-    + [Fetching the prebuilt image from DockerHub](#fetching-the-prebuilt-image-from-dockerhub)
-    + [Creating your own image](#creating-your-own-image)
-    + [Using the docker image](#using-the-docker-image)
-  * [Installing from package managers](#installing-from-package-managers)
-  * [Installing development Python versions](#installing-development-python-versions)
-  * [Adding development version as a pip dependency](#adding-development-version-as-a-pip-dependency)
-  * [Installing from source](#installing-from-source)
+  - [Using Docker](#using-docker)
+    - [Fetching the prebuilt image from DockerHub](#fetching-the-prebuilt-image-from-dockerhub)
+    - [Creating your own image](#creating-your-own-image)
+    - [Using the docker image](#using-the-docker-image)
+  - [Installing from package managers](#installing-from-package-managers)
+  - [Installing development Python versions](#installing-development-python-versions)
+  - [Adding development version as a pip dependency](#adding-development-version-as-a-pip-dependency)
+  - [Installing from source](#installing-from-source)
 - [SBP Development Procedures](#sbp-development-procedures)
 - [SBP Protocol Specification](#sbp-protocol-specification)
 - [JSON Schema Definitions](#json-schema-definitions)
 - [Kaitai Struct Format Descriptions](#kaitai-struct-format-descriptions)
+  - [Notes on python bindings](#notes-on-python-bindings)
 - [LICENSE](#license)
 
 <!-- tocstop -->
@@ -32,19 +34,19 @@ messages used with SBP, a compiler for generating message bindings, and client
 libraries in a variety of languages. This repository is organized into the
 following directory structure:
 
-* [`docs`](./docs): Protocol documentation and message definitions.
-* [`spec`](./spec): Machine readable protocol specification in
+- [`docs`](./docs): Protocol documentation and message definitions.
+- [`spec`](./spec): Machine readable protocol specification in
   [YAML](http://en.wikipedia.org/wiki/YAML).
-* [`generator`](./generator): Simple, template-based generator for
+- [`generator`](./generator): Simple, template-based generator for
   different languages.
-* [`python`](./python): Python client and examples.
-* [`c`](./c): C client library and examples.
-* [`haskell`](./haskell): Haskell client and examples.
-* [`java`](./java): Java client library and examples.
-* [`javascript`](./javascript): JavaScript client library and examples.
-* [`rust`](./rust): Rust client library and examples.
-* [`sbpjson`](./sbpjson): Tools for parsing SBP-JSON.
-* [`kaitai`](./kaitai): Kaitai Struct Format Description and generated code.
+- [`python`](./python): Python client and examples.
+- [`c`](./c): C client library and examples.
+- [`haskell`](./haskell): Haskell client and examples.
+- [`java`](./java): Java client library and examples.
+- [`javascript`](./javascript): JavaScript client library and examples.
+- [`rust`](./rust): Rust client library and examples.
+- [`sbpjson`](./sbpjson): Tools for parsing SBP-JSON.
+- [`kaitai`](./kaitai): Kaitai Struct Format Description and generated code.
 
 Except for the `generator`, all of the above are generated and should not be modified directly.
 
@@ -72,7 +74,7 @@ your platform.
 To install from source, you can use Rust's cargo tool (first [install
 Rust](https://www.rust-lang.org/tools/install)), then run:
 
-```
+```sh
 cargo install --git https://github.com/swift-nav/libsbp.git --bins
 ```
 
@@ -87,13 +89,13 @@ tool as well as a `sbp2prettyjson` tool.
 Finally, a Python version of the `sbp2json` tool exists, which is installable
 on any platform that supports Python via pip, e.g.:
 
-```
+```sh
 pip3 install sbp
 ```
 
 The tool can then be invoked as follows:
 
-```
+```sh
 python3 -m sbp2json <sbp.bin
 ```
 
@@ -103,9 +105,11 @@ but works on all platforms that Python itself supports.
 ## Building / installing
 
 Before you start, run
-```
+
+```sh
 git pull --tags
 ```
+
 in you local libsbp repository to pull the tags. This will ensure the correct
 version number is generated.
 
@@ -119,14 +123,18 @@ Start [Docker desktop](https://docs.docker.com/docker-for-mac/).
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
 (no guarantees on freshness) by running the following on your command line:
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-02-10 /bin/bash
+```sh
+docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-02-10 /bin/bash
+```
 
 This will mount your local copy of the libsbp repository onto the image.
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 Alternatively, you could run
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:latest-master /bin/bash
+```sh
+docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:latest-master /bin/bash
+```
 
 if you are facing issues with compilation and the tags are out of date as well.
 
@@ -136,18 +144,24 @@ Otherwise, the `Dockerfile` will create a docker image that contains all the
 necessary dependencies to build libsbp.  You can make a local image fresh from
 this file by running `docker build` as such:
 
-    docker build -t libsbp-build - <Dockerfile
+```sh
+docker build -t libsbp-build - <Dockerfile
+```
 
 Reading the Dockerfile from STDIN prevents docker from pulling in the whole
 repostory into the build context (which is then immediately discarded anyway).
 You can customize the UID of the user that's created with the docker image
 by passing the desired `UID` value to the build:
 
+```sh
     docker build -t libsbp-build --build-arg UID=1234 - <Dockerfile
+```
 
 You can then make this image operate on your local workspace like this:
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:latest /bin/bash
+```sh
+docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:latest /bin/bash
+```
 
 #### Using the docker image
 
@@ -158,12 +172,16 @@ This could take several hours to run.  Alternately, the docker image will run
 the `make all` command by default, so you can kick off the `make all` process
 by simply running the following command:
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:2025-02-10
+```sh
+docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:2025-02-10
+```
 
 To speed up this process you can attempt to run Python environment tests in
 paralell with:
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t -e SBP_TOX_PARALLEL=auto libsbp-build:2025-02-10
+```sh
+docker run --rm -v $PWD:/mnt/workspace -i -t -e SBP_TOX_PARALLEL=auto libsbp-build:2025-02-10
+```
 
 When you are finished, quit Docker so that it would not unnecessarily use up
 resources on your machine.
@@ -177,9 +195,9 @@ issues from an old build.
 
 Some bindings are available on package managers:
 
-* [`python`](https://github.com/swift-nav/libsbp/tree/HEAD/python): available on pip
-* [`haskell`](https://github.com/swift-nav/libsbp/tree/HEAD/haskell): available on Hackage
-* [`javascript`](https://github.com/swift-nav/libsbp/tree/HEAD/javascript): available on NPM
+- [`python`](https://github.com/swift-nav/libsbp/tree/HEAD/python): available on pip
+- [`haskell`](https://github.com/swift-nav/libsbp/tree/HEAD/haskell): available on Hackage
+- [`javascript`](https://github.com/swift-nav/libsbp/tree/HEAD/javascript): available on NPM
 
 ### Installing development Python versions
 
@@ -190,6 +208,7 @@ pip install 'file:///path/to/libsbp#subdirectory=python'
 ```
 
 Or via setuptools directly:
+
 ```sh
 cd /path/to/libsbp
 cd python
@@ -199,31 +218,35 @@ python setup.py
 ### Adding development version as a pip dependency
 
 Run the following command:
+
 ```sh
 pip install "git+https://github.com/swift-nav/libsbp@<GIT_REVISION>#egg=sbp&subdirectory=python"
 ```
 
 Or add this to `requirements.txt`:
-```
+
+```sh
 git+https://github.com/swift-nav/libsbp@<GIT_REVISION>#egg=sbp&subdirectory=python
 ```
 
 ### Installing from source
+
 You can build one binding at a time or update all at once:
 
-```
+```sh
 make python
 ```
 
 or
 
-```
+```sh
 make all
 ```
 
 are both valid. To see a list of all valid targets, run `make help`.
 
 **Python version notes:**
+
 1. By default the Python targets `make python` and `make test-python` (as well
    as `make all`) run tests on all Python versions officially supported by *the
    libsbp Python bindings*, currently **3.6-3.9**, skipping any versions not
@@ -281,19 +304,19 @@ respectively.
 The Kaitai Struct format description files can also potentially be used to
 generate bindings for the following targets:
 
-* graphviz
-* csharp
-* rust
-* java
-* go
-* cpp_stl
-* php
-* lua
-* nim
-* html
-* ruby
-* construct
-* javascript
+- graphviz
+- csharp
+- rust
+- java
+- go
+- cpp_stl
+- php
+- lua
+- nim
+- html
+- ruby
+- construct
+- javascript
 
 ### Notes on python bindings
 
