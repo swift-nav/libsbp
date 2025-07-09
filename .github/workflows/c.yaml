@@ -193,13 +193,13 @@ jobs:
         run: |
           bazel test --config=ubsan //...
 
-  windows-2019:
+  windows-latest:
     strategy:
       matrix:
-        generator: ["MinGW Makefiles", "Visual Studio 16 2019"]
+        generator: ["MinGW Makefiles", "Visual Studio 17 2022"]
         build_shared_libraries: [true, false]
-    name: "Windows 2019 (Generator: ${{ matrix.generator }}, Shared Library: ${{ matrix.build_shared_libraries }})"
-    runs-on: windows-2019
+    name: "Windows Latest (Generator: ${{ matrix.generator }}, Shared Library: ${{ matrix.build_shared_libraries }})"
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
         with:
