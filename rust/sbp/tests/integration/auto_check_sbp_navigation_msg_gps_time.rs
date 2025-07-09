@@ -37,8 +37,7 @@ fn test_auto_check_sbp_navigation_msg_gps_time() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x102,
-                    "Incorrect message type, expected 0x102, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x102, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -88,8 +87,7 @@ fn test_auto_check_sbp_navigation_msg_gps_time() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x102,
-                    "Incorrect message type, expected 0x102, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x102, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -139,8 +137,7 @@ fn test_auto_check_sbp_navigation_msg_gps_time() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x102,
-                    "Incorrect message type, expected 0x102, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x102, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -190,8 +187,7 @@ fn test_auto_check_sbp_navigation_msg_gps_time() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x102,
-                    "Incorrect message type, expected 0x102, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x102, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -241,8 +237,7 @@ fn test_auto_check_sbp_navigation_msg_gps_time() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x102,
-                    "Incorrect message type, expected 0x102, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x102, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

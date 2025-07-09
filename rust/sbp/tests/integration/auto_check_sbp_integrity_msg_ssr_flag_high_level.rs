@@ -38,8 +38,7 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 3001,
-                    "Incorrect message type, expected 3001, is {}",
-                    msg_type
+                    "Incorrect message type, expected 3001, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

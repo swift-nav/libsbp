@@ -39,8 +39,7 @@ fn test_auto_check_sbp_piksi_msg_network_state_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xbb,
-                    "Incorrect message type, expected 0xbb, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xbb, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

@@ -41,8 +41,7 @@ fn test_auto_check_sbp_linux_msg_linux_cpu_state() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x7f08,
-                    "Incorrect message type, expected 0x7f08, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x7f08, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

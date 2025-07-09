@@ -42,8 +42,7 @@ fn test_auto_check_sbp_signing_msg_certificate_chain_dep() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xC05,
-                    "Incorrect message type, expected 0xC05, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xC05, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

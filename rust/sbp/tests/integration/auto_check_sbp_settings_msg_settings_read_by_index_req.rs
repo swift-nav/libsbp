@@ -35,8 +35,7 @@ fn test_auto_check_sbp_settings_msg_settings_read_by_index_req() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xa2,
-                    "Incorrect message type, expected 0xa2, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xa2, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

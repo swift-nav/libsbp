@@ -38,8 +38,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 1502,
-                    "Incorrect message type, expected 1502, is {}",
-                    msg_type
+                    "Incorrect message type, expected 1502, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

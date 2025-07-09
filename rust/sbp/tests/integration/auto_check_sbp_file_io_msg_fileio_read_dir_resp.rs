@@ -39,8 +39,7 @@ fn test_auto_check_sbp_file_io_msg_fileio_read_dir_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xaa,
-                    "Incorrect message type, expected 0xaa, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xaa, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

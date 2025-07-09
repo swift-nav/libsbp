@@ -47,8 +47,7 @@ fn test_auto_check_sbp_observation_msg_osr() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x640,
-                    "Incorrect message type, expected 0x640, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x640, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

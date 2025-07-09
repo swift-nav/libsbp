@@ -49,8 +49,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_satellite_apc_dep_a() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x604,
-                    "Incorrect message type, expected 0x604, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x604, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

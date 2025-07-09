@@ -38,8 +38,7 @@ fn test_auto_check_sbp_telemetry_msg_tel_sv() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0x120,
-                    "Incorrect message type, expected 0x120, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0x120, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

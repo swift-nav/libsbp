@@ -35,8 +35,7 @@ fn test_auto_check_sbp_flash_msg_stm_flash_unlock_sector() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xe4,
-                    "Incorrect message type, expected 0xe4, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xe4, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
