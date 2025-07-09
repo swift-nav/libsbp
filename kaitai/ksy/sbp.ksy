@@ -97,7 +97,8 @@ enums:
     2305: msg_imu_aux
     2309: msg_imu_comp
   
-    3001: msg_ssr_flag_high_level
+    3001: msg_ssr_flag_high_level_dep_a
+    3002: msg_ssr_flag_high_level
     3005: msg_ssr_flag_satellites
     3011: msg_ssr_flag_tropo_grid_points
     3015: msg_ssr_flag_iono_grid_points
@@ -381,7 +382,8 @@ types:
             2305: imu::msg_imu_aux
             2309: imu::msg_imu_comp
   
-            3001: integrity::msg_ssr_flag_high_level
+            3001: integrity::msg_ssr_flag_high_level_dep_a
+            3002: integrity::msg_ssr_flag_high_level
             3005: integrity::msg_ssr_flag_satellites
             3011: integrity::msg_ssr_flag_tropo_grid_points
             3015: integrity::msg_ssr_flag_iono_grid_points

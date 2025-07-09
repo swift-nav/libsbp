@@ -16,6 +16,7 @@
 pub use integrity_ssr_header::IntegritySSRHeader;
 pub use msg_acknowledge::MsgAcknowledge;
 pub use msg_ssr_flag_high_level::MsgSsrFlagHighLevel;
+pub use msg_ssr_flag_high_level_dep_a::MsgSsrFlagHighLevelDepA;
 pub use msg_ssr_flag_iono_grid_point_sat_los::MsgSsrFlagIonoGridPointSatLos;
 pub use msg_ssr_flag_iono_grid_points::MsgSsrFlagIonoGridPoints;
 pub use msg_ssr_flag_iono_tile_sat_los::MsgSsrFlagIonoTileSatLos;
@@ -888,9 +889,13 @@ pub mod msg_ssr_flag_high_level {
         /// GNSS reference time of the observation used to generate the flag.
         #[cfg_attr(feature = "serde", serde(rename = "obs_time"))]
         pub obs_time: GpsTimeSec,
-        /// GNSS reference time of the correction associated to the flag.
-        #[cfg_attr(feature = "serde", serde(rename = "corr_time"))]
-        pub corr_time: GpsTimeSec,
+        /// GNSS reference time of the atmospheric correction associated to the
+        /// flag.
+        #[cfg_attr(feature = "serde", serde(rename = "atmo_corr_time"))]
+        pub atmo_corr_time: GpsTimeSec,
+        /// GNSS reference time of the satellite correction associated to the flag.
+        #[cfg_attr(feature = "serde", serde(rename = "sat_corr_time"))]
+        pub sat_corr_time: GpsTimeSec,
         /// SSR Solution ID.
         #[cfg_attr(feature = "serde", serde(rename = "ssr_sol_id"))]
         pub ssr_sol_id: u8,
@@ -1083,7 +1088,7 @@ pub mod msg_ssr_flag_high_level {
     }
 
     impl ConcreteMessage for MsgSsrFlagHighLevel {
-        const MESSAGE_TYPE: u16 = 3001;
+        const MESSAGE_TYPE: u16 = 3002;
         const MESSAGE_NAME: &'static str = "MSG_SSR_FLAG_HIGH_LEVEL";
     }
 
@@ -1128,6 +1133,663 @@ pub mod msg_ssr_flag_high_level {
     }
 
     impl WireFormat for MsgSsrFlagHighLevel {
+        const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
+            + <GpsTimeSec as WireFormat>::MIN_LEN
+            + <GpsTimeSec as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <[u8; 5] as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.obs_time)
+                + WireFormat::len(&self.atmo_corr_time)
+                + WireFormat::len(&self.sat_corr_time)
+                + WireFormat::len(&self.ssr_sol_id)
+                + WireFormat::len(&self.tile_set_id)
+                + WireFormat::len(&self.tile_id)
+                + WireFormat::len(&self.chain_id)
+                + WireFormat::len(&self.use_gps_sat)
+                + WireFormat::len(&self.use_gal_sat)
+                + WireFormat::len(&self.use_bds_sat)
+                + WireFormat::len(&self.use_qzss_sat)
+                + WireFormat::len(&self.reserved)
+                + WireFormat::len(&self.use_tropo_grid_points)
+                + WireFormat::len(&self.use_iono_grid_points)
+                + WireFormat::len(&self.use_iono_tile_sat_los)
+                + WireFormat::len(&self.use_iono_grid_point_sat_los)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.obs_time, buf);
+            WireFormat::write(&self.atmo_corr_time, buf);
+            WireFormat::write(&self.sat_corr_time, buf);
+            WireFormat::write(&self.ssr_sol_id, buf);
+            WireFormat::write(&self.tile_set_id, buf);
+            WireFormat::write(&self.tile_id, buf);
+            WireFormat::write(&self.chain_id, buf);
+            WireFormat::write(&self.use_gps_sat, buf);
+            WireFormat::write(&self.use_gal_sat, buf);
+            WireFormat::write(&self.use_bds_sat, buf);
+            WireFormat::write(&self.use_qzss_sat, buf);
+            WireFormat::write(&self.reserved, buf);
+            WireFormat::write(&self.use_tropo_grid_points, buf);
+            WireFormat::write(&self.use_iono_grid_points, buf);
+            WireFormat::write(&self.use_iono_tile_sat_los, buf);
+            WireFormat::write(&self.use_iono_grid_point_sat_los, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrFlagHighLevel {
+                sender_id: None,
+                obs_time: WireFormat::parse_unchecked(buf),
+                atmo_corr_time: WireFormat::parse_unchecked(buf),
+                sat_corr_time: WireFormat::parse_unchecked(buf),
+                ssr_sol_id: WireFormat::parse_unchecked(buf),
+                tile_set_id: WireFormat::parse_unchecked(buf),
+                tile_id: WireFormat::parse_unchecked(buf),
+                chain_id: WireFormat::parse_unchecked(buf),
+                use_gps_sat: WireFormat::parse_unchecked(buf),
+                use_gal_sat: WireFormat::parse_unchecked(buf),
+                use_bds_sat: WireFormat::parse_unchecked(buf),
+                use_qzss_sat: WireFormat::parse_unchecked(buf),
+                reserved: WireFormat::parse_unchecked(buf),
+                use_tropo_grid_points: WireFormat::parse_unchecked(buf),
+                use_iono_grid_points: WireFormat::parse_unchecked(buf),
+                use_iono_tile_sat_los: WireFormat::parse_unchecked(buf),
+                use_iono_grid_point_sat_los: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Use GPS satellites.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum UseGpsSatellites {
+        /// Nominal
+        Nominal = 0,
+
+        /// Warning
+        Warning = 1,
+
+        /// Alert
+        Alert = 2,
+
+        /// Not monitored
+        NotMonitored = 3,
+    }
+
+    impl std::fmt::Display for UseGpsSatellites {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                UseGpsSatellites::Nominal => f.write_str("Nominal"),
+                UseGpsSatellites::Warning => f.write_str("Warning"),
+                UseGpsSatellites::Alert => f.write_str("Alert"),
+                UseGpsSatellites::NotMonitored => f.write_str("Not monitored"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for UseGpsSatellites {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(UseGpsSatellites::Nominal),
+                1 => Ok(UseGpsSatellites::Warning),
+                2 => Ok(UseGpsSatellites::Alert),
+                3 => Ok(UseGpsSatellites::NotMonitored),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Use GAL satellites.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum UseGalSatellites {
+        /// Nominal
+        Nominal = 0,
+
+        /// Warning
+        Warning = 1,
+
+        /// Alert
+        Alert = 2,
+
+        /// Not monitored
+        NotMonitored = 3,
+    }
+
+    impl std::fmt::Display for UseGalSatellites {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                UseGalSatellites::Nominal => f.write_str("Nominal"),
+                UseGalSatellites::Warning => f.write_str("Warning"),
+                UseGalSatellites::Alert => f.write_str("Alert"),
+                UseGalSatellites::NotMonitored => f.write_str("Not monitored"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for UseGalSatellites {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(UseGalSatellites::Nominal),
+                1 => Ok(UseGalSatellites::Warning),
+                2 => Ok(UseGalSatellites::Alert),
+                3 => Ok(UseGalSatellites::NotMonitored),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Use BDS satellites.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum UseBdsSatellites {
+        /// Nominal
+        Nominal = 0,
+
+        /// Warning
+        Warning = 1,
+
+        /// Alert
+        Alert = 2,
+
+        /// Not monitored
+        NotMonitored = 3,
+    }
+
+    impl std::fmt::Display for UseBdsSatellites {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                UseBdsSatellites::Nominal => f.write_str("Nominal"),
+                UseBdsSatellites::Warning => f.write_str("Warning"),
+                UseBdsSatellites::Alert => f.write_str("Alert"),
+                UseBdsSatellites::NotMonitored => f.write_str("Not monitored"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for UseBdsSatellites {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(UseBdsSatellites::Nominal),
+                1 => Ok(UseBdsSatellites::Warning),
+                2 => Ok(UseBdsSatellites::Alert),
+                3 => Ok(UseBdsSatellites::NotMonitored),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Use QZSS satellites.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum UseQzssSatellites {
+        /// Nominal
+        Nominal = 0,
+
+        /// Warning
+        Warning = 1,
+
+        /// Alert
+        Alert = 2,
+
+        /// Not monitored
+        NotMonitored = 3,
+    }
+
+    impl std::fmt::Display for UseQzssSatellites {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                UseQzssSatellites::Nominal => f.write_str("Nominal"),
+                UseQzssSatellites::Warning => f.write_str("Warning"),
+                UseQzssSatellites::Alert => f.write_str("Alert"),
+                UseQzssSatellites::NotMonitored => f.write_str("Not monitored"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for UseQzssSatellites {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(UseQzssSatellites::Nominal),
+                1 => Ok(UseQzssSatellites::Warning),
+                2 => Ok(UseQzssSatellites::Alert),
+                3 => Ok(UseQzssSatellites::NotMonitored),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Use tropo grid points.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum UseTropoGridPoints {
+        /// Nominal
+        Nominal = 0,
+
+        /// Warning
+        Warning = 1,
+
+        /// Alert
+        Alert = 2,
+
+        /// Not monitored
+        NotMonitored = 3,
+    }
+
+    impl std::fmt::Display for UseTropoGridPoints {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                UseTropoGridPoints::Nominal => f.write_str("Nominal"),
+                UseTropoGridPoints::Warning => f.write_str("Warning"),
+                UseTropoGridPoints::Alert => f.write_str("Alert"),
+                UseTropoGridPoints::NotMonitored => f.write_str("Not monitored"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for UseTropoGridPoints {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(UseTropoGridPoints::Nominal),
+                1 => Ok(UseTropoGridPoints::Warning),
+                2 => Ok(UseTropoGridPoints::Alert),
+                3 => Ok(UseTropoGridPoints::NotMonitored),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Use iono grid points.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum UseIonoGridPoints {
+        /// Nominal
+        Nominal = 0,
+
+        /// Warning
+        Warning = 1,
+
+        /// Alert
+        Alert = 2,
+
+        /// Not monitored
+        NotMonitored = 3,
+    }
+
+    impl std::fmt::Display for UseIonoGridPoints {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                UseIonoGridPoints::Nominal => f.write_str("Nominal"),
+                UseIonoGridPoints::Warning => f.write_str("Warning"),
+                UseIonoGridPoints::Alert => f.write_str("Alert"),
+                UseIonoGridPoints::NotMonitored => f.write_str("Not monitored"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for UseIonoGridPoints {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(UseIonoGridPoints::Nominal),
+                1 => Ok(UseIonoGridPoints::Warning),
+                2 => Ok(UseIonoGridPoints::Alert),
+                3 => Ok(UseIonoGridPoints::NotMonitored),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Use iono tile satellite LoS.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum UseIonoTileSatelliteLoS {
+        /// Nominal
+        Nominal = 0,
+
+        /// Warning
+        Warning = 1,
+
+        /// Alert
+        Alert = 2,
+
+        /// Not monitored
+        NotMonitored = 3,
+    }
+
+    impl std::fmt::Display for UseIonoTileSatelliteLoS {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                UseIonoTileSatelliteLoS::Nominal => f.write_str("Nominal"),
+                UseIonoTileSatelliteLoS::Warning => f.write_str("Warning"),
+                UseIonoTileSatelliteLoS::Alert => f.write_str("Alert"),
+                UseIonoTileSatelliteLoS::NotMonitored => f.write_str("Not monitored"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for UseIonoTileSatelliteLoS {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(UseIonoTileSatelliteLoS::Nominal),
+                1 => Ok(UseIonoTileSatelliteLoS::Warning),
+                2 => Ok(UseIonoTileSatelliteLoS::Alert),
+                3 => Ok(UseIonoTileSatelliteLoS::NotMonitored),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Use iono grid point satellite LoS.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum UseIonoGridPointSatelliteLoS {
+        /// Nominal
+        Nominal = 0,
+
+        /// Warning
+        Warning = 1,
+
+        /// Alert
+        Alert = 2,
+
+        /// Not monitored
+        NotMonitored = 3,
+    }
+
+    impl std::fmt::Display for UseIonoGridPointSatelliteLoS {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                UseIonoGridPointSatelliteLoS::Nominal => f.write_str("Nominal"),
+                UseIonoGridPointSatelliteLoS::Warning => f.write_str("Warning"),
+                UseIonoGridPointSatelliteLoS::Alert => f.write_str("Alert"),
+                UseIonoGridPointSatelliteLoS::NotMonitored => f.write_str("Not monitored"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for UseIonoGridPointSatelliteLoS {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(UseIonoGridPointSatelliteLoS::Nominal),
+                1 => Ok(UseIonoGridPointSatelliteLoS::Warning),
+                2 => Ok(UseIonoGridPointSatelliteLoS::Alert),
+                3 => Ok(UseIonoGridPointSatelliteLoS::NotMonitored),
+                i => Err(i),
+            }
+        }
+    }
+}
+
+pub mod msg_ssr_flag_high_level_dep_a {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Deprecated
+    ///
+    /// Deprecated.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgSsrFlagHighLevelDepA {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// GNSS reference time of the observation used to generate the flag.
+        #[cfg_attr(feature = "serde", serde(rename = "obs_time"))]
+        pub obs_time: GpsTimeSec,
+        /// GNSS reference time of the correction associated to the flag.
+        #[cfg_attr(feature = "serde", serde(rename = "corr_time"))]
+        pub corr_time: GpsTimeSec,
+        /// SSR Solution ID.
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_sol_id"))]
+        pub ssr_sol_id: u8,
+        /// Unique identifier of the set this tile belongs to.
+        #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
+        pub tile_set_id: u16,
+        /// Unique identifier of this tile in the tile set.
+        #[cfg_attr(feature = "serde", serde(rename = "tile_id"))]
+        pub tile_id: u16,
+        /// Chain and type of flag.
+        #[cfg_attr(feature = "serde", serde(rename = "chain_id"))]
+        pub chain_id: u8,
+        /// Use GPS satellites.
+        #[cfg_attr(feature = "serde", serde(rename = "use_gps_sat"))]
+        pub use_gps_sat: u8,
+        /// Use GAL satellites.
+        #[cfg_attr(feature = "serde", serde(rename = "use_gal_sat"))]
+        pub use_gal_sat: u8,
+        /// Use BDS satellites.
+        #[cfg_attr(feature = "serde", serde(rename = "use_bds_sat"))]
+        pub use_bds_sat: u8,
+        /// Use QZSS satellites.
+        #[cfg_attr(feature = "serde", serde(rename = "use_qzss_sat"))]
+        pub use_qzss_sat: u8,
+        /// Reserved
+        #[cfg_attr(feature = "serde", serde(rename = "reserved"))]
+        pub reserved: [u8; 5],
+        /// Use tropo grid points.
+        #[cfg_attr(feature = "serde", serde(rename = "use_tropo_grid_points"))]
+        pub use_tropo_grid_points: u8,
+        /// Use iono grid points.
+        #[cfg_attr(feature = "serde", serde(rename = "use_iono_grid_points"))]
+        pub use_iono_grid_points: u8,
+        /// Use iono tile satellite LoS.
+        #[cfg_attr(feature = "serde", serde(rename = "use_iono_tile_sat_los"))]
+        pub use_iono_tile_sat_los: u8,
+        /// Use iono grid point satellite LoS.
+        #[cfg_attr(feature = "serde", serde(rename = "use_iono_grid_point_sat_los"))]
+        pub use_iono_grid_point_sat_los: u8,
+    }
+
+    impl MsgSsrFlagHighLevelDepA {
+        /// Gets the [UseGpsSatellites][self::UseGpsSatellites] stored in the `use_gps_sat` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UseGpsSatellites` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UseGpsSatellites` were added.
+        pub fn use_gps_satellites(&self) -> Result<UseGpsSatellites, u8> {
+            get_bit_range!(self.use_gps_sat, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [UseGpsSatellites][UseGpsSatellites] of the `use_gps_sat` bitfield.
+        pub fn set_use_gps_satellites(&mut self, use_gps_satellites: UseGpsSatellites) {
+            set_bit_range!(&mut self.use_gps_sat, use_gps_satellites, u8, u8, 2, 0);
+        }
+
+        /// Gets the [UseGalSatellites][self::UseGalSatellites] stored in the `use_gal_sat` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UseGalSatellites` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UseGalSatellites` were added.
+        pub fn use_gal_satellites(&self) -> Result<UseGalSatellites, u8> {
+            get_bit_range!(self.use_gal_sat, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [UseGalSatellites][UseGalSatellites] of the `use_gal_sat` bitfield.
+        pub fn set_use_gal_satellites(&mut self, use_gal_satellites: UseGalSatellites) {
+            set_bit_range!(&mut self.use_gal_sat, use_gal_satellites, u8, u8, 2, 0);
+        }
+
+        /// Gets the [UseBdsSatellites][self::UseBdsSatellites] stored in the `use_bds_sat` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UseBdsSatellites` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UseBdsSatellites` were added.
+        pub fn use_bds_satellites(&self) -> Result<UseBdsSatellites, u8> {
+            get_bit_range!(self.use_bds_sat, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [UseBdsSatellites][UseBdsSatellites] of the `use_bds_sat` bitfield.
+        pub fn set_use_bds_satellites(&mut self, use_bds_satellites: UseBdsSatellites) {
+            set_bit_range!(&mut self.use_bds_sat, use_bds_satellites, u8, u8, 2, 0);
+        }
+
+        /// Gets the [UseQzssSatellites][self::UseQzssSatellites] stored in the `use_qzss_sat` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UseQzssSatellites` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UseQzssSatellites` were added.
+        pub fn use_qzss_satellites(&self) -> Result<UseQzssSatellites, u8> {
+            get_bit_range!(self.use_qzss_sat, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [UseQzssSatellites][UseQzssSatellites] of the `use_qzss_sat` bitfield.
+        pub fn set_use_qzss_satellites(&mut self, use_qzss_satellites: UseQzssSatellites) {
+            set_bit_range!(&mut self.use_qzss_sat, use_qzss_satellites, u8, u8, 2, 0);
+        }
+
+        /// Gets the [UseTropoGridPoints][self::UseTropoGridPoints] stored in the `use_tropo_grid_points` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UseTropoGridPoints` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UseTropoGridPoints` were added.
+        pub fn use_tropo_grid_points(&self) -> Result<UseTropoGridPoints, u8> {
+            get_bit_range!(self.use_tropo_grid_points, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [UseTropoGridPoints][UseTropoGridPoints] of the `use_tropo_grid_points` bitfield.
+        pub fn set_use_tropo_grid_points(&mut self, use_tropo_grid_points: UseTropoGridPoints) {
+            set_bit_range!(
+                &mut self.use_tropo_grid_points,
+                use_tropo_grid_points,
+                u8,
+                u8,
+                2,
+                0
+            );
+        }
+
+        /// Gets the [UseIonoGridPoints][self::UseIonoGridPoints] stored in the `use_iono_grid_points` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UseIonoGridPoints` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UseIonoGridPoints` were added.
+        pub fn use_iono_grid_points(&self) -> Result<UseIonoGridPoints, u8> {
+            get_bit_range!(self.use_iono_grid_points, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [UseIonoGridPoints][UseIonoGridPoints] of the `use_iono_grid_points` bitfield.
+        pub fn set_use_iono_grid_points(&mut self, use_iono_grid_points: UseIonoGridPoints) {
+            set_bit_range!(
+                &mut self.use_iono_grid_points,
+                use_iono_grid_points,
+                u8,
+                u8,
+                2,
+                0
+            );
+        }
+
+        /// Gets the [UseIonoTileSatelliteLoS][self::UseIonoTileSatelliteLoS] stored in the `use_iono_tile_sat_los` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UseIonoTileSatelliteLoS` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UseIonoTileSatelliteLoS` were added.
+        pub fn use_iono_tile_satellite_lo_s(&self) -> Result<UseIonoTileSatelliteLoS, u8> {
+            get_bit_range!(self.use_iono_tile_sat_los, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [UseIonoTileSatelliteLoS][UseIonoTileSatelliteLoS] of the `use_iono_tile_sat_los` bitfield.
+        pub fn set_use_iono_tile_satellite_lo_s(
+            &mut self,
+            use_iono_tile_satellite_lo_s: UseIonoTileSatelliteLoS,
+        ) {
+            set_bit_range!(
+                &mut self.use_iono_tile_sat_los,
+                use_iono_tile_satellite_lo_s,
+                u8,
+                u8,
+                2,
+                0
+            );
+        }
+
+        /// Gets the [UseIonoGridPointSatelliteLoS][self::UseIonoGridPointSatelliteLoS] stored in the `use_iono_grid_point_sat_los` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UseIonoGridPointSatelliteLoS` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UseIonoGridPointSatelliteLoS` were added.
+        pub fn use_iono_grid_point_satellite_lo_s(
+            &self,
+        ) -> Result<UseIonoGridPointSatelliteLoS, u8> {
+            get_bit_range!(self.use_iono_grid_point_sat_los, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [UseIonoGridPointSatelliteLoS][UseIonoGridPointSatelliteLoS] of the `use_iono_grid_point_sat_los` bitfield.
+        pub fn set_use_iono_grid_point_satellite_lo_s(
+            &mut self,
+            use_iono_grid_point_satellite_lo_s: UseIonoGridPointSatelliteLoS,
+        ) {
+            set_bit_range!(
+                &mut self.use_iono_grid_point_sat_los,
+                use_iono_grid_point_satellite_lo_s,
+                u8,
+                u8,
+                2,
+                0
+            );
+        }
+    }
+
+    impl ConcreteMessage for MsgSsrFlagHighLevelDepA {
+        const MESSAGE_TYPE: u16 = 3001;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_FLAG_HIGH_LEVEL_DEP_A";
+    }
+
+    impl SbpMessage for MsgSsrFlagHighLevelDepA {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
+    }
+
+    impl FriendlyName for MsgSsrFlagHighLevelDepA {
+        fn friendly_name() -> &'static str {
+            "SSR FLAG HIGH LEVEL DEP A"
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrFlagHighLevelDepA {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrFlagHighLevelDepA(m) => Ok(m),
+                _ => Err(TryFromSbpError(msg)),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrFlagHighLevelDepA {
         const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
             + <GpsTimeSec as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -1178,7 +1840,7 @@ pub mod msg_ssr_flag_high_level {
             WireFormat::write(&self.use_iono_grid_point_sat_los, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-            MsgSsrFlagHighLevel {
+            MsgSsrFlagHighLevelDepA {
                 sender_id: None,
                 obs_time: WireFormat::parse_unchecked(buf),
                 corr_time: WireFormat::parse_unchecked(buf),

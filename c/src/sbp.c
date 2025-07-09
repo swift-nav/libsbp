@@ -162,7 +162,7 @@
  *         registered for that message type.
  */
 static s8 sbp_register_callback_generic(sbp_state_t *s, sbp_msg_type_t msg_type,
-                                        sbp_callback_t cb, 
+                                        sbp_callback_t cb,
                                         void *context,
                                         sbp_msg_callbacks_node_t *node) {
   /* Check our callback function pointer isn't NULL. */
@@ -505,7 +505,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
         ret = process_frame(s, s->sender_id, s->msg_type,
                                 s->msg_len, SBP_FRAME_MSG_PAYLOAD(s->frame_buff));
         return ret;
-      } 
+      }
       return SBP_CRC_ERROR;
     }
     break;

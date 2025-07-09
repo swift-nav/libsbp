@@ -1,4 +1,4 @@
-description: Unit tests for swiftnav.sbp.integrity MsgSsrFlagHighLevel
+description: Unit tests for swiftnav.sbp.integrity MsgSsrFlagHighLevelDepA
 generated_on: 2025-07-09 # manually generated
 package: sbp.integrity
 tests:
@@ -7,11 +7,8 @@ tests:
         obs_time:
           tow: 180
           wn: 3
-        sat_corr_time:
+        corr_time:
           tow: 360
-          wn: 6
-        atmo_corr_time:
-          tow: 365
           wn: 6
         ssr_sol_id: 10
         tile_set_id: 20
@@ -32,18 +29,18 @@ tests:
         use_iono_tile_sat_los: 7
         use_iono_grid_point_sat_los: 8
       module: sbp.integrity
-      name: MsgSsrFlagHighLevel
-    msg_type: "3002"
+      name: MsgSsrFlagHighLevelDepA
+    msg_type: "3001"
     raw_json:
-      '{"obs_time": {"tow": 180, "wn": 3}, "sat_corr_time": {"tow": 360, "wn": 6}, "atmo_corr_time": {"tow": 365, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20,
+      '{"obs_time": {"tow": 180, "wn": 3}, "corr_time": {"tow": 360, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20,
       "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "use_qzss_sat": 4, "reserved": [0,0,0,0,0],
       "use_tropo_grid_points": 5, "use_iono_grid_points": 6, "use_iono_tile_sat_los": 7, "use_iono_grid_point_sat_los": 8,
-      "preamble": 85, "msg_type": 3002, "sender": 66, "length": 37, "payload": "tAAAAAMAbQEAAAYAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==", "crc": 61105}'
-    raw_packet: VboLQgAltAAAAAMAbQEAAAYAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCLHu
+      "preamble": 85, "msg_type": 3001, "sender": 66, "length": 31, "payload": "tAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==", "crc": 873}'
+    raw_packet: VbkLQgAftAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCGkD
     sbp:
       preamble: "0x55"
-      msg_type: "0x0BBA"
+      msg_type: "0x0BB9"
       sender: "0x0042"
-      length: 37
-      payload: tAAAAAMAbQEAAAYAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==
-      crc: "0xEEB1"
+      length: 31
+      payload: tAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==
+      crc: "0x0369"

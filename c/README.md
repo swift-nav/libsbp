@@ -1,4 +1,4 @@
-## SBP Bindings for C
+# SBP Bindings for C
 
 libsbp provides C bindings for Swift Binary Protocol (SBP), the native
 binary protocol used by the
@@ -11,13 +11,13 @@ with no dependencies other than the standard C libraries.
 On Debian-based systems (including Ubuntu 12.10 or later) you can get
 dependencies with:
 
-```shell
+```sh
 sudo apt-get install build-essential pkg-config cmake doxygen check clang-format-6.0
 ```
 
 On Mac:
 
-```shell
+```sh
 brew tap swift-nav/swift-devs
 brew install check cmake pkg-config doxygen clang-tools-6.0
 ```
