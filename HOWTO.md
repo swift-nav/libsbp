@@ -1,23 +1,26 @@
-libsbp Development Procedures
-=============================
+# libsbp Development Procedures
 
 <!-- toc -->
 
-- [Adding and Testing New Messages](#adding-and-testing-new-messages)
-  * [Generating missing tests](#generating-missing-tests)
-- [Message Guidelines](#message-guidelines)
-- [Releasing New Versions of the Library](#releasing-new-versions-of-the-library)
-  * [Using Docker](#using-docker)
-  * [The Process](#the-process)
-- [Installing QuickType](#installing-quicktype)
-- [Distributing Rust](#distributing-rust)
-- [Distributing Python](#distributing-python)
-  * [Troubleshooting](#troubleshooting)
-    + [Error: `!!! No Python wheel (.whl) file found...`](#error--no-python-wheel-whl-file-found)
-    + [Tox error: `ERROR: FAIL could not package project`](#tox-error-error-fail-could-not-package-project)
-    + [Tox error: `ERROR: cowardly refusing to delete envdir`](#tox-error-error-cowardly-refusing-to-delete-envdir)
-- [Distributing Java](#distributing-java)
-- [Contributions](#contributions)
+- [libsbp Development Procedures](#libsbp-development-procedures)
+  - [Adding and Testing New Messages](#adding-and-testing-new-messages)
+    - [Generating missing tests](#generating-missing-tests)
+      - [Existing Messages](#existing-messages)
+      - [New Messages](#new-messages)
+  - [Message Guidelines](#message-guidelines)
+  - [Releasing New Versions of the Library](#releasing-new-versions-of-the-library)
+    - [Using Docker](#using-docker)
+    - [The Process](#the-process)
+  - [Installing QuickType](#installing-quicktype)
+  - [Distributing Rust](#distributing-rust)
+  - [Distributing Python](#distributing-python)
+    - [Troubleshooting](#troubleshooting)
+      - [Error: `!!! No Python wheel (.whl) file found...`](#error--no-python-wheel-whl-file-found)
+      - [Tox error: `ERROR: FAIL could not package project`](#tox-error-error-fail-could-not-package-project)
+      - [Tox error: `ERROR: cowardly refusing to delete envdir`](#tox-error-error-cowardly-refusing-to-delete-envdir)
+  - [Distributing Java](#distributing-java)
+    - [Generating GPG key for Java](#generating-gpg-key-for-java)
+  - [Contributions](#contributions)
 
 <!-- tocstop -->
 
@@ -25,7 +28,7 @@ This document summarizes some practices around contributions to this
 library. These instructions don't come with a warranty yet, so please
 feel free to update it to mirror reality.
 
-# Adding and Testing New Messages
+## Adding and Testing New Messages
 
 Adding new SBP messages is currently a very organic, social
 process. This is likely to change in the future.
@@ -41,8 +44,8 @@ process. This is likely to change in the future.
    by the corresponding number of new messages.
 
 3. If adding a new "group" of messages (adding a new YAML file to
-   `spec/yaml/swiftnav/sbp`), add the new message group to 
-   `python/sbp/table.py` and `javascript/sbp/msg.js`. 
+   `spec/yaml/swiftnav/sbp`), add the new message group to
+   `python/sbp/table.py` and `javascript/sbp/msg.js`.
 
 4. Generate new clients and documentation by running `make
    all`. Verify that the generated code, which isn't too complicated,
@@ -66,14 +69,16 @@ process. This is likely to change in the future.
    new message, deploy the updated Python client first, and then the C
    client. We haven't quite decided on the details of this process.
 
-##  Generating missing tests
+### Generating missing tests
+
 There are some tools that can assist with generating YAML based tests, like the
 ones already defined in the [`test`](spec/tests/yaml/swiftnav/sbp) directory.
 These YAML files are used to generate tests in the various languages that libsbp
 supports, to ensure that serializing and deserializing messages works as
 intended
 
-### Existing Messages
+#### Existing Messages
+
 For messages that are already being sent (eg: by Starling, or by a Piksi), the
 `generator/missing.py` script can be used to connect to a socket and
 automatically generate tests for any received messages that do not already have
@@ -81,11 +86,12 @@ tests.
 
 Usage for `missing`:
 
-```shell
+```sh
 python missing.py --host [HOST] --port [PORT]
 ```
 
-### New Messages
+#### New Messages
+
 The `json2test` script can be used to automatically generate tests for newly
 defined messages. The json2test script uses [uv](https://docs.astral.sh/uv/) to
 manage its dependencies, which can be installed following the instructions on that
@@ -106,7 +112,7 @@ form:
 
 And then generate a test for using `json2test` with:
 
-```shell
+```sh
 uv -n run json2test.py --input heartbeat.json --output ../spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml
 ```
 
@@ -118,14 +124,14 @@ caching is turned off.
 
 Usage for `json2test`
 
-```shell
+```sh
 uv -n run json2test --input [PATH_TO_JSON_IN] --output [PATH_TO_YAML_OUT]
 ```
 
-* The `msg_type` can also be provided through a CLI parameter, with `--msg-id
+- The `msg_type` can also be provided through a CLI parameter, with `--msg-id
   [MESSAGE_ID]`
 
-# Message Guidelines
+## Message Guidelines
 
 Some thoughts to consider when adding a new message:
 
@@ -156,23 +162,27 @@ Some thoughts to consider when adding a new message:
   contents is fine, as long as the migrating consumers is a
   well-understood process.
 
-# Releasing New Versions of the Library
+## Releasing New Versions of the Library
 
-## Using Docker
+### Using Docker
 
 It's highly recommended to use the docker container to run the release process,
 the docker container can be pulled from DockerHub and launched via this command:
 
-    docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-02-10
+```sh
+docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-02-10
+```
 
 You can invoke individual stages like so:
 
-    docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-02-10 \
-      /bin/bash -c "make python"
+```sh
+docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-02-10 \
+   /bin/bash -c "make python"
+```
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 
-## The Process
+### The Process
 
 Oh boy, so you've decided to release a new version of libsbp.  It's recommended
 this process is performed using the above docker container.  You'll likely want
@@ -181,27 +191,27 @@ inside the container (so you don't have to setup git inside the docker container
 
 This process describes running `make <language>` in multiple places. These targets will
 both regenerate the language bindings and then build and run any test suites.
-Skipping tests should not be done by default, but most languages have a "gen" target 
-available - `make gen-<language>` - which will only regenerate the bindings without 
+Skipping tests should not be done by default, but most languages have a "gen" target
+available - `make gen-<language>` - which will only regenerate the bindings without
 running tests. This can be used to split or speed up the process should any errors occur
 and something needs to be repeated.
 
 1. It's easiest to do this on the master branch. Start by tagging the release version:
 
-    ```shell
+    ```sh
     # Produces most recent tag (e.g., v2.7.5)
     git describe --abbrev=0 --tags
     # Increment that value, create a new one (e.g, v2.7.6)
     git tag -a <INCREMENTED_TAG> -m "Version <INCREMENTED_TAG> of libsbp."
     ```
 
-    For library versions (i.e. `<INCREMENTED_TAG>`) we try to follow 
+    For library versions (i.e. `<INCREMENTED_TAG>`) we try to follow
     [SemVer](https://semver.org/).  For message versioning refer to this [document
     on versioning](./VERSIONING.md).
-    
+
 2. Make sure that the repo is reported as clean, e.g.
 
-    ```shell
+    ```sh
     git describe --tags --dirty --always
     ```
 
@@ -210,7 +220,7 @@ and something needs to be repeated.
 
 3. Run make targets for each language and re-tag.  For python:
 
-    ```shell
+    ```sh
     make python
     git add python/sbp/RELEASE-VERSION
     git commit -m 'Release <INCREMENTED_TAG>'
@@ -220,22 +230,22 @@ and something needs to be repeated.
    For Java, jsonschema, and Protobuf (these should not require bumping the git tag,
    unless the generated files are out of date):
 
-    ```shell
+    ```sh
     make java jsonschema protobuf
     ```
 
    For C, Haskell and JavaScript (JavaScript, make needs to be run twice to update the package information):
 
-    ```shell
+    ```sh
     make c haskell javascript rust
     git add c/include/libsbp/version.h haskell/sbp.cabal rust/sbp/Cargo.toml
     git commit --amend -a -m 'Release <INCREMENTED_TAG>'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
 
-
     For JavaScript, needs to be run twice to update the package information
-    ```shell
+
+    ```sh
     make javascript
     make javascript
     git add javascript/sbp/RELEASE-VERSION package.json package-lock.json
@@ -244,7 +254,7 @@ and something needs to be repeated.
 
     For Kaitai
 
-    ```shell
+    ```sh
     make kaitai
     git add kaitai/ksy/sbp.ksy
     git commit --amend -a -m 'Release <INCREMENTED_TAG>'
@@ -252,17 +262,17 @@ and something needs to be repeated.
 
 4. Build the docs:
 
-    ```shell
+    ```sh
     make docs
     ```
-   
+
    Be sure to inspect the [docs](docs/sbp.pdf) manually, as LaTeX sometimes needs to be run multiple
-   times to compile properly. If something looks off with the docs, run `make docs` repeatedly until 
+   times to compile properly. If something looks off with the docs, run `make docs` repeatedly until
    the issue is fixed.
 
    Then commit the docs and re-tag:
 
-    ```shell
+    ```sh
     git add docs/sbp.pdf
     git commit --amend -a -m 'Release <INCREMENTED_TAG>'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
@@ -281,7 +291,8 @@ and something needs to be repeated.
    documentation are consistent.
 
 7. Push the release to GitHub:
-    ```shell
+
+    ```sh
     git push origin master <INCREMENTED_TAG>
     ```
 
@@ -302,7 +313,7 @@ and something needs to be repeated.
 
    Again, javascript needs to be built twice to get the correct package versions
 
-    ```
+    ```sh
     git commit --allow-empty -m "prep for next release #no_auto_pr"
     make all
     make javascript
@@ -311,28 +322,28 @@ and something needs to be repeated.
     git push origin master
     ```
 
-9. Distribute release packages.  You can attempt to run all releases
-   with `make dist` -- this will likely not work through... it is
-   advisable to run each dist target separately.  In particular:
+10. Distribute release packages.  You can attempt to run all releases
+    with `make dist` -- this will likely not work through... it is
+    advisable to run each dist target separately.  In particular:
 
-   - `make dist-javascript`
-   - `make dist-haskell`
-   - `make dist-rust` (see section on Rust below)
-   - `make dist-python` (see section on Python below)
-   - `make dist-java` (see section on Java below)
+    - `make dist-javascript`
+    - `make dist-haskell`
+    - `make dist-rust` (see section on Rust below)
+    - `make dist-python` (see section on Python below)
+    - `make dist-java` (see section on Java below)
 
-   You may need credentials on the appropriate package repositories. Ignore the
-   GPG error in `stack`, the package will get uploaded correctly anyway.  If
-   the release is a Python only change it may be appropriate to just publish to
-   PyPI with `make dist-python` (see section on Python below) -- we typically
-   update all other supported languages when we make an official firmware
-   release.
+    You may need credentials on the appropriate package repositories. Ignore the
+    GPG error in `stack`, the package will get uploaded correctly anyway.  If
+    the release is a Python only change it may be appropriate to just publish to
+    PyPI with `make dist-python` (see section on Python below) -- we typically
+    update all other supported languages when we make an official firmware
+    release.
 
-10. Releases are not only never perfect, they never really end. Please
+11. Releases are not only never perfect, they never really end. Please
    pay special attention to any downstream projects or users that may
    have issues or regressions as a consequence of the release version.
 
-# Installing QuickType
+## Installing QuickType
 
 For web clients we generate JSON schema definitions of the SBP message.
 This allows web clients to build "native" objects out of SBP JSON.
@@ -343,36 +354,36 @@ In order to run the `make quicktype-*` target you need to install the
 quicktype tool first.  No particular version of this tool is required
 at the moment.
 
-# Distributing Rust
+## Distributing Rust
 
 To distribute Rust.  Use the `cargo-release` tool:
 
-```
+```sh
 cargo install cargo-release
 ```
 
 Once you have logged in to crates.io with `cargo`:
 
-```shell
+```sh
 cargo release <INCREMENTED_TAG> --allow-branch HEAD --execute
 ```
 
 Then rollback any commits that are created:
 
-```
+```sh
 git reset --hard v<INCREMENTED_TAG>
 ```
 
-# Distributing Python
+## Distributing Python
 
 The build of the libsbp wheel can be done via the `libsbp-build` container
 described above.
 
 You must have the correct token set in your environment to publish to PyPI.
 
-## Troubleshooting
+### Troubleshooting
 
-### Error: `!!! No Python wheel (.whl) file found...`
+#### Error: `!!! No Python wheel (.whl) file found...`
 
 This usually means the git checkout you're building from is not in a "clean" state.  The
 build scripts will use the git command `git describe --tag --always --dirty` to generate
@@ -380,47 +391,55 @@ a version.  Either temporarily force update the tag with `git tag -f vM.N.X` (do
 push this unintentionally) and/or make sure you're submodule are up-to-date with
 `git submodule update --init --checkout --recursive`.
 
-### Tox error: `ERROR: FAIL could not package project`
+#### Tox error: `ERROR: FAIL could not package project`
 
 Tox needs to be run with the Python it was installed with (and apparently must
 run with Python 2) otherwise you'll get an error similar to:
 
+```sh
     ERROR: FAIL could not package project - v = InvocationError('/home/ubuntu/dev/libsbp/python/.tox/.tox/bin/python setup.py sdist --formats=zip --dist-dir /home/ubuntu/dev/libsbp/python/.tox/dist', -11)
+```
 
 Tox also seems to have issues interacting with conda environments.  The easiest
 way to work around this is to remove conda from your path and make sure tox is
 installed with a Python2 version of the interpreter.
 
-### Tox error: `ERROR: cowardly refusing to delete envdir`
+#### Tox error: `ERROR: cowardly refusing to delete envdir`
 
 Tox may fail with the following error:
 
+```sh
     ERROR: cowardly refusing to delete `envdir` (it does not look like a virtualenv): /home/ubuntu/dev/libsbp/python/.tox/py38-nojit
+```
 
-There's an open tox issue for this: https://github.com/tox-dev/tox/issues/1354
+There's an open tox issue for this: <https://github.com/tox-dev/tox/issues/1354>
 -- the only workaround that resolved this was to downgrade tox:
 
+```sh
     pip install --upgrade --force-reinstall tox==3.12.1
+```
 
-# Distributing Java
+## Distributing Java
 
 To distribute java, ensure you have the correct credentials and prerequisites
+
 - Gradle 7+
 - gradle.properties
 - Sonatype deployer account
 - Your own GPG key
 
-## Generating GPG key for Java
+### Generating GPG key for Java
 
 SonaType open source repo requires a GPG key for signatures.  Generate GPG key via:
 
-```shell
+```sh
 gpg --gen-key
 gpg --export-secret-keys >keys.gpg
 ```
 
 Export your public key
-```
+
+```sh
 gpg --export -a > pub.key
 ```
 
@@ -428,7 +447,7 @@ Go to [https://keyserver.ubuntu.com/#submitKey](https://keyserver.ubuntu.com/#su
 
 To locate the value for `signing.keyId` (needed below) run:
 
-```shell
+```sh
 ❯ gpg --list-keys --keyid-format short                                                                                                                              (base)
 /home/ubuntu/.gnupg/pubring.kbx
 -------------------------------
@@ -442,8 +461,7 @@ The `signing.keyId` value to use from above is `BB59B113`. The `/keys` folder
 to should map to location where your gpg key will be stored. Then, create
 `gradle.properties` in the `java` directory as follows:
 
-
-```shell
+```sh
 # last 8 digit of gpg key
 signing.keyId=xxx
 # password for gpg key
@@ -466,7 +484,7 @@ For more info see: <https://docs.gradle.org/current/userguide/signing_plugin.htm
 
 Now, invoke docker like this in order to run the `dist-java` task:
 
-```shell
+```sh
 docker run -v $HOME/Documents:/keys -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-02-10
 ```
 
@@ -481,7 +499,7 @@ repository on SonaType's repository manager:
 - [Documentation](https://central.sonatype.org/publish/release)
 - [Nexus Repository Manager](https://s01.oss.sonatype.org/#welcome)
 
-# Contributions
+## Contributions
 
 This library is developed internally by Swift Navigation. We welcome
 GitHub issues and pull requests, as well as discussions of potential
