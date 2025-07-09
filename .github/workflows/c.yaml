@@ -196,7 +196,7 @@ jobs:
   windows-latest:
     strategy:
       matrix:
-        generator: ["MinGW Makefiles", "Visual Studio 16 2019"]
+        generator: ["MinGW Makefiles", "Visual Studio 17 2022"]
         build_shared_libraries: [true, false]
     name: "Windows Latest (Generator: ${{ matrix.generator }}, Shared Library: ${{ matrix.build_shared_libraries }})"
     runs-on: windows-latest
