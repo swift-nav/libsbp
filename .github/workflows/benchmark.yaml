@@ -21,7 +21,7 @@ on:
 jobs:
   benchmark:
     name: Benchmark
-    runs-on: [xlarge-22.04]
+    runs-on: [ubuntun-22.04]
     steps:
       - uses: actions/checkout@v4
       - name: Setup
