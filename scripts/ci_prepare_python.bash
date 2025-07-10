@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script prepares the environment for Python use in ubuntu 24.04 runners in CI.
+# This script prepares the environment for Python use in ubuntu 22.04 runners in CI.
 
 set -ex
 
@@ -11,7 +11,7 @@ sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt-get -qq update
 
 # Install Python 3.7, 3.9, 3.10, and the default Python 3 version
-# (Note: distutils is deprecated for default python on Ubuntu 24.04)
+# (Note: distutils is deprecated for default python on Ubuntu 22.04)
 sudo apt-get install -y \
     build-essential \
     zlib1g-dev \
@@ -33,7 +33,5 @@ sudo apt-get install -y \
     musl-tools \
     tox dpkg-dev wget
 
-# --break-system-packages is only a temporary workaround for the workflows to run
-# Long term solution would be to create a dedicated virtual environments for each Python version
-# using uv
-pip3 install --break-system-packages wheel setuptools
+
+pip3 install wheel setuptools
