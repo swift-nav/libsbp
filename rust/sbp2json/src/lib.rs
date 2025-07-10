@@ -30,9 +30,8 @@ impl std::str::FromStr for ErrorHandlerOptions {
             }
 
             s => Err(format!(
-                "Unable to cast option {} to a valid error handler option. \
+                "Unable to cast option {s} to a valid error handler option. \
                     Valid options are 'return', 'skip', & 'to-invalid')",
-                s
             )),
         }
     }

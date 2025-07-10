@@ -35,8 +35,7 @@ fn test_auto_check_sbp_flash_msg_flash_read_req() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xe7,
-                    "Incorrect message type, expected 0xe7, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xe7, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -112,8 +111,7 @@ fn test_json2sbp_auto_check_sbp_flash_msg_flash_read_req() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xe7,
-                    "Incorrect message type, expected 0xe7, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xe7, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -194,8 +192,7 @@ fn test_sbp2json_auto_check_sbp_flash_msg_flash_read_req() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xe7,
-                    "Incorrect message type, expected 0xe7, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xe7, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
