@@ -40,17 +40,17 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelTest {
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
-        value = msg.atmo_corr_time.tow;
+        value = msg.iono_corr_time.tow;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.atmo_corr_time.tow + "' != '" + 365 + "'", value.equals(BigInteger.valueOf( 365L ) ) );
+            org.junit.Assert.assertTrue("'" + msg.iono_corr_time.tow + "' != '" + 365 + "'", value.equals(BigInteger.valueOf( 365L ) ) );
         } else {
             value = value.longValue();
             expected = 365L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.atmo_corr_time.wn;
+        value = msg.iono_corr_time.wn;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue("'" + msg.atmo_corr_time.wn + "' != '" + 6 + "'", value.equals(BigInteger.valueOf( 6L ) ) );
+            org.junit.Assert.assertTrue("'" + msg.iono_corr_time.wn + "' != '" + 6 + "'", value.equals(BigInteger.valueOf( 6L ) ) );
         } else {
             value = value.longValue();
             expected = 6L;
