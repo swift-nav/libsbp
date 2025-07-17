@@ -51,7 +51,7 @@ fn test_(((s.suite_name|snake_case)))()
         match &sbp_msg {
             sbp::messages::Sbp::(((t.msg.name|lower_acronyms)))(msg) => {
                 let msg_type = msg.message_type().unwrap();
-                assert_eq!( msg_type, (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg_type);
+                assert_eq!( msg_type, (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {msg_type}");
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(sender_id, (((t.sbp.sender))), "incorrect sender id, expected (((t.sbp.sender))), is {sender_id}");
                 ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
@@ -98,7 +98,7 @@ fn test_json2sbp_(((s.suite_name|snake_case)))()
         match &sbp_msg {
             sbp::messages::Sbp::(((t.msg.name|lower_acronyms)))(msg) => {
                 let msg_type = msg.message_type().unwrap();
-                assert_eq!( msg_type, (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg_type);
+                assert_eq!( msg_type, (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {msg_type}");
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(sender_id, (((t.sbp.sender))), "incorrect sender id, expected (((t.sbp.sender))), is {sender_id}");
                 ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
@@ -142,7 +142,7 @@ fn test_sbp2json_(((s.suite_name|snake_case)))()
         match &sbp_msg {
             sbp::messages::Sbp::(((t.msg.name|lower_acronyms)))(msg) => {
                 let msg_type = msg.message_type().unwrap();
-                assert_eq!( msg_type, (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg_type);
+                assert_eq!( msg_type, (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {msg_type}");
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(sender_id, (((t.sbp.sender))), "incorrect sender id, expected (((t.sbp.sender))), is {sender_id}");
                 ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))

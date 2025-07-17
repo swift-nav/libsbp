@@ -35,8 +35,7 @@ fn test_auto_check_sbp_system_msg_startup() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xff00,
-                    "Incorrect message type, expected 0xff00, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xff00, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -79,8 +78,7 @@ fn test_auto_check_sbp_system_msg_startup() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xff00,
-                    "Incorrect message type, expected 0xff00, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xff00, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -146,8 +144,7 @@ fn test_json2sbp_auto_check_sbp_system_msg_startup() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xff00,
-                    "Incorrect message type, expected 0xff00, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xff00, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -199,8 +196,7 @@ fn test_json2sbp_auto_check_sbp_system_msg_startup() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xff00,
-                    "Incorrect message type, expected 0xff00, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xff00, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -271,8 +267,7 @@ fn test_sbp2json_auto_check_sbp_system_msg_startup() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xff00,
-                    "Incorrect message type, expected 0xff00, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xff00, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -334,8 +329,7 @@ fn test_sbp2json_auto_check_sbp_system_msg_startup() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xff00,
-                    "Incorrect message type, expected 0xff00, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xff00, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

@@ -64,16 +64,21 @@ jobs:
 
   build:
     name: Build binaries
-    needs: [ lint, test ]
+    needs: [lint, test]
     strategy:
       matrix:
         os:
-          - ubuntu-20.04
+          - ubuntu-24.04
           - macos-13
           - windows-2022
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup cmake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: "3.31.2"
 
       - run: ./scripts/ci_prepare_rust.bash
         shell: bash
@@ -104,7 +109,7 @@ jobs:
 
   registry:
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [ build ]
+    needs: [build]
     name: Publish rust release to package-registry
     runs-on: ubuntu-latest
     steps:
@@ -123,5 +128,3 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           gh-name: ${{ secrets.GH_NAME }}
           gh-email: ${{ secrets.GH_EMAIL }}
-
-

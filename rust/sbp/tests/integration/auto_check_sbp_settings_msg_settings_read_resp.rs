@@ -40,8 +40,7 @@ fn test_auto_check_sbp_settings_msg_settings_read_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xa5,
-                    "Incorrect message type, expected 0xa5, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xa5, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -111,8 +110,7 @@ fn test_json2sbp_auto_check_sbp_settings_msg_settings_read_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xa5,
-                    "Incorrect message type, expected 0xa5, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xa5, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -192,8 +190,7 @@ fn test_sbp2json_auto_check_sbp_settings_msg_settings_read_resp() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 0xa5,
-                    "Incorrect message type, expected 0xa5, is {}",
-                    msg_type
+                    "Incorrect message type, expected 0xa5, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(

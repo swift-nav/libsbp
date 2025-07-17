@@ -199,7 +199,7 @@ where
 
     fn encode(&mut self, msg: T, dst: &mut BytesMut) -> Result<(), Self::Error> {
         if let Err(err) = to_buffer(dst, msg.borrow()) {
-            log::error!("error serializing message: {}", err);
+            log::error!("error serializing message: {err}");
         }
         Ok(())
     }

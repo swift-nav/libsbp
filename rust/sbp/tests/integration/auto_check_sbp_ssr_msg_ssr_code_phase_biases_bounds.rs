@@ -38,8 +38,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 1516,
-                    "Incorrect message type, expected 1516, is {}",
-                    msg_type
+                    "Incorrect message type, expected 1516, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -177,8 +176,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 1516,
-                    "Incorrect message type, expected 1516, is {}",
-                    msg_type
+                    "Incorrect message type, expected 1516, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -324,8 +322,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
                     msg_type, 1516,
-                    "Incorrect message type, expected 1516, is {}",
-                    msg_type
+                    "Incorrect message type, expected 1516, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
