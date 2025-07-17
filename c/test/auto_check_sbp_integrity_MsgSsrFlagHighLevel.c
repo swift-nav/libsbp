@@ -104,9 +104,9 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.ssr_flag_high_level.atmo_corr_time.tow = 365;
+    test_msg.ssr_flag_high_level.iono_corr_time.tow = 365;
 
-    test_msg.ssr_flag_high_level.atmo_corr_time.wn = 6;
+    test_msg.ssr_flag_high_level.iono_corr_time.wn = 6;
 
     test_msg.ssr_flag_high_level.chain_id = 40;
 
@@ -174,17 +174,17 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
         sbp_message_cmp(SbpMsgSsrFlagHighLevel, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.atmo_corr_time.tow == 365,
+    ck_assert_msg(last_msg.msg.ssr_flag_high_level.iono_corr_time.tow == 365,
                   "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.atmo_corr_time.tow, "
+                  "last_msg.msg.ssr_flag_high_level.iono_corr_time.tow, "
                   "expected 365, is %" PRId64,
-                  (int64_t)last_msg.msg.ssr_flag_high_level.atmo_corr_time.tow);
+                  (int64_t)last_msg.msg.ssr_flag_high_level.iono_corr_time.tow);
 
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.atmo_corr_time.wn == 6,
+    ck_assert_msg(last_msg.msg.ssr_flag_high_level.iono_corr_time.wn == 6,
                   "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.atmo_corr_time.wn, "
+                  "last_msg.msg.ssr_flag_high_level.iono_corr_time.wn, "
                   "expected 6, is %" PRId64,
-                  (int64_t)last_msg.msg.ssr_flag_high_level.atmo_corr_time.wn);
+                  (int64_t)last_msg.msg.ssr_flag_high_level.iono_corr_time.wn);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_high_level.chain_id == 40,

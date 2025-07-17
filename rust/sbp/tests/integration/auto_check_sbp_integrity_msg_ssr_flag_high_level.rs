@@ -46,14 +46,14 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.atmo_corr_time.tow, 365,
-                    "incorrect value for atmo_corr_time.tow, expected 365, is {}",
-                    msg.atmo_corr_time.tow
+                    msg.iono_corr_time.tow, 365,
+                    "incorrect value for iono_corr_time.tow, expected 365, is {}",
+                    msg.iono_corr_time.tow
                 );
                 assert_eq!(
-                    msg.atmo_corr_time.wn, 6,
-                    "incorrect value for atmo_corr_time.wn, expected 6, is {}",
-                    msg.atmo_corr_time.wn
+                    msg.iono_corr_time.wn, 6,
+                    "incorrect value for iono_corr_time.wn, expected 6, is {}",
+                    msg.iono_corr_time.wn
                 );
                 assert_eq!(
                     msg.chain_id, 40,
@@ -179,7 +179,7 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
     {
-        let json_input = r#"{"obs_time": {"tow": 180, "wn": 3}, "sat_corr_time": {"tow": 360, "wn": 6}, "atmo_corr_time": {"tow": 365, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20, "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "use_qzss_sat": 4, "reserved": [0,0,0,0,0], "use_tropo_grid_points": 5, "use_iono_grid_points": 6, "use_iono_tile_sat_los": 7, "use_iono_grid_point_sat_los": 8, "preamble": 85, "msg_type": 3002, "sender": 66, "length": 37, "payload": "tAAAAAMAbQEAAAYAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==", "crc": 61105}"#.as_bytes();
+        let json_input = r#"{"obs_time": {"tow": 180, "wn": 3}, "sat_corr_time": {"tow": 360, "wn": 6}, "iono_corr_time": {"tow": 365, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20, "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "use_qzss_sat": 4, "reserved": [0,0,0,0,0], "use_tropo_grid_points": 5, "use_iono_grid_points": 6, "use_iono_tile_sat_los": 7, "use_iono_grid_point_sat_los": 8, "preamble": 85, "msg_type": 3002, "sender": 66, "length": 37, "payload": "tAAAAAMAbQEAAAYAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==", "crc": 61105}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -212,14 +212,14 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.atmo_corr_time.tow, 365,
-                    "incorrect value for atmo_corr_time.tow, expected 365, is {}",
-                    msg.atmo_corr_time.tow
+                    msg.iono_corr_time.tow, 365,
+                    "incorrect value for iono_corr_time.tow, expected 365, is {}",
+                    msg.iono_corr_time.tow
                 );
                 assert_eq!(
-                    msg.atmo_corr_time.wn, 6,
-                    "incorrect value for atmo_corr_time.wn, expected 6, is {}",
-                    msg.atmo_corr_time.wn
+                    msg.iono_corr_time.wn, 6,
+                    "incorrect value for iono_corr_time.wn, expected 6, is {}",
+                    msg.iono_corr_time.wn
                 );
                 assert_eq!(
                     msg.chain_id, 40,
@@ -386,14 +386,14 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.atmo_corr_time.tow, 365,
-                    "incorrect value for atmo_corr_time.tow, expected 365, is {}",
-                    msg.atmo_corr_time.tow
+                    msg.iono_corr_time.tow, 365,
+                    "incorrect value for iono_corr_time.tow, expected 365, is {}",
+                    msg.iono_corr_time.tow
                 );
                 assert_eq!(
-                    msg.atmo_corr_time.wn, 6,
-                    "incorrect value for atmo_corr_time.wn, expected 6, is {}",
-                    msg.atmo_corr_time.wn
+                    msg.iono_corr_time.wn, 6,
+                    "incorrect value for iono_corr_time.wn, expected 6, is {}",
+                    msg.iono_corr_time.wn
                 );
                 assert_eq!(
                     msg.chain_id, 40,
