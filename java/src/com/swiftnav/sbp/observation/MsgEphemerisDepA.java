@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,119 +9,124 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.observation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_EPHEMERIS_DEP_A (0x001A).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_EPHEMERIS_DEP_A (0x001A).
  *
- * <p>You can have MSG_EPHEMERIS_DEP_A inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_EPHEMERIS_DEP_A inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgEphemerisDepA extends SBPMessage {
     public static final int TYPE = 0x001A;
 
+    
     /** Group delay differential between L1 and L2 */
     public double tgd;
-
+    
     /** Amplitude of the sine harmonic correction term to the orbit radius */
     public double c_rs;
-
+    
     /** Amplitude of the cosine harmonic correction term to the orbit radius */
     public double c_rc;
-
-    /** Amplitude of the cosine harmonic correction term to the argument of latitude */
+    
+    /** Amplitude of the cosine harmonic correction term to the argument of
+      * latitude */
     public double c_uc;
-
-    /** Amplitude of the sine harmonic correction term to the argument of latitude */
+    
+    /** Amplitude of the sine harmonic correction term to the argument of
+      * latitude */
     public double c_us;
-
-    /** Amplitude of the cosine harmonic correction term to the angle of inclination */
+    
+    /** Amplitude of the cosine harmonic correction term to the angle of
+      * inclination */
     public double c_ic;
-
-    /** Amplitude of the sine harmonic correction term to the angle of inclination */
+    
+    /** Amplitude of the sine harmonic correction term to the angle of
+      * inclination */
     public double c_is;
-
+    
     /** Mean motion difference */
     public double dn;
-
+    
     /** Mean anomaly at reference time */
     public double m0;
-
+    
     /** Eccentricity of satellite orbit */
     public double ecc;
-
+    
     /** Square root of the semi-major axis of orbit */
     public double sqrta;
-
+    
     /** Longitude of ascending node of orbit plane at weekly epoch */
     public double omega0;
-
+    
     /** Rate of right ascension */
     public double omegadot;
-
+    
     /** Argument of perigee */
     public double w;
-
+    
     /** Inclination */
     public double inc;
-
+    
     /** Inclination first derivative */
     public double inc_dot;
-
+    
     /** Polynomial clock correction coefficient (clock bias) */
     public double af0;
-
+    
     /** Polynomial clock correction coefficient (clock drift) */
     public double af1;
-
+    
     /** Polynomial clock correction coefficient (rate of clock drift) */
     public double af2;
-
+    
     /** Time of week */
     public double toe_tow;
-
+    
     /** Week number */
     public int toe_wn;
-
+    
     /** Clock reference time of week */
     public double toc_tow;
-
+    
     /** Clock reference week number */
     public int toc_wn;
-
+    
     /** Is valid? */
     public int valid;
-
+    
     /** Satellite is healthy? */
     public int healthy;
-
+    
     /** PRN being tracked */
     public int prn;
+    
 
-    public MsgEphemerisDepA(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgEphemerisDepA() {
-        super(TYPE);
-    }
-
-    public MsgEphemerisDepA(SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisDepA (int sender) { super(sender, TYPE); }
+    public MsgEphemerisDepA () { super(TYPE); }
+    public MsgEphemerisDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgEphemerisDepA, expected 26, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgEphemerisDepA, expected 26, actual " + msg.type);
     }
 
     @Override
@@ -151,7 +157,7 @@ public class MsgEphemerisDepA extends SBPMessage {
         toc_wn = parser.getU16();
         valid = parser.getU8();
         healthy = parser.getU8();
-        prn = parser.getU8();
+        prn = parser.getU8(); 
     }
 
     @Override
@@ -181,7 +187,7 @@ public class MsgEphemerisDepA extends SBPMessage {
         builder.putU16(toc_wn);
         builder.putU8(valid);
         builder.putU8(healthy);
-        builder.putU8(prn);
+        builder.putU8(prn); 
     }
 
     @Override

@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,55 +9,56 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.orientation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/orientation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_BASELINE_HEADING (0x020F).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_BASELINE_HEADING (0x020F).
  *
- * <p>You can have MSG_BASELINE_HEADING inherent its fields directly from an inherited SBP object,
- * or construct it inline using a dict of its fields.
+ * You can have MSG_BASELINE_HEADING inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message reports the baseline heading pointing from the base station to the rover relative
- * to True North. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
- * time-of-week (tow). It is intended that time-matched RTK mode is used when the base station is
- * moving.
- */
+ * This message reports the baseline heading pointing from the base station to
+ * the rover relative to True North. The full GPS time is given by the
+ * preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
+ * that time-matched RTK mode is used when the base station is moving. */
+
 public class MsgBaselineHeading extends SBPMessage {
     public static final int TYPE = 0x020F;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** Heading */
     public long heading;
-
+    
     /** Number of satellites used in solution */
     public int n_sats;
-
+    
     /** Status flags */
     public int flags;
+    
 
-    public MsgBaselineHeading(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgBaselineHeading() {
-        super(TYPE);
-    }
-
-    public MsgBaselineHeading(SBPMessage msg) throws SBPBinaryException {
+    public MsgBaselineHeading (int sender) { super(sender, TYPE); }
+    public MsgBaselineHeading () { super(TYPE); }
+    public MsgBaselineHeading (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgBaselineHeading, expected 527, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgBaselineHeading, expected 527, actual " + msg.type);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class MsgBaselineHeading extends SBPMessage {
         tow = parser.getU32();
         heading = parser.getU32();
         n_sats = parser.getU8();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
@@ -73,7 +75,7 @@ public class MsgBaselineHeading extends SBPMessage {
         builder.putU32(tow);
         builder.putU32(heading);
         builder.putU8(n_sats);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override

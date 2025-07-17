@@ -637,7 +637,7 @@ sub _read {
     my ($self) = @_;
 
     $self->{obs_time} = Gnss::GpsTimeSec->new($self->{_io}, $self, $self->{_root});
-    $self->{atmo_corr_time} = Gnss::GpsTimeSec->new($self->{_io}, $self, $self->{_root});
+    $self->{iono_corr_time} = Gnss::GpsTimeSec->new($self->{_io}, $self, $self->{_root});
     $self->{sat_corr_time} = Gnss::GpsTimeSec->new($self->{_io}, $self, $self->{_root});
     $self->{ssr_sol_id} = $self->{_io}->read_u1();
     $self->{tile_set_id} = $self->{_io}->read_u2le();
@@ -663,9 +663,9 @@ sub obs_time {
     return $self->{obs_time};
 }
 
-sub atmo_corr_time {
+sub iono_corr_time {
     my ($self) = @_;
-    return $self->{atmo_corr_time};
+    return $self->{iono_corr_time};
 }
 
 sub sat_corr_time {

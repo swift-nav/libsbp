@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,60 +9,61 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.observation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).
  *
- * <p>You can have MSG_SV_CONFIGURATION_GPS_DEP inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_SV_CONFIGURATION_GPS_DEP inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgSvConfigurationGPSDep extends SBPMessage {
     public static final int TYPE = 0x0091;
 
+    
     /** Navigation Message Correction Table Validity Time */
     public GPSTimeSec t_nmct;
-
+    
     /** L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
     public long l2c_mask;
+    
 
-    public MsgSvConfigurationGPSDep(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgSvConfigurationGPSDep() {
-        super(TYPE);
-    }
-
-    public MsgSvConfigurationGPSDep(SBPMessage msg) throws SBPBinaryException {
+    public MsgSvConfigurationGPSDep (int sender) { super(sender, TYPE); }
+    public MsgSvConfigurationGPSDep () { super(TYPE); }
+    public MsgSvConfigurationGPSDep (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgSvConfigurationGPSDep, expected 145, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgSvConfigurationGPSDep, expected 145, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         t_nmct = new GPSTimeSec().parse(parser);
-        l2c_mask = parser.getU32();
+        l2c_mask = parser.getU32(); 
     }
 
     @Override
     protected void build(Builder builder) {
         t_nmct.build(builder);
-        builder.putU32(l2c_mask);
+        builder.putU32(l2c_mask); 
     }
 
     @Override

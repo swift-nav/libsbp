@@ -23,49 +23,49 @@ def test_auto_check_sbp_integrity_msg_ssr_flag_high_level_1():
 
     stream = KaitaiStream(io.BytesIO(buf))
     msg = get_flattened_msg(sbp.Sbp.SbpMessage(stream))
-    
+
     assert msg.preamble == 0x55
-    
+
     assert msg.msg_type == 0x0BBA
-    
+
     assert msg.sender == 0x0042
-    
+
     assert msg.length == 31
-    
+
     assert msg.payload == "tAAAAAMAbQEAAAYAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA=="
-    
+
     assert msg.crc == 0xBE9D
-    
-    assert dictify(msg.atmo_corr_time) == {'tow': 365, 'wn': 6}
-    
+
+    assert dictify(msg.iono_corr_time) == {'tow': 365, 'wn': 6}
+
     assert dictify(msg.chain_id) == 40
-    
+
     assert dictify(msg.obs_time) == {'tow': 180, 'wn': 3}
-    
+
     assert dictify(msg.reserved) == [0, 0, 0, 0, 0]
-    
+
     assert dictify(msg.sat_corr_time) == {'tow': 360, 'wn': 6}
-    
+
     assert dictify(msg.ssr_sol_id) == 10
-    
+
     assert dictify(msg.tile_id) == 30
-    
+
     assert dictify(msg.tile_set_id) == 20
-    
+
     assert dictify(msg.use_bds_sat) == 3
-    
+
     assert dictify(msg.use_gal_sat) == 2
-    
+
     assert dictify(msg.use_gps_sat) == 1
-    
+
     assert dictify(msg.use_iono_grid_point_sat_los) == 8
-    
+
     assert dictify(msg.use_iono_grid_points) == 6
-    
+
     assert dictify(msg.use_iono_tile_sat_los) == 7
-    
+
     assert dictify(msg.use_qzss_sat) == 4
-    
+
     assert dictify(msg.use_tropo_grid_points) == 5
 
-    assert dictify(msg) == {'obs_time': {'tow': 180, 'wn': 3}, 'sat_corr_time': {'tow': 360, 'wn': 6}, 'atmo_corr_time': {'tow': 365, 'wn': 6}, 'ssr_sol_id': 10, 'tile_set_id': 20, 'tile_id': 30, 'chain_id': 40, 'use_gps_sat': 1, 'use_gal_sat': 2, 'use_bds_sat': 3, 'use_qzss_sat': 4, 'reserved': [0, 0, 0, 0, 0], 'use_tropo_grid_points': 5, 'use_iono_grid_points': 6, 'use_iono_tile_sat_los': 7, 'use_iono_grid_point_sat_los': 8, 'preamble': 85, 'msg_type': 3001, 'sender': 66, 'length': 31, 'payload': 'tAAAAAMAbQEAAAYAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==', 'crc': 48797}
+    assert dictify(msg) == {'obs_time': {'tow': 180, 'wn': 3}, 'sat_corr_time': {'tow': 360, 'wn': 6}, 'iono_corr_time': {'tow': 365, 'wn': 6}, 'ssr_sol_id': 10, 'tile_set_id': 20, 'tile_id': 30, 'chain_id': 40, 'use_gps_sat': 1, 'use_gal_sat': 2, 'use_bds_sat': 3, 'use_qzss_sat': 4, 'reserved': [0, 0, 0, 0, 0], 'use_tropo_grid_points': 5, 'use_iono_grid_points': 6, 'use_iono_tile_sat_los': 7, 'use_iono_grid_point_sat_los': 8, 'preamble': 85, 'msg_type': 3001, 'sender': 66, 'length': 31, 'payload': 'tAAAAAMAbQEAAAYAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==', 'crc': 48797}

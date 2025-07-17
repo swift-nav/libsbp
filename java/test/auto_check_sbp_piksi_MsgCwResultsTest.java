@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,16 +9,21 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/piksi/test_MsgCwResults.yaml by
-// generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/piksi/test_MsgCwResults.yaml by generate.py. Do not modify by hand!
 
+import java.math.BigInteger;
+
+import org.junit.Test;
+
+import org.json.JSONObject;
 
 import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.piksi.MsgCwResults;
-import org.json.JSONObject;
-import org.junit.Test;
+
 
 public class auto_check_sbp_piksi_MsgCwResultsTest {
 
@@ -26,10 +32,11 @@ public class auto_check_sbp_piksi_MsgCwResultsTest {
 
     @Test
     public void test1() throws Throwable {
-        if (debug) System.out.format("%n%s%n", "auto_check_sbp_piksi_MsgCwResultsTest.test1");
-        byte[] payload = new byte[] {};
-        SBPMessage sbp = new SBPMessage(0xf663, 0xc0, payload);
-        MsgCwResults msg = new MsgCwResults(sbp);
+        if (debug)
+            System.out.format("%n%s%n", "auto_check_sbp_piksi_MsgCwResultsTest.test1");
+        byte[] payload = new byte[] { };
+        SBPMessage sbp = new SBPMessage( 0xf663, 0xc0, payload );
+        MsgCwResults msg = new MsgCwResults( sbp );
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;

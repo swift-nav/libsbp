@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,17 +9,21 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/imu/test_MsgImuComp.yaml by
-// generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/imu/test_MsgImuComp.yaml by generate.py. Do not modify by hand!
 
+import java.math.BigInteger;
+
+import org.junit.Test;
+
+import org.json.JSONObject;
 
 import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.imu.MsgImuComp;
-import java.math.BigInteger;
-import org.json.JSONObject;
-import org.junit.Test;
+
 
 public class auto_check_sbp_imu_MsgImuCompTest {
 
@@ -27,25 +32,17 @@ public class auto_check_sbp_imu_MsgImuCompTest {
 
     @Test
     public void test1() throws Throwable {
-        if (debug) System.out.format("%n%s%n", "auto_check_sbp_imu_MsgImuCompTest.test1");
-        byte[] payload =
-                new byte[] {
-                    (byte) 26, (byte) 1, (byte) 0, (byte) 192, (byte) 0, (byte) 0, (byte) 0,
-                    (byte) 0, (byte) 206, (byte) 0, (byte) 96, (byte) 0, (byte) 0, (byte) 0,
-                    (byte) 223, (byte) 255, (byte) 255, (byte) 255, (byte) 44, (byte) 16, (byte) 0,
-                    (byte) 0, (byte) 60, (byte) 0, (byte) 0, (byte) 0, (byte) 208, (byte) 254,
-                    (byte) 255, (byte) 255, (byte) 238, (byte) 255, (byte) 255, (byte) 255,
-                };
-        SBPMessage sbp = new SBPMessage(0x1234, 0x905, payload);
-        MsgImuComp msg = new MsgImuComp(sbp);
+        if (debug)
+            System.out.format("%n%s%n", "auto_check_sbp_imu_MsgImuCompTest.test1");
+        byte[] payload = new byte[] {(byte)26,(byte)1,(byte)0,(byte)192,(byte)0,(byte)0,(byte)0,(byte)0,(byte)206,(byte)0,(byte)96,(byte)0,(byte)0,(byte)0,(byte)223,(byte)255,(byte)255,(byte)255,(byte)44,(byte)16,(byte)0,(byte)0,(byte)60,(byte)0,(byte)0,(byte)0,(byte)208,(byte)254,(byte)255,(byte)255,(byte)238,(byte)255,(byte)255,(byte)255, };
+        SBPMessage sbp = new SBPMessage( 0x1234, 0x905, payload );
+        MsgImuComp msg = new MsgImuComp( sbp );
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
         value = msg.acc_comp_x;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.acc_comp_x + "' != '" + 96 + "'",
-                    value.equals(BigInteger.valueOf(96L)));
+            org.junit.Assert.assertTrue("'" + msg.acc_comp_x + "' != '" + 96 + "'", value.equals(BigInteger.valueOf( 96L ) ) );
         } else {
             value = value.longValue();
             expected = 96L;
@@ -53,9 +50,7 @@ public class auto_check_sbp_imu_MsgImuCompTest {
         }
         value = msg.acc_comp_y;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.acc_comp_y + "' != '" + -33 + "'",
-                    value.equals(BigInteger.valueOf(-33L)));
+            org.junit.Assert.assertTrue("'" + msg.acc_comp_y + "' != '" + -33 + "'", value.equals(BigInteger.valueOf( -33L ) ) );
         } else {
             value = value.longValue();
             expected = -33L;
@@ -63,9 +58,7 @@ public class auto_check_sbp_imu_MsgImuCompTest {
         }
         value = msg.acc_comp_z;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.acc_comp_z + "' != '" + 4140 + "'",
-                    value.equals(BigInteger.valueOf(4140L)));
+            org.junit.Assert.assertTrue("'" + msg.acc_comp_z + "' != '" + 4140 + "'", value.equals(BigInteger.valueOf( 4140L ) ) );
         } else {
             value = value.longValue();
             expected = 4140L;
@@ -73,8 +66,7 @@ public class auto_check_sbp_imu_MsgImuCompTest {
         }
         value = msg.flags;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.flags + "' != '" + 206 + "'", value.equals(BigInteger.valueOf(206L)));
+            org.junit.Assert.assertTrue("'" + msg.flags + "' != '" + 206 + "'", value.equals(BigInteger.valueOf( 206L ) ) );
         } else {
             value = value.longValue();
             expected = 206L;
@@ -82,9 +74,7 @@ public class auto_check_sbp_imu_MsgImuCompTest {
         }
         value = msg.gyr_comp_x;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.gyr_comp_x + "' != '" + 60 + "'",
-                    value.equals(BigInteger.valueOf(60L)));
+            org.junit.Assert.assertTrue("'" + msg.gyr_comp_x + "' != '" + 60 + "'", value.equals(BigInteger.valueOf( 60L ) ) );
         } else {
             value = value.longValue();
             expected = 60L;
@@ -92,9 +82,7 @@ public class auto_check_sbp_imu_MsgImuCompTest {
         }
         value = msg.gyr_comp_y;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.gyr_comp_y + "' != '" + -304 + "'",
-                    value.equals(BigInteger.valueOf(-304L)));
+            org.junit.Assert.assertTrue("'" + msg.gyr_comp_y + "' != '" + -304 + "'", value.equals(BigInteger.valueOf( -304L ) ) );
         } else {
             value = value.longValue();
             expected = -304L;
@@ -102,9 +90,7 @@ public class auto_check_sbp_imu_MsgImuCompTest {
         }
         value = msg.gyr_comp_z;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.gyr_comp_z + "' != '" + -18 + "'",
-                    value.equals(BigInteger.valueOf(-18L)));
+            org.junit.Assert.assertTrue("'" + msg.gyr_comp_z + "' != '" + -18 + "'", value.equals(BigInteger.valueOf( -18L ) ) );
         } else {
             value = value.longValue();
             expected = -18L;
@@ -112,9 +98,7 @@ public class auto_check_sbp_imu_MsgImuCompTest {
         }
         value = msg.time;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.time + "' != '" + 3221225754L + "'",
-                    value.equals(new BigInteger("3221225754")));
+            org.junit.Assert.assertTrue("'" + msg.time + "' != '" + 3221225754L + "'", value.equals( new BigInteger( "3221225754" ) ) );
         } else {
             value = value.longValue();
             expected = 3221225754L;

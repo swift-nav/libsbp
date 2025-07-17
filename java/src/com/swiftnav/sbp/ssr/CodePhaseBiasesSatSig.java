@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,45 +9,46 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.ssr;
 
 // This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class CodePhaseBiasesSatSig extends SBPStruct {
-
-    /**
-     * Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or DF488 (BDS) depending
-     * on the constellation.
-     */
+    
+    /** Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or DF488
+      * (BDS) depending on the constellation. */
     public int sat_id;
-
-    /**
-     * Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS), DF382 (Galileo) or
-     * DF467 (BDS) depending on the constellation.
-     */
+    
+    /** Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS), DF382
+      * (Galileo) or DF467 (BDS) depending on the constellation. */
     public int signal_id;
-
+    
     /** Code Bias Mean. Range: 0-1.275 m */
     public int code_bias_bound_mu;
-
+    
     /** Code Bias Standard Deviation. Range: 0-1.275 m */
     public int code_bias_bound_sig;
-
+    
     /** Phase Bias Mean. Range: 0-1.275 m */
     public int phase_bias_bound_mu;
-
+    
     /** Phase Bias Standard Deviation. Range: 0-1.275 m */
     public int phase_bias_bound_sig;
+    
 
-    public CodePhaseBiasesSatSig() {}
+    public CodePhaseBiasesSatSig () {}
 
     @Override
     public CodePhaseBiasesSatSig parse(SBPMessage.Parser parser) throws SBPBinaryException {

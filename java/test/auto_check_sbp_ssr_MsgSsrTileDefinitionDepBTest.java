@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,18 +9,21 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrTileDefinitionDepB.yaml by generate.py. Do not modify
-// by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrTileDefinitionDepB.yaml by generate.py. Do not modify by hand!
 
+import java.math.BigInteger;
+
+import org.junit.Test;
+
+import org.json.JSONObject;
 
 import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.ssr.MsgSsrTileDefinitionDepB;
-import java.math.BigInteger;
-import org.json.JSONObject;
-import org.junit.Test;
+
 
 public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
 
@@ -30,44 +34,15 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
     public void test1() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest.test1");
-        byte[] payload =
-                new byte[] {
-                    (byte) 31,
-                    (byte) 0,
-                    (byte) 1,
-                    (byte) 0,
-                    (byte) 2,
-                    (byte) 0,
-                    (byte) 4,
-                    (byte) 0,
-                    (byte) 8,
-                    (byte) 0,
-                    (byte) 16,
-                    (byte) 0,
-                    (byte) 32,
-                    (byte) 0,
-                    (byte) 64,
-                    (byte) 0,
-                    (byte) 128,
-                    (byte) 210,
-                    (byte) 2,
-                    (byte) 150,
-                    (byte) 73,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                };
-        SBPMessage sbp = new SBPMessage(0x0042, 0x05F7, payload);
-        MsgSsrTileDefinitionDepB msg = new MsgSsrTileDefinitionDepB(sbp);
+        byte[] payload = new byte[] {(byte)31,(byte)0,(byte)1,(byte)0,(byte)2,(byte)0,(byte)4,(byte)0,(byte)8,(byte)0,(byte)16,(byte)0,(byte)32,(byte)0,(byte)64,(byte)0,(byte)128,(byte)210,(byte)2,(byte)150,(byte)73,(byte)0,(byte)0,(byte)0,(byte)0, };
+        SBPMessage sbp = new SBPMessage( 0x0042, 0x05F7, payload );
+        MsgSsrTileDefinitionDepB msg = new MsgSsrTileDefinitionDepB( sbp );
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
         value = msg.bitmask;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.bitmask + "' != '" + 1234567890 + "'",
-                    value.equals(BigInteger.valueOf(1234567890L)));
+            org.junit.Assert.assertTrue("'" + msg.bitmask + "' != '" + 1234567890 + "'", value.equals(BigInteger.valueOf( 1234567890L ) ) );
         } else {
             value = value.longValue();
             expected = 1234567890L;
@@ -75,9 +50,7 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
         }
         value = msg.cols;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.cols + "' != '" + 32768 + "'",
-                    value.equals(BigInteger.valueOf(32768L)));
+            org.junit.Assert.assertTrue("'" + msg.cols + "' != '" + 32768 + "'", value.equals(BigInteger.valueOf( 32768L ) ) );
         } else {
             value = value.longValue();
             expected = 32768L;
@@ -85,9 +58,7 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
         }
         value = msg.corner_nw_lat;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.corner_nw_lat + "' != '" + 1024 + "'",
-                    value.equals(BigInteger.valueOf(1024L)));
+            org.junit.Assert.assertTrue("'" + msg.corner_nw_lat + "' != '" + 1024 + "'", value.equals(BigInteger.valueOf( 1024L ) ) );
         } else {
             value = value.longValue();
             expected = 1024L;
@@ -95,9 +66,7 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
         }
         value = msg.corner_nw_lon;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.corner_nw_lon + "' != '" + 2048 + "'",
-                    value.equals(BigInteger.valueOf(2048L)));
+            org.junit.Assert.assertTrue("'" + msg.corner_nw_lon + "' != '" + 2048 + "'", value.equals(BigInteger.valueOf( 2048L ) ) );
         } else {
             value = value.longValue();
             expected = 2048L;
@@ -105,9 +74,7 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
         }
         value = msg.rows;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.rows + "' != '" + 16384 + "'",
-                    value.equals(BigInteger.valueOf(16384L)));
+            org.junit.Assert.assertTrue("'" + msg.rows + "' != '" + 16384 + "'", value.equals(BigInteger.valueOf( 16384L ) ) );
         } else {
             value = value.longValue();
             expected = 16384L;
@@ -115,9 +82,7 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
         }
         value = msg.spacing_lat;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.spacing_lat + "' != '" + 4096 + "'",
-                    value.equals(BigInteger.valueOf(4096L)));
+            org.junit.Assert.assertTrue("'" + msg.spacing_lat + "' != '" + 4096 + "'", value.equals(BigInteger.valueOf( 4096L ) ) );
         } else {
             value = value.longValue();
             expected = 4096L;
@@ -125,9 +90,7 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
         }
         value = msg.spacing_lon;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.spacing_lon + "' != '" + 8192 + "'",
-                    value.equals(BigInteger.valueOf(8192L)));
+            org.junit.Assert.assertTrue("'" + msg.spacing_lon + "' != '" + 8192 + "'", value.equals(BigInteger.valueOf( 8192L ) ) );
         } else {
             value = value.longValue();
             expected = 8192L;
@@ -135,9 +98,7 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
         }
         value = msg.ssr_sol_id;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.ssr_sol_id + "' != '" + 31 + "'",
-                    value.equals(BigInteger.valueOf(31L)));
+            org.junit.Assert.assertTrue("'" + msg.ssr_sol_id + "' != '" + 31 + "'", value.equals(BigInteger.valueOf( 31L ) ) );
         } else {
             value = value.longValue();
             expected = 31L;
@@ -145,9 +106,7 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
         }
         value = msg.tile_id;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.tile_id + "' != '" + 512 + "'",
-                    value.equals(BigInteger.valueOf(512L)));
+            org.junit.Assert.assertTrue("'" + msg.tile_id + "' != '" + 512 + "'", value.equals(BigInteger.valueOf( 512L ) ) );
         } else {
             value = value.longValue();
             expected = 512L;
@@ -155,9 +114,7 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
         }
         value = msg.tile_set_id;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.tile_set_id + "' != '" + 256 + "'",
-                    value.equals(BigInteger.valueOf(256L)));
+            org.junit.Assert.assertTrue("'" + msg.tile_set_id + "' != '" + 256 + "'", value.equals(BigInteger.valueOf( 256L ) ) );
         } else {
             value = value.longValue();
             expected = 256L;

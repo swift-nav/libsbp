@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,88 +9,86 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.ssr;
 
 // This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
  *
- * <p>You can have MSG_SSR_ORBIT_CLOCK_DEP_A inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_SSR_ORBIT_CLOCK_DEP_A inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgSsrOrbitClockDepA extends SBPMessage {
     public static final int TYPE = 0x05DC;
 
+    
     /** GNSS reference time of the correction */
     public GPSTimeSec time;
-
+    
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
-
-    /**
-     * Update interval between consecutive corrections. Encoded following RTCM DF391 specification.
-     */
+    
+    /** Update interval between consecutive corrections. Encoded following
+      * RTCM DF391 specification. */
     public int update_interval;
-
-    /**
-     * IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a change in the
-     * SSR generating configuration
-     */
+    
+    /** IOD of the SSR correction. A change of Issue Of Data SSR is used to
+      * indicate a change in the SSR generating configuration */
     public int iod_ssr;
-
+    
     /** Issue of broadcast ephemeris data */
     public int iod;
-
+    
     /** Orbit radial delta correction */
     public int radial;
-
+    
     /** Orbit along delta correction */
     public int along;
-
+    
     /** Orbit along delta correction */
     public int cross;
-
+    
     /** Velocity of orbit radial delta correction */
     public int dot_radial;
-
+    
     /** Velocity of orbit along delta correction */
     public int dot_along;
-
+    
     /** Velocity of orbit cross delta correction */
     public int dot_cross;
-
+    
     /** C0 polynomial coefficient for correction of broadcast satellite clock */
     public int c0;
-
+    
     /** C1 polynomial coefficient for correction of broadcast satellite clock */
     public int c1;
-
+    
     /** C2 polynomial coefficient for correction of broadcast satellite clock */
     public int c2;
+    
 
-    public MsgSsrOrbitClockDepA(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgSsrOrbitClockDepA() {
-        super(TYPE);
-    }
-
-    public MsgSsrOrbitClockDepA(SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrOrbitClockDepA (int sender) { super(sender, TYPE); }
+    public MsgSsrOrbitClockDepA () { super(TYPE); }
+    public MsgSsrOrbitClockDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgSsrOrbitClockDepA, expected 1500, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgSsrOrbitClockDepA, expected 1500, actual " + msg.type);
     }
 
     @Override
@@ -108,7 +107,7 @@ public class MsgSsrOrbitClockDepA extends SBPMessage {
         dot_cross = parser.getS32();
         c0 = parser.getS32();
         c1 = parser.getS32();
-        c2 = parser.getS32();
+        c2 = parser.getS32(); 
     }
 
     @Override
@@ -126,7 +125,7 @@ public class MsgSsrOrbitClockDepA extends SBPMessage {
         builder.putS32(dot_cross);
         builder.putS32(c0);
         builder.putS32(c1);
-        builder.putS32(c2);
+        builder.putS32(c2); 
     }
 
     @Override

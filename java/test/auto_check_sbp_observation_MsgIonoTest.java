@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,17 +9,21 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/observation/test_MsgIono.yaml by
-// generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/observation/test_MsgIono.yaml by generate.py. Do not modify by hand!
 
+import java.math.BigInteger;
+
+import org.junit.Test;
+
+import org.json.JSONObject;
 
 import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.observation.MsgIono;
-import java.math.BigInteger;
-import org.json.JSONObject;
-import org.junit.Test;
+
 
 public class auto_check_sbp_observation_MsgIonoTest {
 
@@ -27,82 +32,11 @@ public class auto_check_sbp_observation_MsgIonoTest {
 
     @Test
     public void test1() throws Throwable {
-        if (debug) System.out.format("%n%s%n", "auto_check_sbp_observation_MsgIonoTest.test1");
-        byte[] payload =
-                new byte[] {
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 52,
-                    (byte) 62,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 80,
-                    (byte) 62,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 112,
-                    (byte) 190,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 112,
-                    (byte) 190,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 243,
-                    (byte) 64,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 232,
-                    (byte) 64,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 240,
-                    (byte) 192,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 20,
-                    (byte) 193,
-                };
-        SBPMessage sbp = new SBPMessage(0x007b, 0x90, payload);
-        MsgIono msg = new MsgIono(sbp);
+        if (debug)
+            System.out.format("%n%s%n", "auto_check_sbp_observation_MsgIonoTest.test1");
+        byte[] payload = new byte[] {(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)52,(byte)62,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)80,(byte)62,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)112,(byte)190,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)112,(byte)190,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)243,(byte)64,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)232,(byte)64,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)240,(byte)192,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)20,(byte)193, };
+        SBPMessage sbp = new SBPMessage( 0x007b, 0x90, payload );
+        MsgIono msg = new MsgIono( sbp );
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
@@ -116,9 +50,7 @@ public class auto_check_sbp_observation_MsgIonoTest {
         org.junit.Assert.assertEquals(msg.b3, -3.27680000000000000e+05, DELTA);
         value = msg.t_nmct.tow;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.t_nmct.tow + "' != '" + 0 + "'",
-                    value.equals(BigInteger.valueOf(0L)));
+            org.junit.Assert.assertTrue("'" + msg.t_nmct.tow + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
         } else {
             value = value.longValue();
             expected = 0L;
@@ -126,8 +58,7 @@ public class auto_check_sbp_observation_MsgIonoTest {
         }
         value = msg.t_nmct.wn;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.t_nmct.wn + "' != '" + 0 + "'", value.equals(BigInteger.valueOf(0L)));
+            org.junit.Assert.assertTrue("'" + msg.t_nmct.wn + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
         } else {
             value = value.longValue();
             expected = 0L;

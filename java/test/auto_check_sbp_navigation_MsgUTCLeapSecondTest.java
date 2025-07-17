@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,18 +9,21 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCLeapSecond.yaml by generate.py. Do not modify
-// by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCLeapSecond.yaml by generate.py. Do not modify by hand!
 
+import java.math.BigInteger;
+
+import org.junit.Test;
+
+import org.json.JSONObject;
 
 import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.navigation.MsgUtcLeapSecond;
-import java.math.BigInteger;
-import org.json.JSONObject;
-import org.junit.Test;
+
 
 public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
 
@@ -30,21 +34,15 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
     public void test1() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "auto_check_sbp_navigation_MsgUTCLeapSecondTest.test1");
-        byte[] payload =
-                new byte[] {
-                    (byte) 1, (byte) 0, (byte) 2, (byte) 0, (byte) 3, (byte) 4, (byte) 5, (byte) 0,
-                    (byte) 6, (byte) 0, (byte) 7, (byte) 0, (byte) 8, (byte) 9,
-                };
-        SBPMessage sbp = new SBPMessage(0x0042, 0x023A, payload);
-        MsgUtcLeapSecond msg = new MsgUtcLeapSecond(sbp);
+        byte[] payload = new byte[] {(byte)1,(byte)0,(byte)2,(byte)0,(byte)3,(byte)4,(byte)5,(byte)0,(byte)6,(byte)0,(byte)7,(byte)0,(byte)8,(byte)9, };
+        SBPMessage sbp = new SBPMessage( 0x0042, 0x023A, payload );
+        MsgUtcLeapSecond msg = new MsgUtcLeapSecond( sbp );
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
         value = msg.count_after;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.count_after + "' != '" + 9 + "'",
-                    value.equals(BigInteger.valueOf(9L)));
+            org.junit.Assert.assertTrue("'" + msg.count_after + "' != '" + 9 + "'", value.equals(BigInteger.valueOf( 9L ) ) );
         } else {
             value = value.longValue();
             expected = 9L;
@@ -52,9 +50,7 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
         }
         value = msg.count_before;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.count_before + "' != '" + 4 + "'",
-                    value.equals(BigInteger.valueOf(4L)));
+            org.junit.Assert.assertTrue("'" + msg.count_before + "' != '" + 4 + "'", value.equals(BigInteger.valueOf( 4L ) ) );
         } else {
             value = value.longValue();
             expected = 4L;
@@ -62,8 +58,7 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
         }
         value = msg.ref_dn;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.ref_dn + "' != '" + 8 + "'", value.equals(BigInteger.valueOf(8L)));
+            org.junit.Assert.assertTrue("'" + msg.ref_dn + "' != '" + 8 + "'", value.equals(BigInteger.valueOf( 8L ) ) );
         } else {
             value = value.longValue();
             expected = 8L;
@@ -71,8 +66,7 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
         }
         value = msg.ref_wn;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.ref_wn + "' != '" + 7 + "'", value.equals(BigInteger.valueOf(7L)));
+            org.junit.Assert.assertTrue("'" + msg.ref_wn + "' != '" + 7 + "'", value.equals(BigInteger.valueOf( 7L ) ) );
         } else {
             value = value.longValue();
             expected = 7L;
@@ -80,9 +74,7 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
         }
         value = msg.reserved_0;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved_0 + "' != '" + 1 + "'",
-                    value.equals(BigInteger.valueOf(1L)));
+            org.junit.Assert.assertTrue("'" + msg.reserved_0 + "' != '" + 1 + "'", value.equals(BigInteger.valueOf( 1L ) ) );
         } else {
             value = value.longValue();
             expected = 1L;
@@ -90,9 +82,7 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
         }
         value = msg.reserved_1;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved_1 + "' != '" + 2 + "'",
-                    value.equals(BigInteger.valueOf(2L)));
+            org.junit.Assert.assertTrue("'" + msg.reserved_1 + "' != '" + 2 + "'", value.equals(BigInteger.valueOf( 2L ) ) );
         } else {
             value = value.longValue();
             expected = 2L;
@@ -100,9 +90,7 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
         }
         value = msg.reserved_2;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved_2 + "' != '" + 3 + "'",
-                    value.equals(BigInteger.valueOf(3L)));
+            org.junit.Assert.assertTrue("'" + msg.reserved_2 + "' != '" + 3 + "'", value.equals(BigInteger.valueOf( 3L ) ) );
         } else {
             value = value.longValue();
             expected = 3L;
@@ -110,9 +98,7 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
         }
         value = msg.reserved_3;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved_3 + "' != '" + 5 + "'",
-                    value.equals(BigInteger.valueOf(5L)));
+            org.junit.Assert.assertTrue("'" + msg.reserved_3 + "' != '" + 5 + "'", value.equals(BigInteger.valueOf( 5L ) ) );
         } else {
             value = value.longValue();
             expected = 5L;
@@ -120,9 +106,7 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
         }
         value = msg.reserved_4;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved_4 + "' != '" + 6 + "'",
-                    value.equals(BigInteger.valueOf(6L)));
+            org.junit.Assert.assertTrue("'" + msg.reserved_4 + "' != '" + 6 + "'", value.equals(BigInteger.valueOf( 6L ) ) );
         } else {
             value = value.longValue();
             expected = 6L;

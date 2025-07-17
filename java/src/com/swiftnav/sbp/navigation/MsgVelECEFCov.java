@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,80 +9,83 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_VEL_ECEF_COV (0x0215).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_VEL_ECEF_COV (0x0215).
  *
- * <p>You can have MSG_VEL_ECEF_COV inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_VEL_ECEF_COV inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The full
- * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
+ * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
+ * the matching time-of-week (tow).
  *
- * <p>The values in this message are from GNSS measurements fused with inertial measurements. To get
- * values from GNSS measurements only use MSG_VEL_ECEF_COV_GNSS.
- */
+ * The values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_VEL_ECEF_COV_GNSS. */
+
 public class MsgVelECEFCov extends SBPMessage {
     public static final int TYPE = 0x0215;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** Velocity ECEF X coordinate */
     public int x;
-
+    
     /** Velocity ECEF Y coordinate */
     public int y;
-
+    
     /** Velocity ECEF Z coordinate */
     public int z;
-
+    
     /** Estimated variance of x */
     public float cov_x_x;
-
+    
     /** Estimated covariance of x and y */
     public float cov_x_y;
-
+    
     /** Estimated covariance of x and z */
     public float cov_x_z;
-
+    
     /** Estimated variance of y */
     public float cov_y_y;
-
+    
     /** Estimated covariance of y and z */
     public float cov_y_z;
-
+    
     /** Estimated variance of z */
     public float cov_z_z;
-
+    
     /** Number of satellites used in solution */
     public int n_sats;
-
+    
     /** Status flags */
     public int flags;
+    
 
-    public MsgVelECEFCov(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgVelECEFCov() {
-        super(TYPE);
-    }
-
-    public MsgVelECEFCov(SBPMessage msg) throws SBPBinaryException {
+    public MsgVelECEFCov (int sender) { super(sender, TYPE); }
+    public MsgVelECEFCov () { super(TYPE); }
+    public MsgVelECEFCov (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgVelECEFCov, expected 533, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgVelECEFCov, expected 533, actual " + msg.type);
     }
 
     @Override
@@ -98,7 +102,7 @@ public class MsgVelECEFCov extends SBPMessage {
         cov_y_z = parser.getFloat();
         cov_z_z = parser.getFloat();
         n_sats = parser.getU8();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
@@ -114,7 +118,7 @@ public class MsgVelECEFCov extends SBPMessage {
         builder.putFloat(cov_y_z);
         builder.putFloat(cov_z_z);
         builder.putU8(n_sats);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override

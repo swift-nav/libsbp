@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,61 +9,63 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.system;
 
 // This file was auto-generated from yaml/swiftnav/sbp/system.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_CSAC_TELEMETRY_LABELS (0xFF05).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_CSAC_TELEMETRY_LABELS (0xFF05).
  *
- * <p>You can have MSG_CSAC_TELEMETRY_LABELS inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_CSAC_TELEMETRY_LABELS inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The CSAC telemetry message provides labels for each member of the string produced by
- * MSG_CSAC_TELEMETRY. It should be provided by a device at a lower rate than the
- * MSG_CSAC_TELEMETRY.
- */
+ * The CSAC telemetry message provides labels for each member of the string
+ * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a
+ * lower rate than the MSG_CSAC_TELEMETRY. */
+
 public class MsgCsacTelemetryLabels extends SBPMessage {
     public static final int TYPE = 0xFF05;
 
-    /** Index representing the type of telemetry in use. It is implementation defined. */
+    
+    /** Index representing the type of telemetry in use.  It is implementation
+      * defined. */
     public int id;
-
+    
     /** Comma separated list of telemetry field values */
     public String telemetry_labels;
+    
 
-    public MsgCsacTelemetryLabels(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgCsacTelemetryLabels() {
-        super(TYPE);
-    }
-
-    public MsgCsacTelemetryLabels(SBPMessage msg) throws SBPBinaryException {
+    public MsgCsacTelemetryLabels (int sender) { super(sender, TYPE); }
+    public MsgCsacTelemetryLabels () { super(TYPE); }
+    public MsgCsacTelemetryLabels (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgCsacTelemetryLabels, expected 65285, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgCsacTelemetryLabels, expected 65285, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         id = parser.getU8();
-        telemetry_labels = parser.getString();
+        telemetry_labels = parser.getString(); 
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU8(id);
-        builder.putString(telemetry_labels);
+        builder.putString(telemetry_labels); 
     }
 
     @Override

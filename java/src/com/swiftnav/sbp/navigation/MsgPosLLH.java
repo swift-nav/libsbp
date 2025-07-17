@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,71 +9,75 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_POS_LLH (0x020A).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_POS_LLH (0x020A).
  *
- * <p>You can have MSG_POS_LLH inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_POS_LLH inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This position solution message reports the absolute geodetic coordinates and the status
- * (single point vs pseudo-absolute RTK) of the position solution. If the rover receiver knows the
- * surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute
- * position solution using the base station position and the rover's RTK baseline vector. The full
- * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This position solution message reports the absolute geodetic coordinates
+ * and the status (single point vs pseudo-absolute RTK) of the position
+ * solution. If the rover receiver knows the surveyed position of the base
+ * station and has an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK baseline
+ * vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow).
  *
- * <p>The values in this message are from GNSS measurements fused with inertial measurements. To get
- * values from GNSS measurements only use MSG_POS_LLH_GNSS.
- */
+ * The values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_POS_LLH_GNSS. */
+
 public class MsgPosLLH extends SBPMessage {
     public static final int TYPE = 0x020A;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** Latitude */
     public double lat;
-
+    
     /** Longitude */
     public double lon;
-
+    
     /** Height above WGS84 ellipsoid */
     public double height;
-
+    
     /** Horizontal position estimated standard deviation */
     public int h_accuracy;
-
+    
     /** Vertical position estimated standard deviation */
     public int v_accuracy;
-
+    
     /** Number of satellites used in solution. */
     public int n_sats;
-
+    
     /** Status flags */
     public int flags;
+    
 
-    public MsgPosLLH(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgPosLLH() {
-        super(TYPE);
-    }
-
-    public MsgPosLLH(SBPMessage msg) throws SBPBinaryException {
+    public MsgPosLLH (int sender) { super(sender, TYPE); }
+    public MsgPosLLH () { super(TYPE); }
+    public MsgPosLLH (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgPosLLH, expected 522, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgPosLLH, expected 522, actual " + msg.type);
     }
 
     @Override
@@ -85,7 +90,7 @@ public class MsgPosLLH extends SBPMessage {
         h_accuracy = parser.getU16();
         v_accuracy = parser.getU16();
         n_sats = parser.getU8();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
@@ -97,7 +102,7 @@ public class MsgPosLLH extends SBPMessage {
         builder.putU16(h_accuracy);
         builder.putU16(v_accuracy);
         builder.putU8(n_sats);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override

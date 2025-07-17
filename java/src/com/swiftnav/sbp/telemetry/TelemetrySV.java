@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,48 +9,53 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.telemetry;
 
 // This file was auto-generated from yaml/swiftnav/sbp/telemetry.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class TelemetrySV extends SBPStruct {
-
+    
     /** Azimuth angle (range 0..179) */
     public int az;
-
+    
     /** Elevation angle (range -90..90) */
     public int el;
-
+    
     /** Observation availability at filter update */
     public int availability_flags;
-
+    
     /** Pseudorange observation residual */
     public int pseudorange_residual;
-
+    
     /** Carrier-phase or carrier-phase-derived observation residual */
     public int phase_residual;
-
+    
     /** Reports if observation is marked as an outlier and is excluded from the update */
     public int outlier_flags;
-
+    
     /** Ephemeris metadata */
     public int ephemeris_flags;
-
+    
     /** Reserved */
     public int correction_flags;
-
+    
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
+    
 
-    public TelemetrySV() {}
+    public TelemetrySV () {}
 
     @Override
     public TelemetrySV parse(SBPMessage.Parser parser) throws SBPBinaryException {

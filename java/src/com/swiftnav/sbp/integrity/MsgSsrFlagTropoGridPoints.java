@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,44 +9,44 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.integrity;
 
 // This file was auto-generated from yaml/swiftnav/sbp/integrity.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
+
+
 
 public class MsgSsrFlagTropoGridPoints extends SBPMessage {
     public static final int TYPE = 0x0BC3;
 
+    
     /** Header of an integrity message. */
     public IntegritySSRHeader header;
-
+    
     /** Number of faulty grid points. */
     public int n_faulty_points;
-
+    
     /** List of faulty grid points. */
     public int[] faulty_points;
+    
 
-    public MsgSsrFlagTropoGridPoints(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgSsrFlagTropoGridPoints() {
-        super(TYPE);
-    }
-
-    public MsgSsrFlagTropoGridPoints(SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrFlagTropoGridPoints (int sender) { super(sender, TYPE); }
+    public MsgSsrFlagTropoGridPoints () { super(TYPE); }
+    public MsgSsrFlagTropoGridPoints (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgSsrFlagTropoGridPoints, expected 3011, actual "
-                            + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgSsrFlagTropoGridPoints, expected 3011, actual " + msg.type);
     }
 
     @Override
@@ -53,14 +54,14 @@ public class MsgSsrFlagTropoGridPoints extends SBPMessage {
         /* Parse fields from binary */
         header = new IntegritySSRHeader().parse(parser);
         n_faulty_points = parser.getU8();
-        faulty_points = parser.getArrayofU16();
+        faulty_points = parser.getArrayofU16(); 
     }
 
     @Override
     protected void build(Builder builder) {
         header.build(builder);
         builder.putU8(n_faulty_points);
-        builder.putArrayofU16(faulty_points);
+        builder.putArrayofU16(faulty_points); 
     }
 
     @Override

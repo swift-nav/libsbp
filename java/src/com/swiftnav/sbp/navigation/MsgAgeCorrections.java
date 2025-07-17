@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,59 +9,61 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_AGE_CORRECTIONS (0x0210).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_AGE_CORRECTIONS (0x0210).
  *
- * <p>You can have MSG_AGE_CORRECTIONS inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_AGE_CORRECTIONS inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message reports the Age of the corrections used for the current Differential solution.
- */
+ * This message reports the Age of the corrections used for the current
+ * Differential solution. */
+
 public class MsgAgeCorrections extends SBPMessage {
     public static final int TYPE = 0x0210;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** Age of the corrections (0xFFFF indicates invalid) */
     public int age;
+    
 
-    public MsgAgeCorrections(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgAgeCorrections() {
-        super(TYPE);
-    }
-
-    public MsgAgeCorrections(SBPMessage msg) throws SBPBinaryException {
+    public MsgAgeCorrections (int sender) { super(sender, TYPE); }
+    public MsgAgeCorrections () { super(TYPE); }
+    public MsgAgeCorrections (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgAgeCorrections, expected 528, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgAgeCorrections, expected 528, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         tow = parser.getU32();
-        age = parser.getU16();
+        age = parser.getU16(); 
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU32(tow);
-        builder.putU16(age);
+        builder.putU16(age); 
     }
 
     @Override

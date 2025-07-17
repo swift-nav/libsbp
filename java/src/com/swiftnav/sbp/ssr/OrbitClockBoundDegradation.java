@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,45 +9,50 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.ssr;
 
 // This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class OrbitClockBoundDegradation extends SBPStruct {
-
+    
     /** Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s */
     public int orb_radial_bound_mu_dot;
-
+    
     /** Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s */
     public int orb_along_bound_mu_dot;
-
+    
     /** Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s */
     public int orb_cross_bound_mu_dot;
-
+    
     /** Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255 m/s */
     public int orb_radial_bound_sig_dot;
-
+    
     /** Orbit Bound Standard Deviation Along-Track First derivative. Range: 0-0.255 m/s */
     public int orb_along_bound_sig_dot;
-
+    
     /** Orbit Bound Standard Deviation Cross-Track First derivative. Range: 0-0.255 m/s */
     public int orb_cross_bound_sig_dot;
-
+    
     /** Clock Bound Mean First derivative. Range: 0-0.255 m/s */
     public int clock_bound_mu_dot;
-
+    
     /** Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s */
     public int clock_bound_sig_dot;
+    
 
-    public OrbitClockBoundDegradation() {}
+    public OrbitClockBoundDegradation () {}
 
     @Override
     public OrbitClockBoundDegradation parse(SBPMessage.Parser parser) throws SBPBinaryException {

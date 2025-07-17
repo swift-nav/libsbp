@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,57 +9,57 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.acquisition;
 
 // This file was auto-generated from yaml/swiftnav/sbp/acquisition.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_ACQ_SV_PROFILE (0x002E).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_ACQ_SV_PROFILE (0x002E).
  *
- * <p>You can have MSG_ACQ_SV_PROFILE inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_ACQ_SV_PROFILE inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The message describes all SV profiles during acquisition time. The message is used to debug
- * and measure the performance.
- */
+ * The message describes all SV profiles during acquisition time. The message
+ * is used to debug and measure the performance. */
+
 public class MsgAcqSvProfile extends SBPMessage {
     public static final int TYPE = 0x002E;
 
+    
     /** SV profiles during acquisition time */
     public AcqSvProfile[] acq_sv_profile;
+    
 
-    public MsgAcqSvProfile(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgAcqSvProfile() {
-        super(TYPE);
-    }
-
-    public MsgAcqSvProfile(SBPMessage msg) throws SBPBinaryException {
+    public MsgAcqSvProfile (int sender) { super(sender, TYPE); }
+    public MsgAcqSvProfile () { super(TYPE); }
+    public MsgAcqSvProfile (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgAcqSvProfile, expected 46, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgAcqSvProfile, expected 46, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        acq_sv_profile = parser.getArray(AcqSvProfile.class);
+        acq_sv_profile = parser.getArray(AcqSvProfile.class); 
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArray(acq_sv_profile);
+        builder.putArray(acq_sv_profile); 
     }
 
     @Override

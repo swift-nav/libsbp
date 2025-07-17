@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,42 +9,47 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.integrity;
 
 // This file was auto-generated from yaml/swiftnav/sbp/integrity.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class IntegritySSRHeader extends SBPStruct {
-
+    
     /** GNSS reference time of the observation used to generate the flag. */
     public GPSTimeSec obs_time;
-
+    
     /** Number of messages in the dataset */
     public int num_msgs;
-
+    
     /** Position of this message in the dataset */
     public int seq_num;
-
+    
     /** SSR Solution ID. */
     public int ssr_sol_id;
-
+    
     /** Unique identifier of the set this tile belongs to. */
     public int tile_set_id;
-
+    
     /** Unique identifier of this tile in the tile set. */
     public int tile_id;
-
+    
     /** Chain and type of flag. */
     public int chain_id;
+    
 
-    public IntegritySSRHeader() {}
+    public IntegritySSRHeader () {}
 
     @Override
     public IntegritySSRHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {

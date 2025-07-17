@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,71 +9,74 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.imu;
 
 // This file was auto-generated from yaml/swiftnav/sbp/imu.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_IMU_RAW (0x0900).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_IMU_RAW (0x0900).
  *
- * <p>You can have MSG_IMU_RAW inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_IMU_RAW inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Raw data from the Inertial Measurement Unit, containing accelerometer and gyroscope readings.
- * The sense of the measurements are to be aligned with the indications on the device itself.
- * Measurement units, which are specific to the device hardware and settings, are communicated via
- * the MSG_IMU_AUX message. If using "time since startup" local time tags, the receiving end will
- * expect either a MSG_GNSS_TIME_OFFSET or MSG_PPS_TIME to establish the relationship between IMU
- * time and GNSS time. Regardless of the timestamping mode, the timestamp is required to roll over
- * to zero when reaching one week (604800 seconds, or 604800000 milliseconds). The time-tagging mode
- * should not change throughout a run.
- */
+ * Raw data from the Inertial Measurement Unit, containing accelerometer and
+ * gyroscope readings. The sense of the measurements are to be aligned with
+ * the indications on the device itself. Measurement units, which are specific
+ * to the device hardware and settings, are communicated via the MSG_IMU_AUX
+ * message. If using "time since startup" local time tags, the receiving end
+ * will expect either a MSG_GNSS_TIME_OFFSET or MSG_PPS_TIME to establish the
+ * relationship between IMU time and GNSS time.
+ * Regardless of the timestamping mode, the timestamp is required to roll over
+ * to zero when reaching one week (604800 seconds, or 604800000 milliseconds).
+ * The time-tagging mode should not change throughout a run. */
+
 public class MsgImuRaw extends SBPMessage {
     public static final int TYPE = 0x0900;
 
+    
     /** Milliseconds since reference epoch and time status. */
     public long tow;
-
+    
     /** Milliseconds since reference epoch, fractional part */
     public int tow_f;
-
+    
     /** Acceleration in the IMU frame X axis */
     public int acc_x;
-
+    
     /** Acceleration in the IMU frame Y axis */
     public int acc_y;
-
+    
     /** Acceleration in the IMU frame Z axis */
     public int acc_z;
-
+    
     /** Angular rate around IMU frame X axis */
     public int gyr_x;
-
+    
     /** Angular rate around IMU frame Y axis */
     public int gyr_y;
-
+    
     /** Angular rate around IMU frame Z axis */
     public int gyr_z;
+    
 
-    public MsgImuRaw(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgImuRaw() {
-        super(TYPE);
-    }
-
-    public MsgImuRaw(SBPMessage msg) throws SBPBinaryException {
+    public MsgImuRaw (int sender) { super(sender, TYPE); }
+    public MsgImuRaw () { super(TYPE); }
+    public MsgImuRaw (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgImuRaw, expected 2304, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgImuRaw, expected 2304, actual " + msg.type);
     }
 
     @Override
@@ -85,7 +89,7 @@ public class MsgImuRaw extends SBPMessage {
         acc_z = parser.getS16();
         gyr_x = parser.getS16();
         gyr_y = parser.getS16();
-        gyr_z = parser.getS16();
+        gyr_z = parser.getS16(); 
     }
 
     @Override
@@ -97,7 +101,7 @@ public class MsgImuRaw extends SBPMessage {
         builder.putS16(acc_z);
         builder.putS16(gyr_x);
         builder.putS16(gyr_y);
-        builder.putS16(gyr_z);
+        builder.putS16(gyr_z); 
     }
 
     @Override

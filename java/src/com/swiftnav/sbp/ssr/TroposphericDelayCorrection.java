@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,34 +9,37 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.ssr;
 
 // This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class TroposphericDelayCorrection extends SBPStruct {
-
+    
     /** Hydrostatic vertical delay. Add 2.3 m to get actual value. */
     public int hydro;
-
+    
     /** Wet vertical delay. Add 0.252 m to get actual value. */
     public int wet;
-
-    /**
-     * Standard deviation encoded using a similar method as RTCM DF389. The upper 3 bit are the
-     * class, the lower 5 bits are the value. Standard deviation [mm] = (3^class * (1 + value/16) -
-     * 1)
-     */
+    
+    /** Standard deviation encoded using a similar method as RTCM DF389. The upper 3
+      * bit are the class, the lower 5 bits are the value. Standard deviation [mm] =
+      * (3^class * (1 + value/16) - 1) */
     public int stddev;
+    
 
-    public TroposphericDelayCorrection() {}
+    public TroposphericDelayCorrection () {}
 
     @Override
     public TroposphericDelayCorrection parse(SBPMessage.Parser parser) throws SBPBinaryException {

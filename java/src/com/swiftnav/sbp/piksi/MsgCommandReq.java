@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,61 +9,62 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.piksi;
 
 // This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_COMMAND_REQ (0x00B8).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_COMMAND_REQ (0x00B8).
  *
- * <p>You can have MSG_COMMAND_REQ inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_COMMAND_REQ inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Request the recipient to execute an command. Output will be sent in MSG_LOG messages, and the
- * exit code will be returned with MSG_COMMAND_RESP.
- */
+ * Request the recipient to execute an command. Output will be sent in MSG_LOG
+ * messages, and the exit code will be returned with MSG_COMMAND_RESP. */
+
 public class MsgCommandReq extends SBPMessage {
     public static final int TYPE = 0x00B8;
 
+    
     /** Sequence number */
     public long sequence;
-
+    
     /** Command line to execute */
     public String command;
+    
 
-    public MsgCommandReq(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgCommandReq() {
-        super(TYPE);
-    }
-
-    public MsgCommandReq(SBPMessage msg) throws SBPBinaryException {
+    public MsgCommandReq (int sender) { super(sender, TYPE); }
+    public MsgCommandReq () { super(TYPE); }
+    public MsgCommandReq (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgCommandReq, expected 184, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgCommandReq, expected 184, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         sequence = parser.getU32();
-        command = parser.getString();
+        command = parser.getString(); 
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU32(sequence);
-        builder.putString(command);
+        builder.putString(command); 
     }
 
     @Override

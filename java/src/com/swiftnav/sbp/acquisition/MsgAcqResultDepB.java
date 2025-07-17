@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,56 +9,55 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.acquisition;
 
 // This file was auto-generated from yaml/swiftnav/sbp/acquisition.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_ACQ_RESULT_DEP_B (0x0014).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_ACQ_RESULT_DEP_B (0x0014).
  *
- * <p>You can have MSG_ACQ_RESULT_DEP_B inherent its fields directly from an inherited SBP object,
- * or construct it inline using a dict of its fields.
+ * You can have MSG_ACQ_RESULT_DEP_B inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgAcqResultDepB extends SBPMessage {
     public static final int TYPE = 0x0014;
 
-    /**
-     * SNR of best point. Currently in arbitrary SNR points, but will be in units of dB Hz in a
-     * later revision of this message.
-     */
+    
+    /** SNR of best point. Currently in arbitrary SNR points, but will be in
+      * units of dB Hz in a later revision of this message. */
     public float snr;
-
+    
     /** Code phase of best point */
     public float cp;
-
+    
     /** Carrier frequency of best point */
     public float cf;
-
+    
     /** GNSS signal for which acquisition was attempted */
     public GnssSignalDep sid;
+    
 
-    public MsgAcqResultDepB(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgAcqResultDepB() {
-        super(TYPE);
-    }
-
-    public MsgAcqResultDepB(SBPMessage msg) throws SBPBinaryException {
+    public MsgAcqResultDepB (int sender) { super(sender, TYPE); }
+    public MsgAcqResultDepB () { super(TYPE); }
+    public MsgAcqResultDepB (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgAcqResultDepB, expected 20, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgAcqResultDepB, expected 20, actual " + msg.type);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class MsgAcqResultDepB extends SBPMessage {
         snr = parser.getFloat();
         cp = parser.getFloat();
         cf = parser.getFloat();
-        sid = new GnssSignalDep().parse(parser);
+        sid = new GnssSignalDep().parse(parser); 
     }
 
     @Override
@@ -74,7 +74,7 @@ public class MsgAcqResultDepB extends SBPMessage {
         builder.putFloat(snr);
         builder.putFloat(cp);
         builder.putFloat(cf);
-        sid.build(builder);
+        sid.build(builder); 
     }
 
     @Override

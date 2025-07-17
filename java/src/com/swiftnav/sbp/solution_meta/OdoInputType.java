@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,23 +9,28 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.solution_meta;
 
 // This file was auto-generated from yaml/swiftnav/sbp/solution_meta.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class OdoInputType extends SBPStruct {
-
+    
     /** Instrument ODO rate, grade, and quality. */
     public int flags;
+    
 
-    public OdoInputType() {}
+    public OdoInputType () {}
 
     @Override
     public OdoInputType parse(SBPMessage.Parser parser) throws SBPBinaryException {

@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,68 +9,69 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
  *
- * <p>You can have MSG_UTC_LEAP_SECOND inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_UTC_LEAP_SECOND inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>UTC-GPST leap seconds before and after the most recent (past, or future, for announced
- * insertions) UTC leap second insertion.
- */
+ * UTC-GPST leap seconds before and after the most recent (past, or future,
+ * for announced insertions) UTC leap second insertion. */
+
 public class MsgUtcLeapSecond extends SBPMessage {
     public static final int TYPE = 0x023A;
 
+    
     /** Reserved. */
     public int reserved_0;
-
+    
     /** Reserved. */
     public int reserved_1;
-
+    
     /** Reserved. */
     public int reserved_2;
-
+    
     /** Leap second count before insertion. */
     public int count_before;
-
+    
     /** Reserved. */
     public int reserved_3;
-
+    
     /** Reserved. */
     public int reserved_4;
-
+    
     /** Leap second reference GPS week number. */
     public int ref_wn;
-
+    
     /** Leap second reference day number. */
     public int ref_dn;
-
+    
     /** Leap second count after insertion. */
     public int count_after;
+    
 
-    public MsgUtcLeapSecond(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgUtcLeapSecond() {
-        super(TYPE);
-    }
-
-    public MsgUtcLeapSecond(SBPMessage msg) throws SBPBinaryException {
+    public MsgUtcLeapSecond (int sender) { super(sender, TYPE); }
+    public MsgUtcLeapSecond () { super(TYPE); }
+    public MsgUtcLeapSecond (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgUtcLeapSecond, expected 570, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgUtcLeapSecond, expected 570, actual " + msg.type);
     }
 
     @Override
@@ -83,7 +85,7 @@ public class MsgUtcLeapSecond extends SBPMessage {
         reserved_4 = parser.getU16();
         ref_wn = parser.getU16();
         ref_dn = parser.getU8();
-        count_after = parser.getS8();
+        count_after = parser.getS8(); 
     }
 
     @Override
@@ -96,7 +98,7 @@ public class MsgUtcLeapSecond extends SBPMessage {
         builder.putU16(reserved_4);
         builder.putU16(ref_wn);
         builder.putU8(ref_dn);
-        builder.putS8(count_after);
+        builder.putS8(count_after); 
     }
 
     @Override

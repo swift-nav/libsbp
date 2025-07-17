@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,61 +9,62 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.piksi;
 
 // This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_MASK_SATELLITE (0x002B).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_MASK_SATELLITE (0x002B).
  *
- * <p>You can have MSG_MASK_SATELLITE inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_MASK_SATELLITE inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message allows setting a mask to prevent a particular satellite from being used in
- * various Piksi subsystems.
- */
+ * This message allows setting a mask to prevent a particular satellite from
+ * being used in various Piksi subsystems. */
+
 public class MsgMaskSatellite extends SBPMessage {
     public static final int TYPE = 0x002B;
 
+    
     /** Mask of systems that should ignore this satellite. */
     public int mask;
-
+    
     /** GNSS signal for which the mask is applied */
     public GnssSignal sid;
+    
 
-    public MsgMaskSatellite(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgMaskSatellite() {
-        super(TYPE);
-    }
-
-    public MsgMaskSatellite(SBPMessage msg) throws SBPBinaryException {
+    public MsgMaskSatellite (int sender) { super(sender, TYPE); }
+    public MsgMaskSatellite () { super(TYPE); }
+    public MsgMaskSatellite (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgMaskSatellite, expected 43, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgMaskSatellite, expected 43, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         mask = parser.getU8();
-        sid = new GnssSignal().parse(parser);
+        sid = new GnssSignal().parse(parser); 
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU8(mask);
-        sid.build(builder);
+        sid.build(builder); 
     }
 
     @Override

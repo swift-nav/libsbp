@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,60 +9,60 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.observation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_EPHEMERIS_SBAS_DEP_A (0x0082).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_EPHEMERIS_SBAS_DEP_A (0x0082).
  *
- * <p>You can have MSG_EPHEMERIS_SBAS_DEP_A inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_EPHEMERIS_SBAS_DEP_A inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgEphemerisSbasDepA extends SBPMessage {
     public static final int TYPE = 0x0082;
 
+    
     /** Values common for all ephemeris types */
     public EphemerisCommonContentDepA common;
-
+    
     /** Position of the GEO at time toe */
     public double[] pos;
-
+    
     /** Velocity of the GEO at time toe */
     public double[] vel;
-
+    
     /** Acceleration of the GEO at time toe */
     public double[] acc;
-
+    
     /** Time offset of the GEO clock w.r.t. SBAS Network Time */
     public double a_gf0;
-
+    
     /** Drift of the GEO clock w.r.t. SBAS Network Time */
     public double a_gf1;
+    
 
-    public MsgEphemerisSbasDepA(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgEphemerisSbasDepA() {
-        super(TYPE);
-    }
-
-    public MsgEphemerisSbasDepA(SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisSbasDepA (int sender) { super(sender, TYPE); }
+    public MsgEphemerisSbasDepA () { super(TYPE); }
+    public MsgEphemerisSbasDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgEphemerisSbasDepA, expected 130, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgEphemerisSbasDepA, expected 130, actual " + msg.type);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class MsgEphemerisSbasDepA extends SBPMessage {
         vel = parser.getArrayofDouble(3);
         acc = parser.getArrayofDouble(3);
         a_gf0 = parser.getDouble();
-        a_gf1 = parser.getDouble();
+        a_gf1 = parser.getDouble(); 
     }
 
     @Override
@@ -82,7 +83,7 @@ public class MsgEphemerisSbasDepA extends SBPMessage {
         builder.putArrayofDouble(vel, 3);
         builder.putArrayofDouble(acc, 3);
         builder.putDouble(a_gf0);
-        builder.putDouble(a_gf1);
+        builder.putDouble(a_gf1); 
     }
 
     @Override

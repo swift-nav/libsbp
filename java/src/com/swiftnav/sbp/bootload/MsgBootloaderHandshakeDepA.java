@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,56 +9,55 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.bootload;
 
 // This file was auto-generated from yaml/swiftnav/sbp/bootload.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_BOOTLOADER_HANDSHAKE_DEP_A (0x00B0).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_BOOTLOADER_HANDSHAKE_DEP_A (0x00B0).
  *
- * <p>You can have MSG_BOOTLOADER_HANDSHAKE_DEP_A inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_BOOTLOADER_HANDSHAKE_DEP_A inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgBootloaderHandshakeDepA extends SBPMessage {
     public static final int TYPE = 0x00B0;
 
+    
     /** Version number string (not NULL terminated) */
     public int[] handshake;
+    
 
-    public MsgBootloaderHandshakeDepA(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgBootloaderHandshakeDepA() {
-        super(TYPE);
-    }
-
-    public MsgBootloaderHandshakeDepA(SBPMessage msg) throws SBPBinaryException {
+    public MsgBootloaderHandshakeDepA (int sender) { super(sender, TYPE); }
+    public MsgBootloaderHandshakeDepA () { super(TYPE); }
+    public MsgBootloaderHandshakeDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgBootloaderHandshakeDepA, expected 176, actual "
-                            + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgBootloaderHandshakeDepA, expected 176, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        handshake = parser.getArrayofU8();
+        handshake = parser.getArrayofU8(); 
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArrayofU8(handshake);
+        builder.putArrayofU8(handshake); 
     }
 
     @Override

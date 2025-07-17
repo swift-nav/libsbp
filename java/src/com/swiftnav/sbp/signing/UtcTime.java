@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,41 +9,46 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.signing;
 
 // This file was auto-generated from yaml/swiftnav/sbp/signing.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class UtcTime extends SBPStruct {
-
+    
     /** Year */
     public int year;
-
+    
     /** Month (range 1 .. 12) */
     public int month;
-
+    
     /** days in the month (range 1-31) */
     public int day;
-
+    
     /** hours of day (range 0-23) */
     public int hours;
-
+    
     /** minutes of hour (range 0-59) */
     public int minutes;
-
+    
     /** seconds of minute (range 0-60) rounded down */
     public int seconds;
-
+    
     /** nanoseconds of second (range 0-999999999) */
     public long ns;
+    
 
-    public UtcTime() {}
+    public UtcTime () {}
 
     @Override
     public UtcTime parse(SBPMessage.Parser parser) throws SBPBinaryException {

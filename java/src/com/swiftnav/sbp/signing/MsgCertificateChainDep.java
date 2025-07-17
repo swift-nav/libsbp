@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,65 +9,62 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.signing;
 
 // This file was auto-generated from yaml/swiftnav/sbp/signing.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_CERTIFICATE_CHAIN_DEP (0x0C05).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_CERTIFICATE_CHAIN_DEP (0x0C05).
  *
- * <p>You can have MSG_CERTIFICATE_CHAIN_DEP inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_CERTIFICATE_CHAIN_DEP inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgCertificateChainDep extends SBPMessage {
     public static final int TYPE = 0x0C05;
 
+    
     /** SHA-1 fingerprint of the root certificate */
     public int[] root_certificate;
-
+    
     /** SHA-1 fingerprint of the intermediate certificate */
     public int[] intermediate_certificate;
-
+    
     /** SHA-1 fingerprint of the corrections certificate */
     public int[] corrections_certificate;
-
-    /**
-     * The certificate chain comprised of three fingerprints: root certificate, intermediate
-     * certificate and corrections certificate.
-     */
+    
+    /** The certificate chain comprised of three fingerprints: root
+      * certificate, intermediate certificate and corrections certificate. */
     public UtcTime expiration;
-
-    /**
-     * An ECDSA signature (created by the root certificate) over the concatenation of the SBP
-     * payload bytes preceding this field. That is, the concatenation of `root_certificate`,
-     * `intermediate_certificate`, `corrections_certificate` and `expiration`. This certificate
-     * chain (allow list) can also be validated by fetching it from
-     * `http(s)://certs.swiftnav.com/chain`.
-     */
+    
+    /** An ECDSA signature (created by the root certificate) over the
+      * concatenation of the SBP payload bytes preceding this field. That is,
+      * the concatenation of `root_certificate`, `intermediate_certificate`,
+      * `corrections_certificate` and `expiration`.  This certificate chain
+      * (allow list) can also be validated by fetching it from
+      * `http(s)://certs.swiftnav.com/chain`. */
     public int[] signature;
+    
 
-    public MsgCertificateChainDep(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgCertificateChainDep() {
-        super(TYPE);
-    }
-
-    public MsgCertificateChainDep(SBPMessage msg) throws SBPBinaryException {
+    public MsgCertificateChainDep (int sender) { super(sender, TYPE); }
+    public MsgCertificateChainDep () { super(TYPE); }
+    public MsgCertificateChainDep (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgCertificateChainDep, expected 3077, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgCertificateChainDep, expected 3077, actual " + msg.type);
     }
 
     @Override
@@ -76,7 +74,7 @@ public class MsgCertificateChainDep extends SBPMessage {
         intermediate_certificate = parser.getArrayofU8(20);
         corrections_certificate = parser.getArrayofU8(20);
         expiration = new UtcTime().parse(parser);
-        signature = parser.getArrayofU8(64);
+        signature = parser.getArrayofU8(64); 
     }
 
     @Override
@@ -85,7 +83,7 @@ public class MsgCertificateChainDep extends SBPMessage {
         builder.putArrayofU8(intermediate_certificate, 20);
         builder.putArrayofU8(corrections_certificate, 20);
         expiration.build(builder);
-        builder.putArrayofU8(signature, 64);
+        builder.putArrayofU8(signature, 64); 
     }
 
     @Override

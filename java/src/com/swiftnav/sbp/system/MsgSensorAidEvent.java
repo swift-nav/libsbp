@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,66 +9,68 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.system;
 
 // This file was auto-generated from yaml/swiftnav/sbp/system.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_SENSOR_AID_EVENT (0xFF09).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_SENSOR_AID_EVENT (0xFF09).
  *
- * <p>You can have MSG_SENSOR_AID_EVENT inherent its fields directly from an inherited SBP object,
- * or construct it inline using a dict of its fields.
+ * You can have MSG_SENSOR_AID_EVENT inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This diagnostic message contains state and update status information for all sensors that are
- * being used by the fusion engine. This message will be generated asynchronously to the solution
- * messages and will be emitted anytime a sensor update is being processed.
- */
+ * This diagnostic message contains state and update status information for
+ * all sensors that are being used by the fusion engine. This message will be
+ * generated asynchronously to the solution messages and will be emitted
+ * anytime a sensor update is being processed. */
+
 public class MsgSensorAidEvent extends SBPMessage {
     public static final int TYPE = 0xFF09;
 
+    
     /** Update timestamp in milliseconds. */
     public long time;
-
+    
     /** Sensor type */
     public int sensor_type;
-
+    
     /** Sensor identifier */
     public int sensor_id;
-
+    
     /** Reserved for future use */
     public int sensor_state;
-
+    
     /** Number of available measurements in this epoch */
     public int n_available_meas;
-
+    
     /** Number of attempted measurements in this epoch */
     public int n_attempted_meas;
-
+    
     /** Number of accepted measurements in this epoch */
     public int n_accepted_meas;
-
+    
     /** Reserved for future use */
     public long flags;
+    
 
-    public MsgSensorAidEvent(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgSensorAidEvent() {
-        super(TYPE);
-    }
-
-    public MsgSensorAidEvent(SBPMessage msg) throws SBPBinaryException {
+    public MsgSensorAidEvent (int sender) { super(sender, TYPE); }
+    public MsgSensorAidEvent () { super(TYPE); }
+    public MsgSensorAidEvent (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgSensorAidEvent, expected 65289, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgSensorAidEvent, expected 65289, actual " + msg.type);
     }
 
     @Override
@@ -80,7 +83,7 @@ public class MsgSensorAidEvent extends SBPMessage {
         n_available_meas = parser.getU8();
         n_attempted_meas = parser.getU8();
         n_accepted_meas = parser.getU8();
-        flags = parser.getU32();
+        flags = parser.getU32(); 
     }
 
     @Override
@@ -92,7 +95,7 @@ public class MsgSensorAidEvent extends SBPMessage {
         builder.putU8(n_available_meas);
         builder.putU8(n_attempted_meas);
         builder.putU8(n_accepted_meas);
-        builder.putU32(flags);
+        builder.putU32(flags); 
     }
 
     @Override

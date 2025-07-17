@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,110 +9,108 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_PROTECTION_LEVEL (0x0217).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_PROTECTION_LEVEL (0x0217).
  *
- * <p>You can have MSG_PROTECTION_LEVEL inherent its fields directly from an inherited SBP object,
- * or construct it inline using a dict of its fields.
+ * You can have MSG_PROTECTION_LEVEL inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message reports the protection levels associated to the given state estimate. The full
- * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
- */
+ * This message reports the protection levels associated to the given state
+ * estimate. The full GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow). */
+
 public class MsgProtectionLevel extends SBPMessage {
     public static final int TYPE = 0x0217;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** GPS week number */
     public int wn;
-
+    
     /** Horizontal protection level */
     public int hpl;
-
+    
     /** Vertical protection level */
     public int vpl;
-
+    
     /** Along-track position error protection level */
     public int atpl;
-
+    
     /** Cross-track position error protection level */
     public int ctpl;
-
-    /**
-     * Protection level for the error vector between estimated and true along/cross track velocity
-     * vector
-     */
+    
+    /** Protection level for the error vector between estimated and true
+      * along/cross track velocity vector */
     public int hvpl;
-
-    /**
-     * Protection level for the velocity in vehicle upright direction (different from vertical
-     * direction if on a slope)
-     */
+    
+    /** Protection level for the velocity in vehicle upright direction
+      * (different from vertical direction if on a slope) */
     public int vvpl;
-
+    
     /** Heading orientation protection level */
     public int hopl;
-
+    
     /** Pitch orientation protection level */
     public int popl;
-
+    
     /** Roll orientation protection level */
     public int ropl;
-
+    
     /** Latitude */
     public double lat;
-
+    
     /** Longitude */
     public double lon;
-
+    
     /** Height */
     public double height;
-
+    
     /** Velocity in vehicle x direction */
     public int v_x;
-
+    
     /** Velocity in vehicle y direction */
     public int v_y;
-
+    
     /** Velocity in vehicle z direction */
     public int v_z;
-
+    
     /** Roll angle */
     public int roll;
-
+    
     /** Pitch angle */
     public int pitch;
-
+    
     /** Heading angle */
     public int heading;
-
+    
     /** Status flags */
     public long flags;
+    
 
-    public MsgProtectionLevel(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgProtectionLevel() {
-        super(TYPE);
-    }
-
-    public MsgProtectionLevel(SBPMessage msg) throws SBPBinaryException {
+    public MsgProtectionLevel (int sender) { super(sender, TYPE); }
+    public MsgProtectionLevel () { super(TYPE); }
+    public MsgProtectionLevel (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgProtectionLevel, expected 535, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgProtectionLevel, expected 535, actual " + msg.type);
     }
 
     @Override
@@ -137,7 +136,7 @@ public class MsgProtectionLevel extends SBPMessage {
         roll = parser.getS32();
         pitch = parser.getS32();
         heading = parser.getS32();
-        flags = parser.getU32();
+        flags = parser.getU32(); 
     }
 
     @Override
@@ -162,7 +161,7 @@ public class MsgProtectionLevel extends SBPMessage {
         builder.putS32(roll);
         builder.putS32(pitch);
         builder.putS32(heading);
-        builder.putU32(flags);
+        builder.putU32(flags); 
     }
 
     @Override

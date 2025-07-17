@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,120 +9,123 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.integrity;
 
 // This file was auto-generated from yaml/swiftnav/sbp/integrity.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BBA).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BBA).
  *
- * <p>You can have MSG_SSR_FLAG_HIGH_LEVEL inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_SSR_FLAG_HIGH_LEVEL inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Integrity monitoring flags for multiple aggregated elements. An element could be a satellite,
- * SSR grid point, or SSR tile. A group of aggregated elements being monitored for integrity could
- * refer to:
+ * Integrity monitoring flags for multiple aggregated elements. An element
+ * could be a satellite, SSR grid point, or SSR tile. A group of aggregated
+ * elements being monitored for integrity could refer to:
  *
- * <p>- Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
+ * - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
  *
- * <p>- Satellites in the line-of-sight of a particular SSR tile.
+ * - Satellites in the line-of-sight of a particular SSR tile.
  *
- * <p>- Satellites in the line-of-sight of a particular SSR grid point.
+ * - Satellites in the line-of-sight of a particular SSR grid point.
  *
- * <p>The integrity usage for a group of aggregated elements varies according to the integrity flag
- * of the satellites comprising that group.
+ * The integrity usage for a group of aggregated elements varies according to
+ * the integrity flag of the satellites comprising that group.
  *
- * <p>SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity check and have flag
- * INTEGRITY_FLAG_OK.
+ * SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity
+ * check and have flag INTEGRITY_FLAG_OK.
  *
- * <p>SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group failed the integrity
- * check. Refer to more granular integrity messages for details on the specific failing elements.
+ * SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group
+ * failed the integrity check. Refer to more granular integrity messages for
+ * details on the specific failing elements.
  *
- * <p>SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity check, do not use
- * for positioning.
+ * SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity
+ * check, do not use for positioning.
  *
- * <p>SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of elements in the
- * group.
- */
+ * SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of
+ * elements in the group. */
+
 public class MsgSsrFlagHighLevel extends SBPMessage {
     public static final int TYPE = 0x0BBA;
 
+    
     /** GNSS reference time of the observation used to generate the flag. */
     public GPSTimeSec obs_time;
-
-    /** GNSS reference time of the atmospheric correction associated to the flag. */
-    public GPSTimeSec atmo_corr_time;
-
-    /** GNSS reference time of the satellite correction associated to the flag. */
+    
+    /** GNSS reference time of the ionospheric correction associated to the
+      * flag. */
+    public GPSTimeSec iono_corr_time;
+    
+    /** GNSS reference time of the satellite correction associated to the
+      * flag. */
     public GPSTimeSec sat_corr_time;
-
+    
     /** SSR Solution ID. */
     public int ssr_sol_id;
-
+    
     /** Unique identifier of the set this tile belongs to. */
     public int tile_set_id;
-
+    
     /** Unique identifier of this tile in the tile set. */
     public int tile_id;
-
+    
     /** Chain and type of flag. */
     public int chain_id;
-
+    
     /** Use GPS satellites. */
     public int use_gps_sat;
-
+    
     /** Use GAL satellites. */
     public int use_gal_sat;
-
+    
     /** Use BDS satellites. */
     public int use_bds_sat;
-
+    
     /** Use QZSS satellites. */
     public int use_qzss_sat;
-
+    
     /** Reserved */
     public int[] reserved;
-
+    
     /** Use tropo grid points. */
     public int use_tropo_grid_points;
-
+    
     /** Use iono grid points. */
     public int use_iono_grid_points;
-
+    
     /** Use iono tile satellite LoS. */
     public int use_iono_tile_sat_los;
-
+    
     /** Use iono grid point satellite LoS. */
     public int use_iono_grid_point_sat_los;
+    
 
-    public MsgSsrFlagHighLevel(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgSsrFlagHighLevel() {
-        super(TYPE);
-    }
-
-    public MsgSsrFlagHighLevel(SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrFlagHighLevel (int sender) { super(sender, TYPE); }
+    public MsgSsrFlagHighLevel () { super(TYPE); }
+    public MsgSsrFlagHighLevel (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgSsrFlagHighLevel, expected 3002, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgSsrFlagHighLevel, expected 3002, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         obs_time = new GPSTimeSec().parse(parser);
-        atmo_corr_time = new GPSTimeSec().parse(parser);
+        iono_corr_time = new GPSTimeSec().parse(parser);
         sat_corr_time = new GPSTimeSec().parse(parser);
         ssr_sol_id = parser.getU8();
         tile_set_id = parser.getU16();
@@ -135,13 +139,13 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
         use_tropo_grid_points = parser.getU8();
         use_iono_grid_points = parser.getU8();
         use_iono_tile_sat_los = parser.getU8();
-        use_iono_grid_point_sat_los = parser.getU8();
+        use_iono_grid_point_sat_los = parser.getU8(); 
     }
 
     @Override
     protected void build(Builder builder) {
         obs_time.build(builder);
-        atmo_corr_time.build(builder);
+        iono_corr_time.build(builder);
         sat_corr_time.build(builder);
         builder.putU8(ssr_sol_id);
         builder.putU16(tile_set_id);
@@ -155,14 +159,14 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
         builder.putU8(use_tropo_grid_points);
         builder.putU8(use_iono_grid_points);
         builder.putU8(use_iono_tile_sat_los);
-        builder.putU8(use_iono_grid_point_sat_los);
+        builder.putU8(use_iono_grid_point_sat_los); 
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("obs_time", obs_time.toJSON());
-        obj.put("atmo_corr_time", atmo_corr_time.toJSON());
+        obj.put("iono_corr_time", iono_corr_time.toJSON());
         obj.put("sat_corr_time", sat_corr_time.toJSON());
         obj.put("ssr_sol_id", ssr_sol_id);
         obj.put("tile_set_id", tile_set_id);

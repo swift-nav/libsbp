@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,61 +9,63 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.system;
 
 // This file was auto-generated from yaml/swiftnav/sbp/system.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_STATUS_REPORT (0xFFFE).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_STATUS_REPORT (0xFFFE).
  *
- * <p>You can have MSG_STATUS_REPORT inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_STATUS_REPORT inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The status report is sent periodically to inform the host or other attached devices that the
- * system is running. It is used to monitor system malfunctions. It contains status reports that
- * indicate to the host the status of each subsystem and whether it is operating correctly.
+ * The status report is sent periodically to inform the host or other attached
+ * devices that the system is running. It is used to monitor system
+ * malfunctions. It contains status reports that indicate to the host the
+ * status of each subsystem and whether it is operating correctly.
  *
- * <p>Interpretation of the subsystem specific status code is product dependent, but if the generic
- * status code is initializing, it should be ignored. Refer to product documentation for details.
- */
+ * Interpretation of the subsystem specific status code is product dependent,
+ * but if the generic status code is initializing, it should be ignored.
+ * Refer to product documentation for details. */
+
 public class MsgStatusReport extends SBPMessage {
     public static final int TYPE = 0xFFFE;
 
+    
     /** Identity of reporting system */
     public int reporting_system;
-
+    
     /** SBP protocol version */
     public int sbp_version;
-
+    
     /** Increments on each status report sent */
     public long sequence;
-
+    
     /** Number of seconds since system start-up */
     public long uptime;
-
+    
     /** Reported status of individual subsystems */
     public SubSystemReport[] status;
+    
 
-    public MsgStatusReport(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgStatusReport() {
-        super(TYPE);
-    }
-
-    public MsgStatusReport(SBPMessage msg) throws SBPBinaryException {
+    public MsgStatusReport (int sender) { super(sender, TYPE); }
+    public MsgStatusReport () { super(TYPE); }
+    public MsgStatusReport (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgStatusReport, expected 65534, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgStatusReport, expected 65534, actual " + msg.type);
     }
 
     @Override
@@ -72,7 +75,7 @@ public class MsgStatusReport extends SBPMessage {
         sbp_version = parser.getU16();
         sequence = parser.getU32();
         uptime = parser.getU32();
-        status = parser.getArray(SubSystemReport.class);
+        status = parser.getArray(SubSystemReport.class); 
     }
 
     @Override
@@ -81,7 +84,7 @@ public class MsgStatusReport extends SBPMessage {
         builder.putU16(sbp_version);
         builder.putU32(sequence);
         builder.putU32(uptime);
-        builder.putArray(status);
+        builder.putArray(status); 
     }
 
     @Override

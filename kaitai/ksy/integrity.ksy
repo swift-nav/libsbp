@@ -50,7 +50,7 @@ types:
         doc: |
           Chain and type of flag.
         type: u1
-  
+
   msg_ssr_flag_high_level_dep_a:
     doc: |
       Deprecated.
@@ -117,7 +117,7 @@ types:
         doc: |
           Use iono grid point satellite LoS.
         type: u1
-  
+
   msg_ssr_flag_high_level:
     doc: |
       Integrity monitoring flags for multiple aggregated elements. An element
@@ -150,7 +150,7 @@ types:
         doc: |
           GNSS reference time of the observation used to generate the flag.
         type: gnss::gps_time_sec
-      - id: atmo_corr_time
+      - id: iono_corr_time
         doc: |
           GNSS reference time of the atmospheric correction associated to the
           flag.
@@ -214,7 +214,7 @@ types:
         doc: |
           Use iono grid point satellite LoS.
         type: u1
-  
+
   msg_ssr_flag_satellites:
     seq:
       - id: obs_time
@@ -250,7 +250,7 @@ types:
           List of faulty satellites.
         type: u1
         repeat: eos
-  
+
   msg_ssr_flag_tropo_grid_points:
     seq:
       - id: header
@@ -266,7 +266,7 @@ types:
           List of faulty grid points.
         type: u2
         repeat: eos
-  
+
   msg_ssr_flag_iono_grid_points:
     seq:
       - id: header
@@ -282,7 +282,7 @@ types:
           List of faulty grid points.
         type: u2
         repeat: eos
-  
+
   msg_ssr_flag_iono_tile_sat_los:
     seq:
       - id: header
@@ -298,7 +298,7 @@ types:
           List of faulty LOS
         type: gnss::sv_id
         repeat: eos
-  
+
   msg_ssr_flag_iono_grid_point_sat_los:
     seq:
       - id: header
@@ -318,7 +318,7 @@ types:
           List of faulty LOS
         type: gnss::sv_id
         repeat: eos
-  
+
   msg_acknowledge:
     seq:
       - id: request_id
@@ -348,4 +348,4 @@ types:
         doc: |
           The solution ID of the instance providing the corrections.
         type: u1
-  
+

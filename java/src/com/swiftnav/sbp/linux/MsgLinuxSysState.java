@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,64 +9,66 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.linux;
 
 // This file was auto-generated from yaml/swiftnav/sbp/linux.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_LINUX_SYS_STATE (0x7F0A).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_LINUX_SYS_STATE (0x7F0A).
  *
- * <p>You can have MSG_LINUX_SYS_STATE inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_LINUX_SYS_STATE inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This presents a summary of CPU and memory utilization, including a timestamp.
- */
+ * This presents a summary of CPU and memory utilization, including a
+ * timestamp. */
+
 public class MsgLinuxSysState extends SBPMessage {
     public static final int TYPE = 0x7F0A;
 
+    
     /** total system memory, in MiB */
     public int mem_total;
-
+    
     /** percent of CPU used, expressed as a fraction of 256 */
     public int pcpu;
-
+    
     /** percent of memory used, expressed as a fraction of 256 */
     public int pmem;
-
+    
     /** number of processes that started during collection phase */
     public int procs_starting;
-
+    
     /** number of processes that stopped during collection phase */
     public int procs_stopping;
-
+    
     /** the count of processes on the system */
     public int pid_count;
-
+    
     /** timestamp of message, refer to flags field for how to interpret */
     public long time;
-
+    
     /** flags */
     public int flags;
+    
 
-    public MsgLinuxSysState(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgLinuxSysState() {
-        super(TYPE);
-    }
-
-    public MsgLinuxSysState(SBPMessage msg) throws SBPBinaryException {
+    public MsgLinuxSysState (int sender) { super(sender, TYPE); }
+    public MsgLinuxSysState () { super(TYPE); }
+    public MsgLinuxSysState (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgLinuxSysState, expected 32522, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgLinuxSysState, expected 32522, actual " + msg.type);
     }
 
     @Override
@@ -78,7 +81,7 @@ public class MsgLinuxSysState extends SBPMessage {
         procs_stopping = parser.getU16();
         pid_count = parser.getU16();
         time = parser.getU32();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
@@ -90,7 +93,7 @@ public class MsgLinuxSysState extends SBPMessage {
         builder.putU16(procs_stopping);
         builder.putU16(pid_count);
         builder.putU32(time);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override

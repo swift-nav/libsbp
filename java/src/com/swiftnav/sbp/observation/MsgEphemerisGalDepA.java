@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,113 +9,118 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.observation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_EPHEMERIS_GAL_DEP_A (0x0095).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_EPHEMERIS_GAL_DEP_A (0x0095).
  *
- * <p>You can have MSG_EPHEMERIS_GAL_DEP_A inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_EPHEMERIS_GAL_DEP_A inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgEphemerisGalDepA extends SBPMessage {
     public static final int TYPE = 0x0095;
 
+    
     /** Values common for all ephemeris types */
     public EphemerisCommonContent common;
-
+    
     /** E1-E5a Broadcast Group Delay */
     public float bgd_e1e5a;
-
+    
     /** E1-E5b Broadcast Group Delay */
     public float bgd_e1e5b;
-
+    
     /** Amplitude of the sine harmonic correction term to the orbit radius */
     public float c_rs;
-
+    
     /** Amplitude of the cosine harmonic correction term to the orbit radius */
     public float c_rc;
-
-    /** Amplitude of the cosine harmonic correction term to the argument of latitude */
+    
+    /** Amplitude of the cosine harmonic correction term to the argument of
+      * latitude */
     public float c_uc;
-
-    /** Amplitude of the sine harmonic correction term to the argument of latitude */
+    
+    /** Amplitude of the sine harmonic correction term to the argument of
+      * latitude */
     public float c_us;
-
-    /** Amplitude of the cosine harmonic correction term to the angle of inclination */
+    
+    /** Amplitude of the cosine harmonic correction term to the angle of
+      * inclination */
     public float c_ic;
-
-    /** Amplitude of the sine harmonic correction term to the angle of inclination */
+    
+    /** Amplitude of the sine harmonic correction term to the angle of
+      * inclination */
     public float c_is;
-
+    
     /** Mean motion difference */
     public double dn;
-
+    
     /** Mean anomaly at reference time */
     public double m0;
-
+    
     /** Eccentricity of satellite orbit */
     public double ecc;
-
+    
     /** Square root of the semi-major axis of orbit */
     public double sqrta;
-
+    
     /** Longitude of ascending node of orbit plane at weekly epoch */
     public double omega0;
-
+    
     /** Rate of right ascension */
     public double omegadot;
-
+    
     /** Argument of perigee */
     public double w;
-
+    
     /** Inclination */
     public double inc;
-
+    
     /** Inclination first derivative */
     public double inc_dot;
-
+    
     /** Polynomial clock correction coefficient (clock bias) */
     public double af0;
-
+    
     /** Polynomial clock correction coefficient (clock drift) */
     public double af1;
-
+    
     /** Polynomial clock correction coefficient (rate of clock drift) */
     public float af2;
-
+    
     /** Clock reference */
     public GPSTimeSec toc;
-
+    
     /** Issue of data (IODnav) */
     public int iode;
-
+    
     /** Issue of data (IODnav). Always equal to iode */
     public int iodc;
+    
 
-    public MsgEphemerisGalDepA(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgEphemerisGalDepA() {
-        super(TYPE);
-    }
-
-    public MsgEphemerisGalDepA(SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisGalDepA (int sender) { super(sender, TYPE); }
+    public MsgEphemerisGalDepA () { super(TYPE); }
+    public MsgEphemerisGalDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgEphemerisGalDepA, expected 149, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgEphemerisGalDepA, expected 149, actual " + msg.type);
     }
 
     @Override
@@ -143,7 +149,7 @@ public class MsgEphemerisGalDepA extends SBPMessage {
         af2 = parser.getFloat();
         toc = new GPSTimeSec().parse(parser);
         iode = parser.getU16();
-        iodc = parser.getU16();
+        iodc = parser.getU16(); 
     }
 
     @Override
@@ -171,7 +177,7 @@ public class MsgEphemerisGalDepA extends SBPMessage {
         builder.putFloat(af2);
         toc.build(builder);
         builder.putU16(iode);
-        builder.putU16(iodc);
+        builder.putU16(iodc); 
     }
 
     @Override

@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,69 +9,72 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_BASELINE_NED (0x020C).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_BASELINE_NED (0x020C).
  *
- * <p>You can have MSG_BASELINE_NED inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_BASELINE_NED inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message reports the baseline solution in North East Down (NED) coordinates. This baseline
- * is the relative vector distance from the base station to the rover receiver, and NED coordinate
- * system is defined at the local WGS84 tangent plane centered at the base station position. The
- * full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of- week (tow).
+ * This message reports the baseline solution in North East Down (NED)
+ * coordinates. This baseline is the relative vector distance from the base
+ * station to the rover receiver, and NED coordinate system is defined at the
+ * local WGS84 tangent plane centered at the base station position.  The full
+ * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
+ * week (tow).
  *
- * <p>The values in this message are from GNSS measurements only.
- */
+ * The values in this message are from GNSS measurements only. */
+
 public class MsgBaselineNED extends SBPMessage {
     public static final int TYPE = 0x020C;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** Baseline North coordinate */
     public int n;
-
+    
     /** Baseline East coordinate */
     public int e;
-
+    
     /** Baseline Down coordinate */
     public int d;
-
+    
     /** Horizontal position estimated standard deviation */
     public int h_accuracy;
-
+    
     /** Vertical position estimated standard deviation */
     public int v_accuracy;
-
+    
     /** Number of satellites used in solution */
     public int n_sats;
-
+    
     /** Status flags */
     public int flags;
+    
 
-    public MsgBaselineNED(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgBaselineNED() {
-        super(TYPE);
-    }
-
-    public MsgBaselineNED(SBPMessage msg) throws SBPBinaryException {
+    public MsgBaselineNED (int sender) { super(sender, TYPE); }
+    public MsgBaselineNED () { super(TYPE); }
+    public MsgBaselineNED (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgBaselineNED, expected 524, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgBaselineNED, expected 524, actual " + msg.type);
     }
 
     @Override
@@ -83,7 +87,7 @@ public class MsgBaselineNED extends SBPMessage {
         h_accuracy = parser.getU16();
         v_accuracy = parser.getU16();
         n_sats = parser.getU8();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
@@ -95,7 +99,7 @@ public class MsgBaselineNED extends SBPMessage {
         builder.putU16(h_accuracy);
         builder.putU16(v_accuracy);
         builder.putU8(n_sats);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override
