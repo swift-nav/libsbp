@@ -379,7 +379,7 @@ bool sbp_msg_ssr_flag_high_level_encode_internal(
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->obs_time)) {
     return false;
   }
-  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->atmo_corr_time)) {
+  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->iono_corr_time)) {
     return false;
   }
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->sat_corr_time)) {
@@ -450,7 +450,7 @@ bool sbp_msg_ssr_flag_high_level_decode_internal(
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->obs_time)) {
     return false;
   }
-  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->atmo_corr_time)) {
+  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->iono_corr_time)) {
     return false;
   }
   if (!sbp_gps_time_sec_decode_internal(ctx, &msg->sat_corr_time)) {
@@ -539,7 +539,7 @@ int sbp_msg_ssr_flag_high_level_cmp(const sbp_msg_ssr_flag_high_level_t *a,
     return ret;
   }
 
-  ret = sbp_gps_time_sec_cmp(&a->atmo_corr_time, &b->atmo_corr_time);
+  ret = sbp_gps_time_sec_cmp(&a->iono_corr_time, &b->iono_corr_time);
   if (ret != 0) {
     return ret;
   }
