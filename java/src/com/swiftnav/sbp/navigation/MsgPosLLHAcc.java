@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,98 +9,100 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_POS_LLH_ACC (0x0218).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_POS_LLH_ACC (0x0218).
  *
- * <p>You can have MSG_POS_LLH_ACC inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_POS_LLH_ACC inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This position solution message reports the absolute geodetic coordinates and the status
- * (single point vs pseudo-absolute RTK) of the position solution as well as the estimated
- * horizontal, vertical, cross-track and along-track errors. The position information and Fix Mode
- * flags follow the MSG_POS_LLH message. Since the covariance matrix is computed in the local-level
- * North, East, Down frame, the estimated error terms follow that convention.
+ * This position solution message reports the absolute geodetic coordinates
+ * and the status (single point vs pseudo-absolute RTK) of the position
+ * solution as well as the estimated horizontal, vertical, cross-track and
+ * along-track errors.  The position information and Fix Mode flags  follow
+ * the MSG_POS_LLH message. Since the covariance matrix is computed in the
+ * local-level North, East, Down frame, the estimated error terms follow that
+ * convention.
  *
- * <p>The estimated errors are reported at a user-configurable confidence level. The user-configured
- * percentile is encoded in the percentile field.
+ * The estimated errors are reported at a user-configurable confidence level.
+ * The user-configured percentile is encoded in the percentile field.
  *
- * <p>The values in this message are from GNSS measurements fused with inertial measurements.
- */
+ * The values in this message are from GNSS measurements fused with inertial
+ * measurements. */
+
 public class MsgPosLLHAcc extends SBPMessage {
     public static final int TYPE = 0x0218;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** Latitude */
     public double lat;
-
+    
     /** Longitude */
     public double lon;
-
+    
     /** Height above WGS84 ellipsoid */
     public double height;
-
-    /**
-     * Height above the geoid (i.e. height above mean sea level). See confidence_and_geoid for geoid
-     * model used.
-     */
+    
+    /** Height above the geoid (i.e. height above mean sea level). See
+      * confidence_and_geoid for geoid model used. */
     public double orthometric_height;
-
-    /** Estimated horizontal error at the user-configured confidence level; zero implies invalid. */
+    
+    /** Estimated horizontal error at the user-configured confidence level;
+      * zero implies invalid. */
     public float h_accuracy;
-
-    /** Estimated vertical error at the user-configured confidence level; zero implies invalid. */
+    
+    /** Estimated vertical error at the user-configured confidence level; zero
+      * implies invalid. */
     public float v_accuracy;
-
-    /**
-     * Estimated cross-track error at the user-configured confidence level; zero implies invalid.
-     */
+    
+    /** Estimated cross-track error at the user-configured confidence level;
+      * zero implies invalid. */
     public float ct_accuracy;
-
-    /**
-     * Estimated along-track error at the user-configured confidence level; zero implies invalid.
-     */
+    
+    /** Estimated along-track error at the user-configured confidence level;
+      * zero implies invalid. */
     public float at_accuracy;
-
-    /** The estimated horizontal error ellipse at the user-configured confidence level. */
+    
+    /** The estimated horizontal error ellipse at the user-configured
+      * confidence level. */
     public EstimatedHorizontalErrorEllipse h_ellipse;
-
-    /**
-     * The lower bits describe the configured confidence level for the estimated position error. The
-     * middle bits describe the geoid model used to calculate the orthometric height.
-     */
+    
+    /** The lower bits describe the configured confidence level for the
+      * estimated position error. The middle bits describe the geoid model
+      * used to calculate the orthometric height. */
     public int confidence_and_geoid;
-
+    
     /** Number of satellites used in solution. */
     public int n_sats;
-
+    
     /** Status flags */
     public int flags;
+    
 
-    public MsgPosLLHAcc(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgPosLLHAcc() {
-        super(TYPE);
-    }
-
-    public MsgPosLLHAcc(SBPMessage msg) throws SBPBinaryException {
+    public MsgPosLLHAcc (int sender) { super(sender, TYPE); }
+    public MsgPosLLHAcc () { super(TYPE); }
+    public MsgPosLLHAcc (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgPosLLHAcc, expected 536, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgPosLLHAcc, expected 536, actual " + msg.type);
     }
 
     @Override
@@ -117,7 +120,7 @@ public class MsgPosLLHAcc extends SBPMessage {
         h_ellipse = new EstimatedHorizontalErrorEllipse().parse(parser);
         confidence_and_geoid = parser.getU8();
         n_sats = parser.getU8();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
@@ -134,7 +137,7 @@ public class MsgPosLLHAcc extends SBPMessage {
         h_ellipse.build(builder);
         builder.putU8(confidence_and_geoid);
         builder.putU8(n_sats);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override

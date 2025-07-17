@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,65 +9,64 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.linux;
 
 // This file was auto-generated from yaml/swiftnav/sbp/linux.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_LINUX_PROCESS_FD_SUMMARY (0x7F07).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_LINUX_PROCESS_FD_SUMMARY (0x7F07).
  *
- * <p>You can have MSG_LINUX_PROCESS_FD_SUMMARY inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_LINUX_PROCESS_FD_SUMMARY inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Summary of open file descriptors on the system.
- */
+ * Summary of open file descriptors on the system. */
+
 public class MsgLinuxProcessFdSummary extends SBPMessage {
     public static final int TYPE = 0x7F07;
 
+    
     /** count of total FDs open on the system */
     public long sys_fd_count;
-
-    /**
-     * A null delimited list of strings which alternates between a string representation of the
-     * process count and the file name whose count it being reported. That is, in C string syntax
-     * "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2 NULL terminators in a
-     * row.
-     */
+    
+    /** A null delimited list of strings which alternates between a string
+      * representation of the process count and the file name whose count it
+      * being reported.  That is, in C string syntax
+      * "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2
+      * NULL terminators in a row. */
     public String most_opened;
+    
 
-    public MsgLinuxProcessFdSummary(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgLinuxProcessFdSummary() {
-        super(TYPE);
-    }
-
-    public MsgLinuxProcessFdSummary(SBPMessage msg) throws SBPBinaryException {
+    public MsgLinuxProcessFdSummary (int sender) { super(sender, TYPE); }
+    public MsgLinuxProcessFdSummary () { super(TYPE); }
+    public MsgLinuxProcessFdSummary (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgLinuxProcessFdSummary, expected 32519, actual "
-                            + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgLinuxProcessFdSummary, expected 32519, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         sys_fd_count = parser.getU32();
-        most_opened = parser.getString();
+        most_opened = parser.getString(); 
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU32(sys_fd_count);
-        builder.putString(most_opened);
+        builder.putString(most_opened); 
     }
 
     @Override

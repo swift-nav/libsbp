@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,42 +9,40 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class EstimatedHorizontalErrorEllipse extends SBPStruct {
-
-    /**
-     * The semi major axis of the estimated horizontal error ellipse at the user- configured
-     * confidence level; zero implies invalid.
-     */
+    
+    /** The semi major axis of the estimated horizontal error ellipse at the user-
+      * configured confidence level; zero implies invalid. */
     public float semi_major;
-
-    /**
-     * The semi minor axis of the estimated horizontal error ellipse at the user- configured
-     * confidence level; zero implies invalid.
-     */
+    
+    /** The semi minor axis of the estimated horizontal error ellipse at the user-
+      * configured confidence level; zero implies invalid. */
     public float semi_minor;
-
-    /**
-     * The orientation of the semi major axis of the estimated horizontal error ellipse with respect
-     * to North.
-     */
+    
+    /** The orientation of the semi major axis of the estimated horizontal error
+      * ellipse with respect to North. */
     public float orientation;
+    
 
-    public EstimatedHorizontalErrorEllipse() {}
+    public EstimatedHorizontalErrorEllipse () {}
 
     @Override
-    public EstimatedHorizontalErrorEllipse parse(SBPMessage.Parser parser)
-            throws SBPBinaryException {
+    public EstimatedHorizontalErrorEllipse parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         semi_major = parser.getFloat();
         semi_minor = parser.getFloat();

@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,68 +9,69 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.observation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_EPHEMERIS_GLO_DEP_C (0x0087).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_EPHEMERIS_GLO_DEP_C (0x0087).
  *
- * <p>You can have MSG_EPHEMERIS_GLO_DEP_C inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_EPHEMERIS_GLO_DEP_C inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The ephemeris message returns a set of satellite orbit parameters that is used to calculate
- * GLO satellite position, velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
- * Characteristics of words of immediate information (ephemeris parameters)" for more details.
- */
+ * The ephemeris message returns a set of satellite orbit parameters that is
+ * used to calculate GLO satellite position, velocity, and clock offset.
+ * Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
+ * information (ephemeris parameters)" for more details. */
+
 public class MsgEphemerisGloDepC extends SBPMessage {
     public static final int TYPE = 0x0087;
 
+    
     /** Values common for all ephemeris types */
     public EphemerisCommonContentDepB common;
-
+    
     /** Relative deviation of predicted carrier frequency from nominal */
     public double gamma;
-
+    
     /** Correction to the SV time */
     public double tau;
-
+    
     /** Equipment delay between L1 and L2 */
     public double d_tau;
-
+    
     /** Position of the SV at tb in PZ-90.02 coordinates system */
     public double[] pos;
-
+    
     /** Velocity vector of the SV at tb in PZ-90.02 coordinates system */
     public double[] vel;
-
+    
     /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys */
     public double[] acc;
-
+    
     /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
     public int fcn;
+    
 
-    public MsgEphemerisGloDepC(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgEphemerisGloDepC() {
-        super(TYPE);
-    }
-
-    public MsgEphemerisGloDepC(SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisGloDepC (int sender) { super(sender, TYPE); }
+    public MsgEphemerisGloDepC () { super(TYPE); }
+    public MsgEphemerisGloDepC (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgEphemerisGloDepC, expected 135, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgEphemerisGloDepC, expected 135, actual " + msg.type);
     }
 
     @Override
@@ -82,7 +84,7 @@ public class MsgEphemerisGloDepC extends SBPMessage {
         pos = parser.getArrayofDouble(3);
         vel = parser.getArrayofDouble(3);
         acc = parser.getArrayofDouble(3);
-        fcn = parser.getU8();
+        fcn = parser.getU8(); 
     }
 
     @Override
@@ -94,7 +96,7 @@ public class MsgEphemerisGloDepC extends SBPMessage {
         builder.putArrayofDouble(pos, 3);
         builder.putArrayofDouble(vel, 3);
         builder.putArrayofDouble(acc, 3);
-        builder.putU8(fcn);
+        builder.putU8(fcn); 
     }
 
     @Override

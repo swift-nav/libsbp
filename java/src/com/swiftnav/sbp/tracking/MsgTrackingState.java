@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,57 +9,58 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.tracking;
 
 // This file was auto-generated from yaml/swiftnav/sbp/tracking.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_TRACKING_STATE (0x0041).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_TRACKING_STATE (0x0041).
  *
- * <p>You can have MSG_TRACKING_STATE inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_TRACKING_STATE inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The tracking message returns a variable-length array of tracking channel states. It reports
- * status and carrier-to-noise density measurements for all tracked satellites.
- */
+ * The tracking message returns a variable-length array of tracking channel
+ * states. It reports status and carrier-to-noise density measurements for all
+ * tracked satellites. */
+
 public class MsgTrackingState extends SBPMessage {
     public static final int TYPE = 0x0041;
 
+    
     /** Signal tracking channel state */
     public TrackingChannelState[] states;
+    
 
-    public MsgTrackingState(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgTrackingState() {
-        super(TYPE);
-    }
-
-    public MsgTrackingState(SBPMessage msg) throws SBPBinaryException {
+    public MsgTrackingState (int sender) { super(sender, TYPE); }
+    public MsgTrackingState () { super(TYPE); }
+    public MsgTrackingState (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgTrackingState, expected 65, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgTrackingState, expected 65, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        states = parser.getArray(TrackingChannelState.class);
+        states = parser.getArray(TrackingChannelState.class); 
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArray(states);
+        builder.putArray(states); 
     }
 
     @Override

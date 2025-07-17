@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,43 +9,44 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.ssr;
 
 // This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class SatelliteAPC extends SBPStruct {
-
+    
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
-
+    
     /** Additional satellite information */
     public int sat_info;
-
+    
     /** Satellite Code, as defined by IGS. Typically the space vehicle number. */
     public int svn;
-
-    /**
-     * Mean phase center offset, X Y and Z axes. See IGS ANTEX file format description for
-     * coordinate system definition.
-     */
+    
+    /** Mean phase center offset, X Y and Z axes. See IGS ANTEX file format description
+      * for coordinate system definition. */
     public int[] pco;
-
-    /**
-     * Elevation dependent phase center variations. First element is 0 degrees separation from the Z
-     * axis, subsequent elements represent elevation variations in 1 degree increments.
-     */
+    
+    /** Elevation dependent phase center variations. First element is 0 degrees
+      * separation from the Z axis, subsequent elements represent elevation variations
+      * in 1 degree increments. */
     public int[] pcv;
+    
 
-    public SatelliteAPC() {}
+    public SatelliteAPC () {}
 
     @Override
     public SatelliteAPC parse(SBPMessage.Parser parser) throws SBPBinaryException {

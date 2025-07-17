@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,70 +9,71 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_VEL_NED_GNSS (0x022E).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_VEL_NED_GNSS (0x022E).
  *
- * <p>You can have MSG_VEL_NED_GNSS inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_VEL_NED_GNSS inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message reports the velocity in local North East Down (NED) coordinates. The NED
- * coordinate system is defined as the local WGS84 tangent plane centered at the current position.
- * The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week
- * (tow).
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is given
+ * by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
  *
- * <p>The values in this message are from GNSS measurements only. To get values fused with inertial
- * measurements use MSG_VEL_NED.
- */
+ * The values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_VEL_NED. */
+
 public class MsgVelNEDGnss extends SBPMessage {
     public static final int TYPE = 0x022E;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** Velocity North coordinate */
     public int n;
-
+    
     /** Velocity East coordinate */
     public int e;
-
+    
     /** Velocity Down coordinate */
     public int d;
-
+    
     /** Horizontal velocity estimated standard deviation */
     public int h_accuracy;
-
+    
     /** Vertical velocity estimated standard deviation */
     public int v_accuracy;
-
+    
     /** Number of satellites used in solution */
     public int n_sats;
-
+    
     /** Status flags */
     public int flags;
+    
 
-    public MsgVelNEDGnss(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgVelNEDGnss() {
-        super(TYPE);
-    }
-
-    public MsgVelNEDGnss(SBPMessage msg) throws SBPBinaryException {
+    public MsgVelNEDGnss (int sender) { super(sender, TYPE); }
+    public MsgVelNEDGnss () { super(TYPE); }
+    public MsgVelNEDGnss (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgVelNEDGnss, expected 558, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgVelNEDGnss, expected 558, actual " + msg.type);
     }
 
     @Override
@@ -84,7 +86,7 @@ public class MsgVelNEDGnss extends SBPMessage {
         h_accuracy = parser.getU16();
         v_accuracy = parser.getU16();
         n_sats = parser.getU8();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
@@ -96,7 +98,7 @@ public class MsgVelNEDGnss extends SBPMessage {
         builder.putU16(h_accuracy);
         builder.putU16(v_accuracy);
         builder.putU8(n_sats);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override

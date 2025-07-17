@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,30 +9,35 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.tracking;
 
 // This file was auto-generated from yaml/swiftnav/sbp/tracking.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class TrackingChannelStateDepB extends SBPStruct {
-
+    
     /** Status of tracking channel */
     public int state;
-
+    
     /** GNSS signal being tracked */
     public GnssSignalDep sid;
-
+    
     /** Carrier-to-noise density */
     public float cn0;
+    
 
-    public TrackingChannelStateDepB() {}
+    public TrackingChannelStateDepB () {}
 
     @Override
     public TrackingChannelStateDepB parse(SBPMessage.Parser parser) throws SBPBinaryException {

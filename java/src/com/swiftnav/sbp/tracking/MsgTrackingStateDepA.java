@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,56 +9,56 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.tracking;
 
 // This file was auto-generated from yaml/swiftnav/sbp/tracking.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_TRACKING_STATE_DEP_A (0x0016).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_TRACKING_STATE_DEP_A (0x0016).
  *
- * <p>You can have MSG_TRACKING_STATE_DEP_A inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_TRACKING_STATE_DEP_A inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgTrackingStateDepA extends SBPMessage {
     public static final int TYPE = 0x0016;
 
+    
     /** Satellite tracking channel state */
     public TrackingChannelStateDepA[] states;
+    
 
-    public MsgTrackingStateDepA(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgTrackingStateDepA() {
-        super(TYPE);
-    }
-
-    public MsgTrackingStateDepA(SBPMessage msg) throws SBPBinaryException {
+    public MsgTrackingStateDepA (int sender) { super(sender, TYPE); }
+    public MsgTrackingStateDepA () { super(TYPE); }
+    public MsgTrackingStateDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgTrackingStateDepA, expected 22, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgTrackingStateDepA, expected 22, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        states = parser.getArray(TrackingChannelStateDepA.class);
+        states = parser.getArray(TrackingChannelStateDepA.class); 
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArray(states);
+        builder.putArray(states); 
     }
 
     @Override

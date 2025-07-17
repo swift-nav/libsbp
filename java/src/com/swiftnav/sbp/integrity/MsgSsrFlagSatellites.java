@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,58 +9,59 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.integrity;
 
 // This file was auto-generated from yaml/swiftnav/sbp/integrity.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
+
+
 
 public class MsgSsrFlagSatellites extends SBPMessage {
     public static final int TYPE = 0x0BBD;
 
+    
     /** GNSS reference time of the observation used to generate the flag. */
     public GPSTimeSec obs_time;
-
+    
     /** Number of messages in the dataset */
     public int num_msgs;
-
+    
     /** Position of this message in the dataset */
     public int seq_num;
-
+    
     /** SSR Solution ID. */
     public int ssr_sol_id;
-
+    
     /** Chain and type of flag. */
     public int chain_id;
-
+    
     /** Constellation ID. */
     public int const_id;
-
+    
     /** Number of faulty satellites. */
     public int n_faulty_sats;
-
+    
     /** List of faulty satellites. */
     public int[] faulty_sats;
+    
 
-    public MsgSsrFlagSatellites(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgSsrFlagSatellites() {
-        super(TYPE);
-    }
-
-    public MsgSsrFlagSatellites(SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrFlagSatellites (int sender) { super(sender, TYPE); }
+    public MsgSsrFlagSatellites () { super(TYPE); }
+    public MsgSsrFlagSatellites (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgSsrFlagSatellites, expected 3005, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgSsrFlagSatellites, expected 3005, actual " + msg.type);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class MsgSsrFlagSatellites extends SBPMessage {
         chain_id = parser.getU8();
         const_id = parser.getU8();
         n_faulty_sats = parser.getU8();
-        faulty_sats = parser.getArrayofU8();
+        faulty_sats = parser.getArrayofU8(); 
     }
 
     @Override
@@ -84,7 +86,7 @@ public class MsgSsrFlagSatellites extends SBPMessage {
         builder.putU8(chain_id);
         builder.putU8(const_id);
         builder.putU8(n_faulty_sats);
-        builder.putArrayofU8(faulty_sats);
+        builder.putArrayofU8(faulty_sats); 
     }
 
     @Override

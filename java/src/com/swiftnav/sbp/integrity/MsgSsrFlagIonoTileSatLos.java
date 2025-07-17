@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,44 +9,44 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.integrity;
 
 // This file was auto-generated from yaml/swiftnav/sbp/integrity.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
+
+
 
 public class MsgSsrFlagIonoTileSatLos extends SBPMessage {
     public static final int TYPE = 0x0BCD;
 
+    
     /** Header of an integrity message. */
     public IntegritySSRHeader header;
-
+    
     /** Number of faulty LOS. */
     public int n_faulty_los;
-
+    
     /** List of faulty LOS */
     public SvId[] faulty_los;
+    
 
-    public MsgSsrFlagIonoTileSatLos(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgSsrFlagIonoTileSatLos() {
-        super(TYPE);
-    }
-
-    public MsgSsrFlagIonoTileSatLos(SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrFlagIonoTileSatLos (int sender) { super(sender, TYPE); }
+    public MsgSsrFlagIonoTileSatLos () { super(TYPE); }
+    public MsgSsrFlagIonoTileSatLos (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgSsrFlagIonoTileSatLos, expected 3021, actual "
-                            + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgSsrFlagIonoTileSatLos, expected 3021, actual " + msg.type);
     }
 
     @Override
@@ -53,14 +54,14 @@ public class MsgSsrFlagIonoTileSatLos extends SBPMessage {
         /* Parse fields from binary */
         header = new IntegritySSRHeader().parse(parser);
         n_faulty_los = parser.getU8();
-        faulty_los = parser.getArray(SvId.class);
+        faulty_los = parser.getArray(SvId.class); 
     }
 
     @Override
     protected void build(Builder builder) {
         header.build(builder);
         builder.putU8(n_faulty_los);
-        builder.putArray(faulty_los);
+        builder.putArray(faulty_los); 
     }
 
     @Override

@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,95 +9,95 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
+
+
 
 public class MsgReferenceFrameParam extends SBPMessage {
     public static final int TYPE = 0x0244;
 
+    
     /** SSR IOD parameter. */
     public int ssr_iod;
-
+    
     /** Name of source coordinate-system. */
     public String sn;
-
+    
     /** Name of target coordinate-system. */
     public String tn;
-
+    
     /** System Identification Number. */
     public int sin;
-
+    
     /** Utilized Transformation Message. */
     public int utn;
-
-    /**
-     * Reference Epoch t0 for transformation parameter set given as Modified Julian Day (MJD) Number
-     * minus 44244 days.
-     */
+    
+    /** Reference Epoch t0 for transformation parameter set given as Modified
+      * Julian Day (MJD) Number minus 44244 days. */
     public int re_t0;
-
+    
     /** Translation in X for Reference Epoch t0. */
     public int delta_X0;
-
+    
     /** Translation in Y for Reference Epoch t0. */
     public int delta_Y0;
-
+    
     /** Translation in Z for Reference Epoch t0. */
     public int delta_Z0;
-
+    
     /** Rotation around the X-axis for Reference Epoch t0. */
     public int theta_01;
-
+    
     /** Rotation around the Y-axis for Reference Epoch t0. */
     public int theta_02;
-
+    
     /** Rotation around the Z-axis for Reference Epoch t0. */
     public int theta_03;
-
+    
     /** Scale correction for Reference Epoch t0. */
     public int scale;
-
+    
     /** Rate of change of translation in X. */
     public int dot_delta_X0;
-
+    
     /** Rate of change of translation in Y. */
     public int dot_delta_Y0;
-
+    
     /** Rate of change of translation in Z. */
     public int dot_delta_Z0;
-
+    
     /** Rate of change of rotation around the X-axis. */
     public int dot_theta_01;
-
+    
     /** Rate of change of rotation around the Y-axis. */
     public int dot_theta_02;
-
+    
     /** Rate of change of rotation around the Z-axis. */
     public int dot_theta_03;
-
+    
     /** Rate of change of scale correction. */
     public int dot_scale;
+    
 
-    public MsgReferenceFrameParam(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgReferenceFrameParam() {
-        super(TYPE);
-    }
-
-    public MsgReferenceFrameParam(SBPMessage msg) throws SBPBinaryException {
+    public MsgReferenceFrameParam (int sender) { super(sender, TYPE); }
+    public MsgReferenceFrameParam () { super(TYPE); }
+    public MsgReferenceFrameParam (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgReferenceFrameParam, expected 580, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgReferenceFrameParam, expected 580, actual " + msg.type);
     }
 
     @Override
@@ -121,7 +122,7 @@ public class MsgReferenceFrameParam extends SBPMessage {
         dot_theta_01 = parser.getS32();
         dot_theta_02 = parser.getS32();
         dot_theta_03 = parser.getS32();
-        dot_scale = parser.getS16();
+        dot_scale = parser.getS16(); 
     }
 
     @Override
@@ -145,7 +146,7 @@ public class MsgReferenceFrameParam extends SBPMessage {
         builder.putS32(dot_theta_01);
         builder.putS32(dot_theta_02);
         builder.putS32(dot_theta_03);
-        builder.putS16(dot_scale);
+        builder.putS16(dot_scale); 
     }
 
     @Override

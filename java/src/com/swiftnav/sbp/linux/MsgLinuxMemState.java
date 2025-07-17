@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,62 +9,63 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.linux;
 
 // This file was auto-generated from yaml/swiftnav/sbp/linux.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_LINUX_MEM_STATE (0x7F09).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_LINUX_MEM_STATE (0x7F09).
  *
- * <p>You can have MSG_LINUX_MEM_STATE inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_LINUX_MEM_STATE inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message indicates the process state of the top 10 heaviest consumers of memory on the
- * system, including a timestamp.
- */
+ * This message indicates the process state of the top 10 heaviest consumers
+ * of memory on the system, including a timestamp. */
+
 public class MsgLinuxMemState extends SBPMessage {
     public static final int TYPE = 0x7F09;
 
+    
     /** sequence of this status message, values from 0-9 */
     public int index;
-
+    
     /** the PID of the process */
     public int pid;
-
+    
     /** percent of memory used, expressed as a fraction of 256 */
     public int pmem;
-
+    
     /** timestamp of message, refer to flags field for how to interpret */
     public long time;
-
+    
     /** flags */
     public int flags;
-
+    
     /** fixed length string representing the thread name */
     public String tname;
-
+    
     /** the command line (as much as it fits in the remaining packet) */
     public String cmdline;
+    
 
-    public MsgLinuxMemState(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgLinuxMemState() {
-        super(TYPE);
-    }
-
-    public MsgLinuxMemState(SBPMessage msg) throws SBPBinaryException {
+    public MsgLinuxMemState (int sender) { super(sender, TYPE); }
+    public MsgLinuxMemState () { super(TYPE); }
+    public MsgLinuxMemState (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgLinuxMemState, expected 32521, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgLinuxMemState, expected 32521, actual " + msg.type);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class MsgLinuxMemState extends SBPMessage {
         time = parser.getU32();
         flags = parser.getU8();
         tname = parser.getString(15);
-        cmdline = parser.getString();
+        cmdline = parser.getString(); 
     }
 
     @Override
@@ -86,7 +88,7 @@ public class MsgLinuxMemState extends SBPMessage {
         builder.putU32(time);
         builder.putU8(flags);
         builder.putString(tname, 15);
-        builder.putString(cmdline);
+        builder.putString(cmdline); 
     }
 
     @Override

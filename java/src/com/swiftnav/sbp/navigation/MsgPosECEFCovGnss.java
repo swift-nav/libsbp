@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,84 +9,87 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_POS_ECEF_COV_GNSS (0x0234).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_POS_ECEF_COV_GNSS (0x0234).
  *
- * <p>You can have MSG_POS_ECEF_COV_GNSS inherent its fields directly from an inherited SBP object,
- * or construct it inline using a dict of its fields.
+ * You can have MSG_POS_ECEF_COV_GNSS inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The position solution message reports absolute Earth Centered Earth Fixed (ECEF) coordinates
- * and the status (single point vs pseudo-absolute RTK) of the position solution. The message also
- * reports the upper triangular portion of the 3x3 covariance matrix. If the receiver knows the
- * surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute
- * position solution using the base station position and the rover's RTK baseline vector. The full
- * GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ * The position solution message reports absolute Earth Centered Earth Fixed
+ * (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
+ * the position solution. The message also reports the upper triangular
+ * portion of the 3x3 covariance matrix. If the receiver knows the surveyed
+ * position of the base station and has an RTK solution, this reports a
+ * pseudo-absolute position solution using the base station position and the
+ * rover's RTK baseline vector. The full GPS time is given by the preceding
+ * MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
  *
- * <p>The values in this message are from GNSS measurements only. To get values fused with inertial
- * measurements use MSG_POS_ECEF_COV.
- */
+ * The values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_POS_ECEF_COV. */
+
 public class MsgPosECEFCovGnss extends SBPMessage {
     public static final int TYPE = 0x0234;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** ECEF X coordinate */
     public double x;
-
+    
     /** ECEF Y coordinate */
     public double y;
-
+    
     /** ECEF Z coordinate */
     public double z;
-
+    
     /** Estimated variance of x */
     public float cov_x_x;
-
+    
     /** Estimated covariance of x and y */
     public float cov_x_y;
-
+    
     /** Estimated covariance of x and z */
     public float cov_x_z;
-
+    
     /** Estimated variance of y */
     public float cov_y_y;
-
+    
     /** Estimated covariance of y and z */
     public float cov_y_z;
-
+    
     /** Estimated variance of z */
     public float cov_z_z;
-
+    
     /** Number of satellites used in solution */
     public int n_sats;
-
+    
     /** Status flags */
     public int flags;
+    
 
-    public MsgPosECEFCovGnss(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgPosECEFCovGnss() {
-        super(TYPE);
-    }
-
-    public MsgPosECEFCovGnss(SBPMessage msg) throws SBPBinaryException {
+    public MsgPosECEFCovGnss (int sender) { super(sender, TYPE); }
+    public MsgPosECEFCovGnss () { super(TYPE); }
+    public MsgPosECEFCovGnss (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgPosECEFCovGnss, expected 564, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgPosECEFCovGnss, expected 564, actual " + msg.type);
     }
 
     @Override
@@ -102,7 +106,7 @@ public class MsgPosECEFCovGnss extends SBPMessage {
         cov_y_z = parser.getFloat();
         cov_z_z = parser.getFloat();
         n_sats = parser.getU8();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
@@ -118,7 +122,7 @@ public class MsgPosECEFCovGnss extends SBPMessage {
         builder.putFloat(cov_y_z);
         builder.putFloat(cov_z_z);
         builder.putU8(n_sats);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override

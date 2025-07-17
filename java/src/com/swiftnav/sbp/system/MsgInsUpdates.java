@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,63 +9,64 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.system;
 
 // This file was auto-generated from yaml/swiftnav/sbp/system.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_INS_UPDATES (0xFF06).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_INS_UPDATES (0xFF06).
  *
- * <p>You can have MSG_INS_UPDATES inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_INS_UPDATES inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The INS update status message contains information about executed and rejected INS updates.
- * This message is expected to be extended in the future as new types of measurements are being
- * added.
- */
+ * The INS update status message contains information about executed and
+ * rejected INS updates. This message is expected to be extended in the future
+ * as new types of measurements are being added. */
+
 public class MsgInsUpdates extends SBPMessage {
     public static final int TYPE = 0xFF06;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** GNSS position update status flags */
     public int gnsspos;
-
+    
     /** GNSS velocity update status flags */
     public int gnssvel;
-
+    
     /** Wheelticks update status flags */
     public int wheelticks;
-
+    
     /** Wheelticks update status flags */
     public int speed;
-
+    
     /** NHC update status flags */
     public int nhc;
-
+    
     /** Zero velocity update status flags */
     public int zerovel;
+    
 
-    public MsgInsUpdates(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgInsUpdates() {
-        super(TYPE);
-    }
-
-    public MsgInsUpdates(SBPMessage msg) throws SBPBinaryException {
+    public MsgInsUpdates (int sender) { super(sender, TYPE); }
+    public MsgInsUpdates () { super(TYPE); }
+    public MsgInsUpdates (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgInsUpdates, expected 65286, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgInsUpdates, expected 65286, actual " + msg.type);
     }
 
     @Override
@@ -76,7 +78,7 @@ public class MsgInsUpdates extends SBPMessage {
         wheelticks = parser.getU8();
         speed = parser.getU8();
         nhc = parser.getU8();
-        zerovel = parser.getU8();
+        zerovel = parser.getU8(); 
     }
 
     @Override
@@ -87,7 +89,7 @@ public class MsgInsUpdates extends SBPMessage {
         builder.putU8(wheelticks);
         builder.putU8(speed);
         builder.putU8(nhc);
-        builder.putU8(zerovel);
+        builder.putU8(zerovel); 
     }
 
     @Override

@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,59 +9,58 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.observation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_GROUP_DELAY_DEP_A (0x0092).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_GROUP_DELAY_DEP_A (0x0092).
  *
- * <p>You can have MSG_GROUP_DELAY_DEP_A inherent its fields directly from an inherited SBP object,
- * or construct it inline using a dict of its fields.
+ * You can have MSG_GROUP_DELAY_DEP_A inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgGroupDelayDepA extends SBPMessage {
     public static final int TYPE = 0x0092;
 
+    
     /** Data Predict Time of Week */
     public GPSTimeDep t_op;
-
+    
     /** Satellite number */
     public int prn;
-
-    /**
-     * bit-field indicating validity of the values, LSB indicating tgd validity etc. 1 = value is
-     * valid, 0 = value is not valid.
-     */
+    
+    /** bit-field indicating validity of the values, LSB indicating tgd
+      * validity etc. 1 = value is valid, 0 = value is not valid. */
     public int valid;
-
+    
     public int tgd;
-
+    
     public int isc_l1ca;
-
+    
     public int isc_l2c;
+    
 
-    public MsgGroupDelayDepA(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgGroupDelayDepA() {
-        super(TYPE);
-    }
-
-    public MsgGroupDelayDepA(SBPMessage msg) throws SBPBinaryException {
+    public MsgGroupDelayDepA (int sender) { super(sender, TYPE); }
+    public MsgGroupDelayDepA () { super(TYPE); }
+    public MsgGroupDelayDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgGroupDelayDepA, expected 146, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgGroupDelayDepA, expected 146, actual " + msg.type);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class MsgGroupDelayDepA extends SBPMessage {
         valid = parser.getU8();
         tgd = parser.getS16();
         isc_l1ca = parser.getS16();
-        isc_l2c = parser.getS16();
+        isc_l2c = parser.getS16(); 
     }
 
     @Override
@@ -81,7 +81,7 @@ public class MsgGroupDelayDepA extends SBPMessage {
         builder.putU8(valid);
         builder.putS16(tgd);
         builder.putS16(isc_l1ca);
-        builder.putS16(isc_l2c);
+        builder.putS16(isc_l2c); 
     }
 
     @Override

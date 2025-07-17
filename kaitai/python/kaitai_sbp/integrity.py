@@ -181,26 +181,26 @@ class Integrity(KaitaiStruct):
         """Integrity monitoring flags for multiple aggregated elements. An element
         could be a satellite, SSR grid point, or SSR tile. A group of aggregated
         elements being monitored for integrity could refer to:
-        
+
         - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
-        
+
         - Satellites in the line-of-sight of a particular SSR tile.
-        
+
         - Satellites in the line-of-sight of a particular SSR grid point.
-        
+
         The integrity usage for a group of aggregated elements varies according
         to the integrity flag of the satellites comprising that group.
-        
+
         SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the
         integrity check and have flag INTEGRITY_FLAG_OK.
-        
+
         SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group
         failed the integrity check. Refer to more granular integrity messages
         for details on the specific failing elements.
-        
+
         SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the
         integrity check, do not use for positioning.
-        
+
         SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag
         of elements in the group.
         """
@@ -212,7 +212,7 @@ class Integrity(KaitaiStruct):
 
         def _read(self):
             self.obs_time = Gnss.GpsTimeSec(self._io, self, self._root)
-            self.atmo_corr_time = Gnss.GpsTimeSec(self._io, self, self._root)
+            self.iono_corr_time = Gnss.GpsTimeSec(self._io, self, self._root)
             self.sat_corr_time = Gnss.GpsTimeSec(self._io, self, self._root)
             self.ssr_sol_id = self._io.read_u1()
             self.tile_set_id = self._io.read_u2le()

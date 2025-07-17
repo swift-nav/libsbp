@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,56 +9,56 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.system;
 
 // This file was auto-generated from yaml/swiftnav/sbp/system.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_GROUP_META (0xFF0A).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_GROUP_META (0xFF0A).
  *
- * <p>You can have MSG_GROUP_META inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_GROUP_META inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This leading message lists the time metadata of the Solution Group. It also lists the atomic
- * contents (i.e. types of messages included) of the Solution Group.
- */
+ * This leading message lists the time metadata of the Solution Group. It also
+ * lists the atomic contents (i.e. types of messages included) of the Solution
+ * Group. */
+
 public class MsgGroupMeta extends SBPMessage {
     public static final int TYPE = 0xFF0A;
 
+    
     /** Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
     public int group_id;
-
+    
     /** Status flags (reserved) */
     public int flags;
-
+    
     /** Size of list group_msgs */
     public int n_group_msgs;
-
-    /**
-     * An in-order list of message types included in the Solution Group, including GROUP_META itself
-     */
+    
+    /** An in-order list of message types included in the Solution Group,
+      * including GROUP_META itself */
     public int[] group_msgs;
+    
 
-    public MsgGroupMeta(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgGroupMeta() {
-        super(TYPE);
-    }
-
-    public MsgGroupMeta(SBPMessage msg) throws SBPBinaryException {
+    public MsgGroupMeta (int sender) { super(sender, TYPE); }
+    public MsgGroupMeta () { super(TYPE); }
+    public MsgGroupMeta (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgGroupMeta, expected 65290, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgGroupMeta, expected 65290, actual " + msg.type);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class MsgGroupMeta extends SBPMessage {
         group_id = parser.getU8();
         flags = parser.getU8();
         n_group_msgs = parser.getU8();
-        group_msgs = parser.getArrayofU16();
+        group_msgs = parser.getArrayofU16(); 
     }
 
     @Override
@@ -74,7 +75,7 @@ public class MsgGroupMeta extends SBPMessage {
         builder.putU8(group_id);
         builder.putU8(flags);
         builder.putU8(n_group_msgs);
-        builder.putArrayofU16(group_msgs);
+        builder.putArrayofU16(group_msgs); 
     }
 
     @Override

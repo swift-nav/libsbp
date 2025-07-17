@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,63 +9,61 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.ssr;
 
 // This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_SSR_CODE_BIASES (0x05E1).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_SSR_CODE_BIASES (0x05E1).
  *
- * <p>You can have MSG_SSR_CODE_BIASES inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_SSR_CODE_BIASES inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The precise code biases message is to be added to the pseudorange of the corresponding signal
- * to get corrected pseudorange. It is an equivalent to the 1059 / 1065 RTCM message types.
- */
+ * The precise code biases message is to be added to the pseudorange of the
+ * corresponding signal to get corrected pseudorange. It is an equivalent to
+ * the 1059 / 1065 RTCM message types. */
+
 public class MsgSsrCodeBiases extends SBPMessage {
     public static final int TYPE = 0x05E1;
 
+    
     /** GNSS reference time of the correction */
     public GPSTimeSec time;
-
+    
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
-
-    /**
-     * Update interval between consecutive corrections. Encoded following RTCM DF391 specification.
-     */
+    
+    /** Update interval between consecutive corrections. Encoded following
+      * RTCM DF391 specification. */
     public int update_interval;
-
-    /**
-     * IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a change in the
-     * SSR generating configuration
-     */
+    
+    /** IOD of the SSR correction. A change of Issue Of Data SSR is used to
+      * indicate a change in the SSR generating configuration */
     public int iod_ssr;
-
+    
     /** Code biases for the different satellite signals */
     public CodeBiasesContent[] biases;
+    
 
-    public MsgSsrCodeBiases(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgSsrCodeBiases() {
-        super(TYPE);
-    }
-
-    public MsgSsrCodeBiases(SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrCodeBiases (int sender) { super(sender, TYPE); }
+    public MsgSsrCodeBiases () { super(TYPE); }
+    public MsgSsrCodeBiases (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgSsrCodeBiases, expected 1505, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgSsrCodeBiases, expected 1505, actual " + msg.type);
     }
 
     @Override
@@ -74,7 +73,7 @@ public class MsgSsrCodeBiases extends SBPMessage {
         sid = new GnssSignal().parse(parser);
         update_interval = parser.getU8();
         iod_ssr = parser.getU8();
-        biases = parser.getArray(CodeBiasesContent.class);
+        biases = parser.getArray(CodeBiasesContent.class); 
     }
 
     @Override
@@ -83,7 +82,7 @@ public class MsgSsrCodeBiases extends SBPMessage {
         sid.build(builder);
         builder.putU8(update_interval);
         builder.putU8(iod_ssr);
-        builder.putArray(biases);
+        builder.putArray(biases); 
     }
 
     @Override

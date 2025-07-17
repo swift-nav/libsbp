@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,57 +9,59 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.piksi;
 
 // This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_DEVICE_MONITOR (0x00B5).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_DEVICE_MONITOR (0x00B5).
  *
- * <p>You can have MSG_DEVICE_MONITOR inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_DEVICE_MONITOR inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message contains temperature and voltage level measurements from the processor's
- * monitoring system and the RF frontend die temperature if available.
- */
+ * This message contains temperature and voltage level measurements from the
+ * processor's monitoring system and the RF frontend die temperature if
+ * available. */
+
 public class MsgDeviceMonitor extends SBPMessage {
     public static final int TYPE = 0x00B5;
 
+    
     /** Device V_in */
     public int dev_vin;
-
+    
     /** Processor V_int */
     public int cpu_vint;
-
+    
     /** Processor V_aux */
     public int cpu_vaux;
-
+    
     /** Processor temperature */
     public int cpu_temperature;
-
+    
     /** Frontend temperature (if available) */
     public int fe_temperature;
+    
 
-    public MsgDeviceMonitor(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgDeviceMonitor() {
-        super(TYPE);
-    }
-
-    public MsgDeviceMonitor(SBPMessage msg) throws SBPBinaryException {
+    public MsgDeviceMonitor (int sender) { super(sender, TYPE); }
+    public MsgDeviceMonitor () { super(TYPE); }
+    public MsgDeviceMonitor (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgDeviceMonitor, expected 181, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgDeviceMonitor, expected 181, actual " + msg.type);
     }
 
     @Override
@@ -68,7 +71,7 @@ public class MsgDeviceMonitor extends SBPMessage {
         cpu_vint = parser.getS16();
         cpu_vaux = parser.getS16();
         cpu_temperature = parser.getS16();
-        fe_temperature = parser.getS16();
+        fe_temperature = parser.getS16(); 
     }
 
     @Override
@@ -77,7 +80,7 @@ public class MsgDeviceMonitor extends SBPMessage {
         builder.putS16(cpu_vint);
         builder.putS16(cpu_vaux);
         builder.putS16(cpu_temperature);
-        builder.putS16(fe_temperature);
+        builder.putS16(fe_temperature); 
     }
 
     @Override

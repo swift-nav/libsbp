@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,61 +9,62 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_PROTECTION_LEVEL_DEP_A (0x0216).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_PROTECTION_LEVEL_DEP_A (0x0216).
  *
- * <p>You can have MSG_PROTECTION_LEVEL_DEP_A inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
+ * You can have MSG_PROTECTION_LEVEL_DEP_A inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Deprecated.
- */
+ * Deprecated. */
+
 public class MsgProtectionLevelDepA extends SBPMessage {
     public static final int TYPE = 0x0216;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** Vertical protection level */
     public int vpl;
-
+    
     /** Horizontal protection level */
     public int hpl;
-
+    
     /** Latitude */
     public double lat;
-
+    
     /** Longitude */
     public double lon;
-
+    
     /** Height */
     public double height;
-
+    
     /** Status flags */
     public int flags;
+    
 
-    public MsgProtectionLevelDepA(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgProtectionLevelDepA() {
-        super(TYPE);
-    }
-
-    public MsgProtectionLevelDepA(SBPMessage msg) throws SBPBinaryException {
+    public MsgProtectionLevelDepA (int sender) { super(sender, TYPE); }
+    public MsgProtectionLevelDepA () { super(TYPE); }
+    public MsgProtectionLevelDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgProtectionLevelDepA, expected 534, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgProtectionLevelDepA, expected 534, actual " + msg.type);
     }
 
     @Override
@@ -74,7 +76,7 @@ public class MsgProtectionLevelDepA extends SBPMessage {
         lat = parser.getDouble();
         lon = parser.getDouble();
         height = parser.getDouble();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
@@ -85,7 +87,7 @@ public class MsgProtectionLevelDepA extends SBPMessage {
         builder.putDouble(lat);
         builder.putDouble(lon);
         builder.putDouble(height);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override

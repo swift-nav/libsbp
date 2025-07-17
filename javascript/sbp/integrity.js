@@ -162,7 +162,7 @@ MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['use_iono_grid_point_sat_los',
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field obs_time GPSTimeSec GNSS reference time of the observation used to generate the flag.
- * @field atmo_corr_time GPSTimeSec GNSS reference time of the atmospheric correction associated to the flag.
+ * @field iono_corr_time GPSTimeSec GNSS reference time of the ionospheric correction associated to the flag.
  * @field sat_corr_time GPSTimeSec GNSS reference time of the satellite correction associated to the flag.
  * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
  * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the set this tile belongs to.
@@ -194,7 +194,7 @@ MsgSsrFlagHighLevel.prototype.constructor = MsgSsrFlagHighLevel;
 MsgSsrFlagHighLevel.prototype.parser = new Parser()
   .endianess('little')
   .nest('obs_time', { type: GPSTimeSec.prototype.parser })
-  .nest('atmo_corr_time', { type: GPSTimeSec.prototype.parser })
+  .nest('iono_corr_time', { type: GPSTimeSec.prototype.parser })
   .nest('sat_corr_time', { type: GPSTimeSec.prototype.parser })
   .uint8('ssr_sol_id')
   .uint16('tile_set_id')
@@ -211,7 +211,7 @@ MsgSsrFlagHighLevel.prototype.parser = new Parser()
   .uint8('use_iono_grid_point_sat_los');
 MsgSsrFlagHighLevel.prototype.fieldSpec = [];
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['obs_time', GPSTimeSec.prototype.fieldSpec]);
-MsgSsrFlagHighLevel.prototype.fieldSpec.push(['atmo_corr_time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrFlagHighLevel.prototype.fieldSpec.push(['iono_corr_time', GPSTimeSec.prototype.fieldSpec]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['sat_corr_time', GPSTimeSec.prototype.fieldSpec]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);

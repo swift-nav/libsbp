@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,18 +9,21 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/integrity/test_MsgSsrFlagHighLevelDepA.yaml by generate.py. Do not
-// modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/integrity/test_MsgSsrFlagHighLevelDepA.yaml by generate.py. Do not modify by hand!
 
+import java.math.BigInteger;
+
+import org.junit.Test;
+
+import org.json.JSONObject;
 
 import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.integrity.MsgSsrFlagHighLevelDepA;
-import java.math.BigInteger;
-import org.json.JSONObject;
-import org.junit.Test;
+
 
 public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
 
@@ -29,52 +33,16 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
     @Test
     public void test1() throws Throwable {
         if (debug)
-            System.out.format(
-                    "%n%s%n", "auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest.test1");
-        byte[] payload =
-                new byte[] {
-                    (byte) 180,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 3,
-                    (byte) 0,
-                    (byte) 104,
-                    (byte) 1,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 6,
-                    (byte) 0,
-                    (byte) 10,
-                    (byte) 20,
-                    (byte) 0,
-                    (byte) 30,
-                    (byte) 0,
-                    (byte) 40,
-                    (byte) 1,
-                    (byte) 2,
-                    (byte) 3,
-                    (byte) 4,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 0,
-                    (byte) 5,
-                    (byte) 6,
-                    (byte) 7,
-                    (byte) 8,
-                };
-        SBPMessage sbp = new SBPMessage(0x0042, 0x0BB9, payload);
-        MsgSsrFlagHighLevelDepA msg = new MsgSsrFlagHighLevelDepA(sbp);
+            System.out.format("%n%s%n", "auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest.test1");
+        byte[] payload = new byte[] {(byte)180,(byte)0,(byte)0,(byte)0,(byte)3,(byte)0,(byte)104,(byte)1,(byte)0,(byte)0,(byte)6,(byte)0,(byte)10,(byte)20,(byte)0,(byte)30,(byte)0,(byte)40,(byte)1,(byte)2,(byte)3,(byte)4,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)5,(byte)6,(byte)7,(byte)8, };
+        SBPMessage sbp = new SBPMessage( 0x0042, 0x0BB9, payload );
+        MsgSsrFlagHighLevelDepA msg = new MsgSsrFlagHighLevelDepA( sbp );
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
         value = msg.chain_id;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.chain_id + "' != '" + 40 + "'",
-                    value.equals(BigInteger.valueOf(40L)));
+            org.junit.Assert.assertTrue("'" + msg.chain_id + "' != '" + 40 + "'", value.equals(BigInteger.valueOf( 40L ) ) );
         } else {
             value = value.longValue();
             expected = 40L;
@@ -82,9 +50,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.corr_time.tow;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.corr_time.tow + "' != '" + 360 + "'",
-                    value.equals(BigInteger.valueOf(360L)));
+            org.junit.Assert.assertTrue("'" + msg.corr_time.tow + "' != '" + 360 + "'", value.equals(BigInteger.valueOf( 360L ) ) );
         } else {
             value = value.longValue();
             expected = 360L;
@@ -92,9 +58,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.corr_time.wn;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.corr_time.wn + "' != '" + 6 + "'",
-                    value.equals(BigInteger.valueOf(6L)));
+            org.junit.Assert.assertTrue("'" + msg.corr_time.wn + "' != '" + 6 + "'", value.equals(BigInteger.valueOf( 6L ) ) );
         } else {
             value = value.longValue();
             expected = 6L;
@@ -102,9 +66,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.obs_time.tow;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.obs_time.tow + "' != '" + 180 + "'",
-                    value.equals(BigInteger.valueOf(180L)));
+            org.junit.Assert.assertTrue("'" + msg.obs_time.tow + "' != '" + 180 + "'", value.equals(BigInteger.valueOf( 180L ) ) );
         } else {
             value = value.longValue();
             expected = 180L;
@@ -112,9 +74,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.obs_time.wn;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.obs_time.wn + "' != '" + 3 + "'",
-                    value.equals(BigInteger.valueOf(3L)));
+            org.junit.Assert.assertTrue("'" + msg.obs_time.wn + "' != '" + 3 + "'", value.equals(BigInteger.valueOf( 3L ) ) );
         } else {
             value = value.longValue();
             expected = 3L;
@@ -122,9 +82,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.reserved[0];
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved[0] + "' != '" + 0 + "'",
-                    value.equals(BigInteger.valueOf(0L)));
+            org.junit.Assert.assertTrue("'" + msg.reserved[0] + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
         } else {
             value = value.longValue();
             expected = 0L;
@@ -132,9 +90,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.reserved[1];
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved[1] + "' != '" + 0 + "'",
-                    value.equals(BigInteger.valueOf(0L)));
+            org.junit.Assert.assertTrue("'" + msg.reserved[1] + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
         } else {
             value = value.longValue();
             expected = 0L;
@@ -142,9 +98,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.reserved[2];
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved[2] + "' != '" + 0 + "'",
-                    value.equals(BigInteger.valueOf(0L)));
+            org.junit.Assert.assertTrue("'" + msg.reserved[2] + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
         } else {
             value = value.longValue();
             expected = 0L;
@@ -152,9 +106,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.reserved[3];
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved[3] + "' != '" + 0 + "'",
-                    value.equals(BigInteger.valueOf(0L)));
+            org.junit.Assert.assertTrue("'" + msg.reserved[3] + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
         } else {
             value = value.longValue();
             expected = 0L;
@@ -162,9 +114,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.reserved[4];
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.reserved[4] + "' != '" + 0 + "'",
-                    value.equals(BigInteger.valueOf(0L)));
+            org.junit.Assert.assertTrue("'" + msg.reserved[4] + "' != '" + 0 + "'", value.equals(BigInteger.valueOf( 0L ) ) );
         } else {
             value = value.longValue();
             expected = 0L;
@@ -172,9 +122,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.ssr_sol_id;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.ssr_sol_id + "' != '" + 10 + "'",
-                    value.equals(BigInteger.valueOf(10L)));
+            org.junit.Assert.assertTrue("'" + msg.ssr_sol_id + "' != '" + 10 + "'", value.equals(BigInteger.valueOf( 10L ) ) );
         } else {
             value = value.longValue();
             expected = 10L;
@@ -182,8 +130,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.tile_id;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.tile_id + "' != '" + 30 + "'", value.equals(BigInteger.valueOf(30L)));
+            org.junit.Assert.assertTrue("'" + msg.tile_id + "' != '" + 30 + "'", value.equals(BigInteger.valueOf( 30L ) ) );
         } else {
             value = value.longValue();
             expected = 30L;
@@ -191,9 +138,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.tile_set_id;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.tile_set_id + "' != '" + 20 + "'",
-                    value.equals(BigInteger.valueOf(20L)));
+            org.junit.Assert.assertTrue("'" + msg.tile_set_id + "' != '" + 20 + "'", value.equals(BigInteger.valueOf( 20L ) ) );
         } else {
             value = value.longValue();
             expected = 20L;
@@ -201,9 +146,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.use_bds_sat;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.use_bds_sat + "' != '" + 3 + "'",
-                    value.equals(BigInteger.valueOf(3L)));
+            org.junit.Assert.assertTrue("'" + msg.use_bds_sat + "' != '" + 3 + "'", value.equals(BigInteger.valueOf( 3L ) ) );
         } else {
             value = value.longValue();
             expected = 3L;
@@ -211,9 +154,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.use_gal_sat;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.use_gal_sat + "' != '" + 2 + "'",
-                    value.equals(BigInteger.valueOf(2L)));
+            org.junit.Assert.assertTrue("'" + msg.use_gal_sat + "' != '" + 2 + "'", value.equals(BigInteger.valueOf( 2L ) ) );
         } else {
             value = value.longValue();
             expected = 2L;
@@ -221,9 +162,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.use_gps_sat;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.use_gps_sat + "' != '" + 1 + "'",
-                    value.equals(BigInteger.valueOf(1L)));
+            org.junit.Assert.assertTrue("'" + msg.use_gps_sat + "' != '" + 1 + "'", value.equals(BigInteger.valueOf( 1L ) ) );
         } else {
             value = value.longValue();
             expected = 1L;
@@ -231,9 +170,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.use_iono_grid_point_sat_los;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.use_iono_grid_point_sat_los + "' != '" + 8 + "'",
-                    value.equals(BigInteger.valueOf(8L)));
+            org.junit.Assert.assertTrue("'" + msg.use_iono_grid_point_sat_los + "' != '" + 8 + "'", value.equals(BigInteger.valueOf( 8L ) ) );
         } else {
             value = value.longValue();
             expected = 8L;
@@ -241,9 +178,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.use_iono_grid_points;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.use_iono_grid_points + "' != '" + 6 + "'",
-                    value.equals(BigInteger.valueOf(6L)));
+            org.junit.Assert.assertTrue("'" + msg.use_iono_grid_points + "' != '" + 6 + "'", value.equals(BigInteger.valueOf( 6L ) ) );
         } else {
             value = value.longValue();
             expected = 6L;
@@ -251,9 +186,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.use_iono_tile_sat_los;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.use_iono_tile_sat_los + "' != '" + 7 + "'",
-                    value.equals(BigInteger.valueOf(7L)));
+            org.junit.Assert.assertTrue("'" + msg.use_iono_tile_sat_los + "' != '" + 7 + "'", value.equals(BigInteger.valueOf( 7L ) ) );
         } else {
             value = value.longValue();
             expected = 7L;
@@ -261,9 +194,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.use_qzss_sat;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.use_qzss_sat + "' != '" + 4 + "'",
-                    value.equals(BigInteger.valueOf(4L)));
+            org.junit.Assert.assertTrue("'" + msg.use_qzss_sat + "' != '" + 4 + "'", value.equals(BigInteger.valueOf( 4L ) ) );
         } else {
             value = value.longValue();
             expected = 4L;
@@ -271,9 +202,7 @@ public class auto_check_sbp_integrity_MsgSsrFlagHighLevelDepATest {
         }
         value = msg.use_tropo_grid_points;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.use_tropo_grid_points + "' != '" + 5 + "'",
-                    value.equals(BigInteger.valueOf(5L)));
+            org.junit.Assert.assertTrue("'" + msg.use_tropo_grid_points + "' != '" + 5 + "'", value.equals(BigInteger.valueOf( 5L ) ) );
         } else {
             value = value.longValue();
             expected = 5L;

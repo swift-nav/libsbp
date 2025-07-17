@@ -7279,7 +7279,7 @@ encodeCodePhaseBiasesSatSig x =
 msgSsrFlagHighLevel : Jdec.Decoder MsgSsrFlagHighLevel
 msgSsrFlagHighLevel =
     Jpipe.decode MsgSsrFlagHighLevel
-        |> Jpipe.required "atmo_corr_time" gpsTimeSEC
+        |> Jpipe.required "iono_corr_time" gpsTimeSEC
         |> Jpipe.required "chain_id" Jdec.int
         |> Jpipe.required "obs_time" gpsTimeSEC
         |> Jpipe.required "sat_corr_time" gpsTimeSEC
@@ -7298,7 +7298,7 @@ msgSsrFlagHighLevel =
 encodeMsgSsrFlagHighLevel : MsgSsrFlagHighLevel -> Jenc.Value
 encodeMsgSsrFlagHighLevel x =
     Jenc.object
-        [ ("atmo_corr_time", encodeGpsTimeSEC x.atmoCorrTime)
+        [ ("iono_corr_time", encodeGpsTimeSEC x.atmoCorrTime)
         , ("chain_id", Jenc.int x.chainID)
         , ("obs_time", encodeGpsTimeSEC x.obsTime)
         , ("sat_corr_time", encodeGpsTimeSEC x.satCorrTime)

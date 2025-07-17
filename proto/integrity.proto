@@ -65,7 +65,7 @@ message IntegritySSRHeader {
  */
 message MsgSsrFlagHighLevel {
     gnss.GpsTimeSec obs_time = 1;
-    gnss.GpsTimeSec atmo_corr_time = 2;
+    gnss.GpsTimeSec iono_corr_time = 2;
     gnss.GpsTimeSec sat_corr_time = 3;
     uint32 ssr_sol_id = 4;
     uint32 tile_set_id = 5;

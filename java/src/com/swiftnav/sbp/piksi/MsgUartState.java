@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,61 +9,64 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.piksi;
 
 // This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_UART_STATE (0x001D).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_UART_STATE (0x001D).
  *
- * <p>You can have MSG_UART_STATE inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_UART_STATE inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The UART message reports data latency and throughput of the UART channels providing SBP I/O.
- * On the default Piksi configuration, UARTs A and B are used for telemetry radios, but can also be
- * host access ports for embedded hosts, or other interfaces in future. The reported percentage
- * values must be normalized. Observations latency and period can be used to assess the health of
- * the differential corrections link. Latency provides the timeliness of received base observations
- * while the period indicates their likelihood of transmission.
- */
+ * The UART message reports data latency and throughput of the UART channels
+ * providing SBP I/O. On the default Piksi configuration, UARTs A and B are
+ * used for telemetry radios, but can also be host access ports for embedded
+ * hosts, or other interfaces in future. The reported percentage values must
+ * be normalized. Observations latency and period can be used to assess the
+ * health of the differential corrections link. Latency provides the
+ * timeliness of received base observations while the period indicates their
+ * likelihood of transmission. */
+
 public class MsgUartState extends SBPMessage {
     public static final int TYPE = 0x001D;
 
+    
     /** State of UART A */
     public UARTChannel uart_a;
-
+    
     /** State of UART B */
     public UARTChannel uart_b;
-
+    
     /** State of UART FTDI (USB logger) */
     public UARTChannel uart_ftdi;
-
+    
     /** UART communication latency */
     public Latency latency;
-
+    
     /** Observation receipt period */
     public Period obs_period;
+    
 
-    public MsgUartState(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgUartState() {
-        super(TYPE);
-    }
-
-    public MsgUartState(SBPMessage msg) throws SBPBinaryException {
+    public MsgUartState (int sender) { super(sender, TYPE); }
+    public MsgUartState () { super(TYPE); }
+    public MsgUartState (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgUartState, expected 29, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgUartState, expected 29, actual " + msg.type);
     }
 
     @Override
@@ -72,7 +76,7 @@ public class MsgUartState extends SBPMessage {
         uart_b = new UARTChannel().parse(parser);
         uart_ftdi = new UARTChannel().parse(parser);
         latency = new Latency().parse(parser);
-        obs_period = new Period().parse(parser);
+        obs_period = new Period().parse(parser); 
     }
 
     @Override
@@ -81,7 +85,7 @@ public class MsgUartState extends SBPMessage {
         uart_b.build(builder);
         uart_ftdi.build(builder);
         latency.build(builder);
-        obs_period.build(builder);
+        obs_period.build(builder); 
     }
 
     @Override

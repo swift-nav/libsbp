@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,60 +9,60 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.system;
 
 // This file was auto-generated from yaml/swiftnav/sbp/system.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_STATUS_JOURNAL (0xFFFD).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_STATUS_JOURNAL (0xFFFD).
  *
- * <p>You can have MSG_STATUS_JOURNAL inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_STATUS_JOURNAL inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The status journal message contains past status reports (see MSG_STATUS_REPORT) and functions
- * as a error/event storage for telemetry purposes.
- */
+ * The status journal message contains past status reports (see
+ * MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+ * purposes. */
+
 public class MsgStatusJournal extends SBPMessage {
     public static final int TYPE = 0xFFFD;
 
+    
     /** Identity of reporting system */
     public int reporting_system;
-
+    
     /** SBP protocol version */
     public int sbp_version;
-
+    
     /** Total number of status reports sent since system startup */
     public long total_status_reports;
-
-    /**
-     * Index and number of messages in this sequence. First nibble is the size of the sequence (n),
-     * second nibble is the zero-indexed counter (ith packet of n)
-     */
+    
+    /** Index and number of messages in this sequence. First nibble is the
+      * size of the sequence (n), second nibble is the zero-indexed counter
+      * (ith packet of n) */
     public int sequence_descriptor;
-
+    
     /** Status journal */
     public StatusJournalItem[] journal;
+    
 
-    public MsgStatusJournal(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgStatusJournal() {
-        super(TYPE);
-    }
-
-    public MsgStatusJournal(SBPMessage msg) throws SBPBinaryException {
+    public MsgStatusJournal (int sender) { super(sender, TYPE); }
+    public MsgStatusJournal () { super(TYPE); }
+    public MsgStatusJournal (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgStatusJournal, expected 65533, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgStatusJournal, expected 65533, actual " + msg.type);
     }
 
     @Override
@@ -71,7 +72,7 @@ public class MsgStatusJournal extends SBPMessage {
         sbp_version = parser.getU16();
         total_status_reports = parser.getU32();
         sequence_descriptor = parser.getU8();
-        journal = parser.getArray(StatusJournalItem.class);
+        journal = parser.getArray(StatusJournalItem.class); 
     }
 
     @Override
@@ -80,7 +81,7 @@ public class MsgStatusJournal extends SBPMessage {
         builder.putU16(sbp_version);
         builder.putU32(total_status_reports);
         builder.putU8(sequence_descriptor);
-        builder.putArray(journal);
+        builder.putArray(journal); 
     }
 
     @Override

@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,66 +9,67 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.piksi;
 
 // This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_FRONT_END_GAIN (0x00BF).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_FRONT_END_GAIN (0x00BF).
  *
- * <p>You can have MSG_FRONT_END_GAIN inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_FRONT_END_GAIN inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message describes the gain of each channel in the receiver frontend. Each gain is encoded
- * as a non-dimensional percentage relative to the maximum range possible for the gain stage of the
- * frontend. By convention, each gain array has 8 entries and the index of the array corresponding
- * to the index of the rf channel in the frontend. A gain of 127 percent encodes that rf channel is
- * not present in the hardware. A negative value implies an error for the particular gain stage as
- * reported by the frontend.
- */
+ * This message describes the gain of each channel in the receiver frontend.
+ * Each gain is encoded as a non-dimensional percentage relative to the
+ * maximum range possible for the gain stage of the frontend. By convention,
+ * each gain array has 8 entries and the index of the array corresponding to
+ * the index of the rf channel in the frontend. A gain of 127 percent encodes
+ * that rf channel is not present in the hardware. A negative value implies an
+ * error for the particular gain stage as reported by the frontend. */
+
 public class MsgFrontEndGain extends SBPMessage {
     public static final int TYPE = 0x00BF;
 
+    
     /** RF gain for each frontend channel */
     public int[] rf_gain;
-
+    
     /** Intermediate frequency gain for each frontend channel */
     public int[] if_gain;
+    
 
-    public MsgFrontEndGain(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgFrontEndGain() {
-        super(TYPE);
-    }
-
-    public MsgFrontEndGain(SBPMessage msg) throws SBPBinaryException {
+    public MsgFrontEndGain (int sender) { super(sender, TYPE); }
+    public MsgFrontEndGain () { super(TYPE); }
+    public MsgFrontEndGain (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgFrontEndGain, expected 191, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgFrontEndGain, expected 191, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         rf_gain = parser.getArrayofS8(8);
-        if_gain = parser.getArrayofS8(8);
+        if_gain = parser.getArrayofS8(8); 
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putArrayofS8(rf_gain, 8);
-        builder.putArrayofS8(if_gain, 8);
+        builder.putArrayofS8(if_gain, 8); 
     }
 
     @Override

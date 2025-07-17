@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,84 +9,88 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.navigation;
 
 // This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_VEL_BODY (0x0213).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_VEL_BODY (0x0213).
  *
- * <p>You can have MSG_VEL_BODY inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_VEL_BODY inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>This message reports the velocity in the Vehicle Body Frame. By convention, the x-axis should
- * point out the nose of the vehicle and represent the forward direction, while as the y-axis should
- * point out the right hand side of the vehicle. Since this is a right handed system, z should point
- * out the bottom of the vehicle. The orientation and origin of the Vehicle Body Frame are specified
- * via the device settings. The full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow). This message is only produced by inertial versions of Swift products
- * and is not available from Piksi Multi or Duro.
+ * This message reports the velocity in the Vehicle Body Frame. By convention,
+ * the x-axis should point out the nose of the vehicle and represent the
+ * forward direction, while as the y-axis should point out the right hand side
+ * of the vehicle. Since this is a right handed system, z should point out the
+ * bottom of the vehicle. The orientation and origin of the Vehicle Body Frame
+ * are specified via the device settings. The full GPS time is given by the
+ * preceding MSG_GPS_TIME with the matching time-of-week (tow). This message
+ * is only produced by inertial versions of Swift products and is not
+ * available from Piksi Multi or Duro.
  *
- * <p>The values in this message are from GNSS measurements fused with inertial measurements.
- */
+ * The values in this message are from GNSS measurements fused with inertial
+ * measurements. */
+
 public class MsgVelBody extends SBPMessage {
     public static final int TYPE = 0x0213;
 
+    
     /** GPS Time of Week */
     public long tow;
-
+    
     /** Velocity in x direction */
     public int x;
-
+    
     /** Velocity in y direction */
     public int y;
-
+    
     /** Velocity in z direction */
     public int z;
-
+    
     /** Estimated variance of x */
     public float cov_x_x;
-
+    
     /** Covariance of x and y */
     public float cov_x_y;
-
+    
     /** Covariance of x and z */
     public float cov_x_z;
-
+    
     /** Estimated variance of y */
     public float cov_y_y;
-
+    
     /** Covariance of y and z */
     public float cov_y_z;
-
+    
     /** Estimated variance of z */
     public float cov_z_z;
-
+    
     /** Number of satellites used in solution */
     public int n_sats;
-
+    
     /** Status flags */
     public int flags;
+    
 
-    public MsgVelBody(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgVelBody() {
-        super(TYPE);
-    }
-
-    public MsgVelBody(SBPMessage msg) throws SBPBinaryException {
+    public MsgVelBody (int sender) { super(sender, TYPE); }
+    public MsgVelBody () { super(TYPE); }
+    public MsgVelBody (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgVelBody, expected 531, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgVelBody, expected 531, actual " + msg.type);
     }
 
     @Override
@@ -102,7 +107,7 @@ public class MsgVelBody extends SBPMessage {
         cov_y_z = parser.getFloat();
         cov_z_z = parser.getFloat();
         n_sats = parser.getU8();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
@@ -118,7 +123,7 @@ public class MsgVelBody extends SBPMessage {
         builder.putFloat(cov_y_z);
         builder.putFloat(cov_z_z);
         builder.putU8(n_sats);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override

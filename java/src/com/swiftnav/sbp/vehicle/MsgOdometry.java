@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,59 +9,60 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.vehicle;
 
 // This file was auto-generated from yaml/swiftnav/sbp/vehicle.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_ODOMETRY (0x0903).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_ODOMETRY (0x0903).
  *
- * <p>You can have MSG_ODOMETRY inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_ODOMETRY inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Message representing the x component of vehicle velocity in the user frame at the odometry
- * reference point(s) specified by the user. The offset for the odometry reference point and the
- * definition and origin of the user frame are defined through the device settings interface. There
- * are 4 possible user-defined sources of this message which are labeled arbitrarily source 0
- * through 3. If using "processor time" time tags, the receiving end will expect either
- * `MSG_GNSS_TIME_OFFSET` or `MSG_PPS_TIME` to sync incoming odometry data to GNSS time. Processor
- * time shall roll over to zero after one week.
- */
+ * Message representing the x component of vehicle velocity in the user frame
+ * at the odometry reference point(s) specified by the user. The offset for
+ * the odometry reference point and the definition and origin of the user
+ * frame are defined through the device settings interface. There are 4
+ * possible user-defined sources of this message which are labeled arbitrarily
+ * source 0 through 3.
+ * If using "processor time" time tags, the receiving end will expect either
+ * `MSG_GNSS_TIME_OFFSET` or `MSG_PPS_TIME` to sync incoming odometry data to
+ * GNSS time.  Processor time shall roll over to zero after one week. */
+
 public class MsgOdometry extends SBPMessage {
     public static final int TYPE = 0x0903;
 
-    /**
-     * Time field representing either milliseconds in the GPS Week or local CPU time from the
-     * producing system in milliseconds. See the tow_source flag for the exact source of this
-     * timestamp.
-     */
+    
+    /** Time field representing either milliseconds in the GPS Week or local
+      * CPU time from the producing system in milliseconds.  See the
+      * tow_source flag for the exact source of this timestamp. */
     public long tow;
-
+    
     /** The signed forward component of vehicle velocity. */
     public int velocity;
-
+    
     /** Status flags */
     public int flags;
+    
 
-    public MsgOdometry(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgOdometry() {
-        super(TYPE);
-    }
-
-    public MsgOdometry(SBPMessage msg) throws SBPBinaryException {
+    public MsgOdometry (int sender) { super(sender, TYPE); }
+    public MsgOdometry () { super(TYPE); }
+    public MsgOdometry (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgOdometry, expected 2307, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgOdometry, expected 2307, actual " + msg.type);
     }
 
     @Override
@@ -68,14 +70,14 @@ public class MsgOdometry extends SBPMessage {
         /* Parse fields from binary */
         tow = parser.getU32();
         velocity = parser.getS32();
-        flags = parser.getU8();
+        flags = parser.getU8(); 
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU32(tow);
         builder.putS32(velocity);
-        builder.putU8(flags);
+        builder.putU8(flags); 
     }
 
     @Override

@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,11 +9,19 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/integrity/test_integrity_structs.yaml by generate.py. Do not modify
-// by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/integrity/test_integrity_structs.yaml by generate.py. Do not modify by hand!
+
+import java.math.BigInteger;
+
+import org.junit.Test;
+
+import org.json.JSONObject;
+
+import com.swiftnav.sbp.SBPMessage;
+
 
 public class auto_check_sbp_integrity_integrity_structsTest {
 

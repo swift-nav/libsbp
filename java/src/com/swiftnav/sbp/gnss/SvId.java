@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,29 +9,32 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.gnss;
 
 // This file was auto-generated from yaml/swiftnav/sbp/gnss.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class SvId extends SBPStruct {
-
-    /**
-     * Constellation-specific satellite id. For GLO can either be (100+FCN) where FCN is in [-7,+6]
-     * or the Slot ID in [1,28].
-     */
+    
+    /** Constellation-specific satellite id. For GLO can either be (100+FCN) where FCN
+      * is in [-7,+6] or the Slot ID in [1,28]. */
     public int satId;
-
+    
     /** Constellation ID to which the SV belongs */
     public int constellation;
+    
 
-    public SvId() {}
+    public SvId () {}
 
     @Override
     public SvId parse(SBPMessage.Parser parser) throws SBPBinaryException {

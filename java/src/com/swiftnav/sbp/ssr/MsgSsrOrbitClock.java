@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,89 +9,88 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.ssr;
 
 // This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
  *
- * <p>You can have MSG_SSR_ORBIT_CLOCK inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_SSR_ORBIT_CLOCK inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The precise orbit and clock correction message is to be applied as a delta correction to
- * broadcast ephemeris and is an equivalent to the 1060 /1066 RTCM message types.
- */
+ * The precise orbit and clock correction message is to be applied as a delta
+ * correction to broadcast ephemeris and is an equivalent to the 1060 /1066
+ * RTCM message types. */
+
 public class MsgSsrOrbitClock extends SBPMessage {
     public static final int TYPE = 0x05DD;
 
+    
     /** GNSS reference time of the correction */
     public GPSTimeSec time;
-
+    
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
-
-    /**
-     * Update interval between consecutive corrections. Encoded following RTCM DF391 specification.
-     */
+    
+    /** Update interval between consecutive corrections. Encoded following
+      * RTCM DF391 specification. */
     public int update_interval;
-
-    /**
-     * IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a change in the
-     * SSR generating configuration
-     */
+    
+    /** IOD of the SSR correction. A change of Issue Of Data SSR is used to
+      * indicate a change in the SSR generating configuration */
     public int iod_ssr;
-
+    
     /** Issue of broadcast ephemeris data or IODCRC (Beidou) */
     public long iod;
-
+    
     /** Orbit radial delta correction */
     public int radial;
-
+    
     /** Orbit along delta correction */
     public int along;
-
+    
     /** Orbit along delta correction */
     public int cross;
-
+    
     /** Velocity of orbit radial delta correction */
     public int dot_radial;
-
+    
     /** Velocity of orbit along delta correction */
     public int dot_along;
-
+    
     /** Velocity of orbit cross delta correction */
     public int dot_cross;
-
+    
     /** C0 polynomial coefficient for correction of broadcast satellite clock */
     public int c0;
-
+    
     /** C1 polynomial coefficient for correction of broadcast satellite clock */
     public int c1;
-
+    
     /** C2 polynomial coefficient for correction of broadcast satellite clock */
     public int c2;
+    
 
-    public MsgSsrOrbitClock(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgSsrOrbitClock() {
-        super(TYPE);
-    }
-
-    public MsgSsrOrbitClock(SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrOrbitClock (int sender) { super(sender, TYPE); }
+    public MsgSsrOrbitClock () { super(TYPE); }
+    public MsgSsrOrbitClock (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgSsrOrbitClock, expected 1501, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgSsrOrbitClock, expected 1501, actual " + msg.type);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class MsgSsrOrbitClock extends SBPMessage {
         dot_cross = parser.getS32();
         c0 = parser.getS32();
         c1 = parser.getS32();
-        c2 = parser.getS32();
+        c2 = parser.getS32(); 
     }
 
     @Override
@@ -127,7 +127,7 @@ public class MsgSsrOrbitClock extends SBPMessage {
         builder.putS32(dot_cross);
         builder.putS32(c0);
         builder.putS32(c1);
-        builder.putS32(c2);
+        builder.putS32(c2); 
     }
 
     @Override

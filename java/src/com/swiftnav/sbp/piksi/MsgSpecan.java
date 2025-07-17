@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,63 +9,63 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.piksi;
 
 // This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_SPECAN (0x0051).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_SPECAN (0x0051).
  *
- * <p>You can have MSG_SPECAN inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_SPECAN inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>Spectrum analyzer packet.
- */
+ * Spectrum analyzer packet. */
+
 public class MsgSpecan extends SBPMessage {
     public static final int TYPE = 0x0051;
 
+    
     /** Channel ID */
     public int channel_tag;
-
+    
     /** Receiver time of this observation */
     public GPSTime t;
-
+    
     /** Reference frequency of this packet */
     public float freq_ref;
-
+    
     /** Frequency step of points in this packet */
     public float freq_step;
-
+    
     /** Reference amplitude of this packet */
     public float amplitude_ref;
-
+    
     /** Amplitude unit value of points in this packet */
     public float amplitude_unit;
-
+    
     /** Amplitude values (in the above units) of points in this packet */
     public int[] amplitude_value;
+    
 
-    public MsgSpecan(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgSpecan() {
-        super(TYPE);
-    }
-
-    public MsgSpecan(SBPMessage msg) throws SBPBinaryException {
+    public MsgSpecan (int sender) { super(sender, TYPE); }
+    public MsgSpecan () { super(TYPE); }
+    public MsgSpecan (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgSpecan, expected 81, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgSpecan, expected 81, actual " + msg.type);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class MsgSpecan extends SBPMessage {
         freq_step = parser.getFloat();
         amplitude_ref = parser.getFloat();
         amplitude_unit = parser.getFloat();
-        amplitude_value = parser.getArrayofU8();
+        amplitude_value = parser.getArrayofU8(); 
     }
 
     @Override
@@ -87,7 +88,7 @@ public class MsgSpecan extends SBPMessage {
         builder.putFloat(freq_step);
         builder.putFloat(amplitude_ref);
         builder.putFloat(amplitude_unit);
-        builder.putArrayofU8(amplitude_value);
+        builder.putArrayofU8(amplitude_value); 
     }
 
     @Override

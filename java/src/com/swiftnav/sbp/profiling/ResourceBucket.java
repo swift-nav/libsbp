@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,47 +9,52 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.profiling;
 
 // This file was auto-generated from yaml/swiftnav/sbp/profiling.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class ResourceBucket extends SBPStruct {
-
+    
     /** Bucket name */
     public String name;
-
+    
     /** Number of threads */
     public int thread;
-
+    
     /** Number of mutexes */
     public int mutex;
-
+    
     /** Number of condition variables */
     public int cv;
-
+    
     /** Number of IO handles */
     public int io;
-
+    
     /** Number of bytes allocated on the heap */
     public long heap_bytes_alloc;
-
+    
     /** Number of bytes freed on the heap */
     public long heap_bytes_free;
-
+    
     /** Number of bytes written to IO handles */
     public long io_write;
-
+    
     /** Number of bytes read from IO handles */
     public long io_read;
+    
 
-    public ResourceBucket() {}
+    public ResourceBucket () {}
 
     @Override
     public ResourceBucket parse(SBPMessage.Parser parser) throws SBPBinaryException {

@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,17 +9,21 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/piksi/test_MsgReset.yaml by
-// generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/piksi/test_MsgReset.yaml by generate.py. Do not modify by hand!
 
+import java.math.BigInteger;
+
+import org.junit.Test;
+
+import org.json.JSONObject;
 
 import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.piksi.MsgReset;
-import java.math.BigInteger;
-import org.json.JSONObject;
-import org.junit.Test;
+
 
 public class auto_check_sbp_piksi_MsgResetTest {
 
@@ -27,21 +32,17 @@ public class auto_check_sbp_piksi_MsgResetTest {
 
     @Test
     public void test1() throws Throwable {
-        if (debug) System.out.format("%n%s%n", "auto_check_sbp_piksi_MsgResetTest.test1");
-        byte[] payload =
-                new byte[] {
-                    (byte) 88, (byte) 248, (byte) 238, (byte) 19,
-                };
-        SBPMessage sbp = new SBPMessage(0xd23f, 0xb6, payload);
-        MsgReset msg = new MsgReset(sbp);
+        if (debug)
+            System.out.format("%n%s%n", "auto_check_sbp_piksi_MsgResetTest.test1");
+        byte[] payload = new byte[] {(byte)88,(byte)248,(byte)238,(byte)19, };
+        SBPMessage sbp = new SBPMessage( 0xd23f, 0xb6, payload );
+        MsgReset msg = new MsgReset( sbp );
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
         value = msg.flags;
         if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.flags + "' != '" + 334428248 + "'",
-                    value.equals(BigInteger.valueOf(334428248L)));
+            org.junit.Assert.assertTrue("'" + msg.flags + "' != '" + 334428248 + "'", value.equals(BigInteger.valueOf( 334428248L ) ) );
         } else {
             value = value.longValue();
             expected = 334428248L;

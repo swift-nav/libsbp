@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,36 +9,41 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.ssr;
 
 // This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
+
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class BoundsHeader extends SBPStruct {
-
+    
     /** GNSS reference time of the bound */
     public GPSTimeSec time;
-
+    
     /** Number of messages in the dataset */
     public int num_msgs;
-
+    
     /** Position of this message in the dataset */
     public int seq_num;
-
+    
     /** Update interval between consecutive bounds. Similar to RTCM DF391. */
     public int update_interval;
-
+    
     /** SSR Solution ID. */
     public int sol_id;
+    
 
-    public BoundsHeader() {}
+    public BoundsHeader () {}
 
     @Override
     public BoundsHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {

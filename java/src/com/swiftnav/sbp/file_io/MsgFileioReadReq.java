@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,57 +9,59 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.file_io;
 
 // This file was auto-generated from yaml/swiftnav/sbp/file_io.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_FILEIO_READ_REQ (0x00A8).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_FILEIO_READ_REQ (0x00A8).
  *
- * <p>You can have MSG_FILEIO_READ_REQ inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_FILEIO_READ_REQ inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The file read message reads a certain length (up to 255 bytes) from a given offset into a
- * file, and returns the data in a MSG_FILEIO_READ_RESP message where the message length field
- * indicates how many bytes were successfully read. The sequence number in the request will be
- * returned in the response. If the message is invalid, a followup MSG_PRINT message will print
- * "Invalid fileio read message". A device will only respond to this message when it is received
- * from sender ID 0x42.
- */
+ * The file read message reads a certain length (up to 255 bytes) from a given
+ * offset into a file, and returns the data in a MSG_FILEIO_READ_RESP message
+ * where the message length field indicates how many bytes were successfully
+ * read. The sequence number in the request will be returned in the response.
+ * If the message is invalid, a followup MSG_PRINT message will print "Invalid
+ * fileio read message". A device will only respond to this message when it is
+ * received from sender ID 0x42. */
+
 public class MsgFileioReadReq extends SBPMessage {
     public static final int TYPE = 0x00A8;
 
+    
     /** Read sequence number */
     public long sequence;
-
+    
     /** File offset */
     public long offset;
-
+    
     /** Chunk size to read */
     public int chunk_size;
-
+    
     /** Name of the file to read from */
     public String filename;
+    
 
-    public MsgFileioReadReq(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgFileioReadReq() {
-        super(TYPE);
-    }
-
-    public MsgFileioReadReq(SBPMessage msg) throws SBPBinaryException {
+    public MsgFileioReadReq (int sender) { super(sender, TYPE); }
+    public MsgFileioReadReq () { super(TYPE); }
+    public MsgFileioReadReq (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgFileioReadReq, expected 168, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgFileioReadReq, expected 168, actual " + msg.type);
     }
 
     @Override
@@ -67,7 +70,7 @@ public class MsgFileioReadReq extends SBPMessage {
         sequence = parser.getU32();
         offset = parser.getU32();
         chunk_size = parser.getU8();
-        filename = parser.getString();
+        filename = parser.getString(); 
     }
 
     @Override
@@ -75,7 +78,7 @@ public class MsgFileioReadReq extends SBPMessage {
         builder.putU32(sequence);
         builder.putU32(offset);
         builder.putU8(chunk_size);
-        builder.putString(filename);
+        builder.putString(filename); 
     }
 
     @Override

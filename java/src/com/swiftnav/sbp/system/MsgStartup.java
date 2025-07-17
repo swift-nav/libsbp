@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,51 +9,52 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.system;
 
 // This file was auto-generated from yaml/swiftnav/sbp/system.yaml by generate.py.
 // Do not modify by hand!
 
+import java.math.BigInteger;
 
-import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
 
-/**
- * SBP class for message MSG_STARTUP (0xFF00).
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_STARTUP (0xFF00).
  *
- * <p>You can have MSG_STARTUP inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * You can have MSG_STARTUP inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
  *
- * <p>The system start-up message is sent once on system start-up. It notifies the host or other
- * attached devices that the system has started and is now ready to respond to commands or
- * configuration requests.
- */
+ * The system start-up message is sent once on system start-up. It notifies
+ * the host or other attached devices that the system has started and is now
+ * ready to respond to commands or configuration requests. */
+
 public class MsgStartup extends SBPMessage {
     public static final int TYPE = 0xFF00;
 
+    
     /** Cause of startup */
     public int cause;
-
+    
     /** Startup type */
     public int startup_type;
-
+    
     /** Reserved */
     public int reserved;
+    
 
-    public MsgStartup(int sender) {
-        super(sender, TYPE);
-    }
-
-    public MsgStartup() {
-        super(TYPE);
-    }
-
-    public MsgStartup(SBPMessage msg) throws SBPBinaryException {
+    public MsgStartup (int sender) { super(sender, TYPE); }
+    public MsgStartup () { super(TYPE); }
+    public MsgStartup (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
-            throw new SBPBinaryException(
-                    "Type mismatch for MsgStartup, expected 65280, actual " + msg.type);
+            throw new SBPBinaryException("Type mismatch for MsgStartup, expected 65280, actual " + msg.type);
     }
 
     @Override
@@ -60,14 +62,14 @@ public class MsgStartup extends SBPMessage {
         /* Parse fields from binary */
         cause = parser.getU8();
         startup_type = parser.getU8();
-        reserved = parser.getU16();
+        reserved = parser.getU16(); 
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU8(cause);
         builder.putU8(startup_type);
-        builder.putU16(reserved);
+        builder.putU16(reserved); 
     }
 
     @Override

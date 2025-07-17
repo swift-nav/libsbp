@@ -1,4 +1,5 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -8,17 +9,21 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/observation/test_MsgBasePosLLH.yaml by generate.py. Do not modify by
-// hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/observation/test_MsgBasePosLLH.yaml by generate.py. Do not modify by hand!
 
+import java.math.BigInteger;
+
+import org.junit.Test;
+
+import org.json.JSONObject;
 
 import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.observation.MsgBasePosLLH;
-import org.json.JSONObject;
-import org.junit.Test;
+
 
 public class auto_check_sbp_observation_MsgBasePosLLHTest {
 
@@ -29,15 +34,9 @@ public class auto_check_sbp_observation_MsgBasePosLLHTest {
     public void test1() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "auto_check_sbp_observation_MsgBasePosLLHTest.test1");
-        byte[] payload =
-                new byte[] {
-                    (byte) 225, (byte) 237, (byte) 238, (byte) 90, (byte) 42, (byte) 160, (byte) 66,
-                    (byte) 64, (byte) 59, (byte) 143, (byte) 70, (byte) 235, (byte) 0, (byte) 120,
-                    (byte) 94, (byte) 192, (byte) 51, (byte) 181, (byte) 124, (byte) 240, (byte) 65,
-                    (byte) 248, (byte) 66, (byte) 64,
-                };
-        SBPMessage sbp = new SBPMessage(0x007b, 0x44, payload);
-        MsgBasePosLLH msg = new MsgBasePosLLH(sbp);
+        byte[] payload = new byte[] {(byte)225,(byte)237,(byte)238,(byte)90,(byte)42,(byte)160,(byte)66,(byte)64,(byte)59,(byte)143,(byte)70,(byte)235,(byte)0,(byte)120,(byte)94,(byte)192,(byte)51,(byte)181,(byte)124,(byte)240,(byte)65,(byte)248,(byte)66,(byte)64, };
+        SBPMessage sbp = new SBPMessage( 0x007b, 0x44, payload );
+        MsgBasePosLLH msg = new MsgBasePosLLH( sbp );
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
