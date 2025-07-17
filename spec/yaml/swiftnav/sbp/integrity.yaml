@@ -202,9 +202,9 @@ definitions:
         - obs_time:
             type: GPSTimeSec
             desc: GNSS reference time of the observation used to generate the flag.
-        - atmo_corr_time:
+        - iono_corr_time:
             type: GPSTimeSec
-            desc: GNSS reference time of the atmospheric correction associated to the flag.
+            desc: GNSS reference time of the ionospheric correction associated to the flag.
         - sat_corr_time:
             type: GPSTimeSec
             desc: GNSS reference time of the satellite correction associated to the flag.
