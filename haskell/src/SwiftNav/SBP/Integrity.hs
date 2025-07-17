@@ -188,8 +188,8 @@ msgSsrFlagHighLevel = 0x0BBA
 data MsgSsrFlagHighLevel = MsgSsrFlagHighLevel
   { _msgSsrFlagHighLevel_obs_time                  :: !GpsTimeSec
     -- ^ GNSS reference time of the observation used to generate the flag.
-  , _msgSsrFlagHighLevel_atmo_corr_time            :: !GpsTimeSec
-    -- ^ GNSS reference time of the atmospheric correction associated to the
+  , _msgSsrFlagHighLevel_iono_corr_time            :: !GpsTimeSec
+    -- ^ GNSS reference time of the ionospheric correction associated to the
     -- flag.
   , _msgSsrFlagHighLevel_sat_corr_time             :: !GpsTimeSec
     -- ^ GNSS reference time of the satellite correction associated to the flag.
@@ -224,7 +224,7 @@ data MsgSsrFlagHighLevel = MsgSsrFlagHighLevel
 instance Binary MsgSsrFlagHighLevel where
   get = do
     _msgSsrFlagHighLevel_obs_time <- get
-    _msgSsrFlagHighLevel_atmo_corr_time <- get
+    _msgSsrFlagHighLevel_iono_corr_time <- get
     _msgSsrFlagHighLevel_sat_corr_time <- get
     _msgSsrFlagHighLevel_ssr_sol_id <- getWord8
     _msgSsrFlagHighLevel_tile_set_id <- getWord16le
@@ -243,7 +243,7 @@ instance Binary MsgSsrFlagHighLevel where
 
   put MsgSsrFlagHighLevel {..} = do
     put _msgSsrFlagHighLevel_obs_time
-    put _msgSsrFlagHighLevel_atmo_corr_time
+    put _msgSsrFlagHighLevel_iono_corr_time
     put _msgSsrFlagHighLevel_sat_corr_time
     putWord8 _msgSsrFlagHighLevel_ssr_sol_id
     putWord16le _msgSsrFlagHighLevel_tile_set_id

@@ -292,8 +292,8 @@ class MsgSsrFlagHighLevel(SBP):
     SBP parent object to inherit from.
   obs_time : GPSTimeSec
     GNSS reference time of the observation used to generate the flag.
-  atmo_corr_time : GPSTimeSec
-    GNSS reference time of the atmospheric correction associated to the flag.
+  iono_corr_time : GPSTimeSec
+    GNSS reference time of the ionospheric correction associated to the flag.
   sat_corr_time : GPSTimeSec
     GNSS reference time of the satellite correction associated to the flag.
   ssr_sol_id : int
@@ -328,7 +328,7 @@ class MsgSsrFlagHighLevel(SBP):
   """
   _parser = construct.Struct(
                    'obs_time' / GPSTimeSec._parser,
-                   'atmo_corr_time' / GPSTimeSec._parser,
+                   'iono_corr_time' / GPSTimeSec._parser,
                    'sat_corr_time' / GPSTimeSec._parser,
                    'ssr_sol_id' / construct.Int8ul,
                    'tile_set_id' / construct.Int16ul,
@@ -345,7 +345,7 @@ class MsgSsrFlagHighLevel(SBP):
                    'use_iono_grid_point_sat_los' / construct.Int8ul,)
   __slots__ = [
                'obs_time',
-               'atmo_corr_time',
+               'iono_corr_time',
                'sat_corr_time',
                'ssr_sol_id',
                'tile_set_id',
@@ -373,7 +373,7 @@ class MsgSsrFlagHighLevel(SBP):
       self.msg_type = SBP_MSG_SSR_FLAG_HIGH_LEVEL
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.obs_time = kwargs.pop('obs_time')
-      self.atmo_corr_time = kwargs.pop('atmo_corr_time')
+      self.iono_corr_time = kwargs.pop('iono_corr_time')
       self.sat_corr_time = kwargs.pop('sat_corr_time')
       self.ssr_sol_id = kwargs.pop('ssr_sol_id')
       self.tile_set_id = kwargs.pop('tile_set_id')

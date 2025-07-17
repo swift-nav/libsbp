@@ -889,10 +889,10 @@ pub mod msg_ssr_flag_high_level {
         /// GNSS reference time of the observation used to generate the flag.
         #[cfg_attr(feature = "serde", serde(rename = "obs_time"))]
         pub obs_time: GpsTimeSec,
-        /// GNSS reference time of the atmospheric correction associated to the
+        /// GNSS reference time of the ionospheric correction associated to the
         /// flag.
-        #[cfg_attr(feature = "serde", serde(rename = "atmo_corr_time"))]
-        pub atmo_corr_time: GpsTimeSec,
+        #[cfg_attr(feature = "serde", serde(rename = "iono_corr_time"))]
+        pub iono_corr_time: GpsTimeSec,
         /// GNSS reference time of the satellite correction associated to the flag.
         #[cfg_attr(feature = "serde", serde(rename = "sat_corr_time"))]
         pub sat_corr_time: GpsTimeSec,
@@ -1151,7 +1151,7 @@ pub mod msg_ssr_flag_high_level {
             + <u8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
             WireFormat::len(&self.obs_time)
-                + WireFormat::len(&self.atmo_corr_time)
+                + WireFormat::len(&self.iono_corr_time)
                 + WireFormat::len(&self.sat_corr_time)
                 + WireFormat::len(&self.ssr_sol_id)
                 + WireFormat::len(&self.tile_set_id)
@@ -1169,7 +1169,7 @@ pub mod msg_ssr_flag_high_level {
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
             WireFormat::write(&self.obs_time, buf);
-            WireFormat::write(&self.atmo_corr_time, buf);
+            WireFormat::write(&self.iono_corr_time, buf);
             WireFormat::write(&self.sat_corr_time, buf);
             WireFormat::write(&self.ssr_sol_id, buf);
             WireFormat::write(&self.tile_set_id, buf);
@@ -1189,7 +1189,7 @@ pub mod msg_ssr_flag_high_level {
             MsgSsrFlagHighLevel {
                 sender_id: None,
                 obs_time: WireFormat::parse_unchecked(buf),
-                atmo_corr_time: WireFormat::parse_unchecked(buf),
+                iono_corr_time: WireFormat::parse_unchecked(buf),
                 sat_corr_time: WireFormat::parse_unchecked(buf),
                 ssr_sol_id: WireFormat::parse_unchecked(buf),
                 tile_set_id: WireFormat::parse_unchecked(buf),

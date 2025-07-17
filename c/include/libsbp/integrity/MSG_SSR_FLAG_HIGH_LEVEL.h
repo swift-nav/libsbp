@@ -72,9 +72,9 @@ typedef struct {
   sbp_gps_time_sec_t obs_time;
 
   /**
-   * GNSS reference time of the atmospheric correction associated to the flag.
+   * GNSS reference time of the ionospheric correction associated to the flag.
    */
-  sbp_gps_time_sec_t atmo_corr_time;
+  sbp_gps_time_sec_t iono_corr_time;
 
   /**
    * GNSS reference time of the satellite correction associated to the flag.

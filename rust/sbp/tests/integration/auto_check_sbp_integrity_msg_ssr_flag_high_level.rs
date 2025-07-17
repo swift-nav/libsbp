@@ -37,8 +37,8 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
             sbp::messages::Sbp::MsgSsrFlagHighLevel(msg) => {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg_type, 3001,
-                    "Incorrect message type, expected 3001, is {msg_type}"
+                    msg_type, 3002,
+                    "Incorrect message type, expected 3002, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -203,8 +203,8 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
             sbp::messages::Sbp::MsgSsrFlagHighLevel(msg) => {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg_type, 3001,
-                    "Incorrect message type, expected 3001, is {msg_type}"
+                    msg_type, 3002,
+                    "Incorrect message type, expected 3002, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -377,8 +377,8 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
             sbp::messages::Sbp::MsgSsrFlagHighLevel(msg) => {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg_type, 3001,
-                    "Incorrect message type, expected 3001, is {msg_type}"
+                    msg_type, 3002,
+                    "Incorrect message type, expected 3002, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
