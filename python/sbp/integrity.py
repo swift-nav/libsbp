@@ -86,40 +86,16 @@ class IntegritySSRHeader(object):
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
-SBP_MSG_SSR_FLAG_HIGH_LEVEL = 0x0BB9
-class MsgSsrFlagHighLevel(SBP):
-  """SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BB9).
+SBP_MSG_SSR_FLAG_HIGH_LEVEL_DEP_A = 0x0BB9
+class MsgSsrFlagHighLevelDepA(SBP):
+  """SBP class for message MSG_SSR_FLAG_HIGH_LEVEL_DEP_A (0x0BB9).
 
-  You can have MSG_SSR_FLAG_HIGH_LEVEL inherit its fields directly
+  You can have MSG_SSR_FLAG_HIGH_LEVEL_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  Integrity monitoring flags for multiple aggregated elements. An element
-  could be a satellite, SSR grid point, or SSR tile. A group of aggregated
-  elements being monitored for integrity could refer to:
-
-  - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
-
-  - Satellites in the line-of-sight of a particular SSR tile.
-
-  - Satellites in the line-of-sight of a particular SSR grid point.
-
-  The integrity usage for a group of aggregated elements varies according to
-  the integrity flag of the satellites comprising that group.
-
-  SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity
-  check and have flag INTEGRITY_FLAG_OK.
-
-  SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group
-  failed the integrity check. Refer to more granular integrity messages for
-  details on the specific failing elements.
-
-  SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity
-  check, do not use for positioning.
-
-  SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of
-  elements in the group.
+  Deprecated.
 
   Parameters
   ----------
@@ -195,6 +171,199 @@ class MsgSsrFlagHighLevel(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
+      super( MsgSsrFlagHighLevelDepA,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrFlagHighLevelDepA, self).__init__()
+      self.msg_type = SBP_MSG_SSR_FLAG_HIGH_LEVEL_DEP_A
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.obs_time = kwargs.pop('obs_time')
+      self.corr_time = kwargs.pop('corr_time')
+      self.ssr_sol_id = kwargs.pop('ssr_sol_id')
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
+      self.chain_id = kwargs.pop('chain_id')
+      self.use_gps_sat = kwargs.pop('use_gps_sat')
+      self.use_gal_sat = kwargs.pop('use_gal_sat')
+      self.use_bds_sat = kwargs.pop('use_bds_sat')
+      self.use_qzss_sat = kwargs.pop('use_qzss_sat')
+      self.reserved = kwargs.pop('reserved')
+      self.use_tropo_grid_points = kwargs.pop('use_tropo_grid_points')
+      self.use_iono_grid_points = kwargs.pop('use_iono_grid_points')
+      self.use_iono_tile_sat_los = kwargs.pop('use_iono_tile_sat_los')
+      self.use_iono_grid_point_sat_los = kwargs.pop('use_iono_grid_point_sat_los')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrFlagHighLevelDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrFlagHighLevelDepA(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrFlagHighLevelDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrFlagHighLevelDepA._parser.build(c)
+    return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR FLAG HIGH LEVEL DEP A"
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrFlagHighLevelDepA._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrFlagHighLevelDepA, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_FLAG_HIGH_LEVEL = 0x0BBA
+class MsgSsrFlagHighLevel(SBP):
+  """SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BBA).
+
+  You can have MSG_SSR_FLAG_HIGH_LEVEL inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Integrity monitoring flags for multiple aggregated elements. An element
+  could be a satellite, SSR grid point, or SSR tile. A group of aggregated
+  elements being monitored for integrity could refer to:
+
+  - Satellites in a particular {GPS, GAL, BDS, QZSS} constellation.
+
+  - Satellites in the line-of-sight of a particular SSR tile.
+
+  - Satellites in the line-of-sight of a particular SSR grid point.
+
+  The integrity usage for a group of aggregated elements varies according to
+  the integrity flag of the satellites comprising that group.
+
+  SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity
+  check and have flag INTEGRITY_FLAG_OK.
+
+  SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group
+  failed the integrity check. Refer to more granular integrity messages for
+  details on the specific failing elements.
+
+  SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity
+  check, do not use for positioning.
+
+  SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of
+  elements in the group.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  obs_time : GPSTimeSec
+    GNSS reference time of the observation used to generate the flag.
+  iono_corr_time : GPSTimeSec
+    GNSS reference time of the ionospheric correction associated to the flag.
+  sat_corr_time : GPSTimeSec
+    GNSS reference time of the satellite correction associated to the flag.
+  ssr_sol_id : int
+    SSR Solution ID.
+  tile_set_id : int
+    Unique identifier of the set this tile belongs to.
+  tile_id : int
+    Unique identifier of this tile in the tile set.
+  chain_id : int
+    Chain and type of flag.
+  use_gps_sat : int
+    Use GPS satellites.
+  use_gal_sat : int
+    Use GAL satellites.
+  use_bds_sat : int
+    Use BDS satellites.
+  use_qzss_sat : int
+    Use QZSS satellites.
+  reserved : array
+    Reserved
+  use_tropo_grid_points : int
+    Use tropo grid points.
+  use_iono_grid_points : int
+    Use iono grid points.
+  use_iono_tile_sat_los : int
+    Use iono tile satellite LoS.
+  use_iono_grid_point_sat_los : int
+    Use iono grid point satellite LoS.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'obs_time' / GPSTimeSec._parser,
+                   'iono_corr_time' / GPSTimeSec._parser,
+                   'sat_corr_time' / GPSTimeSec._parser,
+                   'ssr_sol_id' / construct.Int8ul,
+                   'tile_set_id' / construct.Int16ul,
+                   'tile_id' / construct.Int16ul,
+                   'chain_id' / construct.Int8ul,
+                   'use_gps_sat' / construct.Int8ul,
+                   'use_gal_sat' / construct.Int8ul,
+                   'use_bds_sat' / construct.Int8ul,
+                   'use_qzss_sat' / construct.Int8ul,
+                   'reserved' / construct.Array(5, construct.Int8ul),
+                   'use_tropo_grid_points' / construct.Int8ul,
+                   'use_iono_grid_points' / construct.Int8ul,
+                   'use_iono_tile_sat_los' / construct.Int8ul,
+                   'use_iono_grid_point_sat_los' / construct.Int8ul,)
+  __slots__ = [
+               'obs_time',
+               'iono_corr_time',
+               'sat_corr_time',
+               'ssr_sol_id',
+               'tile_set_id',
+               'tile_id',
+               'chain_id',
+               'use_gps_sat',
+               'use_gal_sat',
+               'use_bds_sat',
+               'use_qzss_sat',
+               'reserved',
+               'use_tropo_grid_points',
+               'use_iono_grid_points',
+               'use_iono_tile_sat_los',
+               'use_iono_grid_point_sat_los',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
       super( MsgSsrFlagHighLevel,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
@@ -204,7 +373,8 @@ class MsgSsrFlagHighLevel(SBP):
       self.msg_type = SBP_MSG_SSR_FLAG_HIGH_LEVEL
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.obs_time = kwargs.pop('obs_time')
-      self.corr_time = kwargs.pop('corr_time')
+      self.iono_corr_time = kwargs.pop('iono_corr_time')
+      self.sat_corr_time = kwargs.pop('sat_corr_time')
       self.ssr_sol_id = kwargs.pop('ssr_sol_id')
       self.tile_set_id = kwargs.pop('tile_set_id')
       self.tile_id = kwargs.pop('tile_id')
@@ -949,7 +1119,8 @@ class MsgAcknowledge(SBP):
     
 
 msg_classes = {
-  0x0BB9: MsgSsrFlagHighLevel,
+  0x0BB9: MsgSsrFlagHighLevelDepA,
+  0x0BBA: MsgSsrFlagHighLevel,
   0x0BBD: MsgSsrFlagSatellites,
   0x0BC3: MsgSsrFlagTropoGridPoints,
   0x0BC7: MsgSsrFlagIonoGridPoints,

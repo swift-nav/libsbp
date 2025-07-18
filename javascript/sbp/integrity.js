@@ -74,7 +74,76 @@ IntegritySSRHeader.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
 IntegritySSRHeader.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
 
 /**
- * SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BB9).
+ * SBP class for message MSG_SSR_FLAG_HIGH_LEVEL_DEP_A (0x0BB9).
+ *
+ * Deprecated.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field obs_time GPSTimeSec GNSS reference time of the observation used to generate the flag.
+ * @field corr_time GPSTimeSec GNSS reference time of the correction associated to the flag.
+ * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the set this tile belongs to.
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
+ * @field chain_id number (unsigned 8-bit int, 1 byte) Chain and type of flag.
+ * @field use_gps_sat number (unsigned 8-bit int, 1 byte) Use GPS satellites.
+ * @field use_gal_sat number (unsigned 8-bit int, 1 byte) Use GAL satellites.
+ * @field use_bds_sat number (unsigned 8-bit int, 1 byte) Use BDS satellites.
+ * @field use_qzss_sat number (unsigned 8-bit int, 1 byte) Use QZSS satellites.
+ * @field reserved array Reserved
+ * @field use_tropo_grid_points number (unsigned 8-bit int, 1 byte) Use tropo grid points.
+ * @field use_iono_grid_points number (unsigned 8-bit int, 1 byte) Use iono grid points.
+ * @field use_iono_tile_sat_los number (unsigned 8-bit int, 1 byte) Use iono tile satellite LoS.
+ * @field use_iono_grid_point_sat_los number (unsigned 8-bit int, 1 byte) Use iono grid point satellite LoS.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let MsgSsrFlagHighLevelDepA = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_FLAG_HIGH_LEVEL_DEP_A";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrFlagHighLevelDepA.prototype = Object.create(SBP.prototype);
+MsgSsrFlagHighLevelDepA.prototype.messageType = "MSG_SSR_FLAG_HIGH_LEVEL_DEP_A";
+MsgSsrFlagHighLevelDepA.prototype.msg_type = 0x0BB9;
+MsgSsrFlagHighLevelDepA.prototype.constructor = MsgSsrFlagHighLevelDepA;
+MsgSsrFlagHighLevelDepA.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('obs_time', { type: GPSTimeSec.prototype.parser })
+  .nest('corr_time', { type: GPSTimeSec.prototype.parser })
+  .uint8('ssr_sol_id')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
+  .uint8('chain_id')
+  .uint8('use_gps_sat')
+  .uint8('use_gal_sat')
+  .uint8('use_bds_sat')
+  .uint8('use_qzss_sat')
+  .array('reserved', { length: 5, type: 'uint8' })
+  .uint8('use_tropo_grid_points')
+  .uint8('use_iono_grid_points')
+  .uint8('use_iono_tile_sat_los')
+  .uint8('use_iono_grid_point_sat_los');
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec = [];
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['obs_time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['corr_time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['use_gps_sat', 'writeUInt8', 1]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['use_gal_sat', 'writeUInt8', 1]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['use_bds_sat', 'writeUInt8', 1]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['use_qzss_sat', 'writeUInt8', 1]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['reserved', 'array', 'writeUInt8', function () { return 1; }, 5]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['use_tropo_grid_points', 'writeUInt8', 1]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['use_iono_grid_points', 'writeUInt8', 1]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['use_iono_tile_sat_los', 'writeUInt8', 1]);
+MsgSsrFlagHighLevelDepA.prototype.fieldSpec.push(['use_iono_grid_point_sat_los', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BBA).
  *
  * Integrity monitoring flags for multiple aggregated elements. An element could be
  * a satellite, SSR grid point, or SSR tile. A group of aggregated elements being
@@ -93,7 +162,8 @@ IntegritySSRHeader.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field obs_time GPSTimeSec GNSS reference time of the observation used to generate the flag.
- * @field corr_time GPSTimeSec GNSS reference time of the correction associated to the flag.
+ * @field iono_corr_time GPSTimeSec GNSS reference time of the ionospheric correction associated to the flag.
+ * @field sat_corr_time GPSTimeSec GNSS reference time of the satellite correction associated to the flag.
  * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
  * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the set this tile belongs to.
  * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
@@ -119,12 +189,13 @@ let MsgSsrFlagHighLevel = function (sbp, fields) {
 };
 MsgSsrFlagHighLevel.prototype = Object.create(SBP.prototype);
 MsgSsrFlagHighLevel.prototype.messageType = "MSG_SSR_FLAG_HIGH_LEVEL";
-MsgSsrFlagHighLevel.prototype.msg_type = 0x0BB9;
+MsgSsrFlagHighLevel.prototype.msg_type = 0x0BBA;
 MsgSsrFlagHighLevel.prototype.constructor = MsgSsrFlagHighLevel;
 MsgSsrFlagHighLevel.prototype.parser = new Parser()
   .endianess('little')
   .nest('obs_time', { type: GPSTimeSec.prototype.parser })
-  .nest('corr_time', { type: GPSTimeSec.prototype.parser })
+  .nest('iono_corr_time', { type: GPSTimeSec.prototype.parser })
+  .nest('sat_corr_time', { type: GPSTimeSec.prototype.parser })
   .uint8('ssr_sol_id')
   .uint16('tile_set_id')
   .uint16('tile_id')
@@ -140,7 +211,8 @@ MsgSsrFlagHighLevel.prototype.parser = new Parser()
   .uint8('use_iono_grid_point_sat_los');
 MsgSsrFlagHighLevel.prototype.fieldSpec = [];
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['obs_time', GPSTimeSec.prototype.fieldSpec]);
-MsgSsrFlagHighLevel.prototype.fieldSpec.push(['corr_time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrFlagHighLevel.prototype.fieldSpec.push(['iono_corr_time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrFlagHighLevel.prototype.fieldSpec.push(['sat_corr_time', GPSTimeSec.prototype.fieldSpec]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
 MsgSsrFlagHighLevel.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
@@ -379,7 +451,9 @@ MsgAcknowledge.prototype.fieldSpec.push(['solution_id', 'writeUInt8', 1]);
 
 module.exports = {
   IntegritySSRHeader: IntegritySSRHeader,
-  0x0BB9: MsgSsrFlagHighLevel,
+  0x0BB9: MsgSsrFlagHighLevelDepA,
+  MsgSsrFlagHighLevelDepA: MsgSsrFlagHighLevelDepA,
+  0x0BBA: MsgSsrFlagHighLevel,
   MsgSsrFlagHighLevel: MsgSsrFlagHighLevel,
   0x0BBD: MsgSsrFlagSatellites,
   MsgSsrFlagSatellites: MsgSsrFlagSatellites,

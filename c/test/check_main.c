@@ -63,6 +63,8 @@ int main(void) {
   srunner_add_suite(sr, auto_check_sbp_imu_MsgImuRaw_suite());
   srunner_add_suite(sr, auto_check_sbp_integrity_MsgAcknowledge_suite());
   srunner_add_suite(sr, auto_check_sbp_integrity_MsgSsrFlagHighLevel_suite());
+  srunner_add_suite(sr,
+                    auto_check_sbp_integrity_MsgSsrFlagHighLevelDepA_suite());
   srunner_add_suite(
       sr, auto_check_sbp_integrity_MsgSsrFlagIonoGridPointSatLos_suite());
   srunner_add_suite(sr,

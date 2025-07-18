@@ -51,6 +51,73 @@ types:
           Chain and type of flag.
         type: u1
   
+  msg_ssr_flag_high_level_dep_a:
+    doc: |
+      Deprecated.
+    seq:
+      - id: obs_time
+        doc: |
+          GNSS reference time of the observation used to generate the flag.
+        type: gnss::gps_time_sec
+      - id: corr_time
+        doc: |
+          GNSS reference time of the correction associated to the flag.
+        type: gnss::gps_time_sec
+      - id: ssr_sol_id
+        doc: |
+          SSR Solution ID.
+        type: u1
+      - id: tile_set_id
+        doc: |
+          Unique identifier of the set this tile belongs to.
+        type: u2
+      - id: tile_id
+        doc: |
+          Unique identifier of this tile in the tile set.
+        type: u2
+      - id: chain_id
+        doc: |
+          Chain and type of flag.
+        type: u1
+      - id: use_gps_sat
+        doc: |
+          Use GPS satellites.
+        type: u1
+      - id: use_gal_sat
+        doc: |
+          Use GAL satellites.
+        type: u1
+      - id: use_bds_sat
+        doc: |
+          Use BDS satellites.
+        type: u1
+      - id: use_qzss_sat
+        doc: |
+          Use QZSS satellites.
+        type: u1
+      - id: reserved
+        doc: |
+          Reserved
+        type: u1
+        repeat: expr
+        repeat-expr: 5
+      - id: use_tropo_grid_points
+        doc: |
+          Use tropo grid points.
+        type: u1
+      - id: use_iono_grid_points
+        doc: |
+          Use iono grid points.
+        type: u1
+      - id: use_iono_tile_sat_los
+        doc: |
+          Use iono tile satellite LoS.
+        type: u1
+      - id: use_iono_grid_point_sat_los
+        doc: |
+          Use iono grid point satellite LoS.
+        type: u1
+  
   msg_ssr_flag_high_level:
     doc: |
       Integrity monitoring flags for multiple aggregated elements. An element
@@ -83,9 +150,15 @@ types:
         doc: |
           GNSS reference time of the observation used to generate the flag.
         type: gnss::gps_time_sec
-      - id: corr_time
+      - id: iono_corr_time
         doc: |
-          GNSS reference time of the correction associated to the flag.
+          GNSS reference time of the ionospheric correction associated to the
+          flag.
+        type: gnss::gps_time_sec
+      - id: sat_corr_time
+        doc: |
+          GNSS reference time of the satellite correction associated to the
+          flag.
         type: gnss::gps_time_sec
       - id: ssr_sol_id
         doc: |
