@@ -22,6 +22,11 @@ jobs:
         with:
           java-version: "11"
           distribution: "temurin"
+      - name: Update apt and install unzip
+        run: |
+          apt-get update
+          apt-get install -y unzip
+        shell: bash
       - uses: gradle/gradle-build-action@v3
         with:
           gradle-version: 7.1.1
