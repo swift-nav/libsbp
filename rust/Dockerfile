@@ -9,11 +9,11 @@ ARG SCCACHE_URL=https://github.com/mozilla/sccache/releases/download/${SCCACHE_F
 ENV SCCACHE_CACHE_SIZE=100G
 ENV SCCACHE_DIR=/opt/sccache
 
-RUN mkdir -p "$SCCACHE_DIR"
+RUN mkdir -p $SCCACHE_DIR
 
 RUN \
-   apt-get update \
-   && apt-get install -y build-essential curl libssl-dev make musl-tools pkg-config \
+      apt-get update \
+   && apt-get install -y libssl-dev pkg-config curl build-essential make musl-tools \
    && curl -sSL -o /tmp/sccache.tgz "${SCCACHE_URL}" \
    && mkdir /tmp/sccache \
    && tar --strip-components=1 -C /tmp/sccache -xzf /tmp/sccache.tgz \
