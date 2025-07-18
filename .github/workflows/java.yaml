@@ -15,6 +15,7 @@ jobs:
   tests-java-1_8:
     name: Test
     runs-on: ubuntu-24.04
+    container: ubuntu:20.04
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/gradle-build-action@v3
