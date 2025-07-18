@@ -234,7 +234,8 @@ our $MSG_IDS_MSG_MAG_RAW = 2306;
 our $MSG_IDS_MSG_ODOMETRY = 2307;
 our $MSG_IDS_MSG_WHEELTICK = 2308;
 our $MSG_IDS_MSG_IMU_COMP = 2309;
-our $MSG_IDS_MSG_SSR_FLAG_HIGH_LEVEL = 3001;
+our $MSG_IDS_MSG_SSR_FLAG_HIGH_LEVEL_DEP_A = 3001;
+our $MSG_IDS_MSG_SSR_FLAG_HIGH_LEVEL = 3002;
 our $MSG_IDS_MSG_SSR_FLAG_SATELLITES = 3005;
 our $MSG_IDS_MSG_SSR_FLAG_TROPO_GRID_POINTS = 3011;
 our $MSG_IDS_MSG_SSR_FLAG_IONO_GRID_POINTS = 3015;
@@ -1510,7 +1511,7 @@ sub _read {
     elsif ($_on == 3001) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
-        $self->{payload} = Integrity::MsgSsrFlagHighLevel->new($io__raw_payload, $self, $self->{_root});
+        $self->{payload} = Integrity::MsgSsrFlagHighLevelDepA->new($io__raw_payload, $self, $self->{_root});
     }
     elsif ($_on == 30) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
@@ -1541,6 +1542,11 @@ sub _read {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Bootload::MsgNapDeviceDnaReq->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 3002) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Integrity::MsgSsrFlagHighLevel->new($io__raw_payload, $self, $self->{_root});
     }
     else {
         $self->{payload} = $self->{_io}->read_bytes($self->length());

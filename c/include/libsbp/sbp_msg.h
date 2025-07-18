@@ -237,6 +237,7 @@ typedef union {
   sbp_msg_specan_t specan;
   sbp_msg_ssr_code_biases_t ssr_code_biases;
   sbp_msg_ssr_code_phase_biases_bounds_t ssr_code_phase_biases_bounds;
+  sbp_msg_ssr_flag_high_level_dep_a_t ssr_flag_high_level_dep_a;
   sbp_msg_ssr_flag_high_level_t ssr_flag_high_level;
   sbp_msg_ssr_flag_iono_grid_point_sat_los_t ssr_flag_iono_grid_point_sat_los;
   sbp_msg_ssr_flag_iono_grid_points_t ssr_flag_iono_grid_points;
@@ -800,6 +801,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSsrCodePhaseBiasesBounds:
       return sbp_msg_ssr_code_phase_biases_bounds_encode(
           buf, len, n_written, &msg->ssr_code_phase_biases_bounds);
+    case SbpMsgSsrFlagHighLevelDepA:
+      return sbp_msg_ssr_flag_high_level_dep_a_encode(
+          buf, len, n_written, &msg->ssr_flag_high_level_dep_a);
     case SbpMsgSsrFlagHighLevel:
       return sbp_msg_ssr_flag_high_level_encode(buf, len, n_written,
                                                 &msg->ssr_flag_high_level);
@@ -1469,6 +1473,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSsrCodePhaseBiasesBounds:
       return sbp_msg_ssr_code_phase_biases_bounds_decode(
           buf, len, n_read, &msg->ssr_code_phase_biases_bounds);
+    case SbpMsgSsrFlagHighLevelDepA:
+      return sbp_msg_ssr_flag_high_level_dep_a_decode(
+          buf, len, n_read, &msg->ssr_flag_high_level_dep_a);
     case SbpMsgSsrFlagHighLevel:
       return sbp_msg_ssr_flag_high_level_decode(buf, len, n_read,
                                                 &msg->ssr_flag_high_level);
@@ -2045,6 +2052,9 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
     case SbpMsgSsrCodePhaseBiasesBounds:
       return sbp_msg_ssr_code_phase_biases_bounds_encoded_len(
           &msg->ssr_code_phase_biases_bounds);
+    case SbpMsgSsrFlagHighLevelDepA:
+      return sbp_msg_ssr_flag_high_level_dep_a_encoded_len(
+          &msg->ssr_flag_high_level_dep_a);
     case SbpMsgSsrFlagHighLevel:
       return sbp_msg_ssr_flag_high_level_encoded_len(&msg->ssr_flag_high_level);
     case SbpMsgSsrFlagIonoGridPointSatLos:
@@ -2659,6 +2669,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSsrCodePhaseBiasesBounds:
       return sbp_msg_ssr_code_phase_biases_bounds_cmp(
           &a->ssr_code_phase_biases_bounds, &b->ssr_code_phase_biases_bounds);
+    case SbpMsgSsrFlagHighLevelDepA:
+      return sbp_msg_ssr_flag_high_level_dep_a_cmp(
+          &a->ssr_flag_high_level_dep_a, &b->ssr_flag_high_level_dep_a);
     case SbpMsgSsrFlagHighLevel:
       return sbp_msg_ssr_flag_high_level_cmp(&a->ssr_flag_high_level,
                                              &b->ssr_flag_high_level);

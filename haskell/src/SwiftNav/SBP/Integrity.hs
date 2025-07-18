@@ -76,10 +76,89 @@ instance Binary IntegritySSRHeader where
 $(makeJSON "_integritySSRHeader_" ''IntegritySSRHeader)
 $(makeLenses ''IntegritySSRHeader)
 
-msgSsrFlagHighLevel :: Word16
-msgSsrFlagHighLevel = 0x0BB9
+msgSsrFlagHighLevelDepA :: Word16
+msgSsrFlagHighLevelDepA = 0x0BB9
 
--- | SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BB9).
+-- | SBP class for message MSG_SSR_FLAG_HIGH_LEVEL_DEP_A (0x0BB9).
+--
+-- Deprecated.
+data MsgSsrFlagHighLevelDepA = MsgSsrFlagHighLevelDepA
+  { _msgSsrFlagHighLevelDepA_obs_time                  :: !GpsTimeSec
+    -- ^ GNSS reference time of the observation used to generate the flag.
+  , _msgSsrFlagHighLevelDepA_corr_time                 :: !GpsTimeSec
+    -- ^ GNSS reference time of the correction associated to the flag.
+  , _msgSsrFlagHighLevelDepA_ssr_sol_id                :: !Word8
+    -- ^ SSR Solution ID.
+  , _msgSsrFlagHighLevelDepA_tile_set_id               :: !Word16
+    -- ^ Unique identifier of the set this tile belongs to.
+  , _msgSsrFlagHighLevelDepA_tile_id                   :: !Word16
+    -- ^ Unique identifier of this tile in the tile set.
+  , _msgSsrFlagHighLevelDepA_chain_id                  :: !Word8
+    -- ^ Chain and type of flag.
+  , _msgSsrFlagHighLevelDepA_use_gps_sat               :: !Word8
+    -- ^ Use GPS satellites.
+  , _msgSsrFlagHighLevelDepA_use_gal_sat               :: !Word8
+    -- ^ Use GAL satellites.
+  , _msgSsrFlagHighLevelDepA_use_bds_sat               :: !Word8
+    -- ^ Use BDS satellites.
+  , _msgSsrFlagHighLevelDepA_use_qzss_sat              :: !Word8
+    -- ^ Use QZSS satellites.
+  , _msgSsrFlagHighLevelDepA_reserved                  :: ![Word8]
+    -- ^ Reserved
+  , _msgSsrFlagHighLevelDepA_use_tropo_grid_points     :: !Word8
+    -- ^ Use tropo grid points.
+  , _msgSsrFlagHighLevelDepA_use_iono_grid_points      :: !Word8
+    -- ^ Use iono grid points.
+  , _msgSsrFlagHighLevelDepA_use_iono_tile_sat_los     :: !Word8
+    -- ^ Use iono tile satellite LoS.
+  , _msgSsrFlagHighLevelDepA_use_iono_grid_point_sat_los :: !Word8
+    -- ^ Use iono grid point satellite LoS.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrFlagHighLevelDepA where
+  get = do
+    _msgSsrFlagHighLevelDepA_obs_time <- get
+    _msgSsrFlagHighLevelDepA_corr_time <- get
+    _msgSsrFlagHighLevelDepA_ssr_sol_id <- getWord8
+    _msgSsrFlagHighLevelDepA_tile_set_id <- getWord16le
+    _msgSsrFlagHighLevelDepA_tile_id <- getWord16le
+    _msgSsrFlagHighLevelDepA_chain_id <- getWord8
+    _msgSsrFlagHighLevelDepA_use_gps_sat <- getWord8
+    _msgSsrFlagHighLevelDepA_use_gal_sat <- getWord8
+    _msgSsrFlagHighLevelDepA_use_bds_sat <- getWord8
+    _msgSsrFlagHighLevelDepA_use_qzss_sat <- getWord8
+    _msgSsrFlagHighLevelDepA_reserved <- replicateM 5 getWord8
+    _msgSsrFlagHighLevelDepA_use_tropo_grid_points <- getWord8
+    _msgSsrFlagHighLevelDepA_use_iono_grid_points <- getWord8
+    _msgSsrFlagHighLevelDepA_use_iono_tile_sat_los <- getWord8
+    _msgSsrFlagHighLevelDepA_use_iono_grid_point_sat_los <- getWord8
+    pure MsgSsrFlagHighLevelDepA {..}
+
+  put MsgSsrFlagHighLevelDepA {..} = do
+    put _msgSsrFlagHighLevelDepA_obs_time
+    put _msgSsrFlagHighLevelDepA_corr_time
+    putWord8 _msgSsrFlagHighLevelDepA_ssr_sol_id
+    putWord16le _msgSsrFlagHighLevelDepA_tile_set_id
+    putWord16le _msgSsrFlagHighLevelDepA_tile_id
+    putWord8 _msgSsrFlagHighLevelDepA_chain_id
+    putWord8 _msgSsrFlagHighLevelDepA_use_gps_sat
+    putWord8 _msgSsrFlagHighLevelDepA_use_gal_sat
+    putWord8 _msgSsrFlagHighLevelDepA_use_bds_sat
+    putWord8 _msgSsrFlagHighLevelDepA_use_qzss_sat
+    mapM_ putWord8 _msgSsrFlagHighLevelDepA_reserved
+    putWord8 _msgSsrFlagHighLevelDepA_use_tropo_grid_points
+    putWord8 _msgSsrFlagHighLevelDepA_use_iono_grid_points
+    putWord8 _msgSsrFlagHighLevelDepA_use_iono_tile_sat_los
+    putWord8 _msgSsrFlagHighLevelDepA_use_iono_grid_point_sat_los
+
+$(makeSBP 'msgSsrFlagHighLevelDepA ''MsgSsrFlagHighLevelDepA)
+$(makeJSON "_msgSsrFlagHighLevelDepA_" ''MsgSsrFlagHighLevelDepA)
+$(makeLenses ''MsgSsrFlagHighLevelDepA)
+
+msgSsrFlagHighLevel :: Word16
+msgSsrFlagHighLevel = 0x0BBA
+
+-- | SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BBA).
 --
 -- Integrity monitoring flags for multiple aggregated elements. An element
 -- could be a satellite, SSR grid point, or SSR tile. A group of aggregated
@@ -109,8 +188,11 @@ msgSsrFlagHighLevel = 0x0BB9
 data MsgSsrFlagHighLevel = MsgSsrFlagHighLevel
   { _msgSsrFlagHighLevel_obs_time                  :: !GpsTimeSec
     -- ^ GNSS reference time of the observation used to generate the flag.
-  , _msgSsrFlagHighLevel_corr_time                 :: !GpsTimeSec
-    -- ^ GNSS reference time of the correction associated to the flag.
+  , _msgSsrFlagHighLevel_iono_corr_time            :: !GpsTimeSec
+    -- ^ GNSS reference time of the ionospheric correction associated to the
+    -- flag.
+  , _msgSsrFlagHighLevel_sat_corr_time             :: !GpsTimeSec
+    -- ^ GNSS reference time of the satellite correction associated to the flag.
   , _msgSsrFlagHighLevel_ssr_sol_id                :: !Word8
     -- ^ SSR Solution ID.
   , _msgSsrFlagHighLevel_tile_set_id               :: !Word16
@@ -142,7 +224,8 @@ data MsgSsrFlagHighLevel = MsgSsrFlagHighLevel
 instance Binary MsgSsrFlagHighLevel where
   get = do
     _msgSsrFlagHighLevel_obs_time <- get
-    _msgSsrFlagHighLevel_corr_time <- get
+    _msgSsrFlagHighLevel_iono_corr_time <- get
+    _msgSsrFlagHighLevel_sat_corr_time <- get
     _msgSsrFlagHighLevel_ssr_sol_id <- getWord8
     _msgSsrFlagHighLevel_tile_set_id <- getWord16le
     _msgSsrFlagHighLevel_tile_id <- getWord16le
@@ -160,7 +243,8 @@ instance Binary MsgSsrFlagHighLevel where
 
   put MsgSsrFlagHighLevel {..} = do
     put _msgSsrFlagHighLevel_obs_time
-    put _msgSsrFlagHighLevel_corr_time
+    put _msgSsrFlagHighLevel_iono_corr_time
+    put _msgSsrFlagHighLevel_sat_corr_time
     putWord8 _msgSsrFlagHighLevel_ssr_sol_id
     putWord16le _msgSsrFlagHighLevel_tile_set_id
     putWord16le _msgSsrFlagHighLevel_tile_id
