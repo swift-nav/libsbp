@@ -5,8 +5,8 @@ RUN    apt-get update \
   && apt-get install -y git build-essential unzip curl libjson-perl libdigest-crc-perl
 
 # install perl runtime for kaitai struct
-WORKDIR /tmp
 RUN \
+  cd /tmp \
   && curl -LO https://github.com/kaitai-io/kaitai_struct_perl_runtime/archive/refs/tags/0.10.zip \
   && unzip 0.10.zip \
   && cd kaitai_struct_perl_runtime-0.10 \
@@ -15,10 +15,12 @@ RUN \
   && rm -rf /tmp/*
 
 WORKDIR /work
-COPY . /work
+ADD . /work
 
-RUN pip3 install -r /work/setup_requirements.txt \
-  && pip3 install -r /work/requirements.txt \
-  && pip3 install kaitaistruct \
-  && pip3 install wheel setuptools '.[sbp2json]'
+RUN pip3 install -r /work/setup_requirements.txt
+RUN pip3 install -r /work/requirements.txt
+RUN pip3 install kaitaistruct
 
+RUN pip3 install wheel setuptools
+
+RUN pip3 install '.[sbp2json]'
