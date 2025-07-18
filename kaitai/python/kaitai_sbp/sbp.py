@@ -227,7 +227,8 @@ class Sbp(KaitaiStruct):
         msg_odometry = 2307
         msg_wheeltick = 2308
         msg_imu_comp = 2309
-        msg_ssr_flag_high_level = 3001
+        msg_ssr_flag_high_level_dep_a = 3001
+        msg_ssr_flag_high_level = 3002
         msg_ssr_flag_satellites = 3005
         msg_ssr_flag_tropo_grid_points = 3011
         msg_ssr_flag_iono_grid_points = 3015
@@ -1237,7 +1238,7 @@ class Sbp(KaitaiStruct):
             elif _on == 3001:
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
-                self.payload = Integrity.MsgSsrFlagHighLevel(_io__raw_payload, self, self._root)
+                self.payload = Integrity.MsgSsrFlagHighLevelDepA(_io__raw_payload, self, self._root)
             elif _on == 30:
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
@@ -1262,6 +1263,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Bootload.MsgNapDeviceDnaReq(_io__raw_payload, self, self._root)
+            elif _on == 3002:
+                self._raw_payload = self._io.read_bytes(self.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Integrity.MsgSsrFlagHighLevel(_io__raw_payload, self, self._root)
             else:
                 self.payload = self._io.read_bytes(self.length)
             self.crc = self._io.read_u2le()

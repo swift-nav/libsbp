@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/integrity/test_MsgSsrFlagHighLevel.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/integrity/test_MsgSsrFlagHighLevelDepA.yaml by generate.py. Do not modify by hand!
 
 use crate::*;
 
@@ -19,11 +19,11 @@ use crate::*;
 /// -   SBP fields equates to that of the field
 /// -   Payload is identical
 #[test]
-fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
+fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level_dep_a() {
     {
         let mut payload = Cursor::new(vec![
-            85, 186, 11, 66, 0, 37, 180, 0, 0, 0, 3, 0, 109, 1, 0, 0, 6, 0, 104, 1, 0, 0, 6, 0, 10,
-            20, 0, 30, 0, 40, 1, 2, 3, 4, 0, 0, 0, 0, 0, 5, 6, 7, 8, 177, 238,
+            85, 185, 11, 66, 0, 31, 180, 0, 0, 0, 3, 0, 104, 1, 0, 0, 6, 0, 10, 20, 0, 30, 0, 40,
+            1, 2, 3, 4, 0, 0, 0, 0, 0, 5, 6, 7, 8, 105, 3,
         ]);
 
         // Test the round trip payload parsing
@@ -34,11 +34,11 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::Sbp::MsgSsrFlagHighLevel(msg) => {
+            sbp::messages::Sbp::MsgSsrFlagHighLevelDepA(msg) => {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg_type, 3002,
-                    "Incorrect message type, expected 3002, is {msg_type}"
+                    msg_type, 3001,
+                    "Incorrect message type, expected 3001, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -51,14 +51,14 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.chain_id
                 );
                 assert_eq!(
-                    msg.iono_corr_time.tow, 365,
-                    "incorrect value for iono_corr_time.tow, expected 365, is {}",
-                    msg.iono_corr_time.tow
+                    msg.corr_time.tow, 360,
+                    "incorrect value for corr_time.tow, expected 360, is {}",
+                    msg.corr_time.tow
                 );
                 assert_eq!(
-                    msg.iono_corr_time.wn, 6,
-                    "incorrect value for iono_corr_time.wn, expected 6, is {}",
-                    msg.iono_corr_time.wn
+                    msg.corr_time.wn, 6,
+                    "incorrect value for corr_time.wn, expected 6, is {}",
+                    msg.corr_time.wn
                 );
                 assert_eq!(
                     msg.obs_time.tow, 180,
@@ -94,16 +94,6 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.reserved[4], 0,
                     "incorrect value for reserved[4], expected 0, is {}",
                     msg.reserved[4]
-                );
-                assert_eq!(
-                    msg.sat_corr_time.tow, 360,
-                    "incorrect value for sat_corr_time.tow, expected 360, is {}",
-                    msg.sat_corr_time.tow
-                );
-                assert_eq!(
-                    msg.sat_corr_time.wn, 6,
-                    "incorrect value for sat_corr_time.wn, expected 6, is {}",
-                    msg.sat_corr_time.wn
                 );
                 assert_eq!(
                     msg.ssr_sol_id, 10,
@@ -161,7 +151,7 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.use_tropo_grid_points
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgSsrFlagHighLevel"),
+            _ => panic!("Invalid message type! Expected a MsgSsrFlagHighLevelDepA"),
         };
         let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
@@ -177,9 +167,9 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
 /// -   Payload is identical
 #[test]
 #[cfg(feature = "json")]
-fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
+fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level_dep_a() {
     {
-        let json_input = r#"{"obs_time": {"tow": 180, "wn": 3}, "sat_corr_time": {"tow": 360, "wn": 6}, "iono_corr_time": {"tow": 365, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20, "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "use_qzss_sat": 4, "reserved": [0,0,0,0,0], "use_tropo_grid_points": 5, "use_iono_grid_points": 6, "use_iono_tile_sat_los": 7, "use_iono_grid_point_sat_los": 8, "preamble": 85, "msg_type": 3002, "sender": 66, "length": 37, "payload": "tAAAAAMAbQEAAAYAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==", "crc": 61105}"#.as_bytes();
+        let json_input = r#"{"obs_time": {"tow": 180, "wn": 3}, "corr_time": {"tow": 360, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20, "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "use_qzss_sat": 4, "reserved": [0,0,0,0,0], "use_tropo_grid_points": 5, "use_iono_grid_points": 6, "use_iono_tile_sat_los": 7, "use_iono_grid_point_sat_los": 8, "preamble": 85, "msg_type": 3001, "sender": 66, "length": 31, "payload": "tAAAAAMAaAEAAAYAChQAHgAoAQIDBAAAAAAABQYHCA==", "crc": 873}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -200,11 +190,11 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
             from_fields
         };
         match &sbp_msg {
-            sbp::messages::Sbp::MsgSsrFlagHighLevel(msg) => {
+            sbp::messages::Sbp::MsgSsrFlagHighLevelDepA(msg) => {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg_type, 3002,
-                    "Incorrect message type, expected 3002, is {msg_type}"
+                    msg_type, 3001,
+                    "Incorrect message type, expected 3001, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -217,14 +207,14 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.chain_id
                 );
                 assert_eq!(
-                    msg.iono_corr_time.tow, 365,
-                    "incorrect value for iono_corr_time.tow, expected 365, is {}",
-                    msg.iono_corr_time.tow
+                    msg.corr_time.tow, 360,
+                    "incorrect value for corr_time.tow, expected 360, is {}",
+                    msg.corr_time.tow
                 );
                 assert_eq!(
-                    msg.iono_corr_time.wn, 6,
-                    "incorrect value for iono_corr_time.wn, expected 6, is {}",
-                    msg.iono_corr_time.wn
+                    msg.corr_time.wn, 6,
+                    "incorrect value for corr_time.wn, expected 6, is {}",
+                    msg.corr_time.wn
                 );
                 assert_eq!(
                     msg.obs_time.tow, 180,
@@ -260,16 +250,6 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.reserved[4], 0,
                     "incorrect value for reserved[4], expected 0, is {}",
                     msg.reserved[4]
-                );
-                assert_eq!(
-                    msg.sat_corr_time.tow, 360,
-                    "incorrect value for sat_corr_time.tow, expected 360, is {}",
-                    msg.sat_corr_time.tow
-                );
-                assert_eq!(
-                    msg.sat_corr_time.wn, 6,
-                    "incorrect value for sat_corr_time.wn, expected 6, is {}",
-                    msg.sat_corr_time.wn
                 );
                 assert_eq!(
                     msg.ssr_sol_id, 10,
@@ -327,7 +307,7 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.use_tropo_grid_points
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgSsrFlagHighLevel"),
+            _ => panic!("Invalid message type! Expected a MsgSsrFlagHighLevelDepA"),
         };
     }
 }
@@ -335,18 +315,18 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
 /// Tests [`sbp::json::JsonEncoder`] for roundtrip SBP message -> JSON
 ///
 /// Assumes:
-/// -   [`self::test_auto_check_sbp_integrity_msg_ssr_flag_high_level`] passes
+/// -   [`self::test_auto_check_sbp_integrity_msg_ssr_flag_high_level_dep_a`] passes
 ///
 /// Asserts:
 /// -   SBP fields equates to that of the field
 /// -   Payload is identical
 #[test]
 #[cfg(feature = "json")]
-fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
+fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level_dep_a() {
     {
         let mut payload = Cursor::new(vec![
-            85, 186, 11, 66, 0, 37, 180, 0, 0, 0, 3, 0, 109, 1, 0, 0, 6, 0, 104, 1, 0, 0, 6, 0, 10,
-            20, 0, 30, 0, 40, 1, 2, 3, 4, 0, 0, 0, 0, 0, 5, 6, 7, 8, 177, 238,
+            85, 185, 11, 66, 0, 31, 180, 0, 0, 0, 3, 0, 104, 1, 0, 0, 6, 0, 10, 20, 0, 30, 0, 40,
+            1, 2, 3, 4, 0, 0, 0, 0, 0, 5, 6, 7, 8, 105, 3,
         ]);
 
         // Construct sbp message
@@ -364,7 +344,7 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
             .unwrap();
 
         // Reconstruct Sbp message from json fields, roundtrip
-        let sbp_msg = sbp::messages::Sbp::MsgSsrFlagHighLevel(
+        let sbp_msg = sbp::messages::Sbp::MsgSsrFlagHighLevelDepA(
             serde_json::from_str(
                 std::str::from_utf8(json_buffer.as_slice())
                     .unwrap()
@@ -374,11 +354,11 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
             .unwrap(),
         );
         match &sbp_msg {
-            sbp::messages::Sbp::MsgSsrFlagHighLevel(msg) => {
+            sbp::messages::Sbp::MsgSsrFlagHighLevelDepA(msg) => {
                 let msg_type = msg.message_type().unwrap();
                 assert_eq!(
-                    msg_type, 3002,
-                    "Incorrect message type, expected 3002, is {msg_type}"
+                    msg_type, 3001,
+                    "Incorrect message type, expected 3001, is {msg_type}"
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
@@ -391,14 +371,14 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.chain_id
                 );
                 assert_eq!(
-                    msg.iono_corr_time.tow, 365,
-                    "incorrect value for iono_corr_time.tow, expected 365, is {}",
-                    msg.iono_corr_time.tow
+                    msg.corr_time.tow, 360,
+                    "incorrect value for corr_time.tow, expected 360, is {}",
+                    msg.corr_time.tow
                 );
                 assert_eq!(
-                    msg.iono_corr_time.wn, 6,
-                    "incorrect value for iono_corr_time.wn, expected 6, is {}",
-                    msg.iono_corr_time.wn
+                    msg.corr_time.wn, 6,
+                    "incorrect value for corr_time.wn, expected 6, is {}",
+                    msg.corr_time.wn
                 );
                 assert_eq!(
                     msg.obs_time.tow, 180,
@@ -434,16 +414,6 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.reserved[4], 0,
                     "incorrect value for reserved[4], expected 0, is {}",
                     msg.reserved[4]
-                );
-                assert_eq!(
-                    msg.sat_corr_time.tow, 360,
-                    "incorrect value for sat_corr_time.tow, expected 360, is {}",
-                    msg.sat_corr_time.tow
-                );
-                assert_eq!(
-                    msg.sat_corr_time.wn, 6,
-                    "incorrect value for sat_corr_time.wn, expected 6, is {}",
-                    msg.sat_corr_time.wn
                 );
                 assert_eq!(
                     msg.ssr_sol_id, 10,
@@ -501,7 +471,7 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     msg.use_tropo_grid_points
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgSsrFlagHighLevel"),
+            _ => panic!("Invalid message type! Expected a MsgSsrFlagHighLevelDepA"),
         };
 
         // Check payload is still identical

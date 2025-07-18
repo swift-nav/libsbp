@@ -91,7 +91,8 @@ our %TABLE = (
     2305 => sub{Imu::MsgImuAux->new(@_)},
     2309 => sub{Imu::MsgImuComp->new(@_)},
   
-    3001 => sub{Integrity::MsgSsrFlagHighLevel->new(@_)},
+    3001 => sub{Integrity::MsgSsrFlagHighLevelDepA->new(@_)},
+    3002 => sub{Integrity::MsgSsrFlagHighLevel->new(@_)},
     3005 => sub{Integrity::MsgSsrFlagSatellites->new(@_)},
     3011 => sub{Integrity::MsgSsrFlagTropoGridPoints->new(@_)},
     3015 => sub{Integrity::MsgSsrFlagIonoGridPoints->new(@_)},
