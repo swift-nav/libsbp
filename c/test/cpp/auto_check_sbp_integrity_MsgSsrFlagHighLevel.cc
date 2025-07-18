@@ -14,24 +14,25 @@
 // spec/tests/yaml/swiftnav/sbp/integrity/test_MsgSsrFlagHighLevel.yaml by
 // generate.py. Do not modify by hand!
 
-#include <algorithm>
 #include <gtest/gtest.h>
 #include <libsbp/cpp/message_handler.h>
 #include <libsbp/cpp/state.h>
 #include <libsbp/sbp.h>
+#include <algorithm>
 
 namespace {
 
-template <typename T, typename U> void assign(T &dest, const U &source) {
+template <typename T, typename U>
+void assign(T &dest, const U &source) {
   dest = static_cast<T>(source);
 }
 class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
     : public ::testing::Test {
-public:
+ public:
   Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0() {
+    assign(test_msg_.chain_id, 40);
     assign(test_msg_.iono_corr_time.tow, 365);
     assign(test_msg_.iono_corr_time.wn, 6);
-    assign(test_msg_.chain_id, 40);
     assign(test_msg_.obs_time.tow, 180);
     assign(test_msg_.obs_time.wn, 3);
 
@@ -60,7 +61,7 @@ public:
   }
 
   class SlowReader final : public sbp::IReader {
-  public:
+   public:
     SlowReader(const uint8_t *buf, uint32_t len)
         : sbp::IReader(), buf_{buf}, len_{len} {}
 
@@ -87,7 +88,7 @@ public:
       return static_cast<SlowReader *>(ctx)->read(buf, len);
     }
 
-  private:
+   private:
     const uint8_t *buf_;
     uint32_t len_;
     uint32_t offset_{};
@@ -95,7 +96,7 @@ public:
   };
 
   class Reader final : public sbp::IReader {
-  public:
+   public:
     Reader(const uint8_t *buf, uint32_t len)
         : sbp::IReader(), buf_{buf}, len_{len} {}
 
@@ -118,14 +119,14 @@ public:
       return static_cast<Reader *>(ctx)->read(buf, len);
     }
 
-  private:
+   private:
     const uint8_t *buf_;
     uint32_t len_;
     uint32_t offset_{};
   };
 
   class SlowWriter final : public sbp::IWriter {
-  public:
+   public:
     explicit SlowWriter(uint32_t max_len = cMaxLen)
         : IWriter(), max_len_{max_len} {}
     static constexpr uint32_t cMaxLen = SBP_MAX_FRAME_LEN;
@@ -157,14 +158,14 @@ public:
       return static_cast<SlowWriter *>(ctx)->write(buf, len);
     }
 
-  private:
+   private:
     uint8_t buf_[cMaxLen];
     uint32_t max_len_;
     uint32_t offset_{};
   };
 
   class Writer final : public sbp::IWriter {
-  public:
+   public:
     explicit Writer(uint32_t max_len = cMaxLen)
         : IWriter(), max_len_{max_len} {}
     static constexpr uint32_t cMaxLen = SBP_MAX_FRAME_LEN;
@@ -196,7 +197,7 @@ public:
       return static_cast<Writer *>(ctx)->write(buf, len);
     }
 
-  private:
+   private:
     uint8_t buf_[cMaxLen];
     uint32_t max_len_;
     uint32_t offset_{};
@@ -213,7 +214,7 @@ public:
 
     std::vector<Output> outputs{};
 
-  protected:
+   protected:
     void handle_sbp_msg(uint16_t sender_id,
                         const sbp_msg_ssr_flag_high_level_t &msg) override {
       outputs.emplace_back();
@@ -237,7 +238,7 @@ public:
 
     std::vector<Output> outputs{};
 
-  private:
+   private:
     void callback(uint16_t sender_id, sbp_msg_type_t msg_type,
                   const sbp_msg_t *msg) {
       ASSERT_EQ(msg_type, SbpMsgSsrFlagHighLevel);
@@ -307,7 +308,7 @@ public:
     return info;
   }
 
-protected:
+ protected:
   void comparison_tests(const sbp_msg_ssr_flag_high_level_t &lesser,
                         const sbp_msg_ssr_flag_high_level_t &greater) {
     sbp_msg_t wrapped_lesser =
@@ -400,7 +401,7 @@ protected:
     }
   }
 
-private:
+ private:
   sbp_msg_ssr_flag_high_level_t test_msg_{};
   uint8_t encoded_frame_[37 + 8] = {
       85, 186, 11, 66,  0, 37, 180, 0, 0, 0,  3,  0, 109, 1,   0,
@@ -665,6 +666,12 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, Comparison) {
   {
     sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
     sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    make_lesser_greater(lesser.chain_id, greater.chain_id);
+    comparison_tests(lesser, greater);
+  }
+  {
+    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
     make_lesser_greater(lesser.iono_corr_time.tow, greater.iono_corr_time.tow);
     comparison_tests(lesser, greater);
   }
@@ -672,12 +679,6 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, Comparison) {
     sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
     sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
     make_lesser_greater(lesser.iono_corr_time.wn, greater.iono_corr_time.wn);
-    comparison_tests(lesser, greater);
-  }
-  {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
-    make_lesser_greater(lesser.chain_id, greater.chain_id);
     comparison_tests(lesser, greater);
   }
   {
@@ -958,4 +959,4 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
   EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
 }
 
-} // namespace
+}  // namespace
