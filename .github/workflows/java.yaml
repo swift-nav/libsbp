@@ -14,7 +14,7 @@ on:
 jobs:
   tests-java-1_8:
     name: Test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/gradle-build-action@v3
@@ -22,22 +22,3 @@ jobs:
           gradle-version: 7.1.1
       - name: Run tests
         run: make test-java
-
-# sonarqube:
-#   name: SonarQube
-#   runs-on: ubuntu-20.04
-#   steps:
-#     - uses: actions/checkout@v4
-#       with:
-#         fetch-depth: 0
-#     - uses: gradle/gradle-build-action@v3
-#       with:
-#         gradle-version: 7.1.1
-#     - name: Run tests
-#       run: make test-java
-#
-#     - name: Run sonarqube
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#       run: (cd java && gradle sonarqube)
