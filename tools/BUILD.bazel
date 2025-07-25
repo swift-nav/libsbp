@@ -1,0 +1,9 @@
+# gen_compile_commands is intentionally put in a subfolder to avoid the "load"ing when using with bazelmod
+# see https://github.com/hedronvision/bazel-compile-commands-extractor/issues/189#issuecomment-2118998582
+
+load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
+
+refresh_compile_commands(
+    name = "gen_compile_commands",
+    visibility = ["//visibility:public"],
+)

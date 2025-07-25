@@ -1,14 +1,8 @@
 load("@rules_swiftnav//cc:defs.bzl", "UNIT", "swift_c_library", "swift_c_test", "swift_cc_test")
-load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 
 SBP_INCLUDE = glob(["include/**/*.h"])
 
 SBP_INCLUDE_INTERNAL = glob(["src/**/*.h"])
-
-refresh_compile_commands(
-    name = "gen_compile_commands",
-    visibility = ["//visibility:public"],
-)
 
 swift_c_library(
     name = "sbp",
@@ -50,9 +44,8 @@ swift_c_library(
         "src/vehicle.c",
     ],
     hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
-    copts = [
-        "-Ic/src/include",
-        "-Iexternal/libsbp/c/src/include",
+    local_includes = [
+        "src/include",
     ],
     includes = [
         "include",

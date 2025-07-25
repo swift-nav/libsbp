@@ -1,0 +1,44 @@
+# This MODULE file can not be used for local development inside libsbp, due to problems
+# with `rules_foreign_cc`, `check` and `rules_swiftnav` on Mac. On Linux it works fine.
+# However, this MODULE file can be used to consume libsbp as a module in other projects.
+# For local development, use the WORKSPACE (and Bazel 6) file instead. 
+
+module(name = "libsbp", version = "0.1.0", compatibility_level = 1)
+
+bazel_dep(name = "platforms", version = "0.0.9")
+bazel_dep(name = "rules_swiftnav", version = "0.2.0")
+git_override(
+    module_name = "rules_swiftnav",
+    remote = "https://github.com/swift-nav/rules_swiftnav.git",
+    commit = "db80d301ec408ff6fcf3a3d44c75411fec8f4e14",
+)
+
+swift_cc_toolchain_ext = use_extension("@rules_swiftnav//cc:extensions.bzl", "swift_cc_toolchain_extension")
+use_repo(
+    swift_cc_toolchain_ext,
+    "aarch64-darwin-llvm",
+    "aarch64-linux-llvm",
+    "aarch64-linux-musl",
+    "aarch64-sysroot",
+    "x86_64-linux-llvm",
+    "x86_64-sysroot",
+)
+
+register_toolchains(
+    "@rules_swiftnav//cc/toolchains/llvm/aarch64-darwin:cc-toolchain-aarch64-darwin",
+    "@rules_swiftnav//cc/toolchains/llvm/x86_64-linux:cc-toolchain-x86_64-linux",
+    "@rules_swiftnav//cc/toolchains/llvm/aarch64-linux:cc-toolchain-aarch64-linux",
+    "@rules_swiftnav//cc/toolchains/llvm/x86_64-darwin:cc-toolchain-x86_64-darwin",
+)
+
+bazel_dep(name = "check", version = "0.15.2", dev_dependency = True)
+bazel_dep(name = "googletest", version = "1.13.0", dev_dependency = True)
+
+bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
+git_override(
+    module_name = "hedron_compile_commands",
+    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
+    commit = "4f28899228fb3ad0126897876f147ca15026151e",
+    # Replace the commit hash (above) with the latest (https://github.com/hedronvision/bazel-compile-commands-extractor/commits/main).
+    # Even better, set up Renovate and let it do the work for you (see "Suggestion: Updates" in the README).
+)

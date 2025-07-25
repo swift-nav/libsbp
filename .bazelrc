@@ -1,3 +1,6 @@
+common --enable_bzlmod
+common --@rules_swiftnav//cc:enable_bzlmod=true
+
 # Causes the build to default to the custom toolchain
 build --incompatible_enable_cc_toolchain_resolution
 
