@@ -1,4 +1,4 @@
-load("@rules_swiftnav//cc:defs.bzl", "UNIT", "swift_c_library", "swift_cc_test")
+load("@rules_swiftnav//cc:defs.bzl", "UNIT", "swift_c_library", "swift_c_test", "swift_cc_test")
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 
 SBP_INCLUDE = glob(["include/**/*.h"])
@@ -69,7 +69,7 @@ filegroup(
 
 SBP_C_SOURCES = glob(["test/auto*.c"])
 
-swift_cc_test(
+swift_c_test(
     name = "sbp-test",
     srcs = [
         "test/check_main.c",
