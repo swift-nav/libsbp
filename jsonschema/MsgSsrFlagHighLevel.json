@@ -17,7 +17,8 @@
   "type": "object",
   "properties": {
     "obs_time": {"$ref": "GpsTimeSec.json"},
-    "corr_time": {"$ref": "GpsTimeSec.json"},
+    "iono_corr_time": {"$ref": "GpsTimeSec.json"},
+    "sat_corr_time": {"$ref": "GpsTimeSec.json"},
     "ssr_sol_id": {"type": "integer"},
     "tile_set_id": {"type": "integer"},
     "tile_id": {"type": "integer"},
@@ -33,7 +34,8 @@
   },
   "required": [
     "obs_time",
-    "corr_time",
+    "iono_corr_time",
+    "sat_corr_time",
     "ssr_sol_id",
     "tile_set_id",
     "tile_id",

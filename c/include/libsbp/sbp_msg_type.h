@@ -228,7 +228,8 @@ typedef enum {
   SbpMsgSpecan = 0x0051,
   SbpMsgSsrCodeBiases = 0x05E1,
   SbpMsgSsrCodePhaseBiasesBounds = 0x05EC,
-  SbpMsgSsrFlagHighLevel = 0x0BB9,
+  SbpMsgSsrFlagHighLevelDepA = 0x0BB9,
+  SbpMsgSsrFlagHighLevel = 0x0BBA,
   SbpMsgSsrFlagIonoGridPointSatLos = 0x0BD1,
   SbpMsgSsrFlagIonoGridPoints = 0x0BC7,
   SbpMsgSsrFlagIonoTileSatLos = 0x0BCD,
@@ -650,6 +651,8 @@ static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
       return "MSG_SSR_CODE_BIASES";
     case SbpMsgSsrCodePhaseBiasesBounds:
       return "MSG_SSR_CODE_PHASE_BIASES_BOUNDS";
+    case SbpMsgSsrFlagHighLevelDepA:
+      return "MSG_SSR_FLAG_HIGH_LEVEL_DEP_A";
     case SbpMsgSsrFlagHighLevel:
       return "MSG_SSR_FLAG_HIGH_LEVEL";
     case SbpMsgSsrFlagIonoGridPointSatLos:

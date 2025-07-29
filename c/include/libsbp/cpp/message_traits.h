@@ -6439,6 +6439,44 @@ struct MessageTraits<sbp_msg_ssr_code_phase_biases_bounds_t> {
 };
 
 template <>
+struct MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgSsrFlagHighLevelDepA;
+  static constexpr const char *name = "MSG_SSR_FLAG_HIGH_LEVEL_DEP_A";
+  static const sbp_msg_ssr_flag_high_level_dep_a_t &get(const sbp_msg_t &msg) {
+    return msg.ssr_flag_high_level_dep_a;
+  }
+  static sbp_msg_ssr_flag_high_level_dep_a_t &get(sbp_msg_t &msg) {
+    return msg.ssr_flag_high_level_dep_a;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_flag_high_level_dep_a_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_flag_high_level_dep_a = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_flag_high_level_dep_a_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_flag_high_level_dep_a = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ssr_flag_high_level_dep_a_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ssr_flag_high_level_dep_a_send(state, sender_id, &msg,
+                                                  write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ssr_flag_high_level_dep_a_t &msg) {
+    return sbp_msg_ssr_flag_high_level_dep_a_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ssr_flag_high_level_dep_a_t *msg) {
+    return sbp_msg_ssr_flag_high_level_dep_a_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ssr_flag_high_level_dep_a_t &msg) {
+    return sbp_msg_ssr_flag_high_level_dep_a_encoded_len(&msg);
+  }
+};
+
+template <>
 struct MessageTraits<sbp_msg_ssr_flag_high_level_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrFlagHighLevel;
   static constexpr const char *name = "MSG_SSR_FLAG_HIGH_LEVEL";

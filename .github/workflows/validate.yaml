@@ -6,17 +6,17 @@ on:
       - "spec/**"
   push:
     branches:
-      - 'v*-release'
-      - 'starling-v*-release'
-      - 'libsbp-v*-release'
+      - "v*-release"
+      - "starling-v*-release"
+      - "libsbp-v*-release"
     tags:
-      - 'v*'
+      - "v*"
     paths:
       - "spec/**"
 
 jobs:
   validation:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Current Spec
         uses: actions/checkout@v4
