@@ -1,5 +1,43 @@
 # Changelog
 
+## [v6.2.2](https://github.com/swift-nav/libsbp/tree/v6.2.2)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.2.1...v6.2.2)
+
+**Merged pull requests:**
+
+- Implement MODULE [\#1489](https://github.com/swift-nav/libsbp/pull/1489) ([martin4861](https://github.com/martin4861))
+- Update dependencies [\#1488](https://github.com/swift-nav/libsbp/pull/1488) ([martin4861](https://github.com/martin4861))
+- Update rust Docker image to rust:1.88.0-slim [\#1486](https://github.com/swift-nav/libsbp/pull/1486) ([dgburr](https://github.com/dgburr))
+- Fix `rust` / `generate artifacts` / `python` workflows [\#1485](https://github.com/swift-nav/libsbp/pull/1485) ([armallen](https://github.com/armallen))
+- Update deprecated windows build image [\#1483](https://github.com/swift-nav/libsbp/pull/1483) ([sbmueller](https://github.com/sbmueller))
+- Auto submodule update: cmake - Add option for suppression file in valgrind memcheck \(\#185\) [\#1482](https://github.com/swift-nav/libsbp/pull/1482) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Update modified DF389 field descriptions [\#1478](https://github.com/swift-nav/libsbp/pull/1478) ([reimerix](https://github.com/reimerix))
+- Bump tar-fs from 2.1.2 to 2.1.3 [\#1477](https://github.com/swift-nav/libsbp/pull/1477) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Auto submodule update: cmake - Update protobuf to v25.1 \(\#183\) [\#1476](https://github.com/swift-nav/libsbp/pull/1476) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Auto submodule update: cmake - Fix importing of latest protobuf version \(\#181\) [\#1474](https://github.com/swift-nav/libsbp/pull/1474) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Update from Ubuntu 18 \(gcc-6, clang-6\) to Ubuntu 20 \(gcc-7, clang-6\) \[AP-3178\] [\#1473](https://github.com/swift-nav/libsbp/pull/1473) ([sbmueller](https://github.com/sbmueller))
+- Fix actions/checkout@v2 [\#1472](https://github.com/swift-nav/libsbp/pull/1472) ([RReichert](https://github.com/RReichert))
+- Update docker image [\#1471](https://github.com/swift-nav/libsbp/pull/1471) ([RReichert](https://github.com/RReichert))
+- Update NodeJS + Haskell version [\#1470](https://github.com/swift-nav/libsbp/pull/1470) ([RReichert](https://github.com/RReichert))
+- fix rust lints [\#1469](https://github.com/swift-nav/libsbp/pull/1469) ([pcrumley](https://github.com/pcrumley))
+- Fix kaitai python version for messages ending in a variable-length string [\#1468](https://github.com/swift-nav/libsbp/pull/1468) ([dgburr](https://github.com/dgburr))
+- fix new rust lints [\#1467](https://github.com/swift-nav/libsbp/pull/1467) ([pcrumley](https://github.com/pcrumley))
+- bump macos to 13 [\#1466](https://github.com/swift-nav/libsbp/pull/1466) ([sokhealy](https://github.com/sokhealy))
+- Auto submodule update: cmake - Add codeowners to guideline relevant files \[AP-3170\] \(\#180\) [\#1464](https://github.com/swift-nav/libsbp/pull/1464) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Bump SonarSource/sonarcloud-github-c-cpp from 2 to 3 [\#1461](https://github.com/swift-nav/libsbp/pull/1461) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump swift-nav/swift-cli-publisher from 2 to 3 [\#1460](https://github.com/swift-nav/libsbp/pull/1460) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump bazelbuild/setup-bazelisk from 2 to 3 [\#1459](https://github.com/swift-nav/libsbp/pull/1459) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump braces, webpack and webpack-cli [\#1458](https://github.com/swift-nav/libsbp/pull/1458) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump elliptic from 6.5.4 to 6.6.0 [\#1457](https://github.com/swift-nav/libsbp/pull/1457) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Fix manual file generation and include trailing newlines in accordance with POSIX \[AP-3048\] [\#1453](https://github.com/swift-nav/libsbp/pull/1453) ([sbmueller](https://github.com/sbmueller))
+- Auto submodule update: cmake - Revert "CMake patches for QNX Support \(\#178\)" \(\#179\) [\#1440](https://github.com/swift-nav/libsbp/pull/1440) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Bump haskell/actions from 1 to 2 [\#1433](https://github.com/swift-nav/libsbp/pull/1433) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump gradle/gradle-build-action from 2 to 3 [\#1432](https://github.com/swift-nav/libsbp/pull/1432) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump svenstaro/upload-release-action from 1.pre.release to 2.9.0 [\#1431](https://github.com/swift-nav/libsbp/pull/1431) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump necojackarc/auto-request-review from 0.10.0 to 0.13.0 [\#1430](https://github.com/swift-nav/libsbp/pull/1430) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/cache from 1 to 4 [\#1429](https://github.com/swift-nav/libsbp/pull/1429) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v6.2.1](https://github.com/swift-nav/libsbp/tree/v6.2.1)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.2.0...v6.2.1)
