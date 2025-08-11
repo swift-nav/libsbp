@@ -237,6 +237,7 @@ data SBPMsg =
    | SBPMsgSsrCodeBiases MsgSsrCodeBiases Msg
    | SBPMsgSsrCodePhaseBiasesBounds MsgSsrCodePhaseBiasesBounds Msg
    | SBPMsgSsrFlagHighLevel MsgSsrFlagHighLevel Msg
+   | SBPMsgSsrFlagHighLevelDepA MsgSsrFlagHighLevelDepA Msg
    | SBPMsgSsrFlagIonoGridPointSatLos MsgSsrFlagIonoGridPointSatLos Msg
    | SBPMsgSsrFlagIonoGridPoints MsgSsrFlagIonoGridPoints Msg
    | SBPMsgSsrFlagIonoTileSatLos MsgSsrFlagIonoTileSatLos Msg
@@ -489,6 +490,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSsrCodeBiases = SBPMsgSsrCodeBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrCodePhaseBiasesBounds = SBPMsgSsrCodePhaseBiasesBounds (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrFlagHighLevel = SBPMsgSsrFlagHighLevel (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagHighLevelDepA = SBPMsgSsrFlagHighLevelDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrFlagIonoGridPointSatLos = SBPMsgSsrFlagIonoGridPointSatLos (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrFlagIonoGridPoints = SBPMsgSsrFlagIonoGridPoints (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrFlagIonoTileSatLos = SBPMsgSsrFlagIonoTileSatLos (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -733,6 +735,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgSsrCodeBiases _ m) = put m
       encoder (SBPMsgSsrCodePhaseBiasesBounds _ m) = put m
       encoder (SBPMsgSsrFlagHighLevel _ m) = put m
+      encoder (SBPMsgSsrFlagHighLevelDepA _ m) = put m
       encoder (SBPMsgSsrFlagIonoGridPointSatLos _ m) = put m
       encoder (SBPMsgSsrFlagIonoGridPoints _ m) = put m
       encoder (SBPMsgSsrFlagIonoTileSatLos _ m) = put m
@@ -981,6 +984,7 @@ instance FromJSON SBPMsg where
         | msgType == msgSsrCodeBiases = SBPMsgSsrCodeBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrCodePhaseBiasesBounds = SBPMsgSsrCodePhaseBiasesBounds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrFlagHighLevel = SBPMsgSsrFlagHighLevel <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagHighLevelDepA = SBPMsgSsrFlagHighLevelDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrFlagIonoGridPointSatLos = SBPMsgSsrFlagIonoGridPointSatLos <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrFlagIonoGridPoints = SBPMsgSsrFlagIonoGridPoints <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrFlagIonoTileSatLos = SBPMsgSsrFlagIonoTileSatLos <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1230,6 +1234,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSsrCodeBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrCodePhaseBiasesBounds n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrFlagHighLevel n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagHighLevelDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrFlagIonoGridPointSatLos n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrFlagIonoGridPoints n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrFlagIonoTileSatLos n m) = toJSON n <<>> toJSON m
@@ -1473,6 +1478,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSsrCodeBiases n m) = SBPMsgSsrCodeBiases n <$> f m
   msg f (SBPMsgSsrCodePhaseBiasesBounds n m) = SBPMsgSsrCodePhaseBiasesBounds n <$> f m
   msg f (SBPMsgSsrFlagHighLevel n m) = SBPMsgSsrFlagHighLevel n <$> f m
+  msg f (SBPMsgSsrFlagHighLevelDepA n m) = SBPMsgSsrFlagHighLevelDepA n <$> f m
   msg f (SBPMsgSsrFlagIonoGridPointSatLos n m) = SBPMsgSsrFlagIonoGridPointSatLos n <$> f m
   msg f (SBPMsgSsrFlagIonoGridPoints n m) = SBPMsgSsrFlagIonoGridPoints n <$> f m
   msg f (SBPMsgSsrFlagIonoTileSatLos n m) = SBPMsgSsrFlagIonoTileSatLos n <$> f m

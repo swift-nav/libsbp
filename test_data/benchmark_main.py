@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 
-import os
-import sys
 import gzip
 import json
+import os
 import subprocess
+import sys
 
 # If the ratio is off from expected by more than this percentage
 SLUSH_PERCENTAGE = 0.25
 
 # How much faster Rust should be than other implementations
 RATIOS_SBP2JSON = {
-    "haskell"       : 3.2,
-    "python"        : 23.38,
-    "kaitai_python" : 5.00,
-    "kaitai_perl"   : 20,
+    "haskell": 3.2,
+    "python": 23.38,
+    "kaitai_python": 5.00,
+    "kaitai_perl": 20,
 }
 
 RATIOS_JSON2SBP = {
@@ -29,20 +29,25 @@ FAILED = [False]
 
 
 def maybe_via_docker(pwd, image, cmd, env=None):
-    if not os.environ.get('VIA_DOCKER'):
+    if not os.environ.get("VIA_DOCKER"):
         if env is not None:
-            for var,val in env.items():
+            for var, val in env.items():
                 os.environ[var] = val
         return cmd
 
     docker_args = [
-        'docker', 'run', '-i',
-        '--cpus=2', '--memory=1g',
-        '--rm', '-v', f'{pwd}:/work',
+        "docker",
+        "run",
+        "-i",
+        "--cpus=2",
+        "--memory=1g",
+        "--rm",
+        "-v",
+        f"{pwd}:/work",
     ]
     if env is not None:
-        for var,val in env.items():
-            docker_args += ['--env', f'{var}={val}']
+        for var, val in env.items():
+            docker_args += ["--env", f"{var}={val}"]
     docker_args += [image] + cmd
     return docker_args
 
@@ -65,23 +70,34 @@ def validate_thresholds(binary, thresholds, means, target):
         ratio = means[lang] / target
         if not compare_ratio(threshold, ratio):
             sys.stderr.write(
-                f"\nERROR: {binary} speed threshold failed for {lang}, expected: {threshold}, actual: {ratio}\n\n")
+                f"\nERROR: {binary} speed threshold failed for {lang}, expected: {threshold}, actual: {ratio}\n\n"
+            )
             sys.stderr.flush()
             FAILED[0] = True
 
 
 def main():
-
     if not os.environ.get("BENCHMARK_SKIP_SBP2JSON"):
         subprocess.run(
-            ['hyperfine', '--warmup', '5', '--min-runs', '20',
-             '--show-output', '--export-json', 'benchmark_sbp2json.json',
-             '-L', 'lang', 'rust,python,haskell,kaitai_python,kaitai_perl',
-             './test_data/benchmark/sbp2json_{lang}.py'],
-            check=True)
+            [
+                "hyperfine",
+                "--warmup",
+                "5",
+                "--min-runs",
+                "20",
+                "--show-output",
+                "--export-json",
+                "benchmark_sbp2json.json",
+                "-L",
+                "lang",
+                "rust,python,haskell,kaitai_python,kaitai_perl",
+                "./test_data/benchmark/sbp2json_{lang}.py",
+            ],
+            check=True,
+        )
         print()
 
-    bench_sbp2json = json.load(open('benchmark_sbp2json.json'))
+    bench_sbp2json = json.load(open("benchmark_sbp2json.json"))
     sbp2json_rust_mean = get_bench_mean(bench_sbp2json, "rust")
     means_sbp2json = {
         "haskell": get_bench_mean(bench_sbp2json, "haskell"),
@@ -100,14 +116,23 @@ def main():
 
     if not os.environ.get("BENCHMARK_SKIP_JSON2SBP"):
         subprocess.run(
-            ['hyperfine', '--warmup', '3', '--show-output',
-             '--export-json', 'benchmark_json2sbp.json',
-             '-L', 'lang', 'rust,haskell',
-             './test_data/benchmark/json2sbp_{lang}.py'],
-            check=True)
+            [
+                "hyperfine",
+                "--warmup",
+                "3",
+                "--show-output",
+                "--export-json",
+                "benchmark_json2sbp.json",
+                "-L",
+                "lang",
+                "rust,haskell",
+                "./test_data/benchmark/json2sbp_{lang}.py",
+            ],
+            check=True,
+        )
         print()
 
-    bench_json2sbp = json.load(open('benchmark_json2sbp.json'))
+    bench_json2sbp = json.load(open("benchmark_json2sbp.json"))
 
     means_json2sbp = {
         "haskell": get_bench_mean(bench_json2sbp, "haskell"),
@@ -124,14 +149,23 @@ def main():
         benchmark_input_json2json.write(json_data)
 
     subprocess.run(
-        ['hyperfine', '--warmup', '3', '--show-output',
-         '--export-json', 'benchmark_json2json.json',
-         '-L', 'lang', 'rust,haskell',
-         './test_data/benchmark/json2json_{lang}.py'],
-        check=True)
+        [
+            "hyperfine",
+            "--warmup",
+            "3",
+            "--show-output",
+            "--export-json",
+            "benchmark_json2json.json",
+            "-L",
+            "lang",
+            "rust,haskell",
+            "./test_data/benchmark/json2json_{lang}.py",
+        ],
+        check=True,
+    )
     print()
 
-    bench_json2json = json.load(open('benchmark_json2json.json'))
+    bench_json2json = json.load(open("benchmark_json2json.json"))
 
     means_json2json = {
         "haskell": get_bench_mean(bench_json2json, "haskell"),
@@ -139,11 +173,13 @@ def main():
 
     json2json_rust_mean = get_bench_mean(bench_json2json, "rust")
 
-    validate_thresholds("json2json", RATIOS_JSON2JSON, means_json2json, json2json_rust_mean)
+    validate_thresholds(
+        "json2json", RATIOS_JSON2JSON, means_json2json, json2json_rust_mean
+    )
 
     if FAILED[0]:
         sys.exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

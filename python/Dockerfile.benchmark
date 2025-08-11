@@ -2,11 +2,11 @@ FROM python:3.7-slim-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN    apt-get update \
-    && apt-get install -y git build-essential unzip curl libjson-perl libdigest-crc-perl
+  && apt-get install -y git build-essential unzip curl libjson-perl libdigest-crc-perl
 
 # install perl runtime for kaitai struct
 RUN \
-     cd /tmp \
+  cd /tmp \
   && curl -LO https://github.com/kaitai-io/kaitai_struct_perl_runtime/archive/refs/tags/0.10.zip \
   && unzip 0.10.zip \
   && cd kaitai_struct_perl_runtime-0.10 \

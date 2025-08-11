@@ -20,6 +20,7 @@
 #include <libsbp/integrity/IntegritySSRHeader.h>
 #include <libsbp/integrity/MSG_ACKNOWLEDGE.h>
 #include <libsbp/integrity/MSG_SSR_FLAG_HIGH_LEVEL.h>
+#include <libsbp/integrity/MSG_SSR_FLAG_HIGH_LEVEL_DEP_A.h>
 #include <libsbp/integrity/MSG_SSR_FLAG_IONO_GRID_POINTS.h>
 #include <libsbp/integrity/MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS.h>
 #include <libsbp/integrity/MSG_SSR_FLAG_IONO_TILE_SAT_LOS.h>

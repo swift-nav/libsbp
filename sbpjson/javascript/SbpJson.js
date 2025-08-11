@@ -3255,8 +3255,9 @@ const typeMap = {
     ], "any"),
     "MsgSsrFlagHighLevel": o([
         { json: "chain_id", js: "chain_id", typ: 0 },
-        { json: "corr_time", js: "corr_time", typ: r("GpsTimeSEC") },
+        { json: "iono_corr_time", js: "iono_corr_time", typ: r("GpsTimeSEC") },
         { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "sat_corr_time", js: "sat_corr_time", typ: r("GpsTimeSEC") },
         { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
         { json: "tile_id", js: "tile_id", typ: 0 },
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
