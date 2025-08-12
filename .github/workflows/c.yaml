@@ -83,7 +83,7 @@ jobs:
     name: macOS
     runs-on: macos-13
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: recursive
           fetch-depth: 0
@@ -115,7 +115,7 @@ jobs:
     name: Test Big Endian
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: recursive
           fetch-depth: 0
@@ -137,7 +137,7 @@ jobs:
     name: Bazel
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: recursive
 
@@ -157,7 +157,7 @@ jobs:
     name: ASAN
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: recursive
 
@@ -177,7 +177,7 @@ jobs:
     name: UBSAN
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: recursive
 
@@ -201,7 +201,7 @@ jobs:
     name: "Windows Latest (Generator: ${{ matrix.generator }}, Shared Library: ${{ matrix.build_shared_libraries }})"
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: recursive
           fetch-depth: 0
