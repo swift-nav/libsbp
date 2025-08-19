@@ -559,6 +559,9 @@ spec-validator-test:
 	python -m black --check scripts/spec_validator.py
 	./scripts/validation_test_harness.bash 2>&1 | grep -E 'PASS|FAIL'
 
+check-targets:
+	bazel run @rules_swiftnav//cc:checktags
+
 version:
 	@echo "SBP version: $(SBP_VERSION)"
 	@echo "SBP is staging: $(SBP_STAGING)"
