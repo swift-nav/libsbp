@@ -1,10 +1,10 @@
-load("@rules_swiftnav//cc:defs.bzl", "UNIT", "swift_c_library", "swift_c_test", "swift_cc_test")
+load("@rules_swiftnav//cc:defs2.bzl", "UNIT", "swift_prod_portable_c_library", "swift_new_cc_test")
 
 SBP_INCLUDE = glob(["include/**/*.h"])
 
 SBP_INCLUDE_INTERNAL = glob(["src/**/*.h"])
 
-swift_c_library(
+swift_prod_portable_c_library(
     name = "sbp",
     srcs = [
         "src/edc.c",
@@ -50,7 +50,6 @@ swift_c_library(
     includes = [
         "include",
     ],
-    nocopts = ["-Wstack-protector"],
     visibility = ["//visibility:public"],
 )
 
@@ -62,7 +61,7 @@ filegroup(
 
 SBP_C_SOURCES = glob(["test/auto*.c"])
 
-swift_c_test(
+swift_new_cc_test(
     name = "sbp-test",
     srcs = [
         "test/check_main.c",
@@ -81,7 +80,7 @@ swift_c_test(
 
 SBP_CPP_C_SOURCES = glob(["test/cpp/auto*.cc"])
 
-swift_cc_test(
+swift_new_cc_test(
     name = "sbp-cpp-test",
     srcs = SBP_CPP_C_SOURCES,
     type = UNIT,
@@ -91,7 +90,7 @@ swift_cc_test(
     ],
 )
 
-swift_cc_test(
+swift_new_cc_test(
     name = "sbp-string-test",
     srcs = [
         "test/string/test_double_null_terminated.cc",
