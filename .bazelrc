@@ -1,3 +1,10 @@
+common --enable_bzlmod
+common --registry=https://raw.githubusercontent.com/swift-nav/swiftnav-bazel-registry/refs/heads/main/
+common --registry=https://bcr.bazel.build
+common --@rules_swiftnav//cc:enable_bzlmod=true
+# Preparation for Bazel 8 behavior of paths in external (plus instead of tilde)
+common --incompatible_use_plus_in_repo_names
+
 # Causes the build to default to the custom toolchain
 build --incompatible_enable_cc_toolchain_resolution
 
