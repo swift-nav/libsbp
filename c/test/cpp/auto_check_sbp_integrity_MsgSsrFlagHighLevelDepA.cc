@@ -11,7 +11,7 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/integrity/test_MsgSsrFlagHighLevel.yaml by
+// spec/tests/yaml/swiftnav/sbp/integrity/test_MsgSsrFlagHighLevelDepA.yaml by
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
@@ -26,13 +26,13 @@ template <typename T, typename U>
 void assign(T &dest, const U &source) {
   dest = static_cast<T>(source);
 }
-class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
+class Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0
     : public ::testing::Test {
  public:
-  Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0() {
+  Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0() {
     assign(test_msg_.chain_id, 40);
-    assign(test_msg_.iono_corr_time.tow, 365);
-    assign(test_msg_.iono_corr_time.wn, 6);
+    assign(test_msg_.corr_time.tow, 360);
+    assign(test_msg_.corr_time.wn, 6);
     assign(test_msg_.obs_time.tow, 180);
     assign(test_msg_.obs_time.wn, 3);
 
@@ -45,8 +45,6 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
     assign(test_msg_.reserved[3], 0);
 
     assign(test_msg_.reserved[4], 0);
-    assign(test_msg_.sat_corr_time.tow, 360);
-    assign(test_msg_.sat_corr_time.wn, 6);
     assign(test_msg_.ssr_sol_id, 10);
     assign(test_msg_.tile_id, 30);
     assign(test_msg_.tile_set_id, 20);
@@ -204,19 +202,21 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
   };
 
   struct CppHandler final
-      : public sbp::MessageHandler<sbp_msg_ssr_flag_high_level_t> {
-    using sbp::MessageHandler<sbp_msg_ssr_flag_high_level_t>::MessageHandler;
+      : public sbp::MessageHandler<sbp_msg_ssr_flag_high_level_dep_a_t> {
+    using sbp::MessageHandler<
+        sbp_msg_ssr_flag_high_level_dep_a_t>::MessageHandler;
 
     struct Output final {
       uint16_t sender_id;
-      sbp_msg_ssr_flag_high_level_t msg;
+      sbp_msg_ssr_flag_high_level_dep_a_t msg;
     };
 
     std::vector<Output> outputs{};
 
    protected:
-    void handle_sbp_msg(uint16_t sender_id,
-                        const sbp_msg_ssr_flag_high_level_t &msg) override {
+    void handle_sbp_msg(
+        uint16_t sender_id,
+        const sbp_msg_ssr_flag_high_level_dep_a_t &msg) override {
       outputs.emplace_back();
       outputs.back().sender_id = sender_id;
       memcpy(&outputs.back().msg, &msg, sizeof(msg));
@@ -225,7 +225,7 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
 
   struct CHandler final {
     explicit CHandler(sbp_state_t *state) : state_{state} {
-      sbp_callback_register(state, SbpMsgSsrFlagHighLevel,
+      sbp_callback_register(state, SbpMsgSsrFlagHighLevelDepA,
                             &CHandler::callback_static, this, &node_);
     }
 
@@ -233,7 +233,7 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
 
     struct Output final {
       uint16_t sender_id;
-      sbp_msg_ssr_flag_high_level_t msg;
+      sbp_msg_ssr_flag_high_level_dep_a_t msg;
     };
 
     std::vector<Output> outputs{};
@@ -241,11 +241,11 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
    private:
     void callback(uint16_t sender_id, sbp_msg_type_t msg_type,
                   const sbp_msg_t *msg) {
-      ASSERT_EQ(msg_type, SbpMsgSsrFlagHighLevel);
+      ASSERT_EQ(msg_type, SbpMsgSsrFlagHighLevelDepA);
       outputs.emplace_back();
       outputs.back().sender_id = sender_id;
-      memcpy(&outputs.back().msg, &msg->ssr_flag_high_level,
-             sizeof(msg->ssr_flag_high_level));
+      memcpy(&outputs.back().msg, &msg->ssr_flag_high_level_dep_a,
+             sizeof(msg->ssr_flag_high_level_dep_a));
     }
 
     static void callback_static(uint16_t sender_id, sbp_msg_type_t msg_type,
@@ -258,7 +258,7 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
   };
 
   struct TestMsgInfo {
-    sbp_msg_ssr_flag_high_level_t test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t test_msg;
     sbp_msg_t test_msg_wrapped;
     sbp_msg_type_t msg_type;
     uint16_t sender_id;
@@ -294,43 +294,45 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
   TestMsgInfo get_test_msg_info() const noexcept {
     TestMsgInfo info;
     memcpy(&info.test_msg, &test_msg_, sizeof(test_msg_));
-    memcpy(&info.test_msg_wrapped.ssr_flag_high_level, &test_msg_,
+    memcpy(&info.test_msg_wrapped.ssr_flag_high_level_dep_a, &test_msg_,
            sizeof(test_msg_));
-    info.msg_type = static_cast<sbp_msg_type_t>(SbpMsgSsrFlagHighLevel);
+    info.msg_type = static_cast<sbp_msg_type_t>(SbpMsgSsrFlagHighLevelDepA);
     info.sender_id = 66;
     info.preamble = 0x55;
-    info.crc = 0xEEB1;
+    info.crc = 0x0369;
     info.encoded_frame = encoded_frame_;
     info.frame_len = sizeof(encoded_frame_);
     info.encoded_payload = encoded_payload_;
-    info.payload_len = 37;
+    info.payload_len = 31;
 
     return info;
   }
 
  protected:
-  void comparison_tests(const sbp_msg_ssr_flag_high_level_t &lesser,
-                        const sbp_msg_ssr_flag_high_level_t &greater) {
+  void comparison_tests(const sbp_msg_ssr_flag_high_level_dep_a_t &lesser,
+                        const sbp_msg_ssr_flag_high_level_dep_a_t &greater) {
     sbp_msg_t wrapped_lesser =
-        sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::to_sbp_msg(lesser);
+        sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::to_sbp_msg(
+            lesser);
     sbp_msg_t wrapped_greater =
-        sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::to_sbp_msg(greater);
+        sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::to_sbp_msg(
+            greater);
 
-    EXPECT_EQ(sbp_msg_ssr_flag_high_level_cmp(&lesser, &lesser), 0);
-    EXPECT_EQ(sbp_msg_ssr_flag_high_level_cmp(&greater, &greater), 0);
-    EXPECT_LE(sbp_msg_ssr_flag_high_level_cmp(&lesser, &greater), 0);
-    EXPECT_GT(sbp_msg_ssr_flag_high_level_cmp(&greater, &lesser), 0);
+    EXPECT_EQ(sbp_msg_ssr_flag_high_level_dep_a_cmp(&lesser, &lesser), 0);
+    EXPECT_EQ(sbp_msg_ssr_flag_high_level_dep_a_cmp(&greater, &greater), 0);
+    EXPECT_LE(sbp_msg_ssr_flag_high_level_dep_a_cmp(&lesser, &greater), 0);
+    EXPECT_GT(sbp_msg_ssr_flag_high_level_dep_a_cmp(&greater, &lesser), 0);
 
-    EXPECT_EQ(sbp_message_cmp(SbpMsgSsrFlagHighLevel, &wrapped_lesser,
+    EXPECT_EQ(sbp_message_cmp(SbpMsgSsrFlagHighLevelDepA, &wrapped_lesser,
                               &wrapped_lesser),
               0);
-    EXPECT_EQ(sbp_message_cmp(SbpMsgSsrFlagHighLevel, &wrapped_greater,
+    EXPECT_EQ(sbp_message_cmp(SbpMsgSsrFlagHighLevelDepA, &wrapped_greater,
                               &wrapped_greater),
               0);
-    EXPECT_LE(sbp_message_cmp(SbpMsgSsrFlagHighLevel, &wrapped_lesser,
+    EXPECT_LE(sbp_message_cmp(SbpMsgSsrFlagHighLevelDepA, &wrapped_lesser,
                               &wrapped_greater),
               0);
-    EXPECT_GT(sbp_message_cmp(SbpMsgSsrFlagHighLevel, &wrapped_greater,
+    EXPECT_GT(sbp_message_cmp(SbpMsgSsrFlagHighLevelDepA, &wrapped_greater,
                               &wrapped_lesser),
               0);
 
@@ -402,113 +404,114 @@ class Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0
   }
 
  private:
-  sbp_msg_ssr_flag_high_level_t test_msg_{};
-  uint8_t encoded_frame_[37 + 8] = {
-      85, 186, 11, 66,  0, 37, 180, 0, 0, 0,  3,  0, 109, 1,   0,
-      0,  6,   0,  104, 1, 0,  0,   6, 0, 10, 20, 0, 30,  0,   40,
-      1,  2,   3,  4,   0, 0,  0,   0, 0, 5,  6,  7, 8,   177, 238,
+  sbp_msg_ssr_flag_high_level_dep_a_t test_msg_{};
+  uint8_t encoded_frame_[31 + 8] = {
+      85, 185, 11, 66, 0, 31, 180, 0, 0, 0, 3, 0, 104, 1, 0, 0, 6, 0,   10, 20,
+      0,  30,  0,  40, 1, 2,  3,   4, 0, 0, 0, 0, 0,   5, 6, 7, 8, 105, 3,
   };
-  uint8_t encoded_payload_[37] = {
-      180, 0, 0,  0, 3,  0, 109, 1, 0, 0, 6, 0, 104, 1, 0, 0, 6, 0, 10,
-      20,  0, 30, 0, 40, 1, 2,   3, 4, 0, 0, 0, 0,   0, 5, 6, 7, 8,
+  uint8_t encoded_payload_[31] = {
+      180, 0,  0, 0, 3, 0, 104, 1, 0, 0, 6, 0, 10, 20, 0, 30,
+      0,   40, 1, 2, 3, 4, 0,   0, 0, 0, 0, 5, 6,  7,  8,
   };
 };
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, EncodedLen) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0, EncodedLen) {
   auto info = get_test_msg_info();
-  EXPECT_EQ(sbp_msg_ssr_flag_high_level_encoded_len(&info.test_msg),
+  EXPECT_EQ(sbp_msg_ssr_flag_high_level_dep_a_encoded_len(&info.test_msg),
             info.payload_len);
 
-  EXPECT_EQ(
-      sbp_message_encoded_len(SbpMsgSsrFlagHighLevel, &info.test_msg_wrapped),
-      info.payload_len);
+  EXPECT_EQ(sbp_message_encoded_len(SbpMsgSsrFlagHighLevelDepA,
+                                    &info.test_msg_wrapped),
+            info.payload_len);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, EncodeToBuf) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0, EncodeToBuf) {
   auto info = get_test_msg_info();
-  uint8_t buf[37];
+  uint8_t buf[31];
   uint8_t n_written;
 
-  EXPECT_EQ(sbp_msg_ssr_flag_high_level_encode(&buf[0], sizeof(buf), &n_written,
-                                               &info.test_msg),
+  EXPECT_EQ(sbp_msg_ssr_flag_high_level_dep_a_encode(
+                &buf[0], sizeof(buf), &n_written, &info.test_msg),
             SBP_OK);
-  EXPECT_EQ(n_written, 37);
-  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 37), 0);
+  EXPECT_EQ(n_written, 31);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 31), 0);
 
   memset(&buf[0], 0, sizeof(buf));
-  EXPECT_EQ(sbp_message_encode(&buf[0], sizeof(buf), &n_written,
-                               SbpMsgSsrFlagHighLevel, &info.test_msg_wrapped),
-            SBP_OK);
-  EXPECT_EQ(n_written, 37);
-  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 37), 0);
+  EXPECT_EQ(
+      sbp_message_encode(&buf[0], sizeof(buf), &n_written,
+                         SbpMsgSsrFlagHighLevelDepA, &info.test_msg_wrapped),
+      SBP_OK);
+  EXPECT_EQ(n_written, 31);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 31), 0);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        EncodeToBufWithoutNwritten) {
   auto info = get_test_msg_info();
-  uint8_t buf[37];
+  uint8_t buf[31];
 
-  EXPECT_EQ(sbp_msg_ssr_flag_high_level_encode(&buf[0], sizeof(buf), nullptr,
-                                               &info.test_msg),
+  EXPECT_EQ(sbp_msg_ssr_flag_high_level_dep_a_encode(&buf[0], sizeof(buf),
+                                                     nullptr, &info.test_msg),
             SBP_OK);
-  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 37), 0);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 31), 0);
 }
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        EncodedToBufUnderflow) {
   auto info = get_test_msg_info();
-  uint8_t buf[37];
+  uint8_t buf[31];
 
-  for (uint8_t i = 0; i < 37; i++) {
-    EXPECT_EQ(
-        sbp_msg_ssr_flag_high_level_encode(&buf[0], i, nullptr, &info.test_msg),
-        SBP_ENCODE_ERROR);
+  for (uint8_t i = 0; i < 31; i++) {
+    EXPECT_EQ(sbp_msg_ssr_flag_high_level_dep_a_encode(&buf[0], i, nullptr,
+                                                       &info.test_msg),
+              SBP_ENCODE_ERROR);
   }
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, DecodeFromBuf) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0, DecodeFromBuf) {
   auto info = get_test_msg_info();
-  sbp_msg_ssr_flag_high_level_t msg{};
+  sbp_msg_ssr_flag_high_level_dep_a_t msg{};
   uint8_t n_read;
 
-  EXPECT_EQ(sbp_msg_ssr_flag_high_level_decode(&info.encoded_payload[0],
-                                               info.payload_len, &n_read, &msg),
+  EXPECT_EQ(sbp_msg_ssr_flag_high_level_dep_a_decode(
+                &info.encoded_payload[0], info.payload_len, &n_read, &msg),
             SBP_OK);
-  EXPECT_EQ(n_read, 37);
+  EXPECT_EQ(n_read, 31);
   EXPECT_EQ(msg, info.test_msg);
 
   sbp_msg_t wrapped_msg{};
-  EXPECT_EQ(sbp_message_decode(&info.encoded_payload[0], info.payload_len,
-                               &n_read, SbpMsgSsrFlagHighLevel, &wrapped_msg),
-            SBP_OK);
-  EXPECT_EQ(n_read, 37);
+  EXPECT_EQ(
+      sbp_message_decode(&info.encoded_payload[0], info.payload_len, &n_read,
+                         SbpMsgSsrFlagHighLevelDepA, &wrapped_msg),
+      SBP_OK);
+  EXPECT_EQ(n_read, 31);
   EXPECT_EQ(msg, info.test_msg);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        DecodeFromBufWithoutNread) {
   auto info = get_test_msg_info();
-  sbp_msg_ssr_flag_high_level_t msg{};
+  sbp_msg_ssr_flag_high_level_dep_a_t msg{};
 
-  EXPECT_EQ(sbp_msg_ssr_flag_high_level_decode(&info.encoded_payload[0],
-                                               info.payload_len, nullptr, &msg),
+  EXPECT_EQ(sbp_msg_ssr_flag_high_level_dep_a_decode(
+                &info.encoded_payload[0], info.payload_len, nullptr, &msg),
             SBP_OK);
   EXPECT_EQ(msg, info.test_msg);
 }
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        DecodeFromBufUnderflow) {
   auto info = get_test_msg_info();
-  sbp_msg_ssr_flag_high_level_t msg{};
+  sbp_msg_ssr_flag_high_level_dep_a_t msg{};
 
   for (uint8_t i = 0; i < info.payload_len; i++) {
     int expected_return = SBP_DECODE_ERROR;
 
-    EXPECT_EQ(sbp_msg_ssr_flag_high_level_decode(&info.encoded_payload[0], i,
-                                                 nullptr, &msg),
+    EXPECT_EQ(sbp_msg_ssr_flag_high_level_dep_a_decode(&info.encoded_payload[0],
+                                                       i, nullptr, &msg),
               expected_return);
   }
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        ReceiveThroughSbpState) {
   auto info = get_test_msg_info();
   sbp_state_t state;
@@ -528,7 +531,7 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
   EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        ReceiveThroughSbpStateUnderflow) {
   auto info = get_test_msg_info();
 
@@ -553,7 +556,7 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
   }
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, SlowRead) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0, SlowRead) {
   auto info = get_test_msg_info();
   sbp_state_t state;
   sbp_state_init(&state);
@@ -572,7 +575,7 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, SlowRead) {
   EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, BadCRC) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0, BadCRC) {
   auto info = get_test_msg_info();
   uint8_t buf[SBP_MAX_FRAME_LEN];
   memcpy(&buf[0], info.encoded_frame, info.frame_len);
@@ -596,7 +599,8 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, BadCRC) {
   EXPECT_EQ(handler.outputs.size(), 0);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, SendThroughSbpState) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
+       SendThroughSbpState) {
   auto info = get_test_msg_info();
   sbp_state_t state;
   sbp_state_init(&state);
@@ -604,14 +608,14 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, SendThroughSbpState) {
   auto writer = info.get_frame_writer();
   sbp_state_set_io_context(&state, &writer);
 
-  EXPECT_EQ(sbp_msg_ssr_flag_high_level_send(&state, info.sender_id,
-                                             &info.test_msg, &Writer::write_c),
+  EXPECT_EQ(sbp_msg_ssr_flag_high_level_dep_a_send(
+                &state, info.sender_id, &info.test_msg, &Writer::write_c),
             SBP_OK);
   EXPECT_EQ(writer.len(), info.frame_len);
   EXPECT_EQ(memcmp(writer.data(), &info.encoded_frame[0], writer.len()), 0);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        SendWrappedThroughSbpState) {
   auto info = get_test_msg_info();
   sbp_state_t state;
@@ -620,14 +624,14 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
   auto writer = info.get_frame_writer();
   sbp_state_set_io_context(&state, &writer);
 
-  EXPECT_EQ(sbp_message_send(&state, SbpMsgSsrFlagHighLevel, info.sender_id,
+  EXPECT_EQ(sbp_message_send(&state, SbpMsgSsrFlagHighLevelDepA, info.sender_id,
                              &info.test_msg_wrapped, &Writer::write_c),
             SBP_OK);
   EXPECT_EQ(writer.len(), info.frame_len);
   EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        SendThroughSbpStateUnderflow) {
   auto info = get_test_msg_info();
 
@@ -638,15 +642,17 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
     auto writer = info.get_frame_writer(i);
     sbp_state_set_io_context(&state, &writer);
 
-    EXPECT_NE(sbp_message_send(&state, SbpMsgSsrFlagHighLevel, info.sender_id,
-                               &info.test_msg_wrapped, &Writer::write_c),
-              SBP_OK);
+    EXPECT_NE(
+        sbp_message_send(&state, SbpMsgSsrFlagHighLevelDepA, info.sender_id,
+                         &info.test_msg_wrapped, &Writer::write_c),
+        SBP_OK);
     EXPECT_EQ(writer.len(), i);
     EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, i), 0);
   }
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, DISABLED_SlowWrite) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
+       DISABLED_SlowWrite) {
   auto info = get_test_msg_info();
   sbp_state_t state;
   sbp_state_init(&state);
@@ -654,210 +660,203 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, DISABLED_SlowWrite) {
   auto writer = info.get_slow_frame_writer();
   sbp_state_set_io_context(&state, &writer);
 
-  EXPECT_EQ(sbp_message_send(&state, SbpMsgSsrFlagHighLevel, info.sender_id,
+  EXPECT_EQ(sbp_message_send(&state, SbpMsgSsrFlagHighLevelDepA, info.sender_id,
                              &info.test_msg_wrapped, &SlowWriter::write_c),
             SBP_OK);
   EXPECT_EQ(writer.len(), info.frame_len);
   EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, Comparison) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0, Comparison) {
   auto info = get_test_msg_info();
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.chain_id, greater.chain_id);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
-    make_lesser_greater(lesser.iono_corr_time.tow, greater.iono_corr_time.tow);
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.corr_time.tow, greater.corr_time.tow);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
-    make_lesser_greater(lesser.iono_corr_time.wn, greater.iono_corr_time.wn);
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
+    make_lesser_greater(lesser.corr_time.wn, greater.corr_time.wn);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.obs_time.tow, greater.obs_time.tow);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.obs_time.wn, greater.obs_time.wn);
     comparison_tests(lesser, greater);
   }
 
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.reserved[0], greater.reserved[0]);
     comparison_tests(lesser, greater);
   }
 
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.reserved[1], greater.reserved[1]);
     comparison_tests(lesser, greater);
   }
 
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.reserved[2], greater.reserved[2]);
     comparison_tests(lesser, greater);
   }
 
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.reserved[3], greater.reserved[3]);
     comparison_tests(lesser, greater);
   }
 
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.reserved[4], greater.reserved[4]);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
-    make_lesser_greater(lesser.sat_corr_time.tow, greater.sat_corr_time.tow);
-    comparison_tests(lesser, greater);
-  }
-  {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
-    make_lesser_greater(lesser.sat_corr_time.wn, greater.sat_corr_time.wn);
-    comparison_tests(lesser, greater);
-  }
-  {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.ssr_sol_id, greater.ssr_sol_id);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.tile_id, greater.tile_id);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.tile_set_id, greater.tile_set_id);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.use_bds_sat, greater.use_bds_sat);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.use_gal_sat, greater.use_gal_sat);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.use_gps_sat, greater.use_gps_sat);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.use_iono_grid_point_sat_los,
                         greater.use_iono_grid_point_sat_los);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.use_iono_grid_points,
                         greater.use_iono_grid_points);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.use_iono_tile_sat_los,
                         greater.use_iono_tile_sat_los);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.use_qzss_sat, greater.use_qzss_sat);
     comparison_tests(lesser, greater);
   }
   {
-    sbp_msg_ssr_flag_high_level_t lesser = info.test_msg;
-    sbp_msg_ssr_flag_high_level_t greater = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t lesser = info.test_msg;
+    sbp_msg_ssr_flag_high_level_dep_a_t greater = info.test_msg;
     make_lesser_greater(lesser.use_tropo_grid_points,
                         greater.use_tropo_grid_points);
     comparison_tests(lesser, greater);
   }
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, CppTraitsProperties) {
-  // EXPECT_EQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::id,
-  // SbpMsgSsrFlagHighLevel);
-  EXPECT_STREQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::name,
-               "MSG_SSR_FLAG_HIGH_LEVEL");
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
+       CppTraitsProperties) {
+  // EXPECT_EQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::id,
+  // SbpMsgSsrFlagHighLevelDepA);
+  EXPECT_STREQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::name,
+               "MSG_SSR_FLAG_HIGH_LEVEL_DEP_A");
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        CppTraitsFromSbpMsgT) {
   auto info = get_test_msg_info();
 
   const sbp_msg_t &const_sbp_msg_t = info.test_msg_wrapped;
   sbp_msg_t &non_const_sbp_msg_t = info.test_msg_wrapped;
 
-  const sbp_msg_ssr_flag_high_level_t &const_unwrapped =
-      sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::get(const_sbp_msg_t);
-  sbp_msg_ssr_flag_high_level_t &non_const_unwrapped =
-      sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::get(
+  const sbp_msg_ssr_flag_high_level_dep_a_t &const_unwrapped =
+      sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::get(
+          const_sbp_msg_t);
+  sbp_msg_ssr_flag_high_level_dep_a_t &non_const_unwrapped =
+      sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::get(
           non_const_sbp_msg_t);
 
   EXPECT_EQ((const void *)&const_sbp_msg_t, (const void *)&const_unwrapped);
   EXPECT_EQ((void *)&non_const_sbp_msg_t, (void *)&non_const_unwrapped);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, CppTraitsToSbpMsgT) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
+       CppTraitsToSbpMsgT) {
   auto info = get_test_msg_info();
 
   sbp_msg_t msg1 =
-      sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::to_sbp_msg(
+      sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::to_sbp_msg(
           info.test_msg);
-  EXPECT_EQ(msg1.ssr_flag_high_level, info.test_msg);
+  EXPECT_EQ(msg1.ssr_flag_high_level_dep_a, info.test_msg);
 
   sbp_msg_t msg2;
-  sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::to_sbp_msg(info.test_msg,
-                                                                &msg2);
-  EXPECT_EQ(msg2.ssr_flag_high_level, info.test_msg);
+  sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::to_sbp_msg(
+      info.test_msg, &msg2);
+  EXPECT_EQ(msg2.ssr_flag_high_level_dep_a, info.test_msg);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, CppTraitsEncodedLen) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
+       CppTraitsEncodedLen) {
   auto info = get_test_msg_info();
-  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::encoded_len(
-                info.test_msg),
-            info.payload_len);
+  EXPECT_EQ(
+      sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::encoded_len(
+          info.test_msg),
+      info.payload_len);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        CppTraitsSendThroughSbpState) {
   auto info = get_test_msg_info();
   sbp_state_t state;
@@ -866,40 +865,40 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
   auto writer = info.get_frame_writer();
   sbp_state_set_io_context(&state, &writer);
 
-  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::send(
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::send(
                 &state, info.sender_id, info.test_msg, &Writer::write_c),
             SBP_OK);
   EXPECT_EQ(writer.len(), info.frame_len);
   EXPECT_EQ(memcmp(writer.data(), &info.encoded_frame[0], writer.len()), 0);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        CppTraitsEncodeToBuf) {
   auto info = get_test_msg_info();
-  uint8_t buf[37];
+  uint8_t buf[31];
   uint8_t n_written;
 
-  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::encode(
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::encode(
                 &buf[0], sizeof(buf), &n_written, info.test_msg),
             SBP_OK);
-  EXPECT_EQ(n_written, 37);
-  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 37), 0);
+  EXPECT_EQ(n_written, 31);
+  EXPECT_EQ(memcmp(&buf[0], info.encoded_payload, 31), 0);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        CppTraitsDecodeFromBuf) {
   auto info = get_test_msg_info();
-  sbp_msg_ssr_flag_high_level_t msg{};
+  sbp_msg_ssr_flag_high_level_dep_a_t msg{};
   uint8_t n_read;
 
-  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_t>::decode(
+  EXPECT_EQ(sbp::MessageTraits<sbp_msg_ssr_flag_high_level_dep_a_t>::decode(
                 &info.encoded_payload[0], info.payload_len, &n_read, &msg),
             SBP_OK);
-  EXPECT_EQ(n_read, 37);
+  EXPECT_EQ(n_read, 31);
   EXPECT_EQ(msg, info.test_msg);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        ReceiveThroughMessageHandler) {
   auto info = get_test_msg_info();
   auto reader = info.get_frame_reader();
@@ -918,13 +917,13 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
   EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        ProcessSbpMsgTThroughMessageHandler) {
   auto info = get_test_msg_info();
   sbp::State state{};
   CppHandler handler(&state);
 
-  state.process_message(info.sender_id, SbpMsgSsrFlagHighLevel,
+  state.process_message(info.sender_id, SbpMsgSsrFlagHighLevelDepA,
                         &info.test_msg_wrapped);
 
   EXPECT_EQ(handler.outputs.size(), 1);
@@ -932,7 +931,8 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
   EXPECT_EQ(handler.outputs[0].msg, info.test_msg);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, SendThroughCppState) {
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
+       SendThroughCppState) {
   auto info = get_test_msg_info();
   auto writer = info.get_frame_writer();
 
@@ -944,7 +944,7 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0, SendThroughCppState) {
   EXPECT_EQ(memcmp(writer.data(), info.encoded_frame, info.frame_len), 0);
 }
 
-TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
+TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevelDepA0,
        SendWrappedSbpMsgTThroughCppState) {
   auto info = get_test_msg_info();
   auto writer = info.get_frame_writer();
@@ -952,7 +952,7 @@ TEST_F(Testauto_check_sbp_integrity_MsgSsrFlagHighLevel0,
   sbp::State state{};
   state.set_writer(&writer);
 
-  EXPECT_EQ(state.send_message(info.sender_id, SbpMsgSsrFlagHighLevel,
+  EXPECT_EQ(state.send_message(info.sender_id, SbpMsgSsrFlagHighLevelDepA,
                                info.test_msg_wrapped),
             SBP_OK);
   EXPECT_EQ(writer.len(), info.frame_len);

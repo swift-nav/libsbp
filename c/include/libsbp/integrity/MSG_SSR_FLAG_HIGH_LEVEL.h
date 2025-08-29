@@ -72,9 +72,14 @@ typedef struct {
   sbp_gps_time_sec_t obs_time;
 
   /**
-   * GNSS reference time of the correction associated to the flag.
+   * GNSS reference time of the ionospheric correction associated to the flag.
    */
-  sbp_gps_time_sec_t corr_time;
+  sbp_gps_time_sec_t iono_corr_time;
+
+  /**
+   * GNSS reference time of the satellite correction associated to the flag.
+   */
+  sbp_gps_time_sec_t sat_corr_time;
 
   /**
    * SSR Solution ID.

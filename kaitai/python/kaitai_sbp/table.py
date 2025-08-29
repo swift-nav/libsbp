@@ -85,7 +85,8 @@ TABLE = {
     2305: Imu.MsgImuAux,
     2309: Imu.MsgImuComp,
   
-    3001: Integrity.MsgSsrFlagHighLevel,
+    3001: Integrity.MsgSsrFlagHighLevelDepA,
+    3002: Integrity.MsgSsrFlagHighLevel,
     3005: Integrity.MsgSsrFlagSatellites,
     3011: Integrity.MsgSsrFlagTropoGridPoints,
     3015: Integrity.MsgSsrFlagIonoGridPoints,

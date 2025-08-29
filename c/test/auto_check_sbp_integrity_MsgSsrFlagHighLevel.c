@@ -90,13 +90,13 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
 
     logging_reset();
 
-    sbp_callback_register(&sbp_state, 3001, &msg_callback,
+    sbp_callback_register(&sbp_state, 3002, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
-        85, 185, 11, 66, 0, 31, 180, 0, 0,  0, 3,  0,   104,
-        1,  0,   0,  6,  0, 10, 20,  0, 30, 0, 40, 1,   2,
-        3,  4,   0,  0,  0, 0,  0,   5, 6,  7, 8,  105, 3,
+        85, 186, 11, 66,  0, 37, 180, 0, 0, 0,  3,  0, 109, 1,   0,
+        0,  6,   0,  104, 1, 0,  0,   6, 0, 10, 20, 0, 30,  0,   40,
+        1,  2,   3,  4,   0, 0,  0,   0, 0, 5,  6,  7, 8,   177, 238,
     };
 
     dummy_reset();
@@ -106,9 +106,9 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
 
     test_msg.ssr_flag_high_level.chain_id = 40;
 
-    test_msg.ssr_flag_high_level.corr_time.tow = 360;
+    test_msg.ssr_flag_high_level.iono_corr_time.tow = 365;
 
-    test_msg.ssr_flag_high_level.corr_time.wn = 6;
+    test_msg.ssr_flag_high_level.iono_corr_time.wn = 6;
 
     test_msg.ssr_flag_high_level.obs_time.tow = 180;
 
@@ -123,6 +123,10 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
     test_msg.ssr_flag_high_level.reserved[3] = 0;
 
     test_msg.ssr_flag_high_level.reserved[4] = 0;
+
+    test_msg.ssr_flag_high_level.sat_corr_time.tow = 360;
+
+    test_msg.ssr_flag_high_level.sat_corr_time.wn = 6;
 
     test_msg.ssr_flag_high_level.ssr_sol_id = 10;
 
@@ -176,17 +180,17 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
         "expected 40, is %" PRId64,
         (int64_t)last_msg.msg.ssr_flag_high_level.chain_id);
 
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.corr_time.tow == 360,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.corr_time.tow, "
-        "expected 360, is %" PRId64,
-        (int64_t)last_msg.msg.ssr_flag_high_level.corr_time.tow);
+    ck_assert_msg(last_msg.msg.ssr_flag_high_level.iono_corr_time.tow == 365,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_high_level.iono_corr_time.tow, "
+                  "expected 365, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_flag_high_level.iono_corr_time.tow);
 
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.corr_time.wn == 6,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.corr_time.wn, "
-        "expected 6, is %" PRId64,
-        (int64_t)last_msg.msg.ssr_flag_high_level.corr_time.wn);
+    ck_assert_msg(last_msg.msg.ssr_flag_high_level.iono_corr_time.wn == 6,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_high_level.iono_corr_time.wn, "
+                  "expected 6, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_flag_high_level.iono_corr_time.wn);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_high_level.obs_time.tow == 180,
@@ -225,6 +229,18 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
         "incorrect value for last_msg.msg.ssr_flag_high_level.reserved[4], "
         "expected 0, is %" PRId64,
         (int64_t)last_msg.msg.ssr_flag_high_level.reserved[4]);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_high_level.sat_corr_time.tow == 360,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_high_level.sat_corr_time.tow, "
+                  "expected 360, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_flag_high_level.sat_corr_time.tow);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_high_level.sat_corr_time.wn == 6,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_high_level.sat_corr_time.wn, expected "
+                  "6, is %" PRId64,
+                  (int64_t)last_msg.msg.ssr_flag_high_level.sat_corr_time.wn);
 
     ck_assert_msg(
         last_msg.msg.ssr_flag_high_level.ssr_sol_id == 10,
