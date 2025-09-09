@@ -19,7 +19,8 @@ ADD . /work
 
 RUN pip3 install -r /work/setup_requirements.txt
 RUN pip3 install -r /work/requirements.txt
-RUN pip3 install kaitaistruct
+# keep in sync with above
+RUN pip3 install kaitaistruct==0.10.0
 
 RUN pip3 install wheel setuptools
 
