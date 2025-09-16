@@ -1,5 +1,19 @@
 # Changelog
 
+## [v6.3.0](https://github.com/swift-nav/libsbp/tree/v6.3.0)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.2.2...v6.3.0)
+
+**Merged pull requests:**
+
+- Update rules\_swiftnav [\#1500](https://github.com/swift-nav/libsbp/pull/1500) ([martin4861](https://github.com/martin4861))
+- Fix benchmark builds [\#1499](https://github.com/swift-nav/libsbp/pull/1499) ([martin4861](https://github.com/martin4861))
+- Use latest versions and remove out-of-date actions for sonar \ [\#1498](https://github.com/swift-nav/libsbp/pull/1498) ([martin4861](https://github.com/martin4861))
+- Investigate cmake issue [\#1495](https://github.com/swift-nav/libsbp/pull/1495) ([martin4861](https://github.com/martin4861))
+- Update github actions [\#1494](https://github.com/swift-nav/libsbp/pull/1494) ([martin4861](https://github.com/martin4861))
+- Remove deprecated  ubuntu-20.04 runners [\#1490](https://github.com/swift-nav/libsbp/pull/1490) ([armallen](https://github.com/armallen))
+- New High Level Flag Message \(3002\)[\#1487](https://github.com/swift-nav/libsbp/pull/1487) ([armallen](https://github.com/armallen))
+
 ## [v6.2.2](https://github.com/swift-nav/libsbp/tree/v6.2.2)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.2.1...v6.2.2)
