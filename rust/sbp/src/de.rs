@@ -11,8 +11,8 @@ use dencode::FramedRead;
 use futures::StreamExt;
 
 use crate::{
-    messages::{invalid::Invalid, SbpMsgParseError},
-    HandleParseError, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE,
+    CRC_LEN, HEADER_LEN, HandleParseError, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE, Sbp,
+    messages::{SbpMsgParseError, invalid::Invalid},
 };
 
 /// Deserialize the IO stream into an iterator of messages.
@@ -275,7 +275,7 @@ impl dencode::Decoder for FramerImpl {
 }
 
 /// The wire representation of an SBP message.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Frame(BytesMut);
 
 impl Frame {
