@@ -1,8 +1,6 @@
 [workspace]
-members = [
-  "rust/sbp",
-  "rust/sbp2json"
-]
+resolver = "3"
+members = ["rust/sbp", "rust/sbp2json"]
 
 [profile.release]
 lto = true
