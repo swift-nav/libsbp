@@ -1,14 +1,15 @@
 use std::io;
 
+use base64::{Engine, prelude::BASE64_STANDARD};
 use bytes::{Buf, BytesMut};
 use dencode::{Decoder, FramedRead};
 use serde::de::DeserializeOwned;
 use serde_json::Deserializer;
 
 use crate::{
+    BUFLEN,
     json::{Json2JsonInput, JsonError, JsonInput},
     messages::Sbp,
-    BUFLEN,
 };
 
 /// Deserialize the IO stream into an iterator of messages.
@@ -62,7 +63,9 @@ impl JsonDecoder {
     fn parse_json(&mut self, input: JsonInput) -> Result<Sbp, JsonError> {
         let data = input.into_inner()?;
         self.payload_buf.clear();
-        base64::decode_config_buf(&data.payload, base64::STANDARD, &mut self.payload_buf)?;
+
+        BASE64_STANDARD.decode_vec(&data.payload, &mut self.payload_buf)?;
+
         Sbp::from_parts(
             data.msg_type,
             data.sender,

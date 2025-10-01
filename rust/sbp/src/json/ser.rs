@@ -1,17 +1,18 @@
 use std::{borrow::Borrow, convert::TryInto, io};
 
+use base64::{Engine, prelude::BASE64_STANDARD};
 use bytes::{BufMut, BytesMut};
 use dencode::{Encoder, FramedWrite, IterSinkExt};
 use serde::Serialize;
-use serde_json::{ser::Formatter, Serializer};
+use serde_json::{Serializer, ser::Formatter};
 
 use crate::{
+    BUFLEN, CRC_LEN, HEADER_LEN, MIN_FRAME_LEN, PREAMBLE, SbpMessage,
     json::{
         CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput, JsonError,
         JsonOutput,
     },
     messages::Sbp,
-    SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, MIN_FRAME_LEN, PREAMBLE,
 };
 
 const BASE64_BUFLEN: usize = BUFLEN * 4;
@@ -190,7 +191,7 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
 
     fn encode(&mut self, input: Json2JsonInput, dst: &mut BytesMut) -> Result<(), Self::Error> {
         let formatter = self.formatter.clone();
-        let payload = base64::decode(input.data.payload)?;
+        let payload = BASE64_STANDARD.decode(input.data.payload)?;
         let msg = Sbp::from_parts(
             input.data.msg_type,
             input.data.sender,
@@ -219,7 +220,7 @@ pub(super) fn get_common_fields<'a, M: SbpMessage>(
     if let Err(crate::messages::invalid::Invalid { invalid_frame, .. }) =
         (*msg).clone().into_valid_msg()
     {
-        base64::encode_config_buf(&invalid_frame, base64::STANDARD, payload_buf);
+        BASE64_STANDARD.encode_string(&invalid_frame, payload_buf);
         return Ok(Some(CommonJson {
             preamble: None,
             sender: None,
@@ -243,11 +244,8 @@ pub(super) fn get_common_fields<'a, M: SbpMessage>(
         .map(u16::from_le_bytes);
 
     // won't panic because MIN_FRAME_LEN > HEADER_LEN
-    base64::encode_config_buf(
-        &frame_buf[HEADER_LEN..HEADER_LEN + size],
-        base64::STANDARD,
-        payload_buf,
-    );
+    BASE64_STANDARD.encode_string(&frame_buf[HEADER_LEN..HEADER_LEN + size], payload_buf);
+
     Ok(Some(CommonJson {
         preamble: Some(PREAMBLE),
         sender: Some(msg.sender_id().unwrap_or_default()),

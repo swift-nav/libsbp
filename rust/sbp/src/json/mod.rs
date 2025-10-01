@@ -7,18 +7,19 @@ mod ser;
 use std::collections::HashMap;
 use std::io;
 
+use base64::{Engine, prelude::BASE64_STANDARD};
 use bytes::BytesMut;
 use serde::{Deserialize, Serialize};
-use serde_json::{ser::Formatter, Value};
+use serde_json::{Value, ser::Formatter};
 
 pub use serde_json::ser::CompactFormatter;
 
-use crate::{messages::invalid::Invalid, HandleParseError, Sbp};
+use crate::{HandleParseError, Sbp, messages::invalid::Invalid};
 #[cfg(feature = "async")]
 pub use de::stream_messages;
 pub use de::{iter_json2json_messages, iter_messages, iter_messages_from_fields};
 
-pub use ser::{to_vec, to_writer, Json2JsonEncoder, JsonEncoder};
+pub use ser::{Json2JsonEncoder, JsonEncoder, to_vec, to_writer};
 
 use crate::SbpMessage;
 pub use convert::JsonMap;
@@ -196,7 +197,8 @@ impl HandleParseError<Sbp> for JsonError {
             Self::InvalidMsg(InvalidMsgInput { payload }) => {
                 // todo remove allocation here
                 let mut invalid_frame = Vec::<u8>::new();
-                base64::decode_config_buf(&payload, base64::STANDARD, &mut invalid_frame)
+                BASE64_STANDARD
+                    .decode_vec(&payload, &mut invalid_frame)
                     .expect("unable to recover from base64 error");
                 Invalid {
                     msg_id: None,
