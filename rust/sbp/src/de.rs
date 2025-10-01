@@ -279,6 +279,28 @@ impl dencode::Decoder for FramerImpl {
 pub struct Frame(BytesMut);
 
 impl Frame {
+    pub fn decode_bytes(src: &mut bytes::Bytes) -> Result<Option<Self>, Error> {
+        let start = match src.iter().position(|b| b == &PREAMBLE) {
+            Some(idx) => idx,
+            None => {
+                src.advance(src.len());
+                return Ok(None);
+            }
+        };
+        let _ = src.split_to(start);
+        if src.remaining() < HEADER_LEN {
+            return Ok(None);
+        }
+
+        let end = HEADER_LEN + src[PAYLOAD_INDEX] as usize + CRC_LEN;
+
+        if src.remaining() < end {
+            return Ok(None);
+        }
+
+        Ok(Some(Frame(src.split_to(end).into())))
+    }
+
     pub fn msg_type(&self) -> Option<u16> {
         self.as_bytes()
             .get(1..3)
@@ -464,6 +486,24 @@ mod tests {
             Error::IoError(_)
         ));
         assert!(now.elapsed() >= timeout_duration);
+    }
+
+    #[test]
+    fn test_frame_decode() {
+        const PACKET: &[u8] = &[
+            0x55u8, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee, 0xff,
+            0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb, 0xbf,
+        ];
+        let mut bytes = bytes::Bytes::from_static(PACKET);
+
+        let frame = Frame::decode_bytes(&mut bytes).unwrap().unwrap();
+        assert_eq!(frame.msg_type(), Some(523)); // 0x020B
+        assert_eq!(frame.sender_id(), Some(35027)); // 0x88D3
+        assert_eq!(
+            frame.payload().unwrap(),
+            &PACKET[HEADER_LEN..PACKET.len() - CRC_LEN]
+        );
+        assert!(bytes.is_empty());
     }
 
     /// Test parsing when we don't have enough data for a frame message
