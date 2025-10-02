@@ -25,24 +25,16 @@ jobs:
       - run: ./scripts/ci_prepare_rust.bash
         shell: bash
 
-      - uses: actions-rs/toolchain@v1
+      - name: Install rust stable latest
+        uses: dtolnay/rust-toolchain@stable
         with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          components: rustfmt
+          components: rustfmt,clippy
 
-      - uses: actions-rs/cargo@v1
-        name: Format Check
-        with:
-          command: fmt
-          args: -- --check
+      - name: Format Check
+        run: cargo fmt -- --check
 
-      - uses: actions-rs/cargo@v1
-        name: Lint Check
-        with:
-          command: clippy
-          args: --all-features --all-targets -- -D warnings
+      - name: Lint Check
+        run : cargo clippy --all-features --all-targets -- -D warnings
 
   test:
     name: Tests
@@ -53,11 +45,8 @@ jobs:
       - run: ./scripts/ci_prepare_rust.bash
         shell: bash
 
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Run tests
         run: make test-rust
@@ -83,11 +72,8 @@ jobs:
       - run: ./scripts/ci_prepare_rust.bash
         shell: bash
 
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
+      - name: Install rust
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Fetch Tags
         run: git fetch --tags --prune --force

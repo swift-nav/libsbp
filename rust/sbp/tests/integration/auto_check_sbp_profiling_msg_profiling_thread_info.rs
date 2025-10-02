@@ -53,9 +53,13 @@ fn test_auto_check_sbp_profiling_msg_profiling_thread_info() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0],
+                    &[
+                        70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0
+                    ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0],
+                    &[
+                        70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0
+                    ],
                     msg.name.as_bytes()
                 );
                 assert_eq!(
@@ -137,9 +141,13 @@ fn test_json2sbp_auto_check_sbp_profiling_msg_profiling_thread_info() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0],
+                    &[
+                        70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0
+                    ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0],
+                    &[
+                        70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0
+                    ],
                     msg.name.as_bytes()
                 );
                 assert_eq!(
@@ -229,9 +237,13 @@ fn test_sbp2json_auto_check_sbp_profiling_msg_profiling_thread_info() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0],
+                    &[
+                        70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0
+                    ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0],
+                    &[
+                        70, 117, 115, 105, 111, 110, 32, 101, 110, 103, 105, 110, 101, 0
+                    ],
                     msg.name.as_bytes()
                 );
                 assert_eq!(
