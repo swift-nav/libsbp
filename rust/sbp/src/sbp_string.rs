@@ -102,9 +102,11 @@ impl SbpString<Vec<u8>, DoubleNullTerminated> {
     ) -> Result<Self, DoubleNullTerminatedError> {
         let vec = data.into();
         if let [.., two, one] = vec.as_slice()
-            && two == &0 && one == &0 {
-                return Ok(SbpString::new(vec));
-            };
+            && two == &0
+            && one == &0
+        {
+            return Ok(SbpString::new(vec));
+        };
         Err(DoubleNullTerminatedError)
     }
 
