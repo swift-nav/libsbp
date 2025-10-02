@@ -81,13 +81,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -103,13 +111,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -125,13 +141,25 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 15,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 15, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 1.16000003814697266e+01 ), "incorrect value for uart_ftdi.tx_throughput, expected 1.16000003814697266e+01, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(1.16000003814697266e+01),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 1.16000003814697266e+01, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -199,13 +227,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -221,13 +257,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -243,13 +287,25 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 0,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 6.59999996423721313e-02 ), "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(6.59999996423721313e-02),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -317,13 +373,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -339,13 +403,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -361,13 +433,25 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 10,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 10, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 1.38999998569488525e-01 ), "incorrect value for uart_ftdi.tx_throughput, expected 1.38999998569488525e-01, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(1.38999998569488525e-01),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 1.38999998569488525e-01, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -435,13 +519,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -457,13 +549,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -479,13 +579,25 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 0,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 6.59999996423721313e-02 ), "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(6.59999996423721313e-02),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -553,13 +665,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 8.19672085344791412e-03 ), "incorrect value for uart_a.rx_throughput, expected 8.19672085344791412e-03, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(8.19672085344791412e-03),
+                    "incorrect value for uart_a.rx_throughput, expected 8.19672085344791412e-03, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -575,13 +695,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 2,
                     "incorrect value for uart_b.tx_buffer_level, expected 2, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 9.83606576919555664e-02 ), "incorrect value for uart_b.tx_throughput, expected 9.83606576919555664e-02, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(9.83606576919555664e-02),
+                    "incorrect value for uart_b.tx_throughput, expected 9.83606576919555664e-02, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -597,13 +725,25 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 38,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 38, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 4.93999987840652466e-01 ), "incorrect value for uart_ftdi.tx_throughput, expected 4.93999987840652466e-01, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(4.93999987840652466e-01),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 4.93999987840652466e-01, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -671,13 +811,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 2,
                     "incorrect value for uart_a.tx_buffer_level, expected 2, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 1.20000001043081284e-02 ), "incorrect value for uart_a.tx_throughput, expected 1.20000001043081284e-02, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(1.20000001043081284e-02),
+                    "incorrect value for uart_a.tx_throughput, expected 1.20000001043081284e-02, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -693,13 +841,21 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 2,
                     "incorrect value for uart_b.tx_buffer_level, expected 2, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 1.20000001043081284e-02 ), "incorrect value for uart_b.tx_throughput, expected 1.20000001043081284e-02, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(1.20000001043081284e-02),
+                    "incorrect value for uart_b.tx_throughput, expected 1.20000001043081284e-02, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -715,13 +871,25 @@ fn test_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 50,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 50, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 1.31500005722045898e+00 ), "incorrect value for uart_ftdi.tx_throughput, expected 1.31500005722045898e+00, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(1.31500005722045898e+00),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 1.31500005722045898e+00, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -808,13 +976,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -830,13 +1006,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -852,13 +1036,25 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 15,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 15, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 1.16000003814697266e+01 ), "incorrect value for uart_ftdi.tx_throughput, expected 1.16000003814697266e+01, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(1.16000003814697266e+01),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 1.16000003814697266e+01, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -931,13 +1127,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -953,13 +1157,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -975,13 +1187,25 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 0,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 6.59999996423721313e-02 ), "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(6.59999996423721313e-02),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -1054,13 +1278,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -1076,13 +1308,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -1098,13 +1338,25 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 10,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 10, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 1.38999998569488525e-01 ), "incorrect value for uart_ftdi.tx_throughput, expected 1.38999998569488525e-01, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(1.38999998569488525e-01),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 1.38999998569488525e-01, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -1177,13 +1429,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -1199,13 +1459,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -1221,13 +1489,25 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 0,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 6.59999996423721313e-02 ), "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(6.59999996423721313e-02),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -1300,13 +1580,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 8.19672085344791412e-03 ), "incorrect value for uart_a.rx_throughput, expected 8.19672085344791412e-03, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(8.19672085344791412e-03),
+                    "incorrect value for uart_a.rx_throughput, expected 8.19672085344791412e-03, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -1322,13 +1610,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 2,
                     "incorrect value for uart_b.tx_buffer_level, expected 2, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 9.83606576919555664e-02 ), "incorrect value for uart_b.tx_throughput, expected 9.83606576919555664e-02, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(9.83606576919555664e-02),
+                    "incorrect value for uart_b.tx_throughput, expected 9.83606576919555664e-02, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -1344,13 +1640,25 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 38,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 38, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 4.93999987840652466e-01 ), "incorrect value for uart_ftdi.tx_throughput, expected 4.93999987840652466e-01, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(4.93999987840652466e-01),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 4.93999987840652466e-01, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -1423,13 +1731,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 2,
                     "incorrect value for uart_a.tx_buffer_level, expected 2, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 1.20000001043081284e-02 ), "incorrect value for uart_a.tx_throughput, expected 1.20000001043081284e-02, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(1.20000001043081284e-02),
+                    "incorrect value for uart_a.tx_throughput, expected 1.20000001043081284e-02, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -1445,13 +1761,21 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 2,
                     "incorrect value for uart_b.tx_buffer_level, expected 2, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 1.20000001043081284e-02 ), "incorrect value for uart_b.tx_throughput, expected 1.20000001043081284e-02, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(1.20000001043081284e-02),
+                    "incorrect value for uart_b.tx_throughput, expected 1.20000001043081284e-02, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -1467,13 +1791,25 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 50,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 50, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 1.31500005722045898e+00 ), "incorrect value for uart_ftdi.tx_throughput, expected 1.31500005722045898e+00, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(1.31500005722045898e+00),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 1.31500005722045898e+00, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -1569,13 +1905,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -1591,13 +1935,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -1613,13 +1965,25 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 15,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 15, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 1.16000003814697266e+01 ), "incorrect value for uart_ftdi.tx_throughput, expected 1.16000003814697266e+01, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(1.16000003814697266e+01),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 1.16000003814697266e+01, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -1706,13 +2070,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -1728,13 +2100,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -1750,13 +2130,25 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 0,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 6.59999996423721313e-02 ), "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(6.59999996423721313e-02),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -1843,13 +2235,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -1865,13 +2265,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -1887,13 +2295,25 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 10,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 10, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 1.38999998569488525e-01 ), "incorrect value for uart_ftdi.tx_throughput, expected 1.38999998569488525e-01, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(1.38999998569488525e-01),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 1.38999998569488525e-01, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -1980,13 +2400,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -2002,13 +2430,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 0,
                     "incorrect value for uart_b.tx_buffer_level, expected 0, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -2024,13 +2460,25 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 0,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 6.59999996423721313e-02 ), "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(6.59999996423721313e-02),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 6.59999996423721313e-02, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -2117,13 +2565,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 8.19672085344791412e-03 ), "incorrect value for uart_a.rx_throughput, expected 8.19672085344791412e-03, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(8.19672085344791412e-03),
+                    "incorrect value for uart_a.rx_throughput, expected 8.19672085344791412e-03, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 0,
                     "incorrect value for uart_a.tx_buffer_level, expected 0, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.tx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -2139,13 +2595,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 2,
                     "incorrect value for uart_b.tx_buffer_level, expected 2, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 9.83606576919555664e-02 ), "incorrect value for uart_b.tx_throughput, expected 9.83606576919555664e-02, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(9.83606576919555664e-02),
+                    "incorrect value for uart_b.tx_throughput, expected 9.83606576919555664e-02, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -2161,13 +2625,25 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 38,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 38, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 4.93999987840652466e-01 ), "incorrect value for uart_ftdi.tx_throughput, expected 4.93999987840652466e-01, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(4.93999987840652466e-01),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 4.93999987840652466e-01, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };
@@ -2254,13 +2730,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_a.rx_buffer_level, expected 0, is {}",
                     msg.uart_a.rx_buffer_level
                 );
-                assert!(msg.uart_a.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_a.rx_throughput);
+                assert!(
+                    msg.uart_a.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_a.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_a.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_a.tx_buffer_level, 2,
                     "incorrect value for uart_a.tx_buffer_level, expected 2, is {}",
                     msg.uart_a.tx_buffer_level
                 );
-                assert!(msg.uart_a.tx_throughput.almost_eq( 1.20000001043081284e-02 ), "incorrect value for uart_a.tx_throughput, expected 1.20000001043081284e-02, is {:e}", msg.uart_a.tx_throughput);
+                assert!(
+                    msg.uart_a.tx_throughput.almost_eq(1.20000001043081284e-02),
+                    "incorrect value for uart_a.tx_throughput, expected 1.20000001043081284e-02, is {:e}",
+                    msg.uart_a.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.crc_error_count, 0,
                     "incorrect value for uart_b.crc_error_count, expected 0, is {}",
@@ -2276,13 +2760,21 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_b.rx_buffer_level, expected 0, is {}",
                     msg.uart_b.rx_buffer_level
                 );
-                assert!(msg.uart_b.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_b.rx_throughput);
+                assert!(
+                    msg.uart_b.rx_throughput.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_b.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_b.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_b.tx_buffer_level, 2,
                     "incorrect value for uart_b.tx_buffer_level, expected 2, is {}",
                     msg.uart_b.tx_buffer_level
                 );
-                assert!(msg.uart_b.tx_throughput.almost_eq( 1.20000001043081284e-02 ), "incorrect value for uart_b.tx_throughput, expected 1.20000001043081284e-02, is {:e}", msg.uart_b.tx_throughput);
+                assert!(
+                    msg.uart_b.tx_throughput.almost_eq(1.20000001043081284e-02),
+                    "incorrect value for uart_b.tx_throughput, expected 1.20000001043081284e-02, is {:e}",
+                    msg.uart_b.tx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.crc_error_count, 0,
                     "incorrect value for uart_ftdi.crc_error_count, expected 0, is {}",
@@ -2298,13 +2790,25 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_uart_state_dep_a() {
                     "incorrect value for uart_ftdi.rx_buffer_level, expected 0, is {}",
                     msg.uart_ftdi.rx_buffer_level
                 );
-                assert!(msg.uart_ftdi.rx_throughput.almost_eq( 0.00000000000000000e+00 ), "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}", msg.uart_ftdi.rx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .rx_throughput
+                        .almost_eq(0.00000000000000000e+00),
+                    "incorrect value for uart_ftdi.rx_throughput, expected 0.00000000000000000e+00, is {:e}",
+                    msg.uart_ftdi.rx_throughput
+                );
                 assert_eq!(
                     msg.uart_ftdi.tx_buffer_level, 50,
                     "incorrect value for uart_ftdi.tx_buffer_level, expected 50, is {}",
                     msg.uart_ftdi.tx_buffer_level
                 );
-                assert!(msg.uart_ftdi.tx_throughput.almost_eq( 1.31500005722045898e+00 ), "incorrect value for uart_ftdi.tx_throughput, expected 1.31500005722045898e+00, is {:e}", msg.uart_ftdi.tx_throughput);
+                assert!(
+                    msg.uart_ftdi
+                        .tx_throughput
+                        .almost_eq(1.31500005722045898e+00),
+                    "incorrect value for uart_ftdi.tx_throughput, expected 1.31500005722045898e+00, is {:e}",
+                    msg.uart_ftdi.tx_throughput
+                );
             }
             _ => panic!("Invalid message type! Expected a MsgUartStateDepa"),
         };

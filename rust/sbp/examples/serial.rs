@@ -7,7 +7,7 @@ use std::time::Duration;
 
 use serialport::prelude::*;
 
-use sbp::{iter_messages, Sbp};
+use sbp::{Sbp, iter_messages};
 
 fn main() {
     let s = SerialPortSettings {

@@ -791,7 +791,11 @@ fn test_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                     "incorrect value for states[9].state, expected 0, is {}",
                     msg.states[9].state
                 );
-                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert!(
+                    msg.states[10].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[10].cn0
+                );
                 assert_eq!(
                     msg.states[10].prn, 0,
                     "incorrect value for states[10].prn, expected 0, is {}",
@@ -985,7 +989,11 @@ fn test_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                     "incorrect value for states[9].state, expected 0, is {}",
                     msg.states[9].state
                 );
-                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert!(
+                    msg.states[10].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[10].cn0
+                );
                 assert_eq!(
                     msg.states[10].prn, 0,
                     "incorrect value for states[10].prn, expected 0, is {}",
@@ -1179,7 +1187,11 @@ fn test_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                     "incorrect value for states[9].state, expected 0, is {}",
                     msg.states[9].state
                 );
-                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert!(
+                    msg.states[10].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[10].cn0
+                );
                 assert_eq!(
                     msg.states[10].prn, 0,
                     "incorrect value for states[10].prn, expected 0, is {}",
@@ -1997,7 +2009,11 @@ fn test_json2sbp_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                     "incorrect value for states[9].state, expected 0, is {}",
                     msg.states[9].state
                 );
-                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert!(
+                    msg.states[10].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[10].cn0
+                );
                 assert_eq!(
                     msg.states[10].prn, 0,
                     "incorrect value for states[10].prn, expected 0, is {}",
@@ -2195,7 +2211,11 @@ fn test_json2sbp_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                     "incorrect value for states[9].state, expected 0, is {}",
                     msg.states[9].state
                 );
-                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert!(
+                    msg.states[10].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[10].cn0
+                );
                 assert_eq!(
                     msg.states[10].prn, 0,
                     "incorrect value for states[10].prn, expected 0, is {}",
@@ -2393,7 +2413,11 @@ fn test_json2sbp_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                     "incorrect value for states[9].state, expected 0, is {}",
                     msg.states[9].state
                 );
-                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert!(
+                    msg.states[10].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[10].cn0
+                );
                 assert_eq!(
                     msg.states[10].prn, 0,
                     "incorrect value for states[10].prn, expected 0, is {}",
@@ -3266,7 +3290,11 @@ fn test_sbp2json_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                     "incorrect value for states[9].state, expected 0, is {}",
                     msg.states[9].state
                 );
-                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert!(
+                    msg.states[10].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[10].cn0
+                );
                 assert_eq!(
                     msg.states[10].prn, 0,
                     "incorrect value for states[10].prn, expected 0, is {}",
@@ -3479,7 +3507,11 @@ fn test_sbp2json_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                     "incorrect value for states[9].state, expected 0, is {}",
                     msg.states[9].state
                 );
-                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert!(
+                    msg.states[10].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[10].cn0
+                );
                 assert_eq!(
                     msg.states[10].prn, 0,
                     "incorrect value for states[10].prn, expected 0, is {}",
@@ -3692,7 +3724,11 @@ fn test_sbp2json_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                     "incorrect value for states[9].state, expected 0, is {}",
                     msg.states[9].state
                 );
-                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert!(
+                    msg.states[10].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[10].cn0
+                );
                 assert_eq!(
                     msg.states[10].prn, 0,
                     "incorrect value for states[10].prn, expected 0, is {}",
