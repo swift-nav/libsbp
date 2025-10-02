@@ -1307,7 +1307,11 @@ fn test_auto_check_sbp_piksi_msg_cell_modem_status() {
                     "incorrect value for reserved[249], expected 80, is {}",
                     msg.reserved[249]
                 );
-                assert!(msg.signal_error_rate.almost_eq( 8.58820019531250000e+03 ), "incorrect value for signal_error_rate, expected 8.58820019531250000e+03, is {:e}", msg.signal_error_rate);
+                assert!(
+                    msg.signal_error_rate.almost_eq(8.58820019531250000e+03),
+                    "incorrect value for signal_error_rate, expected 8.58820019531250000e+03, is {:e}",
+                    msg.signal_error_rate
+                );
                 assert_eq!(
                     msg.signal_strength, 103,
                     "incorrect value for signal_strength, expected 103, is {}",
@@ -2614,7 +2618,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_cell_modem_status() {
                     "incorrect value for reserved[249], expected 80, is {}",
                     msg.reserved[249]
                 );
-                assert!(msg.signal_error_rate.almost_eq( 8.58820019531250000e+03 ), "incorrect value for signal_error_rate, expected 8.58820019531250000e+03, is {:e}", msg.signal_error_rate);
+                assert!(
+                    msg.signal_error_rate.almost_eq(8.58820019531250000e+03),
+                    "incorrect value for signal_error_rate, expected 8.58820019531250000e+03, is {:e}",
+                    msg.signal_error_rate
+                );
                 assert_eq!(
                     msg.signal_strength, 103,
                     "incorrect value for signal_strength, expected 103, is {}",
@@ -3941,7 +3949,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_cell_modem_status() {
                     "incorrect value for reserved[249], expected 80, is {}",
                     msg.reserved[249]
                 );
-                assert!(msg.signal_error_rate.almost_eq( 8.58820019531250000e+03 ), "incorrect value for signal_error_rate, expected 8.58820019531250000e+03, is {:e}", msg.signal_error_rate);
+                assert!(
+                    msg.signal_error_rate.almost_eq(8.58820019531250000e+03),
+                    "incorrect value for signal_error_rate, expected 8.58820019531250000e+03, is {:e}",
+                    msg.signal_error_rate
+                );
                 assert_eq!(
                     msg.signal_strength, 103,
                     "incorrect value for signal_strength, expected 103, is {}",

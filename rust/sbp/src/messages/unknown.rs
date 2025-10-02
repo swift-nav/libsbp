@@ -2,7 +2,7 @@
 
 use bytes::{Buf, BufMut};
 
-use crate::{wire_format::WireFormat, SbpMessage};
+use crate::{SbpMessage, wire_format::WireFormat};
 
 /// The message returned by the parser when the message type does not correspond to a known message.
 ///

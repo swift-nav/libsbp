@@ -80,14 +80,46 @@ fn test_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds_degradation() {
                     "incorrect value for header.update_interval, expected 3, is {}",
                     msg.header.update_interval
                 );
-                assert_eq!(msg.orbit_clock_bounds_degradation.clock_bound_mu_dot, 194, "incorrect value for orbit_clock_bounds_degradation.clock_bound_mu_dot, expected 194, is {}", msg.orbit_clock_bounds_degradation.clock_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.clock_bound_sig_dot, 193, "incorrect value for orbit_clock_bounds_degradation.clock_bound_sig_dot, expected 193, is {}", msg.orbit_clock_bounds_degradation.clock_bound_sig_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot, 199, "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_mu_dot, expected 199, is {}", msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot, 196, "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_sig_dot, expected 196, is {}", msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, 198, "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, expected 198, is {}", msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, 195, "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, expected 195, is {}", msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, 200, "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, expected 200, is {}", msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, 197, "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, expected 197, is {}", msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot);
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.clock_bound_mu_dot, 194,
+                    "incorrect value for orbit_clock_bounds_degradation.clock_bound_mu_dot, expected 194, is {}",
+                    msg.orbit_clock_bounds_degradation.clock_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.clock_bound_sig_dot, 193,
+                    "incorrect value for orbit_clock_bounds_degradation.clock_bound_sig_dot, expected 193, is {}",
+                    msg.orbit_clock_bounds_degradation.clock_bound_sig_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot, 199,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_mu_dot, expected 199, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot, 196,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_sig_dot, expected 196, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, 198,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, expected 198, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, 195,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, expected 195, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, 200,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, expected 200, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, 197,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, expected 197, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot
+                );
                 assert_eq!(
                     msg.sat_bitmask, 10,
                     "incorrect value for sat_bitmask, expected 10, is {}",
@@ -184,14 +216,46 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds_degradation() {
                     "incorrect value for header.update_interval, expected 3, is {}",
                     msg.header.update_interval
                 );
-                assert_eq!(msg.orbit_clock_bounds_degradation.clock_bound_mu_dot, 194, "incorrect value for orbit_clock_bounds_degradation.clock_bound_mu_dot, expected 194, is {}", msg.orbit_clock_bounds_degradation.clock_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.clock_bound_sig_dot, 193, "incorrect value for orbit_clock_bounds_degradation.clock_bound_sig_dot, expected 193, is {}", msg.orbit_clock_bounds_degradation.clock_bound_sig_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot, 199, "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_mu_dot, expected 199, is {}", msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot, 196, "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_sig_dot, expected 196, is {}", msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, 198, "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, expected 198, is {}", msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, 195, "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, expected 195, is {}", msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, 200, "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, expected 200, is {}", msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, 197, "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, expected 197, is {}", msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot);
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.clock_bound_mu_dot, 194,
+                    "incorrect value for orbit_clock_bounds_degradation.clock_bound_mu_dot, expected 194, is {}",
+                    msg.orbit_clock_bounds_degradation.clock_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.clock_bound_sig_dot, 193,
+                    "incorrect value for orbit_clock_bounds_degradation.clock_bound_sig_dot, expected 193, is {}",
+                    msg.orbit_clock_bounds_degradation.clock_bound_sig_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot, 199,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_mu_dot, expected 199, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot, 196,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_sig_dot, expected 196, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, 198,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, expected 198, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, 195,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, expected 195, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, 200,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, expected 200, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, 197,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, expected 197, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot
+                );
                 assert_eq!(
                     msg.sat_bitmask, 10,
                     "incorrect value for sat_bitmask, expected 10, is {}",
@@ -296,14 +360,46 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds_degradation() {
                     "incorrect value for header.update_interval, expected 3, is {}",
                     msg.header.update_interval
                 );
-                assert_eq!(msg.orbit_clock_bounds_degradation.clock_bound_mu_dot, 194, "incorrect value for orbit_clock_bounds_degradation.clock_bound_mu_dot, expected 194, is {}", msg.orbit_clock_bounds_degradation.clock_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.clock_bound_sig_dot, 193, "incorrect value for orbit_clock_bounds_degradation.clock_bound_sig_dot, expected 193, is {}", msg.orbit_clock_bounds_degradation.clock_bound_sig_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot, 199, "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_mu_dot, expected 199, is {}", msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot, 196, "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_sig_dot, expected 196, is {}", msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, 198, "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, expected 198, is {}", msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, 195, "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, expected 195, is {}", msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, 200, "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, expected 200, is {}", msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot);
-                assert_eq!(msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, 197, "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, expected 197, is {}", msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot);
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.clock_bound_mu_dot, 194,
+                    "incorrect value for orbit_clock_bounds_degradation.clock_bound_mu_dot, expected 194, is {}",
+                    msg.orbit_clock_bounds_degradation.clock_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.clock_bound_sig_dot, 193,
+                    "incorrect value for orbit_clock_bounds_degradation.clock_bound_sig_dot, expected 193, is {}",
+                    msg.orbit_clock_bounds_degradation.clock_bound_sig_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot, 199,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_mu_dot, expected 199, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot, 196,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_sig_dot, expected 196, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, 198,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, expected 198, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, 195,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, expected 195, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, 200,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, expected 200, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, 197,
+                    "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, expected 197, is {}",
+                    msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot
+                );
                 assert_eq!(
                     msg.sat_bitmask, 10,
                     "incorrect value for sat_bitmask, expected 10, is {}",

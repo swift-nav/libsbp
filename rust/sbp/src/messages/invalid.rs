@@ -7,7 +7,7 @@
 
 use bytes::{Buf, BufMut};
 
-use crate::{de::CrcError, messages::SbpMsgParseError, wire_format::WireFormat, SbpMessage};
+use crate::{SbpMessage, de::CrcError, messages::SbpMsgParseError, wire_format::WireFormat};
 
 /// Invalid messages occur when either the frame or message payload doesn't have enough bytes or
 /// the CRC does not match the messages payload. If the message is well formed with a message
