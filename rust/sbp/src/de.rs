@@ -4,7 +4,7 @@ use std::{
     time::{Duration, Instant},
 };
 
-use bytes::{Buf, BytesMut};
+use bytes::{Buf, Bytes, BytesMut};
 use dencode::FramedRead;
 
 #[cfg(feature = "async")]
@@ -357,6 +357,18 @@ impl Frame {
     #[inline]
     pub fn as_bytes(&self) -> &[u8] {
         self.0.chunk()
+    }
+}
+
+impl From<Frame> for BytesMut {
+    fn from(Frame(buf): Frame) -> Self {
+        buf
+    }
+}
+
+impl From<Frame> for Bytes {
+    fn from(Frame(buf): Frame) -> Self {
+        buf.into()
     }
 }
 
