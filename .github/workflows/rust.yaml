@@ -56,10 +56,13 @@ jobs:
     needs: [lint, test]
     strategy:
       matrix:
-        os:
-          - ubuntu-24.04
-          - macos-13
-          - windows-2022
+        include:
+          - os: ubuntu-24.04
+            target: x86_64-unknown-linux-musl
+          - os: macos-13
+            target: x86_64-apple-darwin
+          - os: windows-2022
+            target: x86_64-pc-windows-msvc
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v5
@@ -74,6 +77,8 @@ jobs:
 
       - name: Install rust
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
 
       - name: Fetch Tags
         run: git fetch --tags --prune --force
