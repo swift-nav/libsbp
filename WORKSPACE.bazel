@@ -22,15 +22,23 @@ x86_64_sysroot()
 
 register_swift_cc_toolchains()
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 http_archive(
     name = "rules_foreign_cc",
-    strip_prefix = "rules_foreign_cc-c65e8cfbaa002bcd1ce9c26e9fec63b0b866c94b",
-    url = "https://github.com/bazelbuild/rules_foreign_cc/archive/c65e8cfbaa002bcd1ce9c26e9fec63b0b866c94b.tar.gz",
+    sha256 = "8e5605dc2d16a4229cb8fbe398514b10528553ed4f5f7737b663fdd92f48e1c2",
+    strip_prefix = "rules_foreign_cc-0.13.0",
+    url = "https://github.com/bazel-contrib/rules_foreign_cc/releases/download/0.13.0/rules_foreign_cc-0.13.0.tar.gz",
 )
 
 load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
 
+# This sets up some common toolchains for building targets
 rules_foreign_cc_dependencies()
+
+load("@bazel_features//:deps.bzl", "bazel_features_deps")
+
+bazel_features_deps()
 
 # Hedron's Compile Commands Extractor for Bazel
 # Used to create compile_commands.json file
