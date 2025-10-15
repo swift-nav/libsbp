@@ -3,6 +3,7 @@ project(libsbp C CXX)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake" "${CMAKE_CURRENT_LIST_DIR}/cmake/common")
 option(I_KNOW_WHAT_I_AM_DOING_AND_HOW_DANGEROUS_IT_IS__LIBSBP_DISABLE_CRC_VALIDATION "Disable all CRC validation in Libsbp" OFF)
+set(SWIFT_CXX_STANDARD 17 CACHE STRING "Default C++ version for all swift targets")
 
 include(GNUInstallDirs)
 include(CCache)

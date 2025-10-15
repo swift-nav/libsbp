@@ -1,7 +1,9 @@
 # Causes the build to default to the custom toolchain
 build --incompatible_enable_cc_toolchain_resolution
 
-build --action_env=BAZEL_CXXOPTS='-std=c++14'
+# Compile all swift targets and all other codes with C++17 standards
+build --@rules_swiftnav//cc:cxx_standard=17
+build --@rules_swiftnav//cc:global_cxx_standard=17
 
 build:clang-tidy --aspects @rules_swiftnav//clang_tidy:clang_tidy.bzl%clang_tidy_aspect
 build:clang-tidy --output_groups=report
@@ -23,7 +25,7 @@ common:sanitize --@rules_swiftnav//cc:enable_symbolizer=true
 # the compiler falls back to a linear register allocator.  This
 # shouldn't cause a sanitizer build to fail.
 common:sanitize --cxxopt=-Wno-error=disabled-optimization
-common:sanitize --copt=-Wno-error=disabled-optimization 
+common:sanitize --copt=-Wno-error=disabled-optimization
 common:sanitize --linkopt=-Wno-error=disabled-optimization
 # https://github.com/bazelbuild/bazel/issues/12797#issuecomment-980641064
 common:sanitize --linkopt='-fsanitize-link-c++-runtime'
