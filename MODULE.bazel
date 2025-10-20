@@ -1,7 +1,13 @@
 module(name = "libsbp", version = "0.1.0", compatibility_level = 1)
 
 bazel_dep(name = "platforms", version = "0.0.11")
-bazel_dep(name = "rules_swiftnav", version = "0.8.0")
+bazel_dep(name = "rules_swiftnav", version = "0.9.0")
+# Use
+git_override(
+    module_name = "rules_swiftnav",
+    remote = "https://github.com/swift-nav/rules_swiftnav.git",
+    commit = "1ae7bb57e5a1f1602759e81c9ee0f457b91e35f4",
+)
 
 swift_cc_toolchain_ext = use_extension("@rules_swiftnav//cc:extensions.bzl", "swift_cc_toolchain_extension")
 use_repo(
