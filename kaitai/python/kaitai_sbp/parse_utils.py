@@ -6,6 +6,7 @@ from .table import SbpMessage
 import binascii
 import sys
 import base64
+from io import SEEK_SET, SEEK_CUR, SEEK_END
 
 
 SBP_HEADER_LEN = 6
@@ -28,8 +29,13 @@ class BufferKaitaiStream(KaitaiStream):
             self.pos += size
             return buf
 
-        def seek(self, pos):
-            self.pos = pos
+        def seek(self, offset, whence=SEEK_SET):
+            if whence == SEEK_SET:
+                self.pos = offset
+            elif whence == SEEK_CUR:
+                self.pos += offset
+            elif whence == SEEK_END:
+                self.pos = len(self.buf)
 
         def tell(self):
             return self.pos
