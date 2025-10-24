@@ -35,7 +35,7 @@ class BufferKaitaiStream(KaitaiStream):
             elif whence == SEEK_CUR:
                 self.pos += offset
             elif whence == SEEK_END:
-                self.pos = len(self.buf)
+                self.pos = len(self.buf) + offset
             return self.pos
 
         def tell(self):
