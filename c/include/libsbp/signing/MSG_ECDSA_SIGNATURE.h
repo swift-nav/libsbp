@@ -45,7 +45,7 @@ extern "C" {
  */
 typedef struct {
   /**
-   * Describes the format of the `signed\_messages` field below.
+   * Describes the format of the `signed_messages` field below.
    */
   u8 flags;
 

@@ -184,7 +184,7 @@ def iter_messages_buffered(fp):
 
 
 def sbp_main(args):
-    reader = io.open(args.file.fileno(), 'rb')
+    reader = io.open(args.file.fileno(), 'rb', closefd=False)
     include = set(args.include)
     iter_fn = iter_messages_unbuffered if args.unbuffered else iter_messages_buffered
 

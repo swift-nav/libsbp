@@ -623,7 +623,7 @@ class MsgEcdsaSignature(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   flags : int
-    Describes the format of the `signed\_messages` field below.
+    Describes the format of the `signed_messages` field below.
   stream_counter : int
     Signature message counter. Zero indexed and incremented with each
     signature message.  The counter will not increment if this message was in
@@ -754,7 +754,7 @@ class MsgEcdsaSignatureDepB(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   flags : int
-    Describes the format of the `signed\_messages` field below.
+    Describes the format of the `signed_messages` field below.
   stream_counter : int
     Signature message counter. Zero indexed and incremented with each
     signature message.  The counter will not increment if this message was in
@@ -893,7 +893,7 @@ class MsgEcdsaSignatureDepA(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   flags : int
-    Describes the format of the `signed\_messages` field below.
+    Describes the format of the `signed_messages` field below.
   stream_counter : int
     Signature message counter. Zero indexed and incremented with each
     signature message.  The counter will not increment if this message was in

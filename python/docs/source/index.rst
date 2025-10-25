@@ -71,6 +71,7 @@ Messages:
    sbp.flash
    sbp.gnss
    sbp.imu
+   sbp.integrity
    sbp.linux
    sbp.logging
    sbp.mag
@@ -81,9 +82,11 @@ Messages:
    sbp.piksi
    sbp.sbas
    sbp.settings
+   sbp.signing
    sbp.solution_meta
    sbp.ssr
    sbp.system
+   sbp.telemetry
    sbp.tracking
    sbp.user
    sbp.vehicle
