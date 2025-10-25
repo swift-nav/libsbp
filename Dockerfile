@@ -84,7 +84,8 @@ RUN \
       python3.10 python3.10-dev python3.10-distutils \
       python3.11 python3.11-dev python3.11-distutils \
       dpkg-dev \
-      cmake \
+      cmake=3.22.1-1ubuntu1 \
+      cmake-data=3.22.1-1ubuntu1 \
       libjson-perl \
       libdigest-crc-perl \
   && curl -sSL https://get.haskellstack.org/ | sh \
