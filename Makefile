@@ -109,7 +109,7 @@ else
 endif
 
 verify-prereq-c: verify-prereq-generator
-	@command -v clang-format-6.0 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`clang-format-6.0\` but it's not installed. Aborting.\n\nHave you installed clang-format-6.0? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
+	@command -v clang-format-11 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`clang-format-11\` but it's not installed. Aborting.\n\nHave you installed clang-format-11? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v checkmk      1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`checkmk\` but it's not installed. Aborting.\n\nHave you installed checkmk? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v cmake        1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`cmake\` but it's not installed. Aborting.\n\nHave you installed cmake? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v pkg-config   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pkg-config\` but it's not installed. Aborting.\n\nHave you installed pkg-config? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }

@@ -8,18 +8,17 @@ with no dependencies other than the standard C libraries.
 
 ## Installation
 
-On Debian-based systems (including Ubuntu 12.10 or later) you can get
+On Debian-based systems (including Ubuntu 22.04 or later) you can get
 dependencies with:
 
 ```shell
-sudo apt-get install build-essential pkg-config cmake doxygen check clang-format-6.0
+sudo apt-get install build-essential pkg-config cmake doxygen check clang-format-11
 ```
 
 On Mac:
 
 ```shell
-brew tap swift-nav/swift-devs
-brew install check cmake pkg-config doxygen clang-tools-6.0
+brew install check cmake pkg-config doxygen clang-format@11
 ```
 
 On other systems, you can obtain CMake from your operating system
@@ -57,6 +56,6 @@ https://github.com/swift-nav/sbp_tutorial.
 
 ## LICENSE
 
-Copyright © 2015-2021 Swift Navigation
+Copyright © 2015-2025 Swift Navigation
 
 Distributed under MIT.
