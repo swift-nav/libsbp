@@ -34,13 +34,6 @@ _CRC_LEN = struct.calcsize(_CRC_FMT)
 _CRC_PARSER = struct.Struct(_CRC_FMT)
 
 
-def try_import_jit():
-  from warnings import warn
-
-  warn("sbp.jit has been removed", UserWarning, stacklevel=1)
-  return None
-
-
 class UnpackError(ValueError):
   pass
 
