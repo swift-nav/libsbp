@@ -131,9 +131,9 @@ RUN \
 # install perl runtime for kaitai struct
 RUN \
      cd /tmp \
-  && curl -LO https://github.com/kaitai-io/kaitai_struct_perl_runtime/archive/refs/tags/0.10.zip \
-  && unzip 0.10.zip \
-  && cd kaitai_struct_perl_runtime-0.10 \
+  && curl -LO https://github.com/kaitai-io/kaitai_struct_perl_runtime/archive/refs/tags/0.11.zip \
+  && unzip 0.11.zip \
+  && cd kaitai_struct_perl_runtime-0.11 \
   && perl Makefile.PL \
   && make install \
   && rm -rf /tmp/*
