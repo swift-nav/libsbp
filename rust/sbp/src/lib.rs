@@ -193,7 +193,7 @@ pub use messages::Sbp;
 pub use crate::messages::SbpMessage;
 
 #[doc(inline)]
-pub use ser::{Error as SerializeError, SbpEncoder, to_vec, to_writer};
+pub use ser::{to_vec, to_writer, Error as SerializeError, SbpEncoder};
 
 #[doc(inline)]
 pub use de::{Error as DeserializeError, *};

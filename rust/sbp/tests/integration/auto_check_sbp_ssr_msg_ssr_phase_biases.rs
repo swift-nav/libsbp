@@ -352,11 +352,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[11].integer_indicator, expected 246, is {}",
                     msg.biases[11].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[11].widelane_integer_indicator, 141,
-                    "incorrect value for biases[11].widelane_integer_indicator, expected 141, is {}",
-                    msg.biases[11].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[11].widelane_integer_indicator, 141, "incorrect value for biases[11].widelane_integer_indicator, expected 141, is {}", msg.biases[11].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[12].bias, 706252548,
                     "incorrect value for biases[12].bias, expected 706252548, is {}",
@@ -377,11 +373,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[12].integer_indicator, expected 21, is {}",
                     msg.biases[12].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[12].widelane_integer_indicator, 244,
-                    "incorrect value for biases[12].widelane_integer_indicator, expected 244, is {}",
-                    msg.biases[12].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[12].widelane_integer_indicator, 244, "incorrect value for biases[12].widelane_integer_indicator, expected 244, is {}", msg.biases[12].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[13].bias, 388855338,
                     "incorrect value for biases[13].bias, expected 388855338, is {}",
@@ -402,11 +394,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[13].integer_indicator, expected 84, is {}",
                     msg.biases[13].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[13].widelane_integer_indicator, 136,
-                    "incorrect value for biases[13].widelane_integer_indicator, expected 136, is {}",
-                    msg.biases[13].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[13].widelane_integer_indicator, 136, "incorrect value for biases[13].widelane_integer_indicator, expected 136, is {}", msg.biases[13].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[14].bias, 47517353,
                     "incorrect value for biases[14].bias, expected 47517353, is {}",
@@ -427,11 +415,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[14].integer_indicator, expected 175, is {}",
                     msg.biases[14].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[14].widelane_integer_indicator, 129,
-                    "incorrect value for biases[14].widelane_integer_indicator, expected 129, is {}",
-                    msg.biases[14].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[14].widelane_integer_indicator, 129, "incorrect value for biases[14].widelane_integer_indicator, expected 129, is {}", msg.biases[14].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[15].bias, -2124125745,
                     "incorrect value for biases[15].bias, expected -2124125745, is {}",
@@ -477,11 +461,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[16].integer_indicator, expected 136, is {}",
                     msg.biases[16].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[16].widelane_integer_indicator, 240,
-                    "incorrect value for biases[16].widelane_integer_indicator, expected 240, is {}",
-                    msg.biases[16].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[16].widelane_integer_indicator, 240, "incorrect value for biases[16].widelane_integer_indicator, expected 240, is {}", msg.biases[16].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[17].bias, 60257151,
                     "incorrect value for biases[17].bias, expected 60257151, is {}",
@@ -527,11 +507,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[18].integer_indicator, expected 254, is {}",
                     msg.biases[18].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[18].widelane_integer_indicator, 215,
-                    "incorrect value for biases[18].widelane_integer_indicator, expected 215, is {}",
-                    msg.biases[18].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[18].widelane_integer_indicator, 215, "incorrect value for biases[18].widelane_integer_indicator, expected 215, is {}", msg.biases[18].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[19].bias, 1640616471,
                     "incorrect value for biases[19].bias, expected 1640616471, is {}",
@@ -602,11 +578,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[21].integer_indicator, expected 47, is {}",
                     msg.biases[21].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[21].widelane_integer_indicator, 102,
-                    "incorrect value for biases[21].widelane_integer_indicator, expected 102, is {}",
-                    msg.biases[21].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[21].widelane_integer_indicator, 102, "incorrect value for biases[21].widelane_integer_indicator, expected 102, is {}", msg.biases[21].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[22].bias, 364366310,
                     "incorrect value for biases[22].bias, expected 364366310, is {}",
@@ -652,11 +624,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[23].integer_indicator, expected 62, is {}",
                     msg.biases[23].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[23].widelane_integer_indicator, 147,
-                    "incorrect value for biases[23].widelane_integer_indicator, expected 147, is {}",
-                    msg.biases[23].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[23].widelane_integer_indicator, 147, "incorrect value for biases[23].widelane_integer_indicator, expected 147, is {}", msg.biases[23].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[24].bias, 31817639,
                     "incorrect value for biases[24].bias, expected 31817639, is {}",
@@ -677,11 +645,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[24].integer_indicator, expected 167, is {}",
                     msg.biases[24].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[24].widelane_integer_indicator, 138,
-                    "incorrect value for biases[24].widelane_integer_indicator, expected 138, is {}",
-                    msg.biases[24].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[24].widelane_integer_indicator, 138, "incorrect value for biases[24].widelane_integer_indicator, expected 138, is {}", msg.biases[24].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[25].bias, -1619830156,
                     "incorrect value for biases[25].bias, expected -1619830156, is {}",
@@ -702,11 +666,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[25].integer_indicator, expected 127, is {}",
                     msg.biases[25].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[25].widelane_integer_indicator, 237,
-                    "incorrect value for biases[25].widelane_integer_indicator, expected 237, is {}",
-                    msg.biases[25].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[25].widelane_integer_indicator, 237, "incorrect value for biases[25].widelane_integer_indicator, expected 237, is {}", msg.biases[25].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[26].bias, -83375622,
                     "incorrect value for biases[26].bias, expected -83375622, is {}",
@@ -752,11 +712,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[27].integer_indicator, expected 75, is {}",
                     msg.biases[27].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[27].widelane_integer_indicator, 230,
-                    "incorrect value for biases[27].widelane_integer_indicator, expected 230, is {}",
-                    msg.biases[27].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[27].widelane_integer_indicator, 230, "incorrect value for biases[27].widelane_integer_indicator, expected 230, is {}", msg.biases[27].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[28].bias, -883355501,
                     "incorrect value for biases[28].bias, expected -883355501, is {}",
@@ -777,11 +733,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[28].integer_indicator, expected 88, is {}",
                     msg.biases[28].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[28].widelane_integer_indicator, 255,
-                    "incorrect value for biases[28].widelane_integer_indicator, expected 255, is {}",
-                    msg.biases[28].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[28].widelane_integer_indicator, 255, "incorrect value for biases[28].widelane_integer_indicator, expected 255, is {}", msg.biases[28].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[29].bias, -1448611273,
                     "incorrect value for biases[29].bias, expected -1448611273, is {}",
@@ -802,11 +754,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[29].integer_indicator, expected 68, is {}",
                     msg.biases[29].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[29].widelane_integer_indicator, 243,
-                    "incorrect value for biases[29].widelane_integer_indicator, expected 243, is {}",
-                    msg.biases[29].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[29].widelane_integer_indicator, 243, "incorrect value for biases[29].widelane_integer_indicator, expected 243, is {}", msg.biases[29].widelane_integer_indicator);
                 assert_eq!(
                     msg.dispersive_bias, 98,
                     "incorrect value for dispersive_bias, expected 98, is {}",
@@ -1203,11 +1151,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[11].integer_indicator, expected 246, is {}",
                     msg.biases[11].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[11].widelane_integer_indicator, 141,
-                    "incorrect value for biases[11].widelane_integer_indicator, expected 141, is {}",
-                    msg.biases[11].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[11].widelane_integer_indicator, 141, "incorrect value for biases[11].widelane_integer_indicator, expected 141, is {}", msg.biases[11].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[12].bias, 706252548,
                     "incorrect value for biases[12].bias, expected 706252548, is {}",
@@ -1228,11 +1172,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[12].integer_indicator, expected 21, is {}",
                     msg.biases[12].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[12].widelane_integer_indicator, 244,
-                    "incorrect value for biases[12].widelane_integer_indicator, expected 244, is {}",
-                    msg.biases[12].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[12].widelane_integer_indicator, 244, "incorrect value for biases[12].widelane_integer_indicator, expected 244, is {}", msg.biases[12].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[13].bias, 388855338,
                     "incorrect value for biases[13].bias, expected 388855338, is {}",
@@ -1253,11 +1193,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[13].integer_indicator, expected 84, is {}",
                     msg.biases[13].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[13].widelane_integer_indicator, 136,
-                    "incorrect value for biases[13].widelane_integer_indicator, expected 136, is {}",
-                    msg.biases[13].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[13].widelane_integer_indicator, 136, "incorrect value for biases[13].widelane_integer_indicator, expected 136, is {}", msg.biases[13].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[14].bias, 47517353,
                     "incorrect value for biases[14].bias, expected 47517353, is {}",
@@ -1278,11 +1214,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[14].integer_indicator, expected 175, is {}",
                     msg.biases[14].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[14].widelane_integer_indicator, 129,
-                    "incorrect value for biases[14].widelane_integer_indicator, expected 129, is {}",
-                    msg.biases[14].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[14].widelane_integer_indicator, 129, "incorrect value for biases[14].widelane_integer_indicator, expected 129, is {}", msg.biases[14].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[15].bias, -2124125745,
                     "incorrect value for biases[15].bias, expected -2124125745, is {}",
@@ -1328,11 +1260,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[16].integer_indicator, expected 136, is {}",
                     msg.biases[16].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[16].widelane_integer_indicator, 240,
-                    "incorrect value for biases[16].widelane_integer_indicator, expected 240, is {}",
-                    msg.biases[16].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[16].widelane_integer_indicator, 240, "incorrect value for biases[16].widelane_integer_indicator, expected 240, is {}", msg.biases[16].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[17].bias, 60257151,
                     "incorrect value for biases[17].bias, expected 60257151, is {}",
@@ -1378,11 +1306,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[18].integer_indicator, expected 254, is {}",
                     msg.biases[18].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[18].widelane_integer_indicator, 215,
-                    "incorrect value for biases[18].widelane_integer_indicator, expected 215, is {}",
-                    msg.biases[18].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[18].widelane_integer_indicator, 215, "incorrect value for biases[18].widelane_integer_indicator, expected 215, is {}", msg.biases[18].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[19].bias, 1640616471,
                     "incorrect value for biases[19].bias, expected 1640616471, is {}",
@@ -1453,11 +1377,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[21].integer_indicator, expected 47, is {}",
                     msg.biases[21].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[21].widelane_integer_indicator, 102,
-                    "incorrect value for biases[21].widelane_integer_indicator, expected 102, is {}",
-                    msg.biases[21].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[21].widelane_integer_indicator, 102, "incorrect value for biases[21].widelane_integer_indicator, expected 102, is {}", msg.biases[21].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[22].bias, 364366310,
                     "incorrect value for biases[22].bias, expected 364366310, is {}",
@@ -1503,11 +1423,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[23].integer_indicator, expected 62, is {}",
                     msg.biases[23].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[23].widelane_integer_indicator, 147,
-                    "incorrect value for biases[23].widelane_integer_indicator, expected 147, is {}",
-                    msg.biases[23].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[23].widelane_integer_indicator, 147, "incorrect value for biases[23].widelane_integer_indicator, expected 147, is {}", msg.biases[23].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[24].bias, 31817639,
                     "incorrect value for biases[24].bias, expected 31817639, is {}",
@@ -1528,11 +1444,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[24].integer_indicator, expected 167, is {}",
                     msg.biases[24].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[24].widelane_integer_indicator, 138,
-                    "incorrect value for biases[24].widelane_integer_indicator, expected 138, is {}",
-                    msg.biases[24].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[24].widelane_integer_indicator, 138, "incorrect value for biases[24].widelane_integer_indicator, expected 138, is {}", msg.biases[24].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[25].bias, -1619830156,
                     "incorrect value for biases[25].bias, expected -1619830156, is {}",
@@ -1553,11 +1465,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[25].integer_indicator, expected 127, is {}",
                     msg.biases[25].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[25].widelane_integer_indicator, 237,
-                    "incorrect value for biases[25].widelane_integer_indicator, expected 237, is {}",
-                    msg.biases[25].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[25].widelane_integer_indicator, 237, "incorrect value for biases[25].widelane_integer_indicator, expected 237, is {}", msg.biases[25].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[26].bias, -83375622,
                     "incorrect value for biases[26].bias, expected -83375622, is {}",
@@ -1603,11 +1511,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[27].integer_indicator, expected 75, is {}",
                     msg.biases[27].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[27].widelane_integer_indicator, 230,
-                    "incorrect value for biases[27].widelane_integer_indicator, expected 230, is {}",
-                    msg.biases[27].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[27].widelane_integer_indicator, 230, "incorrect value for biases[27].widelane_integer_indicator, expected 230, is {}", msg.biases[27].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[28].bias, -883355501,
                     "incorrect value for biases[28].bias, expected -883355501, is {}",
@@ -1628,11 +1532,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[28].integer_indicator, expected 88, is {}",
                     msg.biases[28].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[28].widelane_integer_indicator, 255,
-                    "incorrect value for biases[28].widelane_integer_indicator, expected 255, is {}",
-                    msg.biases[28].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[28].widelane_integer_indicator, 255, "incorrect value for biases[28].widelane_integer_indicator, expected 255, is {}", msg.biases[28].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[29].bias, -1448611273,
                     "incorrect value for biases[29].bias, expected -1448611273, is {}",
@@ -1653,11 +1553,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[29].integer_indicator, expected 68, is {}",
                     msg.biases[29].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[29].widelane_integer_indicator, 243,
-                    "incorrect value for biases[29].widelane_integer_indicator, expected 243, is {}",
-                    msg.biases[29].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[29].widelane_integer_indicator, 243, "incorrect value for biases[29].widelane_integer_indicator, expected 243, is {}", msg.biases[29].widelane_integer_indicator);
                 assert_eq!(
                     msg.dispersive_bias, 98,
                     "incorrect value for dispersive_bias, expected 98, is {}",
@@ -2074,11 +1970,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[11].integer_indicator, expected 246, is {}",
                     msg.biases[11].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[11].widelane_integer_indicator, 141,
-                    "incorrect value for biases[11].widelane_integer_indicator, expected 141, is {}",
-                    msg.biases[11].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[11].widelane_integer_indicator, 141, "incorrect value for biases[11].widelane_integer_indicator, expected 141, is {}", msg.biases[11].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[12].bias, 706252548,
                     "incorrect value for biases[12].bias, expected 706252548, is {}",
@@ -2099,11 +1991,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[12].integer_indicator, expected 21, is {}",
                     msg.biases[12].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[12].widelane_integer_indicator, 244,
-                    "incorrect value for biases[12].widelane_integer_indicator, expected 244, is {}",
-                    msg.biases[12].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[12].widelane_integer_indicator, 244, "incorrect value for biases[12].widelane_integer_indicator, expected 244, is {}", msg.biases[12].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[13].bias, 388855338,
                     "incorrect value for biases[13].bias, expected 388855338, is {}",
@@ -2124,11 +2012,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[13].integer_indicator, expected 84, is {}",
                     msg.biases[13].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[13].widelane_integer_indicator, 136,
-                    "incorrect value for biases[13].widelane_integer_indicator, expected 136, is {}",
-                    msg.biases[13].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[13].widelane_integer_indicator, 136, "incorrect value for biases[13].widelane_integer_indicator, expected 136, is {}", msg.biases[13].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[14].bias, 47517353,
                     "incorrect value for biases[14].bias, expected 47517353, is {}",
@@ -2149,11 +2033,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[14].integer_indicator, expected 175, is {}",
                     msg.biases[14].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[14].widelane_integer_indicator, 129,
-                    "incorrect value for biases[14].widelane_integer_indicator, expected 129, is {}",
-                    msg.biases[14].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[14].widelane_integer_indicator, 129, "incorrect value for biases[14].widelane_integer_indicator, expected 129, is {}", msg.biases[14].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[15].bias, -2124125745,
                     "incorrect value for biases[15].bias, expected -2124125745, is {}",
@@ -2199,11 +2079,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[16].integer_indicator, expected 136, is {}",
                     msg.biases[16].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[16].widelane_integer_indicator, 240,
-                    "incorrect value for biases[16].widelane_integer_indicator, expected 240, is {}",
-                    msg.biases[16].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[16].widelane_integer_indicator, 240, "incorrect value for biases[16].widelane_integer_indicator, expected 240, is {}", msg.biases[16].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[17].bias, 60257151,
                     "incorrect value for biases[17].bias, expected 60257151, is {}",
@@ -2249,11 +2125,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[18].integer_indicator, expected 254, is {}",
                     msg.biases[18].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[18].widelane_integer_indicator, 215,
-                    "incorrect value for biases[18].widelane_integer_indicator, expected 215, is {}",
-                    msg.biases[18].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[18].widelane_integer_indicator, 215, "incorrect value for biases[18].widelane_integer_indicator, expected 215, is {}", msg.biases[18].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[19].bias, 1640616471,
                     "incorrect value for biases[19].bias, expected 1640616471, is {}",
@@ -2324,11 +2196,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[21].integer_indicator, expected 47, is {}",
                     msg.biases[21].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[21].widelane_integer_indicator, 102,
-                    "incorrect value for biases[21].widelane_integer_indicator, expected 102, is {}",
-                    msg.biases[21].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[21].widelane_integer_indicator, 102, "incorrect value for biases[21].widelane_integer_indicator, expected 102, is {}", msg.biases[21].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[22].bias, 364366310,
                     "incorrect value for biases[22].bias, expected 364366310, is {}",
@@ -2374,11 +2242,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[23].integer_indicator, expected 62, is {}",
                     msg.biases[23].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[23].widelane_integer_indicator, 147,
-                    "incorrect value for biases[23].widelane_integer_indicator, expected 147, is {}",
-                    msg.biases[23].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[23].widelane_integer_indicator, 147, "incorrect value for biases[23].widelane_integer_indicator, expected 147, is {}", msg.biases[23].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[24].bias, 31817639,
                     "incorrect value for biases[24].bias, expected 31817639, is {}",
@@ -2399,11 +2263,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[24].integer_indicator, expected 167, is {}",
                     msg.biases[24].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[24].widelane_integer_indicator, 138,
-                    "incorrect value for biases[24].widelane_integer_indicator, expected 138, is {}",
-                    msg.biases[24].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[24].widelane_integer_indicator, 138, "incorrect value for biases[24].widelane_integer_indicator, expected 138, is {}", msg.biases[24].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[25].bias, -1619830156,
                     "incorrect value for biases[25].bias, expected -1619830156, is {}",
@@ -2424,11 +2284,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[25].integer_indicator, expected 127, is {}",
                     msg.biases[25].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[25].widelane_integer_indicator, 237,
-                    "incorrect value for biases[25].widelane_integer_indicator, expected 237, is {}",
-                    msg.biases[25].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[25].widelane_integer_indicator, 237, "incorrect value for biases[25].widelane_integer_indicator, expected 237, is {}", msg.biases[25].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[26].bias, -83375622,
                     "incorrect value for biases[26].bias, expected -83375622, is {}",
@@ -2474,11 +2330,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[27].integer_indicator, expected 75, is {}",
                     msg.biases[27].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[27].widelane_integer_indicator, 230,
-                    "incorrect value for biases[27].widelane_integer_indicator, expected 230, is {}",
-                    msg.biases[27].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[27].widelane_integer_indicator, 230, "incorrect value for biases[27].widelane_integer_indicator, expected 230, is {}", msg.biases[27].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[28].bias, -883355501,
                     "incorrect value for biases[28].bias, expected -883355501, is {}",
@@ -2499,11 +2351,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[28].integer_indicator, expected 88, is {}",
                     msg.biases[28].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[28].widelane_integer_indicator, 255,
-                    "incorrect value for biases[28].widelane_integer_indicator, expected 255, is {}",
-                    msg.biases[28].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[28].widelane_integer_indicator, 255, "incorrect value for biases[28].widelane_integer_indicator, expected 255, is {}", msg.biases[28].widelane_integer_indicator);
                 assert_eq!(
                     msg.biases[29].bias, -1448611273,
                     "incorrect value for biases[29].bias, expected -1448611273, is {}",
@@ -2524,11 +2372,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_phase_biases() {
                     "incorrect value for biases[29].integer_indicator, expected 68, is {}",
                     msg.biases[29].integer_indicator
                 );
-                assert_eq!(
-                    msg.biases[29].widelane_integer_indicator, 243,
-                    "incorrect value for biases[29].widelane_integer_indicator, expected 243, is {}",
-                    msg.biases[29].widelane_integer_indicator
-                );
+                assert_eq!(msg.biases[29].widelane_integer_indicator, 243, "incorrect value for biases[29].widelane_integer_indicator, expected 243, is {}", msg.biases[29].widelane_integer_indicator);
                 assert_eq!(
                     msg.dispersive_bias, 98,
                     "incorrect value for dispersive_bias, expected 98, is {}",
