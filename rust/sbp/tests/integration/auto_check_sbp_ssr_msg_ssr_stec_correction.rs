@@ -105,11 +105,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_stec_correction() {
                     "incorrect value for stec_sat_list[0].stec_coeff[3], expected 60, is {}",
                     msg.stec_sat_list[0].stec_coeff[3]
                 );
-                assert_eq!(
-                    msg.stec_sat_list[0].stec_quality_indicator, 1,
-                    "incorrect value for stec_sat_list[0].stec_quality_indicator, expected 1, is {}",
-                    msg.stec_sat_list[0].stec_quality_indicator
-                );
+                assert_eq!(msg.stec_sat_list[0].stec_quality_indicator, 1, "incorrect value for stec_sat_list[0].stec_quality_indicator, expected 1, is {}", msg.stec_sat_list[0].stec_quality_indicator);
                 assert_eq!(
                     msg.stec_sat_list[0].sv_id.constellation, 1,
                     "incorrect value for stec_sat_list[0].sv_id.constellation, expected 1, is {}",
@@ -140,11 +136,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_stec_correction() {
                     "incorrect value for stec_sat_list[1].stec_coeff[3], expected 66, is {}",
                     msg.stec_sat_list[1].stec_coeff[3]
                 );
-                assert_eq!(
-                    msg.stec_sat_list[1].stec_quality_indicator, 5,
-                    "incorrect value for stec_sat_list[1].stec_quality_indicator, expected 5, is {}",
-                    msg.stec_sat_list[1].stec_quality_indicator
-                );
+                assert_eq!(msg.stec_sat_list[1].stec_quality_indicator, 5, "incorrect value for stec_sat_list[1].stec_quality_indicator, expected 5, is {}", msg.stec_sat_list[1].stec_quality_indicator);
                 assert_eq!(
                     msg.stec_sat_list[1].sv_id.constellation, 15,
                     "incorrect value for stec_sat_list[1].sv_id.constellation, expected 15, is {}",
@@ -276,11 +268,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_stec_correction() {
                     "incorrect value for stec_sat_list[0].stec_coeff[3], expected 60, is {}",
                     msg.stec_sat_list[0].stec_coeff[3]
                 );
-                assert_eq!(
-                    msg.stec_sat_list[0].stec_quality_indicator, 1,
-                    "incorrect value for stec_sat_list[0].stec_quality_indicator, expected 1, is {}",
-                    msg.stec_sat_list[0].stec_quality_indicator
-                );
+                assert_eq!(msg.stec_sat_list[0].stec_quality_indicator, 1, "incorrect value for stec_sat_list[0].stec_quality_indicator, expected 1, is {}", msg.stec_sat_list[0].stec_quality_indicator);
                 assert_eq!(
                     msg.stec_sat_list[0].sv_id.constellation, 1,
                     "incorrect value for stec_sat_list[0].sv_id.constellation, expected 1, is {}",
@@ -311,11 +299,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_stec_correction() {
                     "incorrect value for stec_sat_list[1].stec_coeff[3], expected 66, is {}",
                     msg.stec_sat_list[1].stec_coeff[3]
                 );
-                assert_eq!(
-                    msg.stec_sat_list[1].stec_quality_indicator, 5,
-                    "incorrect value for stec_sat_list[1].stec_quality_indicator, expected 5, is {}",
-                    msg.stec_sat_list[1].stec_quality_indicator
-                );
+                assert_eq!(msg.stec_sat_list[1].stec_quality_indicator, 5, "incorrect value for stec_sat_list[1].stec_quality_indicator, expected 5, is {}", msg.stec_sat_list[1].stec_quality_indicator);
                 assert_eq!(
                     msg.stec_sat_list[1].sv_id.constellation, 15,
                     "incorrect value for stec_sat_list[1].sv_id.constellation, expected 15, is {}",
@@ -455,11 +439,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_stec_correction() {
                     "incorrect value for stec_sat_list[0].stec_coeff[3], expected 60, is {}",
                     msg.stec_sat_list[0].stec_coeff[3]
                 );
-                assert_eq!(
-                    msg.stec_sat_list[0].stec_quality_indicator, 1,
-                    "incorrect value for stec_sat_list[0].stec_quality_indicator, expected 1, is {}",
-                    msg.stec_sat_list[0].stec_quality_indicator
-                );
+                assert_eq!(msg.stec_sat_list[0].stec_quality_indicator, 1, "incorrect value for stec_sat_list[0].stec_quality_indicator, expected 1, is {}", msg.stec_sat_list[0].stec_quality_indicator);
                 assert_eq!(
                     msg.stec_sat_list[0].sv_id.constellation, 1,
                     "incorrect value for stec_sat_list[0].sv_id.constellation, expected 1, is {}",
@@ -490,11 +470,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_stec_correction() {
                     "incorrect value for stec_sat_list[1].stec_coeff[3], expected 66, is {}",
                     msg.stec_sat_list[1].stec_coeff[3]
                 );
-                assert_eq!(
-                    msg.stec_sat_list[1].stec_quality_indicator, 5,
-                    "incorrect value for stec_sat_list[1].stec_quality_indicator, expected 5, is {}",
-                    msg.stec_sat_list[1].stec_quality_indicator
-                );
+                assert_eq!(msg.stec_sat_list[1].stec_quality_indicator, 5, "incorrect value for stec_sat_list[1].stec_quality_indicator, expected 5, is {}", msg.stec_sat_list[1].stec_quality_indicator);
                 assert_eq!(
                     msg.stec_sat_list[1].sv_id.constellation, 15,
                     "incorrect value for stec_sat_list[1].sv_id.constellation, expected 15, is {}",

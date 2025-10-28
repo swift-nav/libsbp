@@ -7,19 +7,19 @@ mod ser;
 use std::collections::HashMap;
 use std::io;
 
-use base64::{Engine, prelude::BASE64_STANDARD};
+use base64::{prelude::BASE64_STANDARD, Engine};
 use bytes::BytesMut;
 use serde::{Deserialize, Serialize};
-use serde_json::{Value, ser::Formatter};
+use serde_json::{ser::Formatter, Value};
 
 pub use serde_json::ser::CompactFormatter;
 
-use crate::{HandleParseError, Sbp, messages::invalid::Invalid};
+use crate::{messages::invalid::Invalid, HandleParseError, Sbp};
 #[cfg(feature = "async")]
 pub use de::stream_messages;
 pub use de::{iter_json2json_messages, iter_messages, iter_messages_from_fields};
 
-pub use ser::{Json2JsonEncoder, JsonEncoder, to_vec, to_writer};
+pub use ser::{to_vec, to_writer, Json2JsonEncoder, JsonEncoder};
 
 use crate::SbpMessage;
 pub use convert::JsonMap;

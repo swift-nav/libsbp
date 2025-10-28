@@ -1,15 +1,15 @@
 use std::io;
 
-use base64::{Engine, prelude::BASE64_STANDARD};
+use base64::{prelude::BASE64_STANDARD, Engine};
 use bytes::{Buf, BytesMut};
 use dencode::{Decoder, FramedRead};
 use serde::de::DeserializeOwned;
 use serde_json::Deserializer;
 
 use crate::{
-    BUFLEN,
     json::{Json2JsonInput, JsonError, JsonInput},
     messages::Sbp,
+    BUFLEN,
 };
 
 /// Deserialize the IO stream into an iterator of messages.

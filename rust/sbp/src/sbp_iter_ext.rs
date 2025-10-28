@@ -120,9 +120,9 @@ mod swiftnav_impl {
     use swiftnav::time::GpsTime;
 
     use crate::{
-        Frame, Sbp,
         messages::SbpMessage,
         time::{GpsTimeError, MessageTime, RoverTime},
+        Frame, Sbp,
     };
 
     /// See [SbpIterExt::with_rover_time] for more information.

@@ -57,13 +57,7 @@ fn test_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[0].duration, expected 2159176030, is {}",
                     msg.interfaces[0].duration
                 );
-                assert_eq!(
-                    msg.interfaces[0].interface_name.as_bytes(),
-                    &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[0].interface_name, expected string '{:?}', is '{:?}'",
-                    &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[0].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[0].interface_name.as_bytes(), &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[0].interface_name, expected string '{:?}', is '{:?}'", &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[0].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[0].rx_bytes, 0,
                     "incorrect value for interfaces[0].rx_bytes, expected 0, is {}",
@@ -84,13 +78,7 @@ fn test_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[1].duration, expected 2159176030, is {}",
                     msg.interfaces[1].duration
                 );
-                assert_eq!(
-                    msg.interfaces[1].interface_name.as_bytes(),
-                    &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[1].interface_name, expected string '{:?}', is '{:?}'",
-                    &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[1].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[1].interface_name.as_bytes(), &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[1].interface_name, expected string '{:?}', is '{:?}'", &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[1].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[1].rx_bytes, 0,
                     "incorrect value for interfaces[1].rx_bytes, expected 0, is {}",
@@ -111,13 +99,7 @@ fn test_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[2].duration, expected 2159176030, is {}",
                     msg.interfaces[2].duration
                 );
-                assert_eq!(
-                    msg.interfaces[2].interface_name.as_bytes(),
-                    &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[2].interface_name, expected string '{:?}', is '{:?}'",
-                    &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[2].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[2].interface_name.as_bytes(), &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[2].interface_name, expected string '{:?}', is '{:?}'", &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[2].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[2].rx_bytes, 4036234989,
                     "incorrect value for interfaces[2].rx_bytes, expected 4036234989, is {}",
@@ -138,13 +120,7 @@ fn test_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[3].duration, expected 2159176030, is {}",
                     msg.interfaces[3].duration
                 );
-                assert_eq!(
-                    msg.interfaces[3].interface_name.as_bytes(),
-                    &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[3].interface_name, expected string '{:?}', is '{:?}'",
-                    &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[3].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[3].interface_name.as_bytes(), &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[3].interface_name, expected string '{:?}', is '{:?}'", &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[3].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[3].rx_bytes, 0,
                     "incorrect value for interfaces[3].rx_bytes, expected 0, is {}",
@@ -165,13 +141,7 @@ fn test_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[4].duration, expected 2159176030, is {}",
                     msg.interfaces[4].duration
                 );
-                assert_eq!(
-                    msg.interfaces[4].interface_name.as_bytes(),
-                    &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[4].interface_name, expected string '{:?}', is '{:?}'",
-                    &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[4].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[4].interface_name.as_bytes(), &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[4].interface_name, expected string '{:?}', is '{:?}'", &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[4].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[4].rx_bytes, 0,
                     "incorrect value for interfaces[4].rx_bytes, expected 0, is {}",
@@ -243,13 +213,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[0].duration, expected 2159176030, is {}",
                     msg.interfaces[0].duration
                 );
-                assert_eq!(
-                    msg.interfaces[0].interface_name.as_bytes(),
-                    &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[0].interface_name, expected string '{:?}', is '{:?}'",
-                    &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[0].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[0].interface_name.as_bytes(), &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[0].interface_name, expected string '{:?}', is '{:?}'", &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[0].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[0].rx_bytes, 0,
                     "incorrect value for interfaces[0].rx_bytes, expected 0, is {}",
@@ -270,13 +234,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[1].duration, expected 2159176030, is {}",
                     msg.interfaces[1].duration
                 );
-                assert_eq!(
-                    msg.interfaces[1].interface_name.as_bytes(),
-                    &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[1].interface_name, expected string '{:?}', is '{:?}'",
-                    &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[1].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[1].interface_name.as_bytes(), &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[1].interface_name, expected string '{:?}', is '{:?}'", &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[1].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[1].rx_bytes, 0,
                     "incorrect value for interfaces[1].rx_bytes, expected 0, is {}",
@@ -297,13 +255,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[2].duration, expected 2159176030, is {}",
                     msg.interfaces[2].duration
                 );
-                assert_eq!(
-                    msg.interfaces[2].interface_name.as_bytes(),
-                    &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[2].interface_name, expected string '{:?}', is '{:?}'",
-                    &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[2].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[2].interface_name.as_bytes(), &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[2].interface_name, expected string '{:?}', is '{:?}'", &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[2].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[2].rx_bytes, 4036234989,
                     "incorrect value for interfaces[2].rx_bytes, expected 4036234989, is {}",
@@ -324,13 +276,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[3].duration, expected 2159176030, is {}",
                     msg.interfaces[3].duration
                 );
-                assert_eq!(
-                    msg.interfaces[3].interface_name.as_bytes(),
-                    &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[3].interface_name, expected string '{:?}', is '{:?}'",
-                    &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[3].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[3].interface_name.as_bytes(), &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[3].interface_name, expected string '{:?}', is '{:?}'", &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[3].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[3].rx_bytes, 0,
                     "incorrect value for interfaces[3].rx_bytes, expected 0, is {}",
@@ -351,13 +297,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[4].duration, expected 2159176030, is {}",
                     msg.interfaces[4].duration
                 );
-                assert_eq!(
-                    msg.interfaces[4].interface_name.as_bytes(),
-                    &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[4].interface_name, expected string '{:?}', is '{:?}'",
-                    &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[4].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[4].interface_name.as_bytes(), &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[4].interface_name, expected string '{:?}', is '{:?}'", &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[4].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[4].rx_bytes, 0,
                     "incorrect value for interfaces[4].rx_bytes, expected 0, is {}",
@@ -444,13 +384,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[0].duration, expected 2159176030, is {}",
                     msg.interfaces[0].duration
                 );
-                assert_eq!(
-                    msg.interfaces[0].interface_name.as_bytes(),
-                    &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[0].interface_name, expected string '{:?}', is '{:?}'",
-                    &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[0].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[0].interface_name.as_bytes(), &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[0].interface_name, expected string '{:?}', is '{:?}'", &[99, 97, 110, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[0].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[0].rx_bytes, 0,
                     "incorrect value for interfaces[0].rx_bytes, expected 0, is {}",
@@ -471,13 +405,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[1].duration, expected 2159176030, is {}",
                     msg.interfaces[1].duration
                 );
-                assert_eq!(
-                    msg.interfaces[1].interface_name.as_bytes(),
-                    &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[1].interface_name, expected string '{:?}', is '{:?}'",
-                    &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[1].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[1].interface_name.as_bytes(), &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[1].interface_name, expected string '{:?}', is '{:?}'", &[99, 97, 110, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[1].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[1].rx_bytes, 0,
                     "incorrect value for interfaces[1].rx_bytes, expected 0, is {}",
@@ -498,13 +426,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[2].duration, expected 2159176030, is {}",
                     msg.interfaces[2].duration
                 );
-                assert_eq!(
-                    msg.interfaces[2].interface_name.as_bytes(),
-                    &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[2].interface_name, expected string '{:?}', is '{:?}'",
-                    &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[2].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[2].interface_name.as_bytes(), &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[2].interface_name, expected string '{:?}', is '{:?}'", &[101, 116, 104, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[2].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[2].rx_bytes, 4036234989,
                     "incorrect value for interfaces[2].rx_bytes, expected 4036234989, is {}",
@@ -525,13 +447,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[3].duration, expected 2159176030, is {}",
                     msg.interfaces[3].duration
                 );
-                assert_eq!(
-                    msg.interfaces[3].interface_name.as_bytes(),
-                    &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[3].interface_name, expected string '{:?}', is '{:?}'",
-                    &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[3].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[3].interface_name.as_bytes(), &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[3].interface_name, expected string '{:?}', is '{:?}'", &[108, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[3].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[3].rx_bytes, 0,
                     "incorrect value for interfaces[3].rx_bytes, expected 0, is {}",
@@ -552,13 +468,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_network_bandwidth_usage() {
                     "incorrect value for interfaces[4].duration, expected 2159176030, is {}",
                     msg.interfaces[4].duration
                 );
-                assert_eq!(
-                    msg.interfaces[4].interface_name.as_bytes(),
-                    &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    "incorrect value for msg.interfaces[4].interface_name, expected string '{:?}', is '{:?}'",
-                    &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    msg.interfaces[4].interface_name.as_bytes()
-                );
+                assert_eq!(msg.interfaces[4].interface_name.as_bytes(), &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "incorrect value for msg.interfaces[4].interface_name, expected string '{:?}', is '{:?}'", &[115, 105, 116, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], msg.interfaces[4].interface_name.as_bytes());
                 assert_eq!(
                     msg.interfaces[4].rx_bytes, 0,
                     "incorrect value for interfaces[4].rx_bytes, expected 0, is {}",

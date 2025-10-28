@@ -167,11 +167,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[3].stddev, expected 220, is {}",
                     msg.stec_residuals[3].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[3].sv_id.constellation, 224,
-                    "incorrect value for stec_residuals[3].sv_id.constellation, expected 224, is {}",
-                    msg.stec_residuals[3].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[3].sv_id.constellation, 224, "incorrect value for stec_residuals[3].sv_id.constellation, expected 224, is {}", msg.stec_residuals[3].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[3].sv_id.sat_id, 116,
                     "incorrect value for stec_residuals[3].sv_id.sat_id, expected 116, is {}",
@@ -187,11 +183,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[4].stddev, expected 178, is {}",
                     msg.stec_residuals[4].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[4].sv_id.constellation, 176,
-                    "incorrect value for stec_residuals[4].sv_id.constellation, expected 176, is {}",
-                    msg.stec_residuals[4].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[4].sv_id.constellation, 176, "incorrect value for stec_residuals[4].sv_id.constellation, expected 176, is {}", msg.stec_residuals[4].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[4].sv_id.sat_id, 23,
                     "incorrect value for stec_residuals[4].sv_id.sat_id, expected 23, is {}",
@@ -207,11 +199,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[5].stddev, expected 15, is {}",
                     msg.stec_residuals[5].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[5].sv_id.constellation, 160,
-                    "incorrect value for stec_residuals[5].sv_id.constellation, expected 160, is {}",
-                    msg.stec_residuals[5].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[5].sv_id.constellation, 160, "incorrect value for stec_residuals[5].sv_id.constellation, expected 160, is {}", msg.stec_residuals[5].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[5].sv_id.sat_id, 79,
                     "incorrect value for stec_residuals[5].sv_id.sat_id, expected 79, is {}",
@@ -227,11 +215,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[6].stddev, expected 22, is {}",
                     msg.stec_residuals[6].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[6].sv_id.constellation, 206,
-                    "incorrect value for stec_residuals[6].sv_id.constellation, expected 206, is {}",
-                    msg.stec_residuals[6].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[6].sv_id.constellation, 206, "incorrect value for stec_residuals[6].sv_id.constellation, expected 206, is {}", msg.stec_residuals[6].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[6].sv_id.sat_id, 53,
                     "incorrect value for stec_residuals[6].sv_id.sat_id, expected 53, is {}",
@@ -247,11 +231,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[7].stddev, expected 82, is {}",
                     msg.stec_residuals[7].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[7].sv_id.constellation, 184,
-                    "incorrect value for stec_residuals[7].sv_id.constellation, expected 184, is {}",
-                    msg.stec_residuals[7].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[7].sv_id.constellation, 184, "incorrect value for stec_residuals[7].sv_id.constellation, expected 184, is {}", msg.stec_residuals[7].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[7].sv_id.sat_id, 117,
                     "incorrect value for stec_residuals[7].sv_id.sat_id, expected 117, is {}",
@@ -307,11 +287,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[10].stddev, expected 169, is {}",
                     msg.stec_residuals[10].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[10].sv_id.constellation, 238,
-                    "incorrect value for stec_residuals[10].sv_id.constellation, expected 238, is {}",
-                    msg.stec_residuals[10].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[10].sv_id.constellation, 238, "incorrect value for stec_residuals[10].sv_id.constellation, expected 238, is {}", msg.stec_residuals[10].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[10].sv_id.sat_id, 19,
                     "incorrect value for stec_residuals[10].sv_id.sat_id, expected 19, is {}",
@@ -327,11 +303,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[11].stddev, expected 183, is {}",
                     msg.stec_residuals[11].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[11].sv_id.constellation, 146,
-                    "incorrect value for stec_residuals[11].sv_id.constellation, expected 146, is {}",
-                    msg.stec_residuals[11].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[11].sv_id.constellation, 146, "incorrect value for stec_residuals[11].sv_id.constellation, expected 146, is {}", msg.stec_residuals[11].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[11].sv_id.sat_id, 164,
                     "incorrect value for stec_residuals[11].sv_id.sat_id, expected 164, is {}",
@@ -347,11 +319,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[12].stddev, expected 114, is {}",
                     msg.stec_residuals[12].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[12].sv_id.constellation, 71,
-                    "incorrect value for stec_residuals[12].sv_id.constellation, expected 71, is {}",
-                    msg.stec_residuals[12].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[12].sv_id.constellation, 71, "incorrect value for stec_residuals[12].sv_id.constellation, expected 71, is {}", msg.stec_residuals[12].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[12].sv_id.sat_id, 85,
                     "incorrect value for stec_residuals[12].sv_id.sat_id, expected 85, is {}",
@@ -367,11 +335,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[13].stddev, expected 60, is {}",
                     msg.stec_residuals[13].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[13].sv_id.constellation, 105,
-                    "incorrect value for stec_residuals[13].sv_id.constellation, expected 105, is {}",
-                    msg.stec_residuals[13].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[13].sv_id.constellation, 105, "incorrect value for stec_residuals[13].sv_id.constellation, expected 105, is {}", msg.stec_residuals[13].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[13].sv_id.sat_id, 211,
                     "incorrect value for stec_residuals[13].sv_id.sat_id, expected 211, is {}",
@@ -387,11 +351,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[14].stddev, expected 172, is {}",
                     msg.stec_residuals[14].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[14].sv_id.constellation, 230,
-                    "incorrect value for stec_residuals[14].sv_id.constellation, expected 230, is {}",
-                    msg.stec_residuals[14].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[14].sv_id.constellation, 230, "incorrect value for stec_residuals[14].sv_id.constellation, expected 230, is {}", msg.stec_residuals[14].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[14].sv_id.sat_id, 18,
                     "incorrect value for stec_residuals[14].sv_id.sat_id, expected 18, is {}",
@@ -407,11 +367,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[15].stddev, expected 106, is {}",
                     msg.stec_residuals[15].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[15].sv_id.constellation, 39,
-                    "incorrect value for stec_residuals[15].sv_id.constellation, expected 39, is {}",
-                    msg.stec_residuals[15].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[15].sv_id.constellation, 39, "incorrect value for stec_residuals[15].sv_id.constellation, expected 39, is {}", msg.stec_residuals[15].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[15].sv_id.sat_id, 16,
                     "incorrect value for stec_residuals[15].sv_id.sat_id, expected 16, is {}",
@@ -427,11 +383,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[16].stddev, expected 162, is {}",
                     msg.stec_residuals[16].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[16].sv_id.constellation, 188,
-                    "incorrect value for stec_residuals[16].sv_id.constellation, expected 188, is {}",
-                    msg.stec_residuals[16].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[16].sv_id.constellation, 188, "incorrect value for stec_residuals[16].sv_id.constellation, expected 188, is {}", msg.stec_residuals[16].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[16].sv_id.sat_id, 99,
                     "incorrect value for stec_residuals[16].sv_id.sat_id, expected 99, is {}",
@@ -447,11 +399,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[17].stddev, expected 12, is {}",
                     msg.stec_residuals[17].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[17].sv_id.constellation, 138,
-                    "incorrect value for stec_residuals[17].sv_id.constellation, expected 138, is {}",
-                    msg.stec_residuals[17].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[17].sv_id.constellation, 138, "incorrect value for stec_residuals[17].sv_id.constellation, expected 138, is {}", msg.stec_residuals[17].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[17].sv_id.sat_id, 197,
                     "incorrect value for stec_residuals[17].sv_id.sat_id, expected 197, is {}",
@@ -467,11 +415,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[18].stddev, expected 93, is {}",
                     msg.stec_residuals[18].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[18].sv_id.constellation, 67,
-                    "incorrect value for stec_residuals[18].sv_id.constellation, expected 67, is {}",
-                    msg.stec_residuals[18].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[18].sv_id.constellation, 67, "incorrect value for stec_residuals[18].sv_id.constellation, expected 67, is {}", msg.stec_residuals[18].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[18].sv_id.sat_id, 54,
                     "incorrect value for stec_residuals[18].sv_id.sat_id, expected 54, is {}",
@@ -487,11 +431,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[19].stddev, expected 46, is {}",
                     msg.stec_residuals[19].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[19].sv_id.constellation, 207,
-                    "incorrect value for stec_residuals[19].sv_id.constellation, expected 207, is {}",
-                    msg.stec_residuals[19].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[19].sv_id.constellation, 207, "incorrect value for stec_residuals[19].sv_id.constellation, expected 207, is {}", msg.stec_residuals[19].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[19].sv_id.sat_id, 1,
                     "incorrect value for stec_residuals[19].sv_id.sat_id, expected 1, is {}",
@@ -507,11 +447,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[20].stddev, expected 127, is {}",
                     msg.stec_residuals[20].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[20].sv_id.constellation, 49,
-                    "incorrect value for stec_residuals[20].sv_id.constellation, expected 49, is {}",
-                    msg.stec_residuals[20].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[20].sv_id.constellation, 49, "incorrect value for stec_residuals[20].sv_id.constellation, expected 49, is {}", msg.stec_residuals[20].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[20].sv_id.sat_id, 115,
                     "incorrect value for stec_residuals[20].sv_id.sat_id, expected 115, is {}",
@@ -527,11 +463,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[21].stddev, expected 202, is {}",
                     msg.stec_residuals[21].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[21].sv_id.constellation, 200,
-                    "incorrect value for stec_residuals[21].sv_id.constellation, expected 200, is {}",
-                    msg.stec_residuals[21].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[21].sv_id.constellation, 200, "incorrect value for stec_residuals[21].sv_id.constellation, expected 200, is {}", msg.stec_residuals[21].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[21].sv_id.sat_id, 156,
                     "incorrect value for stec_residuals[21].sv_id.sat_id, expected 156, is {}",
@@ -547,11 +479,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[22].stddev, expected 81, is {}",
                     msg.stec_residuals[22].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[22].sv_id.constellation, 245,
-                    "incorrect value for stec_residuals[22].sv_id.constellation, expected 245, is {}",
-                    msg.stec_residuals[22].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[22].sv_id.constellation, 245, "incorrect value for stec_residuals[22].sv_id.constellation, expected 245, is {}", msg.stec_residuals[22].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[22].sv_id.sat_id, 15,
                     "incorrect value for stec_residuals[22].sv_id.sat_id, expected 15, is {}",
@@ -567,11 +495,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[23].stddev, expected 82, is {}",
                     msg.stec_residuals[23].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[23].sv_id.constellation, 132,
-                    "incorrect value for stec_residuals[23].sv_id.constellation, expected 132, is {}",
-                    msg.stec_residuals[23].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[23].sv_id.constellation, 132, "incorrect value for stec_residuals[23].sv_id.constellation, expected 132, is {}", msg.stec_residuals[23].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[23].sv_id.sat_id, 218,
                     "incorrect value for stec_residuals[23].sv_id.sat_id, expected 218, is {}",
@@ -587,11 +511,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[24].stddev, expected 134, is {}",
                     msg.stec_residuals[24].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[24].sv_id.constellation, 26,
-                    "incorrect value for stec_residuals[24].sv_id.constellation, expected 26, is {}",
-                    msg.stec_residuals[24].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[24].sv_id.constellation, 26, "incorrect value for stec_residuals[24].sv_id.constellation, expected 26, is {}", msg.stec_residuals[24].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[24].sv_id.sat_id, 147,
                     "incorrect value for stec_residuals[24].sv_id.sat_id, expected 147, is {}",
@@ -607,11 +527,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[25].stddev, expected 83, is {}",
                     msg.stec_residuals[25].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[25].sv_id.constellation, 138,
-                    "incorrect value for stec_residuals[25].sv_id.constellation, expected 138, is {}",
-                    msg.stec_residuals[25].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[25].sv_id.constellation, 138, "incorrect value for stec_residuals[25].sv_id.constellation, expected 138, is {}", msg.stec_residuals[25].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[25].sv_id.sat_id, 96,
                     "incorrect value for stec_residuals[25].sv_id.sat_id, expected 96, is {}",
@@ -627,11 +543,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[26].stddev, expected 173, is {}",
                     msg.stec_residuals[26].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[26].sv_id.constellation, 170,
-                    "incorrect value for stec_residuals[26].sv_id.constellation, expected 170, is {}",
-                    msg.stec_residuals[26].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[26].sv_id.constellation, 170, "incorrect value for stec_residuals[26].sv_id.constellation, expected 170, is {}", msg.stec_residuals[26].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[26].sv_id.sat_id, 156,
                     "incorrect value for stec_residuals[26].sv_id.sat_id, expected 156, is {}",
@@ -647,11 +559,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[27].stddev, expected 107, is {}",
                     msg.stec_residuals[27].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[27].sv_id.constellation, 115,
-                    "incorrect value for stec_residuals[27].sv_id.constellation, expected 115, is {}",
-                    msg.stec_residuals[27].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[27].sv_id.constellation, 115, "incorrect value for stec_residuals[27].sv_id.constellation, expected 115, is {}", msg.stec_residuals[27].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[27].sv_id.sat_id, 228,
                     "incorrect value for stec_residuals[27].sv_id.sat_id, expected 228, is {}",
@@ -667,11 +575,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[28].stddev, expected 10, is {}",
                     msg.stec_residuals[28].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[28].sv_id.constellation, 112,
-                    "incorrect value for stec_residuals[28].sv_id.constellation, expected 112, is {}",
-                    msg.stec_residuals[28].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[28].sv_id.constellation, 112, "incorrect value for stec_residuals[28].sv_id.constellation, expected 112, is {}", msg.stec_residuals[28].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[28].sv_id.sat_id, 245,
                     "incorrect value for stec_residuals[28].sv_id.sat_id, expected 245, is {}",
@@ -687,11 +591,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[29].stddev, expected 108, is {}",
                     msg.stec_residuals[29].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[29].sv_id.constellation, 117,
-                    "incorrect value for stec_residuals[29].sv_id.constellation, expected 117, is {}",
-                    msg.stec_residuals[29].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[29].sv_id.constellation, 117, "incorrect value for stec_residuals[29].sv_id.constellation, expected 117, is {}", msg.stec_residuals[29].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[29].sv_id.sat_id, 5,
                     "incorrect value for stec_residuals[29].sv_id.sat_id, expected 5, is {}",
@@ -707,11 +607,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[30].stddev, expected 226, is {}",
                     msg.stec_residuals[30].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[30].sv_id.constellation, 212,
-                    "incorrect value for stec_residuals[30].sv_id.constellation, expected 212, is {}",
-                    msg.stec_residuals[30].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[30].sv_id.constellation, 212, "incorrect value for stec_residuals[30].sv_id.constellation, expected 212, is {}", msg.stec_residuals[30].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[30].sv_id.sat_id, 248,
                     "incorrect value for stec_residuals[30].sv_id.sat_id, expected 248, is {}",
@@ -747,11 +643,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[32].stddev, expected 243, is {}",
                     msg.stec_residuals[32].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[32].sv_id.constellation, 60,
-                    "incorrect value for stec_residuals[32].sv_id.constellation, expected 60, is {}",
-                    msg.stec_residuals[32].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[32].sv_id.constellation, 60, "incorrect value for stec_residuals[32].sv_id.constellation, expected 60, is {}", msg.stec_residuals[32].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[32].sv_id.sat_id, 0,
                     "incorrect value for stec_residuals[32].sv_id.sat_id, expected 0, is {}",
@@ -767,11 +659,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[33].stddev, expected 137, is {}",
                     msg.stec_residuals[33].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[33].sv_id.constellation, 216,
-                    "incorrect value for stec_residuals[33].sv_id.constellation, expected 216, is {}",
-                    msg.stec_residuals[33].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[33].sv_id.constellation, 216, "incorrect value for stec_residuals[33].sv_id.constellation, expected 216, is {}", msg.stec_residuals[33].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[33].sv_id.sat_id, 203,
                     "incorrect value for stec_residuals[33].sv_id.sat_id, expected 203, is {}",
@@ -787,11 +675,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[34].stddev, expected 152, is {}",
                     msg.stec_residuals[34].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[34].sv_id.constellation, 28,
-                    "incorrect value for stec_residuals[34].sv_id.constellation, expected 28, is {}",
-                    msg.stec_residuals[34].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[34].sv_id.constellation, 28, "incorrect value for stec_residuals[34].sv_id.constellation, expected 28, is {}", msg.stec_residuals[34].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[34].sv_id.sat_id, 16,
                     "incorrect value for stec_residuals[34].sv_id.sat_id, expected 16, is {}",
@@ -807,11 +691,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[35].stddev, expected 203, is {}",
                     msg.stec_residuals[35].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[35].sv_id.constellation, 119,
-                    "incorrect value for stec_residuals[35].sv_id.constellation, expected 119, is {}",
-                    msg.stec_residuals[35].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[35].sv_id.constellation, 119, "incorrect value for stec_residuals[35].sv_id.constellation, expected 119, is {}", msg.stec_residuals[35].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[35].sv_id.sat_id, 181,
                     "incorrect value for stec_residuals[35].sv_id.sat_id, expected 181, is {}",
@@ -827,11 +707,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[36].stddev, expected 32, is {}",
                     msg.stec_residuals[36].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[36].sv_id.constellation, 34,
-                    "incorrect value for stec_residuals[36].sv_id.constellation, expected 34, is {}",
-                    msg.stec_residuals[36].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[36].sv_id.constellation, 34, "incorrect value for stec_residuals[36].sv_id.constellation, expected 34, is {}", msg.stec_residuals[36].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[36].sv_id.sat_id, 236,
                     "incorrect value for stec_residuals[36].sv_id.sat_id, expected 236, is {}",
@@ -867,11 +743,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[38].stddev, expected 137, is {}",
                     msg.stec_residuals[38].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[38].sv_id.constellation, 94,
-                    "incorrect value for stec_residuals[38].sv_id.constellation, expected 94, is {}",
-                    msg.stec_residuals[38].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[38].sv_id.constellation, 94, "incorrect value for stec_residuals[38].sv_id.constellation, expected 94, is {}", msg.stec_residuals[38].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[38].sv_id.sat_id, 25,
                     "incorrect value for stec_residuals[38].sv_id.sat_id, expected 25, is {}",
@@ -907,11 +779,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[40].stddev, expected 126, is {}",
                     msg.stec_residuals[40].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[40].sv_id.constellation, 132,
-                    "incorrect value for stec_residuals[40].sv_id.constellation, expected 132, is {}",
-                    msg.stec_residuals[40].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[40].sv_id.constellation, 132, "incorrect value for stec_residuals[40].sv_id.constellation, expected 132, is {}", msg.stec_residuals[40].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[40].sv_id.sat_id, 48,
                     "incorrect value for stec_residuals[40].sv_id.sat_id, expected 48, is {}",
@@ -927,11 +795,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[41].stddev, expected 21, is {}",
                     msg.stec_residuals[41].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[41].sv_id.constellation, 68,
-                    "incorrect value for stec_residuals[41].sv_id.constellation, expected 68, is {}",
-                    msg.stec_residuals[41].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[41].sv_id.constellation, 68, "incorrect value for stec_residuals[41].sv_id.constellation, expected 68, is {}", msg.stec_residuals[41].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[41].sv_id.sat_id, 186,
                     "incorrect value for stec_residuals[41].sv_id.sat_id, expected 186, is {}",
@@ -947,11 +811,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[42].stddev, expected 148, is {}",
                     msg.stec_residuals[42].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[42].sv_id.constellation, 180,
-                    "incorrect value for stec_residuals[42].sv_id.constellation, expected 180, is {}",
-                    msg.stec_residuals[42].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[42].sv_id.constellation, 180, "incorrect value for stec_residuals[42].sv_id.constellation, expected 180, is {}", msg.stec_residuals[42].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[42].sv_id.sat_id, 0,
                     "incorrect value for stec_residuals[42].sv_id.sat_id, expected 0, is {}",
@@ -967,11 +827,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[43].stddev, expected 177, is {}",
                     msg.stec_residuals[43].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[43].sv_id.constellation, 149,
-                    "incorrect value for stec_residuals[43].sv_id.constellation, expected 149, is {}",
-                    msg.stec_residuals[43].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[43].sv_id.constellation, 149, "incorrect value for stec_residuals[43].sv_id.constellation, expected 149, is {}", msg.stec_residuals[43].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[43].sv_id.sat_id, 119,
                     "incorrect value for stec_residuals[43].sv_id.sat_id, expected 119, is {}",
@@ -987,11 +843,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[44].stddev, expected 10, is {}",
                     msg.stec_residuals[44].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[44].sv_id.constellation, 80,
-                    "incorrect value for stec_residuals[44].sv_id.constellation, expected 80, is {}",
-                    msg.stec_residuals[44].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[44].sv_id.constellation, 80, "incorrect value for stec_residuals[44].sv_id.constellation, expected 80, is {}", msg.stec_residuals[44].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[44].sv_id.sat_id, 201,
                     "incorrect value for stec_residuals[44].sv_id.sat_id, expected 201, is {}",
@@ -1007,11 +859,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[45].stddev, expected 233, is {}",
                     msg.stec_residuals[45].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[45].sv_id.constellation, 118,
-                    "incorrect value for stec_residuals[45].sv_id.constellation, expected 118, is {}",
-                    msg.stec_residuals[45].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[45].sv_id.constellation, 118, "incorrect value for stec_residuals[45].sv_id.constellation, expected 118, is {}", msg.stec_residuals[45].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[45].sv_id.sat_id, 136,
                     "incorrect value for stec_residuals[45].sv_id.sat_id, expected 136, is {}",
@@ -1027,11 +875,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[46].stddev, expected 103, is {}",
                     msg.stec_residuals[46].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[46].sv_id.constellation, 227,
-                    "incorrect value for stec_residuals[46].sv_id.constellation, expected 227, is {}",
-                    msg.stec_residuals[46].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[46].sv_id.constellation, 227, "incorrect value for stec_residuals[46].sv_id.constellation, expected 227, is {}", msg.stec_residuals[46].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[46].sv_id.sat_id, 233,
                     "incorrect value for stec_residuals[46].sv_id.sat_id, expected 233, is {}",
@@ -1213,11 +1057,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[3].stddev, expected 220, is {}",
                     msg.stec_residuals[3].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[3].sv_id.constellation, 224,
-                    "incorrect value for stec_residuals[3].sv_id.constellation, expected 224, is {}",
-                    msg.stec_residuals[3].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[3].sv_id.constellation, 224, "incorrect value for stec_residuals[3].sv_id.constellation, expected 224, is {}", msg.stec_residuals[3].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[3].sv_id.sat_id, 116,
                     "incorrect value for stec_residuals[3].sv_id.sat_id, expected 116, is {}",
@@ -1233,11 +1073,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[4].stddev, expected 178, is {}",
                     msg.stec_residuals[4].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[4].sv_id.constellation, 176,
-                    "incorrect value for stec_residuals[4].sv_id.constellation, expected 176, is {}",
-                    msg.stec_residuals[4].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[4].sv_id.constellation, 176, "incorrect value for stec_residuals[4].sv_id.constellation, expected 176, is {}", msg.stec_residuals[4].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[4].sv_id.sat_id, 23,
                     "incorrect value for stec_residuals[4].sv_id.sat_id, expected 23, is {}",
@@ -1253,11 +1089,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[5].stddev, expected 15, is {}",
                     msg.stec_residuals[5].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[5].sv_id.constellation, 160,
-                    "incorrect value for stec_residuals[5].sv_id.constellation, expected 160, is {}",
-                    msg.stec_residuals[5].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[5].sv_id.constellation, 160, "incorrect value for stec_residuals[5].sv_id.constellation, expected 160, is {}", msg.stec_residuals[5].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[5].sv_id.sat_id, 79,
                     "incorrect value for stec_residuals[5].sv_id.sat_id, expected 79, is {}",
@@ -1273,11 +1105,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[6].stddev, expected 22, is {}",
                     msg.stec_residuals[6].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[6].sv_id.constellation, 206,
-                    "incorrect value for stec_residuals[6].sv_id.constellation, expected 206, is {}",
-                    msg.stec_residuals[6].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[6].sv_id.constellation, 206, "incorrect value for stec_residuals[6].sv_id.constellation, expected 206, is {}", msg.stec_residuals[6].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[6].sv_id.sat_id, 53,
                     "incorrect value for stec_residuals[6].sv_id.sat_id, expected 53, is {}",
@@ -1293,11 +1121,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[7].stddev, expected 82, is {}",
                     msg.stec_residuals[7].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[7].sv_id.constellation, 184,
-                    "incorrect value for stec_residuals[7].sv_id.constellation, expected 184, is {}",
-                    msg.stec_residuals[7].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[7].sv_id.constellation, 184, "incorrect value for stec_residuals[7].sv_id.constellation, expected 184, is {}", msg.stec_residuals[7].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[7].sv_id.sat_id, 117,
                     "incorrect value for stec_residuals[7].sv_id.sat_id, expected 117, is {}",
@@ -1353,11 +1177,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[10].stddev, expected 169, is {}",
                     msg.stec_residuals[10].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[10].sv_id.constellation, 238,
-                    "incorrect value for stec_residuals[10].sv_id.constellation, expected 238, is {}",
-                    msg.stec_residuals[10].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[10].sv_id.constellation, 238, "incorrect value for stec_residuals[10].sv_id.constellation, expected 238, is {}", msg.stec_residuals[10].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[10].sv_id.sat_id, 19,
                     "incorrect value for stec_residuals[10].sv_id.sat_id, expected 19, is {}",
@@ -1373,11 +1193,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[11].stddev, expected 183, is {}",
                     msg.stec_residuals[11].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[11].sv_id.constellation, 146,
-                    "incorrect value for stec_residuals[11].sv_id.constellation, expected 146, is {}",
-                    msg.stec_residuals[11].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[11].sv_id.constellation, 146, "incorrect value for stec_residuals[11].sv_id.constellation, expected 146, is {}", msg.stec_residuals[11].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[11].sv_id.sat_id, 164,
                     "incorrect value for stec_residuals[11].sv_id.sat_id, expected 164, is {}",
@@ -1393,11 +1209,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[12].stddev, expected 114, is {}",
                     msg.stec_residuals[12].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[12].sv_id.constellation, 71,
-                    "incorrect value for stec_residuals[12].sv_id.constellation, expected 71, is {}",
-                    msg.stec_residuals[12].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[12].sv_id.constellation, 71, "incorrect value for stec_residuals[12].sv_id.constellation, expected 71, is {}", msg.stec_residuals[12].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[12].sv_id.sat_id, 85,
                     "incorrect value for stec_residuals[12].sv_id.sat_id, expected 85, is {}",
@@ -1413,11 +1225,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[13].stddev, expected 60, is {}",
                     msg.stec_residuals[13].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[13].sv_id.constellation, 105,
-                    "incorrect value for stec_residuals[13].sv_id.constellation, expected 105, is {}",
-                    msg.stec_residuals[13].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[13].sv_id.constellation, 105, "incorrect value for stec_residuals[13].sv_id.constellation, expected 105, is {}", msg.stec_residuals[13].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[13].sv_id.sat_id, 211,
                     "incorrect value for stec_residuals[13].sv_id.sat_id, expected 211, is {}",
@@ -1433,11 +1241,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[14].stddev, expected 172, is {}",
                     msg.stec_residuals[14].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[14].sv_id.constellation, 230,
-                    "incorrect value for stec_residuals[14].sv_id.constellation, expected 230, is {}",
-                    msg.stec_residuals[14].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[14].sv_id.constellation, 230, "incorrect value for stec_residuals[14].sv_id.constellation, expected 230, is {}", msg.stec_residuals[14].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[14].sv_id.sat_id, 18,
                     "incorrect value for stec_residuals[14].sv_id.sat_id, expected 18, is {}",
@@ -1453,11 +1257,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[15].stddev, expected 106, is {}",
                     msg.stec_residuals[15].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[15].sv_id.constellation, 39,
-                    "incorrect value for stec_residuals[15].sv_id.constellation, expected 39, is {}",
-                    msg.stec_residuals[15].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[15].sv_id.constellation, 39, "incorrect value for stec_residuals[15].sv_id.constellation, expected 39, is {}", msg.stec_residuals[15].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[15].sv_id.sat_id, 16,
                     "incorrect value for stec_residuals[15].sv_id.sat_id, expected 16, is {}",
@@ -1473,11 +1273,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[16].stddev, expected 162, is {}",
                     msg.stec_residuals[16].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[16].sv_id.constellation, 188,
-                    "incorrect value for stec_residuals[16].sv_id.constellation, expected 188, is {}",
-                    msg.stec_residuals[16].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[16].sv_id.constellation, 188, "incorrect value for stec_residuals[16].sv_id.constellation, expected 188, is {}", msg.stec_residuals[16].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[16].sv_id.sat_id, 99,
                     "incorrect value for stec_residuals[16].sv_id.sat_id, expected 99, is {}",
@@ -1493,11 +1289,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[17].stddev, expected 12, is {}",
                     msg.stec_residuals[17].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[17].sv_id.constellation, 138,
-                    "incorrect value for stec_residuals[17].sv_id.constellation, expected 138, is {}",
-                    msg.stec_residuals[17].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[17].sv_id.constellation, 138, "incorrect value for stec_residuals[17].sv_id.constellation, expected 138, is {}", msg.stec_residuals[17].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[17].sv_id.sat_id, 197,
                     "incorrect value for stec_residuals[17].sv_id.sat_id, expected 197, is {}",
@@ -1513,11 +1305,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[18].stddev, expected 93, is {}",
                     msg.stec_residuals[18].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[18].sv_id.constellation, 67,
-                    "incorrect value for stec_residuals[18].sv_id.constellation, expected 67, is {}",
-                    msg.stec_residuals[18].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[18].sv_id.constellation, 67, "incorrect value for stec_residuals[18].sv_id.constellation, expected 67, is {}", msg.stec_residuals[18].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[18].sv_id.sat_id, 54,
                     "incorrect value for stec_residuals[18].sv_id.sat_id, expected 54, is {}",
@@ -1533,11 +1321,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[19].stddev, expected 46, is {}",
                     msg.stec_residuals[19].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[19].sv_id.constellation, 207,
-                    "incorrect value for stec_residuals[19].sv_id.constellation, expected 207, is {}",
-                    msg.stec_residuals[19].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[19].sv_id.constellation, 207, "incorrect value for stec_residuals[19].sv_id.constellation, expected 207, is {}", msg.stec_residuals[19].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[19].sv_id.sat_id, 1,
                     "incorrect value for stec_residuals[19].sv_id.sat_id, expected 1, is {}",
@@ -1553,11 +1337,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[20].stddev, expected 127, is {}",
                     msg.stec_residuals[20].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[20].sv_id.constellation, 49,
-                    "incorrect value for stec_residuals[20].sv_id.constellation, expected 49, is {}",
-                    msg.stec_residuals[20].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[20].sv_id.constellation, 49, "incorrect value for stec_residuals[20].sv_id.constellation, expected 49, is {}", msg.stec_residuals[20].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[20].sv_id.sat_id, 115,
                     "incorrect value for stec_residuals[20].sv_id.sat_id, expected 115, is {}",
@@ -1573,11 +1353,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[21].stddev, expected 202, is {}",
                     msg.stec_residuals[21].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[21].sv_id.constellation, 200,
-                    "incorrect value for stec_residuals[21].sv_id.constellation, expected 200, is {}",
-                    msg.stec_residuals[21].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[21].sv_id.constellation, 200, "incorrect value for stec_residuals[21].sv_id.constellation, expected 200, is {}", msg.stec_residuals[21].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[21].sv_id.sat_id, 156,
                     "incorrect value for stec_residuals[21].sv_id.sat_id, expected 156, is {}",
@@ -1593,11 +1369,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[22].stddev, expected 81, is {}",
                     msg.stec_residuals[22].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[22].sv_id.constellation, 245,
-                    "incorrect value for stec_residuals[22].sv_id.constellation, expected 245, is {}",
-                    msg.stec_residuals[22].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[22].sv_id.constellation, 245, "incorrect value for stec_residuals[22].sv_id.constellation, expected 245, is {}", msg.stec_residuals[22].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[22].sv_id.sat_id, 15,
                     "incorrect value for stec_residuals[22].sv_id.sat_id, expected 15, is {}",
@@ -1613,11 +1385,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[23].stddev, expected 82, is {}",
                     msg.stec_residuals[23].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[23].sv_id.constellation, 132,
-                    "incorrect value for stec_residuals[23].sv_id.constellation, expected 132, is {}",
-                    msg.stec_residuals[23].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[23].sv_id.constellation, 132, "incorrect value for stec_residuals[23].sv_id.constellation, expected 132, is {}", msg.stec_residuals[23].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[23].sv_id.sat_id, 218,
                     "incorrect value for stec_residuals[23].sv_id.sat_id, expected 218, is {}",
@@ -1633,11 +1401,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[24].stddev, expected 134, is {}",
                     msg.stec_residuals[24].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[24].sv_id.constellation, 26,
-                    "incorrect value for stec_residuals[24].sv_id.constellation, expected 26, is {}",
-                    msg.stec_residuals[24].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[24].sv_id.constellation, 26, "incorrect value for stec_residuals[24].sv_id.constellation, expected 26, is {}", msg.stec_residuals[24].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[24].sv_id.sat_id, 147,
                     "incorrect value for stec_residuals[24].sv_id.sat_id, expected 147, is {}",
@@ -1653,11 +1417,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[25].stddev, expected 83, is {}",
                     msg.stec_residuals[25].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[25].sv_id.constellation, 138,
-                    "incorrect value for stec_residuals[25].sv_id.constellation, expected 138, is {}",
-                    msg.stec_residuals[25].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[25].sv_id.constellation, 138, "incorrect value for stec_residuals[25].sv_id.constellation, expected 138, is {}", msg.stec_residuals[25].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[25].sv_id.sat_id, 96,
                     "incorrect value for stec_residuals[25].sv_id.sat_id, expected 96, is {}",
@@ -1673,11 +1433,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[26].stddev, expected 173, is {}",
                     msg.stec_residuals[26].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[26].sv_id.constellation, 170,
-                    "incorrect value for stec_residuals[26].sv_id.constellation, expected 170, is {}",
-                    msg.stec_residuals[26].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[26].sv_id.constellation, 170, "incorrect value for stec_residuals[26].sv_id.constellation, expected 170, is {}", msg.stec_residuals[26].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[26].sv_id.sat_id, 156,
                     "incorrect value for stec_residuals[26].sv_id.sat_id, expected 156, is {}",
@@ -1693,11 +1449,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[27].stddev, expected 107, is {}",
                     msg.stec_residuals[27].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[27].sv_id.constellation, 115,
-                    "incorrect value for stec_residuals[27].sv_id.constellation, expected 115, is {}",
-                    msg.stec_residuals[27].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[27].sv_id.constellation, 115, "incorrect value for stec_residuals[27].sv_id.constellation, expected 115, is {}", msg.stec_residuals[27].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[27].sv_id.sat_id, 228,
                     "incorrect value for stec_residuals[27].sv_id.sat_id, expected 228, is {}",
@@ -1713,11 +1465,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[28].stddev, expected 10, is {}",
                     msg.stec_residuals[28].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[28].sv_id.constellation, 112,
-                    "incorrect value for stec_residuals[28].sv_id.constellation, expected 112, is {}",
-                    msg.stec_residuals[28].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[28].sv_id.constellation, 112, "incorrect value for stec_residuals[28].sv_id.constellation, expected 112, is {}", msg.stec_residuals[28].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[28].sv_id.sat_id, 245,
                     "incorrect value for stec_residuals[28].sv_id.sat_id, expected 245, is {}",
@@ -1733,11 +1481,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[29].stddev, expected 108, is {}",
                     msg.stec_residuals[29].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[29].sv_id.constellation, 117,
-                    "incorrect value for stec_residuals[29].sv_id.constellation, expected 117, is {}",
-                    msg.stec_residuals[29].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[29].sv_id.constellation, 117, "incorrect value for stec_residuals[29].sv_id.constellation, expected 117, is {}", msg.stec_residuals[29].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[29].sv_id.sat_id, 5,
                     "incorrect value for stec_residuals[29].sv_id.sat_id, expected 5, is {}",
@@ -1753,11 +1497,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[30].stddev, expected 226, is {}",
                     msg.stec_residuals[30].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[30].sv_id.constellation, 212,
-                    "incorrect value for stec_residuals[30].sv_id.constellation, expected 212, is {}",
-                    msg.stec_residuals[30].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[30].sv_id.constellation, 212, "incorrect value for stec_residuals[30].sv_id.constellation, expected 212, is {}", msg.stec_residuals[30].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[30].sv_id.sat_id, 248,
                     "incorrect value for stec_residuals[30].sv_id.sat_id, expected 248, is {}",
@@ -1793,11 +1533,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[32].stddev, expected 243, is {}",
                     msg.stec_residuals[32].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[32].sv_id.constellation, 60,
-                    "incorrect value for stec_residuals[32].sv_id.constellation, expected 60, is {}",
-                    msg.stec_residuals[32].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[32].sv_id.constellation, 60, "incorrect value for stec_residuals[32].sv_id.constellation, expected 60, is {}", msg.stec_residuals[32].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[32].sv_id.sat_id, 0,
                     "incorrect value for stec_residuals[32].sv_id.sat_id, expected 0, is {}",
@@ -1813,11 +1549,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[33].stddev, expected 137, is {}",
                     msg.stec_residuals[33].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[33].sv_id.constellation, 216,
-                    "incorrect value for stec_residuals[33].sv_id.constellation, expected 216, is {}",
-                    msg.stec_residuals[33].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[33].sv_id.constellation, 216, "incorrect value for stec_residuals[33].sv_id.constellation, expected 216, is {}", msg.stec_residuals[33].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[33].sv_id.sat_id, 203,
                     "incorrect value for stec_residuals[33].sv_id.sat_id, expected 203, is {}",
@@ -1833,11 +1565,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[34].stddev, expected 152, is {}",
                     msg.stec_residuals[34].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[34].sv_id.constellation, 28,
-                    "incorrect value for stec_residuals[34].sv_id.constellation, expected 28, is {}",
-                    msg.stec_residuals[34].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[34].sv_id.constellation, 28, "incorrect value for stec_residuals[34].sv_id.constellation, expected 28, is {}", msg.stec_residuals[34].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[34].sv_id.sat_id, 16,
                     "incorrect value for stec_residuals[34].sv_id.sat_id, expected 16, is {}",
@@ -1853,11 +1581,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[35].stddev, expected 203, is {}",
                     msg.stec_residuals[35].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[35].sv_id.constellation, 119,
-                    "incorrect value for stec_residuals[35].sv_id.constellation, expected 119, is {}",
-                    msg.stec_residuals[35].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[35].sv_id.constellation, 119, "incorrect value for stec_residuals[35].sv_id.constellation, expected 119, is {}", msg.stec_residuals[35].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[35].sv_id.sat_id, 181,
                     "incorrect value for stec_residuals[35].sv_id.sat_id, expected 181, is {}",
@@ -1873,11 +1597,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[36].stddev, expected 32, is {}",
                     msg.stec_residuals[36].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[36].sv_id.constellation, 34,
-                    "incorrect value for stec_residuals[36].sv_id.constellation, expected 34, is {}",
-                    msg.stec_residuals[36].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[36].sv_id.constellation, 34, "incorrect value for stec_residuals[36].sv_id.constellation, expected 34, is {}", msg.stec_residuals[36].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[36].sv_id.sat_id, 236,
                     "incorrect value for stec_residuals[36].sv_id.sat_id, expected 236, is {}",
@@ -1913,11 +1633,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[38].stddev, expected 137, is {}",
                     msg.stec_residuals[38].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[38].sv_id.constellation, 94,
-                    "incorrect value for stec_residuals[38].sv_id.constellation, expected 94, is {}",
-                    msg.stec_residuals[38].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[38].sv_id.constellation, 94, "incorrect value for stec_residuals[38].sv_id.constellation, expected 94, is {}", msg.stec_residuals[38].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[38].sv_id.sat_id, 25,
                     "incorrect value for stec_residuals[38].sv_id.sat_id, expected 25, is {}",
@@ -1953,11 +1669,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[40].stddev, expected 126, is {}",
                     msg.stec_residuals[40].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[40].sv_id.constellation, 132,
-                    "incorrect value for stec_residuals[40].sv_id.constellation, expected 132, is {}",
-                    msg.stec_residuals[40].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[40].sv_id.constellation, 132, "incorrect value for stec_residuals[40].sv_id.constellation, expected 132, is {}", msg.stec_residuals[40].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[40].sv_id.sat_id, 48,
                     "incorrect value for stec_residuals[40].sv_id.sat_id, expected 48, is {}",
@@ -1973,11 +1685,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[41].stddev, expected 21, is {}",
                     msg.stec_residuals[41].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[41].sv_id.constellation, 68,
-                    "incorrect value for stec_residuals[41].sv_id.constellation, expected 68, is {}",
-                    msg.stec_residuals[41].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[41].sv_id.constellation, 68, "incorrect value for stec_residuals[41].sv_id.constellation, expected 68, is {}", msg.stec_residuals[41].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[41].sv_id.sat_id, 186,
                     "incorrect value for stec_residuals[41].sv_id.sat_id, expected 186, is {}",
@@ -1993,11 +1701,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[42].stddev, expected 148, is {}",
                     msg.stec_residuals[42].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[42].sv_id.constellation, 180,
-                    "incorrect value for stec_residuals[42].sv_id.constellation, expected 180, is {}",
-                    msg.stec_residuals[42].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[42].sv_id.constellation, 180, "incorrect value for stec_residuals[42].sv_id.constellation, expected 180, is {}", msg.stec_residuals[42].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[42].sv_id.sat_id, 0,
                     "incorrect value for stec_residuals[42].sv_id.sat_id, expected 0, is {}",
@@ -2013,11 +1717,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[43].stddev, expected 177, is {}",
                     msg.stec_residuals[43].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[43].sv_id.constellation, 149,
-                    "incorrect value for stec_residuals[43].sv_id.constellation, expected 149, is {}",
-                    msg.stec_residuals[43].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[43].sv_id.constellation, 149, "incorrect value for stec_residuals[43].sv_id.constellation, expected 149, is {}", msg.stec_residuals[43].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[43].sv_id.sat_id, 119,
                     "incorrect value for stec_residuals[43].sv_id.sat_id, expected 119, is {}",
@@ -2033,11 +1733,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[44].stddev, expected 10, is {}",
                     msg.stec_residuals[44].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[44].sv_id.constellation, 80,
-                    "incorrect value for stec_residuals[44].sv_id.constellation, expected 80, is {}",
-                    msg.stec_residuals[44].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[44].sv_id.constellation, 80, "incorrect value for stec_residuals[44].sv_id.constellation, expected 80, is {}", msg.stec_residuals[44].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[44].sv_id.sat_id, 201,
                     "incorrect value for stec_residuals[44].sv_id.sat_id, expected 201, is {}",
@@ -2053,11 +1749,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[45].stddev, expected 233, is {}",
                     msg.stec_residuals[45].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[45].sv_id.constellation, 118,
-                    "incorrect value for stec_residuals[45].sv_id.constellation, expected 118, is {}",
-                    msg.stec_residuals[45].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[45].sv_id.constellation, 118, "incorrect value for stec_residuals[45].sv_id.constellation, expected 118, is {}", msg.stec_residuals[45].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[45].sv_id.sat_id, 136,
                     "incorrect value for stec_residuals[45].sv_id.sat_id, expected 136, is {}",
@@ -2073,11 +1765,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[46].stddev, expected 103, is {}",
                     msg.stec_residuals[46].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[46].sv_id.constellation, 227,
-                    "incorrect value for stec_residuals[46].sv_id.constellation, expected 227, is {}",
-                    msg.stec_residuals[46].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[46].sv_id.constellation, 227, "incorrect value for stec_residuals[46].sv_id.constellation, expected 227, is {}", msg.stec_residuals[46].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[46].sv_id.sat_id, 233,
                     "incorrect value for stec_residuals[46].sv_id.sat_id, expected 233, is {}",
@@ -2279,11 +1967,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[3].stddev, expected 220, is {}",
                     msg.stec_residuals[3].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[3].sv_id.constellation, 224,
-                    "incorrect value for stec_residuals[3].sv_id.constellation, expected 224, is {}",
-                    msg.stec_residuals[3].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[3].sv_id.constellation, 224, "incorrect value for stec_residuals[3].sv_id.constellation, expected 224, is {}", msg.stec_residuals[3].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[3].sv_id.sat_id, 116,
                     "incorrect value for stec_residuals[3].sv_id.sat_id, expected 116, is {}",
@@ -2299,11 +1983,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[4].stddev, expected 178, is {}",
                     msg.stec_residuals[4].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[4].sv_id.constellation, 176,
-                    "incorrect value for stec_residuals[4].sv_id.constellation, expected 176, is {}",
-                    msg.stec_residuals[4].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[4].sv_id.constellation, 176, "incorrect value for stec_residuals[4].sv_id.constellation, expected 176, is {}", msg.stec_residuals[4].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[4].sv_id.sat_id, 23,
                     "incorrect value for stec_residuals[4].sv_id.sat_id, expected 23, is {}",
@@ -2319,11 +1999,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[5].stddev, expected 15, is {}",
                     msg.stec_residuals[5].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[5].sv_id.constellation, 160,
-                    "incorrect value for stec_residuals[5].sv_id.constellation, expected 160, is {}",
-                    msg.stec_residuals[5].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[5].sv_id.constellation, 160, "incorrect value for stec_residuals[5].sv_id.constellation, expected 160, is {}", msg.stec_residuals[5].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[5].sv_id.sat_id, 79,
                     "incorrect value for stec_residuals[5].sv_id.sat_id, expected 79, is {}",
@@ -2339,11 +2015,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[6].stddev, expected 22, is {}",
                     msg.stec_residuals[6].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[6].sv_id.constellation, 206,
-                    "incorrect value for stec_residuals[6].sv_id.constellation, expected 206, is {}",
-                    msg.stec_residuals[6].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[6].sv_id.constellation, 206, "incorrect value for stec_residuals[6].sv_id.constellation, expected 206, is {}", msg.stec_residuals[6].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[6].sv_id.sat_id, 53,
                     "incorrect value for stec_residuals[6].sv_id.sat_id, expected 53, is {}",
@@ -2359,11 +2031,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[7].stddev, expected 82, is {}",
                     msg.stec_residuals[7].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[7].sv_id.constellation, 184,
-                    "incorrect value for stec_residuals[7].sv_id.constellation, expected 184, is {}",
-                    msg.stec_residuals[7].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[7].sv_id.constellation, 184, "incorrect value for stec_residuals[7].sv_id.constellation, expected 184, is {}", msg.stec_residuals[7].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[7].sv_id.sat_id, 117,
                     "incorrect value for stec_residuals[7].sv_id.sat_id, expected 117, is {}",
@@ -2419,11 +2087,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[10].stddev, expected 169, is {}",
                     msg.stec_residuals[10].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[10].sv_id.constellation, 238,
-                    "incorrect value for stec_residuals[10].sv_id.constellation, expected 238, is {}",
-                    msg.stec_residuals[10].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[10].sv_id.constellation, 238, "incorrect value for stec_residuals[10].sv_id.constellation, expected 238, is {}", msg.stec_residuals[10].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[10].sv_id.sat_id, 19,
                     "incorrect value for stec_residuals[10].sv_id.sat_id, expected 19, is {}",
@@ -2439,11 +2103,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[11].stddev, expected 183, is {}",
                     msg.stec_residuals[11].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[11].sv_id.constellation, 146,
-                    "incorrect value for stec_residuals[11].sv_id.constellation, expected 146, is {}",
-                    msg.stec_residuals[11].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[11].sv_id.constellation, 146, "incorrect value for stec_residuals[11].sv_id.constellation, expected 146, is {}", msg.stec_residuals[11].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[11].sv_id.sat_id, 164,
                     "incorrect value for stec_residuals[11].sv_id.sat_id, expected 164, is {}",
@@ -2459,11 +2119,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[12].stddev, expected 114, is {}",
                     msg.stec_residuals[12].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[12].sv_id.constellation, 71,
-                    "incorrect value for stec_residuals[12].sv_id.constellation, expected 71, is {}",
-                    msg.stec_residuals[12].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[12].sv_id.constellation, 71, "incorrect value for stec_residuals[12].sv_id.constellation, expected 71, is {}", msg.stec_residuals[12].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[12].sv_id.sat_id, 85,
                     "incorrect value for stec_residuals[12].sv_id.sat_id, expected 85, is {}",
@@ -2479,11 +2135,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[13].stddev, expected 60, is {}",
                     msg.stec_residuals[13].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[13].sv_id.constellation, 105,
-                    "incorrect value for stec_residuals[13].sv_id.constellation, expected 105, is {}",
-                    msg.stec_residuals[13].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[13].sv_id.constellation, 105, "incorrect value for stec_residuals[13].sv_id.constellation, expected 105, is {}", msg.stec_residuals[13].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[13].sv_id.sat_id, 211,
                     "incorrect value for stec_residuals[13].sv_id.sat_id, expected 211, is {}",
@@ -2499,11 +2151,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[14].stddev, expected 172, is {}",
                     msg.stec_residuals[14].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[14].sv_id.constellation, 230,
-                    "incorrect value for stec_residuals[14].sv_id.constellation, expected 230, is {}",
-                    msg.stec_residuals[14].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[14].sv_id.constellation, 230, "incorrect value for stec_residuals[14].sv_id.constellation, expected 230, is {}", msg.stec_residuals[14].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[14].sv_id.sat_id, 18,
                     "incorrect value for stec_residuals[14].sv_id.sat_id, expected 18, is {}",
@@ -2519,11 +2167,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[15].stddev, expected 106, is {}",
                     msg.stec_residuals[15].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[15].sv_id.constellation, 39,
-                    "incorrect value for stec_residuals[15].sv_id.constellation, expected 39, is {}",
-                    msg.stec_residuals[15].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[15].sv_id.constellation, 39, "incorrect value for stec_residuals[15].sv_id.constellation, expected 39, is {}", msg.stec_residuals[15].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[15].sv_id.sat_id, 16,
                     "incorrect value for stec_residuals[15].sv_id.sat_id, expected 16, is {}",
@@ -2539,11 +2183,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[16].stddev, expected 162, is {}",
                     msg.stec_residuals[16].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[16].sv_id.constellation, 188,
-                    "incorrect value for stec_residuals[16].sv_id.constellation, expected 188, is {}",
-                    msg.stec_residuals[16].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[16].sv_id.constellation, 188, "incorrect value for stec_residuals[16].sv_id.constellation, expected 188, is {}", msg.stec_residuals[16].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[16].sv_id.sat_id, 99,
                     "incorrect value for stec_residuals[16].sv_id.sat_id, expected 99, is {}",
@@ -2559,11 +2199,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[17].stddev, expected 12, is {}",
                     msg.stec_residuals[17].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[17].sv_id.constellation, 138,
-                    "incorrect value for stec_residuals[17].sv_id.constellation, expected 138, is {}",
-                    msg.stec_residuals[17].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[17].sv_id.constellation, 138, "incorrect value for stec_residuals[17].sv_id.constellation, expected 138, is {}", msg.stec_residuals[17].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[17].sv_id.sat_id, 197,
                     "incorrect value for stec_residuals[17].sv_id.sat_id, expected 197, is {}",
@@ -2579,11 +2215,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[18].stddev, expected 93, is {}",
                     msg.stec_residuals[18].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[18].sv_id.constellation, 67,
-                    "incorrect value for stec_residuals[18].sv_id.constellation, expected 67, is {}",
-                    msg.stec_residuals[18].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[18].sv_id.constellation, 67, "incorrect value for stec_residuals[18].sv_id.constellation, expected 67, is {}", msg.stec_residuals[18].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[18].sv_id.sat_id, 54,
                     "incorrect value for stec_residuals[18].sv_id.sat_id, expected 54, is {}",
@@ -2599,11 +2231,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[19].stddev, expected 46, is {}",
                     msg.stec_residuals[19].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[19].sv_id.constellation, 207,
-                    "incorrect value for stec_residuals[19].sv_id.constellation, expected 207, is {}",
-                    msg.stec_residuals[19].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[19].sv_id.constellation, 207, "incorrect value for stec_residuals[19].sv_id.constellation, expected 207, is {}", msg.stec_residuals[19].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[19].sv_id.sat_id, 1,
                     "incorrect value for stec_residuals[19].sv_id.sat_id, expected 1, is {}",
@@ -2619,11 +2247,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[20].stddev, expected 127, is {}",
                     msg.stec_residuals[20].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[20].sv_id.constellation, 49,
-                    "incorrect value for stec_residuals[20].sv_id.constellation, expected 49, is {}",
-                    msg.stec_residuals[20].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[20].sv_id.constellation, 49, "incorrect value for stec_residuals[20].sv_id.constellation, expected 49, is {}", msg.stec_residuals[20].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[20].sv_id.sat_id, 115,
                     "incorrect value for stec_residuals[20].sv_id.sat_id, expected 115, is {}",
@@ -2639,11 +2263,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[21].stddev, expected 202, is {}",
                     msg.stec_residuals[21].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[21].sv_id.constellation, 200,
-                    "incorrect value for stec_residuals[21].sv_id.constellation, expected 200, is {}",
-                    msg.stec_residuals[21].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[21].sv_id.constellation, 200, "incorrect value for stec_residuals[21].sv_id.constellation, expected 200, is {}", msg.stec_residuals[21].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[21].sv_id.sat_id, 156,
                     "incorrect value for stec_residuals[21].sv_id.sat_id, expected 156, is {}",
@@ -2659,11 +2279,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[22].stddev, expected 81, is {}",
                     msg.stec_residuals[22].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[22].sv_id.constellation, 245,
-                    "incorrect value for stec_residuals[22].sv_id.constellation, expected 245, is {}",
-                    msg.stec_residuals[22].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[22].sv_id.constellation, 245, "incorrect value for stec_residuals[22].sv_id.constellation, expected 245, is {}", msg.stec_residuals[22].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[22].sv_id.sat_id, 15,
                     "incorrect value for stec_residuals[22].sv_id.sat_id, expected 15, is {}",
@@ -2679,11 +2295,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[23].stddev, expected 82, is {}",
                     msg.stec_residuals[23].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[23].sv_id.constellation, 132,
-                    "incorrect value for stec_residuals[23].sv_id.constellation, expected 132, is {}",
-                    msg.stec_residuals[23].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[23].sv_id.constellation, 132, "incorrect value for stec_residuals[23].sv_id.constellation, expected 132, is {}", msg.stec_residuals[23].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[23].sv_id.sat_id, 218,
                     "incorrect value for stec_residuals[23].sv_id.sat_id, expected 218, is {}",
@@ -2699,11 +2311,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[24].stddev, expected 134, is {}",
                     msg.stec_residuals[24].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[24].sv_id.constellation, 26,
-                    "incorrect value for stec_residuals[24].sv_id.constellation, expected 26, is {}",
-                    msg.stec_residuals[24].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[24].sv_id.constellation, 26, "incorrect value for stec_residuals[24].sv_id.constellation, expected 26, is {}", msg.stec_residuals[24].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[24].sv_id.sat_id, 147,
                     "incorrect value for stec_residuals[24].sv_id.sat_id, expected 147, is {}",
@@ -2719,11 +2327,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[25].stddev, expected 83, is {}",
                     msg.stec_residuals[25].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[25].sv_id.constellation, 138,
-                    "incorrect value for stec_residuals[25].sv_id.constellation, expected 138, is {}",
-                    msg.stec_residuals[25].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[25].sv_id.constellation, 138, "incorrect value for stec_residuals[25].sv_id.constellation, expected 138, is {}", msg.stec_residuals[25].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[25].sv_id.sat_id, 96,
                     "incorrect value for stec_residuals[25].sv_id.sat_id, expected 96, is {}",
@@ -2739,11 +2343,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[26].stddev, expected 173, is {}",
                     msg.stec_residuals[26].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[26].sv_id.constellation, 170,
-                    "incorrect value for stec_residuals[26].sv_id.constellation, expected 170, is {}",
-                    msg.stec_residuals[26].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[26].sv_id.constellation, 170, "incorrect value for stec_residuals[26].sv_id.constellation, expected 170, is {}", msg.stec_residuals[26].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[26].sv_id.sat_id, 156,
                     "incorrect value for stec_residuals[26].sv_id.sat_id, expected 156, is {}",
@@ -2759,11 +2359,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[27].stddev, expected 107, is {}",
                     msg.stec_residuals[27].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[27].sv_id.constellation, 115,
-                    "incorrect value for stec_residuals[27].sv_id.constellation, expected 115, is {}",
-                    msg.stec_residuals[27].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[27].sv_id.constellation, 115, "incorrect value for stec_residuals[27].sv_id.constellation, expected 115, is {}", msg.stec_residuals[27].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[27].sv_id.sat_id, 228,
                     "incorrect value for stec_residuals[27].sv_id.sat_id, expected 228, is {}",
@@ -2779,11 +2375,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[28].stddev, expected 10, is {}",
                     msg.stec_residuals[28].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[28].sv_id.constellation, 112,
-                    "incorrect value for stec_residuals[28].sv_id.constellation, expected 112, is {}",
-                    msg.stec_residuals[28].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[28].sv_id.constellation, 112, "incorrect value for stec_residuals[28].sv_id.constellation, expected 112, is {}", msg.stec_residuals[28].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[28].sv_id.sat_id, 245,
                     "incorrect value for stec_residuals[28].sv_id.sat_id, expected 245, is {}",
@@ -2799,11 +2391,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[29].stddev, expected 108, is {}",
                     msg.stec_residuals[29].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[29].sv_id.constellation, 117,
-                    "incorrect value for stec_residuals[29].sv_id.constellation, expected 117, is {}",
-                    msg.stec_residuals[29].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[29].sv_id.constellation, 117, "incorrect value for stec_residuals[29].sv_id.constellation, expected 117, is {}", msg.stec_residuals[29].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[29].sv_id.sat_id, 5,
                     "incorrect value for stec_residuals[29].sv_id.sat_id, expected 5, is {}",
@@ -2819,11 +2407,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[30].stddev, expected 226, is {}",
                     msg.stec_residuals[30].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[30].sv_id.constellation, 212,
-                    "incorrect value for stec_residuals[30].sv_id.constellation, expected 212, is {}",
-                    msg.stec_residuals[30].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[30].sv_id.constellation, 212, "incorrect value for stec_residuals[30].sv_id.constellation, expected 212, is {}", msg.stec_residuals[30].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[30].sv_id.sat_id, 248,
                     "incorrect value for stec_residuals[30].sv_id.sat_id, expected 248, is {}",
@@ -2859,11 +2443,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[32].stddev, expected 243, is {}",
                     msg.stec_residuals[32].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[32].sv_id.constellation, 60,
-                    "incorrect value for stec_residuals[32].sv_id.constellation, expected 60, is {}",
-                    msg.stec_residuals[32].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[32].sv_id.constellation, 60, "incorrect value for stec_residuals[32].sv_id.constellation, expected 60, is {}", msg.stec_residuals[32].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[32].sv_id.sat_id, 0,
                     "incorrect value for stec_residuals[32].sv_id.sat_id, expected 0, is {}",
@@ -2879,11 +2459,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[33].stddev, expected 137, is {}",
                     msg.stec_residuals[33].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[33].sv_id.constellation, 216,
-                    "incorrect value for stec_residuals[33].sv_id.constellation, expected 216, is {}",
-                    msg.stec_residuals[33].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[33].sv_id.constellation, 216, "incorrect value for stec_residuals[33].sv_id.constellation, expected 216, is {}", msg.stec_residuals[33].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[33].sv_id.sat_id, 203,
                     "incorrect value for stec_residuals[33].sv_id.sat_id, expected 203, is {}",
@@ -2899,11 +2475,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[34].stddev, expected 152, is {}",
                     msg.stec_residuals[34].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[34].sv_id.constellation, 28,
-                    "incorrect value for stec_residuals[34].sv_id.constellation, expected 28, is {}",
-                    msg.stec_residuals[34].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[34].sv_id.constellation, 28, "incorrect value for stec_residuals[34].sv_id.constellation, expected 28, is {}", msg.stec_residuals[34].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[34].sv_id.sat_id, 16,
                     "incorrect value for stec_residuals[34].sv_id.sat_id, expected 16, is {}",
@@ -2919,11 +2491,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[35].stddev, expected 203, is {}",
                     msg.stec_residuals[35].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[35].sv_id.constellation, 119,
-                    "incorrect value for stec_residuals[35].sv_id.constellation, expected 119, is {}",
-                    msg.stec_residuals[35].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[35].sv_id.constellation, 119, "incorrect value for stec_residuals[35].sv_id.constellation, expected 119, is {}", msg.stec_residuals[35].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[35].sv_id.sat_id, 181,
                     "incorrect value for stec_residuals[35].sv_id.sat_id, expected 181, is {}",
@@ -2939,11 +2507,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[36].stddev, expected 32, is {}",
                     msg.stec_residuals[36].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[36].sv_id.constellation, 34,
-                    "incorrect value for stec_residuals[36].sv_id.constellation, expected 34, is {}",
-                    msg.stec_residuals[36].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[36].sv_id.constellation, 34, "incorrect value for stec_residuals[36].sv_id.constellation, expected 34, is {}", msg.stec_residuals[36].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[36].sv_id.sat_id, 236,
                     "incorrect value for stec_residuals[36].sv_id.sat_id, expected 236, is {}",
@@ -2979,11 +2543,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[38].stddev, expected 137, is {}",
                     msg.stec_residuals[38].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[38].sv_id.constellation, 94,
-                    "incorrect value for stec_residuals[38].sv_id.constellation, expected 94, is {}",
-                    msg.stec_residuals[38].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[38].sv_id.constellation, 94, "incorrect value for stec_residuals[38].sv_id.constellation, expected 94, is {}", msg.stec_residuals[38].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[38].sv_id.sat_id, 25,
                     "incorrect value for stec_residuals[38].sv_id.sat_id, expected 25, is {}",
@@ -3019,11 +2579,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[40].stddev, expected 126, is {}",
                     msg.stec_residuals[40].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[40].sv_id.constellation, 132,
-                    "incorrect value for stec_residuals[40].sv_id.constellation, expected 132, is {}",
-                    msg.stec_residuals[40].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[40].sv_id.constellation, 132, "incorrect value for stec_residuals[40].sv_id.constellation, expected 132, is {}", msg.stec_residuals[40].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[40].sv_id.sat_id, 48,
                     "incorrect value for stec_residuals[40].sv_id.sat_id, expected 48, is {}",
@@ -3039,11 +2595,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[41].stddev, expected 21, is {}",
                     msg.stec_residuals[41].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[41].sv_id.constellation, 68,
-                    "incorrect value for stec_residuals[41].sv_id.constellation, expected 68, is {}",
-                    msg.stec_residuals[41].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[41].sv_id.constellation, 68, "incorrect value for stec_residuals[41].sv_id.constellation, expected 68, is {}", msg.stec_residuals[41].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[41].sv_id.sat_id, 186,
                     "incorrect value for stec_residuals[41].sv_id.sat_id, expected 186, is {}",
@@ -3059,11 +2611,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[42].stddev, expected 148, is {}",
                     msg.stec_residuals[42].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[42].sv_id.constellation, 180,
-                    "incorrect value for stec_residuals[42].sv_id.constellation, expected 180, is {}",
-                    msg.stec_residuals[42].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[42].sv_id.constellation, 180, "incorrect value for stec_residuals[42].sv_id.constellation, expected 180, is {}", msg.stec_residuals[42].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[42].sv_id.sat_id, 0,
                     "incorrect value for stec_residuals[42].sv_id.sat_id, expected 0, is {}",
@@ -3079,11 +2627,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[43].stddev, expected 177, is {}",
                     msg.stec_residuals[43].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[43].sv_id.constellation, 149,
-                    "incorrect value for stec_residuals[43].sv_id.constellation, expected 149, is {}",
-                    msg.stec_residuals[43].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[43].sv_id.constellation, 149, "incorrect value for stec_residuals[43].sv_id.constellation, expected 149, is {}", msg.stec_residuals[43].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[43].sv_id.sat_id, 119,
                     "incorrect value for stec_residuals[43].sv_id.sat_id, expected 119, is {}",
@@ -3099,11 +2643,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[44].stddev, expected 10, is {}",
                     msg.stec_residuals[44].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[44].sv_id.constellation, 80,
-                    "incorrect value for stec_residuals[44].sv_id.constellation, expected 80, is {}",
-                    msg.stec_residuals[44].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[44].sv_id.constellation, 80, "incorrect value for stec_residuals[44].sv_id.constellation, expected 80, is {}", msg.stec_residuals[44].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[44].sv_id.sat_id, 201,
                     "incorrect value for stec_residuals[44].sv_id.sat_id, expected 201, is {}",
@@ -3119,11 +2659,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[45].stddev, expected 233, is {}",
                     msg.stec_residuals[45].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[45].sv_id.constellation, 118,
-                    "incorrect value for stec_residuals[45].sv_id.constellation, expected 118, is {}",
-                    msg.stec_residuals[45].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[45].sv_id.constellation, 118, "incorrect value for stec_residuals[45].sv_id.constellation, expected 118, is {}", msg.stec_residuals[45].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[45].sv_id.sat_id, 136,
                     "incorrect value for stec_residuals[45].sv_id.sat_id, expected 136, is {}",
@@ -3139,11 +2675,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_dep_a() {
                     "incorrect value for stec_residuals[46].stddev, expected 103, is {}",
                     msg.stec_residuals[46].stddev
                 );
-                assert_eq!(
-                    msg.stec_residuals[46].sv_id.constellation, 227,
-                    "incorrect value for stec_residuals[46].sv_id.constellation, expected 227, is {}",
-                    msg.stec_residuals[46].sv_id.constellation
-                );
+                assert_eq!(msg.stec_residuals[46].sv_id.constellation, 227, "incorrect value for stec_residuals[46].sv_id.constellation, expected 227, is {}", msg.stec_residuals[46].sv_id.constellation);
                 assert_eq!(
                     msg.stec_residuals[46].sv_id.sat_id, 233,
                     "incorrect value for stec_residuals[46].sv_id.sat_id, expected 233, is {}",

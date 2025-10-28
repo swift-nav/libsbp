@@ -5,8 +5,8 @@ use bytes::BytesMut;
 use dencode::{Encoder, FramedWrite, IterSinkExt};
 
 use crate::wire_format::WireFormat;
-use crate::{BUFLEN, MAX_PAYLOAD_LEN, PREAMBLE};
 use crate::{Sbp, SbpMessage};
+use crate::{BUFLEN, MAX_PAYLOAD_LEN, PREAMBLE};
 
 /// Serialize the given message into the IO stream.
 ///

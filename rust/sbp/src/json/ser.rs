@@ -1,18 +1,18 @@
 use std::{borrow::Borrow, convert::TryInto, io};
 
-use base64::{Engine, prelude::BASE64_STANDARD};
+use base64::{prelude::BASE64_STANDARD, Engine};
 use bytes::{BufMut, BytesMut};
 use dencode::{Encoder, FramedWrite, IterSinkExt};
 use serde::Serialize;
-use serde_json::{Serializer, ser::Formatter};
+use serde_json::{ser::Formatter, Serializer};
 
 use crate::{
-    BUFLEN, CRC_LEN, HEADER_LEN, MIN_FRAME_LEN, PREAMBLE, SbpMessage,
     json::{
         CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput, JsonError,
         JsonOutput,
     },
     messages::Sbp,
+    SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, MIN_FRAME_LEN, PREAMBLE,
 };
 
 const BASE64_BUFLEN: usize = BUFLEN * 4;

@@ -197,13 +197,9 @@ fn test_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[2].name.as_bytes(),
-                    &[
-                        83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[2].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[2].name.as_bytes()
                 );
                 assert_eq!(
@@ -248,13 +244,9 @@ fn test_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[3].name.as_bytes(),
-                    &[
-                        80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[3].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[3].name.as_bytes()
                 );
                 assert_eq!(
@@ -299,13 +291,9 @@ fn test_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[4].name.as_bytes(),
-                    &[
-                        73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[4].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[4].name.as_bytes()
                 );
                 assert_eq!(
@@ -350,13 +338,9 @@ fn test_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[5].name.as_bytes(),
-                    &[
-                        115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[5].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[5].name.as_bytes()
                 );
                 assert_eq!(
@@ -569,13 +553,9 @@ fn test_json2sbp_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[2].name.as_bytes(),
-                    &[
-                        83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[2].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[2].name.as_bytes()
                 );
                 assert_eq!(
@@ -620,13 +600,9 @@ fn test_json2sbp_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[3].name.as_bytes(),
-                    &[
-                        80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[3].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[3].name.as_bytes()
                 );
                 assert_eq!(
@@ -671,13 +647,9 @@ fn test_json2sbp_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[4].name.as_bytes(),
-                    &[
-                        73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[4].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[4].name.as_bytes()
                 );
                 assert_eq!(
@@ -722,13 +694,9 @@ fn test_json2sbp_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[5].name.as_bytes(),
-                    &[
-                        115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[5].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[5].name.as_bytes()
                 );
                 assert_eq!(
@@ -957,13 +925,9 @@ fn test_sbp2json_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[2].name.as_bytes(),
-                    &[
-                        83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[2].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[83, 83, 82, 50, 79, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[2].name.as_bytes()
                 );
                 assert_eq!(
@@ -1008,13 +972,9 @@ fn test_sbp2json_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[3].name.as_bytes(),
-                    &[
-                        80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[3].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[80, 101, 114, 105, 111, 100, 105, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[3].name.as_bytes()
                 );
                 assert_eq!(
@@ -1059,13 +1019,9 @@ fn test_sbp2json_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[4].name.as_bytes(),
-                    &[
-                        73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[4].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[73, 77, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[4].name.as_bytes()
                 );
                 assert_eq!(
@@ -1110,13 +1066,9 @@ fn test_sbp2json_auto_check_sbp_profiling_msg_profiling_resource_counter() {
                 );
                 assert_eq!(
                     msg.buckets[5].name.as_bytes(),
-                    &[
-                        115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.buckets[5].name, expected string '{:?}', is '{:?}'",
-                    &[
-                        115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-                    ],
+                    &[115, 98, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.buckets[5].name.as_bytes()
                 );
                 assert_eq!(

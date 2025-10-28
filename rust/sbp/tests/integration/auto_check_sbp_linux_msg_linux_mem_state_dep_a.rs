@@ -79,13 +79,9 @@ fn test_auto_check_sbp_linux_msg_linux_mem_state_dep_a() {
                 );
                 assert_eq!(
                     msg.tname.as_bytes(),
-                    &[
-                        112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0
-                    ],
+                    &[112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0],
                     "incorrect value for msg.tname, expected string '{:?}', is '{:?}'",
-                    &[
-                        112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0
-                    ],
+                    &[112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0],
                     msg.tname.as_bytes()
                 );
             }
@@ -171,13 +167,9 @@ fn test_json2sbp_auto_check_sbp_linux_msg_linux_mem_state_dep_a() {
                 );
                 assert_eq!(
                     msg.tname.as_bytes(),
-                    &[
-                        112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0
-                    ],
+                    &[112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0],
                     "incorrect value for msg.tname, expected string '{:?}', is '{:?}'",
-                    &[
-                        112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0
-                    ],
+                    &[112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0],
                     msg.tname.as_bytes()
                 );
             }
@@ -273,13 +265,9 @@ fn test_sbp2json_auto_check_sbp_linux_msg_linux_mem_state_dep_a() {
                 );
                 assert_eq!(
                     msg.tname.as_bytes(),
-                    &[
-                        112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0
-                    ],
+                    &[112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0],
                     "incorrect value for msg.tname, expected string '{:?}', is '{:?}'",
-                    &[
-                        112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0
-                    ],
+                    &[112, 114, 111, 99, 101, 115, 115, 45, 110, 97, 109, 101, 0, 0, 0],
                     msg.tname.as_bytes()
                 );
             }
