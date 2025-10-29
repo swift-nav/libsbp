@@ -1,5 +1,25 @@
 # Changelog
 
+## [v6.3.1](https://github.com/swift-nav/libsbp/tree/v6.3.1)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.3.0...v6.3.1)
+
+**Merged pull requests:**
+
+- Update to kaitaistruct 0.11 [\#1518](https://github.com/swift-nav/libsbp/pull/1518) ([dgburr](https://github.com/dgburr))
+- Fix dependabot SONAR\_TOKEN [\#1517](https://github.com/swift-nav/libsbp/pull/1517) ([sbmueller](https://github.com/sbmueller))
+- Update rules\_swiftnav [\#1516](https://github.com/swift-nav/libsbp/pull/1516) ([martin4861](https://github.com/martin4861))
+- Update to Bazel 8 [\#1515](https://github.com/swift-nav/libsbp/pull/1515) ([martin4861](https://github.com/martin4861))
+- Auto submodule update: cmake - Fix compiler errors from check third-party dependency on Windows \(\#188\) [\#1514](https://github.com/swift-nav/libsbp/pull/1514) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Update check [\#1513](https://github.com/swift-nav/libsbp/pull/1513) ([martin4861](https://github.com/martin4861))
+- Update to C++17 \[\#1512](https://github.com/swift-nav/libsbp/pull/1512) ([sbmueller](https://github.com/sbmueller))
+- Update rules\_foreign\_cc [\#1511](https://github.com/swift-nav/libsbp/pull/1511) ([martin4861](https://github.com/martin4861))
+- Auto submodule update: cmake - Default C++/C version for all swift targets \(\#187\) [\#1510](https://github.com/swift-nav/libsbp/pull/1510) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Apply new cargo fmt rules & remove deprecated actions [\#1509](https://github.com/swift-nav/libsbp/pull/1509) ([pcrumley](https://github.com/pcrumley))
+- rust: add Frome\<Frame\> impls for Bytes/BytesMut [\#1508](https://github.com/swift-nav/libsbp/pull/1508) ([notoriaga](https://github.com/notoriaga))
+- Add clone to sbp frame in rust [\#1507](https://github.com/swift-nav/libsbp/pull/1507) ([tzilist](https://github.com/tzilist))
+- update rust deps [\#1505](https://github.com/swift-nav/libsbp/pull/1505) ([tzilist](https://github.com/tzilist))
+
 ## [v6.3.0](https://github.com/swift-nav/libsbp/tree/v6.3.0)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.2.2...v6.3.0)
