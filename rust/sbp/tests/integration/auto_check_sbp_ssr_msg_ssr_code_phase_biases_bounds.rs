@@ -85,10 +85,26 @@ fn test_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                     "incorrect value for n_sats_signals, expected 3, is {}",
                     msg.n_sats_signals
                 );
-                assert_eq!(msg.satellites_signals[0].code_bias_bound_mu, 39, "incorrect value for satellites_signals[0].code_bias_bound_mu, expected 39, is {}", msg.satellites_signals[0].code_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[0].code_bias_bound_sig, 1, "incorrect value for satellites_signals[0].code_bias_bound_sig, expected 1, is {}", msg.satellites_signals[0].code_bias_bound_sig);
-                assert_eq!(msg.satellites_signals[0].phase_bias_bound_mu, 39, "incorrect value for satellites_signals[0].phase_bias_bound_mu, expected 39, is {}", msg.satellites_signals[0].phase_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[0].phase_bias_bound_sig, 1, "incorrect value for satellites_signals[0].phase_bias_bound_sig, expected 1, is {}", msg.satellites_signals[0].phase_bias_bound_sig);
+                assert_eq!(
+                    msg.satellites_signals[0].code_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[0].code_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[0].code_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[0].code_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[0].code_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[0].code_bias_bound_sig
+                );
+                assert_eq!(
+                    msg.satellites_signals[0].phase_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[0].phase_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[0].phase_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[0].phase_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[0].phase_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[0].phase_bias_bound_sig
+                );
                 assert_eq!(
                     msg.satellites_signals[0].sat_id, 0,
                     "incorrect value for satellites_signals[0].sat_id, expected 0, is {}",
@@ -99,10 +115,26 @@ fn test_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                     "incorrect value for satellites_signals[0].signal_id, expected 3, is {}",
                     msg.satellites_signals[0].signal_id
                 );
-                assert_eq!(msg.satellites_signals[1].code_bias_bound_mu, 39, "incorrect value for satellites_signals[1].code_bias_bound_mu, expected 39, is {}", msg.satellites_signals[1].code_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[1].code_bias_bound_sig, 1, "incorrect value for satellites_signals[1].code_bias_bound_sig, expected 1, is {}", msg.satellites_signals[1].code_bias_bound_sig);
-                assert_eq!(msg.satellites_signals[1].phase_bias_bound_mu, 39, "incorrect value for satellites_signals[1].phase_bias_bound_mu, expected 39, is {}", msg.satellites_signals[1].phase_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[1].phase_bias_bound_sig, 1, "incorrect value for satellites_signals[1].phase_bias_bound_sig, expected 1, is {}", msg.satellites_signals[1].phase_bias_bound_sig);
+                assert_eq!(
+                    msg.satellites_signals[1].code_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[1].code_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[1].code_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[1].code_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[1].code_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[1].code_bias_bound_sig
+                );
+                assert_eq!(
+                    msg.satellites_signals[1].phase_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[1].phase_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[1].phase_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[1].phase_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[1].phase_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[1].phase_bias_bound_sig
+                );
                 assert_eq!(
                     msg.satellites_signals[1].sat_id, 1,
                     "incorrect value for satellites_signals[1].sat_id, expected 1, is {}",
@@ -113,10 +145,26 @@ fn test_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                     "incorrect value for satellites_signals[1].signal_id, expected 3, is {}",
                     msg.satellites_signals[1].signal_id
                 );
-                assert_eq!(msg.satellites_signals[2].code_bias_bound_mu, 39, "incorrect value for satellites_signals[2].code_bias_bound_mu, expected 39, is {}", msg.satellites_signals[2].code_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[2].code_bias_bound_sig, 1, "incorrect value for satellites_signals[2].code_bias_bound_sig, expected 1, is {}", msg.satellites_signals[2].code_bias_bound_sig);
-                assert_eq!(msg.satellites_signals[2].phase_bias_bound_mu, 39, "incorrect value for satellites_signals[2].phase_bias_bound_mu, expected 39, is {}", msg.satellites_signals[2].phase_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[2].phase_bias_bound_sig, 1, "incorrect value for satellites_signals[2].phase_bias_bound_sig, expected 1, is {}", msg.satellites_signals[2].phase_bias_bound_sig);
+                assert_eq!(
+                    msg.satellites_signals[2].code_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[2].code_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[2].code_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[2].code_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[2].code_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[2].code_bias_bound_sig
+                );
+                assert_eq!(
+                    msg.satellites_signals[2].phase_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[2].phase_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[2].phase_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[2].phase_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[2].phase_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[2].phase_bias_bound_sig
+                );
                 assert_eq!(
                     msg.satellites_signals[2].sat_id, 1,
                     "incorrect value for satellites_signals[2].sat_id, expected 1, is {}",
@@ -223,10 +271,26 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                     "incorrect value for n_sats_signals, expected 3, is {}",
                     msg.n_sats_signals
                 );
-                assert_eq!(msg.satellites_signals[0].code_bias_bound_mu, 39, "incorrect value for satellites_signals[0].code_bias_bound_mu, expected 39, is {}", msg.satellites_signals[0].code_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[0].code_bias_bound_sig, 1, "incorrect value for satellites_signals[0].code_bias_bound_sig, expected 1, is {}", msg.satellites_signals[0].code_bias_bound_sig);
-                assert_eq!(msg.satellites_signals[0].phase_bias_bound_mu, 39, "incorrect value for satellites_signals[0].phase_bias_bound_mu, expected 39, is {}", msg.satellites_signals[0].phase_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[0].phase_bias_bound_sig, 1, "incorrect value for satellites_signals[0].phase_bias_bound_sig, expected 1, is {}", msg.satellites_signals[0].phase_bias_bound_sig);
+                assert_eq!(
+                    msg.satellites_signals[0].code_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[0].code_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[0].code_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[0].code_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[0].code_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[0].code_bias_bound_sig
+                );
+                assert_eq!(
+                    msg.satellites_signals[0].phase_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[0].phase_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[0].phase_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[0].phase_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[0].phase_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[0].phase_bias_bound_sig
+                );
                 assert_eq!(
                     msg.satellites_signals[0].sat_id, 0,
                     "incorrect value for satellites_signals[0].sat_id, expected 0, is {}",
@@ -237,10 +301,26 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                     "incorrect value for satellites_signals[0].signal_id, expected 3, is {}",
                     msg.satellites_signals[0].signal_id
                 );
-                assert_eq!(msg.satellites_signals[1].code_bias_bound_mu, 39, "incorrect value for satellites_signals[1].code_bias_bound_mu, expected 39, is {}", msg.satellites_signals[1].code_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[1].code_bias_bound_sig, 1, "incorrect value for satellites_signals[1].code_bias_bound_sig, expected 1, is {}", msg.satellites_signals[1].code_bias_bound_sig);
-                assert_eq!(msg.satellites_signals[1].phase_bias_bound_mu, 39, "incorrect value for satellites_signals[1].phase_bias_bound_mu, expected 39, is {}", msg.satellites_signals[1].phase_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[1].phase_bias_bound_sig, 1, "incorrect value for satellites_signals[1].phase_bias_bound_sig, expected 1, is {}", msg.satellites_signals[1].phase_bias_bound_sig);
+                assert_eq!(
+                    msg.satellites_signals[1].code_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[1].code_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[1].code_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[1].code_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[1].code_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[1].code_bias_bound_sig
+                );
+                assert_eq!(
+                    msg.satellites_signals[1].phase_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[1].phase_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[1].phase_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[1].phase_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[1].phase_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[1].phase_bias_bound_sig
+                );
                 assert_eq!(
                     msg.satellites_signals[1].sat_id, 1,
                     "incorrect value for satellites_signals[1].sat_id, expected 1, is {}",
@@ -251,10 +331,26 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                     "incorrect value for satellites_signals[1].signal_id, expected 3, is {}",
                     msg.satellites_signals[1].signal_id
                 );
-                assert_eq!(msg.satellites_signals[2].code_bias_bound_mu, 39, "incorrect value for satellites_signals[2].code_bias_bound_mu, expected 39, is {}", msg.satellites_signals[2].code_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[2].code_bias_bound_sig, 1, "incorrect value for satellites_signals[2].code_bias_bound_sig, expected 1, is {}", msg.satellites_signals[2].code_bias_bound_sig);
-                assert_eq!(msg.satellites_signals[2].phase_bias_bound_mu, 39, "incorrect value for satellites_signals[2].phase_bias_bound_mu, expected 39, is {}", msg.satellites_signals[2].phase_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[2].phase_bias_bound_sig, 1, "incorrect value for satellites_signals[2].phase_bias_bound_sig, expected 1, is {}", msg.satellites_signals[2].phase_bias_bound_sig);
+                assert_eq!(
+                    msg.satellites_signals[2].code_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[2].code_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[2].code_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[2].code_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[2].code_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[2].code_bias_bound_sig
+                );
+                assert_eq!(
+                    msg.satellites_signals[2].phase_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[2].phase_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[2].phase_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[2].phase_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[2].phase_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[2].phase_bias_bound_sig
+                );
                 assert_eq!(
                     msg.satellites_signals[2].sat_id, 1,
                     "incorrect value for satellites_signals[2].sat_id, expected 1, is {}",
@@ -369,10 +465,26 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                     "incorrect value for n_sats_signals, expected 3, is {}",
                     msg.n_sats_signals
                 );
-                assert_eq!(msg.satellites_signals[0].code_bias_bound_mu, 39, "incorrect value for satellites_signals[0].code_bias_bound_mu, expected 39, is {}", msg.satellites_signals[0].code_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[0].code_bias_bound_sig, 1, "incorrect value for satellites_signals[0].code_bias_bound_sig, expected 1, is {}", msg.satellites_signals[0].code_bias_bound_sig);
-                assert_eq!(msg.satellites_signals[0].phase_bias_bound_mu, 39, "incorrect value for satellites_signals[0].phase_bias_bound_mu, expected 39, is {}", msg.satellites_signals[0].phase_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[0].phase_bias_bound_sig, 1, "incorrect value for satellites_signals[0].phase_bias_bound_sig, expected 1, is {}", msg.satellites_signals[0].phase_bias_bound_sig);
+                assert_eq!(
+                    msg.satellites_signals[0].code_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[0].code_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[0].code_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[0].code_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[0].code_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[0].code_bias_bound_sig
+                );
+                assert_eq!(
+                    msg.satellites_signals[0].phase_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[0].phase_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[0].phase_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[0].phase_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[0].phase_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[0].phase_bias_bound_sig
+                );
                 assert_eq!(
                     msg.satellites_signals[0].sat_id, 0,
                     "incorrect value for satellites_signals[0].sat_id, expected 0, is {}",
@@ -383,10 +495,26 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                     "incorrect value for satellites_signals[0].signal_id, expected 3, is {}",
                     msg.satellites_signals[0].signal_id
                 );
-                assert_eq!(msg.satellites_signals[1].code_bias_bound_mu, 39, "incorrect value for satellites_signals[1].code_bias_bound_mu, expected 39, is {}", msg.satellites_signals[1].code_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[1].code_bias_bound_sig, 1, "incorrect value for satellites_signals[1].code_bias_bound_sig, expected 1, is {}", msg.satellites_signals[1].code_bias_bound_sig);
-                assert_eq!(msg.satellites_signals[1].phase_bias_bound_mu, 39, "incorrect value for satellites_signals[1].phase_bias_bound_mu, expected 39, is {}", msg.satellites_signals[1].phase_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[1].phase_bias_bound_sig, 1, "incorrect value for satellites_signals[1].phase_bias_bound_sig, expected 1, is {}", msg.satellites_signals[1].phase_bias_bound_sig);
+                assert_eq!(
+                    msg.satellites_signals[1].code_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[1].code_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[1].code_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[1].code_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[1].code_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[1].code_bias_bound_sig
+                );
+                assert_eq!(
+                    msg.satellites_signals[1].phase_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[1].phase_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[1].phase_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[1].phase_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[1].phase_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[1].phase_bias_bound_sig
+                );
                 assert_eq!(
                     msg.satellites_signals[1].sat_id, 1,
                     "incorrect value for satellites_signals[1].sat_id, expected 1, is {}",
@@ -397,10 +525,26 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_code_phase_biases_bounds() {
                     "incorrect value for satellites_signals[1].signal_id, expected 3, is {}",
                     msg.satellites_signals[1].signal_id
                 );
-                assert_eq!(msg.satellites_signals[2].code_bias_bound_mu, 39, "incorrect value for satellites_signals[2].code_bias_bound_mu, expected 39, is {}", msg.satellites_signals[2].code_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[2].code_bias_bound_sig, 1, "incorrect value for satellites_signals[2].code_bias_bound_sig, expected 1, is {}", msg.satellites_signals[2].code_bias_bound_sig);
-                assert_eq!(msg.satellites_signals[2].phase_bias_bound_mu, 39, "incorrect value for satellites_signals[2].phase_bias_bound_mu, expected 39, is {}", msg.satellites_signals[2].phase_bias_bound_mu);
-                assert_eq!(msg.satellites_signals[2].phase_bias_bound_sig, 1, "incorrect value for satellites_signals[2].phase_bias_bound_sig, expected 1, is {}", msg.satellites_signals[2].phase_bias_bound_sig);
+                assert_eq!(
+                    msg.satellites_signals[2].code_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[2].code_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[2].code_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[2].code_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[2].code_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[2].code_bias_bound_sig
+                );
+                assert_eq!(
+                    msg.satellites_signals[2].phase_bias_bound_mu, 39,
+                    "incorrect value for satellites_signals[2].phase_bias_bound_mu, expected 39, is {}",
+                    msg.satellites_signals[2].phase_bias_bound_mu
+                );
+                assert_eq!(
+                    msg.satellites_signals[2].phase_bias_bound_sig, 1,
+                    "incorrect value for satellites_signals[2].phase_bias_bound_sig, expected 1, is {}",
+                    msg.satellites_signals[2].phase_bias_bound_sig
+                );
                 assert_eq!(
                     msg.satellites_signals[2].sat_id, 1,
                     "incorrect value for satellites_signals[2].sat_id, expected 1, is {}",
