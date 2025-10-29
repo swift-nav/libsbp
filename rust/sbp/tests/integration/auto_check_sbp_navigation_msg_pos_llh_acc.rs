@@ -72,9 +72,21 @@ fn test_auto_check_sbp_navigation_msg_pos_llh_acc() {
                     "incorrect value for h_accuracy, expected 2.41019995117187500e+03, is {:e}",
                     msg.h_accuracy
                 );
-                assert!(msg.h_ellipse.orientation.almost_eq( 2.55019995117187500e+03 ), "incorrect value for h_ellipse.orientation, expected 2.55019995117187500e+03, is {:e}", msg.h_ellipse.orientation);
-                assert!(msg.h_ellipse.semi_major.almost_eq( 8.24820019531250000e+03 ), "incorrect value for h_ellipse.semi_major, expected 8.24820019531250000e+03, is {:e}", msg.h_ellipse.semi_major);
-                assert!(msg.h_ellipse.semi_minor.almost_eq( 3.20219995117187500e+03 ), "incorrect value for h_ellipse.semi_minor, expected 3.20219995117187500e+03, is {:e}", msg.h_ellipse.semi_minor);
+                assert!(
+                    msg.h_ellipse.orientation.almost_eq(2.55019995117187500e+03),
+                    "incorrect value for h_ellipse.orientation, expected 2.55019995117187500e+03, is {:e}",
+                    msg.h_ellipse.orientation
+                );
+                assert!(
+                    msg.h_ellipse.semi_major.almost_eq(8.24820019531250000e+03),
+                    "incorrect value for h_ellipse.semi_major, expected 8.24820019531250000e+03, is {:e}",
+                    msg.h_ellipse.semi_major
+                );
+                assert!(
+                    msg.h_ellipse.semi_minor.almost_eq(3.20219995117187500e+03),
+                    "incorrect value for h_ellipse.semi_minor, expected 3.20219995117187500e+03, is {:e}",
+                    msg.h_ellipse.semi_minor
+                );
                 assert!(
                     msg.height.almost_eq(4.25719999999999982e+03),
                     "incorrect value for height, expected 4.25719999999999982e+03, is {:e}",
@@ -95,7 +107,11 @@ fn test_auto_check_sbp_navigation_msg_pos_llh_acc() {
                     "incorrect value for n_sats, expected 27, is {}",
                     msg.n_sats
                 );
-                assert!(msg.orthometric_height.almost_eq( 4.96519999999999982e+03 ), "incorrect value for orthometric_height, expected 4.96519999999999982e+03, is {:e}", msg.orthometric_height);
+                assert!(
+                    msg.orthometric_height.almost_eq(4.96519999999999982e+03),
+                    "incorrect value for orthometric_height, expected 4.96519999999999982e+03, is {:e}",
+                    msg.orthometric_height
+                );
                 assert_eq!(
                     msg.tow, 309229607,
                     "incorrect value for tow, expected 309229607, is {}",
@@ -182,9 +198,21 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_acc() {
                     "incorrect value for h_accuracy, expected 2.41019995117187500e+03, is {:e}",
                     msg.h_accuracy
                 );
-                assert!(msg.h_ellipse.orientation.almost_eq( 2.55019995117187500e+03 ), "incorrect value for h_ellipse.orientation, expected 2.55019995117187500e+03, is {:e}", msg.h_ellipse.orientation);
-                assert!(msg.h_ellipse.semi_major.almost_eq( 8.24820019531250000e+03 ), "incorrect value for h_ellipse.semi_major, expected 8.24820019531250000e+03, is {:e}", msg.h_ellipse.semi_major);
-                assert!(msg.h_ellipse.semi_minor.almost_eq( 3.20219995117187500e+03 ), "incorrect value for h_ellipse.semi_minor, expected 3.20219995117187500e+03, is {:e}", msg.h_ellipse.semi_minor);
+                assert!(
+                    msg.h_ellipse.orientation.almost_eq(2.55019995117187500e+03),
+                    "incorrect value for h_ellipse.orientation, expected 2.55019995117187500e+03, is {:e}",
+                    msg.h_ellipse.orientation
+                );
+                assert!(
+                    msg.h_ellipse.semi_major.almost_eq(8.24820019531250000e+03),
+                    "incorrect value for h_ellipse.semi_major, expected 8.24820019531250000e+03, is {:e}",
+                    msg.h_ellipse.semi_major
+                );
+                assert!(
+                    msg.h_ellipse.semi_minor.almost_eq(3.20219995117187500e+03),
+                    "incorrect value for h_ellipse.semi_minor, expected 3.20219995117187500e+03, is {:e}",
+                    msg.h_ellipse.semi_minor
+                );
                 assert!(
                     msg.height.almost_eq(4.25719999999999982e+03),
                     "incorrect value for height, expected 4.25719999999999982e+03, is {:e}",
@@ -205,7 +233,11 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh_acc() {
                     "incorrect value for n_sats, expected 27, is {}",
                     msg.n_sats
                 );
-                assert!(msg.orthometric_height.almost_eq( 4.96519999999999982e+03 ), "incorrect value for orthometric_height, expected 4.96519999999999982e+03, is {:e}", msg.orthometric_height);
+                assert!(
+                    msg.orthometric_height.almost_eq(4.96519999999999982e+03),
+                    "incorrect value for orthometric_height, expected 4.96519999999999982e+03, is {:e}",
+                    msg.orthometric_height
+                );
                 assert_eq!(
                     msg.tow, 309229607,
                     "incorrect value for tow, expected 309229607, is {}",
@@ -302,9 +334,21 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_acc() {
                     "incorrect value for h_accuracy, expected 2.41019995117187500e+03, is {:e}",
                     msg.h_accuracy
                 );
-                assert!(msg.h_ellipse.orientation.almost_eq( 2.55019995117187500e+03 ), "incorrect value for h_ellipse.orientation, expected 2.55019995117187500e+03, is {:e}", msg.h_ellipse.orientation);
-                assert!(msg.h_ellipse.semi_major.almost_eq( 8.24820019531250000e+03 ), "incorrect value for h_ellipse.semi_major, expected 8.24820019531250000e+03, is {:e}", msg.h_ellipse.semi_major);
-                assert!(msg.h_ellipse.semi_minor.almost_eq( 3.20219995117187500e+03 ), "incorrect value for h_ellipse.semi_minor, expected 3.20219995117187500e+03, is {:e}", msg.h_ellipse.semi_minor);
+                assert!(
+                    msg.h_ellipse.orientation.almost_eq(2.55019995117187500e+03),
+                    "incorrect value for h_ellipse.orientation, expected 2.55019995117187500e+03, is {:e}",
+                    msg.h_ellipse.orientation
+                );
+                assert!(
+                    msg.h_ellipse.semi_major.almost_eq(8.24820019531250000e+03),
+                    "incorrect value for h_ellipse.semi_major, expected 8.24820019531250000e+03, is {:e}",
+                    msg.h_ellipse.semi_major
+                );
+                assert!(
+                    msg.h_ellipse.semi_minor.almost_eq(3.20219995117187500e+03),
+                    "incorrect value for h_ellipse.semi_minor, expected 3.20219995117187500e+03, is {:e}",
+                    msg.h_ellipse.semi_minor
+                );
                 assert!(
                     msg.height.almost_eq(4.25719999999999982e+03),
                     "incorrect value for height, expected 4.25719999999999982e+03, is {:e}",
@@ -325,7 +369,11 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_pos_llh_acc() {
                     "incorrect value for n_sats, expected 27, is {}",
                     msg.n_sats
                 );
-                assert!(msg.orthometric_height.almost_eq( 4.96519999999999982e+03 ), "incorrect value for orthometric_height, expected 4.96519999999999982e+03, is {:e}", msg.orthometric_height);
+                assert!(
+                    msg.orthometric_height.almost_eq(4.96519999999999982e+03),
+                    "incorrect value for orthometric_height, expected 4.96519999999999982e+03, is {:e}",
+                    msg.orthometric_height
+                );
                 assert_eq!(
                     msg.tow, 309229607,
                     "incorrect value for tow, expected 309229607, is {}",

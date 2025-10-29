@@ -95,12 +95,36 @@ fn test_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds() {
                     "incorrect value for orbit_clock_bounds[0].clock_bound_sig, expected 1, is {}",
                     msg.orbit_clock_bounds[0].clock_bound_sig
                 );
-                assert_eq!(msg.orbit_clock_bounds[0].orb_along_bound_mu, 38, "incorrect value for orbit_clock_bounds[0].orb_along_bound_mu, expected 38, is {}", msg.orbit_clock_bounds[0].orb_along_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_along_bound_sig, 2, "incorrect value for orbit_clock_bounds[0].orb_along_bound_sig, expected 2, is {}", msg.orbit_clock_bounds[0].orb_along_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_cross_bound_mu, 37, "incorrect value for orbit_clock_bounds[0].orb_cross_bound_mu, expected 37, is {}", msg.orbit_clock_bounds[0].orb_cross_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_cross_bound_sig, 3, "incorrect value for orbit_clock_bounds[0].orb_cross_bound_sig, expected 3, is {}", msg.orbit_clock_bounds[0].orb_cross_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_radial_bound_mu, 39, "incorrect value for orbit_clock_bounds[0].orb_radial_bound_mu, expected 39, is {}", msg.orbit_clock_bounds[0].orb_radial_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_radial_bound_sig, 1, "incorrect value for orbit_clock_bounds[0].orb_radial_bound_sig, expected 1, is {}", msg.orbit_clock_bounds[0].orb_radial_bound_sig);
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_along_bound_mu, 38,
+                    "incorrect value for orbit_clock_bounds[0].orb_along_bound_mu, expected 38, is {}",
+                    msg.orbit_clock_bounds[0].orb_along_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_along_bound_sig, 2,
+                    "incorrect value for orbit_clock_bounds[0].orb_along_bound_sig, expected 2, is {}",
+                    msg.orbit_clock_bounds[0].orb_along_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_cross_bound_mu, 37,
+                    "incorrect value for orbit_clock_bounds[0].orb_cross_bound_mu, expected 37, is {}",
+                    msg.orbit_clock_bounds[0].orb_cross_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_cross_bound_sig, 3,
+                    "incorrect value for orbit_clock_bounds[0].orb_cross_bound_sig, expected 3, is {}",
+                    msg.orbit_clock_bounds[0].orb_cross_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_radial_bound_mu, 39,
+                    "incorrect value for orbit_clock_bounds[0].orb_radial_bound_mu, expected 39, is {}",
+                    msg.orbit_clock_bounds[0].orb_radial_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_radial_bound_sig, 1,
+                    "incorrect value for orbit_clock_bounds[0].orb_radial_bound_sig, expected 1, is {}",
+                    msg.orbit_clock_bounds[0].orb_radial_bound_sig
+                );
                 assert_eq!(
                     msg.orbit_clock_bounds[0].sat_id, 24,
                     "incorrect value for orbit_clock_bounds[0].sat_id, expected 24, is {}",
@@ -116,12 +140,36 @@ fn test_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds() {
                     "incorrect value for orbit_clock_bounds[1].clock_bound_sig, expected 1, is {}",
                     msg.orbit_clock_bounds[1].clock_bound_sig
                 );
-                assert_eq!(msg.orbit_clock_bounds[1].orb_along_bound_mu, 38, "incorrect value for orbit_clock_bounds[1].orb_along_bound_mu, expected 38, is {}", msg.orbit_clock_bounds[1].orb_along_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_along_bound_sig, 2, "incorrect value for orbit_clock_bounds[1].orb_along_bound_sig, expected 2, is {}", msg.orbit_clock_bounds[1].orb_along_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_cross_bound_mu, 37, "incorrect value for orbit_clock_bounds[1].orb_cross_bound_mu, expected 37, is {}", msg.orbit_clock_bounds[1].orb_cross_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_cross_bound_sig, 3, "incorrect value for orbit_clock_bounds[1].orb_cross_bound_sig, expected 3, is {}", msg.orbit_clock_bounds[1].orb_cross_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_radial_bound_mu, 39, "incorrect value for orbit_clock_bounds[1].orb_radial_bound_mu, expected 39, is {}", msg.orbit_clock_bounds[1].orb_radial_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_radial_bound_sig, 1, "incorrect value for orbit_clock_bounds[1].orb_radial_bound_sig, expected 1, is {}", msg.orbit_clock_bounds[1].orb_radial_bound_sig);
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_along_bound_mu, 38,
+                    "incorrect value for orbit_clock_bounds[1].orb_along_bound_mu, expected 38, is {}",
+                    msg.orbit_clock_bounds[1].orb_along_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_along_bound_sig, 2,
+                    "incorrect value for orbit_clock_bounds[1].orb_along_bound_sig, expected 2, is {}",
+                    msg.orbit_clock_bounds[1].orb_along_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_cross_bound_mu, 37,
+                    "incorrect value for orbit_clock_bounds[1].orb_cross_bound_mu, expected 37, is {}",
+                    msg.orbit_clock_bounds[1].orb_cross_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_cross_bound_sig, 3,
+                    "incorrect value for orbit_clock_bounds[1].orb_cross_bound_sig, expected 3, is {}",
+                    msg.orbit_clock_bounds[1].orb_cross_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_radial_bound_mu, 39,
+                    "incorrect value for orbit_clock_bounds[1].orb_radial_bound_mu, expected 39, is {}",
+                    msg.orbit_clock_bounds[1].orb_radial_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_radial_bound_sig, 1,
+                    "incorrect value for orbit_clock_bounds[1].orb_radial_bound_sig, expected 1, is {}",
+                    msg.orbit_clock_bounds[1].orb_radial_bound_sig
+                );
                 assert_eq!(
                     msg.orbit_clock_bounds[1].sat_id, 3,
                     "incorrect value for orbit_clock_bounds[1].sat_id, expected 3, is {}",
@@ -233,12 +281,36 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds() {
                     "incorrect value for orbit_clock_bounds[0].clock_bound_sig, expected 1, is {}",
                     msg.orbit_clock_bounds[0].clock_bound_sig
                 );
-                assert_eq!(msg.orbit_clock_bounds[0].orb_along_bound_mu, 38, "incorrect value for orbit_clock_bounds[0].orb_along_bound_mu, expected 38, is {}", msg.orbit_clock_bounds[0].orb_along_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_along_bound_sig, 2, "incorrect value for orbit_clock_bounds[0].orb_along_bound_sig, expected 2, is {}", msg.orbit_clock_bounds[0].orb_along_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_cross_bound_mu, 37, "incorrect value for orbit_clock_bounds[0].orb_cross_bound_mu, expected 37, is {}", msg.orbit_clock_bounds[0].orb_cross_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_cross_bound_sig, 3, "incorrect value for orbit_clock_bounds[0].orb_cross_bound_sig, expected 3, is {}", msg.orbit_clock_bounds[0].orb_cross_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_radial_bound_mu, 39, "incorrect value for orbit_clock_bounds[0].orb_radial_bound_mu, expected 39, is {}", msg.orbit_clock_bounds[0].orb_radial_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_radial_bound_sig, 1, "incorrect value for orbit_clock_bounds[0].orb_radial_bound_sig, expected 1, is {}", msg.orbit_clock_bounds[0].orb_radial_bound_sig);
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_along_bound_mu, 38,
+                    "incorrect value for orbit_clock_bounds[0].orb_along_bound_mu, expected 38, is {}",
+                    msg.orbit_clock_bounds[0].orb_along_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_along_bound_sig, 2,
+                    "incorrect value for orbit_clock_bounds[0].orb_along_bound_sig, expected 2, is {}",
+                    msg.orbit_clock_bounds[0].orb_along_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_cross_bound_mu, 37,
+                    "incorrect value for orbit_clock_bounds[0].orb_cross_bound_mu, expected 37, is {}",
+                    msg.orbit_clock_bounds[0].orb_cross_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_cross_bound_sig, 3,
+                    "incorrect value for orbit_clock_bounds[0].orb_cross_bound_sig, expected 3, is {}",
+                    msg.orbit_clock_bounds[0].orb_cross_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_radial_bound_mu, 39,
+                    "incorrect value for orbit_clock_bounds[0].orb_radial_bound_mu, expected 39, is {}",
+                    msg.orbit_clock_bounds[0].orb_radial_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_radial_bound_sig, 1,
+                    "incorrect value for orbit_clock_bounds[0].orb_radial_bound_sig, expected 1, is {}",
+                    msg.orbit_clock_bounds[0].orb_radial_bound_sig
+                );
                 assert_eq!(
                     msg.orbit_clock_bounds[0].sat_id, 24,
                     "incorrect value for orbit_clock_bounds[0].sat_id, expected 24, is {}",
@@ -254,12 +326,36 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds() {
                     "incorrect value for orbit_clock_bounds[1].clock_bound_sig, expected 1, is {}",
                     msg.orbit_clock_bounds[1].clock_bound_sig
                 );
-                assert_eq!(msg.orbit_clock_bounds[1].orb_along_bound_mu, 38, "incorrect value for orbit_clock_bounds[1].orb_along_bound_mu, expected 38, is {}", msg.orbit_clock_bounds[1].orb_along_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_along_bound_sig, 2, "incorrect value for orbit_clock_bounds[1].orb_along_bound_sig, expected 2, is {}", msg.orbit_clock_bounds[1].orb_along_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_cross_bound_mu, 37, "incorrect value for orbit_clock_bounds[1].orb_cross_bound_mu, expected 37, is {}", msg.orbit_clock_bounds[1].orb_cross_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_cross_bound_sig, 3, "incorrect value for orbit_clock_bounds[1].orb_cross_bound_sig, expected 3, is {}", msg.orbit_clock_bounds[1].orb_cross_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_radial_bound_mu, 39, "incorrect value for orbit_clock_bounds[1].orb_radial_bound_mu, expected 39, is {}", msg.orbit_clock_bounds[1].orb_radial_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_radial_bound_sig, 1, "incorrect value for orbit_clock_bounds[1].orb_radial_bound_sig, expected 1, is {}", msg.orbit_clock_bounds[1].orb_radial_bound_sig);
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_along_bound_mu, 38,
+                    "incorrect value for orbit_clock_bounds[1].orb_along_bound_mu, expected 38, is {}",
+                    msg.orbit_clock_bounds[1].orb_along_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_along_bound_sig, 2,
+                    "incorrect value for orbit_clock_bounds[1].orb_along_bound_sig, expected 2, is {}",
+                    msg.orbit_clock_bounds[1].orb_along_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_cross_bound_mu, 37,
+                    "incorrect value for orbit_clock_bounds[1].orb_cross_bound_mu, expected 37, is {}",
+                    msg.orbit_clock_bounds[1].orb_cross_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_cross_bound_sig, 3,
+                    "incorrect value for orbit_clock_bounds[1].orb_cross_bound_sig, expected 3, is {}",
+                    msg.orbit_clock_bounds[1].orb_cross_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_radial_bound_mu, 39,
+                    "incorrect value for orbit_clock_bounds[1].orb_radial_bound_mu, expected 39, is {}",
+                    msg.orbit_clock_bounds[1].orb_radial_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_radial_bound_sig, 1,
+                    "incorrect value for orbit_clock_bounds[1].orb_radial_bound_sig, expected 1, is {}",
+                    msg.orbit_clock_bounds[1].orb_radial_bound_sig
+                );
                 assert_eq!(
                     msg.orbit_clock_bounds[1].sat_id, 3,
                     "incorrect value for orbit_clock_bounds[1].sat_id, expected 3, is {}",
@@ -379,12 +475,36 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds() {
                     "incorrect value for orbit_clock_bounds[0].clock_bound_sig, expected 1, is {}",
                     msg.orbit_clock_bounds[0].clock_bound_sig
                 );
-                assert_eq!(msg.orbit_clock_bounds[0].orb_along_bound_mu, 38, "incorrect value for orbit_clock_bounds[0].orb_along_bound_mu, expected 38, is {}", msg.orbit_clock_bounds[0].orb_along_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_along_bound_sig, 2, "incorrect value for orbit_clock_bounds[0].orb_along_bound_sig, expected 2, is {}", msg.orbit_clock_bounds[0].orb_along_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_cross_bound_mu, 37, "incorrect value for orbit_clock_bounds[0].orb_cross_bound_mu, expected 37, is {}", msg.orbit_clock_bounds[0].orb_cross_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_cross_bound_sig, 3, "incorrect value for orbit_clock_bounds[0].orb_cross_bound_sig, expected 3, is {}", msg.orbit_clock_bounds[0].orb_cross_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_radial_bound_mu, 39, "incorrect value for orbit_clock_bounds[0].orb_radial_bound_mu, expected 39, is {}", msg.orbit_clock_bounds[0].orb_radial_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[0].orb_radial_bound_sig, 1, "incorrect value for orbit_clock_bounds[0].orb_radial_bound_sig, expected 1, is {}", msg.orbit_clock_bounds[0].orb_radial_bound_sig);
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_along_bound_mu, 38,
+                    "incorrect value for orbit_clock_bounds[0].orb_along_bound_mu, expected 38, is {}",
+                    msg.orbit_clock_bounds[0].orb_along_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_along_bound_sig, 2,
+                    "incorrect value for orbit_clock_bounds[0].orb_along_bound_sig, expected 2, is {}",
+                    msg.orbit_clock_bounds[0].orb_along_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_cross_bound_mu, 37,
+                    "incorrect value for orbit_clock_bounds[0].orb_cross_bound_mu, expected 37, is {}",
+                    msg.orbit_clock_bounds[0].orb_cross_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_cross_bound_sig, 3,
+                    "incorrect value for orbit_clock_bounds[0].orb_cross_bound_sig, expected 3, is {}",
+                    msg.orbit_clock_bounds[0].orb_cross_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_radial_bound_mu, 39,
+                    "incorrect value for orbit_clock_bounds[0].orb_radial_bound_mu, expected 39, is {}",
+                    msg.orbit_clock_bounds[0].orb_radial_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].orb_radial_bound_sig, 1,
+                    "incorrect value for orbit_clock_bounds[0].orb_radial_bound_sig, expected 1, is {}",
+                    msg.orbit_clock_bounds[0].orb_radial_bound_sig
+                );
                 assert_eq!(
                     msg.orbit_clock_bounds[0].sat_id, 24,
                     "incorrect value for orbit_clock_bounds[0].sat_id, expected 24, is {}",
@@ -400,12 +520,36 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds() {
                     "incorrect value for orbit_clock_bounds[1].clock_bound_sig, expected 1, is {}",
                     msg.orbit_clock_bounds[1].clock_bound_sig
                 );
-                assert_eq!(msg.orbit_clock_bounds[1].orb_along_bound_mu, 38, "incorrect value for orbit_clock_bounds[1].orb_along_bound_mu, expected 38, is {}", msg.orbit_clock_bounds[1].orb_along_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_along_bound_sig, 2, "incorrect value for orbit_clock_bounds[1].orb_along_bound_sig, expected 2, is {}", msg.orbit_clock_bounds[1].orb_along_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_cross_bound_mu, 37, "incorrect value for orbit_clock_bounds[1].orb_cross_bound_mu, expected 37, is {}", msg.orbit_clock_bounds[1].orb_cross_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_cross_bound_sig, 3, "incorrect value for orbit_clock_bounds[1].orb_cross_bound_sig, expected 3, is {}", msg.orbit_clock_bounds[1].orb_cross_bound_sig);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_radial_bound_mu, 39, "incorrect value for orbit_clock_bounds[1].orb_radial_bound_mu, expected 39, is {}", msg.orbit_clock_bounds[1].orb_radial_bound_mu);
-                assert_eq!(msg.orbit_clock_bounds[1].orb_radial_bound_sig, 1, "incorrect value for orbit_clock_bounds[1].orb_radial_bound_sig, expected 1, is {}", msg.orbit_clock_bounds[1].orb_radial_bound_sig);
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_along_bound_mu, 38,
+                    "incorrect value for orbit_clock_bounds[1].orb_along_bound_mu, expected 38, is {}",
+                    msg.orbit_clock_bounds[1].orb_along_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_along_bound_sig, 2,
+                    "incorrect value for orbit_clock_bounds[1].orb_along_bound_sig, expected 2, is {}",
+                    msg.orbit_clock_bounds[1].orb_along_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_cross_bound_mu, 37,
+                    "incorrect value for orbit_clock_bounds[1].orb_cross_bound_mu, expected 37, is {}",
+                    msg.orbit_clock_bounds[1].orb_cross_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_cross_bound_sig, 3,
+                    "incorrect value for orbit_clock_bounds[1].orb_cross_bound_sig, expected 3, is {}",
+                    msg.orbit_clock_bounds[1].orb_cross_bound_sig
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_radial_bound_mu, 39,
+                    "incorrect value for orbit_clock_bounds[1].orb_radial_bound_mu, expected 39, is {}",
+                    msg.orbit_clock_bounds[1].orb_radial_bound_mu
+                );
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].orb_radial_bound_sig, 1,
+                    "incorrect value for orbit_clock_bounds[1].orb_radial_bound_sig, expected 1, is {}",
+                    msg.orbit_clock_bounds[1].orb_radial_bound_sig
+                );
                 assert_eq!(
                     msg.orbit_clock_bounds[1].sat_id, 3,
                     "incorrect value for orbit_clock_bounds[1].sat_id, expected 3, is {}",
