@@ -55,7 +55,7 @@ version = "0.4"
 optional = true
 
 [dependencies.base64]
-version = "0.22"
+version = "0.13"
 optional = true
 
 [dependencies.futures]
