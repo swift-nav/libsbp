@@ -355,7 +355,7 @@ def render_source(output_dir, package_specs, version: ReleaseVersion):
   if "TEXMFVAR" not in os.environ:
     os.environ["TEXMFVAR"] = "/tmp"
   # fix "dubious ownership in repository" error with git 2.35.2 and later
-  os.chown("..", os.environ["UID"], -1)
+  os.chown("..", os.getuid(), os.getgid())
   subprocess.check_call(["pdflatex", "--enable-write18",
                          "-shell-escape", "sbp_out.tex"])
   subprocess.check_call(["mv", "sbp_out.pdf", "../docs/sbp.pdf"])
