@@ -30,7 +30,7 @@ import org.json.JSONObject;
 public class MsgEcdsaSignatureDepB extends SBPMessage {
     public static final int TYPE = 0x0C07;
 
-    /** Describes the format of the `signed\_messages` field below. */
+    /** Describes the format of the `signed_messages` field below. */
     public int flags;
 
     /**
