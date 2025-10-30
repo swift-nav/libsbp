@@ -20,7 +20,7 @@ jobs:
     name: Generated artifacts
     runs-on: ubuntu-24.04
     container:
-      image: swiftnav/libsbp-build:2025-02-10
+      image: swiftnav/libsbp-build:2025-10-29
       options: --user root
       volumes:
         - ${{ github.workspace }}:/mnt/workspace
@@ -32,7 +32,7 @@ jobs:
 
       - name: Set safe git directory
         run: |
-          git config --global --add safe.directory /__w/libsbp/libsbp
+          git config --system --add safe.directory /__w/libsbp/libsbp
 
       - name: Generate tests
         run: |
