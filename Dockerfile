@@ -11,7 +11,7 @@
 # This describes an image that should be able to generate libsbp bindings.
 # See the README.md for instructions on how to use it.
 
-ARG UBUNTU_RELEASE=focal
+ARG UBUNTU_RELEASE=jammy
 
 FROM ubuntu:${UBUNTU_RELEASE}
 
@@ -23,8 +23,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV NODE_VERSION=v22.13.1
 ENV JAVA_VERSION=11.0.11.hs-adpt
 ENV GRADLE_VERSION=7.1.1
-ENV CC=gcc-7
-ENV CXX=g++-7
+ENV CC=gcc-10
+ENV CXX=g++-10
 
 ENV RUSTUP_HOME=/rust
 ENV CARGO_HOME=/cargo
@@ -77,15 +77,15 @@ RUN \
       doxygen \
       graphviz \
       imagemagick \
-      enchant \
-      clang-format-6.0 \
+      enchant-2 \
+      clang-format-11 \
       python3 python3-dev python3-distutils \
       python3.9 python3.9-dev python3.9-distutils \
       python3.10 python3.10-dev python3.10-distutils \
       python3.11 python3.11-dev python3.11-distutils \
       dpkg-dev \
-      cmake-data=3.16.3-1ubuntu1.20.04.1 \
-      cmake=3.16.3-1ubuntu1.20.04.1 \
+      cmake=3.22.1-1ubuntu1 \
+      cmake-data=3.22.1-1ubuntu1 \
       libjson-perl \
       libdigest-crc-perl \
   && curl -sSL https://get.haskellstack.org/ | sh \
@@ -131,9 +131,9 @@ RUN \
 # install perl runtime for kaitai struct
 RUN \
      cd /tmp \
-  && curl -LO https://github.com/kaitai-io/kaitai_struct_perl_runtime/archive/refs/tags/0.10.zip \
-  && unzip 0.10.zip \
-  && cd kaitai_struct_perl_runtime-0.10 \
+  && curl -LO https://github.com/kaitai-io/kaitai_struct_perl_runtime/archive/refs/tags/0.11.zip \
+  && unzip 0.11.zip \
+  && cd kaitai_struct_perl_runtime-0.11 \
   && perl Makefile.PL \
   && make install \
   && rm -rf /tmp/*
