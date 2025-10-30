@@ -649,7 +649,7 @@ pub mod msg_ecdsa_signature {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        /// Describes the format of the `signed\_messages` field below.
+        /// Describes the format of the `signed_messages` field below.
         #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// Signature message counter. Zero indexed and incremented with each
@@ -825,7 +825,7 @@ pub mod msg_ecdsa_signature_dep_a {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        /// Describes the format of the `signed\_messages` field below.
+        /// Describes the format of the `signed_messages` field below.
         #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// Signature message counter. Zero indexed and incremented with each
@@ -1001,7 +1001,7 @@ pub mod msg_ecdsa_signature_dep_b {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        /// Describes the format of the `signed\_messages` field below.
+        /// Describes the format of the `signed_messages` field below.
         #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// Signature message counter. Zero indexed and incremented with each
