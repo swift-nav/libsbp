@@ -33,18 +33,6 @@ def no_us(value):
     pass
   return None
 
-# Note, these reg exps will not replace the '^' character to allow
-# exponents in the units text field
-LATEX_SUBS_ALLOW_EXPONENTS = (
-    (re.compile(r'\\'), r'\\textbackslash'),
-    (re.compile(r'([{}_#%&$])'), r'\\\1'),
-    (re.compile(r'~'), r'\~{}'),
-    (re.compile(r'_'), r'_'),
-    (re.compile(r'"'), r"''"),
-    (re.compile(r'\.\.\.+'), r'\\ldots'),
-    (re.compile(r'\n'), r'\\newline ')
-)
-
 TEMPLATE_NAME = "sbp_messages_desc.tex"
 
 LATEX_SUBS_MIN = (

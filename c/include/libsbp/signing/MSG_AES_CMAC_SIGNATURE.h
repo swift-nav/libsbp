@@ -70,7 +70,7 @@ typedef struct {
   u8 signature[SBP_MSG_AES_CMAC_SIGNATURE_SIGNATURE_MAX];
 
   /**
-   * Describes the format of the 'signed messages' field below.
+   * Describes the format of the 'signed_messages' field.
    */
   u8 flags;
 

@@ -51,7 +51,7 @@ public class MsgAesCmacSignature extends SBPMessage {
     /** Signature (CMAC tag value) */
     public int[] signature;
 
-    /** Describes the format of the 'signed messages' field below. */
+    /** Describes the format of the 'signed_messages' field. */
     public int flags;
 
     /**
