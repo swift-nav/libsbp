@@ -11,6 +11,7 @@
 from .utils import PYTHON_ROOT
 import sbp.sbp2json
 import os
+import pytest
 
 TEST_DATA = os.path.join(PYTHON_ROOT, "..", "test_data", "benchmark.sbp")
 
@@ -37,6 +38,7 @@ def get_message_count(unbuffered):
 
 # make sure that we parse exactly 150000 SBP messages from TEST_DATA
 # when running sbp2json without the --unbuffered flag
+@pytest.mark.slow
 def test_sbp2json_buffered():
     msg_count = get_message_count(False)
     assert msg_count == 150000
@@ -44,6 +46,7 @@ def test_sbp2json_buffered():
 
 # make sure that we parse exactly 150000 SBP messages from TEST_DATA
 # when running sbp2json with the --unbuffered flag
+@pytest.mark.slow
 def test_sbp2json_unbuffered():
     msg_count = get_message_count(True)
     assert msg_count == 150000

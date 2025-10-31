@@ -239,7 +239,7 @@ MsgCertificateChainDep.prototype.fieldSpec.push(['signature', 'array', 'writeUIn
  *   be zero.
  * @field certificate_id array The last 4 bytes of the certificate's SHA-1 fingerprint
  * @field signature array Signature (CMAC tag value)
- * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the 'signed messages' field below.
+ * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the 'signed_messages' field.
  * @field signed_messages array CRCs of the messages covered by this signature.  For Skylark, which delivers SBP
  *   messages wrapped in Swift's proprietary RTCM message, these are the 24-bit CRCs
  *   from the RTCM message framing. For SBP only streams, this will be 16-bit CRCs
@@ -281,7 +281,7 @@ MsgAesCmacSignature.prototype.fieldSpec.push(['signed_messages', 'array', 'write
  * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the `signed\_messages` field below.
+ * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the 'signed_messages' field.
  * @field stream_counter number (unsigned 8-bit int, 1 byte) Signature message counter. Zero indexed and incremented with each signature
  *   message.  The counter will not increment if this message was in response to an
  *   on demand request.  The counter will roll over after 256 messages. Upon
@@ -333,7 +333,7 @@ MsgEcdsaSignature.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUI
  * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the `signed\_messages` field below.
+ * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the 'signed_messages' field.
  * @field stream_counter number (unsigned 8-bit int, 1 byte) Signature message counter. Zero indexed and incremented with each signature
  *   message.  The counter will not increment if this message was in response to an
  *   on demand request.  The counter will roll over after 256 messages. Upon
@@ -390,7 +390,7 @@ MsgEcdsaSignatureDepB.prototype.fieldSpec.push(['signed_messages', 'array', 'wri
  * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the `signed\_messages` field below.
+ * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the 'signed_messages' field.
  * @field stream_counter number (unsigned 8-bit int, 1 byte) Signature message counter. Zero indexed and incremented with each signature
  *   message.  The counter will not increment if this message was in response to an
  *   on demand request.  The counter will roll over after 256 messages. Upon

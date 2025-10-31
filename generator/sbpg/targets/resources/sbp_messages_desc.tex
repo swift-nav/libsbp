@@ -67,7 +67,7 @@
   ((*- for bf in f.bitfields *))
   \regfieldb{(((bf['desc'])))((* if 'vals' in bf *)) (\autoref{tab:(((m.name)))_(((f.name|nobrackets)))(((bf['range'])))})((* endif *))}{(((bf['len'])))}{(((bf['lsb'])))}
   ((*- endfor *))
-  \captionof{field}{(((f.desc))) (\texttt{(((f.name|removearray|escape_tex)))})}
+  \captionof{field}{(((f.desc|escape_tex))) (\texttt{(((f.name|removearray|escape_tex)))})}
   \label{fld:(((m.name)))_(((f.name|nobrackets)))}
   \end{minipage}
   \hfill
@@ -157,7 +157,7 @@
   ((*- for bf in f.bitfields *))
   \regfieldb{(((bf['desc'])))((* if 'vals' in bf *)) (\autoref{tab:(((m.name)))_(((f.name|nobrackets)))(((bf['range'])))})((* endif *))}{(((bf['len'])))}{(((bf['lsb'])))}
   ((*- endfor *))
-  \captionof{field}{(((f.desc))) (\texttt{(((f.name|removearray|escape_tex)))})}
+  \captionof{field}{(((f.desc|escape_tex))) (\texttt{(((f.name|removearray|escape_tex)))})}
   \label{fld:(((m.name)))_(((f.name|nobrackets)))}
   \end{minipage}
   \hfill

@@ -201,7 +201,7 @@ types:
         repeat-expr: 16
       - id: flags
         doc: |
-          Describes the format of the 'signed messages' field below.
+          Describes the format of the 'signed_messages' field.
         type: u1
       - id: signed_messages
         doc: |
@@ -219,7 +219,7 @@ types:
     seq:
       - id: flags
         doc: |
-          Describes the format of the `signed\_messages` field below.
+          Describes the format of the 'signed_messages' field.
         type: u1
       - id: stream_counter
         doc: |
@@ -262,7 +262,7 @@ types:
     seq:
       - id: flags
         doc: |
-          Describes the format of the `signed\_messages` field below.
+          Describes the format of the 'signed_messages' field.
         type: u1
       - id: stream_counter
         doc: |
@@ -314,7 +314,7 @@ types:
     seq:
       - id: flags
         doc: |
-          Describes the format of the `signed\_messages` field below.
+          Describes the format of the 'signed_messages' field.
         type: u1
       - id: stream_counter
         doc: |
