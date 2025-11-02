@@ -36,7 +36,7 @@ jobs:
 
       - name: Generate tests
         run: |
-          rm c/test/auto_check_*.c c/test/cpp/auto_check_*.cc java/test/auto_check_*.java rust/sbp/tests/integration/auto_check_*.rs
+          rm c/test/auto_check_*.cc c/test/cpp/auto_check_*.cc java/test/auto_check_*.java rust/sbp/tests/integration/auto_check_*.rs
           make gen-c gen-java gen-rust gen-jsonschema gen-haskell gen-python gen-javascript gen-protobuf
           make quicktype
 
