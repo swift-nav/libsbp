@@ -135,7 +135,7 @@ TEST(Core, test_sbp_process) {
   test_msg2.fwd.n_fwd_payload = 0;
   sbp_message_send(&s, SbpMsgFwd, 0x4243, &test_msg2, &dummy_write);
 
-  s8 ret = 0;
+  int ret = 0;
   while (dummy_rd < dummy_wr) {
     ret |= sbp_process(&s, &dummy_read);
   }
