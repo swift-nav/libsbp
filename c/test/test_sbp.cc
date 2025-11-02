@@ -76,6 +76,7 @@ TEST(Core, test_sbp_process) {
   test_msg.log.level = 3;
   sbp_msg_log_text_printf(&test_msg.log, false, NULL, "Hello, World!");
 
+  logging_reset();
   dummy_reset();
   sbp_message_send(&s, SbpMsgLog, 0x42, &test_msg, &dummy_write);
 
@@ -283,8 +284,8 @@ TEST(Core, test_sbp_all_payload) {
   msg_2.user_data.contents[3] = 0x66;
   msg_2.user_data.contents[4] = 0x55;
 
-  dummy_reset();
   logging_reset();
+  dummy_reset();
   sbp_message_send(&s, SbpMsgLog, 0x42, &msg_1, &dummy_write);
   sbp_message_send(&s, SbpMsgUserData, 0x43, &msg_2, &dummy_write);
 
@@ -321,8 +322,8 @@ TEST(Core, test_sbp_big_msg) {
     big_msg.user_data.contents[i] = i;
   }
 
-  dummy_reset();
   logging_reset();
+  dummy_reset();
   sbp_message_send(&s, SbpMsgUserData, 0x42, &big_msg, &dummy_write);
 
   s8 ret = SBP_OK;
