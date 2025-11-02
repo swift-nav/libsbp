@@ -10,7 +10,7 @@ namespace io {
 u32 dummy_wr = 0u;
 u32 dummy_rd = 0u;
 u8 dummy_buff[1024];
-void* last_io_context;
+void* last_io_context = nullptr;
 
 void dummy_reset(void) {
   dummy_rd = dummy_wr = 0;
