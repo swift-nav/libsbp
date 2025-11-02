@@ -1,0 +1,113 @@
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/observation/test_MsgBasePosLLH.yaml by
+// generate.py. Do not modify by hand!
+
+#include <gtest/gtest.h>
+#include <libsbp/observation.h>
+#include <libsbp/sbp.h>
+#include <stdio.h>   // for debugging
+#include <stdlib.h>  // for malloc
+#include "test_utils.h"
+
+using namespace utils;
+using namespace utils::io;
+using namespace utils::logging;
+
+namespace {
+
+TEST(auto_check_sbp_observation_MsgBasePosLLH,
+     test_auto_check_sbp_observation_MsgBasePosLLH) {
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message
+    // types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_callback_register(&sbp_state, SbpMsgBasePosLlh, &logging_callback,
+                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {
+        85, 68,  0, 123, 0,  24,  225, 237, 238, 90,  42, 160, 66, 64, 59, 143,
+        70, 235, 0, 120, 94, 192, 51,  181, 124, 240, 65, 248, 66, 64, 82, 230,
+    };
+
+    dummy_reset();
+
+    sbp_msg_t test_msg;
+    memset(&test_msg, 0, sizeof(test_msg));
+
+    test_msg.base_pos_llh.height = 37.939512310879216;
+
+    test_msg.base_pos_llh.lat = 37.251292578377395;
+
+    test_msg.base_pos_llh.lon = -121.87505609407974;
+
+    sbp_message_send(&sbp_state, SbpMsgBasePosLlh, 123, &test_msg,
+                     &dummy_write);
+
+    EXPECT_EQ(dummy_wr, sizeof(encoded_frame))
+        << "not enough data was written to dummy_buff (expected: "
+        << sizeof(encoded_frame) << ", actual: " << dummy_wr << ")";
+    EXPECT_EQ(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)), 0)
+        << "frame was not encoded properly";
+
+    while (dummy_rd < dummy_wr) {
+      EXPECT_GE(sbp_process(&sbp_state, &dummy_read), SBP_OK)
+          << "sbp_process threw an error!";
+    }
+
+    EXPECT_EQ(last_msg.n_callbacks_logged, 1)
+        << "msg_callback: one callback should have been logged";
+    EXPECT_EQ(last_msg.sender_id, 123)
+        << "msg_callback: sender_id decoded incorrectly";
+
+    EXPECT_EQ(sbp_message_cmp(SbpMsgBasePosLlh, &last_msg.msg, &test_msg), 0)
+        << "Sent and received messages did not compare equal";
+
+    EXPECT_LE((last_msg.msg.base_pos_llh.height * 100 - 37.9395123109 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.base_pos_llh.height, expected "
+           "37.9395123109, is "
+        << last_msg.msg.base_pos_llh.height;
+
+    EXPECT_LE((last_msg.msg.base_pos_llh.lat * 100 - 37.2512925784 * 100), 0.05)
+        << "incorrect value for last_msg.msg.base_pos_llh.lat, expected "
+           "37.2512925784, is "
+        << last_msg.msg.base_pos_llh.lat;
+
+    EXPECT_LE((last_msg.msg.base_pos_llh.lon * 100 - -121.875056094 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.base_pos_llh.lon, expected "
+           "-121.875056094, is "
+        << last_msg.msg.base_pos_llh.lon;
+  }
+}
+
+}  // namespace

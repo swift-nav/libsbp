@@ -1,0 +1,207 @@
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/observation/test_MsgAlmanacGLO.yaml by
+// generate.py. Do not modify by hand!
+
+#include <gtest/gtest.h>
+#include <libsbp/observation.h>
+#include <libsbp/sbp.h>
+#include <stdio.h>   // for debugging
+#include <stdlib.h>  // for malloc
+#include "test_utils.h"
+
+using namespace utils;
+using namespace utils::io;
+using namespace utils::logging;
+
+namespace {
+
+TEST(auto_check_sbp_observation_MsgAlmanacGLO,
+     test_auto_check_sbp_observation_MsgAlmanacGLO) {
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message
+    // types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_callback_register(&sbp_state, SbpMsgAlmanacGlo, &logging_callback,
+                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {
+        85,  115, 0,   195, 4,   78,  22,  0,   176, 207, 6,   0,   106,
+        8,   154, 153, 153, 153, 153, 153, 1,   64,  64,  56,  0,   0,
+        1,   0,   142, 41,  5,   235, 95,  135, 150, 191, 0,   0,   0,
+        32,  191, 247, 124, 63,  0,   0,   192, 206, 140, 33,  180, 64,
+        41,  131, 179, 134, 141, 248, 253, 191, 227, 133, 81,  54,  204,
+        30,  67,  190, 216, 59,  199, 39,  96,  168, 239, 191, 71,  11,
+        217, 147, 145, 228, 237, 63,  155, 87,
+    };
+
+    dummy_reset();
+
+    sbp_msg_t test_msg;
+    memset(&test_msg, 0, sizeof(test_msg));
+
+    test_msg.almanac_glo.common.fit_interval = 14400;
+
+    test_msg.almanac_glo.common.health_bits = 0;
+
+    test_msg.almanac_glo.common.sid.code = 0;
+
+    test_msg.almanac_glo.common.sid.sat = 22;
+
+    test_msg.almanac_glo.common.toa.tow = 446384;
+
+    test_msg.almanac_glo.common.toa.wn = 2154;
+
+    test_msg.almanac_glo.common.ura = 2.2;
+
+    test_msg.almanac_glo.common.valid = 1;
+
+    test_msg.almanac_glo.epsilon = -0.9893036629599647;
+
+    test_msg.almanac_glo.i = 5153.550029754639;
+
+    test_msg.almanac_glo.lambda_na = -0.02200078842114688;
+
+    test_msg.almanac_glo.omega = 0.9341514480259797;
+
+    test_msg.almanac_glo.t = -1.8731818448797617;
+
+    test_msg.almanac_glo.t_dot = -8.903585155774196e-09;
+
+    test_msg.almanac_glo.t_lambda_na = 0.007072207052260637;
+
+    sbp_message_send(&sbp_state, SbpMsgAlmanacGlo, 1219, &test_msg,
+                     &dummy_write);
+
+    EXPECT_EQ(dummy_wr, sizeof(encoded_frame))
+        << "not enough data was written to dummy_buff (expected: "
+        << sizeof(encoded_frame) << ", actual: " << dummy_wr << ")";
+    EXPECT_EQ(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)), 0)
+        << "frame was not encoded properly";
+
+    while (dummy_rd < dummy_wr) {
+      EXPECT_GE(sbp_process(&sbp_state, &dummy_read), SBP_OK)
+          << "sbp_process threw an error!";
+    }
+
+    EXPECT_EQ(last_msg.n_callbacks_logged, 1)
+        << "msg_callback: one callback should have been logged";
+    EXPECT_EQ(last_msg.sender_id, 1219)
+        << "msg_callback: sender_id decoded incorrectly";
+
+    EXPECT_EQ(sbp_message_cmp(SbpMsgAlmanacGlo, &last_msg.msg, &test_msg), 0)
+        << "Sent and received messages did not compare equal";
+
+    EXPECT_EQ(last_msg.msg.almanac_glo.common.fit_interval, 14400)
+        << "incorrect value for last_msg.msg.almanac_glo.common.fit_interval, "
+           "expected 14400, is "
+        << (int64_t)last_msg.msg.almanac_glo.common.fit_interval;
+
+    EXPECT_EQ(last_msg.msg.almanac_glo.common.health_bits, 0)
+        << "incorrect value for last_msg.msg.almanac_glo.common.health_bits, "
+           "expected 0, is "
+        << (int64_t)last_msg.msg.almanac_glo.common.health_bits;
+
+    EXPECT_EQ(last_msg.msg.almanac_glo.common.sid.code, 0)
+        << "incorrect value for last_msg.msg.almanac_glo.common.sid.code, "
+           "expected 0, is "
+        << (int64_t)last_msg.msg.almanac_glo.common.sid.code;
+
+    EXPECT_EQ(last_msg.msg.almanac_glo.common.sid.sat, 22)
+        << "incorrect value for last_msg.msg.almanac_glo.common.sid.sat, "
+           "expected 22, is "
+        << (int64_t)last_msg.msg.almanac_glo.common.sid.sat;
+
+    EXPECT_EQ(last_msg.msg.almanac_glo.common.toa.tow, 446384)
+        << "incorrect value for last_msg.msg.almanac_glo.common.toa.tow, "
+           "expected 446384, is "
+        << (int64_t)last_msg.msg.almanac_glo.common.toa.tow;
+
+    EXPECT_EQ(last_msg.msg.almanac_glo.common.toa.wn, 2154)
+        << "incorrect value for last_msg.msg.almanac_glo.common.toa.wn, "
+           "expected 2154, is "
+        << (int64_t)last_msg.msg.almanac_glo.common.toa.wn;
+
+    EXPECT_LE((last_msg.msg.almanac_glo.common.ura * 100 - 2.2 * 100), 0.05)
+        << "incorrect value for last_msg.msg.almanac_glo.common.ura, expected "
+           "2.2, is "
+        << last_msg.msg.almanac_glo.common.ura;
+
+    EXPECT_EQ(last_msg.msg.almanac_glo.common.valid, 1)
+        << "incorrect value for last_msg.msg.almanac_glo.common.valid, "
+           "expected 1, is "
+        << (int64_t)last_msg.msg.almanac_glo.common.valid;
+
+    EXPECT_LE((last_msg.msg.almanac_glo.epsilon * 100 - -0.98930366296 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.almanac_glo.epsilon, expected "
+           "-0.98930366296, is "
+        << last_msg.msg.almanac_glo.epsilon;
+
+    EXPECT_LE((last_msg.msg.almanac_glo.i * 100 - 5153.55002975 * 100), 0.05)
+        << "incorrect value for last_msg.msg.almanac_glo.i, expected "
+           "5153.55002975, is "
+        << last_msg.msg.almanac_glo.i;
+
+    EXPECT_LE(
+        (last_msg.msg.almanac_glo.lambda_na * 100 - -0.0220007884211 * 100),
+        0.05)
+        << "incorrect value for last_msg.msg.almanac_glo.lambda_na, expected "
+           "-0.0220007884211, is "
+        << last_msg.msg.almanac_glo.lambda_na;
+
+    EXPECT_LE((last_msg.msg.almanac_glo.omega * 100 - 0.934151448026 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.almanac_glo.omega, expected "
+           "0.934151448026, is "
+        << last_msg.msg.almanac_glo.omega;
+
+    EXPECT_LE((last_msg.msg.almanac_glo.t * 100 - -1.87318184488 * 100), 0.05)
+        << "incorrect value for last_msg.msg.almanac_glo.t, expected "
+           "-1.87318184488, is "
+        << last_msg.msg.almanac_glo.t;
+
+    EXPECT_LE((last_msg.msg.almanac_glo.t_dot * 100 - -8.90358515577e-09 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.almanac_glo.t_dot, expected "
+           "-8.90358515577e-09, is "
+        << last_msg.msg.almanac_glo.t_dot;
+
+    EXPECT_LE(
+        (last_msg.msg.almanac_glo.t_lambda_na * 100 - 0.00707220705226 * 100),
+        0.05)
+        << "incorrect value for last_msg.msg.almanac_glo.t_lambda_na, expected "
+           "0.00707220705226, is "
+        << last_msg.msg.almanac_glo.t_lambda_na;
+  }
+}
+
+}  // namespace

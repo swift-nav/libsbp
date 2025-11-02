@@ -1,12 +1,12 @@
 find_package(Threads)
-set(TEST_LIBS ${TEST_LIBS} check Threads::Threads swiftnav::sbp)
+set(TEST_LIBS ${TEST_LIBS} gtest gtest_main Threads::Threads swiftnav::sbp)
 
 # Check needs to be linked against Librt on Linux
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
   set(TEST_LIBS ${TEST_LIBS} rt)
 endif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 
-FILE(GLOB generated_c_sources auto*.c)
+FILE(GLOB generated_c_sources auto*.cc)
 
 set(TEST_INCLUDES ${PROJECT_SOURCE_DIR}/include/libsbp)
 
@@ -26,10 +26,10 @@ endif()
 swift_add_test(test-libsbp
   UNIT_TEST
   SRCS
-    check_main.c
-    check_edc.c
-    check_sbp.c
-    check_bitfield_macros.c
+    test_edc.cc
+    test_sbp.cc
+    test_bitfield_macros.cc
+    test_utils.cc
     ${generated_c_sources}
   INCLUDE
     ${TEST_INCLUDES}

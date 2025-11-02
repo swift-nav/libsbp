@@ -1,0 +1,343 @@
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/observation/test_MsgEphemerisBds.yaml by
+// generate.py. Do not modify by hand!
+
+#include <gtest/gtest.h>
+#include <libsbp/observation.h>
+#include <libsbp/sbp.h>
+#include <stdio.h>   // for debugging
+#include <stdlib.h>  // for malloc
+#include "test_utils.h"
+
+using namespace utils;
+using namespace utils::io;
+using namespace utils::logging;
+
+namespace {
+
+TEST(auto_check_sbp_observation_MsgEphemerisBds,
+     test_auto_check_sbp_observation_MsgEphemerisBds) {
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message
+    // types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_callback_register(&sbp_state, SbpMsgEphemerisBds, &logging_callback,
+                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {
+        85,  137, 0,   128, 240, 147, 8,   12,  174, 179, 6,   0,   106,
+        8,   0,   0,   0,   64,  48,  42,  0,   0,   1,   0,   125, 99,
+        52,  50,  207, 46,  151, 176, 0,   112, 96,  67,  0,   164, 106,
+        67,  0,   60,  255, 54,  0,   224, 47,  53,  0,   0,   143, 179,
+        0,   192, 190, 52,  146, 101, 162, 196, 109, 104, 19,  62,  253,
+        87,  86,  202, 62,  28,  251, 63,  0,   0,   0,   96,  151, 60,
+        117, 63,  0,   0,   128, 154, 127, 93,  185, 64,  151, 193, 64,
+        0,   10,  166, 4,   192, 160, 75,  174, 98,  8,   201, 35,  190,
+        205, 29,  12,  71,  189, 150, 5,   192, 176, 72,  249, 189, 193,
+        172, 240, 63,  72,  249, 188, 180, 160, 203, 9,   62,  0,   0,
+        0,   0,   92,  51,  77,  191, 0,   128, 174, 43,  0,   0,   88,
+        161, 174, 179, 6,   0,   106, 8,   6,   5,   0,   157, 249,
+    };
+
+    dummy_reset();
+
+    sbp_msg_t test_msg;
+    memset(&test_msg, 0, sizeof(test_msg));
+
+    test_msg.ephemeris_bds.af0 = -0.0008911322802305222;
+
+    test_msg.ephemeris_bds.af1 = 1.2398970739013748e-12;
+
+    test_msg.ephemeris_bds.af2 = -7.318364664277155e-19;
+
+    test_msg.ephemeris_bds.c_ic = -6.658956408500671e-08;
+
+    test_msg.ephemeris_bds.c_is = 3.5529956221580505e-07;
+
+    test_msg.ephemeris_bds.c_rc = 234.640625;
+
+    test_msg.ephemeris_bds.c_rs = 224.4375;
+
+    test_msg.ephemeris_bds.c_uc = 7.606577128171921e-06;
+
+    test_msg.ephemeris_bds.c_us = 6.551854312419891e-07;
+
+    test_msg.ephemeris_bds.common.fit_interval = 10800;
+
+    test_msg.ephemeris_bds.common.health_bits = 0;
+
+    test_msg.ephemeris_bds.common.sid.code = 12;
+
+    test_msg.ephemeris_bds.common.sid.sat = 8;
+
+    test_msg.ephemeris_bds.common.toe.tow = 439214;
+
+    test_msg.ephemeris_bds.common.toe.wn = 2154;
+
+    test_msg.ephemeris_bds.common.ura = 2.0;
+
+    test_msg.ephemeris_bds.common.valid = 1;
+
+    test_msg.ephemeris_bds.dn = 1.1296899132622133e-09;
+
+    test_msg.ephemeris_bds.ecc = 0.005184737499803305;
+
+    test_msg.ephemeris_bds.inc = 1.0421769543504915;
+
+    test_msg.ephemeris_bds.inc_dot = 7.507455572801683e-10;
+
+    test_msg.ephemeris_bds.iodc = 5;
+
+    test_msg.ephemeris_bds.iode = 6;
+
+    test_msg.ephemeris_bds.m0 = 1.6943958190727237;
+
+    test_msg.ephemeris_bds.omega0 = -2.581073762870982;
+
+    test_msg.ephemeris_bds.omegadot = -2.303310227830545e-09;
+
+    test_msg.ephemeris_bds.sqrta = 6493.49845123291;
+
+    test_msg.ephemeris_bds.tgd1 = 1.0499999980595476e-08;
+
+    test_msg.ephemeris_bds.tgd2 = -1.0999999799921056e-09;
+
+    test_msg.ephemeris_bds.toc.tow = 439214;
+
+    test_msg.ephemeris_bds.toc.wn = 2154;
+
+    test_msg.ephemeris_bds.w = -2.698603205735458;
+
+    sbp_message_send(&sbp_state, SbpMsgEphemerisBds, 61568, &test_msg,
+                     &dummy_write);
+
+    EXPECT_EQ(dummy_wr, sizeof(encoded_frame))
+        << "not enough data was written to dummy_buff (expected: "
+        << sizeof(encoded_frame) << ", actual: " << dummy_wr << ")";
+    EXPECT_EQ(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)), 0)
+        << "frame was not encoded properly";
+
+    while (dummy_rd < dummy_wr) {
+      EXPECT_GE(sbp_process(&sbp_state, &dummy_read), SBP_OK)
+          << "sbp_process threw an error!";
+    }
+
+    EXPECT_EQ(last_msg.n_callbacks_logged, 1)
+        << "msg_callback: one callback should have been logged";
+    EXPECT_EQ(last_msg.sender_id, 61568)
+        << "msg_callback: sender_id decoded incorrectly";
+
+    EXPECT_EQ(sbp_message_cmp(SbpMsgEphemerisBds, &last_msg.msg, &test_msg), 0)
+        << "Sent and received messages did not compare equal";
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.af0 * 100 - -0.000891132280231 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.af0, expected "
+           "-0.000891132280231, is "
+        << last_msg.msg.ephemeris_bds.af0;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.af1 * 100 - 1.2398970739e-12 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.af1, expected "
+           "1.2398970739e-12, is "
+        << last_msg.msg.ephemeris_bds.af1;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.af2 * 100 - -7.31836466428e-19 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.af2, expected "
+           "-7.31836466428e-19, is "
+        << last_msg.msg.ephemeris_bds.af2;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.c_ic * 100 - -6.6589564085e-08 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.c_ic, expected "
+           "-6.6589564085e-08, is "
+        << last_msg.msg.ephemeris_bds.c_ic;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.c_is * 100 - 3.55299562216e-07 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.c_is, expected "
+           "3.55299562216e-07, is "
+        << last_msg.msg.ephemeris_bds.c_is;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.c_rc * 100 - 234.640625 * 100), 0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.c_rc, expected "
+           "234.640625, is "
+        << last_msg.msg.ephemeris_bds.c_rc;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.c_rs * 100 - 224.4375 * 100), 0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.c_rs, expected "
+           "224.4375, is "
+        << last_msg.msg.ephemeris_bds.c_rs;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.c_uc * 100 - 7.60657712817e-06 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.c_uc, expected "
+           "7.60657712817e-06, is "
+        << last_msg.msg.ephemeris_bds.c_uc;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.c_us * 100 - 6.55185431242e-07 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.c_us, expected "
+           "6.55185431242e-07, is "
+        << last_msg.msg.ephemeris_bds.c_us;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.common.fit_interval, 10800)
+        << "incorrect value for "
+           "last_msg.msg.ephemeris_bds.common.fit_interval, expected 10800, is "
+        << (int64_t)last_msg.msg.ephemeris_bds.common.fit_interval;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.common.health_bits, 0)
+        << "incorrect value for last_msg.msg.ephemeris_bds.common.health_bits, "
+           "expected 0, is "
+        << (int64_t)last_msg.msg.ephemeris_bds.common.health_bits;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.common.sid.code, 12)
+        << "incorrect value for last_msg.msg.ephemeris_bds.common.sid.code, "
+           "expected 12, is "
+        << (int64_t)last_msg.msg.ephemeris_bds.common.sid.code;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.common.sid.sat, 8)
+        << "incorrect value for last_msg.msg.ephemeris_bds.common.sid.sat, "
+           "expected 8, is "
+        << (int64_t)last_msg.msg.ephemeris_bds.common.sid.sat;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.common.toe.tow, 439214)
+        << "incorrect value for last_msg.msg.ephemeris_bds.common.toe.tow, "
+           "expected 439214, is "
+        << (int64_t)last_msg.msg.ephemeris_bds.common.toe.tow;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.common.toe.wn, 2154)
+        << "incorrect value for last_msg.msg.ephemeris_bds.common.toe.wn, "
+           "expected 2154, is "
+        << (int64_t)last_msg.msg.ephemeris_bds.common.toe.wn;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.common.ura * 100 - 2.0 * 100), 0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.common.ura, "
+           "expected 2.0, is "
+        << last_msg.msg.ephemeris_bds.common.ura;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.common.valid, 1)
+        << "incorrect value for last_msg.msg.ephemeris_bds.common.valid, "
+           "expected 1, is "
+        << (int64_t)last_msg.msg.ephemeris_bds.common.valid;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.dn * 100 - 1.12968991326e-09 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.dn, expected "
+           "1.12968991326e-09, is "
+        << last_msg.msg.ephemeris_bds.dn;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.ecc * 100 - 0.0051847374998 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.ecc, expected "
+           "0.0051847374998, is "
+        << last_msg.msg.ephemeris_bds.ecc;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.inc * 100 - 1.04217695435 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.inc, expected "
+           "1.04217695435, is "
+        << last_msg.msg.ephemeris_bds.inc;
+
+    EXPECT_LE(
+        (last_msg.msg.ephemeris_bds.inc_dot * 100 - 7.5074555728e-10 * 100),
+        0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.inc_dot, expected "
+           "7.5074555728e-10, is "
+        << last_msg.msg.ephemeris_bds.inc_dot;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.iodc, 5)
+        << "incorrect value for last_msg.msg.ephemeris_bds.iodc, expected 5, "
+           "is "
+        << (int64_t)last_msg.msg.ephemeris_bds.iodc;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.iode, 6)
+        << "incorrect value for last_msg.msg.ephemeris_bds.iode, expected 6, "
+           "is "
+        << (int64_t)last_msg.msg.ephemeris_bds.iode;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.m0 * 100 - 1.69439581907 * 100), 0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.m0, expected "
+           "1.69439581907, is "
+        << last_msg.msg.ephemeris_bds.m0;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.omega0 * 100 - -2.58107376287 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.omega0, expected "
+           "-2.58107376287, is "
+        << last_msg.msg.ephemeris_bds.omega0;
+
+    EXPECT_LE(
+        (last_msg.msg.ephemeris_bds.omegadot * 100 - -2.30331022783e-09 * 100),
+        0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.omegadot, expected "
+           "-2.30331022783e-09, is "
+        << last_msg.msg.ephemeris_bds.omegadot;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.sqrta * 100 - 6493.49845123 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.sqrta, expected "
+           "6493.49845123, is "
+        << last_msg.msg.ephemeris_bds.sqrta;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.tgd1 * 100 - 1.04999999806e-08 * 100),
+              0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.tgd1, expected "
+           "1.04999999806e-08, is "
+        << last_msg.msg.ephemeris_bds.tgd1;
+
+    EXPECT_LE(
+        (last_msg.msg.ephemeris_bds.tgd2 * 100 - -1.09999997999e-09 * 100),
+        0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.tgd2, expected "
+           "-1.09999997999e-09, is "
+        << last_msg.msg.ephemeris_bds.tgd2;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.toc.tow, 439214)
+        << "incorrect value for last_msg.msg.ephemeris_bds.toc.tow, expected "
+           "439214, is "
+        << (int64_t)last_msg.msg.ephemeris_bds.toc.tow;
+
+    EXPECT_EQ(last_msg.msg.ephemeris_bds.toc.wn, 2154)
+        << "incorrect value for last_msg.msg.ephemeris_bds.toc.wn, expected "
+           "2154, is "
+        << (int64_t)last_msg.msg.ephemeris_bds.toc.wn;
+
+    EXPECT_LE((last_msg.msg.ephemeris_bds.w * 100 - -2.69860320574 * 100), 0.05)
+        << "incorrect value for last_msg.msg.ephemeris_bds.w, expected "
+           "-2.69860320574, is "
+        << last_msg.msg.ephemeris_bds.w;
+  }
+}
+
+}  // namespace
