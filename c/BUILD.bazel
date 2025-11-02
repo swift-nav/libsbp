@@ -75,6 +75,7 @@ swift_cc_test(
     type = UNIT,
     deps = [
         ":sbp",
+        "@googletest//:gtest_main",
     ],
 )
 
