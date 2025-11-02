@@ -1,5 +1,5 @@
 find_package(Threads)
-set(TEST_LIBS ${TEST_LIBS} gtest gtest_main Threads::Threads swiftnav::sbp)
+set(TEST_LIBS ${TEST_LIBS} gtest_main Threads::Threads swiftnav::sbp)
 
 # Check needs to be linked against Librt on Linux
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
@@ -36,10 +36,9 @@ swift_add_test(test-libsbp
   LINK
     ${TEST_LIBS}
   )
+swift_set_language_standards(test-libsbp)
 swift_set_compile_options(test-libsbp
   REMOVE
-    -Wpointer-arith
-    -Wformat
     -Wformat-security
     -Wformat-y2k
   ADD
