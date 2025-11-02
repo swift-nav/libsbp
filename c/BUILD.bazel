@@ -62,7 +62,7 @@ filegroup(
 
 SBP_C_SOURCES = glob(["test/auto*.cc"])
 
-swift_c_test(
+swift_cc_test(
     name = "sbp-test",
     srcs = [
         "test/test_edc.cc",
