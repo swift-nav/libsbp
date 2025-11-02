@@ -39,10 +39,7 @@ swift_add_test(test-libsbp
 swift_set_language_standards(test-libsbp)
 swift_set_compile_options(test-libsbp
   REMOVE
-    -Wformat-security
-    -Wformat-y2k
-  ADD
-    -Wformat=0
+    -Wdisabled-optimization
 )
 
 add_subdirectory(cpp)
