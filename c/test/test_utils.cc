@@ -2,8 +2,8 @@
 
 namespace utils {
 
-const void* DUMMY_MEMORY_FOR_CALLBACKS = (void*)0xdeadbeef;
-const void* DUMMY_MEMORY_FOR_IO = (void*)0xdead0000;
+const void* DUMMY_MEMORY_FOR_CALLBACKS = reinterpret_cast<void*>(0xdeadbeef);
+const void* DUMMY_MEMORY_FOR_IO = reinterpret_cast<void*>(0xdead0000);
 
 namespace io {
 

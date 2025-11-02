@@ -20,8 +20,10 @@
 namespace {
 
 TEST(BitfieldMacros, test_nav_bitfields) {
-  sbp_msg_gps_time_t gps_t = {
-      .wn = 1, .tow = 100, .ns_residual = 1, .flags = 0};
+  sbp_msg_gps_time_t gps_t = {};
+  gps_t.wn = 1;
+  gps_t.tow = 100;
+  gps_t.ns_residual = 1;
 
   SBP_GPS_TIME_TIME_SOURCE_SET(gps_t.flags, SBP_GPS_TIME_TIME_SOURCE_NONE);
   EXPECT_EQ(gps_t.flags, 0);
@@ -62,8 +64,7 @@ TEST(BitfieldMacros, test_imu_bitfields) {
 }
 
 TEST(BitfieldMacros, test_ins_status_bitfields) {
-  // TODO(?) : This test case currently failing
-  sbp_msg_ins_status_t ins_status = {.flags = 0};
+  sbp_msg_ins_status_t ins_status = {};
   SBP_INS_STATUS_INS_TYPE_SET(
       ins_status.flags, SBP_INS_STATUS_INS_TYPE_SMOOTHPOSE_LOOSELY_COUPLED);
   EXPECT_EQ(ins_status.flags, 0);
