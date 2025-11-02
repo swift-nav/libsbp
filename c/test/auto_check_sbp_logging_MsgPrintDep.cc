@@ -29,10 +29,9 @@ namespace {
 
 TEST(auto_check_sbp_logging_MsgPrintDep,
      test_auto_check_sbp_logging_MsgPrintDep) {
-  static sbp_msg_callbacks_node_t n;
+  sbp_msg_callbacks_node_t n;
 
   // State of the SBP message parser.
-  // Must be statically allocated.
   sbp_state_t sbp_state;
 
   //

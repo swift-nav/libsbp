@@ -65,8 +65,8 @@ TEST(Core, test_sbp_process) {
   sbp_state_init(&s);
   sbp_state_set_io_context(&s, &DUMMY_MEMORY_FOR_IO);
 
-  static sbp_msg_callbacks_node_t n;
-  static sbp_msg_callbacks_node_t n2;
+  sbp_msg_callbacks_node_t n;
+  sbp_msg_callbacks_node_t n2;
 
   sbp_callback_register(&s, SbpMsgLog, &logging_callback,
                         &DUMMY_MEMORY_FOR_CALLBACKS, &n);
@@ -162,7 +162,7 @@ TEST(Core, test_sbp_process) {
   decoded_awesome_message.log.level = 3;
   sbp_msg_log_text_printf(&decoded_awesome_message.log, false, NULL, "awesome");
 
-  static sbp_msg_callbacks_node_t m;
+  sbp_msg_callbacks_node_t m;
   sbp_callback_register(&s, SbpMsgLog, &logging_callback, 0, &m);
 
   while (dummy_rd < dummy_wr) {
@@ -210,7 +210,7 @@ TEST(Core, test_sbp_process) {
   dummy_wr = sizeof(awesome_message2);
   memcpy(dummy_buff, awesome_message2, sizeof(awesome_message2));
 
-  static sbp_msg_callbacks_node_t p;
+  sbp_msg_callbacks_node_t p;
   sbp_callback_register(&s, SbpMsgLog, &logging_callback, 0, &p);
 
   while (dummy_rd < dummy_wr) {
@@ -240,7 +240,7 @@ TEST(Core, test_sbp_process) {
   memcpy(dummy_buff, crappy_then_awesome_message,
          sizeof(crappy_then_awesome_message));
 
-  static sbp_msg_callbacks_node_t q;
+  sbp_msg_callbacks_node_t q;
   sbp_callback_register(&s, SbpMsgLog, &logging_callback, 0, &q);
 
   while (dummy_rd < dummy_wr) {
@@ -264,7 +264,7 @@ TEST(Core, test_sbp_all_payload) {
   sbp_state_init(&s);
   sbp_state_set_io_context(&s, &DUMMY_MEMORY_FOR_IO);
 
-  static sbp_msg_callbacks_node_t n;
+  sbp_msg_callbacks_node_t n;
 
   sbp_all_message_callback_register(&s, &logging_callback,
                                     &DUMMY_MEMORY_FOR_CALLBACKS, &n);
@@ -309,7 +309,7 @@ TEST(Core, test_sbp_big_msg) {
   sbp_state_init(&s);
   sbp_state_set_io_context(&s, &DUMMY_MEMORY_FOR_IO);
 
-  static sbp_msg_callbacks_node_t n2;
+  sbp_msg_callbacks_node_t n2;
 
   sbp_callback_register(&s, SbpMsgUserData, &logging_callback,
                         &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
@@ -356,7 +356,7 @@ TEST(Core, test_callbacks) {
 
   /* Add a first callback. */
 
-  static sbp_msg_callbacks_node_t n;
+  sbp_msg_callbacks_node_t n;
 
   int NUMBER = 42;
 
@@ -385,7 +385,7 @@ TEST(Core, test_callbacks) {
 
   /* Add a second callback. */
 
-  static sbp_msg_callbacks_node_t m;
+  sbp_msg_callbacks_node_t m;
 
   int NUMBER2 = 84;
 
