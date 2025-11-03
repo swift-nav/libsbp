@@ -15,14 +15,14 @@ include(ClangTidy)
 swift_create_project_options(
     HAS_TESTS
     HAS_DOCS
-    TEST_PACKAGES "Check"
+    TEST_PACKAGES "Googletest"
     )
 include(CodeCoverage)
 include(SwiftTargets)
 include(TestTargets)
 add_code_coverage_all_targets()
 # TODO: Reformatting is limited to generated files; it should be expanded to cover all files
-swift_setup_clang_format(PATTERNS 'include/*.h' 'test/*.c' 'test/*.h' 'test/cpp/*.cc')
+swift_setup_clang_format(PATTERNS 'include/*.h' 'test/*.cc' 'test/*.h' 'test/cpp/*.cc')
 
 if(libsbp_BUILD_TESTS)
   find_package(Googletest)

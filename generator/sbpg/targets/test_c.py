@@ -27,8 +27,6 @@ import re
 
 TEST_TEMPLATE_NAME = "c/test/sbp_c_test.c.j2"
 CPP_TEST_TEMPLATE_NAME = "c/test/sbp_cpp_test.cc.j2"
-CHECK_SUITES_TEMPLATE_NAME = "c/test/sbp_c_suites.h.j2"
-CHECK_MAIN_TEMPLATE_NAME = "c/test/sbp_c_main.c.j2"
 
 
 def str_escape(value):
@@ -73,7 +71,7 @@ def render_source(output_dir, package_spec):
 
     # The older templates require at least 1 message test, they don't work with specifications which only test structs
     if len(package_spec.tests) > 0:
-        destination_filename = "%s/%s.c" % (output_dir, name)
+        destination_filename = "%s/%s.cc" % (output_dir, name)
         py_template = JENV.get_template(TEST_TEMPLATE_NAME)
         with open(destination_filename, "w") as f:
             f.write(
@@ -97,17 +95,3 @@ def render_source(output_dir, package_spec):
                 filepath="/".join(package_spec.filepath) + ".yaml",
             )
         )
-
-
-def render_check_suites(output_dir, all_package_specs):
-    destination_filename = "%s/%s.h" % (output_dir, "check_suites")
-    py_template = JENV.get_template(CHECK_SUITES_TEMPLATE_NAME)
-    with open(destination_filename, "w") as f:
-        f.write(py_template.render(package_suites=all_package_specs, test_type="new"))
-
-
-def render_check_main(output_dir, all_package_specs):
-    destination_filename = "%s/%s.c" % (output_dir, "check_main")
-    py_template = JENV.get_template(CHECK_MAIN_TEMPLATE_NAME)
-    with open(destination_filename, "w") as f:
-        f.write(py_template.render(package_suites=all_package_specs, test_type="new"))

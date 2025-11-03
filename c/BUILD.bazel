@@ -60,22 +60,22 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-SBP_C_SOURCES = glob(["test/auto*.c"])
+SBP_C_SOURCES = glob(["test/auto*.cc"])
 
-swift_c_test(
+swift_cc_test(
     name = "sbp-test",
     srcs = [
-        "test/check_main.c",
-        "test/check_edc.c",
-        "test/check_sbp.c",
-        "test/check_bitfield_macros.c",
-        "test/check_suites.h",
+        "test/test_edc.cc",
+        "test/test_sbp.cc",
+        "test/test_bitfield_macros.cc",
+        "test/test_utils.cc",
+        "test/test_utils.h",
     ] + SBP_C_SOURCES,
     includes = ["include/libsbp"],
     type = UNIT,
     deps = [
         ":sbp",
-        "@check",
+        "@googletest//:gtest_main",
     ],
 )
 

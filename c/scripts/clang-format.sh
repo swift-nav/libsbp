@@ -8,4 +8,4 @@ set -e -x
 GENERATED_HEADERS=$(grep -rl --include="*.h" "Automatically generated" include/libsbp/* src/)
 GENERATED_C_SOURCES=$(grep -rl --include="*.c" "Automatically generated" src/)
 CLANG_FORMAT=clang-format-11
-$CLANG_FORMAT -i $GENERATED_HEADERS $GENERATED_C_SOURCES test/*.c test/*.h test/auto* test/cpp/auto*
+$CLANG_FORMAT -i $GENERATED_HEADERS $GENERATED_C_SOURCES test/*.cc test/*.h test/auto* test/cpp/auto*

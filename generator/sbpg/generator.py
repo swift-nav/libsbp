@@ -219,9 +219,6 @@ def main():
         import sbpg.targets.rust as rs
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         rs.render_all(output_dir, parsed, release)
-      elif args.test_c:
-        test_c.render_check_suites(output_dir, all_specs)
-        test_c.render_check_main(output_dir, all_specs)
       elif args.test_rust:
         import sbpg.targets.test_rust as test_rs
         test_rs.render_main(output_dir, all_specs)

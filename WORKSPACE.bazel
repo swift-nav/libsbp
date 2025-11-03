@@ -57,9 +57,3 @@ local_repository(
     name = "googletest",
     path = "c/third_party/googletest",
 )
-
-new_local_repository(
-    name = "check",
-    build_file = "@rules_swiftnav//third_party:check.BUILD",
-    path = "c/third_party/check",
-)
