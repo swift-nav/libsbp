@@ -78,9 +78,26 @@ install(
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/libsbp/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libsbp)
 
 export(EXPORT sbp-export
        NAMESPACE swiftnav::
        FILE ${PROJECT_BINARY_DIR}/LibSbpImport.cmake)
+
+install(
+  EXPORT sbp-export
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/libsbp/cmake
+  NAMESPACE swiftnav::
+)
+
+configure_package_config_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/libsbpConfig.cmake.in
+  libsbpConfig.cmake
+  INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}
+)
+install(
+  FILES "${CMAKE_CURRENT_BINARY_DIR}/libsbpConfig.cmake"
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/libsbp/cmake
+)
