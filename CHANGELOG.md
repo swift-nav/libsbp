@@ -1,5 +1,27 @@
 # Changelog
 
+## [v6.3.2](https://github.com/swift-nav/libsbp/tree/v6.3.2)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.3.1...v6.3.2)
+
+**Merged pull requests:**
+
+- \[C/C++\] Install a CMake package configuration file [\#1529](https://github.com/swift-nav/libsbp/pull/1529) ([ethanmusser](https://github.com/ethanmusser))
+- Use gtest instead of check for C tests [\#1527](https://github.com/swift-nav/libsbp/pull/1527) ([dgburr](https://github.com/dgburr))
+- Update to libsbp-build:2025-10-29 [\#1526](https://github.com/swift-nav/libsbp/pull/1526) ([dgburr](https://github.com/dgburr))
+- Reverts let chain usage because not supported until rust 2024 [\#1525](https://github.com/swift-nav/libsbp/pull/1525) ([pcrumley](https://github.com/pcrumley))
+- Bump actions/upload-artifact from 4 to 5 [\#1524](https://github.com/swift-nav/libsbp/pull/1524) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/download-artifact from 4 to 6 [\#1523](https://github.com/swift-nav/libsbp/pull/1523) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Fix "Generate artifacts" stage in CI [\#1521](https://github.com/swift-nav/libsbp/pull/1521) ([dgburr](https://github.com/dgburr))
+- Update from focal to jammy [\#1520](https://github.com/swift-nav/libsbp/pull/1520) ([dgburr](https://github.com/dgburr))
+- Fix warnings generated when running pytest [\#1519](https://github.com/swift-nav/libsbp/pull/1519) ([dgburr](https://github.com/dgburr))
+- Bump tar-fs from 2.1.3 to 2.1.4 [\#1503](https://github.com/swift-nav/libsbp/pull/1503) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump sonarsource/sonarqube-scan-action from 5.3.1 to 6.0.0 in /.github/workflows [\#1502](https://github.com/swift-nav/libsbp/pull/1502) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump sonarsource/sonarqube-scan-action from 5.3.1 to 6.0.0 [\#1501](https://github.com/swift-nav/libsbp/pull/1501) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Use latest versions and remove out-of-date actions for sonar [\#1498](https://github.com/swift-nav/libsbp/pull/1498) ([martin4861](https://github.com/martin4861))
+- Bump svenstaro/upload-release-action from 2.9.0 to 2.11.2 [\#1481](https://github.com/swift-nav/libsbp/pull/1481) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump mimalloc from 0.1.29 to 0.1.39 in /rust/sbp2json [\#1463](https://github.com/swift-nav/libsbp/pull/1463) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v6.3.1](https://github.com/swift-nav/libsbp/tree/v6.3.1)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.3.0...v6.3.1)
