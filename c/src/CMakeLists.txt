@@ -92,12 +92,13 @@ install(
   NAMESPACE swiftnav::
 )
 
+set(LIBSBP_CFG_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/libsbp/cmake")
 configure_package_config_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/libsbpConfig.cmake.in
-  libsbpConfig.cmake
-  INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}
+  ${CMAKE_CURRENT_BINARY_DIR}/libsbpConfig.cmake
+  INSTALL_DESTINATION ${LIBSBP_CFG_INSTALL_DIR}
 )
 install(
   FILES "${CMAKE_CURRENT_BINARY_DIR}/libsbpConfig.cmake"
-  DESTINATION ${CMAKE_INSTALL_DATADIR}/libsbp/cmake
+  DESTINATION ${LIBSBP_CFG_INSTALL_DIR}
 )
