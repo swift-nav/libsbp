@@ -32,7 +32,7 @@ function dispatchee(err, msg) {
 describe('test packages based on YAML descriptors, through the dispatcher', function () {
   yamlTestFiles.forEach(function (filename) {
     describe(filename, function () {
-      var yamlConfig = yaml.safeLoad(fs.readFileSync(filename));
+      var yamlConfig = yaml.load(fs.readFileSync(filename));
       if ("tests" in yamlConfig) {
         yamlConfig.tests.map(function (testSpec, i) {
           describe('test spec '+i, function () {
