@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Current Spec
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Checkout Previous Spec
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: master
           path: previous
