@@ -56,7 +56,7 @@ jobs:
           cp docs/sbp.pdf .
           echo "::set-output name=artifact_name::sbp.pdf"
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.pdf.outputs.artifact_name }}
           path: ${{ steps.pdf.outputs.artifact_name }}
