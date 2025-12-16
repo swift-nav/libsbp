@@ -12,7 +12,10 @@ set(TEST_INCLUDES ${PROJECT_SOURCE_DIR}/include/libsbp)
 
 if(APPLE)
   # Some libraries are available in non-standard places on apple.
-  list(APPEND TEST_INCLUDES /usr/local/include)
+  # Only add these paths if they exist (for local development with Homebrew).
+  if(EXISTS /usr/local/include)
+    list(APPEND TEST_INCLUDES /usr/local/include)
+  endif()
 
   # This is not a great way of doing this, but the proper cmake function
   # target_link_directories() was introduced in version 3.13 and we need to support
@@ -20,7 +23,9 @@ if(APPLE)
   # linker flags, making sure that this instance is well protected and only applies
   # to a single platform. Don't use the extant link_directories() function since
   # that leaks the path to other targets.
-  list(APPEND TEST_INCLUDES "-L/usr/local/lib")
+  if(EXISTS /usr/local/lib)
+    list(APPEND TEST_INCLUDES "-L/usr/local/lib")
+  endif()
 endif()
 
 swift_add_test(test-libsbp
