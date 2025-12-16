@@ -14,7 +14,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Sonarcloud Scan
-        uses: sonarsource/sonarqube-scan-action@v6.0.0
+        uses: sonarsource/sonarqube-scan-action@v7.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -36,7 +36,7 @@ jobs:
           submodules: recursive
           fetch-depth: 0
       - name: Install Build Wrapper
-        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v6.0.0
+        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v7.0.0
       - name: Setup
         run: |
           sudo apt-get install llvm -y
@@ -48,7 +48,7 @@ jobs:
           cmake -S c -B build -DCODE_COVERAGE=ON -DCMAKE_C_FLAGS=--coverage -DCMAKE_CXX_FLAGS=--coverage &&
           build-wrapper-linux-x86-64 --out-dir ./bw-output cmake --build build -j4 --target ccov-all-export
       - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@v6.0.0
+        uses: SonarSource/sonarqube-scan-action@v7.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
