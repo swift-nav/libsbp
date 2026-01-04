@@ -27,7 +27,7 @@ register_toolchains(
     "@rules_swiftnav//cc/toolchains/llvm/x86_64-darwin:cc-toolchain-x86_64-darwin",
 )
 
-bazel_dep(name = "googletest", version = "1.13.0", dev_dependency = True)
+bazel_dep(name = "googletest", version = "1.17.0.bcr.2", dev_dependency = True)
 
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 git_override(
