@@ -5,7 +5,7 @@ set -ex
 VERSION="$(git describe --always --tags --dirty)"
 
 if [ "$RUNNER_OS" == "macOS" ]; then
-    ARTIFACT_NAME="sbp_tools-${VERSION}-x86_64-apple-darwin.zip"
+    ARTIFACT_NAME="sbp_tools-${VERSION}-aarch64-apple-darwin.zip"
     EXECUTABLES=("sbp2json" "json2sbp" "json2json")
     PACKAGE_CMD="zip ../../../$ARTIFACT_NAME ${EXECUTABLES[*]}"
 elif [ "$RUNNER_OS" == "Linux" ]; then
@@ -36,8 +36,8 @@ elif [ "$RUNNER_OS" == "Windows" ]; then
   cargo build --all --release --target=x86_64-pc-windows-msvc
   cd target/x86_64-pc-windows-msvc/release
 elif [ "$RUNNER_OS" == "macOS" ]; then
-  cargo build --all --release --target=x86_64-apple-darwin
-  cd target/x86_64-apple-darwin/release
+  cargo build --all --release --target=aarch64-apple-darwin
+  cd target/aarch64-apple-darwin/release
 else
   cargo build --all --release
   cd target/release
