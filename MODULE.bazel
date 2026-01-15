@@ -1,12 +1,18 @@
-module(name = "libsbp", version = "0.1.0", compatibility_level = 1)
+module(
+    name = "libsbp",
+    version = "0.1.0",
+    compatibility_level = 1,
+)
 
 bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_rust", version = "0.68.1")
 bazel_dep(name = "rules_swiftnav", version = "0.9.0")
+
 # Use
 git_override(
     module_name = "rules_swiftnav",
-    remote = "https://github.com/swift-nav/rules_swiftnav.git",
     commit = "1ae7bb57e5a1f1602759e81c9ee0f457b91e35f4",
+    remote = "https://github.com/swift-nav/rules_swiftnav.git",
 )
 
 swift_cc_toolchain_ext = use_extension("@rules_swiftnav//cc:extensions.bzl", "swift_cc_toolchain_extension")
@@ -27,13 +33,32 @@ register_toolchains(
     "@rules_swiftnav//cc/toolchains/llvm/x86_64-darwin:cc-toolchain-x86_64-darwin",
 )
 
-bazel_dep(name = "googletest", version = "1.13.0", dev_dependency = True)
+# Rust toolchain
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(
+    edition = "2024",
+    versions = ["1.91.1"],
+)
+use_repo(rust, "rust_toolchains")
 
+register_toolchains("@rust_toolchains//:all")
+
+crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
+crate.from_cargo(
+    name = "crates",
+    cargo_lockfile = "//:Cargo.lock",
+    manifests = [
+        "//:Cargo.toml",
+    ],
+)
+use_repo(crate, "crates")
+
+bazel_dep(name = "googletest", version = "1.13.0", dev_dependency = True)
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 git_override(
     module_name = "hedron_compile_commands",
-    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
     commit = "4f28899228fb3ad0126897876f147ca15026151e",
+    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
     # Replace the commit hash (above) with the latest (https://github.com/hedronvision/bazel-compile-commands-extractor/commits/main).
     # Even better, set up Renovate and let it do the work for you (see "Suggestion: Updates" in the README).
 )
