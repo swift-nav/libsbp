@@ -23,3 +23,23 @@ rust_library(
         "@crates//:serde_json",
     ],
 )
+
+rust_test(
+    name = "integration_tests",
+    srcs = glob(["tests/integration/**/*.rs"]),
+    crate_features = [
+        "json",
+        "serde",
+        "serde_json",
+        "float_roundtrip",
+    ],
+    crate_root = "tests/integration/main.rs",
+    edition = "2024",
+    deps = [
+        ":sbp",
+        "@crates//:base64",
+        "@crates//:bytes",
+        "@crates//:serde",
+        "@crates//:serde_json",
+    ],
+)
