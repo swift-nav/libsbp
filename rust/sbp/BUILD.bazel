@@ -1,0 +1,25 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "sbp",
+    srcs = glob(["src/**/*.rs"]),
+    crate_features = [
+        "json",
+        "serde",
+        "serde_json",
+        "float_roundtrip",
+    ],
+    crate_root = "src/lib.rs",
+    edition = "2024",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@crates//:base64",
+        "@crates//:bytes",
+        "@crates//:crc16",
+        "@crates//:dencode",
+        "@crates//:log",
+        "@crates//:serde",
+        "@crates//:serde-big-array",
+        "@crates//:serde_json",
+    ],
+)
