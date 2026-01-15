@@ -21,7 +21,7 @@ cargo_build_script(
     name = "build_script",
     srcs = ["build.rs"],
     build_script_env = {
-        "VERGEN_SEMVER_LIGHTWEIGHT": "6.3.3-alpha",
+        "VERGEN_SEMVER_LIGHTWEIGHT": "0.0.0-bazel-no-version",
     },
     edition = "2024",
     deps = [
