@@ -1,0 +1,41 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@crates//:defs.bzl", "all_crate_deps")
+
+rust_library(
+    name = "sbp",
+    srcs = glob(["src/**/*.rs"]),
+    crate_features = [
+        "json",
+        "serde",
+        "serde_json",
+        "float_roundtrip",
+    ],
+    crate_root = "src/lib.rs",
+    edition = "2024",
+    visibility = ["//visibility:public"],
+    deps = all_crate_deps(
+        normal = True,
+    ),
+    proc_macro_deps = all_crate_deps(
+        proc_macro = True,
+    ),
+)
+
+rust_test(
+    name = "integration_tests",
+    srcs = glob(["tests/integration/**/*.rs"]),
+    crate_features = [
+        "json",
+        "serde",
+        "serde_json",
+        "float_roundtrip",
+    ],
+    crate_root = "tests/integration/main.rs",
+    edition = "2024",
+    deps = [":sbp"] + all_crate_deps(
+        normal = True,
+    ),
+    proc_macro_deps = all_crate_deps(
+        proc_macro = True,
+    ),
+)
