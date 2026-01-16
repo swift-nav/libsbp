@@ -1,4 +1,5 @@
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@crates//:defs.bzl", "all_crate_deps")
 
 rust_library(
     name = "sbp",
@@ -12,16 +13,12 @@ rust_library(
     crate_root = "src/lib.rs",
     edition = "2024",
     visibility = ["//visibility:public"],
-    deps = [
-        "@crates//:base64",
-        "@crates//:bytes",
-        "@crates//:crc16",
-        "@crates//:dencode",
-        "@crates//:log",
-        "@crates//:serde",
-        "@crates//:serde-big-array",
-        "@crates//:serde_json",
-    ],
+    deps = all_crate_deps(
+        normal = True,
+    ),
+    proc_macro_deps = all_crate_deps(
+        proc_macro = True,
+    ),
 )
 
 rust_test(
@@ -35,11 +32,10 @@ rust_test(
     ],
     crate_root = "tests/integration/main.rs",
     edition = "2024",
-    deps = [
-        ":sbp",
-        "@crates//:base64",
-        "@crates//:bytes",
-        "@crates//:serde",
-        "@crates//:serde_json",
-    ],
+    deps = [":sbp"] + all_crate_deps(
+        normal = True,
+    ),
+    proc_macro_deps = all_crate_deps(
+        proc_macro = True,
+    ),
 )
