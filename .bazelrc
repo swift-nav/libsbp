@@ -4,6 +4,8 @@ common --@rules_swiftnav//cc:enable_bzlmod=true
 # Preparation for Bazel 8 behavior of paths in external (plus instead of tilde)
 common --incompatible_use_plus_in_repo_names
 
+common --experimental_isolated_extension_usages
+
 # Compile all swift targets and all other codes with C++17 standards
 build --@rules_swiftnav//cc:cxx_standard=17
 build --@rules_swiftnav//cc:global_cxx_standard=17

@@ -740,10 +740,10 @@
         ]
       }
     },
-    "@@rules_rust+//crate_universe:extension.bzl%crate": {
+    "@@rules_rust+//crate_universe:extension.bzl%crate%<root>+crate": {
       "general": {
         "bzlTransitiveDigest": "ZK0rqtqAEp4LjqER6IfJbXOITI7zguxJMuCb9GVhqMM=",
-        "usagesDigest": "j5boM2FVbHlFnEuHWiiKUlP3ZE0jYIkcMshOs+7A+Ic=",
+        "usagesDigest": "WAibmXoZXjFZAn4J1WiXxnpKjstUF+A14oKVeQWXVOs=",
         "recordedFileInputs": {
           "@@//Cargo.lock": "33103b80a5b2fe4d769dd2077e96261343de3b882d1b1f2d4b873f01b19278f5",
           "@@//Cargo.toml": "e5d28b99c4e281d050ecd530b1b18d7bb308c66f3615993ba8554d5f9aa34cbf",
