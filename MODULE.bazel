@@ -5,7 +5,6 @@ module(
 )
 
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "rules_rust", version = "0.68.1")
 bazel_dep(name = "rules_swiftnav", version = "0.9.0")
 
 # Use
@@ -34,6 +33,8 @@ register_toolchains(
 )
 
 # Rust toolchain
+bazel_dep(name = "rules_rust", version = "0.68.1")
+
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 rust.toolchain(
     edition = "2024",
@@ -43,13 +44,107 @@ use_repo(rust, "rust_toolchains")
 
 register_toolchains("@rust_toolchains//:all")
 
-crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate", isolate=True)
-crate.from_cargo(
+crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
+crate.spec(
+    package = "bytes",
+    version = "1.10.1",
+)
+crate.spec(
+    package = "crc16",
+    version = "0.4",
+)
+crate.spec(
+    package = "log",
+    version = "0.4.28",
+)
+crate.spec(
+    default_features = False,
+    package = "dencode",
+    version = "0.3",
+)
+crate.spec(
+    package = "swiftnav",
+    version = "0.10",
+)
+crate.spec(
+    package = "slotmap",
+    version = "1.0.7",
+)
+crate.spec(
+    features = ["derive"],
+    package = "serde",
+    version = "1.0.228",
+)
+crate.spec(
+    package = "serde_json",
+    version = "1.0.145",
+)
+crate.spec(
+    package = "serde-big-array",
+    version = "0.5.1",
+)
+crate.spec(
+    package = "base64",
+    version = "0.22.1",
+)
+crate.spec(
+    package = "futures",
+    version = "0.3.31",
+)
+crate.spec(
+    package = "serialport",
+    version = "2.1.0",
+)
+crate.spec(
+    package = "env_logger",
+    version = "0.8",
+)
+crate.spec(
+    features = ["derive"],
+    package = "clap",
+    version = "3.1.15",
+)
+crate.spec(
+    default_features = False,
+    package = "mimalloc",
+    version = "0.1",
+)
+crate.spec(
+    package = "vergen",
+    version = "3",
+)
+crate.spec(
+    package = "sha2",
+    version = "0.8",
+)
+crate.spec(
+    package = "hex",
+    version = "0.4",
+)
+crate.spec(
+    package = "assert_cmd",
+    version = "=1.0.8",
+)
+crate.spec(
+    package = "predicates",
+    version = "=2.1.1",
+)
+crate.spec(
+    package = "predicates-tree",
+    version = "=1.0.4",
+)
+crate.spec(
+    package = "predicates-core",
+    version = "=1.0.3",
+)
+crate.spec(
+    package = "assert-json-diff",
+    version = "2.0",
+)
+crate.from_specs(
     name = "crates",
-    cargo_lockfile = "//:Cargo.lock",
-    manifests = [
-        "//:Cargo.toml",
-    ],
+    cargo_lockfile = "//:Cargo.bazel.lock",
+    strip_internal_dependencies_from_cargo_lockfile = True,
 )
 use_repo(crate, "crates")
 
