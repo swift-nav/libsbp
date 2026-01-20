@@ -25,6 +25,18 @@ rust_library(
 )
 
 rust_test(
+    name = "unit_tests",
+    crate = ":sbp",
+    crate_features = [
+        "json",
+        "serde",
+        "serde_json",
+        "float_roundtrip",
+    ],
+    edition = "2024",
+)
+
+rust_test(
     name = "integration_tests",
     srcs = glob(["tests/integration/**/*.rs"]),
     crate_features = [

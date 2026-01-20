@@ -1,6 +1,0 @@
-# Root BUILD file for libsbp
-
-exports_files([
-    "Cargo.toml",
-    "Cargo.lock",
-])

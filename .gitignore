@@ -73,6 +73,7 @@ sbp_out.*
 stack.yaml.lock
 
 # rust
+Cargo.lock
 target/
 rust/sbp/Cargo.lock
 rust/sbp/target
