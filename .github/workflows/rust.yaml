@@ -16,6 +16,26 @@ on:
       - scripts/ci_build_rust.bash
       - .github/workflows/rust.yaml
 jobs:
+  bazel:
+    name: Bazel
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - uses: bazelbuild/setup-bazelisk@v3
+
+      - name: Mount bazel cache
+        uses: actions/cache@v5
+        with:
+          path: "~/.cache/bazel"
+          key: bazel
+
+      - name: Bazel Build & Test
+        run: |
+          bazel test //rust/...
+
   lint:
     name: Format and lint
     runs-on: ubuntu-latest
