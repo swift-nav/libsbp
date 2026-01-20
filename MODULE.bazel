@@ -76,6 +76,7 @@ crate.spec(
     version = "1.0.228",
 )
 crate.spec(
+    features = ["float_roundtrip"],
     package = "serde_json",
     version = "1.0.145",
 )
