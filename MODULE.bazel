@@ -1,12 +1,17 @@
-module(name = "libsbp", version = "0.1.0", compatibility_level = 1)
+module(
+    name = "libsbp",
+    version = "0.1.0",
+    compatibility_level = 1,
+)
 
 bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "rules_swiftnav", version = "0.9.0")
+
 # Use
 git_override(
     module_name = "rules_swiftnav",
-    remote = "https://github.com/swift-nav/rules_swiftnav.git",
     commit = "1ae7bb57e5a1f1602759e81c9ee0f457b91e35f4",
+    remote = "https://github.com/swift-nav/rules_swiftnav.git",
 )
 
 swift_cc_toolchain_ext = use_extension("@rules_swiftnav//cc:extensions.bzl", "swift_cc_toolchain_extension")
@@ -27,13 +32,129 @@ register_toolchains(
     "@rules_swiftnav//cc/toolchains/llvm/x86_64-darwin:cc-toolchain-x86_64-darwin",
 )
 
-bazel_dep(name = "googletest", version = "1.13.0", dev_dependency = True)
+# Rust toolchain
+bazel_dep(name = "rules_rust", version = "0.68.1")
 
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(
+    edition = "2024",
+    versions = ["1.91.1"],
+)
+use_repo(rust, "rust_toolchains")
+
+register_toolchains("@rust_toolchains//:all")
+
+crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
+crate.spec(
+    package = "bytes",
+    version = "1.10.1",
+)
+crate.spec(
+    package = "crc16",
+    version = "0.4",
+)
+crate.spec(
+    package = "log",
+    version = "0.4.28",
+)
+crate.spec(
+    default_features = False,
+    package = "dencode",
+    version = "0.3",
+)
+crate.spec(
+    package = "swiftnav",
+    version = "0.10",
+)
+crate.spec(
+    package = "slotmap",
+    version = "1.0.7",
+)
+crate.spec(
+    features = ["derive"],
+    package = "serde",
+    version = "1.0.228",
+)
+crate.spec(
+    features = ["float_roundtrip"],
+    package = "serde_json",
+    version = "1.0.145",
+)
+crate.spec(
+    package = "serde-big-array",
+    version = "0.5.1",
+)
+crate.spec(
+    package = "base64",
+    version = "0.22.1",
+)
+crate.spec(
+    package = "futures",
+    version = "0.3.31",
+)
+crate.spec(
+    package = "serialport",
+    version = "2.1.0",
+)
+crate.spec(
+    package = "env_logger",
+    version = "0.8",
+)
+crate.spec(
+    features = ["derive"],
+    package = "clap",
+    version = "3.1.15",
+)
+crate.spec(
+    default_features = False,
+    package = "mimalloc",
+    version = "0.1",
+)
+crate.spec(
+    package = "vergen",
+    version = "3",
+)
+crate.spec(
+    package = "sha2",
+    version = "0.8",
+)
+crate.spec(
+    package = "hex",
+    version = "0.4",
+)
+crate.spec(
+    package = "assert_cmd",
+    version = "=1.0.8",
+)
+crate.spec(
+    package = "predicates",
+    version = "=2.1.1",
+)
+crate.spec(
+    package = "predicates-tree",
+    version = "=1.0.4",
+)
+crate.spec(
+    package = "predicates-core",
+    version = "=1.0.3",
+)
+crate.spec(
+    package = "assert-json-diff",
+    version = "2.0",
+)
+crate.from_specs(
+    name = "crates",
+    cargo_lockfile = "//:Cargo.bazel.lock",
+    strip_internal_dependencies_from_cargo_lockfile = True,
+)
+use_repo(crate, "crates")
+
+bazel_dep(name = "googletest", version = "1.13.0", dev_dependency = True)
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 git_override(
     module_name = "hedron_compile_commands",
-    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
     commit = "4f28899228fb3ad0126897876f147ca15026151e",
+    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
     # Replace the commit hash (above) with the latest (https://github.com/hedronvision/bazel-compile-commands-extractor/commits/main).
     # Even better, set up Renovate and let it do the work for you (see "Suggestion: Updates" in the README).
 )

@@ -1,0 +1,96 @@
+load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library", "rust_test")
+
+rust_library(
+    name = "converters",
+    srcs = ["src/lib.rs"],
+    crate_root = "src/lib.rs",
+    edition = "2024",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//rust/sbp",
+        "@crates//:clap",
+        "@crates//:dencode",
+        "@crates//:env_logger",
+        "@crates//:mimalloc",
+        "@crates//:serde_json",
+    ],
+)
+
+cargo_build_script(
+    name = "build_script",
+    srcs = ["build.rs"],
+    build_script_env = {
+        "VERGEN_SEMVER_LIGHTWEIGHT": "0.0.0-bazel-no-version",
+    },
+    edition = "2024",
+    deps = [
+        "@crates//:vergen",
+    ],
+)
+
+rust_binary(
+    name = "sbp2json",
+    srcs = ["src/bin/sbp2json.rs"],
+    edition = "2021",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":build_script",
+        ":converters",
+        "//rust/sbp",
+        "@crates//:clap",
+        "@crates//:dencode",
+        "@crates//:env_logger",
+        "@crates//:mimalloc",
+        "@crates//:serde_json",
+    ],
+)
+
+rust_binary(
+    name = "json2sbp",
+    srcs = ["src/bin/json2sbp.rs"],
+    edition = "2021",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":build_script",
+        ":converters",
+        "//rust/sbp",
+        "@crates//:clap",
+        "@crates//:dencode",
+        "@crates//:env_logger",
+        "@crates//:mimalloc",
+        "@crates//:serde_json",
+    ],
+)
+
+rust_binary(
+    name = "json2json",
+    srcs = ["src/bin/json2json.rs"],
+    edition = "2021",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":build_script",
+        ":converters",
+        "//rust/sbp",
+        "@crates//:clap",
+        "@crates//:dencode",
+        "@crates//:env_logger",
+        "@crates//:mimalloc",
+        "@crates//:serde_json",
+    ],
+)
+
+rust_test(
+    name = "converters_test",
+    crate = ":converters",
+    deps = [
+        "@crates//:assert-json-diff",
+        "@crates//:assert_cmd",
+        "@crates//:hex",
+        "@crates//:predicates",
+        "@crates//:predicates-core",
+        "@crates//:predicates-tree",
+        "@crates//:serde_json",
+        "@crates//:sha2",
+    ],
+)
