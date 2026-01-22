@@ -170,13 +170,13 @@ It's highly recommended to use the docker container to run the release process,
 the docker container can be pulled from DockerHub and launched via this command:
 
 ```sh
-docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-02-10
+docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-10-29
 ```
 
 You can invoke individual stages like so:
 
 ```sh
-docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-02-10 \
+docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2025-10-29 \
    /bin/bash -c "make python"
 ```
 
@@ -234,10 +234,10 @@ and something needs to be repeated.
     make java jsonschema protobuf
     ```
 
-   For C, Haskell and JavaScript (JavaScript, make needs to be run twice to update the package information):
+   For C, Haskell and Rust:
 
     ```sh
-    make c haskell javascript rust
+    make c haskell rust
     git add c/include/libsbp/version.h haskell/sbp.cabal rust/sbp/Cargo.toml
     git commit --amend -a -m 'Release <INCREMENTED_TAG>'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
@@ -250,6 +250,7 @@ and something needs to be repeated.
     make javascript
     git add javascript/sbp/RELEASE-VERSION package.json package-lock.json
     git commit --amend -a -m 'Release <INCREMENTED_TAG>'
+    git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
 
     For Kaitai
@@ -258,6 +259,7 @@ and something needs to be repeated.
     make kaitai
     git add kaitai/ksy/sbp.ksy
     git commit --amend -a -m 'Release <INCREMENTED_TAG>'
+    git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
 
 4. Build the docs:
