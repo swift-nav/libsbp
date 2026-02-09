@@ -1,4 +1,4 @@
-var request = require('request');
+var got = require('got');
 var dispatch = require('./sbp').dispatch;
 var PassThrough = require('stream').PassThrough;
 
@@ -11,7 +11,7 @@ var options = {
 };
 
 var rs = new PassThrough();
-request.get(options).pipe(rs);
+got.stream.get(options.url, { headers: options.headers }).pipe(rs);
 
 dispatch(rs, function (err, framedMsg) {
   console.log(framedMsg);
