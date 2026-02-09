@@ -17,19 +17,15 @@ git_override(
 swift_cc_toolchain_ext = use_extension("@rules_swiftnav//cc:extensions.bzl", "swift_cc_toolchain_extension")
 use_repo(
     swift_cc_toolchain_ext,
-    "aarch64-darwin-llvm",
-    "aarch64-linux-llvm",
-    "aarch64-linux-musl",
+    "aarch64-darwin-llvm20",
     "aarch64-sysroot",
-    "x86_64-linux-llvm",
+    "x86_64-linux-llvm20",
     "x86_64-sysroot",
 )
 
 register_toolchains(
-    "@rules_swiftnav//cc/toolchains/llvm/aarch64-darwin:cc-toolchain-aarch64-darwin",
-    "@rules_swiftnav//cc/toolchains/llvm/x86_64-linux:cc-toolchain-x86_64-linux",
-    "@rules_swiftnav//cc/toolchains/llvm/aarch64-linux:cc-toolchain-aarch64-linux",
-    "@rules_swiftnav//cc/toolchains/llvm/x86_64-darwin:cc-toolchain-x86_64-darwin",
+    "@rules_swiftnav//cc/toolchains/llvm20/aarch64-darwin:cc-toolchain-aarch64-darwin",
+    "@rules_swiftnav//cc/toolchains/llvm20/x86_64-linux:cc-toolchain-x86_64-linux",
 )
 
 # Rust toolchain
