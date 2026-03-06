@@ -45,14 +45,14 @@ pub fn stream_messages<R: futures::AsyncRead + Unpin>(
 #[derive(Debug, Default)]
 struct JsonDecoder {
     payload_buf: Vec<u8>,
-    eof_seen: bool,
+    incomplete_buf_len: Option<usize>,
 }
 
 impl JsonDecoder {
     fn new() -> Self {
         JsonDecoder {
             payload_buf: Vec::with_capacity(BUFLEN),
-            eof_seen: false,
+            incomplete_buf_len: None,
         }
     }
 
@@ -83,7 +83,7 @@ impl Decoder for JsonDecoder {
     type Error = JsonError;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        let value = match decode_one::<JsonInput>(&mut self.eof_seen, src)? {
+        let value = match decode_one::<JsonInput>(&mut self.incomplete_buf_len, src)? {
             Some(v) => v,
             None => return Ok(None),
         };
@@ -93,12 +93,17 @@ impl Decoder for JsonDecoder {
 
 #[derive(Debug)]
 struct Json2JsonDecoder {
-    eof_seen: bool,
+    incomplete_buf_len: Option<usize>,
 }
 
 impl Json2JsonDecoder {
     fn framed<R>(input: R) -> FramedRead<R, Self> {
-        FramedRead::new(input, Self { eof_seen: false })
+        FramedRead::new(
+            input,
+            Self {
+                incomplete_buf_len: None,
+            },
+        )
     }
 }
 
@@ -107,49 +112,154 @@ impl Decoder for Json2JsonDecoder {
     type Error = JsonError;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        decode_one::<Json2JsonInput>(&mut self.eof_seen, src).map_err(Into::into)
+        decode_one::<Json2JsonInput>(&mut self.incomplete_buf_len, src).map_err(Into::into)
     }
 }
 
-fn decode_one<T>(eof_seen: &mut bool, buf: &mut BytesMut) -> Result<Option<T>, serde_json::Error>
+fn decode_one<T>(
+    incomplete_buf_len: &mut Option<usize>,
+    buf: &mut BytesMut,
+) -> Result<Option<T>, serde_json::Error>
 where
     T: DeserializeOwned,
 {
     let mut de = Deserializer::from_slice(buf).into_iter::<T>();
     let value = de.next();
     let bytes_read = de.byte_offset();
-    buf.advance(bytes_read);
     match value.transpose() {
         Ok(v) => {
-            *eof_seen = false;
+            buf.advance(bytes_read);
+            *incomplete_buf_len = None;
             Ok(v)
         }
-        // One EOF error is OK, if we fail to resolve it on a second read then we return an error.
-        // (Note this will incorrectly fail if there is a JSON object that spans the underlying buffer of dencode,
-        //  which is 8k, see https://github.com/swift-nav/dencode/blob/df889f926013085212af55d0e31d59fa71f16833/src/framed_read.rs#L10)
-        Err(e) if e.is_eof() => {
-            if *eof_seen {
+        // is_eof() means serde hit the end of the buffer slice mid-parse, i.e.
+        // the buffer contains an incomplete JSON object (not a pipe/stream EOF).
+        // Return Ok(None) so that FramedRead will read more data and retry.
+        // Only return an error if the buffer hasn't grown since the last
+        // incomplete parse, meaning no new data arrived.
+        Err(e) if e.is_eof() => match *incomplete_buf_len {
+            Some(prev_len) if prev_len == buf.len() => {
                 buf.advance(buf.len());
                 Err(e)
-            } else {
-                *eof_seen = true;
+            }
+            _ => {
+                *incomplete_buf_len = Some(buf.len());
                 Ok(None)
             }
-        }
+        },
         // For semantic errors, we need to dump the invalid JSON object
         Err(e) if e.is_data() => {
+            buf.advance(bytes_read);
             let mut de = Deserializer::from_slice(buf).into_iter::<serde_json::Value>();
             let _ = de.next();
             let bytes_read = de.byte_offset();
             buf.advance(bytes_read);
             Err(e)
         }
-        // For syntax (and EOF errors) we dump the whole buffer so the stream
+        // For syntax errors we dump the whole buffer so the stream
         // will terminate.
         Err(e) if e.is_syntax() => {
             buf.advance(buf.len());
             Err(e)
         }
         Err(e) => Err(e),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_decode_one_preserves_partial_json_on_eof() {
+        let payload = "A".repeat(5000);
+        let full_json = format!(r#"{{"msg_type":1534,"sender":0,"payload":"{}"}}"#, payload);
+        let partial = &full_json.as_bytes()[..4096];
+        let mut buf = BytesMut::from(partial);
+        let mut incomplete_buf_len: Option<usize> = None;
+
+        let result = decode_one::<serde_json::Value>(&mut incomplete_buf_len, &mut buf);
+
+        assert!(
+            result.unwrap().is_none(),
+            "should return Ok(None) to request more data"
+        );
+        assert_eq!(incomplete_buf_len, Some(4096));
+        assert_eq!(
+            buf.len(),
+            partial.len(),
+            "partial JSON must be preserved in buffer, but {} bytes were discarded",
+            partial.len() - buf.len()
+        );
+    }
+
+    /// Simulates the actual bug: partial JSON requires multiple reads to
+    /// complete, and incomplete_buf_len must allow retries as long as the buffer grows.
+    #[test]
+    fn test_decode_one_multiple_partial_reads() {
+        let payload = "C".repeat(5000);
+        let full_json = format!(r#"{{"msg_type":1534,"sender":42,"payload":"{}"}}"#, payload);
+        let full_bytes = full_json.as_bytes();
+        let mut buf = BytesMut::from(&full_bytes[..1000]);
+        let mut incomplete_buf_len: Option<usize> = None;
+
+        // First call: 1000 bytes, partial → Ok(None)
+        let result = decode_one::<serde_json::Value>(&mut incomplete_buf_len, &mut buf);
+        assert!(result.unwrap().is_none());
+        assert_eq!(incomplete_buf_len, Some(1000));
+
+        // Simulate read of 2000 more bytes (still not enough)
+        buf.extend_from_slice(&full_bytes[1000..3000]);
+
+        // Second call: 3000 bytes, still partial → Ok(None) (not Err!)
+        let result = decode_one::<serde_json::Value>(&mut incomplete_buf_len, &mut buf);
+        assert!(result.unwrap().is_none(), "should retry when buffer grew");
+        assert_eq!(incomplete_buf_len, Some(3000));
+
+        // Simulate read of remaining data
+        buf.extend_from_slice(&full_bytes[3000..]);
+
+        // Third call: complete JSON → Ok(Some)
+        let result = decode_one::<serde_json::Value>(&mut incomplete_buf_len, &mut buf);
+        let val = result.unwrap().unwrap();
+        assert_eq!(val["msg_type"], 1534);
+        assert!(incomplete_buf_len.is_none());
+    }
+
+    /// When the buffer hasn't grown between EOF attempts (true end of stream),
+    /// the error should be returned.
+    #[test]
+    fn test_decode_one_returns_error_on_stale_eof() {
+        let partial = br#"{"msg_type":1534,"sender"#;
+        let mut buf = BytesMut::from(&partial[..]);
+        let mut incomplete_buf_len: Option<usize> = None;
+
+        // First EOF
+        let result = decode_one::<serde_json::Value>(&mut incomplete_buf_len, &mut buf);
+        assert!(result.unwrap().is_none());
+
+        // Second EOF with same buffer length (no new data) → Err
+        let result = decode_one::<serde_json::Value>(&mut incomplete_buf_len, &mut buf);
+        assert!(
+            result.is_err(),
+            "should return error when buffer didn't grow"
+        );
+    }
+
+    #[test]
+    fn test_decode_one_advances_past_complete_json() {
+        let input = br#"{"msg_type":1534,"sender":42}
+{"msg_type":1535,"sender":99}
+"#;
+        let mut buf = BytesMut::from(&input[..]);
+        let mut incomplete_buf_len: Option<usize> = None;
+
+        let result = decode_one::<serde_json::Value>(&mut incomplete_buf_len, &mut buf);
+        let val = result.unwrap().unwrap();
+        assert_eq!(val["msg_type"], 1534);
+
+        let result = decode_one::<serde_json::Value>(&mut incomplete_buf_len, &mut buf);
+        let val = result.unwrap().unwrap();
+        assert_eq!(val["msg_type"], 1535);
     }
 }
