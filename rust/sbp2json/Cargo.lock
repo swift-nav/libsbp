@@ -125,9 +125,9 @@ checksum = "08c48aae112d48ed9f069b33538ea9e3e90aa263cfa3d1c24309612b1f7472de"
 
 [[package]]
 name = "bytes"
-version = "1.10.1"
+version = "1.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d71b6127be86fdcfddb610f7182ac57211d4b18a3e9c82eb2d17662f2227ad6a"
+checksum = "1e748733b7cbc798e1434b6ac524f0c1ff2ab456fe201501e6497c8417a4fc33"
 
 [[package]]
 name = "cc"
@@ -570,7 +570,7 @@ checksum = "71d301d4193d031abdd79ff7e3dd721168a9572ef3fe51a1517aba235bd8f86e"
 
 [[package]]
 name = "sbp"
-version = "6.3.2-alpha"
+version = "6.3.3-alpha"
 dependencies = [
  "base64",
  "bytes",
@@ -584,7 +584,7 @@ dependencies = [
 
 [[package]]
 name = "sbp2json"
-version = "6.3.2-alpha"
+version = "6.3.3-alpha"
 dependencies = [
  "assert-json-diff",
  "assert_cmd",
