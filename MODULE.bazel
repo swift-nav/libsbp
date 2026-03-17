@@ -1,7 +1,6 @@
 module(
     name = "libsbp",
     version = "0.1.0",
-    compatibility_level = 1,
 )
 
 bazel_dep(name = "platforms", version = "1.0.0")
@@ -147,12 +146,15 @@ crate.from_specs(
 )
 use_repo(crate, "crates")
 
-bazel_dep(name = "googletest", version = "1.13.0", dev_dependency = True)
+bazel_dep(name = "googletest", version = "1.16.0.bcr.2", dev_dependency = True)
+single_version_override(
+    module_name = "googletest",
+    version = "1.16.0.bcr.2",
+)
+
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 git_override(
     module_name = "hedron_compile_commands",
-    commit = "4f28899228fb3ad0126897876f147ca15026151e",
-    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
-    # Replace the commit hash (above) with the latest (https://github.com/hedronvision/bazel-compile-commands-extractor/commits/main).
-    # Even better, set up Renovate and let it do the work for you (see "Suggestion: Updates" in the README).
+    commit = "84b1fd42b09ec026eb69d54b25a447a3b0d7d80f",
+    remote = "https://github.com/swift-nav/bazel-compile-commands-extractor.git",
 )
