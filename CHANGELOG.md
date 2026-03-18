@@ -1,5 +1,39 @@
 # Changelog
 
+## [v6.3.3](https://github.com/swift-nav/libsbp/tree/v6.3.3)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.3.2...v6.3.3)
+
+**Merged pull requests:**
+
+- Bump svenstaro/upload-release-action from 2.11.4 to 2.11.5 [\#1566](https://github.com/swift-nav/libsbp/pull/1566) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Fix bazel\_dep version [\#1565](https://github.com/swift-nav/libsbp/pull/1565) ([martin4861](https://github.com/martin4861))
+- Remove WORKSPACE files and updated Bazel build [\#1564](https://github.com/swift-nav/libsbp/pull/1564) ([martin4861](https://github.com/martin4861))
+- Fix json2sbp errors when receiving block-buffered pipe input [\#1563](https://github.com/swift-nav/libsbp/pull/1563) ([reimerix](https://github.com/reimerix))
+- Bump svenstaro/upload-release-action from 2.11.3 to 2.11.4 [\#1562](https://github.com/swift-nav/libsbp/pull/1562) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/download-artifact from 7 to 8 [\#1561](https://github.com/swift-nav/libsbp/pull/1561) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/upload-artifact from 6 to 7 [\#1560](https://github.com/swift-nav/libsbp/pull/1560) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump minimatch from 5.1.6 to 5.1.9 [\#1559](https://github.com/swift-nav/libsbp/pull/1559) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Replace deprecated `request` package with `got` [\#1557](https://github.com/swift-nav/libsbp/pull/1557) ([martin4861](https://github.com/martin4861))
+- Bump webpack from 5.97.1 to 5.105.0 [\#1556](https://github.com/swift-nav/libsbp/pull/1556) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/setup-java from 5.1.0 to 5.2.0 [\#1554](https://github.com/swift-nav/libsbp/pull/1554) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump lodash from 4.17.21 to 4.17.23 [\#1553](https://github.com/swift-nav/libsbp/pull/1553) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update GH MacOs runners [\#1551](https://github.com/swift-nav/libsbp/pull/1551) ([martin4861](https://github.com/martin4861))
+- `sbp2json` as bazel target [\#1550](https://github.com/swift-nav/libsbp/pull/1550) ([martin4861](https://github.com/martin4861))
+- Switch to macos-latest [\#1549](https://github.com/swift-nav/libsbp/pull/1549) ([martin4861](https://github.com/martin4861))
+- Bump actions/cache from 4 to 5 [\#1548](https://github.com/swift-nav/libsbp/pull/1548) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/upload-artifact from 5 to 6 [\#1547](https://github.com/swift-nav/libsbp/pull/1547) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/download-artifact from 6 to 7 [\#1546](https://github.com/swift-nav/libsbp/pull/1546) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump sonarsource/sonarqube-scan-action from 6.0.0 to 7.0.0 [\#1545](https://github.com/swift-nav/libsbp/pull/1545) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/setup-java from 4.7.1 to 5.1.0 [\#1544](https://github.com/swift-nav/libsbp/pull/1544) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump platforms from 0.0.11 to 1.0.0 [\#1542](https://github.com/swift-nav/libsbp/pull/1542) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Add bazel dependabot config [\#1541](https://github.com/swift-nav/libsbp/pull/1541) ([martin4861](https://github.com/martin4861))
+- Bump svenstaro/upload-release-action from 2.11.2 to 2.11.3 [\#1540](https://github.com/swift-nav/libsbp/pull/1540) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/checkout from 5 to 6 [\#1539](https://github.com/swift-nav/libsbp/pull/1539) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump js-yaml from 3.14.1 to 4.1.1 [\#1538](https://github.com/swift-nav/libsbp/pull/1538) ([dependabot[bot]](https://github.com/apps/dependabot))
+- \[C/C++\] CMake: Resolve package configuration install destination mismatch [\#1536](https://github.com/swift-nav/libsbp/pull/1536) ([ethanmusser](https://github.com/ethanmusser))
+- \[C/C++\] CMake: Set include install interface to `include` [\#1535](https://github.com/swift-nav/libsbp/pull/1535) ([ethanmusser](https://github.com/ethanmusser))
+
 ## [v6.3.2](https://github.com/swift-nav/libsbp/tree/v6.3.2)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.3.1...v6.3.2)
