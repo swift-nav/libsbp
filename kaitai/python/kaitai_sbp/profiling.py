@@ -17,6 +17,25 @@ class Profiling(KaitaiStruct):
     def _read(self):
         pass
 
+    class MsgProfilingQueueInfo(KaitaiStruct):
+        """Contains profiling information for a single swiftlet internal message
+        queue type. Refer to product documentation to understand the meaning and
+        values in this message.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.size = self._io.read_u2le()
+            self.current_fill = self._io.read_u2le()
+            self.peak_fill = self._io.read_u2le()
+            self.drop_count = self._io.read_u2le()
+            self.name = (self._io.read_bytes_full()).decode(u"ascii")
+
+
     class ResourceBucket(KaitaiStruct):
         """Information about allocation of various resources grouped by buckets.
         Refer to product documentation to understand the meaning and values in

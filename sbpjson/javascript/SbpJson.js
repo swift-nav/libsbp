@@ -129,6 +129,7 @@
 //   const msgPosLLHGnss = Convert.toMsgPosLLHGnss(json);
 //   const msgPoseRelative = Convert.toMsgPoseRelative(json);
 //   const msgPpsTime = Convert.toMsgPpsTime(json);
+//   const msgProfilingQueueInfo = Convert.toMsgProfilingQueueInfo(json);
 //   const msgProfilingResourceCounter = Convert.toMsgProfilingResourceCounter(json);
 //   const msgProfilingSystemInfo = Convert.toMsgProfilingSystemInfo(json);
 //   const msgProfilingThreadInfo = Convert.toMsgProfilingThreadInfo(json);
@@ -1244,6 +1245,14 @@ function toMsgPpsTime(json) {
 
 function msgPpsTimeToJson(value) {
     return JSON.stringify(uncast(value, r("MsgPpsTime")), null, 2);
+}
+
+function toMsgProfilingQueueInfo(json) {
+    return cast(JSON.parse(json), r("MsgProfilingQueueInfo"));
+}
+
+function msgProfilingQueueInfoToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgProfilingQueueInfo")), null, 2);
 }
 
 function toMsgProfilingResourceCounter(json) {
@@ -3074,6 +3083,13 @@ const typeMap = {
         { json: "flags", js: "flags", typ: 0 },
         { json: "time", js: "time", typ: 0 },
     ], "any"),
+    "MsgProfilingQueueInfo": o([
+        { json: "current_fill", js: "current_fill", typ: 0 },
+        { json: "drop_count", js: "drop_count", typ: 0 },
+        { json: "name", js: "name", typ: "" },
+        { json: "peak_fill", js: "peak_fill", typ: 0 },
+        { json: "size", js: "size", typ: 0 },
+    ], "any"),
     "MsgProfilingResourceCounter": o([
         { json: "buckets", js: "buckets", typ: a(r("ResourceBucket")) },
         { json: "seq_len", js: "seq_len", typ: 0 },
@@ -3994,6 +4010,8 @@ module.exports = {
     "toMsgPoseRelative": toMsgPoseRelative,
     "msgPpsTimeToJson": msgPpsTimeToJson,
     "toMsgPpsTime": toMsgPpsTime,
+    "msgProfilingQueueInfoToJson": msgProfilingQueueInfoToJson,
+    "toMsgProfilingQueueInfo": toMsgProfilingQueueInfo,
     "msgProfilingResourceCounterToJson": msgProfilingResourceCounterToJson,
     "toMsgProfilingResourceCounter": toMsgProfilingResourceCounter,
     "msgProfilingSystemInfoToJson": msgProfilingSystemInfoToJson,

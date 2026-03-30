@@ -95,3 +95,17 @@ message MsgProfilingResourceCounter {
     uint32 seq_len = 2;
     repeated ResourceBucket buckets = 3;
 }
+
+/** Queue Profiling Information
+ *
+ * Contains profiling information for a single swiftlet internal message queue
+ * type. Refer to product documentation to understand the meaning and values
+ * in this message.
+ */
+message MsgProfilingQueueInfo {
+    uint32 size = 1;
+    uint32 current_fill = 2;
+    uint32 peak_fill = 3;
+    uint32 drop_count = 4;
+    string name = 5;
+}

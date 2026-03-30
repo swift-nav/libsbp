@@ -14,6 +14,7 @@
 //****************************************************************************/
 //! Standardized profiling messages from Swift Navigation devices.
 pub use msg_measurement_point::MsgMeasurementPoint;
+pub use msg_profiling_queue_info::MsgProfilingQueueInfo;
 pub use msg_profiling_resource_counter::MsgProfilingResourceCounter;
 pub use msg_profiling_system_info::MsgProfilingSystemInfo;
 pub use msg_profiling_thread_info::MsgProfilingThreadInfo;
@@ -156,6 +157,120 @@ pub mod msg_measurement_point {
                 slice_time: WireFormat::parse_unchecked(buf),
                 line: WireFormat::parse_unchecked(buf),
                 func: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_profiling_queue_info {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Queue Profiling Information
+    ///
+    /// Contains profiling information for a single swiftlet internal message
+    /// queue type. Refer to product documentation to understand the meaning and
+    /// values in this message.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgProfilingQueueInfo {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// Total number of slots in the queue
+        #[cfg_attr(feature = "serde", serde(rename = "size"))]
+        pub size: u16,
+        /// Number of slots currently in use
+        #[cfg_attr(feature = "serde", serde(rename = "current_fill"))]
+        pub current_fill: u16,
+        /// Peak number of slots used since init
+        #[cfg_attr(feature = "serde", serde(rename = "peak_fill"))]
+        pub peak_fill: u16,
+        /// Number of messages dropped since init
+        #[cfg_attr(feature = "serde", serde(rename = "drop_count"))]
+        pub drop_count: u16,
+        /// Queue type name
+        #[cfg_attr(feature = "serde", serde(rename = "name"))]
+        pub name: SbpString<Vec<u8>, NullTerminated>,
+    }
+
+    impl ConcreteMessage for MsgProfilingQueueInfo {
+        const MESSAGE_TYPE: u16 = 52996;
+        const MESSAGE_NAME: &'static str = "MSG_PROFILING_QUEUE_INFO";
+    }
+
+    impl SbpMessage for MsgProfilingQueueInfo {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
+    }
+
+    impl FriendlyName for MsgProfilingQueueInfo {
+        fn friendly_name() -> &'static str {
+            "PROFILING QUEUE INFO"
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgProfilingQueueInfo {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgProfilingQueueInfo(m) => Ok(m),
+                _ => Err(TryFromSbpError(msg)),
+            }
+        }
+    }
+
+    impl WireFormat for MsgProfilingQueueInfo {
+        const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.size)
+                + WireFormat::len(&self.current_fill)
+                + WireFormat::len(&self.peak_fill)
+                + WireFormat::len(&self.drop_count)
+                + WireFormat::len(&self.name)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.size, buf);
+            WireFormat::write(&self.current_fill, buf);
+            WireFormat::write(&self.peak_fill, buf);
+            WireFormat::write(&self.drop_count, buf);
+            WireFormat::write(&self.name, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgProfilingQueueInfo {
+                sender_id: None,
+                size: WireFormat::parse_unchecked(buf),
+                current_fill: WireFormat::parse_unchecked(buf),
+                peak_fill: WireFormat::parse_unchecked(buf),
+                drop_count: WireFormat::parse_unchecked(buf),
+                name: WireFormat::parse_unchecked(buf),
             }
         }
     }

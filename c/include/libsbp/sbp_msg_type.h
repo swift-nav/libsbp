@@ -200,6 +200,7 @@ typedef enum {
   SbpMsgPoseRelative = 0x0245,
   SbpMsgPpsTime = 0xFF08,
   SbpMsgPrintDep = 0x0010,
+  SbpMsgProfilingQueueInfo = 0xCF04,
   SbpMsgProfilingResourceCounter = 0xCF03,
   SbpMsgProfilingSystemInfo = 0xCF01,
   SbpMsgProfilingThreadInfo = 0xCF02,
@@ -595,6 +596,8 @@ static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
       return "MSG_PPS_TIME";
     case SbpMsgPrintDep:
       return "MSG_PRINT_DEP";
+    case SbpMsgProfilingQueueInfo:
+      return "MSG_PROFILING_QUEUE_INFO";
     case SbpMsgProfilingResourceCounter:
       return "MSG_PROFILING_RESOURCE_COUNTER";
     case SbpMsgProfilingSystemInfo:

@@ -242,6 +242,7 @@ enums:
     52993: msg_profiling_system_info
     52994: msg_profiling_thread_info
     52995: msg_profiling_resource_counter
+    52996: msg_profiling_queue_info
   
     30583: msg_sbas_raw
   
@@ -527,6 +528,7 @@ types:
             52993: profiling::msg_profiling_system_info
             52994: profiling::msg_profiling_thread_info
             52995: profiling::msg_profiling_resource_counter
+            52996: profiling::msg_profiling_queue_info
   
             30583: sbas::msg_sbas_raw
   

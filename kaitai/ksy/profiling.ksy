@@ -186,3 +186,32 @@ types:
         type: resource_bucket
         repeat: eos
   
+  msg_profiling_queue_info:
+    doc: |
+      Contains profiling information for a single swiftlet internal message
+      queue type. Refer to product documentation to understand the meaning and
+      values in this message.
+    seq:
+      - id: size
+        doc: |
+          Total number of slots in the queue
+        type: u2
+      - id: current_fill
+        doc: |
+          Number of slots currently in use
+        type: u2
+      - id: peak_fill
+        doc: |
+          Peak number of slots used since init
+        type: u2
+      - id: drop_count
+        doc: |
+          Number of messages dropped since init
+        type: u2
+      - id: name
+        doc: |
+          Queue type name
+        type: str
+        encoding: ascii
+        size-eos: true
+  

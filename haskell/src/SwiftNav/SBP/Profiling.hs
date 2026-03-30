@@ -260,3 +260,44 @@ $(makeSBP 'msgProfilingResourceCounter ''MsgProfilingResourceCounter)
 $(makeJSON "_msgProfilingResourceCounter_" ''MsgProfilingResourceCounter)
 $(makeLenses ''MsgProfilingResourceCounter)
 
+msgProfilingQueueInfo :: Word16
+msgProfilingQueueInfo = 0xCF04
+
+-- | SBP class for message MSG_PROFILING_QUEUE_INFO (0xCF04).
+--
+-- Contains profiling information for a single swiftlet internal message queue
+-- type. Refer to product documentation to understand the meaning and values
+-- in this message.
+data MsgProfilingQueueInfo = MsgProfilingQueueInfo
+  { _msgProfilingQueueInfo_size       :: !Word16
+    -- ^ Total number of slots in the queue
+  , _msgProfilingQueueInfo_current_fill :: !Word16
+    -- ^ Number of slots currently in use
+  , _msgProfilingQueueInfo_peak_fill  :: !Word16
+    -- ^ Peak number of slots used since init
+  , _msgProfilingQueueInfo_drop_count :: !Word16
+    -- ^ Number of messages dropped since init
+  , _msgProfilingQueueInfo_name       :: !Text
+    -- ^ Queue type name
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgProfilingQueueInfo where
+  get = do
+    _msgProfilingQueueInfo_size <- getWord16le
+    _msgProfilingQueueInfo_current_fill <- getWord16le
+    _msgProfilingQueueInfo_peak_fill <- getWord16le
+    _msgProfilingQueueInfo_drop_count <- getWord16le
+    _msgProfilingQueueInfo_name <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgProfilingQueueInfo {..}
+
+  put MsgProfilingQueueInfo {..} = do
+    putWord16le _msgProfilingQueueInfo_size
+    putWord16le _msgProfilingQueueInfo_current_fill
+    putWord16le _msgProfilingQueueInfo_peak_fill
+    putWord16le _msgProfilingQueueInfo_drop_count
+    putByteString $ encodeUtf8 _msgProfilingQueueInfo_name
+
+$(makeSBP 'msgProfilingQueueInfo ''MsgProfilingQueueInfo)
+$(makeJSON "_msgProfilingQueueInfo_" ''MsgProfilingQueueInfo)
+$(makeLenses ''MsgProfilingQueueInfo)
+

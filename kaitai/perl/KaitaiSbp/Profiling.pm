@@ -38,6 +38,68 @@ sub _read {
 }
 
 ########################################################################
+package Profiling::MsgProfilingQueueInfo;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{size} = $self->{_io}->read_u2le();
+    $self->{current_fill} = $self->{_io}->read_u2le();
+    $self->{peak_fill} = $self->{_io}->read_u2le();
+    $self->{drop_count} = $self->{_io}->read_u2le();
+    $self->{name} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+}
+
+sub size {
+    my ($self) = @_;
+    return $self->{size};
+}
+
+sub current_fill {
+    my ($self) = @_;
+    return $self->{current_fill};
+}
+
+sub peak_fill {
+    my ($self) = @_;
+    return $self->{peak_fill};
+}
+
+sub drop_count {
+    my ($self) = @_;
+    return $self->{drop_count};
+}
+
+sub name {
+    my ($self) = @_;
+    return $self->{name};
+}
+
+########################################################################
 package Profiling::ResourceBucket;
 
 our @ISA = 'IO::KaitaiStruct::Struct';

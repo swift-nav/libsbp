@@ -576,10 +576,128 @@ class MsgProfilingResourceCounter(SBP):
     d.update(j)
     return d
     
+SBP_MSG_PROFILING_QUEUE_INFO = 0xCF04
+class MsgProfilingQueueInfo(SBP):
+  """SBP class for message MSG_PROFILING_QUEUE_INFO (0xCF04).
+
+  You can have MSG_PROFILING_QUEUE_INFO inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Contains profiling information for a single swiftlet internal message queue
+  type. Refer to product documentation to understand the meaning and values in
+  this message.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  size : int
+    Total number of slots in the queue
+  current_fill : int
+    Number of slots currently in use
+  peak_fill : int
+    Peak number of slots used since init
+  drop_count : int
+    Number of messages dropped since init
+  name : string
+    Queue type name
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'size' / construct.Int16ul,
+                   'current_fill' / construct.Int16ul,
+                   'peak_fill' / construct.Int16ul,
+                   'drop_count' / construct.Int16ul,
+                   'name' / construct.GreedyBytes,)
+  __slots__ = [
+               'size',
+               'current_fill',
+               'peak_fill',
+               'drop_count',
+               'name',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgProfilingQueueInfo,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgProfilingQueueInfo, self).__init__()
+      self.msg_type = SBP_MSG_PROFILING_QUEUE_INFO
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.size = kwargs.pop('size')
+      self.current_fill = kwargs.pop('current_fill')
+      self.peak_fill = kwargs.pop('peak_fill')
+      self.drop_count = kwargs.pop('drop_count')
+      self.name = kwargs.pop('name')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgProfilingQueueInfo.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgProfilingQueueInfo(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgProfilingQueueInfo._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgProfilingQueueInfo._parser.build(c)
+    return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "PROFILING QUEUE INFO"
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgProfilingQueueInfo._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgProfilingQueueInfo, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0xCF00: MsgMeasurementPoint,
   0xCF01: MsgProfilingSystemInfo,
   0xCF02: MsgProfilingThreadInfo,
   0xCF03: MsgProfilingResourceCounter,
+  0xCF04: MsgProfilingQueueInfo,
 }

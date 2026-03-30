@@ -244,6 +244,47 @@ MsgProfilingResourceCounter.prototype.fieldSpec.push(['seq_no', 'writeUInt8', 1]
 MsgProfilingResourceCounter.prototype.fieldSpec.push(['seq_len', 'writeUInt8', 1]);
 MsgProfilingResourceCounter.prototype.fieldSpec.push(['buckets', 'array', ResourceBucket.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
+/**
+ * SBP class for message MSG_PROFILING_QUEUE_INFO (0xCF04).
+ *
+ * Contains profiling information for a single swiftlet internal message queue
+ * type. Refer to product documentation to understand the meaning and values in
+ * this message.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field size number (unsigned 16-bit int, 2 bytes) Total number of slots in the queue
+ * @field current_fill number (unsigned 16-bit int, 2 bytes) Number of slots currently in use
+ * @field peak_fill number (unsigned 16-bit int, 2 bytes) Peak number of slots used since init
+ * @field drop_count number (unsigned 16-bit int, 2 bytes) Number of messages dropped since init
+ * @field name string Queue type name
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let MsgProfilingQueueInfo = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_PROFILING_QUEUE_INFO";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgProfilingQueueInfo.prototype = Object.create(SBP.prototype);
+MsgProfilingQueueInfo.prototype.messageType = "MSG_PROFILING_QUEUE_INFO";
+MsgProfilingQueueInfo.prototype.msg_type = 0xCF04;
+MsgProfilingQueueInfo.prototype.constructor = MsgProfilingQueueInfo;
+MsgProfilingQueueInfo.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('size')
+  .uint16('current_fill')
+  .uint16('peak_fill')
+  .uint16('drop_count')
+  .string('name', { greedy: true });
+MsgProfilingQueueInfo.prototype.fieldSpec = [];
+MsgProfilingQueueInfo.prototype.fieldSpec.push(['size', 'writeUInt16LE', 2]);
+MsgProfilingQueueInfo.prototype.fieldSpec.push(['current_fill', 'writeUInt16LE', 2]);
+MsgProfilingQueueInfo.prototype.fieldSpec.push(['peak_fill', 'writeUInt16LE', 2]);
+MsgProfilingQueueInfo.prototype.fieldSpec.push(['drop_count', 'writeUInt16LE', 2]);
+MsgProfilingQueueInfo.prototype.fieldSpec.push(['name', 'string', null]);
+
 module.exports = {
   0xCF00: MsgMeasurementPoint,
   MsgMeasurementPoint: MsgMeasurementPoint,
@@ -254,4 +295,6 @@ module.exports = {
   ResourceBucket: ResourceBucket,
   0xCF03: MsgProfilingResourceCounter,
   MsgProfilingResourceCounter: MsgProfilingResourceCounter,
+  0xCF04: MsgProfilingQueueInfo,
+  MsgProfilingQueueInfo: MsgProfilingQueueInfo,
 }

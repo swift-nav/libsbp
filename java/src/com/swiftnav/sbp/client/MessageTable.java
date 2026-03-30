@@ -181,6 +181,7 @@ import com.swiftnav.sbp.piksi.MsgThreadState;
 import com.swiftnav.sbp.piksi.MsgUartState;
 import com.swiftnav.sbp.piksi.MsgUartStateDepa;
 import com.swiftnav.sbp.profiling.MsgMeasurementPoint;
+import com.swiftnav.sbp.profiling.MsgProfilingQueueInfo;
 import com.swiftnav.sbp.profiling.MsgProfilingResourceCounter;
 import com.swiftnav.sbp.profiling.MsgProfilingSystemInfo;
 import com.swiftnav.sbp.profiling.MsgProfilingThreadInfo;
@@ -599,6 +600,8 @@ final class MessageTable {
                 return new MsgProfilingThreadInfo(msg);
             case MsgProfilingResourceCounter.TYPE:
                 return new MsgProfilingResourceCounter(msg);
+            case MsgProfilingQueueInfo.TYPE:
+                return new MsgProfilingQueueInfo(msg);
             case MsgSbasRaw.TYPE:
                 return new MsgSbasRaw(msg);
             case MsgSettingsSave.TYPE:

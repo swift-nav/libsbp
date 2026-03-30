@@ -866,3 +866,217 @@ int sbp_msg_profiling_resource_counter_cmp(
   }
   return ret;
 }
+
+void sbp_msg_profiling_queue_info_name_init(
+    sbp_msg_profiling_queue_info_t *msg) {
+  sbp_null_terminated_string_init(&msg->name);
+}
+
+bool sbp_msg_profiling_queue_info_name_valid(
+    const sbp_msg_profiling_queue_info_t *msg) {
+  return sbp_null_terminated_string_valid(
+      &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX);
+}
+
+int sbp_msg_profiling_queue_info_name_strcmp(
+    const sbp_msg_profiling_queue_info_t *a,
+    const sbp_msg_profiling_queue_info_t *b) {
+  return sbp_null_terminated_string_strcmp(
+      &a->name, &b->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX);
+}
+
+size_t sbp_msg_profiling_queue_info_name_encoded_len(
+    const sbp_msg_profiling_queue_info_t *msg) {
+  return sbp_null_terminated_string_encoded_len(
+      &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX);
+}
+
+size_t sbp_msg_profiling_queue_info_name_space_remaining(
+    const sbp_msg_profiling_queue_info_t *msg) {
+  return sbp_null_terminated_string_space_remaining(
+      &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX);
+}
+bool sbp_msg_profiling_queue_info_name_set(sbp_msg_profiling_queue_info_t *msg,
+                                           const char *new_str,
+                                           bool should_trunc,
+                                           size_t *n_written) {
+  return sbp_null_terminated_string_set(&msg->name,
+                                        SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX,
+                                        should_trunc, n_written, new_str);
+}
+
+bool sbp_msg_profiling_queue_info_name_set_raw(
+    sbp_msg_profiling_queue_info_t *msg, const char *new_buf,
+    size_t new_buf_len, bool should_trunc, size_t *n_written) {
+  return sbp_null_terminated_string_set_raw(
+      &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX, should_trunc,
+      n_written, new_buf, new_buf_len);
+}
+
+bool sbp_msg_profiling_queue_info_name_printf(
+    sbp_msg_profiling_queue_info_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, ...) {
+  va_list ap;
+  va_start(ap, fmt);
+  bool ret = sbp_null_terminated_string_vprintf(
+      &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX, should_trunc,
+      n_written, fmt, ap);
+  va_end(ap);
+  return ret;
+}
+
+bool sbp_msg_profiling_queue_info_name_vprintf(
+    sbp_msg_profiling_queue_info_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, va_list ap) {
+  return sbp_null_terminated_string_vprintf(
+      &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX, should_trunc,
+      n_written, fmt, ap);
+}
+
+bool sbp_msg_profiling_queue_info_name_append_printf(
+    sbp_msg_profiling_queue_info_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, ...) {
+  va_list ap;
+  va_start(ap, fmt);
+  bool ret = sbp_null_terminated_string_append_vprintf(
+      &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX, should_trunc,
+      n_written, fmt, ap);
+  va_end(ap);
+  return ret;
+}
+
+bool sbp_msg_profiling_queue_info_name_append_vprintf(
+    sbp_msg_profiling_queue_info_t *msg, bool should_trunc, size_t *n_written,
+    const char *fmt, va_list ap) {
+  return sbp_null_terminated_string_append_vprintf(
+      &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX, should_trunc,
+      n_written, fmt, ap);
+}
+
+const char *sbp_msg_profiling_queue_info_name_get(
+    const sbp_msg_profiling_queue_info_t *msg) {
+  return sbp_null_terminated_string_get(&msg->name,
+                                        SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX);
+}
+
+size_t sbp_msg_profiling_queue_info_name_strlen(
+    const sbp_msg_profiling_queue_info_t *msg) {
+  return sbp_null_terminated_string_strlen(
+      &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX);
+}
+
+bool sbp_msg_profiling_queue_info_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_profiling_queue_info_t *msg) {
+  if (!sbp_u16_encode(ctx, &msg->size)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->current_fill)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->peak_fill)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->drop_count)) {
+    return false;
+  }
+  if (!sbp_null_terminated_string_encode(
+          &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX, ctx)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_msg_profiling_queue_info_encode(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_profiling_queue_info_t *msg) {
+  sbp_encode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_profiling_queue_info_encode_internal(&ctx, msg)) {
+    return SBP_ENCODE_ERROR;
+  }
+  if (n_written != NULL) {
+    *n_written = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+bool sbp_msg_profiling_queue_info_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_profiling_queue_info_t *msg) {
+  if (!sbp_u16_decode(ctx, &msg->size)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->current_fill)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->peak_fill)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->drop_count)) {
+    return false;
+  }
+  if (!sbp_null_terminated_string_decode(
+          &msg->name, SBP_MSG_PROFILING_QUEUE_INFO_NAME_MAX, ctx)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_msg_profiling_queue_info_decode(const uint8_t *buf, uint8_t len,
+                                       uint8_t *n_read,
+                                       sbp_msg_profiling_queue_info_t *msg) {
+  sbp_decode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_profiling_queue_info_decode_internal(&ctx, msg)) {
+    return SBP_DECODE_ERROR;
+  }
+  if (n_read != NULL) {
+    *n_read = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+s8 sbp_msg_profiling_queue_info_send(sbp_state_t *s, u16 sender_id,
+                                     const sbp_msg_profiling_queue_info_t *msg,
+                                     sbp_write_fn_t write) {
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_msg_profiling_queue_info_encode(payload, sizeof(payload),
+                                               &payload_len, msg);
+  if (ret != SBP_OK) {
+    return ret;
+  }
+  return sbp_internal_forward_payload(s, SbpMsgProfilingQueueInfo, sender_id,
+                                      payload_len, payload, write);
+}
+
+int sbp_msg_profiling_queue_info_cmp(const sbp_msg_profiling_queue_info_t *a,
+                                     const sbp_msg_profiling_queue_info_t *b) {
+  int ret = 0;
+
+  ret = sbp_u16_cmp(&a->size, &b->size);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->current_fill, &b->current_fill);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->peak_fill, &b->peak_fill);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->drop_count, &b->drop_count);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_msg_profiling_queue_info_name_strcmp(a, b);
+  return ret;
+}
