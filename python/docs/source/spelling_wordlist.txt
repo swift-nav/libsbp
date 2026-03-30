@@ -84,6 +84,7 @@ imu
 incrementing
 inertially
 infofirmware
+init
 interoperable
 io
 iode
@@ -148,6 +149,7 @@ stepOfLatitude
 stepOfLongitude
 structs
 swiftnav
+swiftlet
 synch
 synchronise
 synchronisation
