@@ -165,7 +165,28 @@ definitions:
           type: array
           fill: ResourceBucket
           desc: List of resource buckets
-          
 
-    
-
+ - MSG_PROFILING_QUEUE_INFO:
+    id: 0xCF04
+    short_desc: Queue Profiling Information
+    desc: >
+      Contains profiling information for a single swiftlet internal message
+      queue type. Refer to product documentation to understand the meaning
+      and values in this message.
+    fields:
+      - size:
+          type: u16
+          desc: Total number of slots in the queue
+      - current_fill:
+          type: u16
+          desc: Number of slots currently in use
+      - peak_fill:
+          type: u16
+          desc: Peak number of slots used since init
+      - drop_count:
+          type: u16
+          desc: Number of messages dropped since init
+      - name:
+          type: string
+          encoding: null_terminated
+          desc: Queue type name
