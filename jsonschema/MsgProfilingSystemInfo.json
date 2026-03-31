@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgProfilingSystemInfo",
   "title":"MsgProfilingSystemInfo",
-  "description":"Contains basic information about system resource usage. System is defined in terms of the source of this message and may vary from  sender to sender. Refer to product documentation to understand the exact scope and meaning of this message.\n",
+  "description":"Contains basic information about system resource usage. System is defined in terms of the source of this message and may vary from sender to sender. Refer to product documentation to understand the exact scope and meaning of this message.\n",
   "type": "object",
   "properties": {
     "total_cpu_time": {"type": "integer"},

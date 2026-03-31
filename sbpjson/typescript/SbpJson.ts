@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, ECDSASignature, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, IntegritySSRHeader, Latency, MeasurementState, MsgAcknowledge, MsgAcqResult, MsgAcqSvProfile, MsgAESCmacSignature, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCertificateChain, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEcdsaCertificate, MsgEcdsaSignature, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuComp, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementPoint, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPoseRelative, MsgPpsTime, MsgProfilingQueueInfo, MsgProfilingResourceCounter, MsgProfilingSystemInfo, MsgProfilingThreadInfo, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgTelSv, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, ResourceBucket, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TelemetrySV, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel, UTCTime } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, ECDSASignature, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, IntegritySSRHeader, Latency, MeasurementState, MsgAcknowledge, MsgAcqResult, MsgAcqSvProfile, MsgAESCmacSignature, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCertificateChain, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEcdsaCertificate, MsgEcdsaSignature, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuComp, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementPoint, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPoseRelative, MsgPpsTime, MsgProfilingQueueInfo, MsgProfilingResourceCounter, MsgProfilingSystemInfo, MsgProfilingThreadInfo, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgTelSv, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, QueueInfo, ResourceBucket, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TelemetrySV, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel, UTCTime } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -206,6 +206,7 @@
 //   const packedOsrContent = Convert.toPackedOsrContent(json);
 //   const period = Convert.toPeriod(json);
 //   const phaseBiasesContent = Convert.toPhaseBiasesContent(json);
+//   const queueInfo = Convert.toQueueInfo(json);
 //   const resourceBucket = Convert.toResourceBucket(json);
 //   const sTECHeader = Convert.toSTECHeader(json);
 //   const sTECResidual = Convert.toSTECResidual(json);
@@ -2065,15 +2066,26 @@ export interface MsgPpsTime {
 }
 
 /**
- * Contains profiling information for a single swiftlet internal message queue type. Refer
- * to product documentation to understand the meaning and values in this message.
+ * Contains profiling information for swiftlet internal message queues. Refer to product
+ * documentation to understand the meaning and values in this message.
  */
 export interface MsgProfilingQueueInfo {
+    queues:  QueueInfo[];
+    seq_len: number;
+    seq_no:  number;
+    [property: string]: any;
+}
+
+/**
+ * Profiling information for a single swiftlet internal message queue type.
+ */
+export interface QueueInfo {
     current_fill: number;
     drop_count:   number;
     name:         string;
     peak_fill:    number;
     size:         number;
+    timestamp:    number;
     [property: string]: any;
 }
 
@@ -2107,8 +2119,8 @@ export interface ResourceBucket {
 
 /**
  * Contains basic information about system resource usage. System is defined in terms of the
- * source of this message and may vary from  sender to sender. Refer to product
- * documentation to understand the exact scope and meaning of this message.
+ * source of this message and may vary from sender to sender. Refer to product documentation
+ * to understand the exact scope and meaning of this message.
  */
 export interface MsgProfilingSystemInfo {
     age:            number;
@@ -4986,6 +4998,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("PhaseBiasesContent")), null, 2);
     }
 
+    public static toQueueInfo(json: string): QueueInfo {
+        return cast(JSON.parse(json), r("QueueInfo"));
+    }
+
+    public static queueInfoToJson(value: QueueInfo): string {
+        return JSON.stringify(uncast(value, r("QueueInfo")), null, 2);
+    }
+
     public static toResourceBucket(json: string): ResourceBucket {
         return cast(JSON.parse(json), r("ResourceBucket"));
     }
@@ -6208,11 +6228,17 @@ const typeMap: any = {
         { json: "time", js: "time", typ: 0 },
     ], "any"),
     "MsgProfilingQueueInfo": o([
+        { json: "queues", js: "queues", typ: a(r("QueueInfo")) },
+        { json: "seq_len", js: "seq_len", typ: 0 },
+        { json: "seq_no", js: "seq_no", typ: 0 },
+    ], "any"),
+    "QueueInfo": o([
         { json: "current_fill", js: "current_fill", typ: 0 },
         { json: "drop_count", js: "drop_count", typ: 0 },
         { json: "name", js: "name", typ: "" },
         { json: "peak_fill", js: "peak_fill", typ: 0 },
         { json: "size", js: "size", typ: 0 },
+        { json: "timestamp", js: "timestamp", typ: 0 },
     ], "any"),
     "MsgProfilingResourceCounter": o([
         { json: "buckets", js: "buckets", typ: a(r("ResourceBucket")) },

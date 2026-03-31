@@ -80,9 +80,8 @@ MsgMeasurementPoint.prototype.fieldSpec.push(['func', 'string', null]);
  * SBP class for message MSG_PROFILING_SYSTEM_INFO (0xCF01).
  *
  * Contains basic information about system resource usage. System is defined in
- * terms of the source of this message and may vary from  sender to sender. Refer
- * to product documentation to understand the exact scope and meaning of this
- * message.
+ * terms of the source of this message and may vary from sender to sender. Refer to
+ * product documentation to understand the exact scope and meaning of this message.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field total_cpu_time number (unsigned 64-bit int, 8 bytes) Total cpu time in microseconds consumed by this system
@@ -245,18 +244,56 @@ MsgProfilingResourceCounter.prototype.fieldSpec.push(['seq_len', 'writeUInt8', 1
 MsgProfilingResourceCounter.prototype.fieldSpec.push(['buckets', 'array', ResourceBucket.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
- * SBP class for message MSG_PROFILING_QUEUE_INFO (0xCF04).
+ * SBP class for message fragment QueueInfo
  *
- * Contains profiling information for a single swiftlet internal message queue
- * type. Refer to product documentation to understand the meaning and values in
- * this message.
+ * Profiling information for a single swiftlet internal message queue type.
  *
  * Fields in the SBP payload (`sbp.payload`):
+ * @field timestamp number (unsigned 64-bit int, 8 bytes) Timestamp in milliseconds
+ * @field name string Queue type name
  * @field size number (unsigned 16-bit int, 2 bytes) Total number of slots in the queue
  * @field current_fill number (unsigned 16-bit int, 2 bytes) Number of slots currently in use
  * @field peak_fill number (unsigned 16-bit int, 2 bytes) Peak number of slots used since init
  * @field drop_count number (unsigned 16-bit int, 2 bytes) Number of messages dropped since init
- * @field name string Queue type name
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let QueueInfo = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "QueueInfo";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+QueueInfo.prototype = Object.create(SBP.prototype);
+QueueInfo.prototype.messageType = "QueueInfo";
+QueueInfo.prototype.constructor = QueueInfo;
+QueueInfo.prototype.parser = new Parser()
+  .endianess('little')
+  .uint64('timestamp')
+  .string('name', { length: 40 })
+  .uint16('size')
+  .uint16('current_fill')
+  .uint16('peak_fill')
+  .uint16('drop_count');
+QueueInfo.prototype.fieldSpec = [];
+QueueInfo.prototype.fieldSpec.push(['timestamp', 'writeUInt64LE', 8]);
+QueueInfo.prototype.fieldSpec.push(['name', 'string', 40]);
+QueueInfo.prototype.fieldSpec.push(['size', 'writeUInt16LE', 2]);
+QueueInfo.prototype.fieldSpec.push(['current_fill', 'writeUInt16LE', 2]);
+QueueInfo.prototype.fieldSpec.push(['peak_fill', 'writeUInt16LE', 2]);
+QueueInfo.prototype.fieldSpec.push(['drop_count', 'writeUInt16LE', 2]);
+
+/**
+ * SBP class for message MSG_PROFILING_QUEUE_INFO (0xCF04).
+ *
+ * Contains profiling information for swiftlet internal message queues. Refer to
+ * product documentation to understand the meaning and values in this message.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field seq_no number (unsigned 8-bit int, 1 byte) Message number in complete sequence
+ * @field seq_len number (unsigned 8-bit int, 1 byte) Length of message sequence
+ * @field queues array List of queue stats
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -273,17 +310,13 @@ MsgProfilingQueueInfo.prototype.msg_type = 0xCF04;
 MsgProfilingQueueInfo.prototype.constructor = MsgProfilingQueueInfo;
 MsgProfilingQueueInfo.prototype.parser = new Parser()
   .endianess('little')
-  .uint16('size')
-  .uint16('current_fill')
-  .uint16('peak_fill')
-  .uint16('drop_count')
-  .string('name', { greedy: true });
+  .uint8('seq_no')
+  .uint8('seq_len')
+  .array('queues', { type: QueueInfo.prototype.parser, readUntil: 'eof' });
 MsgProfilingQueueInfo.prototype.fieldSpec = [];
-MsgProfilingQueueInfo.prototype.fieldSpec.push(['size', 'writeUInt16LE', 2]);
-MsgProfilingQueueInfo.prototype.fieldSpec.push(['current_fill', 'writeUInt16LE', 2]);
-MsgProfilingQueueInfo.prototype.fieldSpec.push(['peak_fill', 'writeUInt16LE', 2]);
-MsgProfilingQueueInfo.prototype.fieldSpec.push(['drop_count', 'writeUInt16LE', 2]);
-MsgProfilingQueueInfo.prototype.fieldSpec.push(['name', 'string', null]);
+MsgProfilingQueueInfo.prototype.fieldSpec.push(['seq_no', 'writeUInt8', 1]);
+MsgProfilingQueueInfo.prototype.fieldSpec.push(['seq_len', 'writeUInt8', 1]);
+MsgProfilingQueueInfo.prototype.fieldSpec.push(['queues', 'array', QueueInfo.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 module.exports = {
   0xCF00: MsgMeasurementPoint,
@@ -295,6 +328,7 @@ module.exports = {
   ResourceBucket: ResourceBucket,
   0xCF03: MsgProfilingResourceCounter,
   MsgProfilingResourceCounter: MsgProfilingResourceCounter,
+  QueueInfo: QueueInfo,
   0xCF04: MsgProfilingQueueInfo,
   MsgProfilingQueueInfo: MsgProfilingQueueInfo,
 }

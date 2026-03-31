@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/profiling/QueueInfo.h>
 #include <libsbp/profiling_macros.h>
 #include <libsbp/string/sbp_string.h>
 
@@ -38,232 +39,38 @@ extern "C" {
  * SBP_MSG_PROFILING_QUEUE_INFO
  *
  *****************************************************************************/
-/** Queue Profiling Information
+/** Messaging Queue Profiling Information
  *
- * Contains profiling information for a single swiftlet internal message queue
- * type. Refer to product documentation to understand the meaning and values in
- * this message.
+ * Contains profiling information for swiftlet internal message queues. Refer to
+ * product documentation to understand the meaning and values in this message.
  */
 typedef struct {
   /**
-   * Total number of slots in the queue
+   * Message number in complete sequence
    */
-  u16 size;
+  u8 seq_no;
 
   /**
-   * Number of slots currently in use
+   * Length of message sequence
    */
-  u16 current_fill;
+  u8 seq_len;
 
   /**
-   * Peak number of slots used since init
+   * List of queue stats
    */
-  u16 peak_fill;
-
+  sbp_queue_info_t queues[SBP_MSG_PROFILING_QUEUE_INFO_QUEUES_MAX];
   /**
-   * Number of messages dropped since init
+   * Number of elements in queues
+   *
+   * When sending a message fill in this field with the number elements set in
+   * queues before calling an appropriate libsbp send function
+   *
+   * When receiving a message query this field for the number of elements in
+   * queues. The value of any elements beyond the index specified in this field
+   * is undefined
    */
-  u16 drop_count;
-
-  /**
-   * Queue type name
-   */
-  sbp_string_t name;
+  u8 n_queues;
 } sbp_msg_profiling_queue_info_t;
-
-/**
- * Initialise sbp_msg_profiling_queue_info_t::name to empty
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- */
-SBP_EXPORT void sbp_msg_profiling_queue_info_name_init(
-    sbp_msg_profiling_queue_info_t *msg);
-
-/**
- * Test sbp_msg_profiling_queue_info_t::name for validity
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @return true is sbp_msg_profiling_queue_info_t::name is valid for encoding
- * purposes, false otherwise
- */
-SBP_EXPORT bool sbp_msg_profiling_queue_info_name_valid(
-    const sbp_msg_profiling_queue_info_t *msg);
-
-/**
- * Tests 2 instances of sbp_msg_profiling_queue_info_t::name for equality
- *
- * Returns a value with the same definitions as strcmp from the C standard
- * library
- *
- * @param a sbp_msg_profiling_queue_info_t instance
- * @param b sbp_msg_profiling_queue_info_t instance
- * @return 0 if equal, <0 if a<b, >0 if a>b
- */
-SBP_EXPORT int sbp_msg_profiling_queue_info_name_strcmp(
-    const sbp_msg_profiling_queue_info_t *a,
-    const sbp_msg_profiling_queue_info_t *b);
-
-/**
- * Get the encoded size of sbp_msg_profiling_queue_info_t::name
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @return Size of sbp_msg_profiling_queue_info_t::name in wire representation
- */
-SBP_EXPORT size_t sbp_msg_profiling_queue_info_name_encoded_len(
-    const sbp_msg_profiling_queue_info_t *msg);
-
-/**
- * Query sbp_msg_profiling_queue_info_t::name for remaining space
- *
- * Returns the number of bytes (not including NULL terminator) which can be
- * added to sbp_msg_profiling_queue_info_t::name before it exceeds the maximum
- * size of the field in wire representation
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @return Maximum number of bytes that can be appended to the existing string
- */
-SBP_EXPORT size_t sbp_msg_profiling_queue_info_name_space_remaining(
-    const sbp_msg_profiling_queue_info_t *msg);
-/**
- * Set sbp_msg_profiling_queue_info_t::name
- *
- * Erase any existing content and replace with the specified string
- *
- * If the should_trunc parameter is set to false and the specified string is
- * longer than can be represented in wire encoding, this function will return
- * false. Otherwise, if should_trunc is set to true, then as much as possible
- * will be read from the new_str as can fit in the msg.
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @param new_str New string
- * @param should_trunc Whether the new_str can be truncated to fit in msg
- * @param n_written If not null, on success will be set to the number of bytes
- * written to msg
- * @return true on success, false otherwise
- */
-SBP_EXPORT bool sbp_msg_profiling_queue_info_name_set(
-    sbp_msg_profiling_queue_info_t *msg, const char *new_str, bool should_trunc,
-    size_t *n_written);
-
-/**
- * Set sbp_msg_profiling_queue_info_t::name from a raw buffer
- *
- * Erase any existing content and replace with the specified raw buffer
- *
- * If the should_trunc parameter is set to false and the specified string is
- * longer than can be represented in wire encoding, this function will return
- * false. Otherwise, if should_trunc is set to true, then as much as possible
- * will be read from the new_str as can fit in the msg.
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @param new_buf New buffer
- * @param new_buf_len New buffer length
- * @param should_trunc Whether the new_str can be truncated to fit in msg
- * @param n_written If not null, on success will be set to the number of bytes
- * written to msg
- * @return true on success, false otherwise
- */
-SBP_EXPORT bool sbp_msg_profiling_queue_info_name_set_raw(
-    sbp_msg_profiling_queue_info_t *msg, const char *new_buf,
-    size_t new_buf_len, bool should_trunc, size_t *n_written);
-
-/**
- * Set sbp_msg_profiling_queue_info_t::name with printf style formatting
- *
- * Erase any existing content and replace with the formatted string
- *
- * This function will return true if the new string was successfully applied.
- * If should_trunc is set false, and the operation would end up overflowing the
- * maximum size of this field in wire encoding the existing contents will be
- * erased and this function will return false. Otherwise, if should_trunc is
- * set true, the input formatted string will be truncated to fit.
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @param should_trunc Whether the input string should be truncated to fit
- * @param n_written If not null, on success will be set to the number of bytes
- * written to msg
- * @param fmt printf style format string
- * @return true on success, false otherwise
- */
-SBP_EXPORT bool sbp_msg_profiling_queue_info_name_printf(
-    sbp_msg_profiling_queue_info_t *msg, bool should_trunc, size_t *n_written,
-    const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
-
-/**
- * Set sbp_msg_profiling_queue_info_t::name with printf style formatting
- *
- * Identical to #sbp_msg_profiling_queue_info_name_printf except it takes a
- * va_list argument
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @param should_trunc Whether the input string should be truncated to fit
- * @param n_written If not null, on success will be set to the number of bytes
- * written to msg
- * @param fmt printf style format string
- * @param ap Argument list
- * @return true on success, false otherwise
- */
-SBP_EXPORT bool sbp_msg_profiling_queue_info_name_vprintf(
-    sbp_msg_profiling_queue_info_t *msg, bool should_trunc, size_t *n_written,
-    const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
-
-/**
- * Append sbp_msg_profiling_queue_info_t::name with printf style formatting
- *
- * The new string will be appended to the existing contents of the string (if
- * any). If should_trunc is false and the operation would end up overflowing
- * the maximum size of this field in wire encoding, the existing contents will
- * be unmodified and this function will return false. Otherwise, if
- * should_trunc is true, the input string will be truncated to fit.
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @param should_trunc Whether the input string should be truncated to fit
- * @param n_written If not null, on success will be set to the number of bytes
- * written to msg
- * @param fmt printf style format string
- * @return true on success, false otherwise
- */
-SBP_EXPORT bool sbp_msg_profiling_queue_info_name_append_printf(
-    sbp_msg_profiling_queue_info_t *msg, bool should_trunc, size_t *n_written,
-    const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
-
-/**
- * Append sbp_msg_profiling_queue_info_t::name with printf style formatting
- *
- * Identical to #sbp_msg_profiling_queue_info_name_append_printf except it takes
- * a va_list argument
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @param should_trunc Whether the input string should be truncated to fit
- * @param n_written If not null, on success will be set to the number of bytes
- * written to msg
- * @param fmt printf style format string
- * @param ap Argument list
- * @return true on success, false otherwise
- */
-SBP_EXPORT bool sbp_msg_profiling_queue_info_name_append_vprintf(
-    sbp_msg_profiling_queue_info_t *msg, bool should_trunc, size_t *n_written,
-    const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
-
-/**
- * Obtain the string value from sbp_msg_profiling_queue_info_t::name
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @return String contents
- */
-SBP_EXPORT const char *sbp_msg_profiling_queue_info_name_get(
-    const sbp_msg_profiling_queue_info_t *msg);
-
-/**
- * Obtain the length of sbp_msg_profiling_queue_info_t::name
- *
- * The returned value does not include the NULL terminator.
- *
- * @param msg sbp_msg_profiling_queue_info_t instance
- * @return Length of string
- */
-SBP_EXPORT size_t sbp_msg_profiling_queue_info_name_strlen(
-    const sbp_msg_profiling_queue_info_t *msg);
 
 /**
  * Get encoded size of an instance of sbp_msg_profiling_queue_info_t
@@ -274,7 +81,7 @@ SBP_EXPORT size_t sbp_msg_profiling_queue_info_name_strlen(
 static inline size_t sbp_msg_profiling_queue_info_encoded_len(
     const sbp_msg_profiling_queue_info_t *msg) {
   return SBP_MSG_PROFILING_QUEUE_INFO_ENCODED_OVERHEAD +
-         sbp_msg_profiling_queue_info_name_encoded_len(msg);
+         (msg->n_queues * SBP_QUEUE_INFO_ENCODED_LEN);
 }
 
 /**

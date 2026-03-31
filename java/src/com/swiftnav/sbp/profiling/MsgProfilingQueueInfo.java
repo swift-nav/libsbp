@@ -16,6 +16,7 @@ package com.swiftnav.sbp.profiling;
 
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPStruct;
 import org.json.JSONObject;
 
 /**
@@ -24,26 +25,20 @@ import org.json.JSONObject;
  * <p>You can have MSG_PROFILING_QUEUE_INFO inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>Contains profiling information for a single swiftlet internal message queue type. Refer to
- * product documentation to understand the meaning and values in this message.
+ * <p>Contains profiling information for swiftlet internal message queues. Refer to product
+ * documentation to understand the meaning and values in this message.
  */
 public class MsgProfilingQueueInfo extends SBPMessage {
     public static final int TYPE = 0xCF04;
 
-    /** Total number of slots in the queue */
-    public int size;
+    /** Message number in complete sequence */
+    public int seq_no;
 
-    /** Number of slots currently in use */
-    public int current_fill;
+    /** Length of message sequence */
+    public int seq_len;
 
-    /** Peak number of slots used since init */
-    public int peak_fill;
-
-    /** Number of messages dropped since init */
-    public int drop_count;
-
-    /** Queue type name */
-    public String name;
+    /** List of queue stats */
+    public QueueInfo[] queues;
 
     public MsgProfilingQueueInfo(int sender) {
         super(sender, TYPE);
@@ -63,30 +58,24 @@ public class MsgProfilingQueueInfo extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        size = parser.getU16();
-        current_fill = parser.getU16();
-        peak_fill = parser.getU16();
-        drop_count = parser.getU16();
-        name = parser.getString();
+        seq_no = parser.getU8();
+        seq_len = parser.getU8();
+        queues = parser.getArray(QueueInfo.class);
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putU16(size);
-        builder.putU16(current_fill);
-        builder.putU16(peak_fill);
-        builder.putU16(drop_count);
-        builder.putString(name);
+        builder.putU8(seq_no);
+        builder.putU8(seq_len);
+        builder.putArray(queues);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("size", size);
-        obj.put("current_fill", current_fill);
-        obj.put("peak_fill", peak_fill);
-        obj.put("drop_count", drop_count);
-        obj.put("name", name);
+        obj.put("seq_no", seq_no);
+        obj.put("seq_len", seq_len);
+        obj.put("queues", SBPStruct.toJSONArray(queues));
         return obj;
     }
 

@@ -98,6 +98,62 @@ class ResourceBucket(object):
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
+class QueueInfo(object):
+  """QueueInfo.
+  
+  Profiling information for a single swiftlet internal message queue type.
+  
+  Parameters
+  ----------
+  timestamp : int
+    Timestamp in milliseconds
+  name : string
+    Queue type name
+  size : int
+    Total number of slots in the queue
+  current_fill : int
+    Number of slots currently in use
+  peak_fill : int
+    Peak number of slots used since init
+  drop_count : int
+    Number of messages dropped since init
+
+  """
+  _parser = construct.Struct(
+                     'timestamp' / construct.Int64ul,
+                     'name'/ construct.Bytes(40),
+                     'size' / construct.Int16ul,
+                     'current_fill' / construct.Int16ul,
+                     'peak_fill' / construct.Int16ul,
+                     'drop_count' / construct.Int16ul,)
+  __slots__ = [
+               'timestamp',
+               'name',
+               'size',
+               'current_fill',
+               'peak_fill',
+               'drop_count',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.timestamp = kwargs.pop('timestamp')
+      self.name = kwargs.pop('name')
+      self.size = kwargs.pop('size')
+      self.current_fill = kwargs.pop('current_fill')
+      self.peak_fill = kwargs.pop('peak_fill')
+      self.drop_count = kwargs.pop('drop_count')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = QueueInfo._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
 SBP_MSG_MEASUREMENT_POINT = 0xCF00
 class MsgMeasurementPoint(SBP):
   """SBP class for message MSG_MEASUREMENT_POINT (0xCF00).
@@ -245,7 +301,7 @@ class MsgProfilingSystemInfo(SBP):
 
   
   Contains basic information about system resource usage. System is defined in
-  terms of the source of this message and may vary from  sender to sender.
+  terms of the source of this message and may vary from sender to sender.
   Refer to product documentation to understand the exact scope and meaning of
   this message.
 
@@ -585,40 +641,32 @@ class MsgProfilingQueueInfo(SBP):
   of its fields.
 
   
-  Contains profiling information for a single swiftlet internal message queue
-  type. Refer to product documentation to understand the meaning and values in
-  this message.
+  Contains profiling information for swiftlet internal message queues. Refer
+  to product documentation to understand the meaning and values in this
+  message.
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  size : int
-    Total number of slots in the queue
-  current_fill : int
-    Number of slots currently in use
-  peak_fill : int
-    Peak number of slots used since init
-  drop_count : int
-    Number of messages dropped since init
-  name : string
-    Queue type name
+  seq_no : int
+    Message number in complete sequence
+  seq_len : int
+    Length of message sequence
+  queues : array
+    List of queue stats
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'size' / construct.Int16ul,
-                   'current_fill' / construct.Int16ul,
-                   'peak_fill' / construct.Int16ul,
-                   'drop_count' / construct.Int16ul,
-                   'name' / construct.GreedyBytes,)
+                   'seq_no' / construct.Int8ul,
+                   'seq_len' / construct.Int8ul,
+                   'queues' / construct.GreedyRange(QueueInfo._parser),)
   __slots__ = [
-               'size',
-               'current_fill',
-               'peak_fill',
-               'drop_count',
-               'name',
+               'seq_no',
+               'seq_len',
+               'queues',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -631,11 +679,9 @@ class MsgProfilingQueueInfo(SBP):
       super( MsgProfilingQueueInfo, self).__init__()
       self.msg_type = SBP_MSG_PROFILING_QUEUE_INFO
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.size = kwargs.pop('size')
-      self.current_fill = kwargs.pop('current_fill')
-      self.peak_fill = kwargs.pop('peak_fill')
-      self.drop_count = kwargs.pop('drop_count')
-      self.name = kwargs.pop('name')
+      self.seq_no = kwargs.pop('seq_no')
+      self.seq_len = kwargs.pop('seq_len')
+      self.queues = kwargs.pop('queues')
 
   def __repr__(self):
     return fmt_repr(self)

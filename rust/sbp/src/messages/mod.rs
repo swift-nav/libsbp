@@ -843,7 +843,7 @@ pub enum Sbp {
     MsgProfilingThreadInfo(MsgProfilingThreadInfo),
     /// Information about resource buckets
     MsgProfilingResourceCounter(MsgProfilingResourceCounter),
-    /// Queue Profiling Information
+    /// Messaging Queue Profiling Information
     MsgProfilingQueueInfo(MsgProfilingQueueInfo),
     /// System start-up message
     MsgStartup(MsgStartup),

@@ -98,7 +98,7 @@ msgProfilingSystemInfo = 0xCF01
 -- | SBP class for message MSG_PROFILING_SYSTEM_INFO (0xCF01).
 --
 -- Contains basic information about system resource usage. System is defined
--- in terms of the source of this message and may vary from  sender to sender.
+-- in terms of the source of this message and may vary from sender to sender.
 -- Refer to product documentation to understand the exact scope and meaning of
 -- this message.
 data MsgProfilingSystemInfo = MsgProfilingSystemInfo
@@ -260,42 +260,73 @@ $(makeSBP 'msgProfilingResourceCounter ''MsgProfilingResourceCounter)
 $(makeJSON "_msgProfilingResourceCounter_" ''MsgProfilingResourceCounter)
 $(makeLenses ''MsgProfilingResourceCounter)
 
+-- | QueueInfo.
+--
+-- Profiling information for a single swiftlet internal message queue type.
+data QueueInfo = QueueInfo
+  { _queueInfo_timestamp  :: !Word64
+    -- ^ Timestamp in milliseconds
+  , _queueInfo_name       :: !Text
+    -- ^ Queue type name
+  , _queueInfo_size       :: !Word16
+    -- ^ Total number of slots in the queue
+  , _queueInfo_current_fill :: !Word16
+    -- ^ Number of slots currently in use
+  , _queueInfo_peak_fill  :: !Word16
+    -- ^ Peak number of slots used since init
+  , _queueInfo_drop_count :: !Word16
+    -- ^ Number of messages dropped since init
+  } deriving ( Show, Read, Eq )
+
+instance Binary QueueInfo where
+  get = do
+    _queueInfo_timestamp <- getWord64le
+    _queueInfo_name <- decodeUtf8 <$> getByteString 40
+    _queueInfo_size <- getWord16le
+    _queueInfo_current_fill <- getWord16le
+    _queueInfo_peak_fill <- getWord16le
+    _queueInfo_drop_count <- getWord16le
+    pure QueueInfo {..}
+
+  put QueueInfo {..} = do
+    putWord64le _queueInfo_timestamp
+    putByteString $ encodeUtf8 _queueInfo_name
+    putWord16le _queueInfo_size
+    putWord16le _queueInfo_current_fill
+    putWord16le _queueInfo_peak_fill
+    putWord16le _queueInfo_drop_count
+
+$(makeJSON "_queueInfo_" ''QueueInfo)
+$(makeLenses ''QueueInfo)
+
 msgProfilingQueueInfo :: Word16
 msgProfilingQueueInfo = 0xCF04
 
 -- | SBP class for message MSG_PROFILING_QUEUE_INFO (0xCF04).
 --
--- Contains profiling information for a single swiftlet internal message queue
--- type. Refer to product documentation to understand the meaning and values
--- in this message.
+-- Contains profiling information for swiftlet internal message queues. Refer
+-- to product documentation to understand the meaning and values in this
+-- message.
 data MsgProfilingQueueInfo = MsgProfilingQueueInfo
-  { _msgProfilingQueueInfo_size       :: !Word16
-    -- ^ Total number of slots in the queue
-  , _msgProfilingQueueInfo_current_fill :: !Word16
-    -- ^ Number of slots currently in use
-  , _msgProfilingQueueInfo_peak_fill  :: !Word16
-    -- ^ Peak number of slots used since init
-  , _msgProfilingQueueInfo_drop_count :: !Word16
-    -- ^ Number of messages dropped since init
-  , _msgProfilingQueueInfo_name       :: !Text
-    -- ^ Queue type name
+  { _msgProfilingQueueInfo_seq_no :: !Word8
+    -- ^ Message number in complete sequence
+  , _msgProfilingQueueInfo_seq_len :: !Word8
+    -- ^ Length of message sequence
+  , _msgProfilingQueueInfo_queues :: ![QueueInfo]
+    -- ^ List of queue stats
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgProfilingQueueInfo where
   get = do
-    _msgProfilingQueueInfo_size <- getWord16le
-    _msgProfilingQueueInfo_current_fill <- getWord16le
-    _msgProfilingQueueInfo_peak_fill <- getWord16le
-    _msgProfilingQueueInfo_drop_count <- getWord16le
-    _msgProfilingQueueInfo_name <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    _msgProfilingQueueInfo_seq_no <- getWord8
+    _msgProfilingQueueInfo_seq_len <- getWord8
+    _msgProfilingQueueInfo_queues <- whileM (not <$> isEmpty) get
     pure MsgProfilingQueueInfo {..}
 
   put MsgProfilingQueueInfo {..} = do
-    putWord16le _msgProfilingQueueInfo_size
-    putWord16le _msgProfilingQueueInfo_current_fill
-    putWord16le _msgProfilingQueueInfo_peak_fill
-    putWord16le _msgProfilingQueueInfo_drop_count
-    putByteString $ encodeUtf8 _msgProfilingQueueInfo_name
+    putWord8 _msgProfilingQueueInfo_seq_no
+    putWord8 _msgProfilingQueueInfo_seq_len
+    mapM_ put _msgProfilingQueueInfo_queues
 
 $(makeSBP 'msgProfilingQueueInfo ''MsgProfilingQueueInfo)
 $(makeJSON "_msgProfilingQueueInfo_" ''MsgProfilingQueueInfo)

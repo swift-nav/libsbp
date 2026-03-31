@@ -67,11 +67,75 @@ sub new {
 sub _read {
     my ($self) = @_;
 
+    $self->{seq_no} = $self->{_io}->read_u1();
+    $self->{seq_len} = $self->{_io}->read_u1();
+    $self->{queues} = [];
+    while (!$self->{_io}->is_eof()) {
+        push @{$self->{queues}}, Profiling::QueueInfo->new($self->{_io}, $self, $self->{_root});
+    }
+}
+
+sub seq_no {
+    my ($self) = @_;
+    return $self->{seq_no};
+}
+
+sub seq_len {
+    my ($self) = @_;
+    return $self->{seq_len};
+}
+
+sub queues {
+    my ($self) = @_;
+    return $self->{queues};
+}
+
+########################################################################
+package Profiling::QueueInfo;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{timestamp} = $self->{_io}->read_u8le();
+    $self->{name} = Encode::decode("ascii", $self->{_io}->read_bytes(40));
     $self->{size} = $self->{_io}->read_u2le();
     $self->{current_fill} = $self->{_io}->read_u2le();
     $self->{peak_fill} = $self->{_io}->read_u2le();
     $self->{drop_count} = $self->{_io}->read_u2le();
-    $self->{name} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+}
+
+sub timestamp {
+    my ($self) = @_;
+    return $self->{timestamp};
+}
+
+sub name {
+    my ($self) = @_;
+    return $self->{name};
 }
 
 sub size {
@@ -92,11 +156,6 @@ sub peak_fill {
 sub drop_count {
     my ($self) = @_;
     return $self->{drop_count};
-}
-
-sub name {
-    my ($self) = @_;
-    return $self->{name};
 }
 
 ########################################################################

@@ -58,7 +58,7 @@ definitions:
     short_desc: System Profiling Information
     desc: >
       Contains basic information about system resource usage.
-      System is defined in terms of the source of this message and may vary from 
+      System is defined in terms of the source of this message and may vary from
       sender to sender. Refer to product documentation to understand the exact scope
       and meaning of this message.
     fields:
@@ -118,7 +118,7 @@ definitions:
       documentation to understand the meaning and values in this message.
     fields:
       - name:
-          type: string 
+          type: string
           encoding: null_terminated
           size: 21
           desc: Bucket name
@@ -146,7 +146,7 @@ definitions:
       - io_read:
           type: u32
           desc: Number of bytes read from IO handles
-          
+
 
  - MSG_PROFILING_RESOURCE_COUNTER:
     id: 0xCF03
@@ -166,14 +166,19 @@ definitions:
           fill: ResourceBucket
           desc: List of resource buckets
 
- - MSG_PROFILING_QUEUE_INFO:
-    id: 0xCF04
-    short_desc: Queue Profiling Information
+ - QueueInfo:
+    short_desc: Stats for a single message queue type
     desc: >
-      Contains profiling information for a single swiftlet internal message
-      queue type. Refer to product documentation to understand the meaning
-      and values in this message.
+      Profiling information for a single swiftlet internal message queue type.
     fields:
+      - timestamp:
+          type: u64
+          desc: Timestamp in milliseconds
+      - name:
+          type: string
+          encoding: null_terminated
+          size: 40
+          desc: Queue type name
       - size:
           type: u16
           desc: Total number of slots in the queue
@@ -186,7 +191,22 @@ definitions:
       - drop_count:
           type: u16
           desc: Number of messages dropped since init
-      - name:
-          type: string
-          encoding: null_terminated
-          desc: Queue type name
+
+ - MSG_PROFILING_QUEUE_INFO:
+    id: 0xCF04
+    short_desc: Messaging Queue Profiling Information
+    desc: >
+      Contains profiling information for swiftlet internal message queues.
+      Refer to product documentation to understand the meaning and values
+      in this message.
+    fields:
+      - seq_no:
+          type: u8
+          desc: Message number in complete sequence
+      - seq_len:
+          type: u8
+          desc: Length of message sequence
+      - queues:
+          type: array
+          fill: QueueInfo
+          desc: List of queue stats
