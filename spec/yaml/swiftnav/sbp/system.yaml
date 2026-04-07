@@ -157,6 +157,7 @@ definitions:
                       - 4: CAN
                       - 5: Wheel Odometry
                       - 6: Sensor Fusion Engine
+                      - 7: Messaging Queue
         - generic:
             type: u8
             desc: Generic form status report
