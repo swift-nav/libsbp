@@ -41,7 +41,7 @@ message MsgMeasurementPoint {
 /** System Profiling Information
  *
  * Contains basic information about system resource usage. System is defined
- * in terms of the source of this message and may vary from  sender to sender.
+ * in terms of the source of this message and may vary from sender to sender.
  * Refer to product documentation to understand the exact scope and meaning of
  * this message.
  */
@@ -94,4 +94,29 @@ message MsgProfilingResourceCounter {
     uint32 seq_no = 1;
     uint32 seq_len = 2;
     repeated ResourceBucket buckets = 3;
+}
+
+/** Stats for a single message queue type
+ *
+ * Profiling information for a single swiftlet internal message queue type.
+ */
+message QueueInfo {
+    uint64 timestamp = 1;
+    string name = 2;
+    uint32 size = 3;
+    uint32 current_fill = 4;
+    uint32 peak_fill = 5;
+    uint32 drop_count = 6;
+}
+
+/** Messaging Queue Profiling Information
+ *
+ * Contains profiling information for swiftlet internal message queues. Refer
+ * to product documentation to understand the meaning and values in this
+ * message.
+ */
+message MsgProfilingQueueInfo {
+    uint32 seq_no = 1;
+    uint32 seq_len = 2;
+    repeated QueueInfo queues = 3;
 }

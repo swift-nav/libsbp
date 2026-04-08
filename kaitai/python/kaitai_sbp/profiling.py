@@ -17,6 +17,46 @@ class Profiling(KaitaiStruct):
     def _read(self):
         pass
 
+    class MsgProfilingQueueInfo(KaitaiStruct):
+        """Contains profiling information for swiftlet internal message queues.
+        Refer to product documentation to understand the meaning and values in
+        this message.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.seq_no = self._io.read_u1()
+            self.seq_len = self._io.read_u1()
+            self.queues = []
+            i = 0
+            while not self._io.is_eof():
+                self.queues.append(Profiling.QueueInfo(self._io, self, self._root))
+                i += 1
+
+
+
+    class QueueInfo(KaitaiStruct):
+        """Profiling information for a single swiftlet internal message queue type.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.timestamp = self._io.read_u8le()
+            self.name = (self._io.read_bytes(40)).decode(u"ascii")
+            self.size = self._io.read_u2le()
+            self.current_fill = self._io.read_u2le()
+            self.peak_fill = self._io.read_u2le()
+            self.drop_count = self._io.read_u2le()
+
+
     class ResourceBucket(KaitaiStruct):
         """Information about allocation of various resources grouped by buckets.
         Refer to product documentation to understand the meaning and values in
@@ -42,7 +82,7 @@ class Profiling(KaitaiStruct):
 
     class MsgProfilingSystemInfo(KaitaiStruct):
         """Contains basic information about system resource usage. System is
-        defined in terms of the source of this message and may vary from  sender
+        defined in terms of the source of this message and may vary from sender
         to sender. Refer to product documentation to understand the exact scope
         and meaning of this message.
         """

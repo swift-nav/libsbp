@@ -41,9 +41,9 @@ extern "C" {
 /** System Profiling Information
  *
  * Contains basic information about system resource usage. System is defined in
- * terms of the source of this message and may vary from  sender to sender.
- * Refer to product documentation to understand the exact scope and meaning of
- * this message.
+ * terms of the source of this message and may vary from sender to sender. Refer
+ * to product documentation to understand the exact scope and meaning of this
+ * message.
  */
 typedef struct {
   /**

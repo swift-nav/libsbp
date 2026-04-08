@@ -1,0 +1,36 @@
+---
+description: Unit tests for swiftnav.sbp.profiling MsgProfilingQueueInfo
+generated_on: 2026-03-31 00:00:00.00 # manually generated
+package: sbp.profiling
+tests:
+
+
+  - msg:
+      c_decoded_fields:
+        n_queues:
+          handle_as: vararray-len
+          relates_to: queues
+          value: 1
+      fields:
+        seq_no: 0
+        seq_len: 1
+        queues:
+          - timestamp: 5000
+            name: "CohesiveSbpMsg\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+            size: 100
+            current_fill: 10
+            peak_fill: 50
+            drop_count: 0
+      module: sbp.profiling
+      name: MsgProfilingQueueInfo
+    msg_type: '0xcf04'
+    raw_json: >
+      {"crc": 10890, "preamble": 85, "sender": 4096, "length": 58, "msg_type": 52996, "seq_no": 0, "seq_len": 1, "queues": [{"timestamp": 5000, "name": "CohesiveSbpMsg\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", "size": 100, "current_fill": 10, "peak_fill": 50, "drop_count": 0}], "payload": "AAGIEwAAAAAAAENvaGVzaXZlU2JwTXNnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAoAMgAAAA=="}
+    raw_packet: VQTPABA6AAGIEwAAAAAAAENvaGVzaXZlU2JwTXNnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAoAMgAAAIoq
+    sbp:
+      crc: '0x2a8a'
+      length: 58
+      msg_type: '0xcf04'
+      payload: AAGIEwAAAAAAAENvaGVzaXZlU2JwTXNnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAoAMgAAAA==
+      preamble: '0x55'
+      sender: '0x1000'

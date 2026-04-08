@@ -111,4 +111,35 @@
  */
 #define SBP_MSG_PROFILING_RESOURCE_COUNTER_ENCODED_OVERHEAD 2u
 
+/**
+ * The maximum number of items that can be stored in sbp_queue_info_t::name
+ * before the maximum SBP message size is exceeded
+ */
+#define SBP_QUEUE_INFO_NAME_MAX 40u
+
+/**
+ * Encoded length of sbp_queue_info_t
+ */
+#define SBP_QUEUE_INFO_ENCODED_LEN 56u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_profiling_queue_info_t::queues before the maximum SBP message size is
+ * exceeded
+ */
+#define SBP_MSG_PROFILING_QUEUE_INFO_QUEUES_MAX 4u
+
+/**
+ * Encoded length of sbp_msg_profiling_queue_info_t
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users call
+ * #sbp_msg_profiling_queue_info_encoded_len to determine the actual size of an
+ * instance of this message.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_PROFILING_QUEUE_INFO_ENCODED_OVERHEAD 2u
+
 #endif /* LIBSBP_PROFILING_MACROS_H */

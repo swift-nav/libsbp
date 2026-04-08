@@ -209,6 +209,7 @@ typedef union {
   sbp_msg_pose_relative_t pose_relative;
   sbp_msg_pps_time_t pps_time;
   sbp_msg_print_dep_t print_dep;
+  sbp_msg_profiling_queue_info_t profiling_queue_info;
   sbp_msg_profiling_resource_counter_t profiling_resource_counter;
   sbp_msg_profiling_system_info_t profiling_system_info;
   sbp_msg_profiling_thread_info_t profiling_thread_info;
@@ -724,6 +725,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
       return sbp_msg_pps_time_encode(buf, len, n_written, &msg->pps_time);
     case SbpMsgPrintDep:
       return sbp_msg_print_dep_encode(buf, len, n_written, &msg->print_dep);
+    case SbpMsgProfilingQueueInfo:
+      return sbp_msg_profiling_queue_info_encode(buf, len, n_written,
+                                                 &msg->profiling_queue_info);
     case SbpMsgProfilingResourceCounter:
       return sbp_msg_profiling_resource_counter_encode(
           buf, len, n_written, &msg->profiling_resource_counter);
@@ -1396,6 +1400,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_pps_time_decode(buf, len, n_read, &msg->pps_time);
     case SbpMsgPrintDep:
       return sbp_msg_print_dep_decode(buf, len, n_read, &msg->print_dep);
+    case SbpMsgProfilingQueueInfo:
+      return sbp_msg_profiling_queue_info_decode(buf, len, n_read,
+                                                 &msg->profiling_queue_info);
     case SbpMsgProfilingResourceCounter:
       return sbp_msg_profiling_resource_counter_decode(
           buf, len, n_read, &msg->profiling_resource_counter);
@@ -1986,6 +1993,9 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_pps_time_encoded_len(&msg->pps_time);
     case SbpMsgPrintDep:
       return sbp_msg_print_dep_encoded_len(&msg->print_dep);
+    case SbpMsgProfilingQueueInfo:
+      return sbp_msg_profiling_queue_info_encoded_len(
+          &msg->profiling_queue_info);
     case SbpMsgProfilingResourceCounter:
       return sbp_msg_profiling_resource_counter_encoded_len(
           &msg->profiling_resource_counter);
@@ -2595,6 +2605,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_pps_time_cmp(&a->pps_time, &b->pps_time);
     case SbpMsgPrintDep:
       return sbp_msg_print_dep_cmp(&a->print_dep, &b->print_dep);
+    case SbpMsgProfilingQueueInfo:
+      return sbp_msg_profiling_queue_info_cmp(&a->profiling_queue_info,
+                                              &b->profiling_queue_info);
     case SbpMsgProfilingResourceCounter:
       return sbp_msg_profiling_resource_counter_cmp(
           &a->profiling_resource_counter, &b->profiling_resource_counter);

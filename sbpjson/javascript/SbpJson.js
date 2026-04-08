@@ -129,6 +129,7 @@
 //   const msgPosLLHGnss = Convert.toMsgPosLLHGnss(json);
 //   const msgPoseRelative = Convert.toMsgPoseRelative(json);
 //   const msgPpsTime = Convert.toMsgPpsTime(json);
+//   const msgProfilingQueueInfo = Convert.toMsgProfilingQueueInfo(json);
 //   const msgProfilingResourceCounter = Convert.toMsgProfilingResourceCounter(json);
 //   const msgProfilingSystemInfo = Convert.toMsgProfilingSystemInfo(json);
 //   const msgProfilingThreadInfo = Convert.toMsgProfilingThreadInfo(json);
@@ -205,6 +206,7 @@
 //   const packedOsrContent = Convert.toPackedOsrContent(json);
 //   const period = Convert.toPeriod(json);
 //   const phaseBiasesContent = Convert.toPhaseBiasesContent(json);
+//   const queueInfo = Convert.toQueueInfo(json);
 //   const resourceBucket = Convert.toResourceBucket(json);
 //   const sTECHeader = Convert.toSTECHeader(json);
 //   const sTECResidual = Convert.toSTECResidual(json);
@@ -1246,6 +1248,14 @@ function msgPpsTimeToJson(value) {
     return JSON.stringify(uncast(value, r("MsgPpsTime")), null, 2);
 }
 
+function toMsgProfilingQueueInfo(json) {
+    return cast(JSON.parse(json), r("MsgProfilingQueueInfo"));
+}
+
+function msgProfilingQueueInfoToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgProfilingQueueInfo")), null, 2);
+}
+
 function toMsgProfilingResourceCounter(json) {
     return cast(JSON.parse(json), r("MsgProfilingResourceCounter"));
 }
@@ -1852,6 +1862,14 @@ function toPhaseBiasesContent(json) {
 
 function phaseBiasesContentToJson(value) {
     return JSON.stringify(uncast(value, r("PhaseBiasesContent")), null, 2);
+}
+
+function toQueueInfo(json) {
+    return cast(JSON.parse(json), r("QueueInfo"));
+}
+
+function queueInfoToJson(value) {
+    return JSON.stringify(uncast(value, r("QueueInfo")), null, 2);
 }
 
 function toResourceBucket(json) {
@@ -3074,6 +3092,19 @@ const typeMap = {
         { json: "flags", js: "flags", typ: 0 },
         { json: "time", js: "time", typ: 0 },
     ], "any"),
+    "MsgProfilingQueueInfo": o([
+        { json: "queues", js: "queues", typ: a(r("QueueInfo")) },
+        { json: "seq_len", js: "seq_len", typ: 0 },
+        { json: "seq_no", js: "seq_no", typ: 0 },
+    ], "any"),
+    "QueueInfo": o([
+        { json: "current_fill", js: "current_fill", typ: 0 },
+        { json: "drop_count", js: "drop_count", typ: 0 },
+        { json: "name", js: "name", typ: "" },
+        { json: "peak_fill", js: "peak_fill", typ: 0 },
+        { json: "size", js: "size", typ: 0 },
+        { json: "timestamp", js: "timestamp", typ: 0 },
+    ], "any"),
     "MsgProfilingResourceCounter": o([
         { json: "buckets", js: "buckets", typ: a(r("ResourceBucket")) },
         { json: "seq_len", js: "seq_len", typ: 0 },
@@ -3994,6 +4025,8 @@ module.exports = {
     "toMsgPoseRelative": toMsgPoseRelative,
     "msgPpsTimeToJson": msgPpsTimeToJson,
     "toMsgPpsTime": toMsgPpsTime,
+    "msgProfilingQueueInfoToJson": msgProfilingQueueInfoToJson,
+    "toMsgProfilingQueueInfo": toMsgProfilingQueueInfo,
     "msgProfilingResourceCounterToJson": msgProfilingResourceCounterToJson,
     "toMsgProfilingResourceCounter": toMsgProfilingResourceCounter,
     "msgProfilingSystemInfoToJson": msgProfilingSystemInfoToJson,
@@ -4146,6 +4179,8 @@ module.exports = {
     "toPeriod": toPeriod,
     "phaseBiasesContentToJson": phaseBiasesContentToJson,
     "toPhaseBiasesContent": toPhaseBiasesContent,
+    "queueInfoToJson": queueInfoToJson,
+    "toQueueInfo": toQueueInfo,
     "resourceBucketToJson": resourceBucketToJson,
     "toResourceBucket": toResourceBucket,
     "sTECHeaderToJson": sTECHeaderToJson,

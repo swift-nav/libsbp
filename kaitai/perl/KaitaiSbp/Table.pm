@@ -236,6 +236,7 @@ our %TABLE = (
     52993 => sub{Profiling::MsgProfilingSystemInfo->new(@_)},
     52994 => sub{Profiling::MsgProfilingThreadInfo->new(@_)},
     52995 => sub{Profiling::MsgProfilingResourceCounter->new(@_)},
+    52996 => sub{Profiling::MsgProfilingQueueInfo->new(@_)},
   
     30583 => sub{Sbas::MsgSbasRaw->new(@_)},
   

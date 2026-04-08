@@ -270,6 +270,7 @@ our $MSG_IDS_MSG_MEASUREMENT_POINT = 52992;
 our $MSG_IDS_MSG_PROFILING_SYSTEM_INFO = 52993;
 our $MSG_IDS_MSG_PROFILING_THREAD_INFO = 52994;
 our $MSG_IDS_MSG_PROFILING_RESOURCE_COUNTER = 52995;
+our $MSG_IDS_MSG_PROFILING_QUEUE_INFO = 52996;
 our $MSG_IDS_MSG_STARTUP = 65280;
 our $MSG_IDS_MSG_DGNSS_STATUS = 65282;
 our $MSG_IDS_MSG_INS_STATUS = 65283;
@@ -777,6 +778,11 @@ sub _read {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Navigation::MsgPosEcefDepA->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 52996) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Profiling::MsgProfilingQueueInfo->new($io__raw_payload, $self, $self->{_root});
     }
     elsif ($_on == 137) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());

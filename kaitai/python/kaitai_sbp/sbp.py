@@ -263,6 +263,7 @@ class Sbp(KaitaiStruct):
         msg_profiling_system_info = 52993
         msg_profiling_thread_info = 52994
         msg_profiling_resource_counter = 52995
+        msg_profiling_queue_info = 52996
         msg_startup = 65280
         msg_dgnss_status = 65282
         msg_ins_status = 65283
@@ -651,6 +652,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Navigation.MsgPosEcefDepA(_io__raw_payload, self, self._root)
+            elif _on == 52996:
+                self._raw_payload = self._io.read_bytes(self.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Profiling.MsgProfilingQueueInfo(_io__raw_payload, self, self._root)
             elif _on == 137:
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))

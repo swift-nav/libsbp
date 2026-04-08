@@ -213,6 +213,7 @@ use self::piksi::msg_thread_state::MsgThreadState;
 use self::piksi::msg_uart_state::MsgUartState;
 use self::piksi::msg_uart_state_depa::MsgUartStateDepa;
 use self::profiling::msg_measurement_point::MsgMeasurementPoint;
+use self::profiling::msg_profiling_queue_info::MsgProfilingQueueInfo;
 use self::profiling::msg_profiling_resource_counter::MsgProfilingResourceCounter;
 use self::profiling::msg_profiling_system_info::MsgProfilingSystemInfo;
 use self::profiling::msg_profiling_thread_info::MsgProfilingThreadInfo;
@@ -842,6 +843,8 @@ pub enum Sbp {
     MsgProfilingThreadInfo(MsgProfilingThreadInfo),
     /// Information about resource buckets
     MsgProfilingResourceCounter(MsgProfilingResourceCounter),
+    /// Messaging Queue Profiling Information
+    MsgProfilingQueueInfo(MsgProfilingQueueInfo),
     /// System start-up message
     MsgStartup(MsgStartup),
     /// Status of received corrections
@@ -1606,6 +1609,10 @@ impl<'de> serde::Deserialize<'de> for Sbp {
                 serde_json::from_value::<MsgProfilingResourceCounter>(value)
                     .map(Sbp::MsgProfilingResourceCounter)
             }
+            Some(MsgProfilingQueueInfo::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgProfilingQueueInfo>(value)
+                    .map(Sbp::MsgProfilingQueueInfo)
+            }
             Some(MsgStartup::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgStartup>(value).map(Sbp::MsgStartup)
             }
@@ -2311,6 +2318,9 @@ impl Sbp {
                 MsgProfilingResourceCounter::parse(&mut payload)
                     .map(Sbp::MsgProfilingResourceCounter)
             }
+            MsgProfilingQueueInfo::MESSAGE_TYPE => {
+                MsgProfilingQueueInfo::parse(&mut payload).map(Sbp::MsgProfilingQueueInfo)
+            }
             MsgStartup::MESSAGE_TYPE => MsgStartup::parse(&mut payload).map(Sbp::MsgStartup),
             MsgDgnssStatus::MESSAGE_TYPE => {
                 MsgDgnssStatus::parse(&mut payload).map(Sbp::MsgDgnssStatus)
@@ -2597,6 +2607,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProfilingSystemInfo(msg) => msg.message_name(),
             Sbp::MsgProfilingThreadInfo(msg) => msg.message_name(),
             Sbp::MsgProfilingResourceCounter(msg) => msg.message_name(),
+            Sbp::MsgProfilingQueueInfo(msg) => msg.message_name(),
             Sbp::MsgStartup(msg) => msg.message_name(),
             Sbp::MsgDgnssStatus(msg) => msg.message_name(),
             Sbp::MsgInsStatus(msg) => msg.message_name(),
@@ -2844,6 +2855,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProfilingSystemInfo(msg) => msg.message_type(),
             Sbp::MsgProfilingThreadInfo(msg) => msg.message_type(),
             Sbp::MsgProfilingResourceCounter(msg) => msg.message_type(),
+            Sbp::MsgProfilingQueueInfo(msg) => msg.message_type(),
             Sbp::MsgStartup(msg) => msg.message_type(),
             Sbp::MsgDgnssStatus(msg) => msg.message_type(),
             Sbp::MsgInsStatus(msg) => msg.message_type(),
@@ -3091,6 +3103,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProfilingSystemInfo(msg) => msg.sender_id(),
             Sbp::MsgProfilingThreadInfo(msg) => msg.sender_id(),
             Sbp::MsgProfilingResourceCounter(msg) => msg.sender_id(),
+            Sbp::MsgProfilingQueueInfo(msg) => msg.sender_id(),
             Sbp::MsgStartup(msg) => msg.sender_id(),
             Sbp::MsgDgnssStatus(msg) => msg.sender_id(),
             Sbp::MsgInsStatus(msg) => msg.sender_id(),
@@ -3338,6 +3351,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProfilingSystemInfo(msg) => msg.set_sender_id(new_id),
             Sbp::MsgProfilingThreadInfo(msg) => msg.set_sender_id(new_id),
             Sbp::MsgProfilingResourceCounter(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgProfilingQueueInfo(msg) => msg.set_sender_id(new_id),
             Sbp::MsgStartup(msg) => msg.set_sender_id(new_id),
             Sbp::MsgDgnssStatus(msg) => msg.set_sender_id(new_id),
             Sbp::MsgInsStatus(msg) => msg.set_sender_id(new_id),
@@ -3585,6 +3599,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProfilingSystemInfo(msg) => msg.encoded_len(),
             Sbp::MsgProfilingThreadInfo(msg) => msg.encoded_len(),
             Sbp::MsgProfilingResourceCounter(msg) => msg.encoded_len(),
+            Sbp::MsgProfilingQueueInfo(msg) => msg.encoded_len(),
             Sbp::MsgStartup(msg) => msg.encoded_len(),
             Sbp::MsgDgnssStatus(msg) => msg.encoded_len(),
             Sbp::MsgInsStatus(msg) => msg.encoded_len(),
@@ -3835,6 +3850,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProfilingSystemInfo(msg) => msg.gps_time(),
             Sbp::MsgProfilingThreadInfo(msg) => msg.gps_time(),
             Sbp::MsgProfilingResourceCounter(msg) => msg.gps_time(),
+            Sbp::MsgProfilingQueueInfo(msg) => msg.gps_time(),
             Sbp::MsgStartup(msg) => msg.gps_time(),
             Sbp::MsgDgnssStatus(msg) => msg.gps_time(),
             Sbp::MsgInsStatus(msg) => msg.gps_time(),
@@ -4082,6 +4098,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProfilingSystemInfo(msg) => msg.friendly_name(),
             Sbp::MsgProfilingThreadInfo(msg) => msg.friendly_name(),
             Sbp::MsgProfilingResourceCounter(msg) => msg.friendly_name(),
+            Sbp::MsgProfilingQueueInfo(msg) => msg.friendly_name(),
             Sbp::MsgStartup(msg) => msg.friendly_name(),
             Sbp::MsgDgnssStatus(msg) => msg.friendly_name(),
             Sbp::MsgInsStatus(msg) => msg.friendly_name(),
@@ -4329,6 +4346,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProfilingSystemInfo(msg) => msg.is_valid(),
             Sbp::MsgProfilingThreadInfo(msg) => msg.is_valid(),
             Sbp::MsgProfilingResourceCounter(msg) => msg.is_valid(),
+            Sbp::MsgProfilingQueueInfo(msg) => msg.is_valid(),
             Sbp::MsgStartup(msg) => msg.is_valid(),
             Sbp::MsgDgnssStatus(msg) => msg.is_valid(),
             Sbp::MsgInsStatus(msg) => msg.is_valid(),
@@ -4673,6 +4691,9 @@ impl SbpMessage for Sbp {
             Sbp::MsgProfilingResourceCounter(msg) => {
                 Ok(Sbp::MsgProfilingResourceCounter(msg.into_valid_msg()?))
             }
+            Sbp::MsgProfilingQueueInfo(msg) => {
+                Ok(Sbp::MsgProfilingQueueInfo(msg.into_valid_msg()?))
+            }
             Sbp::MsgStartup(msg) => Ok(Sbp::MsgStartup(msg.into_valid_msg()?)),
             Sbp::MsgDgnssStatus(msg) => Ok(Sbp::MsgDgnssStatus(msg.into_valid_msg()?)),
             Sbp::MsgInsStatus(msg) => Ok(Sbp::MsgInsStatus(msg.into_valid_msg()?)),
@@ -4935,6 +4956,7 @@ impl WireFormat for Sbp {
             Sbp::MsgProfilingSystemInfo(msg) => WireFormat::write(msg, buf),
             Sbp::MsgProfilingThreadInfo(msg) => WireFormat::write(msg, buf),
             Sbp::MsgProfilingResourceCounter(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgProfilingQueueInfo(msg) => WireFormat::write(msg, buf),
             Sbp::MsgStartup(msg) => WireFormat::write(msg, buf),
             Sbp::MsgDgnssStatus(msg) => WireFormat::write(msg, buf),
             Sbp::MsgInsStatus(msg) => WireFormat::write(msg, buf),
@@ -5182,6 +5204,7 @@ impl WireFormat for Sbp {
             Sbp::MsgProfilingSystemInfo(msg) => WireFormat::len(msg),
             Sbp::MsgProfilingThreadInfo(msg) => WireFormat::len(msg),
             Sbp::MsgProfilingResourceCounter(msg) => WireFormat::len(msg),
+            Sbp::MsgProfilingQueueInfo(msg) => WireFormat::len(msg),
             Sbp::MsgStartup(msg) => WireFormat::len(msg),
             Sbp::MsgDgnssStatus(msg) => WireFormat::len(msg),
             Sbp::MsgInsStatus(msg) => WireFormat::len(msg),
@@ -6550,6 +6573,12 @@ impl From<MsgProfilingThreadInfo> for Sbp {
 impl From<MsgProfilingResourceCounter> for Sbp {
     fn from(msg: MsgProfilingResourceCounter) -> Self {
         Sbp::MsgProfilingResourceCounter(msg)
+    }
+}
+
+impl From<MsgProfilingQueueInfo> for Sbp {
+    fn from(msg: MsgProfilingQueueInfo) -> Self {
+        Sbp::MsgProfilingQueueInfo(msg)
     }
 }
 

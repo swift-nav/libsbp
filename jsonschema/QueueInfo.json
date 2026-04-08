@@ -11,20 +11,24 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "#MsgProfilingSystemInfo",
-  "title":"MsgProfilingSystemInfo",
-  "description":"Contains basic information about system resource usage. System is defined in terms of the source of this message and may vary from sender to sender. Refer to product documentation to understand the exact scope and meaning of this message.\n",
+  "$id": "#QueueInfo",
+  "title":"QueueInfo",
+  "description":"Profiling information for a single swiftlet internal message queue type.\n",
   "type": "object",
   "properties": {
-    "total_cpu_time": {"type": "integer"},
-    "age": {"type": "integer"},
-    "n_threads": {"type": "integer"},
-    "heap_usage": {"type": "integer"}
+    "timestamp": {"type": "integer"},
+    "name": {"type": "string"},
+    "size": {"type": "integer"},
+    "current_fill": {"type": "integer"},
+    "peak_fill": {"type": "integer"},
+    "drop_count": {"type": "integer"}
   },
   "required": [
-    "total_cpu_time",
-    "age",
-    "n_threads",
-    "heap_usage"
+    "timestamp",
+    "name",
+    "size",
+    "current_fill",
+    "peak_fill",
+    "drop_count"
   ]
 }

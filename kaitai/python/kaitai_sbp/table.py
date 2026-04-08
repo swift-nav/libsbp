@@ -230,6 +230,7 @@ TABLE = {
     52993: Profiling.MsgProfilingSystemInfo,
     52994: Profiling.MsgProfilingThreadInfo,
     52995: Profiling.MsgProfilingResourceCounter,
+    52996: Profiling.MsgProfilingQueueInfo,
   
     30583: Sbas.MsgSbasRaw,
   

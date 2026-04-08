@@ -68,7 +68,7 @@ types:
   msg_profiling_system_info:
     doc: |
       Contains basic information about system resource usage. System is
-      defined in terms of the source of this message and may vary from  sender
+      defined in terms of the source of this message and may vary from sender
       to sender. Refer to product documentation to understand the exact scope
       and meaning of this message.
     seq:
@@ -184,5 +184,56 @@ types:
         doc: |
           List of resource buckets
         type: resource_bucket
+        repeat: eos
+  
+  queue_info:
+    doc: |
+      Profiling information for a single swiftlet internal message queue type.
+    seq:
+      - id: timestamp
+        doc: |
+          Timestamp in milliseconds
+        type: u8
+      - id: name
+        doc: |
+          Queue type name
+        type: str
+        encoding: ascii
+        size: 40
+      - id: size
+        doc: |
+          Total number of slots in the queue
+        type: u2
+      - id: current_fill
+        doc: |
+          Number of slots currently in use
+        type: u2
+      - id: peak_fill
+        doc: |
+          Peak number of slots used since init
+        type: u2
+      - id: drop_count
+        doc: |
+          Number of messages dropped since init
+        type: u2
+  
+  msg_profiling_queue_info:
+    doc: |
+      Contains profiling information for swiftlet internal message queues.
+      Refer to product documentation to understand the meaning and values in
+      this message.
+    seq:
+      - id: seq_no
+        doc: |
+          Message number in complete sequence
+        type: u1
+      - id: seq_len
+        doc: |
+          Length of message sequence
+        type: u1
+      - id: queues
+        doc: |
+          List of queue stats
+        type: queue_info
         repeat: eos
   
