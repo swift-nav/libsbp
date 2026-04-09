@@ -3022,6 +3022,9 @@ pub mod sub_system_report {
 
         /// Sensor Fusion Engine
         SensorFusionEngine = 6,
+
+        /// Messaging
+        Messaging = 7,
     }
 
     impl std::fmt::Display for Subsystem {
@@ -3034,6 +3037,7 @@ pub mod sub_system_report {
                 Subsystem::Can => f.write_str("CAN"),
                 Subsystem::WheelOdometry => f.write_str("Wheel Odometry"),
                 Subsystem::SensorFusionEngine => f.write_str("Sensor Fusion Engine"),
+                Subsystem::Messaging => f.write_str("Messaging"),
             }
         }
     }
@@ -3049,6 +3053,7 @@ pub mod sub_system_report {
                 4 => Ok(Subsystem::Can),
                 5 => Ok(Subsystem::WheelOdometry),
                 6 => Ok(Subsystem::SensorFusionEngine),
+                7 => Ok(Subsystem::Messaging),
                 i => Err(i),
             }
         }
