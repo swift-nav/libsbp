@@ -1,0 +1,9 @@
+[project]
+name = "libsbp"
+version = "0.1.0"
+description = ""
+requires-python = ">=3.10"
+dependencies = ["asil"]
+
+[tool.uv.sources]
+asil = { git = "https://github.com/swift-nav/asil.git", tag = "v0.2.11" }

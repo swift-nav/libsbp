@@ -17,6 +17,8 @@ on:
       - .clang-tidy
       - tools/lint/**
       - scripts/lint.sh
+      - scripts/generate_code_coverage.sh
+      - pyproject.toml
 
 jobs:
   ubuntu-lts:
@@ -234,6 +236,31 @@ jobs:
         run: |
           cmake -G "${{ matrix.generator }}" -S c/test_package -B c/test_package/build -DCMAKE_PREFIX_PATH="${{ github.workspace }}/install"
           cmake --build c/test_package/build
+
+  code-coverage:
+    name: Code Coverage
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - uses: bazel-contrib/setup-bazel@0.19.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
+
+      - uses: astral-sh/setup-uv@v7
+
+      - name: Generate code coverage
+        run: uv run ./scripts/generate_code_coverage.sh --html
+
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-html
+          path: code_coverage_html/
 
   clang-tidy:
     permissions:

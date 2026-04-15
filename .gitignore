@@ -111,3 +111,6 @@ java/example/gradle/wrapper
 
 # clang-tidy lint output
 clang-tidy-output/
+
+# Code coverage output
+code_coverage_html/
