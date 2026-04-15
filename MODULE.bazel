@@ -13,8 +13,7 @@ git_override(
     remote = "https://github.com/swift-nav/rules_swiftnav.git",
 )
 
-# Linting
-bazel_dep(name = "aspect_rules_lint", version = "2.3.0", dev_dependency = True)
+bazel_dep(name = "aspect_rules_lint", version = "2.5.0", dev_dependency = True)
 
 swift_cc_toolchain_ext = use_extension("@rules_swiftnav//cc:extensions.bzl", "swift_cc_toolchain_extension")
 use_repo(
