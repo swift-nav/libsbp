@@ -4,13 +4,17 @@ module(
     compatibility_level = 1,
 )
 
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "rules_swiftnav", version = "0.16.0")
+bazel_dep(name = "rules_swiftnav", version = "0.19.0")
 git_override(
     module_name = "rules_swiftnav",
-    commit = "bc82a952a2f4298636dc844e9783b555e2a068f6",
+    commit = "318b0eced915b75b901ad6616ecf92499b517149",
     remote = "https://github.com/swift-nav/rules_swiftnav.git",
 )
+
+# Linting
+bazel_dep(name = "aspect_rules_lint", version = "2.3.0", dev_dependency = True)
 
 swift_cc_toolchain_ext = use_extension("@rules_swiftnav//cc:extensions.bzl", "swift_cc_toolchain_extension")
 use_repo(

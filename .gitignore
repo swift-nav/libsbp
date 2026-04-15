@@ -105,3 +105,9 @@ java/example/gradle/wrapper
 /compile_commands.json
 # Directory where clangd puts its indexing work
 /.cache/
+
+# Ignore personal bazelrc file.
+.bazelrc.user
+
+# clang-tidy lint output
+clang-tidy-output/

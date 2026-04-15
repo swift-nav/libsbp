@@ -4,8 +4,11 @@ common --experimental_isolated_extension_usages
 build --@rules_swiftnav//cc:cxx_standard=17
 build --@rules_swiftnav//cc:global_cxx_standard=17
 
-build:clang-tidy --aspects @rules_swiftnav//clang_tidy:clang_tidy.bzl%clang_tidy_aspect
-build:clang-tidy --output_groups=report
+# Mark external include paths as system
+build --features=external_include_paths
+
+# Suppress deprecation warnings from external dependencies
+build --per_file_copt="external/.*@-Wno-deprecated-declarations"
 
 # Shared sanitizer configuration
 common:sanitize -c dbg
@@ -96,3 +99,5 @@ common:tsan --platform_suffix=tsan
 common:asan_ubsan --config=asan
 common:asan_ubsan --config=ubsan
 common:ubsan_asan --config=asan_ubsan
+
+common:lint --aspects=//tools/lint:linters.bzl%clang_tidy
