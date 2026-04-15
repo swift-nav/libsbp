@@ -1,5 +1,18 @@
 # Changelog
 
+## [v6.4.0](https://github.com/swift-nav/libsbp/tree/v6.4.0)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.3.3...v6.4.0)
+
+**Merged pull requests:**
+
+- Bump lodash from 4.17.23 to 4.18.1 [\#1574](https://github.com/swift-nav/libsbp/pull/1574) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Add MessagingQueue subsystem [\#1573](https://github.com/swift-nav/libsbp/pull/1573) ([Madhunika-atmakuri](https://github.com/Madhunika-atmakuri))
+- Add MSG\_PROFILING\_QUEUE\_INFO sbp msg [\#1571](https://github.com/swift-nav/libsbp/pull/1571) ([Madhunika-atmakuri](https://github.com/Madhunika-atmakuri))
+- Update HOWTO file [\#1570](https://github.com/swift-nav/libsbp/pull/1570) ([Madhunika-atmakuri](https://github.com/Madhunika-atmakuri))
+- Bump picomatch from 2.3.1 to 2.3.2 [\#1569](https://github.com/swift-nav/libsbp/pull/1569) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump bazel-contrib/setup-bazel from 0.18.0 to 0.19.0 [\#1568](https://github.com/swift-nav/libsbp/pull/1568) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v6.3.3](https://github.com/swift-nav/libsbp/tree/v6.3.3)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.3.2...v6.3.3)
