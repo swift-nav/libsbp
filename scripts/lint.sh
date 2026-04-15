@@ -70,7 +70,6 @@ bazel run @rules_swiftnav//tools/lint:extract_lint_results -- \
   --build-event-json-file=$buildevents --bazel-output-path="$(pwd)" \
   --output-merged-sarif-file="$OUTPUT_DIR_MERGED_SARIF" \
   --output-patch-folder="$OUTPUT_DIR_PATCHES" \
-  --only-errors \
   --exit-code=1 || EXIT_CODE=$?
 
 if [[ "$APPLY_PATCHES" == true ]]; then
