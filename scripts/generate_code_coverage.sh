@@ -3,7 +3,6 @@
 set -e
 
 OPEN_REPORT=false
-EXCLUDE_FILES=false
 TARGETS=()
 
 while [[ $# -gt 0 ]]; do
@@ -14,10 +13,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         --html)
             HTML_REPORT=true
-            shift
-            ;;
-        --exclude-files)
-            EXCLUDE_FILES=true
             shift
             ;;
         --targets)
@@ -48,24 +43,6 @@ echo "Generating coverage report..."
 
 bazel coverage "${TARGETS[@]}"
 
-echo "Filtering for exclusions..."
-
-# Build exclusion list
-EXCLUSIONS=("test[/_]")
-
-if [[ "$EXCLUDE_FILES" == true ]]; then
-    echo "Applying specific file exclusions..."
-    EXCLUSIONS+=(
-    )
-fi
-
-uv run lcov-filter \
-    --output "$(bazel info output_path)/_coverage/_coverage_report_filtered.dat" \
-    --input "$(bazel info output_path)/_coverage/_coverage_report.dat" --filter-exclusions \
-    --sources-root "$PWD/" \
-    --exclude \
-    "${EXCLUSIONS[@]}"
-
 if [[ "$HTML_REPORT" == true ]]; then
     echo "Generating HTML coverage report..."
     bazel run @lcov//:genhtml -- \
@@ -79,17 +56,15 @@ if [[ "$HTML_REPORT" == true ]]; then
         --legend \
         --quiet \
         --title="Code Coverage Report" \
-        "$(bazel info output_path)/_coverage/_coverage_report_filtered.dat"
+        "$(bazel info output_path)/_coverage/_coverage_report.dat"
 
     echo "Coverage report generated in code_coverage_html/"
 fi
 
 if [[ "$OPEN_REPORT" == true ]]; then
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "Opening coverage report in default browser..."
         open "$(pwd)/code_coverage_html/index.html"
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo "Opening coverage report in default browser..."
         xdg-open "$(pwd)/code_coverage_html/index.html"
     else
         echo "Coverage report available at: $(pwd)/code_coverage_html/index.html"

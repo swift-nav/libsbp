@@ -8,10 +8,10 @@ clang-tidy-all-check:
 	bazel build //... --config=clang-tidy
 
 do-code-coverage:
-	cd .. && uv run ./scripts/generate_code_coverage.sh
+	cd .. && ./scripts/generate_code_coverage.sh
 
 do-generate-coverage-report:
-	cd .. && uv run ./scripts/generate_code_coverage.sh --html
+	cd .. && ./scripts/generate_code_coverage.sh --html
 
 gen-compile-commands:
 	bazel run //tools/compile_commands:gen_compile_commands
