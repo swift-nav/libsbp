@@ -238,6 +238,8 @@ jobs:
 
   code-coverage:
     name: Code Coverage
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
@@ -251,13 +253,46 @@ jobs:
           repository-cache: true
 
       - name: Generate code coverage
-        run: ./scripts/generate_code_coverage.sh --html
+        id: coverage
+        run: |
+          ./scripts/generate_code_coverage.sh --html 2>&1 | tee coverage_output.txt
+          SOURCE_FILES=$(grep "source files:" coverage_output.txt | sed 's/.*source files: //')
+          LINES=$(grep "lines\.\.\.\.\.\." coverage_output.txt | sed 's/.*lines\.\.*: //')
+          BRANCHES=$(grep "branches\.\.\.\.\." coverage_output.txt | sed 's/.*branches\.\.*: //')
+          echo "source_files=$SOURCE_FILES" >> "$GITHUB_OUTPUT"
+          echo "lines=$LINES" >> "$GITHUB_OUTPUT"
+          echo "branches=$BRANCHES" >> "$GITHUB_OUTPUT"
 
       - name: Upload code coverage report
         uses: actions/upload-artifact@v4
         with:
           name: code-coverage-html
           path: code_coverage_html/
+
+      - name: Find existing coverage comment
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
+        uses: peter-evans/find-comment@v3
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '<!-- code-coverage-libsbp -->'
+
+      - name: Post coverage comment
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          edit-mode: replace
+          body: |
+            <!-- code-coverage-libsbp -->
+            ## Code Coverage
+            | Metric | Coverage |
+            |--------|----------|
+            | Source files | ${{ steps.coverage.outputs.source_files }} |
+            | Lines | ${{ steps.coverage.outputs.lines }} |
+            | Branches | ${{ steps.coverage.outputs.branches }} |
 
   clang-tidy:
     permissions:
