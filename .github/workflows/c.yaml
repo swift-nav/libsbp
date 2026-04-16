@@ -257,8 +257,8 @@ jobs:
         run: |
           ./scripts/generate_code_coverage.sh --html 2>&1 | tee coverage_output.txt
           SOURCE_FILES=$(grep "source files:" coverage_output.txt | sed 's/.*source files: //')
-          LINES=$(grep "lines\.\.\.\.\.\." coverage_output.txt | sed 's/.*lines\.\.*: //')
-          BRANCHES=$(grep "branches\.\.\.\.\." coverage_output.txt | sed 's/.*branches\.\.*: //')
+          LINES=$(grep "  lines" coverage_output.txt | sed 's/.*lines[.]*: //')
+          BRANCHES=$(grep "  branches" coverage_output.txt | sed 's/.*branches[.]*: //')
           echo "source_files=$SOURCE_FILES" >> "$GITHUB_OUTPUT"
           echo "lines=$LINES" >> "$GITHUB_OUTPUT"
           echo "branches=$BRANCHES" >> "$GITHUB_OUTPUT"
