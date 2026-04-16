@@ -14,6 +14,10 @@ on:
       - MODULE.bazel
       - .bazeliskrc
       - .bazelrc
+      - .clang-tidy
+      - tools/lint/**
+      - scripts/lint.sh
+      - scripts/generate_code_coverage.sh
 
 jobs:
   ubuntu-lts:
@@ -231,3 +235,113 @@ jobs:
         run: |
           cmake -G "${{ matrix.generator }}" -S c/test_package -B c/test_package/build -DCMAKE_PREFIX_PATH="${{ github.workspace }}/install"
           cmake --build c/test_package/build
+
+  code-coverage:
+    name: Code Coverage
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - uses: bazel-contrib/setup-bazel@0.19.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
+
+      - name: Generate code coverage
+        id: coverage
+        run: |
+          ./scripts/generate_code_coverage.sh --html 2>&1 | tee coverage_output.txt
+          SOURCE_FILES=$(grep "source files:" coverage_output.txt | sed 's/.*source files: //')
+          LINES=$(grep "  lines" coverage_output.txt | sed 's/.*lines[.]*: //')
+          BRANCHES=$(grep "  branches" coverage_output.txt | sed 's/.*branches[.]*: //')
+          echo "source_files=$SOURCE_FILES" >> "$GITHUB_OUTPUT"
+          echo "lines=$LINES" >> "$GITHUB_OUTPUT"
+          echo "branches=$BRANCHES" >> "$GITHUB_OUTPUT"
+
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-html
+          path: code_coverage_html/
+
+      - name: Find existing coverage comment
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
+        uses: peter-evans/find-comment@v3
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '<!-- code-coverage-libsbp -->'
+
+      - name: Post coverage comment
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          edit-mode: replace
+          body: |
+            <!-- code-coverage-libsbp -->
+            ## Code Coverage
+            | Metric | Coverage |
+            |--------|----------|
+            | Source files | ${{ steps.coverage.outputs.source_files }} |
+            | Lines | ${{ steps.coverage.outputs.lines }} |
+            | Branches | ${{ steps.coverage.outputs.branches }} |
+
+  clang-tidy:
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - uses: bazel-contrib/setup-bazel@0.19.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
+
+      - name: Run Clang-Tidy
+        continue-on-error: true
+        id: run_clang_tidy
+        run: |
+          ./scripts/lint.sh --targets //c/...
+
+      - name: Setup reviewdog
+        # Pinning to a specific SHA prevents "tag-shifting" attacks
+        uses: reviewdog/action-setup@d8a7baabd7f3e8544ee4dbde3ee41d0011c3a93f # v1.5.0
+        if: github.event_name == 'pull_request'
+        with:
+          reviewdog_version: v0.21.0
+
+      - name: Run reviewdog with merged SARIF report
+        if: github.event_name == 'pull_request'
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat clang-tidy-output/merged-report.sarif | reviewdog -f=sarif \
+            -name="clang-tidy" \
+            -reporter=github-pr-review \
+            -filter-mode=diff_context \
+            -fail-on-error=false \
+            -level=warning || echo "Reviewdog completed with status $?"
+
+      - name: Upload SARIF report
+        uses: actions/upload-artifact@v4
+        with:
+          name: clang-tidy-sarif-report
+          path: clang-tidy-output/merged-report.sarif
+
+      - name: Fail if clang-tidy errors were found
+        if: steps.run_clang_tidy.outcome == 'failure'
+        run: exit 1

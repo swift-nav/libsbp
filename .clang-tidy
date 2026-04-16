@@ -1,0 +1,287 @@
+---
+Checks: >
+  -*,
+  cert-con36-c,
+  cert-con54-cpp,
+  cert-ctr56-cpp,
+  cert-dcl16-c,
+  cert-dcl50-cpp,
+  cert-dcl54-cpp,
+  cert-dcl58-cpp,
+  cert-dcl59-cpp,
+  cert-env33-c,
+  cert-err09-cpp,
+  cert-err52-cpp,
+  cert-err60-cpp,
+  cert-err61-cpp,
+  cert-fio38-c,
+  cert-flp30-c,
+  cert-int09-c,
+  cert-mem57-cpp,
+  cert-msc24-c,
+  cert-msc30-c,
+  cert-msc32-c,
+  cert-msc33-c,
+  cert-msc50-cpp,
+  cert-msc51-cpp,
+  cert-msc54-cpp,
+  cert-oop11-cpp,
+  cert-oop57-cpp,
+  cert-oop58-cpp,
+  cert-pos44-c,
+  cert-pos47-c,
+  cert-sig30-c,
+  clang-analyzer-apiModeling.Errno,
+  clang-analyzer-apiModeling.TrustNonnull,
+  clang-analyzer-apiModeling.TrustReturnsNonnull,
+  clang-analyzer-apiModeling.llvm.CastValue,
+  clang-analyzer-apiModeling.llvm.ReturnValue,
+  clang-analyzer-core.BitwiseShift,
+  clang-analyzer-core.CallAndMessage,
+  clang-analyzer-core.CallAndMessageModeling,
+  clang-analyzer-core.DivideZero,
+  clang-analyzer-core.DynamicTypePropagation,
+  clang-analyzer-core.NonNullParamChecker,
+  clang-analyzer-core.NonnilStringConstants,
+  clang-analyzer-core.NullDereference,
+  clang-analyzer-core.StackAddrEscapeBase,
+  clang-analyzer-core.StackAddressEscape,
+  clang-analyzer-core.UndefinedBinaryOperatorResult,
+  clang-analyzer-core.VLASize,
+  clang-analyzer-core.builtin.BuiltinFunctions,
+  clang-analyzer-core.builtin.NoReturnFunctions,
+  clang-analyzer-core.uninitialized.ArraySubscript,
+  clang-analyzer-core.uninitialized.Assign,
+  clang-analyzer-core.uninitialized.Branch,
+  clang-analyzer-core.uninitialized.CapturedBlockVariable,
+  clang-analyzer-core.uninitialized.NewArraySize,
+  clang-analyzer-core.uninitialized.UndefReturn,
+  clang-analyzer-cplusplus.ArrayDelete,
+  clang-analyzer-cplusplus.InnerPointer,
+  clang-analyzer-cplusplus.Move,
+  clang-analyzer-cplusplus.NewDelete,
+  clang-analyzer-cplusplus.PlacementNew,
+  clang-analyzer-cplusplus.PureVirtualCall,
+  clang-analyzer-cplusplus.SelfAssignment,
+  clang-analyzer-cplusplus.SmartPtrModeling,
+  clang-analyzer-cplusplus.StringChecker,
+  clang-analyzer-cplusplus.VirtualCallModeling,
+  clang-analyzer-fuchsia.HandleChecker,
+  clang-analyzer-nullability.NullPassedToNonnull,
+  clang-analyzer-nullability.NullReturnedFromNonnull,
+  clang-analyzer-nullability.NullabilityBase,
+  clang-analyzer-nullability.NullableDereferenced,
+  clang-analyzer-nullability.NullablePassedToNonnull,
+  clang-analyzer-nullability.NullableReturnedFromNonnull,
+  clang-analyzer-optin.core.EnumCastOutOfRange,
+  clang-analyzer-optin.performance.GCDAntipattern,
+  clang-analyzer-optin.portability.UnixAPI,
+  clang-analyzer-optin.taint.TaintedAlloc,
+  clang-analyzer-security.FloatLoopCounter,
+  clang-analyzer-security.PutenvStackArray,
+  clang-analyzer-security.SetgidSetuidOrder,
+  clang-analyzer-security.cert.env.InvalidPtr,
+  clang-analyzer-unix.API,
+  clang-analyzer-unix.BlockInCriticalSection,
+  clang-analyzer-unix.DynamicMemoryModeling,
+  clang-analyzer-unix.Errno,
+  clang-analyzer-unix.Malloc,
+  clang-analyzer-unix.MallocSizeof,
+  clang-analyzer-unix.MismatchedDeallocator,
+  clang-analyzer-unix.StdCLibraryFunctions,
+  clang-analyzer-unix.Stream,
+  clang-analyzer-unix.Vfork,
+  clang-analyzer-unix.cstring.BadSizeArg,
+  clang-analyzer-unix.cstring.CStringModeling,
+  clang-analyzer-unix.cstring.NullArg,
+  clang-analyzer-valist.CopyToSelf,
+  clang-analyzer-valist.Uninitialized,
+  clang-analyzer-valist.Unterminated,
+  clang-analyzer-valist.ValistBase,
+  clang-analyzer-webkit.NoUncountedMemberChecker,
+  clang-analyzer-webkit.RefCntblBaseVirtualDtor,
+  clang-analyzer-webkit.UncountedLambdaCapturesChecker,
+  cppcoreguidelines-avoid-capturing-lambda-coroutines,
+  cppcoreguidelines-avoid-const-or-ref-data-members,
+  cppcoreguidelines-avoid-do-while,
+  cppcoreguidelines-avoid-reference-coroutine-parameters,
+  cppcoreguidelines-c-copy-assignment-signature,
+  cppcoreguidelines-explicit-virtual-functions,
+  cppcoreguidelines-interfaces-global-init,
+  cppcoreguidelines-misleading-capture-default-by-value,
+  cppcoreguidelines-missing-std-forward,
+  cppcoreguidelines-no-malloc,
+  cppcoreguidelines-no-suspend-with-lock,
+  cppcoreguidelines-noexcept-destructor,
+  cppcoreguidelines-noexcept-move-operations,
+  cppcoreguidelines-noexcept-swap,
+  cppcoreguidelines-pro-type-const-cast,
+  cppcoreguidelines-pro-type-cstyle-cast,
+  cppcoreguidelines-pro-type-reinterpret-cast,
+  cppcoreguidelines-rvalue-reference-param-not-moved,
+  cppcoreguidelines-slicing,
+  cppcoreguidelines-use-default-member-init,
+  google-build-explicit-make-pair,
+  google-build-namespaces,
+  google-build-using-namespace,
+  google-default-arguments,
+  google-explicit-constructor,
+  google-global-names-in-headers,
+  google-readability-avoid-underscore-in-googletest-name,
+  google-readability-braces-around-statements,
+  google-readability-casting,
+  google-readability-function-size,
+  google-readability-namespace-comments,
+  google-readability-todo,
+  google-runtime-int,
+  google-runtime-operator,
+  google-upgrade-googletest-case,
+  misc-confusable-identifiers,
+  misc-const-correctness,
+  misc-coroutine-hostile-raii,
+  misc-definitions-in-headers,
+  misc-header-include-cycle,
+  misc-misleading-bidirectional,
+  misc-misleading-identifier,
+  misc-misplaced-const,
+  misc-new-delete-overloads,
+  misc-non-copyable-objects,
+  misc-redundant-expression,
+  misc-throw-by-value-catch-by-reference,
+  misc-unconventional-assign-operator,
+  misc-uniqueptr-reset-release,
+  misc-unused-alias-decls,
+  misc-unused-using-decls,
+  misc-use-anonymous-namespace,
+  misc-use-internal-linkage,
+  modernize-avoid-bind,
+  modernize-concat-nested-namespaces,
+  modernize-deprecated-ios-base-aliases,
+  modernize-loop-convert,
+  modernize-make-shared,
+  modernize-make-unique,
+  modernize-min-max-use-initializer-list,
+  modernize-raw-string-literal,
+  modernize-replace-auto-ptr,
+  modernize-replace-disallow-copy-and-assign-macro,
+  modernize-replace-random-shuffle,
+  modernize-shrink-to-fit,
+  modernize-type-traits,
+  modernize-unary-static-assert,
+  modernize-use-constraints,
+  modernize-use-designated-initializers,
+  modernize-use-nodiscard,
+  modernize-use-noexcept,
+  modernize-use-nullptr,
+  modernize-use-override,
+  modernize-use-ranges,
+  modernize-use-starts-ends-with,
+  modernize-use-std-format,
+  modernize-use-std-numbers,
+  modernize-use-std-print,
+  modernize-use-transparent-functors,
+  modernize-use-uncaught-exceptions,
+  performance-avoid-endl,
+  performance-enum-size,
+  performance-faster-string-find,
+  performance-for-range-copy,
+  performance-implicit-conversion-in-loop,
+  performance-inefficient-algorithm,
+  performance-inefficient-string-concatenation,
+  performance-inefficient-vector-operation,
+  performance-move-const-arg,
+  performance-move-constructor-init,
+  performance-no-automatic-move,
+  performance-noexcept-destructor,
+  performance-noexcept-move-constructor,
+  performance-noexcept-swap,
+  performance-trivially-destructible,
+  performance-type-promotion-in-math-fn,
+  performance-unnecessary-copy-initialization,
+  readability-avoid-nested-conditional-operator,
+  readability-avoid-return-with-void-value,
+  readability-avoid-unconditional-preprocessor-if,
+  readability-braces-around-statements,
+  readability-container-contains,
+  readability-container-size-empty,
+  readability-delete-null-pointer,
+  readability-else-after-return,
+  readability-enum-initial-value,
+  readability-implicit-bool-conversion,
+  readability-inconsistent-declaration-parameter-name,
+  readability-math-missing-parentheses,
+  readability-misplaced-array-index,
+  readability-named-parameter,
+  readability-operators-representation,
+  readability-redundant-casting,
+  readability-redundant-control-flow,
+  readability-redundant-function-ptr-dereference,
+  readability-redundant-inline-specifier,
+  readability-redundant-preprocessor,
+  readability-redundant-smartptr-get,
+  readability-redundant-string-cstr,
+  readability-redundant-string-init,
+  readability-reference-to-constructed-temporary,
+  readability-simplify-boolean-expr,
+  readability-simplify-subscript-expr,
+  readability-static-accessed-through-instance,
+  readability-static-definition-in-anonymous-namespace,
+  readability-string-compare,
+  readability-uniqueptr-delete-release,
+  readability-use-std-min-max
+CheckOptions:
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.ClassMemberCase
+    value: lower_case
+  - key: readability-identifier-naming.ClassMemberSuffix
+    value: ""
+  - key: readability-identifier-naming.ConstantVariableCase
+    value: CamelCase
+  - key: readability-identifier-naming.ConstantVariablePrefix
+    value: c
+  - key: readability-identifier-naming.ConstexprVariableCase
+    value: CamelCase
+  - key: readability-identifier-naming.ConstexprVariablePrefix
+    value: c
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumConstantCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumConstantPrefix
+    value: c
+  - key: readability-identifier-naming.FunctionCase
+    value: lower_case
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: CamelCase
+  - key: readability-identifier-naming.GlobalConstantPrefix
+    value: c
+  - key: readability-identifier-naming.MemberConstantCase
+    value: CamelCase
+  - key: readability-identifier-naming.MemberConstantPrefix
+    value: c
+  - key: readability-identifier-naming.NamespaceCase
+    value: lower_case
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: _
+  - key: readability-identifier-naming.ProtectedMemberSuffix
+    value: ""
+  - key: readability-identifier-naming.PublicMemberSuffix
+    value: ""
+  - key: readability-identifier-naming.StaticConstantCase
+    value: CamelCase
+  - key: readability-identifier-naming.StaticConstantPrefix
+    value: c
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.TemplateParameterCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypedefCase
+    value: lower_case
+  - key: readability-identifier-naming.TypedefSuffix
+    value: _t
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case
+  - key: readability-identifier-naming.TemplateParameterIgnoredRegexp
+    value: "expr-type"
+WarningsAsErrors: '*'

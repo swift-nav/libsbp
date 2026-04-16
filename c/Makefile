@@ -8,10 +8,10 @@ clang-tidy-all-check:
 	bazel build //... --config=clang-tidy
 
 do-code-coverage:
-	bazel coverage --test_tag_filters=unit --collect_code_coverage --combined_report=lcov //...
+	cd .. && ./scripts/generate_code_coverage.sh
 
-do-generate-coverage-report: do-code-coverage
-	genhtml bazel-out/_coverage/_coverage_report.dat -o coverage
+do-generate-coverage-report:
+	cd .. && ./scripts/generate_code_coverage.sh --html
 
 gen-compile-commands:
 	bazel run //tools/compile_commands:gen_compile_commands
