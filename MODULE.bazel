@@ -9,7 +9,7 @@ bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "rules_swiftnav", version = "0.19.0")
 git_override(
     module_name = "rules_swiftnav",
-    commit = "0acc312f98a7f09fd30d502cfd2370ebd6a8f12c",
+    commit = "a3689d77154b709a6e3ca675efdd3094ab627672",
     remote = "https://github.com/swift-nav/rules_swiftnav.git",
 )
 
