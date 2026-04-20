@@ -280,7 +280,7 @@ jobs:
 
       - name: Post coverage comment
         if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
