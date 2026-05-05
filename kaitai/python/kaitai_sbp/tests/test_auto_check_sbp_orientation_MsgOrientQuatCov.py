@@ -1,0 +1,63 @@
+# Copyright (C) 2015-2023 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#
+# Test cases automatically generated from spec/tests/yaml/swiftnav/sbp/orientation/test_MsgOrientQuatCov.yaml
+# with generate.py.  Do not modify by hand!
+
+import kaitai_sbp.sbp as sbp
+from kaitai_sbp.parse_utils import get_flattened_msg
+from kaitai_sbp.tests.utils import dictify
+from kaitaistruct import KaitaiStream
+import io
+import base64
+
+def test_auto_check_sbp_orientation_msg_orient_quat_cov_1():
+    buf = base64.standard_b64decode("VSMCQgAtAAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEABLkk=")
+
+    stream = KaitaiStream(io.BytesIO(buf))
+    msg = get_flattened_msg(sbp.Sbp.SbpMessage(stream))
+    
+    assert msg.crc == 0x492E
+    
+    assert msg.length == 45
+    
+    assert msg.msg_type == 0x223
+    
+    assert msg.payload == "AAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEAB"
+    
+    assert msg.preamble == 0x55
+    
+    assert msg.sender == 0x42
+    
+    assert dictify(msg.cov_xx) == 1.0
+    
+    assert dictify(msg.cov_xy) == 0.5
+    
+    assert dictify(msg.cov_xz) == 0.25
+    
+    assert dictify(msg.cov_yy) == 2.0
+    
+    assert dictify(msg.cov_yz) == 0.125
+    
+    assert dictify(msg.cov_zz) == 4.0
+    
+    assert dictify(msg.flags) == 1
+    
+    assert dictify(msg.tow) == 0
+    
+    assert dictify(msg.w) == 3
+    
+    assert dictify(msg.x) == 7
+    
+    assert dictify(msg.y) == 8
+    
+    assert dictify(msg.z) == 4
+
+    assert dictify(msg) == {'preamble': 85, 'msg_type': 547, 'sender': 66, 'length': 45, 'payload': 'AAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEAB', 'crc': 18734, 'tow': 0, 'w': 3, 'x': 7, 'y': 8, 'z': 4, 'cov_xx': 1.0, 'cov_xy': 0.5, 'cov_xz': 0.25, 'cov_yy': 2.0, 'cov_yz': 0.125, 'cov_zz': 4.0, 'flags': 1}

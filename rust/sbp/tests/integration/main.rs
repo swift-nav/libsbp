@@ -153,6 +153,7 @@ mod auto_check_sbp_orientation_msg_angular_rate;
 mod auto_check_sbp_orientation_msg_baseline_heading;
 mod auto_check_sbp_orientation_msg_orient_euler;
 mod auto_check_sbp_orientation_msg_orient_quat;
+mod auto_check_sbp_orientation_msg_orient_quat_cov;
 mod auto_check_sbp_piksi_msg_almanac;
 mod auto_check_sbp_piksi_msg_cell_modem_status;
 mod auto_check_sbp_piksi_msg_command_output;
