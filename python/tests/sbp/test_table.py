@@ -45,7 +45,7 @@ def test_table_count():
     Test number of available messages to deserialize.
 
     """
-    number_of_messages = 241
+    number_of_messages = 242
     assert len(_SBP_TABLE) == number_of_messages
 
 

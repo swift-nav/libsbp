@@ -197,3 +197,92 @@ definitions:
                     values:
                         - 0: Invalid
                         - 1: Valid
+ - MSG_ORIENT_QUAT_COV:
+    id: 0x0223
+    short_desc: Quaternion 4 component vector with full attitude covariance
+    desc: >
+      This message reports the orientation as a unit quaternion together with
+      the upper triangle of the symmetric 3x3 attitude covariance matrix and
+      a GPS time-of-week time-tag. The reference frame of the quaternion and
+      the parameterization of the covariance matrix are both encoded in the
+      flags field, allowing additional frames or parameterizations to be added
+      later without introducing a new message. By default the quaternion
+      describes the orientation of the vehicle body frame with respect to a
+      local-level NED frame (matching MSG_ORIENT_QUAT) and the covariance is
+      expressed as small-angle rotation errors about the axes of that NED
+      frame; in this default case the cov_xx, cov_yy, cov_zz diagonal entries
+      correspond to the variance of the rotation error about North, East, and
+      Down respectively. The components of the quaternion sum to a unit vector
+      assuming that the LSB of each component has a value of 2^-31. This
+      message will only be available in future INS versions of Swift Products
+      and is not produced by Piksi Multi or Duro.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - w:
+              type: s32
+              units: 2^-31
+              desc: Real component
+          - x:
+              type: s32
+              units: 2^-31
+              desc: 1st imaginary component
+          - y:
+              type: s32
+              units: 2^-31
+              desc: 2nd imaginary component
+          - z:
+              type: s32
+              units: 2^-31
+              desc: 3rd imaginary component
+          - cov_xx:
+              type: float
+              units: rad^2
+              desc: Estimated variance of the rotation error about the 1st axis of the covariance frame
+          - cov_xy:
+              type: float
+              units: rad^2
+              desc: Estimated covariance of the rotation errors about the 1st and 2nd axes of the covariance frame
+          - cov_xz:
+              type: float
+              units: rad^2
+              desc: Estimated covariance of the rotation errors about the 1st and 3rd axes of the covariance frame
+          - cov_yy:
+              type: float
+              units: rad^2
+              desc: Estimated variance of the rotation error about the 2nd axis of the covariance frame
+          - cov_yz:
+              type: float
+              units: rad^2
+              desc: Estimated covariance of the rotation errors about the 2nd and 3rd axes of the covariance frame
+          - cov_zz:
+              type: float
+              units: rad^2
+              desc: Estimated variance of the rotation error about the 3rd axis of the covariance frame
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 7-7:
+                    desc: Reserved
+                - 5-6:
+                    desc: Covariance parameterization
+                    values:
+                        - 0: Small-angle rotation errors about the axes of the global frame given by the quaternion frame field
+                        - 1: Small-angle rotation errors about the body/vehicle frame axes
+                        - 2: Roll/pitch/yaw Euler-angle covariance (radians)
+                        - 3: Reserved
+                - 3-4:
+                    desc: Quaternion reference frame
+                    values:
+                        - 0: Local-level NED
+                        - 1: Local-level ENU
+                        - 2: ECEF
+                        - 3: Reserved
+                - 0-2:
+                    desc: INS Navigation mode
+                    values:
+                        - 0: Invalid
+                        - 1: Valid
