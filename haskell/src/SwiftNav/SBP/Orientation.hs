@@ -239,3 +239,90 @@ $(makeSBP 'msgAngularRate ''MsgAngularRate)
 $(makeJSON "_msgAngularRate_" ''MsgAngularRate)
 $(makeLenses ''MsgAngularRate)
 
+msgOrientQuatCov :: Word16
+msgOrientQuatCov = 0x0223
+
+-- | SBP class for message MSG_ORIENT_QUAT_COV (0x0223).
+--
+-- This message reports the orientation as a unit quaternion together with the
+-- upper triangle of the symmetric 3x3 attitude covariance matrix and a GPS
+-- time-of-week time-tag. The reference frame of the quaternion and the
+-- parameterization of the covariance matrix are both encoded in the flags
+-- field, allowing additional frames or parameterizations to be added later
+-- without introducing a new message. By default the quaternion describes the
+-- orientation of the vehicle body frame with respect to a local-level NED
+-- frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as small-
+-- angle rotation errors about the axes of that NED frame; in this default
+-- case the cov_xx, cov_yy, cov_zz diagonal entries correspond to the variance
+-- of the rotation error about North, East, and Down respectively. The
+-- components of the quaternion sum to a unit vector assuming that the LSB of
+-- each component has a value of 2^-31. This message will only be available in
+-- future INS versions of Swift Products and is not produced by Piksi Multi or
+-- Duro.
+data MsgOrientQuatCov = MsgOrientQuatCov
+  { _msgOrientQuatCov_tow  :: !Word32
+    -- ^ GPS Time of Week
+  , _msgOrientQuatCov_w    :: !Int32
+    -- ^ Real component
+  , _msgOrientQuatCov_x    :: !Int32
+    -- ^ 1st imaginary component
+  , _msgOrientQuatCov_y    :: !Int32
+    -- ^ 2nd imaginary component
+  , _msgOrientQuatCov_z    :: !Int32
+    -- ^ 3rd imaginary component
+  , _msgOrientQuatCov_cov_xx :: !Float
+    -- ^ Estimated variance of the rotation error about the 1st axis of the
+    -- covariance frame
+  , _msgOrientQuatCov_cov_xy :: !Float
+    -- ^ Estimated covariance of the rotation errors about the 1st and 2nd axes
+    -- of the covariance frame
+  , _msgOrientQuatCov_cov_xz :: !Float
+    -- ^ Estimated covariance of the rotation errors about the 1st and 3rd axes
+    -- of the covariance frame
+  , _msgOrientQuatCov_cov_yy :: !Float
+    -- ^ Estimated variance of the rotation error about the 2nd axis of the
+    -- covariance frame
+  , _msgOrientQuatCov_cov_yz :: !Float
+    -- ^ Estimated covariance of the rotation errors about the 2nd and 3rd axes
+    -- of the covariance frame
+  , _msgOrientQuatCov_cov_zz :: !Float
+    -- ^ Estimated variance of the rotation error about the 3rd axis of the
+    -- covariance frame
+  , _msgOrientQuatCov_flags :: !Word8
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgOrientQuatCov where
+  get = do
+    _msgOrientQuatCov_tow <- getWord32le
+    _msgOrientQuatCov_w <- (fromIntegral <$> getWord32le)
+    _msgOrientQuatCov_x <- (fromIntegral <$> getWord32le)
+    _msgOrientQuatCov_y <- (fromIntegral <$> getWord32le)
+    _msgOrientQuatCov_z <- (fromIntegral <$> getWord32le)
+    _msgOrientQuatCov_cov_xx <- getFloat32le
+    _msgOrientQuatCov_cov_xy <- getFloat32le
+    _msgOrientQuatCov_cov_xz <- getFloat32le
+    _msgOrientQuatCov_cov_yy <- getFloat32le
+    _msgOrientQuatCov_cov_yz <- getFloat32le
+    _msgOrientQuatCov_cov_zz <- getFloat32le
+    _msgOrientQuatCov_flags <- getWord8
+    pure MsgOrientQuatCov {..}
+
+  put MsgOrientQuatCov {..} = do
+    putWord32le _msgOrientQuatCov_tow
+    (putWord32le . fromIntegral) _msgOrientQuatCov_w
+    (putWord32le . fromIntegral) _msgOrientQuatCov_x
+    (putWord32le . fromIntegral) _msgOrientQuatCov_y
+    (putWord32le . fromIntegral) _msgOrientQuatCov_z
+    putFloat32le _msgOrientQuatCov_cov_xx
+    putFloat32le _msgOrientQuatCov_cov_xy
+    putFloat32le _msgOrientQuatCov_cov_xz
+    putFloat32le _msgOrientQuatCov_cov_yy
+    putFloat32le _msgOrientQuatCov_cov_yz
+    putFloat32le _msgOrientQuatCov_cov_zz
+    putWord8 _msgOrientQuatCov_flags
+
+$(makeSBP 'msgOrientQuatCov ''MsgOrientQuatCov)
+$(makeJSON "_msgOrientQuatCov_" ''MsgOrientQuatCov)
+$(makeLenses ''MsgOrientQuatCov)
+

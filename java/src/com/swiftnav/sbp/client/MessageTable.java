@@ -155,6 +155,7 @@ import com.swiftnav.sbp.orientation.MsgAngularRate;
 import com.swiftnav.sbp.orientation.MsgBaselineHeading;
 import com.swiftnav.sbp.orientation.MsgOrientEuler;
 import com.swiftnav.sbp.orientation.MsgOrientQuat;
+import com.swiftnav.sbp.orientation.MsgOrientQuatCov;
 import com.swiftnav.sbp.piksi.MsgAlmanac;
 import com.swiftnav.sbp.piksi.MsgCellModemStatus;
 import com.swiftnav.sbp.piksi.MsgCommandOutput;
@@ -542,6 +543,8 @@ final class MessageTable {
                 return new MsgOrientEuler(msg);
             case MsgAngularRate.TYPE:
                 return new MsgAngularRate(msg);
+            case MsgOrientQuatCov.TYPE:
+                return new MsgOrientQuatCov(msg);
             case MsgAlmanac.TYPE:
                 return new MsgAlmanac(msg);
             case MsgSetTime.TYPE:

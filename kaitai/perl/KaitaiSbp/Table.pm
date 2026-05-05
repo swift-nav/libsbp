@@ -205,6 +205,7 @@ our %TABLE = (
     544 => sub{Orientation::MsgOrientQuat->new(@_)},
     545 => sub{Orientation::MsgOrientEuler->new(@_)},
     546 => sub{Orientation::MsgAngularRate->new(@_)},
+    547 => sub{Orientation::MsgOrientQuatCov->new(@_)},
   
     105 => sub{Piksi::MsgAlmanac->new(@_)},
     104 => sub{Piksi::MsgSetTime->new(@_)},

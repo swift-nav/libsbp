@@ -117,6 +117,7 @@
 //   const msgOdometry = Convert.toMsgOdometry(json);
 //   const msgOrientEuler = Convert.toMsgOrientEuler(json);
 //   const msgOrientQuat = Convert.toMsgOrientQuat(json);
+//   const msgOrientQuatCov = Convert.toMsgOrientQuatCov(json);
 //   const msgOsr = Convert.toMsgOsr(json);
 //   const msgPosECEF = Convert.toMsgPosECEF(json);
 //   const msgPosECEFCov = Convert.toMsgPosECEFCov(json);
@@ -1150,6 +1151,14 @@ function toMsgOrientQuat(json) {
 
 function msgOrientQuatToJson(value) {
     return JSON.stringify(uncast(value, r("MsgOrientQuat")), null, 2);
+}
+
+function toMsgOrientQuatCov(json) {
+    return cast(JSON.parse(json), r("MsgOrientQuatCov"));
+}
+
+function msgOrientQuatCovToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgOrientQuatCov")), null, 2);
 }
 
 function toMsgOsr(json) {
@@ -2936,6 +2945,20 @@ const typeMap = {
         { json: "z", js: "z", typ: 0 },
         { json: "z_accuracy", js: "z_accuracy", typ: 3.14 },
     ], "any"),
+    "MsgOrientQuatCov": o([
+        { json: "cov_xx", js: "cov_xx", typ: 3.14 },
+        { json: "cov_xy", js: "cov_xy", typ: 3.14 },
+        { json: "cov_xz", js: "cov_xz", typ: 3.14 },
+        { json: "cov_yy", js: "cov_yy", typ: 3.14 },
+        { json: "cov_yz", js: "cov_yz", typ: 3.14 },
+        { json: "cov_zz", js: "cov_zz", typ: 3.14 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "w", js: "w", typ: 0 },
+        { json: "x", js: "x", typ: 0 },
+        { json: "y", js: "y", typ: 0 },
+        { json: "z", js: "z", typ: 0 },
+    ], "any"),
     "MsgOsr": o([
         { json: "header", js: "header", typ: r("ObservationHeader") },
         { json: "obs", js: "obs", typ: a(r("PackedOsrContent")) },
@@ -4001,6 +4024,8 @@ module.exports = {
     "toMsgOrientEuler": toMsgOrientEuler,
     "msgOrientQuatToJson": msgOrientQuatToJson,
     "toMsgOrientQuat": toMsgOrientQuat,
+    "msgOrientQuatCovToJson": msgOrientQuatCovToJson,
+    "toMsgOrientQuatCov": toMsgOrientQuatCov,
     "msgOsrToJson": msgOsrToJson,
     "toMsgOsr": toMsgOsr,
     "msgPosECEFToJson": msgPosECEFToJson,

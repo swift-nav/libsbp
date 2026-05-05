@@ -199,6 +199,7 @@ TABLE = {
     544: Orientation.MsgOrientQuat,
     545: Orientation.MsgOrientEuler,
     546: Orientation.MsgAngularRate,
+    547: Orientation.MsgOrientQuatCov,
   
     105: Piksi.MsgAlmanac,
     104: Piksi.MsgSetTime,

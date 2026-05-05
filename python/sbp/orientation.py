@@ -540,10 +540,181 @@ class MsgAngularRate(SBP):
     d.update(j)
     return d
     
+SBP_MSG_ORIENT_QUAT_COV = 0x0223
+class MsgOrientQuatCov(SBP):
+  """SBP class for message MSG_ORIENT_QUAT_COV (0x0223).
+
+  You can have MSG_ORIENT_QUAT_COV inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the orientation as a unit quaternion together with the
+  upper triangle of the symmetric 3x3 attitude covariance matrix and a GPS
+  time-of-week time-tag. The reference frame of the quaternion and the
+  parameterization of the covariance matrix are both encoded in the flags
+  field, allowing additional frames or parameterizations to be added later
+  without introducing a new message. By default the quaternion describes the
+  orientation of the vehicle body frame with respect to a local-level NED
+  frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as small-
+  angle rotation errors about the axes of that NED frame; in this default case
+  the cov_xx, cov_yy, cov_zz diagonal entries correspond to the variance of
+  the rotation error about North, East, and Down respectively. The components
+  of the quaternion sum to a unit vector assuming that the LSB of each
+  component has a value of 2^-31. This message will only be available in
+  future INS versions of Swift Products and is not produced by Piksi Multi or
+  Duro.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  w : int
+    Real component
+  x : int
+    1st imaginary component
+  y : int
+    2nd imaginary component
+  z : int
+    3rd imaginary component
+  cov_xx : float
+    Estimated variance of the rotation error about the 1st axis of the
+    covariance frame
+  cov_xy : float
+    Estimated covariance of the rotation errors about the 1st and 2nd axes of
+    the covariance frame
+  cov_xz : float
+    Estimated covariance of the rotation errors about the 1st and 3rd axes of
+    the covariance frame
+  cov_yy : float
+    Estimated variance of the rotation error about the 2nd axis of the
+    covariance frame
+  cov_yz : float
+    Estimated covariance of the rotation errors about the 2nd and 3rd axes of
+    the covariance frame
+  cov_zz : float
+    Estimated variance of the rotation error about the 3rd axis of the
+    covariance frame
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'w' / construct.Int32sl,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
+                   'cov_xx' / construct.Float32l,
+                   'cov_xy' / construct.Float32l,
+                   'cov_xz' / construct.Float32l,
+                   'cov_yy' / construct.Float32l,
+                   'cov_yz' / construct.Float32l,
+                   'cov_zz' / construct.Float32l,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'w',
+               'x',
+               'y',
+               'z',
+               'cov_xx',
+               'cov_xy',
+               'cov_xz',
+               'cov_yy',
+               'cov_yz',
+               'cov_zz',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgOrientQuatCov,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgOrientQuatCov, self).__init__()
+      self.msg_type = SBP_MSG_ORIENT_QUAT_COV
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.w = kwargs.pop('w')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.cov_xx = kwargs.pop('cov_xx')
+      self.cov_xy = kwargs.pop('cov_xy')
+      self.cov_xz = kwargs.pop('cov_xz')
+      self.cov_yy = kwargs.pop('cov_yy')
+      self.cov_yz = kwargs.pop('cov_yz')
+      self.cov_zz = kwargs.pop('cov_zz')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgOrientQuatCov.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgOrientQuatCov(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgOrientQuatCov._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgOrientQuatCov._parser.build(c)
+    return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ORIENT QUAT COV"
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgOrientQuatCov._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgOrientQuatCov, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x020F: MsgBaselineHeading,
   0x0220: MsgOrientQuat,
   0x0221: MsgOrientEuler,
   0x0222: MsgAngularRate,
+  0x0223: MsgOrientQuatCov,
 }

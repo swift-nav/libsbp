@@ -185,6 +185,7 @@ class Sbp(KaitaiStruct):
         msg_orient_quat = 544
         msg_orient_euler = 545
         msg_angular_rate = 546
+        msg_orient_quat_cov = 547
         msg_pos_ecef_gnss = 553
         msg_pos_llh_gnss = 554
         msg_vel_ecef_gnss = 557
@@ -876,6 +877,10 @@ class Sbp(KaitaiStruct):
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
                 self.payload = Tracking.MsgTrackingIqDepB(_io__raw_payload, self, self._root)
+            elif _on == 547:
+                self._raw_payload = self._io.read_bytes(self.length)
+                _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))
+                self.payload = Orientation.MsgOrientQuatCov(_io__raw_payload, self, self._root)
             elif _on == 3073:
                 self._raw_payload = self._io.read_bytes(self.length)
                 _io__raw_payload = KaitaiStream(BytesIO(self._raw_payload))

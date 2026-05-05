@@ -21,5 +21,6 @@
 #include <libsbp/orientation/MSG_BASELINE_HEADING.h>
 #include <libsbp/orientation/MSG_ORIENT_EULER.h>
 #include <libsbp/orientation/MSG_ORIENT_QUAT.h>
+#include <libsbp/orientation/MSG_ORIENT_QUAT_COV.h>
 
 #endif /* LIBSBP_ORIENTATION_MESSAGES_H */
