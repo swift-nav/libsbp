@@ -101,9 +101,7 @@ class Orientation(KaitaiStruct):
         default case the cov_xx, cov_yy, cov_zz diagonal entries correspond to
         the variance of the rotation error about North, East, and Down
         respectively. The components of the quaternion sum to a unit vector
-        assuming that the LSB of each component has a value of 2^-31. This
-        message will only be available in future INS versions of Swift Products
-        and is not produced by Piksi Multi or Duro.
+        assuming that the LSB of each component has a value of 2^-31.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
