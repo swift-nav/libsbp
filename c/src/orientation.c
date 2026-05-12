@@ -561,22 +561,22 @@ bool sbp_msg_orient_quat_cov_encode_internal(
   if (!sbp_s32_encode(ctx, &msg->z)) {
     return false;
   }
-  if (!sbp_float_encode(ctx, &msg->cov_xx)) {
+  if (!sbp_float_encode(ctx, &msg->cov_x_x)) {
     return false;
   }
-  if (!sbp_float_encode(ctx, &msg->cov_xy)) {
+  if (!sbp_float_encode(ctx, &msg->cov_x_y)) {
     return false;
   }
-  if (!sbp_float_encode(ctx, &msg->cov_xz)) {
+  if (!sbp_float_encode(ctx, &msg->cov_x_z)) {
     return false;
   }
-  if (!sbp_float_encode(ctx, &msg->cov_yy)) {
+  if (!sbp_float_encode(ctx, &msg->cov_y_y)) {
     return false;
   }
-  if (!sbp_float_encode(ctx, &msg->cov_yz)) {
+  if (!sbp_float_encode(ctx, &msg->cov_y_z)) {
     return false;
   }
-  if (!sbp_float_encode(ctx, &msg->cov_zz)) {
+  if (!sbp_float_encode(ctx, &msg->cov_z_z)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->flags)) {
@@ -617,22 +617,22 @@ bool sbp_msg_orient_quat_cov_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_s32_decode(ctx, &msg->z)) {
     return false;
   }
-  if (!sbp_float_decode(ctx, &msg->cov_xx)) {
+  if (!sbp_float_decode(ctx, &msg->cov_x_x)) {
     return false;
   }
-  if (!sbp_float_decode(ctx, &msg->cov_xy)) {
+  if (!sbp_float_decode(ctx, &msg->cov_x_y)) {
     return false;
   }
-  if (!sbp_float_decode(ctx, &msg->cov_xz)) {
+  if (!sbp_float_decode(ctx, &msg->cov_x_z)) {
     return false;
   }
-  if (!sbp_float_decode(ctx, &msg->cov_yy)) {
+  if (!sbp_float_decode(ctx, &msg->cov_y_y)) {
     return false;
   }
-  if (!sbp_float_decode(ctx, &msg->cov_yz)) {
+  if (!sbp_float_decode(ctx, &msg->cov_y_z)) {
     return false;
   }
-  if (!sbp_float_decode(ctx, &msg->cov_zz)) {
+  if (!sbp_float_decode(ctx, &msg->cov_z_z)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->flags)) {
@@ -700,32 +700,32 @@ int sbp_msg_orient_quat_cov_cmp(const sbp_msg_orient_quat_cov_t *a,
     return ret;
   }
 
-  ret = sbp_float_cmp(&a->cov_xx, &b->cov_xx);
+  ret = sbp_float_cmp(&a->cov_x_x, &b->cov_x_x);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_float_cmp(&a->cov_xy, &b->cov_xy);
+  ret = sbp_float_cmp(&a->cov_x_y, &b->cov_x_y);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_float_cmp(&a->cov_xz, &b->cov_xz);
+  ret = sbp_float_cmp(&a->cov_x_z, &b->cov_x_z);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_float_cmp(&a->cov_yy, &b->cov_yy);
+  ret = sbp_float_cmp(&a->cov_y_y, &b->cov_y_y);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_float_cmp(&a->cov_yz, &b->cov_yz);
+  ret = sbp_float_cmp(&a->cov_y_z, &b->cov_y_z);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_float_cmp(&a->cov_zz, &b->cov_zz);
+  ret = sbp_float_cmp(&a->cov_z_z, &b->cov_z_z);
   if (ret != 0) {
     return ret;
   }

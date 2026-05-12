@@ -47,17 +47,17 @@ sub test_auto_check_sbp_orientation_msg_orient_quat_cov_1() {
 
     my $json = JSON::PP->new->convert_blessed->canonical;
     
-    is($msg->cov_xx(), 1.0, "cov_xx");
+    is($msg->cov_x_x(), 1.0, "cov_x_x");
     
-    is($msg->cov_xy(), 0.5, "cov_xy");
+    is($msg->cov_x_y(), 0.5, "cov_x_y");
     
-    is($msg->cov_xz(), 0.25, "cov_xz");
+    is($msg->cov_x_z(), 0.25, "cov_x_z");
     
-    is($msg->cov_yy(), 2.0, "cov_yy");
+    is($msg->cov_y_y(), 2.0, "cov_y_y");
     
-    is($msg->cov_yz(), 0.125, "cov_yz");
+    is($msg->cov_y_z(), 0.125, "cov_y_z");
     
-    is($msg->cov_zz(), 4.0, "cov_zz");
+    is($msg->cov_z_z(), 4.0, "cov_z_z");
     
     is($msg->flags(), 1, "flags");
     
@@ -71,7 +71,7 @@ sub test_auto_check_sbp_orientation_msg_orient_quat_cov_1() {
     
     is($msg->z(), 4, "z");
 
-    is($json->encode($msg), $json->encode($json->decode(q{{"cov_xx":1.0,"cov_xy":0.5,"cov_xz":0.25,"cov_yy":2.0,"cov_yz":0.125,"cov_zz":4.0,"crc":18734,"flags":1,"length":45,"msg_type":547,"payload":"AAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEAB","preamble":85,"sender":66,"tow":0,"w":3,"x":7,"y":8,"z":4}})), "raw_json");
+    is($json->encode($msg), $json->encode($json->decode(q{{"cov_x_x":1.0,"cov_x_y":0.5,"cov_x_z":0.25,"cov_y_y":2.0,"cov_y_z":0.125,"cov_z_z":4.0,"crc":18734,"flags":1,"length":45,"msg_type":547,"payload":"AAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEAB","preamble":85,"sender":66,"tow":0,"w":3,"x":7,"y":8,"z":4}})), "raw_json");
 }
 test_auto_check_sbp_orientation_msg_orient_quat_cov_1();
 

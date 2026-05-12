@@ -210,10 +210,11 @@ definitions:
       describes the orientation of the vehicle body frame with respect to a
       local-level NED frame (matching MSG_ORIENT_QUAT) and the covariance is
       expressed as small-angle rotation errors about the axes of that NED
-      frame; in this default case the cov_xx, cov_yy, cov_zz diagonal entries
-      correspond to the variance of the rotation error about North, East, and
-      Down respectively. The components of the quaternion sum to a unit vector
-      assuming that the LSB of each component has a value of 2^-31.
+      frame; in this default case the cov_x_x, cov_y_y, cov_z_z diagonal
+      entries correspond to the variance of the rotation error about North,
+      East, and Down respectively. The components of the quaternion sum to a
+      unit vector assuming that the LSB of each component has a value of
+      2^-31.
     fields:
           - tow:
               type: u32
@@ -235,27 +236,27 @@ definitions:
               type: s32
               units: 2^-31
               desc: 3rd imaginary component
-          - cov_xx:
+          - cov_x_x:
               type: float
               units: rad^2
               desc: Estimated variance of the rotation error about the 1st axis of the covariance frame
-          - cov_xy:
+          - cov_x_y:
               type: float
               units: rad^2
               desc: Estimated covariance of the rotation errors about the 1st and 2nd axes of the covariance frame
-          - cov_xz:
+          - cov_x_z:
               type: float
               units: rad^2
               desc: Estimated covariance of the rotation errors about the 1st and 3rd axes of the covariance frame
-          - cov_yy:
+          - cov_y_y:
               type: float
               units: rad^2
               desc: Estimated variance of the rotation error about the 2nd axis of the covariance frame
-          - cov_yz:
+          - cov_y_z:
               type: float
               units: rad^2
               desc: Estimated covariance of the rotation errors about the 2nd and 3rd axes of the covariance frame
-          - cov_zz:
+          - cov_z_z:
               type: float
               units: rad^2
               desc: Estimated variance of the rotation error about the 3rd axis of the covariance frame

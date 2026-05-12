@@ -98,8 +98,8 @@ class Orientation(KaitaiStruct):
         the orientation of the vehicle body frame with respect to a local-level
         NED frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as
         small-angle rotation errors about the axes of that NED frame; in this
-        default case the cov_xx, cov_yy, cov_zz diagonal entries correspond to
-        the variance of the rotation error about North, East, and Down
+        default case the cov_x_x, cov_y_y, cov_z_z diagonal entries correspond
+        to the variance of the rotation error about North, East, and Down
         respectively. The components of the quaternion sum to a unit vector
         assuming that the LSB of each component has a value of 2^-31.
         """
@@ -115,12 +115,12 @@ class Orientation(KaitaiStruct):
             self.x = self._io.read_s4le()
             self.y = self._io.read_s4le()
             self.z = self._io.read_s4le()
-            self.cov_xx = self._io.read_f4le()
-            self.cov_xy = self._io.read_f4le()
-            self.cov_xz = self._io.read_f4le()
-            self.cov_yy = self._io.read_f4le()
-            self.cov_yz = self._io.read_f4le()
-            self.cov_zz = self._io.read_f4le()
+            self.cov_x_x = self._io.read_f4le()
+            self.cov_x_y = self._io.read_f4le()
+            self.cov_x_z = self._io.read_f4le()
+            self.cov_y_y = self._io.read_f4le()
+            self.cov_y_z = self._io.read_f4le()
+            self.cov_z_z = self._io.read_f4le()
             self.flags = self._io.read_u1()
 
 

@@ -63,17 +63,17 @@ TEST(auto_check_sbp_orientation_MsgOrientQuatCov,
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.orient_quat_cov.cov_xx = 1.0;
+    test_msg.orient_quat_cov.cov_x_x = 1.0;
 
-    test_msg.orient_quat_cov.cov_xy = 0.5;
+    test_msg.orient_quat_cov.cov_x_y = 0.5;
 
-    test_msg.orient_quat_cov.cov_xz = 0.25;
+    test_msg.orient_quat_cov.cov_x_z = 0.25;
 
-    test_msg.orient_quat_cov.cov_yy = 2.0;
+    test_msg.orient_quat_cov.cov_y_y = 2.0;
 
-    test_msg.orient_quat_cov.cov_yz = 0.125;
+    test_msg.orient_quat_cov.cov_y_z = 0.125;
 
-    test_msg.orient_quat_cov.cov_zz = 4.0;
+    test_msg.orient_quat_cov.cov_z_z = 4.0;
 
     test_msg.orient_quat_cov.flags = 1;
 
@@ -109,35 +109,35 @@ TEST(auto_check_sbp_orientation_MsgOrientQuatCov,
     EXPECT_EQ(sbp_message_cmp(SbpMsgOrientQuatCov, &last_msg.msg, &test_msg), 0)
         << "Sent and received messages did not compare equal";
 
-    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_xx * 100 - 1.0 * 100), 0.05)
-        << "incorrect value for last_msg.msg.orient_quat_cov.cov_xx, expected "
+    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_x_x * 100 - 1.0 * 100), 0.05)
+        << "incorrect value for last_msg.msg.orient_quat_cov.cov_x_x, expected "
            "1.0, is "
-        << last_msg.msg.orient_quat_cov.cov_xx;
+        << last_msg.msg.orient_quat_cov.cov_x_x;
 
-    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_xy * 100 - 0.5 * 100), 0.05)
-        << "incorrect value for last_msg.msg.orient_quat_cov.cov_xy, expected "
+    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_x_y * 100 - 0.5 * 100), 0.05)
+        << "incorrect value for last_msg.msg.orient_quat_cov.cov_x_y, expected "
            "0.5, is "
-        << last_msg.msg.orient_quat_cov.cov_xy;
+        << last_msg.msg.orient_quat_cov.cov_x_y;
 
-    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_xz * 100 - 0.25 * 100), 0.05)
-        << "incorrect value for last_msg.msg.orient_quat_cov.cov_xz, expected "
+    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_x_z * 100 - 0.25 * 100), 0.05)
+        << "incorrect value for last_msg.msg.orient_quat_cov.cov_x_z, expected "
            "0.25, is "
-        << last_msg.msg.orient_quat_cov.cov_xz;
+        << last_msg.msg.orient_quat_cov.cov_x_z;
 
-    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_yy * 100 - 2.0 * 100), 0.05)
-        << "incorrect value for last_msg.msg.orient_quat_cov.cov_yy, expected "
+    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_y_y * 100 - 2.0 * 100), 0.05)
+        << "incorrect value for last_msg.msg.orient_quat_cov.cov_y_y, expected "
            "2.0, is "
-        << last_msg.msg.orient_quat_cov.cov_yy;
+        << last_msg.msg.orient_quat_cov.cov_y_y;
 
-    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_yz * 100 - 0.125 * 100), 0.05)
-        << "incorrect value for last_msg.msg.orient_quat_cov.cov_yz, expected "
+    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_y_z * 100 - 0.125 * 100), 0.05)
+        << "incorrect value for last_msg.msg.orient_quat_cov.cov_y_z, expected "
            "0.125, is "
-        << last_msg.msg.orient_quat_cov.cov_yz;
+        << last_msg.msg.orient_quat_cov.cov_y_z;
 
-    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_zz * 100 - 4.0 * 100), 0.05)
-        << "incorrect value for last_msg.msg.orient_quat_cov.cov_zz, expected "
+    EXPECT_LE((last_msg.msg.orient_quat_cov.cov_z_z * 100 - 4.0 * 100), 0.05)
+        << "incorrect value for last_msg.msg.orient_quat_cov.cov_z_z, expected "
            "4.0, is "
-        << last_msg.msg.orient_quat_cov.cov_zz;
+        << last_msg.msg.orient_quat_cov.cov_z_z;
 
     EXPECT_EQ(last_msg.msg.orient_quat_cov.flags, 1)
         << "incorrect value for last_msg.msg.orient_quat_cov.flags, expected "

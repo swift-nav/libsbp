@@ -30,8 +30,8 @@ import org.json.JSONObject;
  * field, allowing additional frames or parameterizations to be added later without introducing a
  * new message. By default the quaternion describes the orientation of the vehicle body frame with
  * respect to a local-level NED frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as
- * small- angle rotation errors about the axes of that NED frame; in this default case the cov_xx,
- * cov_yy, cov_zz diagonal entries correspond to the variance of the rotation error about North,
+ * small- angle rotation errors about the axes of that NED frame; in this default case the cov_x_x,
+ * cov_y_y, cov_z_z diagonal entries correspond to the variance of the rotation error about North,
  * East, and Down respectively. The components of the quaternion sum to a unit vector assuming that
  * the LSB of each component has a value of 2^-31.
  */
@@ -54,31 +54,31 @@ public class MsgOrientQuatCov extends SBPMessage {
     public int z;
 
     /** Estimated variance of the rotation error about the 1st axis of the covariance frame */
-    public float cov_xx;
+    public float cov_x_x;
 
     /**
      * Estimated covariance of the rotation errors about the 1st and 2nd axes of the covariance
      * frame
      */
-    public float cov_xy;
+    public float cov_x_y;
 
     /**
      * Estimated covariance of the rotation errors about the 1st and 3rd axes of the covariance
      * frame
      */
-    public float cov_xz;
+    public float cov_x_z;
 
     /** Estimated variance of the rotation error about the 2nd axis of the covariance frame */
-    public float cov_yy;
+    public float cov_y_y;
 
     /**
      * Estimated covariance of the rotation errors about the 2nd and 3rd axes of the covariance
      * frame
      */
-    public float cov_yz;
+    public float cov_y_z;
 
     /** Estimated variance of the rotation error about the 3rd axis of the covariance frame */
-    public float cov_zz;
+    public float cov_z_z;
 
     /** Status flags */
     public int flags;
@@ -106,12 +106,12 @@ public class MsgOrientQuatCov extends SBPMessage {
         x = parser.getS32();
         y = parser.getS32();
         z = parser.getS32();
-        cov_xx = parser.getFloat();
-        cov_xy = parser.getFloat();
-        cov_xz = parser.getFloat();
-        cov_yy = parser.getFloat();
-        cov_yz = parser.getFloat();
-        cov_zz = parser.getFloat();
+        cov_x_x = parser.getFloat();
+        cov_x_y = parser.getFloat();
+        cov_x_z = parser.getFloat();
+        cov_y_y = parser.getFloat();
+        cov_y_z = parser.getFloat();
+        cov_z_z = parser.getFloat();
         flags = parser.getU8();
     }
 
@@ -122,12 +122,12 @@ public class MsgOrientQuatCov extends SBPMessage {
         builder.putS32(x);
         builder.putS32(y);
         builder.putS32(z);
-        builder.putFloat(cov_xx);
-        builder.putFloat(cov_xy);
-        builder.putFloat(cov_xz);
-        builder.putFloat(cov_yy);
-        builder.putFloat(cov_yz);
-        builder.putFloat(cov_zz);
+        builder.putFloat(cov_x_x);
+        builder.putFloat(cov_x_y);
+        builder.putFloat(cov_x_z);
+        builder.putFloat(cov_y_y);
+        builder.putFloat(cov_y_z);
+        builder.putFloat(cov_z_z);
         builder.putU8(flags);
     }
 
@@ -139,12 +139,12 @@ public class MsgOrientQuatCov extends SBPMessage {
         obj.put("x", x);
         obj.put("y", y);
         obj.put("z", z);
-        obj.put("cov_xx", cov_xx);
-        obj.put("cov_xy", cov_xy);
-        obj.put("cov_xz", cov_xz);
-        obj.put("cov_yy", cov_yy);
-        obj.put("cov_yz", cov_yz);
-        obj.put("cov_zz", cov_zz);
+        obj.put("cov_x_x", cov_x_x);
+        obj.put("cov_x_y", cov_x_y);
+        obj.put("cov_x_z", cov_x_z);
+        obj.put("cov_y_y", cov_y_y);
+        obj.put("cov_y_z", cov_y_z);
+        obj.put("cov_z_z", cov_z_z);
         obj.put("flags", flags);
         return obj;
     }

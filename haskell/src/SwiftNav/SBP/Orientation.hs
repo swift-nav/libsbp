@@ -253,37 +253,37 @@ msgOrientQuatCov = 0x0223
 -- orientation of the vehicle body frame with respect to a local-level NED
 -- frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as small-
 -- angle rotation errors about the axes of that NED frame; in this default
--- case the cov_xx, cov_yy, cov_zz diagonal entries correspond to the variance
--- of the rotation error about North, East, and Down respectively. The
--- components of the quaternion sum to a unit vector assuming that the LSB of
--- each component has a value of 2^-31.
+-- case the cov_x_x, cov_y_y, cov_z_z diagonal entries correspond to the
+-- variance of the rotation error about North, East, and Down respectively.
+-- The components of the quaternion sum to a unit vector assuming that the LSB
+-- of each component has a value of 2^-31.
 data MsgOrientQuatCov = MsgOrientQuatCov
-  { _msgOrientQuatCov_tow  :: !Word32
+  { _msgOrientQuatCov_tow   :: !Word32
     -- ^ GPS Time of Week
-  , _msgOrientQuatCov_w    :: !Int32
+  , _msgOrientQuatCov_w     :: !Int32
     -- ^ Real component
-  , _msgOrientQuatCov_x    :: !Int32
+  , _msgOrientQuatCov_x     :: !Int32
     -- ^ 1st imaginary component
-  , _msgOrientQuatCov_y    :: !Int32
+  , _msgOrientQuatCov_y     :: !Int32
     -- ^ 2nd imaginary component
-  , _msgOrientQuatCov_z    :: !Int32
+  , _msgOrientQuatCov_z     :: !Int32
     -- ^ 3rd imaginary component
-  , _msgOrientQuatCov_cov_xx :: !Float
+  , _msgOrientQuatCov_cov_x_x :: !Float
     -- ^ Estimated variance of the rotation error about the 1st axis of the
     -- covariance frame
-  , _msgOrientQuatCov_cov_xy :: !Float
+  , _msgOrientQuatCov_cov_x_y :: !Float
     -- ^ Estimated covariance of the rotation errors about the 1st and 2nd axes
     -- of the covariance frame
-  , _msgOrientQuatCov_cov_xz :: !Float
+  , _msgOrientQuatCov_cov_x_z :: !Float
     -- ^ Estimated covariance of the rotation errors about the 1st and 3rd axes
     -- of the covariance frame
-  , _msgOrientQuatCov_cov_yy :: !Float
+  , _msgOrientQuatCov_cov_y_y :: !Float
     -- ^ Estimated variance of the rotation error about the 2nd axis of the
     -- covariance frame
-  , _msgOrientQuatCov_cov_yz :: !Float
+  , _msgOrientQuatCov_cov_y_z :: !Float
     -- ^ Estimated covariance of the rotation errors about the 2nd and 3rd axes
     -- of the covariance frame
-  , _msgOrientQuatCov_cov_zz :: !Float
+  , _msgOrientQuatCov_cov_z_z :: !Float
     -- ^ Estimated variance of the rotation error about the 3rd axis of the
     -- covariance frame
   , _msgOrientQuatCov_flags :: !Word8
@@ -297,12 +297,12 @@ instance Binary MsgOrientQuatCov where
     _msgOrientQuatCov_x <- (fromIntegral <$> getWord32le)
     _msgOrientQuatCov_y <- (fromIntegral <$> getWord32le)
     _msgOrientQuatCov_z <- (fromIntegral <$> getWord32le)
-    _msgOrientQuatCov_cov_xx <- getFloat32le
-    _msgOrientQuatCov_cov_xy <- getFloat32le
-    _msgOrientQuatCov_cov_xz <- getFloat32le
-    _msgOrientQuatCov_cov_yy <- getFloat32le
-    _msgOrientQuatCov_cov_yz <- getFloat32le
-    _msgOrientQuatCov_cov_zz <- getFloat32le
+    _msgOrientQuatCov_cov_x_x <- getFloat32le
+    _msgOrientQuatCov_cov_x_y <- getFloat32le
+    _msgOrientQuatCov_cov_x_z <- getFloat32le
+    _msgOrientQuatCov_cov_y_y <- getFloat32le
+    _msgOrientQuatCov_cov_y_z <- getFloat32le
+    _msgOrientQuatCov_cov_z_z <- getFloat32le
     _msgOrientQuatCov_flags <- getWord8
     pure MsgOrientQuatCov {..}
 
@@ -312,12 +312,12 @@ instance Binary MsgOrientQuatCov where
     (putWord32le . fromIntegral) _msgOrientQuatCov_x
     (putWord32le . fromIntegral) _msgOrientQuatCov_y
     (putWord32le . fromIntegral) _msgOrientQuatCov_z
-    putFloat32le _msgOrientQuatCov_cov_xx
-    putFloat32le _msgOrientQuatCov_cov_xy
-    putFloat32le _msgOrientQuatCov_cov_xz
-    putFloat32le _msgOrientQuatCov_cov_yy
-    putFloat32le _msgOrientQuatCov_cov_yz
-    putFloat32le _msgOrientQuatCov_cov_zz
+    putFloat32le _msgOrientQuatCov_cov_x_x
+    putFloat32le _msgOrientQuatCov_cov_x_y
+    putFloat32le _msgOrientQuatCov_cov_x_z
+    putFloat32le _msgOrientQuatCov_cov_y_y
+    putFloat32le _msgOrientQuatCov_cov_y_z
+    putFloat32le _msgOrientQuatCov_cov_z_z
     putWord8 _msgOrientQuatCov_flags
 
 $(makeSBP 'msgOrientQuatCov ''MsgOrientQuatCov)

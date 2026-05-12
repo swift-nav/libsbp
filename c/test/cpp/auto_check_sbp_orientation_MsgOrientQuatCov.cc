@@ -30,12 +30,12 @@ class Testauto_check_sbp_orientation_MsgOrientQuatCov0
     : public ::testing::Test {
  public:
   Testauto_check_sbp_orientation_MsgOrientQuatCov0() {
-    assign(test_msg_.cov_xx, 1.0);
-    assign(test_msg_.cov_xy, 0.5);
-    assign(test_msg_.cov_xz, 0.25);
-    assign(test_msg_.cov_yy, 2.0);
-    assign(test_msg_.cov_yz, 0.125);
-    assign(test_msg_.cov_zz, 4.0);
+    assign(test_msg_.cov_x_x, 1.0);
+    assign(test_msg_.cov_x_y, 0.5);
+    assign(test_msg_.cov_x_z, 0.25);
+    assign(test_msg_.cov_y_y, 2.0);
+    assign(test_msg_.cov_y_z, 0.125);
+    assign(test_msg_.cov_z_z, 4.0);
     assign(test_msg_.flags, 1);
     assign(test_msg_.tow, 0);
     assign(test_msg_.w, 3);
@@ -651,37 +651,37 @@ TEST_F(Testauto_check_sbp_orientation_MsgOrientQuatCov0, Comparison) {
   {
     sbp_msg_orient_quat_cov_t lesser = info.test_msg;
     sbp_msg_orient_quat_cov_t greater = info.test_msg;
-    make_lesser_greater(lesser.cov_xx, greater.cov_xx);
+    make_lesser_greater(lesser.cov_x_x, greater.cov_x_x);
     comparison_tests(lesser, greater);
   }
   {
     sbp_msg_orient_quat_cov_t lesser = info.test_msg;
     sbp_msg_orient_quat_cov_t greater = info.test_msg;
-    make_lesser_greater(lesser.cov_xy, greater.cov_xy);
+    make_lesser_greater(lesser.cov_x_y, greater.cov_x_y);
     comparison_tests(lesser, greater);
   }
   {
     sbp_msg_orient_quat_cov_t lesser = info.test_msg;
     sbp_msg_orient_quat_cov_t greater = info.test_msg;
-    make_lesser_greater(lesser.cov_xz, greater.cov_xz);
+    make_lesser_greater(lesser.cov_x_z, greater.cov_x_z);
     comparison_tests(lesser, greater);
   }
   {
     sbp_msg_orient_quat_cov_t lesser = info.test_msg;
     sbp_msg_orient_quat_cov_t greater = info.test_msg;
-    make_lesser_greater(lesser.cov_yy, greater.cov_yy);
+    make_lesser_greater(lesser.cov_y_y, greater.cov_y_y);
     comparison_tests(lesser, greater);
   }
   {
     sbp_msg_orient_quat_cov_t lesser = info.test_msg;
     sbp_msg_orient_quat_cov_t greater = info.test_msg;
-    make_lesser_greater(lesser.cov_yz, greater.cov_yz);
+    make_lesser_greater(lesser.cov_y_z, greater.cov_y_z);
     comparison_tests(lesser, greater);
   }
   {
     sbp_msg_orient_quat_cov_t lesser = info.test_msg;
     sbp_msg_orient_quat_cov_t greater = info.test_msg;
-    make_lesser_greater(lesser.cov_zz, greater.cov_zz);
+    make_lesser_greater(lesser.cov_z_z, greater.cov_z_z);
     comparison_tests(lesser, greater);
   }
   {

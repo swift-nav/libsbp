@@ -49,7 +49,7 @@ extern "C" {
  * orientation of the vehicle body frame with respect to a local-level NED frame
  * (matching MSG_ORIENT_QUAT) and the covariance is expressed as small-angle
  * rotation errors about the axes of that NED frame; in this default case the
- * cov_xx, cov_yy, cov_zz diagonal entries correspond to the variance of the
+ * cov_x_x, cov_y_y, cov_z_z diagonal entries correspond to the variance of the
  * rotation error about North, East, and Down respectively. The components of
  * the quaternion sum to a unit vector assuming that the LSB of each component
  * has a value of 2^-31.
@@ -84,37 +84,37 @@ typedef struct {
    * Estimated variance of the rotation error about the 1st axis of the
    * covariance frame [rad^2]
    */
-  float cov_xx;
+  float cov_x_x;
 
   /**
    * Estimated covariance of the rotation errors about the 1st and 2nd axes of
    * the covariance frame [rad^2]
    */
-  float cov_xy;
+  float cov_x_y;
 
   /**
    * Estimated covariance of the rotation errors about the 1st and 3rd axes of
    * the covariance frame [rad^2]
    */
-  float cov_xz;
+  float cov_x_z;
 
   /**
    * Estimated variance of the rotation error about the 2nd axis of the
    * covariance frame [rad^2]
    */
-  float cov_yy;
+  float cov_y_y;
 
   /**
    * Estimated covariance of the rotation errors about the 2nd and 3rd axes of
    * the covariance frame [rad^2]
    */
-  float cov_yz;
+  float cov_y_z;
 
   /**
    * Estimated variance of the rotation error about the 3rd axis of the
    * covariance frame [rad^2]
    */
-  float cov_zz;
+  float cov_z_z;
 
   /**
    * Status flags

@@ -558,7 +558,7 @@ class MsgOrientQuatCov(SBP):
   orientation of the vehicle body frame with respect to a local-level NED
   frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as small-
   angle rotation errors about the axes of that NED frame; in this default case
-  the cov_xx, cov_yy, cov_zz diagonal entries correspond to the variance of
+  the cov_x_x, cov_y_y, cov_z_z diagonal entries correspond to the variance of
   the rotation error about North, East, and Down respectively. The components
   of the quaternion sum to a unit vector assuming that the LSB of each
   component has a value of 2^-31.
@@ -577,22 +577,22 @@ class MsgOrientQuatCov(SBP):
     2nd imaginary component
   z : int
     3rd imaginary component
-  cov_xx : float
+  cov_x_x : float
     Estimated variance of the rotation error about the 1st axis of the
     covariance frame
-  cov_xy : float
+  cov_x_y : float
     Estimated covariance of the rotation errors about the 1st and 2nd axes of
     the covariance frame
-  cov_xz : float
+  cov_x_z : float
     Estimated covariance of the rotation errors about the 1st and 3rd axes of
     the covariance frame
-  cov_yy : float
+  cov_y_y : float
     Estimated variance of the rotation error about the 2nd axis of the
     covariance frame
-  cov_yz : float
+  cov_y_z : float
     Estimated covariance of the rotation errors about the 2nd and 3rd axes of
     the covariance frame
-  cov_zz : float
+  cov_z_z : float
     Estimated variance of the rotation error about the 3rd axis of the
     covariance frame
   flags : int
@@ -607,12 +607,12 @@ class MsgOrientQuatCov(SBP):
                    'x' / construct.Int32sl,
                    'y' / construct.Int32sl,
                    'z' / construct.Int32sl,
-                   'cov_xx' / construct.Float32l,
-                   'cov_xy' / construct.Float32l,
-                   'cov_xz' / construct.Float32l,
-                   'cov_yy' / construct.Float32l,
-                   'cov_yz' / construct.Float32l,
-                   'cov_zz' / construct.Float32l,
+                   'cov_x_x' / construct.Float32l,
+                   'cov_x_y' / construct.Float32l,
+                   'cov_x_z' / construct.Float32l,
+                   'cov_y_y' / construct.Float32l,
+                   'cov_y_z' / construct.Float32l,
+                   'cov_z_z' / construct.Float32l,
                    'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
@@ -620,12 +620,12 @@ class MsgOrientQuatCov(SBP):
                'x',
                'y',
                'z',
-               'cov_xx',
-               'cov_xy',
-               'cov_xz',
-               'cov_yy',
-               'cov_yz',
-               'cov_zz',
+               'cov_x_x',
+               'cov_x_y',
+               'cov_x_z',
+               'cov_y_y',
+               'cov_y_z',
+               'cov_z_z',
                'flags',
               ]
 
@@ -644,12 +644,12 @@ class MsgOrientQuatCov(SBP):
       self.x = kwargs.pop('x')
       self.y = kwargs.pop('y')
       self.z = kwargs.pop('z')
-      self.cov_xx = kwargs.pop('cov_xx')
-      self.cov_xy = kwargs.pop('cov_xy')
-      self.cov_xz = kwargs.pop('cov_xz')
-      self.cov_yy = kwargs.pop('cov_yy')
-      self.cov_yz = kwargs.pop('cov_yz')
-      self.cov_zz = kwargs.pop('cov_zz')
+      self.cov_x_x = kwargs.pop('cov_x_x')
+      self.cov_x_y = kwargs.pop('cov_x_y')
+      self.cov_x_z = kwargs.pop('cov_x_z')
+      self.cov_y_y = kwargs.pop('cov_y_y')
+      self.cov_y_z = kwargs.pop('cov_y_z')
+      self.cov_z_z = kwargs.pop('cov_z_z')
       self.flags = kwargs.pop('flags')
 
   def __repr__(self):

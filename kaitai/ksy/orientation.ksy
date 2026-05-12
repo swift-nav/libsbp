@@ -182,8 +182,8 @@ types:
       the orientation of the vehicle body frame with respect to a local-level
       NED frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as
       small-angle rotation errors about the axes of that NED frame; in this
-      default case the cov_xx, cov_yy, cov_zz diagonal entries correspond to
-      the variance of the rotation error about North, East, and Down
+      default case the cov_x_x, cov_y_y, cov_z_z diagonal entries correspond
+      to the variance of the rotation error about North, East, and Down
       respectively. The components of the quaternion sum to a unit vector
       assuming that the LSB of each component has a value of 2^-31.
     seq:
@@ -207,32 +207,32 @@ types:
         doc: |
           3rd imaginary component
         type: s4
-      - id: cov_xx
+      - id: cov_x_x
         doc: |
           Estimated variance of the rotation error about the 1st axis of the
           covariance frame
         type: f4
-      - id: cov_xy
+      - id: cov_x_y
         doc: |
           Estimated covariance of the rotation errors about the 1st and 2nd
           axes of the covariance frame
         type: f4
-      - id: cov_xz
+      - id: cov_x_z
         doc: |
           Estimated covariance of the rotation errors about the 1st and 3rd
           axes of the covariance frame
         type: f4
-      - id: cov_yy
+      - id: cov_y_y
         doc: |
           Estimated variance of the rotation error about the 2nd axis of the
           covariance frame
         type: f4
-      - id: cov_yz
+      - id: cov_y_z
         doc: |
           Estimated covariance of the rotation errors about the 2nd and 3rd
           axes of the covariance frame
         type: f4
-      - id: cov_zz
+      - id: cov_z_z
         doc: |
           Estimated variance of the rotation error about the 3rd axis of the
           covariance frame

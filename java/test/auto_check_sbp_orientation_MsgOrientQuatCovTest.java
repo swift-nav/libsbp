@@ -83,12 +83,12 @@ public class auto_check_sbp_orientation_MsgOrientQuatCovTest {
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
-        org.junit.Assert.assertEquals(msg.cov_xx, 1.00000000000000000e+00, DELTA);
-        org.junit.Assert.assertEquals(msg.cov_xy, 5.00000000000000000e-01, DELTA);
-        org.junit.Assert.assertEquals(msg.cov_xz, 2.50000000000000000e-01, DELTA);
-        org.junit.Assert.assertEquals(msg.cov_yy, 2.00000000000000000e+00, DELTA);
-        org.junit.Assert.assertEquals(msg.cov_yz, 1.25000000000000000e-01, DELTA);
-        org.junit.Assert.assertEquals(msg.cov_zz, 4.00000000000000000e+00, DELTA);
+        org.junit.Assert.assertEquals(msg.cov_x_x, 1.00000000000000000e+00, DELTA);
+        org.junit.Assert.assertEquals(msg.cov_x_y, 5.00000000000000000e-01, DELTA);
+        org.junit.Assert.assertEquals(msg.cov_x_z, 2.50000000000000000e-01, DELTA);
+        org.junit.Assert.assertEquals(msg.cov_y_y, 2.00000000000000000e+00, DELTA);
+        org.junit.Assert.assertEquals(msg.cov_y_z, 1.25000000000000000e-01, DELTA);
+        org.junit.Assert.assertEquals(msg.cov_z_z, 4.00000000000000000e+00, DELTA);
         value = msg.flags;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(

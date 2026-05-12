@@ -2251,18 +2251,18 @@ are both encoded in the flags field, allowing additional frames or parameterizat
 be added later without introducing a new message. By default the quaternion describes the
 orientation of the vehicle body frame with respect to a local-level NED frame (matching
 MSG_ORIENT_QUAT) and the covariance is expressed as small-angle rotation errors about the
-axes of that NED frame; in this default case the cov_xx, cov_yy, cov_zz diagonal entries
-correspond to the variance of the rotation error about North, East, and Down
+axes of that NED frame; in this default case the cov_x_x, cov_y_y, cov_z_z diagonal
+entries correspond to the variance of the rotation error about North, East, and Down
 respectively. The components of the quaternion sum to a unit vector assuming that the LSB
 of each component has a value of 2^-31.
 -}
 type alias MsgOrientQuatCov =
-    { covXx : Float
-    , covXy : Float
-    , covXz : Float
-    , covYy : Float
-    , covYz : Float
-    , covZz : Float
+    { covXX : Float
+    , covXY : Float
+    , covXZ : Float
+    , covYY : Float
+    , covYZ : Float
+    , covZZ : Float
     , flags : Int
     , tow : Int
     , w : Int
@@ -6477,12 +6477,12 @@ encodeMsgOrientQuat x =
 msgOrientQuatCov : Jdec.Decoder MsgOrientQuatCov
 msgOrientQuatCov =
     Jpipe.decode MsgOrientQuatCov
-        |> Jpipe.required "cov_xx" Jdec.float
-        |> Jpipe.required "cov_xy" Jdec.float
-        |> Jpipe.required "cov_xz" Jdec.float
-        |> Jpipe.required "cov_yy" Jdec.float
-        |> Jpipe.required "cov_yz" Jdec.float
-        |> Jpipe.required "cov_zz" Jdec.float
+        |> Jpipe.required "cov_x_x" Jdec.float
+        |> Jpipe.required "cov_x_y" Jdec.float
+        |> Jpipe.required "cov_x_z" Jdec.float
+        |> Jpipe.required "cov_y_y" Jdec.float
+        |> Jpipe.required "cov_y_z" Jdec.float
+        |> Jpipe.required "cov_z_z" Jdec.float
         |> Jpipe.required "flags" Jdec.int
         |> Jpipe.required "tow" Jdec.int
         |> Jpipe.required "w" Jdec.int
@@ -6493,12 +6493,12 @@ msgOrientQuatCov =
 encodeMsgOrientQuatCov : MsgOrientQuatCov -> Jenc.Value
 encodeMsgOrientQuatCov x =
     Jenc.object
-        [ ("cov_xx", Jenc.float x.covXx)
-        , ("cov_xy", Jenc.float x.covXy)
-        , ("cov_xz", Jenc.float x.covXz)
-        , ("cov_yy", Jenc.float x.covYy)
-        , ("cov_yz", Jenc.float x.covYz)
-        , ("cov_zz", Jenc.float x.covZz)
+        [ ("cov_x_x", Jenc.float x.covXX)
+        , ("cov_x_y", Jenc.float x.covXY)
+        , ("cov_x_z", Jenc.float x.covXZ)
+        , ("cov_y_y", Jenc.float x.covYY)
+        , ("cov_y_z", Jenc.float x.covYZ)
+        , ("cov_z_z", Jenc.float x.covZZ)
         , ("flags", Jenc.int x.flags)
         , ("tow", Jenc.int x.tow)
         , ("w", Jenc.int x.w)

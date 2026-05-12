@@ -36,17 +36,17 @@ def test_auto_check_sbp_orientation_msg_orient_quat_cov_1():
     
     assert msg.sender == 0x42
     
-    assert dictify(msg.cov_xx) == 1.0
+    assert dictify(msg.cov_x_x) == 1.0
     
-    assert dictify(msg.cov_xy) == 0.5
+    assert dictify(msg.cov_x_y) == 0.5
     
-    assert dictify(msg.cov_xz) == 0.25
+    assert dictify(msg.cov_x_z) == 0.25
     
-    assert dictify(msg.cov_yy) == 2.0
+    assert dictify(msg.cov_y_y) == 2.0
     
-    assert dictify(msg.cov_yz) == 0.125
+    assert dictify(msg.cov_y_z) == 0.125
     
-    assert dictify(msg.cov_zz) == 4.0
+    assert dictify(msg.cov_z_z) == 4.0
     
     assert dictify(msg.flags) == 1
     
@@ -60,4 +60,4 @@ def test_auto_check_sbp_orientation_msg_orient_quat_cov_1():
     
     assert dictify(msg.z) == 4
 
-    assert dictify(msg) == {'preamble': 85, 'msg_type': 547, 'sender': 66, 'length': 45, 'payload': 'AAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEAB', 'crc': 18734, 'tow': 0, 'w': 3, 'x': 7, 'y': 8, 'z': 4, 'cov_xx': 1.0, 'cov_xy': 0.5, 'cov_xz': 0.25, 'cov_yy': 2.0, 'cov_yz': 0.125, 'cov_zz': 4.0, 'flags': 1}
+    assert dictify(msg) == {'preamble': 85, 'msg_type': 547, 'sender': 66, 'length': 45, 'payload': 'AAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEAB', 'crc': 18734, 'tow': 0, 'w': 3, 'x': 7, 'y': 8, 'z': 4, 'cov_x_x': 1.0, 'cov_x_y': 0.5, 'cov_x_z': 0.25, 'cov_y_y': 2.0, 'cov_y_z': 0.125, 'cov_z_z': 4.0, 'flags': 1}

@@ -789,7 +789,7 @@ pub mod msg_orient_quat_cov {
     /// orientation of the vehicle body frame with respect to a local-level NED
     /// frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as small-
     /// angle rotation errors about the axes of that NED frame; in this default
-    /// case the cov_xx, cov_yy, cov_zz diagonal entries correspond to the
+    /// case the cov_x_x, cov_y_y, cov_z_z diagonal entries correspond to the
     /// variance of the rotation error about North, East, and Down respectively.
     /// The components of the quaternion sum to a unit vector assuming that the
     /// LSB of each component has a value of 2^-31.
@@ -818,28 +818,28 @@ pub mod msg_orient_quat_cov {
         pub z: i32,
         /// Estimated variance of the rotation error about the 1st axis of the
         /// covariance frame
-        #[cfg_attr(feature = "serde", serde(rename = "cov_xx"))]
-        pub cov_xx: f32,
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_x"))]
+        pub cov_x_x: f32,
         /// Estimated covariance of the rotation errors about the 1st and 2nd axes
         /// of the covariance frame
-        #[cfg_attr(feature = "serde", serde(rename = "cov_xy"))]
-        pub cov_xy: f32,
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_y"))]
+        pub cov_x_y: f32,
         /// Estimated covariance of the rotation errors about the 1st and 3rd axes
         /// of the covariance frame
-        #[cfg_attr(feature = "serde", serde(rename = "cov_xz"))]
-        pub cov_xz: f32,
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_z"))]
+        pub cov_x_z: f32,
         /// Estimated variance of the rotation error about the 2nd axis of the
         /// covariance frame
-        #[cfg_attr(feature = "serde", serde(rename = "cov_yy"))]
-        pub cov_yy: f32,
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_y"))]
+        pub cov_y_y: f32,
         /// Estimated covariance of the rotation errors about the 2nd and 3rd axes
         /// of the covariance frame
-        #[cfg_attr(feature = "serde", serde(rename = "cov_yz"))]
-        pub cov_yz: f32,
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_z"))]
+        pub cov_y_z: f32,
         /// Estimated variance of the rotation error about the 3rd axis of the
         /// covariance frame
-        #[cfg_attr(feature = "serde", serde(rename = "cov_zz"))]
-        pub cov_zz: f32,
+        #[cfg_attr(feature = "serde", serde(rename = "cov_z_z"))]
+        pub cov_z_z: f32,
         /// Status flags
         #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
@@ -969,12 +969,12 @@ pub mod msg_orient_quat_cov {
                 + WireFormat::len(&self.x)
                 + WireFormat::len(&self.y)
                 + WireFormat::len(&self.z)
-                + WireFormat::len(&self.cov_xx)
-                + WireFormat::len(&self.cov_xy)
-                + WireFormat::len(&self.cov_xz)
-                + WireFormat::len(&self.cov_yy)
-                + WireFormat::len(&self.cov_yz)
-                + WireFormat::len(&self.cov_zz)
+                + WireFormat::len(&self.cov_x_x)
+                + WireFormat::len(&self.cov_x_y)
+                + WireFormat::len(&self.cov_x_z)
+                + WireFormat::len(&self.cov_y_y)
+                + WireFormat::len(&self.cov_y_z)
+                + WireFormat::len(&self.cov_z_z)
                 + WireFormat::len(&self.flags)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
@@ -983,12 +983,12 @@ pub mod msg_orient_quat_cov {
             WireFormat::write(&self.x, buf);
             WireFormat::write(&self.y, buf);
             WireFormat::write(&self.z, buf);
-            WireFormat::write(&self.cov_xx, buf);
-            WireFormat::write(&self.cov_xy, buf);
-            WireFormat::write(&self.cov_xz, buf);
-            WireFormat::write(&self.cov_yy, buf);
-            WireFormat::write(&self.cov_yz, buf);
-            WireFormat::write(&self.cov_zz, buf);
+            WireFormat::write(&self.cov_x_x, buf);
+            WireFormat::write(&self.cov_x_y, buf);
+            WireFormat::write(&self.cov_x_z, buf);
+            WireFormat::write(&self.cov_y_y, buf);
+            WireFormat::write(&self.cov_y_z, buf);
+            WireFormat::write(&self.cov_z_z, buf);
             WireFormat::write(&self.flags, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
@@ -999,12 +999,12 @@ pub mod msg_orient_quat_cov {
                 x: WireFormat::parse_unchecked(buf),
                 y: WireFormat::parse_unchecked(buf),
                 z: WireFormat::parse_unchecked(buf),
-                cov_xx: WireFormat::parse_unchecked(buf),
-                cov_xy: WireFormat::parse_unchecked(buf),
-                cov_xz: WireFormat::parse_unchecked(buf),
-                cov_yy: WireFormat::parse_unchecked(buf),
-                cov_yz: WireFormat::parse_unchecked(buf),
-                cov_zz: WireFormat::parse_unchecked(buf),
+                cov_x_x: WireFormat::parse_unchecked(buf),
+                cov_x_y: WireFormat::parse_unchecked(buf),
+                cov_x_z: WireFormat::parse_unchecked(buf),
+                cov_y_y: WireFormat::parse_unchecked(buf),
+                cov_y_z: WireFormat::parse_unchecked(buf),
+                cov_z_z: WireFormat::parse_unchecked(buf),
                 flags: WireFormat::parse_unchecked(buf),
             }
         }

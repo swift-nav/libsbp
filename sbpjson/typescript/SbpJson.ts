@@ -1758,24 +1758,24 @@ export interface MsgOrientQuat {
  * be added later without introducing a new message. By default the quaternion describes the
  * orientation of the vehicle body frame with respect to a local-level NED frame (matching
  * MSG_ORIENT_QUAT) and the covariance is expressed as small-angle rotation errors about the
- * axes of that NED frame; in this default case the cov_xx, cov_yy, cov_zz diagonal entries
- * correspond to the variance of the rotation error about North, East, and Down
+ * axes of that NED frame; in this default case the cov_x_x, cov_y_y, cov_z_z diagonal
+ * entries correspond to the variance of the rotation error about North, East, and Down
  * respectively. The components of the quaternion sum to a unit vector assuming that the LSB
  * of each component has a value of 2^-31.
  */
 export interface MsgOrientQuatCov {
-    cov_xx: number;
-    cov_xy: number;
-    cov_xz: number;
-    cov_yy: number;
-    cov_yz: number;
-    cov_zz: number;
-    flags:  number;
-    tow:    number;
-    w:      number;
-    x:      number;
-    y:      number;
-    z:      number;
+    cov_x_x: number;
+    cov_x_y: number;
+    cov_x_z: number;
+    cov_y_y: number;
+    cov_y_z: number;
+    cov_z_z: number;
+    flags:   number;
+    tow:     number;
+    w:       number;
+    x:       number;
+    y:       number;
+    z:       number;
     [property: string]: any;
 }
 
@@ -6110,12 +6110,12 @@ const typeMap: any = {
         { json: "z_accuracy", js: "z_accuracy", typ: 3.14 },
     ], "any"),
     "MsgOrientQuatCov": o([
-        { json: "cov_xx", js: "cov_xx", typ: 3.14 },
-        { json: "cov_xy", js: "cov_xy", typ: 3.14 },
-        { json: "cov_xz", js: "cov_xz", typ: 3.14 },
-        { json: "cov_yy", js: "cov_yy", typ: 3.14 },
-        { json: "cov_yz", js: "cov_yz", typ: 3.14 },
-        { json: "cov_zz", js: "cov_zz", typ: 3.14 },
+        { json: "cov_x_x", js: "cov_x_x", typ: 3.14 },
+        { json: "cov_x_y", js: "cov_x_y", typ: 3.14 },
+        { json: "cov_x_z", js: "cov_x_z", typ: 3.14 },
+        { json: "cov_y_y", js: "cov_y_y", typ: 3.14 },
+        { json: "cov_y_z", js: "cov_y_z", typ: 3.14 },
+        { json: "cov_z_z", js: "cov_z_z", typ: 3.14 },
         { json: "flags", js: "flags", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
         { json: "w", js: "w", typ: 0 },

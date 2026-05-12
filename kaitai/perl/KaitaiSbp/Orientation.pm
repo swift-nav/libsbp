@@ -269,12 +269,12 @@ sub _read {
     $self->{x} = $self->{_io}->read_s4le();
     $self->{y} = $self->{_io}->read_s4le();
     $self->{z} = $self->{_io}->read_s4le();
-    $self->{cov_xx} = $self->{_io}->read_f4le();
-    $self->{cov_xy} = $self->{_io}->read_f4le();
-    $self->{cov_xz} = $self->{_io}->read_f4le();
-    $self->{cov_yy} = $self->{_io}->read_f4le();
-    $self->{cov_yz} = $self->{_io}->read_f4le();
-    $self->{cov_zz} = $self->{_io}->read_f4le();
+    $self->{cov_x_x} = $self->{_io}->read_f4le();
+    $self->{cov_x_y} = $self->{_io}->read_f4le();
+    $self->{cov_x_z} = $self->{_io}->read_f4le();
+    $self->{cov_y_y} = $self->{_io}->read_f4le();
+    $self->{cov_y_z} = $self->{_io}->read_f4le();
+    $self->{cov_z_z} = $self->{_io}->read_f4le();
     $self->{flags} = $self->{_io}->read_u1();
 }
 
@@ -303,34 +303,34 @@ sub z {
     return $self->{z};
 }
 
-sub cov_xx {
+sub cov_x_x {
     my ($self) = @_;
-    return $self->{cov_xx};
+    return $self->{cov_x_x};
 }
 
-sub cov_xy {
+sub cov_x_y {
     my ($self) = @_;
-    return $self->{cov_xy};
+    return $self->{cov_x_y};
 }
 
-sub cov_xz {
+sub cov_x_z {
     my ($self) = @_;
-    return $self->{cov_xz};
+    return $self->{cov_x_z};
 }
 
-sub cov_yy {
+sub cov_y_y {
     my ($self) = @_;
-    return $self->{cov_yy};
+    return $self->{cov_y_y};
 }
 
-sub cov_yz {
+sub cov_y_z {
     my ($self) = @_;
-    return $self->{cov_yz};
+    return $self->{cov_y_z};
 }
 
-sub cov_zz {
+sub cov_z_z {
     my ($self) = @_;
-    return $self->{cov_zz};
+    return $self->{cov_z_z};
 }
 
 sub flags {

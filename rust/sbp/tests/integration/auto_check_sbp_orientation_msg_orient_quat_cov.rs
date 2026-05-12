@@ -47,34 +47,34 @@ fn test_auto_check_sbp_orientation_msg_orient_quat_cov() {
                     "incorrect sender id, expected 0x42, is {sender_id}"
                 );
                 assert!(
-                    msg.cov_xx.almost_eq(1.00000000000000000e+00),
-                    "incorrect value for cov_xx, expected 1.00000000000000000e+00, is {:e}",
-                    msg.cov_xx
+                    msg.cov_x_x.almost_eq(1.00000000000000000e+00),
+                    "incorrect value for cov_x_x, expected 1.00000000000000000e+00, is {:e}",
+                    msg.cov_x_x
                 );
                 assert!(
-                    msg.cov_xy.almost_eq(5.00000000000000000e-01),
-                    "incorrect value for cov_xy, expected 5.00000000000000000e-01, is {:e}",
-                    msg.cov_xy
+                    msg.cov_x_y.almost_eq(5.00000000000000000e-01),
+                    "incorrect value for cov_x_y, expected 5.00000000000000000e-01, is {:e}",
+                    msg.cov_x_y
                 );
                 assert!(
-                    msg.cov_xz.almost_eq(2.50000000000000000e-01),
-                    "incorrect value for cov_xz, expected 2.50000000000000000e-01, is {:e}",
-                    msg.cov_xz
+                    msg.cov_x_z.almost_eq(2.50000000000000000e-01),
+                    "incorrect value for cov_x_z, expected 2.50000000000000000e-01, is {:e}",
+                    msg.cov_x_z
                 );
                 assert!(
-                    msg.cov_yy.almost_eq(2.00000000000000000e+00),
-                    "incorrect value for cov_yy, expected 2.00000000000000000e+00, is {:e}",
-                    msg.cov_yy
+                    msg.cov_y_y.almost_eq(2.00000000000000000e+00),
+                    "incorrect value for cov_y_y, expected 2.00000000000000000e+00, is {:e}",
+                    msg.cov_y_y
                 );
                 assert!(
-                    msg.cov_yz.almost_eq(1.25000000000000000e-01),
-                    "incorrect value for cov_yz, expected 1.25000000000000000e-01, is {:e}",
-                    msg.cov_yz
+                    msg.cov_y_z.almost_eq(1.25000000000000000e-01),
+                    "incorrect value for cov_y_z, expected 1.25000000000000000e-01, is {:e}",
+                    msg.cov_y_z
                 );
                 assert!(
-                    msg.cov_zz.almost_eq(4.00000000000000000e+00),
-                    "incorrect value for cov_zz, expected 4.00000000000000000e+00, is {:e}",
-                    msg.cov_zz
+                    msg.cov_z_z.almost_eq(4.00000000000000000e+00),
+                    "incorrect value for cov_z_z, expected 4.00000000000000000e+00, is {:e}",
+                    msg.cov_z_z
                 );
                 assert_eq!(
                     msg.flags, 1,
@@ -109,7 +109,7 @@ fn test_auto_check_sbp_orientation_msg_orient_quat_cov() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_orientation_msg_orient_quat_cov() {
     {
-        let json_input = r#"{"preamble": 85, "msg_type": 547, "sender": 66, "length": 45, "payload": "AAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEAB", "crc": 18734, "tow": 0, "w": 3, "x": 7, "y": 8, "z": 4, "cov_xx": 1.0, "cov_xy": 0.5, "cov_xz": 0.25, "cov_yy": 2.0, "cov_yz": 0.125, "cov_zz": 4.0, "flags": 1}"#.as_bytes();
+        let json_input = r#"{"preamble": 85, "msg_type": 547, "sender": 66, "length": 45, "payload": "AAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEAB", "crc": 18734, "tow": 0, "w": 3, "x": 7, "y": 8, "z": 4, "cov_x_x": 1.0, "cov_x_y": 0.5, "cov_x_z": 0.25, "cov_y_y": 2.0, "cov_y_z": 0.125, "cov_z_z": 4.0, "flags": 1}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -142,34 +142,34 @@ fn test_json2sbp_auto_check_sbp_orientation_msg_orient_quat_cov() {
                     "incorrect sender id, expected 0x42, is {sender_id}"
                 );
                 assert!(
-                    msg.cov_xx.almost_eq(1.00000000000000000e+00),
-                    "incorrect value for cov_xx, expected 1.00000000000000000e+00, is {:e}",
-                    msg.cov_xx
+                    msg.cov_x_x.almost_eq(1.00000000000000000e+00),
+                    "incorrect value for cov_x_x, expected 1.00000000000000000e+00, is {:e}",
+                    msg.cov_x_x
                 );
                 assert!(
-                    msg.cov_xy.almost_eq(5.00000000000000000e-01),
-                    "incorrect value for cov_xy, expected 5.00000000000000000e-01, is {:e}",
-                    msg.cov_xy
+                    msg.cov_x_y.almost_eq(5.00000000000000000e-01),
+                    "incorrect value for cov_x_y, expected 5.00000000000000000e-01, is {:e}",
+                    msg.cov_x_y
                 );
                 assert!(
-                    msg.cov_xz.almost_eq(2.50000000000000000e-01),
-                    "incorrect value for cov_xz, expected 2.50000000000000000e-01, is {:e}",
-                    msg.cov_xz
+                    msg.cov_x_z.almost_eq(2.50000000000000000e-01),
+                    "incorrect value for cov_x_z, expected 2.50000000000000000e-01, is {:e}",
+                    msg.cov_x_z
                 );
                 assert!(
-                    msg.cov_yy.almost_eq(2.00000000000000000e+00),
-                    "incorrect value for cov_yy, expected 2.00000000000000000e+00, is {:e}",
-                    msg.cov_yy
+                    msg.cov_y_y.almost_eq(2.00000000000000000e+00),
+                    "incorrect value for cov_y_y, expected 2.00000000000000000e+00, is {:e}",
+                    msg.cov_y_y
                 );
                 assert!(
-                    msg.cov_yz.almost_eq(1.25000000000000000e-01),
-                    "incorrect value for cov_yz, expected 1.25000000000000000e-01, is {:e}",
-                    msg.cov_yz
+                    msg.cov_y_z.almost_eq(1.25000000000000000e-01),
+                    "incorrect value for cov_y_z, expected 1.25000000000000000e-01, is {:e}",
+                    msg.cov_y_z
                 );
                 assert!(
-                    msg.cov_zz.almost_eq(4.00000000000000000e+00),
-                    "incorrect value for cov_zz, expected 4.00000000000000000e+00, is {:e}",
-                    msg.cov_zz
+                    msg.cov_z_z.almost_eq(4.00000000000000000e+00),
+                    "incorrect value for cov_z_z, expected 4.00000000000000000e+00, is {:e}",
+                    msg.cov_z_z
                 );
                 assert_eq!(
                     msg.flags, 1,
@@ -246,34 +246,34 @@ fn test_sbp2json_auto_check_sbp_orientation_msg_orient_quat_cov() {
                     "incorrect sender id, expected 0x42, is {sender_id}"
                 );
                 assert!(
-                    msg.cov_xx.almost_eq(1.00000000000000000e+00),
-                    "incorrect value for cov_xx, expected 1.00000000000000000e+00, is {:e}",
-                    msg.cov_xx
+                    msg.cov_x_x.almost_eq(1.00000000000000000e+00),
+                    "incorrect value for cov_x_x, expected 1.00000000000000000e+00, is {:e}",
+                    msg.cov_x_x
                 );
                 assert!(
-                    msg.cov_xy.almost_eq(5.00000000000000000e-01),
-                    "incorrect value for cov_xy, expected 5.00000000000000000e-01, is {:e}",
-                    msg.cov_xy
+                    msg.cov_x_y.almost_eq(5.00000000000000000e-01),
+                    "incorrect value for cov_x_y, expected 5.00000000000000000e-01, is {:e}",
+                    msg.cov_x_y
                 );
                 assert!(
-                    msg.cov_xz.almost_eq(2.50000000000000000e-01),
-                    "incorrect value for cov_xz, expected 2.50000000000000000e-01, is {:e}",
-                    msg.cov_xz
+                    msg.cov_x_z.almost_eq(2.50000000000000000e-01),
+                    "incorrect value for cov_x_z, expected 2.50000000000000000e-01, is {:e}",
+                    msg.cov_x_z
                 );
                 assert!(
-                    msg.cov_yy.almost_eq(2.00000000000000000e+00),
-                    "incorrect value for cov_yy, expected 2.00000000000000000e+00, is {:e}",
-                    msg.cov_yy
+                    msg.cov_y_y.almost_eq(2.00000000000000000e+00),
+                    "incorrect value for cov_y_y, expected 2.00000000000000000e+00, is {:e}",
+                    msg.cov_y_y
                 );
                 assert!(
-                    msg.cov_yz.almost_eq(1.25000000000000000e-01),
-                    "incorrect value for cov_yz, expected 1.25000000000000000e-01, is {:e}",
-                    msg.cov_yz
+                    msg.cov_y_z.almost_eq(1.25000000000000000e-01),
+                    "incorrect value for cov_y_z, expected 1.25000000000000000e-01, is {:e}",
+                    msg.cov_y_z
                 );
                 assert!(
-                    msg.cov_zz.almost_eq(4.00000000000000000e+00),
-                    "incorrect value for cov_zz, expected 4.00000000000000000e+00, is {:e}",
-                    msg.cov_zz
+                    msg.cov_z_z.almost_eq(4.00000000000000000e+00),
+                    "incorrect value for cov_z_z, expected 4.00000000000000000e+00, is {:e}",
+                    msg.cov_z_z
                 );
                 assert_eq!(
                     msg.flags, 1,
