@@ -1,5 +1,20 @@
 # Changelog
 
+## [v6.5.0](https://github.com/swift-nav/libsbp/tree/v6.5.0)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.4.0...v6.5.0)
+
+**Merged pull requests:**
+
+- Fix spellings to unblock libsbp release [\#1582](https://github.com/swift-nav/libsbp/pull/1582) ([Madhunika-atmakuri](https://github.com/Madhunika-atmakuri))
+- Remove auto-generated directories from CODEOWNERS file [\#1581](https://github.com/swift-nav/libsbp/pull/1581) ([sbmueller](https://github.com/sbmueller))
+- Bump fast-uri from 3.1.0 to 3.1.2 [\#1580](https://github.com/swift-nav/libsbp/pull/1580) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Add MSG\_ORIENT\_QUAT\_COV: attitude quaternion with full 3x3 covariance \[\#1579](https://github.com/swift-nav/libsbp/pull/1579) ([reimerix](https://github.com/reimerix))
+- Bump peter-evans/find-comment from 3 to 4 [\#1578](https://github.com/swift-nav/libsbp/pull/1578) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/upload-artifact from 4 to 7 [\#1577](https://github.com/swift-nav/libsbp/pull/1577) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump peter-evans/create-or-update-comment from 4 to 5 [\#1576](https://github.com/swift-nav/libsbp/pull/1576) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Replace sonarcloud with clang-tidy and bazel coverage [\#1575](https://github.com/swift-nav/libsbp/pull/1575) ([martin4861](https://github.com/martin4861))
+
 ## [v6.4.0](https://github.com/swift-nav/libsbp/tree/v6.4.0)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.3.3...v6.4.0)
