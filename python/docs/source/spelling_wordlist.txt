@@ -48,6 +48,7 @@ cdc
 cn
 correctionPointSetID
 correlators
+cov
 covariances
 cpu
 dataset
@@ -117,6 +118,8 @@ oc
 odometry
 oe
 orthometric
+parameterization
+parameterizations
 piksi
 pseudorange
 pseudoranges
