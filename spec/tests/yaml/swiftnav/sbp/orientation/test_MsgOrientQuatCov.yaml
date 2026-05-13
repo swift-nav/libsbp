@@ -1,0 +1,33 @@
+description: Unit tests for swiftnav.sbp.orientation MsgOrientQuatCov
+generated_on: '2026-05-05 14:30:16.623971'
+package: sbp.orientation
+tests:
+- msg:
+    fields:
+      cov_x_x: 1.0
+      cov_x_y: 0.5
+      cov_x_z: 0.25
+      cov_y_y: 2.0
+      cov_y_z: 0.125
+      cov_z_z: 4.0
+      flags: 1
+      tow: 0
+      w: 3
+      x: 7
+      y: 8
+      z: 4
+    module: sbp.orientation
+    name: MsgOrientQuatCov
+  msg_type: '0x223'
+  raw_json: '{"preamble": 85, "msg_type": 547, "sender": 66, "length": 45, "payload":
+    "AAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEAB", "crc": 18734,
+    "tow": 0, "w": 3, "x": 7, "y": 8, "z": 4, "cov_x_x": 1.0, "cov_x_y": 0.5, "cov_x_z":
+    0.25, "cov_y_y": 2.0, "cov_y_z": 0.125, "cov_z_z": 4.0, "flags": 1}'
+  raw_packet: VSMCQgAtAAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEABLkk=
+  sbp:
+    crc: '0x492E'
+    length: 45
+    msg_type: '0x223'
+    payload: AAAAAAMAAAAHAAAACAAAAAQAAAAAAIA/AAAAPwAAgD4AAABAAAAAPgAAgEAB
+    preamble: '0x55'
+    sender: '0x42'

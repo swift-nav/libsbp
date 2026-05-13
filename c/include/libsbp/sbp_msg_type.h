@@ -184,6 +184,7 @@ typedef enum {
   SbpMsgObs = 0x004A,
   SbpMsgOdometry = 0x0903,
   SbpMsgOrientEuler = 0x0221,
+  SbpMsgOrientQuatCov = 0x0223,
   SbpMsgOrientQuat = 0x0220,
   SbpMsgOsr = 0x0640,
   SbpMsgPosEcefCovGnss = 0x0234,
@@ -564,6 +565,8 @@ static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
       return "MSG_ODOMETRY";
     case SbpMsgOrientEuler:
       return "MSG_ORIENT_EULER";
+    case SbpMsgOrientQuatCov:
+      return "MSG_ORIENT_QUAT_COV";
     case SbpMsgOrientQuat:
       return "MSG_ORIENT_QUAT";
     case SbpMsgOsr:

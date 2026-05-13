@@ -211,6 +211,7 @@ enums:
     544: msg_orient_quat
     545: msg_orient_euler
     546: msg_angular_rate
+    547: msg_orient_quat_cov
   
     105: msg_almanac
     104: msg_set_time
@@ -497,6 +498,7 @@ types:
             544: orientation::msg_orient_quat
             545: orientation::msg_orient_euler
             546: orientation::msg_angular_rate
+            547: orientation::msg_orient_quat_cov
   
             105: piksi::msg_almanac
             104: piksi::msg_set_time

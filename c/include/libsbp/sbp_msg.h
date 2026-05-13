@@ -193,6 +193,7 @@ typedef union {
   sbp_msg_obs_t obs;
   sbp_msg_odometry_t odometry;
   sbp_msg_orient_euler_t orient_euler;
+  sbp_msg_orient_quat_cov_t orient_quat_cov;
   sbp_msg_orient_quat_t orient_quat;
   sbp_msg_osr_t osr;
   sbp_msg_pos_ecef_cov_gnss_t pos_ecef_cov_gnss;
@@ -685,6 +686,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgOrientEuler:
       return sbp_msg_orient_euler_encode(buf, len, n_written,
                                          &msg->orient_euler);
+    case SbpMsgOrientQuatCov:
+      return sbp_msg_orient_quat_cov_encode(buf, len, n_written,
+                                            &msg->orient_quat_cov);
     case SbpMsgOrientQuat:
       return sbp_msg_orient_quat_encode(buf, len, n_written, &msg->orient_quat);
     case SbpMsgOsr:
@@ -1362,6 +1366,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_odometry_decode(buf, len, n_read, &msg->odometry);
     case SbpMsgOrientEuler:
       return sbp_msg_orient_euler_decode(buf, len, n_read, &msg->orient_euler);
+    case SbpMsgOrientQuatCov:
+      return sbp_msg_orient_quat_cov_decode(buf, len, n_read,
+                                            &msg->orient_quat_cov);
     case SbpMsgOrientQuat:
       return sbp_msg_orient_quat_decode(buf, len, n_read, &msg->orient_quat);
     case SbpMsgOsr:
@@ -1961,6 +1968,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_odometry_encoded_len(&msg->odometry);
     case SbpMsgOrientEuler:
       return sbp_msg_orient_euler_encoded_len(&msg->orient_euler);
+    case SbpMsgOrientQuatCov:
+      return sbp_msg_orient_quat_cov_encoded_len(&msg->orient_quat_cov);
     case SbpMsgOrientQuat:
       return sbp_msg_orient_quat_encoded_len(&msg->orient_quat);
     case SbpMsgOsr:
@@ -2571,6 +2580,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_odometry_cmp(&a->odometry, &b->odometry);
     case SbpMsgOrientEuler:
       return sbp_msg_orient_euler_cmp(&a->orient_euler, &b->orient_euler);
+    case SbpMsgOrientQuatCov:
+      return sbp_msg_orient_quat_cov_cmp(&a->orient_quat_cov,
+                                         &b->orient_quat_cov);
     case SbpMsgOrientQuat:
       return sbp_msg_orient_quat_cmp(&a->orient_quat, &b->orient_quat);
     case SbpMsgOsr:

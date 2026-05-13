@@ -193,6 +193,7 @@ data SBPMsg =
    | SBPMsgOdometry MsgOdometry Msg
    | SBPMsgOrientEuler MsgOrientEuler Msg
    | SBPMsgOrientQuat MsgOrientQuat Msg
+   | SBPMsgOrientQuatCov MsgOrientQuatCov Msg
    | SBPMsgOsr MsgOsr Msg
    | SBPMsgPosEcef MsgPosEcef Msg
    | SBPMsgPosEcefCov MsgPosEcefCov Msg
@@ -447,6 +448,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgOdometry = SBPMsgOdometry (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgOrientEuler = SBPMsgOrientEuler (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgOrientQuat = SBPMsgOrientQuat (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgOrientQuatCov = SBPMsgOrientQuatCov (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgOsr = SBPMsgOsr (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosEcefCov = SBPMsgPosEcefCov (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -693,6 +695,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgOdometry _ m) = put m
       encoder (SBPMsgOrientEuler _ m) = put m
       encoder (SBPMsgOrientQuat _ m) = put m
+      encoder (SBPMsgOrientQuatCov _ m) = put m
       encoder (SBPMsgOsr _ m) = put m
       encoder (SBPMsgPosEcef _ m) = put m
       encoder (SBPMsgPosEcefCov _ m) = put m
@@ -943,6 +946,7 @@ instance FromJSON SBPMsg where
         | msgType == msgOdometry = SBPMsgOdometry <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgOrientEuler = SBPMsgOrientEuler <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgOrientQuat = SBPMsgOrientQuat <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgOrientQuatCov = SBPMsgOrientQuatCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgOsr = SBPMsgOsr <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosEcef = SBPMsgPosEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosEcefCov = SBPMsgPosEcefCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1194,6 +1198,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgOdometry n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgOrientEuler n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgOrientQuat n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgOrientQuatCov n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgOsr n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosEcef n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosEcefCov n m) = toJSON n <<>> toJSON m
@@ -1439,6 +1444,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgOdometry n m) = SBPMsgOdometry n <$> f m
   msg f (SBPMsgOrientEuler n m) = SBPMsgOrientEuler n <$> f m
   msg f (SBPMsgOrientQuat n m) = SBPMsgOrientQuat n <$> f m
+  msg f (SBPMsgOrientQuatCov n m) = SBPMsgOrientQuatCov n <$> f m
   msg f (SBPMsgOsr n m) = SBPMsgOsr n <$> f m
   msg f (SBPMsgPosEcef n m) = SBPMsgPosEcef n <$> f m
   msg f (SBPMsgPosEcefCov n m) = SBPMsgPosEcefCov n <$> f m

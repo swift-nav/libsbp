@@ -95,3 +95,34 @@ message MsgAngularRate {
     sint32 z = 4;
     uint32 flags = 5;
 }
+
+/** Quaternion 4 component vector with full attitude covariance
+ *
+ * This message reports the orientation as a unit quaternion together with the
+ * upper triangle of the symmetric 3x3 attitude covariance matrix and a GPS
+ * time-of-week time-tag. The reference frame of the quaternion and the
+ * parameterization of the covariance matrix are both encoded in the flags
+ * field, allowing additional frames or parameterizations to be added later
+ * without introducing a new message. By default the quaternion describes the
+ * orientation of the vehicle body frame with respect to a local-level NED
+ * frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as small-
+ * angle rotation errors about the axes of that NED frame; in this default
+ * case the cov_x_x, cov_y_y, cov_z_z diagonal entries correspond to the
+ * variance of the rotation error about North, East, and Down respectively.
+ * The components of the quaternion sum to a unit vector assuming that the LSB
+ * of each component has a value of 2^-31.
+ */
+message MsgOrientQuatCov {
+    uint32 tow = 1;
+    sint32 w = 2;
+    sint32 x = 3;
+    sint32 y = 4;
+    sint32 z = 5;
+    float cov_x_x = 6;
+    float cov_x_y = 7;
+    float cov_x_z = 8;
+    float cov_y_y = 9;
+    float cov_y_z = 10;
+    float cov_z_z = 11;
+    uint32 flags = 12;
+}

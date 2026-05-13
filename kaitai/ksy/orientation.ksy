@@ -171,3 +171,74 @@ types:
           Status flags
         type: u1
   
+  msg_orient_quat_cov:
+    doc: |
+      This message reports the orientation as a unit quaternion together with
+      the upper triangle of the symmetric 3x3 attitude covariance matrix and a
+      GPS time-of-week time-tag. The reference frame of the quaternion and the
+      parameterization of the covariance matrix are both encoded in the flags
+      field, allowing additional frames or parameterizations to be added later
+      without introducing a new message. By default the quaternion describes
+      the orientation of the vehicle body frame with respect to a local-level
+      NED frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as
+      small-angle rotation errors about the axes of that NED frame; in this
+      default case the cov_x_x, cov_y_y, cov_z_z diagonal entries correspond
+      to the variance of the rotation error about North, East, and Down
+      respectively. The components of the quaternion sum to a unit vector
+      assuming that the LSB of each component has a value of 2^-31.
+    seq:
+      - id: tow
+        doc: |
+          GPS Time of Week
+        type: u4
+      - id: w
+        doc: |
+          Real component
+        type: s4
+      - id: x
+        doc: |
+          1st imaginary component
+        type: s4
+      - id: y
+        doc: |
+          2nd imaginary component
+        type: s4
+      - id: z
+        doc: |
+          3rd imaginary component
+        type: s4
+      - id: cov_x_x
+        doc: |
+          Estimated variance of the rotation error about the 1st axis of the
+          covariance frame
+        type: f4
+      - id: cov_x_y
+        doc: |
+          Estimated covariance of the rotation errors about the 1st and 2nd
+          axes of the covariance frame
+        type: f4
+      - id: cov_x_z
+        doc: |
+          Estimated covariance of the rotation errors about the 1st and 3rd
+          axes of the covariance frame
+        type: f4
+      - id: cov_y_y
+        doc: |
+          Estimated variance of the rotation error about the 2nd axis of the
+          covariance frame
+        type: f4
+      - id: cov_y_z
+        doc: |
+          Estimated covariance of the rotation errors about the 2nd and 3rd
+          axes of the covariance frame
+        type: f4
+      - id: cov_z_z
+        doc: |
+          Estimated variance of the rotation error about the 3rd axis of the
+          covariance frame
+        type: f4
+      - id: flags
+        doc: |
+          Status flags
+        type: u1
+  

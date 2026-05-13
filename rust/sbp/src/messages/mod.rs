@@ -187,6 +187,7 @@ use self::orientation::msg_angular_rate::MsgAngularRate;
 use self::orientation::msg_baseline_heading::MsgBaselineHeading;
 use self::orientation::msg_orient_euler::MsgOrientEuler;
 use self::orientation::msg_orient_quat::MsgOrientQuat;
+use self::orientation::msg_orient_quat_cov::MsgOrientQuatCov;
 use self::piksi::msg_almanac::MsgAlmanac;
 use self::piksi::msg_cell_modem_status::MsgCellModemStatus;
 use self::piksi::msg_command_output::MsgCommandOutput;
@@ -687,6 +688,8 @@ pub enum Sbp {
     MsgOrientEuler(MsgOrientEuler),
     /// Vehicle Body Frame instantaneous angular rates
     MsgAngularRate(MsgAngularRate),
+    /// Quaternion 4 component vector with full attitude covariance
+    MsgOrientQuatCov(MsgOrientQuatCov),
     /// GNSS-only Position in ECEF
     MsgPosEcefGnss(MsgPosEcefGnss),
     /// GNSS-only Geodetic Position
@@ -1348,6 +1351,9 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             }
             Some(MsgAngularRate::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgAngularRate>(value).map(Sbp::MsgAngularRate)
+            }
+            Some(MsgOrientQuatCov::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgOrientQuatCov>(value).map(Sbp::MsgOrientQuatCov)
             }
             Some(MsgPosEcefGnss::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgPosEcefGnss>(value).map(Sbp::MsgPosEcefGnss)
@@ -2099,6 +2105,9 @@ impl Sbp {
             MsgAngularRate::MESSAGE_TYPE => {
                 MsgAngularRate::parse(&mut payload).map(Sbp::MsgAngularRate)
             }
+            MsgOrientQuatCov::MESSAGE_TYPE => {
+                MsgOrientQuatCov::parse(&mut payload).map(Sbp::MsgOrientQuatCov)
+            }
             MsgPosEcefGnss::MESSAGE_TYPE => {
                 MsgPosEcefGnss::parse(&mut payload).map(Sbp::MsgPosEcefGnss)
             }
@@ -2529,6 +2538,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgOrientQuat(msg) => msg.message_name(),
             Sbp::MsgOrientEuler(msg) => msg.message_name(),
             Sbp::MsgAngularRate(msg) => msg.message_name(),
+            Sbp::MsgOrientQuatCov(msg) => msg.message_name(),
             Sbp::MsgPosEcefGnss(msg) => msg.message_name(),
             Sbp::MsgPosLlhGnss(msg) => msg.message_name(),
             Sbp::MsgVelEcefGnss(msg) => msg.message_name(),
@@ -2777,6 +2787,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgOrientQuat(msg) => msg.message_type(),
             Sbp::MsgOrientEuler(msg) => msg.message_type(),
             Sbp::MsgAngularRate(msg) => msg.message_type(),
+            Sbp::MsgOrientQuatCov(msg) => msg.message_type(),
             Sbp::MsgPosEcefGnss(msg) => msg.message_type(),
             Sbp::MsgPosLlhGnss(msg) => msg.message_type(),
             Sbp::MsgVelEcefGnss(msg) => msg.message_type(),
@@ -3025,6 +3036,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgOrientQuat(msg) => msg.sender_id(),
             Sbp::MsgOrientEuler(msg) => msg.sender_id(),
             Sbp::MsgAngularRate(msg) => msg.sender_id(),
+            Sbp::MsgOrientQuatCov(msg) => msg.sender_id(),
             Sbp::MsgPosEcefGnss(msg) => msg.sender_id(),
             Sbp::MsgPosLlhGnss(msg) => msg.sender_id(),
             Sbp::MsgVelEcefGnss(msg) => msg.sender_id(),
@@ -3273,6 +3285,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgOrientQuat(msg) => msg.set_sender_id(new_id),
             Sbp::MsgOrientEuler(msg) => msg.set_sender_id(new_id),
             Sbp::MsgAngularRate(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgOrientQuatCov(msg) => msg.set_sender_id(new_id),
             Sbp::MsgPosEcefGnss(msg) => msg.set_sender_id(new_id),
             Sbp::MsgPosLlhGnss(msg) => msg.set_sender_id(new_id),
             Sbp::MsgVelEcefGnss(msg) => msg.set_sender_id(new_id),
@@ -3521,6 +3534,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgOrientQuat(msg) => msg.encoded_len(),
             Sbp::MsgOrientEuler(msg) => msg.encoded_len(),
             Sbp::MsgAngularRate(msg) => msg.encoded_len(),
+            Sbp::MsgOrientQuatCov(msg) => msg.encoded_len(),
             Sbp::MsgPosEcefGnss(msg) => msg.encoded_len(),
             Sbp::MsgPosLlhGnss(msg) => msg.encoded_len(),
             Sbp::MsgVelEcefGnss(msg) => msg.encoded_len(),
@@ -3772,6 +3786,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgOrientQuat(msg) => msg.gps_time(),
             Sbp::MsgOrientEuler(msg) => msg.gps_time(),
             Sbp::MsgAngularRate(msg) => msg.gps_time(),
+            Sbp::MsgOrientQuatCov(msg) => msg.gps_time(),
             Sbp::MsgPosEcefGnss(msg) => msg.gps_time(),
             Sbp::MsgPosLlhGnss(msg) => msg.gps_time(),
             Sbp::MsgVelEcefGnss(msg) => msg.gps_time(),
@@ -4020,6 +4035,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgOrientQuat(msg) => msg.friendly_name(),
             Sbp::MsgOrientEuler(msg) => msg.friendly_name(),
             Sbp::MsgAngularRate(msg) => msg.friendly_name(),
+            Sbp::MsgOrientQuatCov(msg) => msg.friendly_name(),
             Sbp::MsgPosEcefGnss(msg) => msg.friendly_name(),
             Sbp::MsgPosLlhGnss(msg) => msg.friendly_name(),
             Sbp::MsgVelEcefGnss(msg) => msg.friendly_name(),
@@ -4268,6 +4284,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgOrientQuat(msg) => msg.is_valid(),
             Sbp::MsgOrientEuler(msg) => msg.is_valid(),
             Sbp::MsgAngularRate(msg) => msg.is_valid(),
+            Sbp::MsgOrientQuatCov(msg) => msg.is_valid(),
             Sbp::MsgPosEcefGnss(msg) => msg.is_valid(),
             Sbp::MsgPosLlhGnss(msg) => msg.is_valid(),
             Sbp::MsgVelEcefGnss(msg) => msg.is_valid(),
@@ -4549,6 +4566,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgOrientQuat(msg) => Ok(Sbp::MsgOrientQuat(msg.into_valid_msg()?)),
             Sbp::MsgOrientEuler(msg) => Ok(Sbp::MsgOrientEuler(msg.into_valid_msg()?)),
             Sbp::MsgAngularRate(msg) => Ok(Sbp::MsgAngularRate(msg.into_valid_msg()?)),
+            Sbp::MsgOrientQuatCov(msg) => Ok(Sbp::MsgOrientQuatCov(msg.into_valid_msg()?)),
             Sbp::MsgPosEcefGnss(msg) => Ok(Sbp::MsgPosEcefGnss(msg.into_valid_msg()?)),
             Sbp::MsgPosLlhGnss(msg) => Ok(Sbp::MsgPosLlhGnss(msg.into_valid_msg()?)),
             Sbp::MsgVelEcefGnss(msg) => Ok(Sbp::MsgVelEcefGnss(msg.into_valid_msg()?)),
@@ -4878,6 +4896,7 @@ impl WireFormat for Sbp {
             Sbp::MsgOrientQuat(msg) => WireFormat::write(msg, buf),
             Sbp::MsgOrientEuler(msg) => WireFormat::write(msg, buf),
             Sbp::MsgAngularRate(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgOrientQuatCov(msg) => WireFormat::write(msg, buf),
             Sbp::MsgPosEcefGnss(msg) => WireFormat::write(msg, buf),
             Sbp::MsgPosLlhGnss(msg) => WireFormat::write(msg, buf),
             Sbp::MsgVelEcefGnss(msg) => WireFormat::write(msg, buf),
@@ -5126,6 +5145,7 @@ impl WireFormat for Sbp {
             Sbp::MsgOrientQuat(msg) => WireFormat::len(msg),
             Sbp::MsgOrientEuler(msg) => WireFormat::len(msg),
             Sbp::MsgAngularRate(msg) => WireFormat::len(msg),
+            Sbp::MsgOrientQuatCov(msg) => WireFormat::len(msg),
             Sbp::MsgPosEcefGnss(msg) => WireFormat::len(msg),
             Sbp::MsgPosLlhGnss(msg) => WireFormat::len(msg),
             Sbp::MsgVelEcefGnss(msg) => WireFormat::len(msg),
@@ -6105,6 +6125,12 @@ impl From<MsgOrientEuler> for Sbp {
 impl From<MsgAngularRate> for Sbp {
     fn from(msg: MsgAngularRate) -> Self {
         Sbp::MsgAngularRate(msg)
+    }
+}
+
+impl From<MsgOrientQuatCov> for Sbp {
+    fn from(msg: MsgOrientQuatCov) -> Self {
+        Sbp::MsgOrientQuatCov(msg)
     }
 }
 

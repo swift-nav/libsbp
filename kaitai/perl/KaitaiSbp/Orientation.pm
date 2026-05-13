@@ -37,6 +37,68 @@ sub _read {
 }
 
 ########################################################################
+package Orientation::MsgAngularRate;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{tow} = $self->{_io}->read_u4le();
+    $self->{x} = $self->{_io}->read_s4le();
+    $self->{y} = $self->{_io}->read_s4le();
+    $self->{z} = $self->{_io}->read_s4le();
+    $self->{flags} = $self->{_io}->read_u1();
+}
+
+sub tow {
+    my ($self) = @_;
+    return $self->{tow};
+}
+
+sub x {
+    my ($self) = @_;
+    return $self->{x};
+}
+
+sub y {
+    my ($self) = @_;
+    return $self->{y};
+}
+
+sub z {
+    my ($self) = @_;
+    return $self->{z};
+}
+
+sub flags {
+    my ($self) = @_;
+    return $self->{flags};
+}
+
+########################################################################
 package Orientation::MsgBaselineHeading;
 
 our @ISA = 'IO::KaitaiStruct::Struct';
@@ -85,6 +147,190 @@ sub heading {
 sub n_sats {
     my ($self) = @_;
     return $self->{n_sats};
+}
+
+sub flags {
+    my ($self) = @_;
+    return $self->{flags};
+}
+
+########################################################################
+package Orientation::MsgOrientEuler;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{tow} = $self->{_io}->read_u4le();
+    $self->{roll} = $self->{_io}->read_s4le();
+    $self->{pitch} = $self->{_io}->read_s4le();
+    $self->{yaw} = $self->{_io}->read_s4le();
+    $self->{roll_accuracy} = $self->{_io}->read_f4le();
+    $self->{pitch_accuracy} = $self->{_io}->read_f4le();
+    $self->{yaw_accuracy} = $self->{_io}->read_f4le();
+    $self->{flags} = $self->{_io}->read_u1();
+}
+
+sub tow {
+    my ($self) = @_;
+    return $self->{tow};
+}
+
+sub roll {
+    my ($self) = @_;
+    return $self->{roll};
+}
+
+sub pitch {
+    my ($self) = @_;
+    return $self->{pitch};
+}
+
+sub yaw {
+    my ($self) = @_;
+    return $self->{yaw};
+}
+
+sub roll_accuracy {
+    my ($self) = @_;
+    return $self->{roll_accuracy};
+}
+
+sub pitch_accuracy {
+    my ($self) = @_;
+    return $self->{pitch_accuracy};
+}
+
+sub yaw_accuracy {
+    my ($self) = @_;
+    return $self->{yaw_accuracy};
+}
+
+sub flags {
+    my ($self) = @_;
+    return $self->{flags};
+}
+
+########################################################################
+package Orientation::MsgOrientQuatCov;
+
+our @ISA = 'IO::KaitaiStruct::Struct';
+
+sub from_file {
+    my ($class, $filename) = @_;
+    my $fd;
+
+    open($fd, '<', $filename) or return undef;
+    binmode($fd);
+    return new($class, IO::KaitaiStruct::Stream->new($fd));
+}
+
+sub new {
+    my ($class, $_io, $_parent, $_root) = @_;
+    my $self = IO::KaitaiStruct::Struct->new($_io);
+
+    bless $self, $class;
+    $self->{_parent} = $_parent;
+    $self->{_root} = $_root || $self;;
+
+    $self->_read();
+
+    return $self;
+}
+
+sub _read {
+    my ($self) = @_;
+
+    $self->{tow} = $self->{_io}->read_u4le();
+    $self->{w} = $self->{_io}->read_s4le();
+    $self->{x} = $self->{_io}->read_s4le();
+    $self->{y} = $self->{_io}->read_s4le();
+    $self->{z} = $self->{_io}->read_s4le();
+    $self->{cov_x_x} = $self->{_io}->read_f4le();
+    $self->{cov_x_y} = $self->{_io}->read_f4le();
+    $self->{cov_x_z} = $self->{_io}->read_f4le();
+    $self->{cov_y_y} = $self->{_io}->read_f4le();
+    $self->{cov_y_z} = $self->{_io}->read_f4le();
+    $self->{cov_z_z} = $self->{_io}->read_f4le();
+    $self->{flags} = $self->{_io}->read_u1();
+}
+
+sub tow {
+    my ($self) = @_;
+    return $self->{tow};
+}
+
+sub w {
+    my ($self) = @_;
+    return $self->{w};
+}
+
+sub x {
+    my ($self) = @_;
+    return $self->{x};
+}
+
+sub y {
+    my ($self) = @_;
+    return $self->{y};
+}
+
+sub z {
+    my ($self) = @_;
+    return $self->{z};
+}
+
+sub cov_x_x {
+    my ($self) = @_;
+    return $self->{cov_x_x};
+}
+
+sub cov_x_y {
+    my ($self) = @_;
+    return $self->{cov_x_y};
+}
+
+sub cov_x_z {
+    my ($self) = @_;
+    return $self->{cov_x_z};
+}
+
+sub cov_y_y {
+    my ($self) = @_;
+    return $self->{cov_y_y};
+}
+
+sub cov_y_z {
+    my ($self) = @_;
+    return $self->{cov_y_z};
+}
+
+sub cov_z_z {
+    my ($self) = @_;
+    return $self->{cov_z_z};
 }
 
 sub flags {
@@ -177,148 +423,6 @@ sub y_accuracy {
 sub z_accuracy {
     my ($self) = @_;
     return $self->{z_accuracy};
-}
-
-sub flags {
-    my ($self) = @_;
-    return $self->{flags};
-}
-
-########################################################################
-package Orientation::MsgOrientEuler;
-
-our @ISA = 'IO::KaitaiStruct::Struct';
-
-sub from_file {
-    my ($class, $filename) = @_;
-    my $fd;
-
-    open($fd, '<', $filename) or return undef;
-    binmode($fd);
-    return new($class, IO::KaitaiStruct::Stream->new($fd));
-}
-
-sub new {
-    my ($class, $_io, $_parent, $_root) = @_;
-    my $self = IO::KaitaiStruct::Struct->new($_io);
-
-    bless $self, $class;
-    $self->{_parent} = $_parent;
-    $self->{_root} = $_root || $self;;
-
-    $self->_read();
-
-    return $self;
-}
-
-sub _read {
-    my ($self) = @_;
-
-    $self->{tow} = $self->{_io}->read_u4le();
-    $self->{roll} = $self->{_io}->read_s4le();
-    $self->{pitch} = $self->{_io}->read_s4le();
-    $self->{yaw} = $self->{_io}->read_s4le();
-    $self->{roll_accuracy} = $self->{_io}->read_f4le();
-    $self->{pitch_accuracy} = $self->{_io}->read_f4le();
-    $self->{yaw_accuracy} = $self->{_io}->read_f4le();
-    $self->{flags} = $self->{_io}->read_u1();
-}
-
-sub tow {
-    my ($self) = @_;
-    return $self->{tow};
-}
-
-sub roll {
-    my ($self) = @_;
-    return $self->{roll};
-}
-
-sub pitch {
-    my ($self) = @_;
-    return $self->{pitch};
-}
-
-sub yaw {
-    my ($self) = @_;
-    return $self->{yaw};
-}
-
-sub roll_accuracy {
-    my ($self) = @_;
-    return $self->{roll_accuracy};
-}
-
-sub pitch_accuracy {
-    my ($self) = @_;
-    return $self->{pitch_accuracy};
-}
-
-sub yaw_accuracy {
-    my ($self) = @_;
-    return $self->{yaw_accuracy};
-}
-
-sub flags {
-    my ($self) = @_;
-    return $self->{flags};
-}
-
-########################################################################
-package Orientation::MsgAngularRate;
-
-our @ISA = 'IO::KaitaiStruct::Struct';
-
-sub from_file {
-    my ($class, $filename) = @_;
-    my $fd;
-
-    open($fd, '<', $filename) or return undef;
-    binmode($fd);
-    return new($class, IO::KaitaiStruct::Stream->new($fd));
-}
-
-sub new {
-    my ($class, $_io, $_parent, $_root) = @_;
-    my $self = IO::KaitaiStruct::Struct->new($_io);
-
-    bless $self, $class;
-    $self->{_parent} = $_parent;
-    $self->{_root} = $_root || $self;;
-
-    $self->_read();
-
-    return $self;
-}
-
-sub _read {
-    my ($self) = @_;
-
-    $self->{tow} = $self->{_io}->read_u4le();
-    $self->{x} = $self->{_io}->read_s4le();
-    $self->{y} = $self->{_io}->read_s4le();
-    $self->{z} = $self->{_io}->read_s4le();
-    $self->{flags} = $self->{_io}->read_u1();
-}
-
-sub tow {
-    my ($self) = @_;
-    return $self->{tow};
-}
-
-sub x {
-    my ($self) = @_;
-    return $self->{x};
-}
-
-sub y {
-    my ($self) = @_;
-    return $self->{y};
-}
-
-sub z {
-    my ($self) = @_;
-    return $self->{z};
 }
 
 sub flags {

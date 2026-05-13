@@ -17,6 +17,7 @@ pub use msg_angular_rate::MsgAngularRate;
 pub use msg_baseline_heading::MsgBaselineHeading;
 pub use msg_orient_euler::MsgOrientEuler;
 pub use msg_orient_quat::MsgOrientQuat;
+pub use msg_orient_quat_cov::MsgOrientQuatCov;
 
 pub mod msg_angular_rate {
     #![allow(unused_imports)]
@@ -736,6 +737,346 @@ pub mod msg_orient_quat {
                 y_accuracy: WireFormat::parse_unchecked(buf),
                 z_accuracy: WireFormat::parse_unchecked(buf),
                 flags: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// INS Navigation mode
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum InsNavigationMode {
+        /// Invalid
+        Invalid = 0,
+
+        /// Valid
+        Valid = 1,
+    }
+
+    impl std::fmt::Display for InsNavigationMode {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                InsNavigationMode::Invalid => f.write_str("Invalid"),
+                InsNavigationMode::Valid => f.write_str("Valid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for InsNavigationMode {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(InsNavigationMode::Invalid),
+                1 => Ok(InsNavigationMode::Valid),
+                i => Err(i),
+            }
+        }
+    }
+}
+
+pub mod msg_orient_quat_cov {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Quaternion 4 component vector with full attitude covariance
+    ///
+    /// This message reports the orientation as a unit quaternion together with
+    /// the upper triangle of the symmetric 3x3 attitude covariance matrix and a
+    /// GPS time-of-week time-tag. The reference frame of the quaternion and the
+    /// parameterization of the covariance matrix are both encoded in the flags
+    /// field, allowing additional frames or parameterizations to be added later
+    /// without introducing a new message. By default the quaternion describes the
+    /// orientation of the vehicle body frame with respect to a local-level NED
+    /// frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as small-
+    /// angle rotation errors about the axes of that NED frame; in this default
+    /// case the cov_x_x, cov_y_y, cov_z_z diagonal entries correspond to the
+    /// variance of the rotation error about North, East, and Down respectively.
+    /// The components of the quaternion sum to a unit vector assuming that the
+    /// LSB of each component has a value of 2^-31.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgOrientQuatCov {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// GPS Time of Week
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
+        pub tow: u32,
+        /// Real component
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
+        pub w: i32,
+        /// 1st imaginary component
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
+        pub x: i32,
+        /// 2nd imaginary component
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
+        pub y: i32,
+        /// 3rd imaginary component
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
+        pub z: i32,
+        /// Estimated variance of the rotation error about the 1st axis of the
+        /// covariance frame
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_x"))]
+        pub cov_x_x: f32,
+        /// Estimated covariance of the rotation errors about the 1st and 2nd axes
+        /// of the covariance frame
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_y"))]
+        pub cov_x_y: f32,
+        /// Estimated covariance of the rotation errors about the 1st and 3rd axes
+        /// of the covariance frame
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_z"))]
+        pub cov_x_z: f32,
+        /// Estimated variance of the rotation error about the 2nd axis of the
+        /// covariance frame
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_y"))]
+        pub cov_y_y: f32,
+        /// Estimated covariance of the rotation errors about the 2nd and 3rd axes
+        /// of the covariance frame
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_z"))]
+        pub cov_y_z: f32,
+        /// Estimated variance of the rotation error about the 3rd axis of the
+        /// covariance frame
+        #[cfg_attr(feature = "serde", serde(rename = "cov_z_z"))]
+        pub cov_z_z: f32,
+        /// Status flags
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
+        pub flags: u8,
+    }
+
+    impl MsgOrientQuatCov {
+        /// Gets the [CovarianceParameterization][self::CovarianceParameterization] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CovarianceParameterization` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CovarianceParameterization` were added.
+        pub fn covariance_parameterization(&self) -> Result<CovarianceParameterization, u8> {
+            get_bit_range!(self.flags, u8, u8, 6, 5).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [CovarianceParameterization][CovarianceParameterization] of the `flags` bitfield.
+        pub fn set_covariance_parameterization(
+            &mut self,
+            covariance_parameterization: CovarianceParameterization,
+        ) {
+            set_bit_range!(&mut self.flags, covariance_parameterization, u8, u8, 6, 5);
+        }
+
+        /// Gets the [QuaternionReferenceFrame][self::QuaternionReferenceFrame] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `QuaternionReferenceFrame` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `QuaternionReferenceFrame` were added.
+        pub fn quaternion_reference_frame(&self) -> Result<QuaternionReferenceFrame, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [QuaternionReferenceFrame][QuaternionReferenceFrame] of the `flags` bitfield.
+        pub fn set_quaternion_reference_frame(
+            &mut self,
+            quaternion_reference_frame: QuaternionReferenceFrame,
+        ) {
+            set_bit_range!(&mut self.flags, quaternion_reference_frame, u8, u8, 4, 3);
+        }
+
+        /// Gets the [InsNavigationMode][self::InsNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsNavigationMode` were added.
+        pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [InsNavigationMode][InsNavigationMode] of the `flags` bitfield.
+        pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
+            set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 2, 0);
+        }
+    }
+
+    impl ConcreteMessage for MsgOrientQuatCov {
+        const MESSAGE_TYPE: u16 = 547;
+        const MESSAGE_NAME: &'static str = "MSG_ORIENT_QUAT_COV";
+    }
+
+    impl SbpMessage for MsgOrientQuatCov {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
+
+        #[cfg(feature = "swiftnav")]
+        fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            let tow_s = (self.tow as f64) / 1000.0;
+            let gps_time = match time::GpsTime::new(0, tow_s) {
+                Ok(gps_time) => gps_time.tow(),
+                Err(e) => return Some(Err(e.into())),
+            };
+            Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgOrientQuatCov {
+        fn friendly_name() -> &'static str {
+            "ORIENT QUAT COV"
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgOrientQuatCov {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgOrientQuatCov(m) => Ok(m),
+                _ => Err(TryFromSbpError(msg)),
+            }
+        }
+    }
+
+    impl WireFormat for MsgOrientQuatCov {
+        const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.tow)
+                + WireFormat::len(&self.w)
+                + WireFormat::len(&self.x)
+                + WireFormat::len(&self.y)
+                + WireFormat::len(&self.z)
+                + WireFormat::len(&self.cov_x_x)
+                + WireFormat::len(&self.cov_x_y)
+                + WireFormat::len(&self.cov_x_z)
+                + WireFormat::len(&self.cov_y_y)
+                + WireFormat::len(&self.cov_y_z)
+                + WireFormat::len(&self.cov_z_z)
+                + WireFormat::len(&self.flags)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.tow, buf);
+            WireFormat::write(&self.w, buf);
+            WireFormat::write(&self.x, buf);
+            WireFormat::write(&self.y, buf);
+            WireFormat::write(&self.z, buf);
+            WireFormat::write(&self.cov_x_x, buf);
+            WireFormat::write(&self.cov_x_y, buf);
+            WireFormat::write(&self.cov_x_z, buf);
+            WireFormat::write(&self.cov_y_y, buf);
+            WireFormat::write(&self.cov_y_z, buf);
+            WireFormat::write(&self.cov_z_z, buf);
+            WireFormat::write(&self.flags, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgOrientQuatCov {
+                sender_id: None,
+                tow: WireFormat::parse_unchecked(buf),
+                w: WireFormat::parse_unchecked(buf),
+                x: WireFormat::parse_unchecked(buf),
+                y: WireFormat::parse_unchecked(buf),
+                z: WireFormat::parse_unchecked(buf),
+                cov_x_x: WireFormat::parse_unchecked(buf),
+                cov_x_y: WireFormat::parse_unchecked(buf),
+                cov_x_z: WireFormat::parse_unchecked(buf),
+                cov_y_y: WireFormat::parse_unchecked(buf),
+                cov_y_z: WireFormat::parse_unchecked(buf),
+                cov_z_z: WireFormat::parse_unchecked(buf),
+                flags: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Covariance parameterization
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum CovarianceParameterization {
+        /// Small-angle rotation errors about the axes of the global frame given by
+        /// the quaternion frame field
+        SmallAngleRotationErrorsAboutTheAxesOfTheGlobalFrameGivenByTheQuaternionFrameField = 0,
+
+        /// Small-angle rotation errors about the body/vehicle frame axes
+        SmallAngleRotationErrorsAboutTheBodyvehicleFrameAxes = 1,
+
+        /// Roll/pitch/yaw Euler-angle covariance (radians)
+        RollpitchyawEulerAngleCovariance = 2,
+    }
+
+    impl std::fmt::Display for CovarianceParameterization {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+            CovarianceParameterization::SmallAngleRotationErrorsAboutTheAxesOfTheGlobalFrameGivenByTheQuaternionFrameField => f.write_str("Small-angle rotation errors about the axes of the global frame given by the quaternion frame field"),
+            CovarianceParameterization::SmallAngleRotationErrorsAboutTheBodyvehicleFrameAxes => f.write_str("Small-angle rotation errors about the body/vehicle frame axes"),
+            CovarianceParameterization::RollpitchyawEulerAngleCovariance => f.write_str("Roll/pitch/yaw Euler-angle covariance (radians)"),
+        }
+        }
+    }
+
+    impl TryFrom<u8> for CovarianceParameterization {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+            0 => Ok( CovarianceParameterization :: SmallAngleRotationErrorsAboutTheAxesOfTheGlobalFrameGivenByTheQuaternionFrameField ),
+            1 => Ok( CovarianceParameterization :: SmallAngleRotationErrorsAboutTheBodyvehicleFrameAxes ),
+            2 => Ok( CovarianceParameterization :: RollpitchyawEulerAngleCovariance ),
+            i => Err(i),
+        }
+        }
+    }
+
+    /// Quaternion reference frame
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum QuaternionReferenceFrame {
+        /// Local-level NED
+        LocalLevelNed = 0,
+
+        /// Local-level ENU
+        LocalLevelEnu = 1,
+
+        /// ECEF
+        Ecef = 2,
+    }
+
+    impl std::fmt::Display for QuaternionReferenceFrame {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                QuaternionReferenceFrame::LocalLevelNed => f.write_str("Local-level NED"),
+                QuaternionReferenceFrame::LocalLevelEnu => f.write_str("Local-level ENU"),
+                QuaternionReferenceFrame::Ecef => f.write_str("ECEF"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for QuaternionReferenceFrame {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(QuaternionReferenceFrame::LocalLevelNed),
+                1 => Ok(QuaternionReferenceFrame::LocalLevelEnu),
+                2 => Ok(QuaternionReferenceFrame::Ecef),
+                i => Err(i),
             }
         }
     }

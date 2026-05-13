@@ -192,6 +192,7 @@ our $MSG_IDS_MSG_VEL_COG = 540;
 our $MSG_IDS_MSG_ORIENT_QUAT = 544;
 our $MSG_IDS_MSG_ORIENT_EULER = 545;
 our $MSG_IDS_MSG_ANGULAR_RATE = 546;
+our $MSG_IDS_MSG_ORIENT_QUAT_COV = 547;
 our $MSG_IDS_MSG_POS_ECEF_GNSS = 553;
 our $MSG_IDS_MSG_POS_LLH_GNSS = 554;
 our $MSG_IDS_MSG_VEL_ECEF_GNSS = 557;
@@ -1058,6 +1059,11 @@ sub _read {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
         my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
         $self->{payload} = Tracking::MsgTrackingIqDepB->new($io__raw_payload, $self, $self->{_root});
+    }
+    elsif ($_on == 547) {
+        $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());
+        my $io__raw_payload = IO::KaitaiStruct::Stream->new($self->{_raw_payload});
+        $self->{payload} = Orientation::MsgOrientQuatCov->new($io__raw_payload, $self, $self->{_root});
     }
     elsif ($_on == 3073) {
         $self->{_raw_payload} = $self->{_io}->read_bytes($self->length());

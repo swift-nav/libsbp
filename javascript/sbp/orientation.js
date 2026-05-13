@@ -219,6 +219,83 @@ MsgAngularRate.prototype.fieldSpec.push(['y', 'writeInt32LE', 4]);
 MsgAngularRate.prototype.fieldSpec.push(['z', 'writeInt32LE', 4]);
 MsgAngularRate.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
+/**
+ * SBP class for message MSG_ORIENT_QUAT_COV (0x0223).
+ *
+ * This message reports the orientation as a unit quaternion together with the
+ * upper triangle of the symmetric 3x3 attitude covariance matrix and a GPS time-
+ * of-week time-tag. The reference frame of the quaternion and the parameterization
+ * of the covariance matrix are both encoded in the flags field, allowing
+ * additional frames or parameterizations to be added later without introducing a
+ * new message. By default the quaternion describes the orientation of the vehicle
+ * body frame with respect to a local-level NED frame (matching MSG_ORIENT_QUAT)
+ * and the covariance is expressed as small-angle rotation errors about the axes of
+ * that NED frame; in this default case the cov_x_x, cov_y_y, cov_z_z diagonal
+ * entries correspond to the variance of the rotation error about North, East, and
+ * Down respectively. The components of the quaternion sum to a unit vector
+ * assuming that the LSB of each component has a value of 2^-31.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field w number (signed 32-bit int, 4 bytes) Real component
+ * @field x number (signed 32-bit int, 4 bytes) 1st imaginary component
+ * @field y number (signed 32-bit int, 4 bytes) 2nd imaginary component
+ * @field z number (signed 32-bit int, 4 bytes) 3rd imaginary component
+ * @field cov_x_x number (float, 4 bytes) Estimated variance of the rotation error about the 1st axis of the covariance
+ *   frame
+ * @field cov_x_y number (float, 4 bytes) Estimated covariance of the rotation errors about the 1st and 2nd axes of the
+ *   covariance frame
+ * @field cov_x_z number (float, 4 bytes) Estimated covariance of the rotation errors about the 1st and 3rd axes of the
+ *   covariance frame
+ * @field cov_y_y number (float, 4 bytes) Estimated variance of the rotation error about the 2nd axis of the covariance
+ *   frame
+ * @field cov_y_z number (float, 4 bytes) Estimated covariance of the rotation errors about the 2nd and 3rd axes of the
+ *   covariance frame
+ * @field cov_z_z number (float, 4 bytes) Estimated variance of the rotation error about the 3rd axis of the covariance
+ *   frame
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let MsgOrientQuatCov = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ORIENT_QUAT_COV";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgOrientQuatCov.prototype = Object.create(SBP.prototype);
+MsgOrientQuatCov.prototype.messageType = "MSG_ORIENT_QUAT_COV";
+MsgOrientQuatCov.prototype.msg_type = 0x0223;
+MsgOrientQuatCov.prototype.constructor = MsgOrientQuatCov;
+MsgOrientQuatCov.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .int32('w')
+  .int32('x')
+  .int32('y')
+  .int32('z')
+  .floatle('cov_x_x')
+  .floatle('cov_x_y')
+  .floatle('cov_x_z')
+  .floatle('cov_y_y')
+  .floatle('cov_y_z')
+  .floatle('cov_z_z')
+  .uint8('flags');
+MsgOrientQuatCov.prototype.fieldSpec = [];
+MsgOrientQuatCov.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['w', 'writeInt32LE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['x', 'writeInt32LE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['y', 'writeInt32LE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['z', 'writeInt32LE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['cov_x_x', 'writeFloatLE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['cov_x_y', 'writeFloatLE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['cov_x_z', 'writeFloatLE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['cov_y_y', 'writeFloatLE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['cov_y_z', 'writeFloatLE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['cov_z_z', 'writeFloatLE', 4]);
+MsgOrientQuatCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
 module.exports = {
   0x020F: MsgBaselineHeading,
   MsgBaselineHeading: MsgBaselineHeading,
@@ -228,4 +305,6 @@ module.exports = {
   MsgOrientEuler: MsgOrientEuler,
   0x0222: MsgAngularRate,
   MsgAngularRate: MsgAngularRate,
+  0x0223: MsgOrientQuatCov,
+  MsgOrientQuatCov: MsgOrientQuatCov,
 }

@@ -17,6 +17,32 @@ class Orientation(KaitaiStruct):
     def _read(self):
         pass
 
+    class MsgAngularRate(KaitaiStruct):
+        """This message reports the orientation rates in the vehicle body frame.
+        The values represent the measurements a strapped down gyroscope would
+        make and are not equivalent to the time derivative of the Euler angles.
+        The orientation and origin of the user frame is specified via device
+        settings. By convention, the vehicle x-axis is expected to be aligned
+        with the forward direction, while the vehicle y-axis is expected to be
+        aligned with the right direction, and the vehicle z-axis should be
+        aligned with the down direction. This message will only be available in
+        future INS versions of Swift Products and is not produced by Piksi Multi
+        or Duro.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.tow = self._io.read_u4le()
+            self.x = self._io.read_s4le()
+            self.y = self._io.read_s4le()
+            self.z = self._io.read_s4le()
+            self.flags = self._io.read_u1()
+
+
     class MsgBaselineHeading(KaitaiStruct):
         """This message reports the baseline heading pointing from the base station
         to the rover relative to True North. The full GPS time is given by the
@@ -34,33 +60,6 @@ class Orientation(KaitaiStruct):
             self.tow = self._io.read_u4le()
             self.heading = self._io.read_u4le()
             self.n_sats = self._io.read_u1()
-            self.flags = self._io.read_u1()
-
-
-    class MsgOrientQuat(KaitaiStruct):
-        """This message reports the quaternion vector describing the vehicle body
-        frame's orientation with respect to a local-level NED frame. The
-        components of the vector should sum to a unit vector assuming that the
-        LSB of each component as a value of 2^-31. This message will only be
-        available in future INS versions of Swift Products and is not produced
-        by Piksi Multi or Duro.
-        """
-        def __init__(self, _io, _parent=None, _root=None):
-            self._io = _io
-            self._parent = _parent
-            self._root = _root if _root else self
-            self._read()
-
-        def _read(self):
-            self.tow = self._io.read_u4le()
-            self.w = self._io.read_s4le()
-            self.x = self._io.read_s4le()
-            self.y = self._io.read_s4le()
-            self.z = self._io.read_s4le()
-            self.w_accuracy = self._io.read_f4le()
-            self.x_accuracy = self._io.read_f4le()
-            self.y_accuracy = self._io.read_f4le()
-            self.z_accuracy = self._io.read_f4le()
             self.flags = self._io.read_u1()
 
 
@@ -89,17 +88,20 @@ class Orientation(KaitaiStruct):
             self.flags = self._io.read_u1()
 
 
-    class MsgAngularRate(KaitaiStruct):
-        """This message reports the orientation rates in the vehicle body frame.
-        The values represent the measurements a strapped down gyroscope would
-        make and are not equivalent to the time derivative of the Euler angles.
-        The orientation and origin of the user frame is specified via device
-        settings. By convention, the vehicle x-axis is expected to be aligned
-        with the forward direction, while the vehicle y-axis is expected to be
-        aligned with the right direction, and the vehicle z-axis should be
-        aligned with the down direction. This message will only be available in
-        future INS versions of Swift Products and is not produced by Piksi Multi
-        or Duro.
+    class MsgOrientQuatCov(KaitaiStruct):
+        """This message reports the orientation as a unit quaternion together with
+        the upper triangle of the symmetric 3x3 attitude covariance matrix and a
+        GPS time-of-week time-tag. The reference frame of the quaternion and the
+        parameterization of the covariance matrix are both encoded in the flags
+        field, allowing additional frames or parameterizations to be added later
+        without introducing a new message. By default the quaternion describes
+        the orientation of the vehicle body frame with respect to a local-level
+        NED frame (matching MSG_ORIENT_QUAT) and the covariance is expressed as
+        small-angle rotation errors about the axes of that NED frame; in this
+        default case the cov_x_x, cov_y_y, cov_z_z diagonal entries correspond
+        to the variance of the rotation error about North, East, and Down
+        respectively. The components of the quaternion sum to a unit vector
+        assuming that the LSB of each component has a value of 2^-31.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io
@@ -109,9 +111,43 @@ class Orientation(KaitaiStruct):
 
         def _read(self):
             self.tow = self._io.read_u4le()
+            self.w = self._io.read_s4le()
             self.x = self._io.read_s4le()
             self.y = self._io.read_s4le()
             self.z = self._io.read_s4le()
+            self.cov_x_x = self._io.read_f4le()
+            self.cov_x_y = self._io.read_f4le()
+            self.cov_x_z = self._io.read_f4le()
+            self.cov_y_y = self._io.read_f4le()
+            self.cov_y_z = self._io.read_f4le()
+            self.cov_z_z = self._io.read_f4le()
+            self.flags = self._io.read_u1()
+
+
+    class MsgOrientQuat(KaitaiStruct):
+        """This message reports the quaternion vector describing the vehicle body
+        frame's orientation with respect to a local-level NED frame. The
+        components of the vector should sum to a unit vector assuming that the
+        LSB of each component as a value of 2^-31. This message will only be
+        available in future INS versions of Swift Products and is not produced
+        by Piksi Multi or Duro.
+        """
+        def __init__(self, _io, _parent=None, _root=None):
+            self._io = _io
+            self._parent = _parent
+            self._root = _root if _root else self
+            self._read()
+
+        def _read(self):
+            self.tow = self._io.read_u4le()
+            self.w = self._io.read_s4le()
+            self.x = self._io.read_s4le()
+            self.y = self._io.read_s4le()
+            self.z = self._io.read_s4le()
+            self.w_accuracy = self._io.read_f4le()
+            self.x_accuracy = self._io.read_f4le()
+            self.y_accuracy = self._io.read_f4le()
+            self.z_accuracy = self._io.read_f4le()
             self.flags = self._io.read_u1()
 
 
