@@ -5,15 +5,20 @@ module(
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.8.2")
-bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "rules_swiftnav", version = "0.19.0")
+bazel_dep(name = "platforms", version = "1.1.0")
+bazel_dep(name = "rules_swiftnav", version = "0.20.0")
 git_override(
     module_name = "rules_swiftnav",
-    commit = "600fe0302ed5c7b0eced642c218dae8fc2f65735",
+    commit = "d53aabb7388ab08bc059ed44602b38c0bed8e6aa",
     remote = "https://github.com/swift-nav/rules_swiftnav.git",
 )
 
 bazel_dep(name = "aspect_rules_lint", version = "2.5.0", dev_dependency = True)
+
+# Force a Bazel 9 compatible rules_go. It is pulled in transitively (dev-only)
+# via aspect_rules_lint -> rules_buf; the version that chain selects (0.42.0)
+# uses CcInfo, which Bazel 9 removed. >=0.59.0 has the fix.
+bazel_dep(name = "rules_go", version = "0.61.1", dev_dependency = True)
 
 swift_cc_toolchain_ext = use_extension("@rules_swiftnav//cc:extensions.bzl", "swift_cc_toolchain_extension")
 use_repo(
@@ -33,125 +38,50 @@ register_toolchains(
     "@rules_swiftnav//cc/toolchains/llvm20/x86_64-darwin:cc-toolchain-x86_64-darwin",
 )
 
-# Rust toolchain
-bazel_dep(name = "rules_rust", version = "0.68.1")
+# Rust toolchain (rules_rs is built on top of rules_rust; it reimplements the
+# compile path + dependency resolver but still defers to rules_rust for the rules
+# it does not wrap). platforms 1.1.0 is declared above.
+bazel_dep(name = "rules_rs", version = "0.0.86")
+bazel_dep(name = "llvm", version = "0.8.3")
 
-rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
-rust.toolchain(
+# Make @rules_rust available for the rules rules_rs does NOT wrap
+# (rust_clippy / rust_doc / rust_doc_test / rustfmt_test / rust_test_suite + aspects).
+rules_rust = use_extension("@rules_rs//rs:rules_rust.bzl", "rules_rust")
+use_repo(rules_rust, "rules_rust")
+
+# Toolchain — preserve the repo's edition (2024) and stable pin (1.91.1).
+toolchains = use_extension("@rules_rs//rs/toolchains:module_extension.bzl", "toolchains")
+toolchains.toolchain(
     edition = "2024",
-    versions = ["1.91.1"],
+    version = "1.96.0",
 )
-use_repo(rust, "rust_toolchains")
+use_repo(toolchains, "default_rust_toolchains")
 
-register_toolchains("@rust_toolchains//:all")
+register_toolchains(
+    "@default_rust_toolchains//:all",
+    "@llvm//toolchain:all",
+)
 
-crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
-crate.spec(
-    package = "bytes",
-    version = "1.10.1",
-)
-crate.spec(
-    package = "crc16",
-    version = "0.4",
-)
-crate.spec(
-    package = "log",
-    version = "0.4.28",
-)
-crate.spec(
-    default_features = False,
-    package = "dencode",
-    version = "0.3",
-)
-crate.spec(
-    package = "swiftnav",
-    version = "0.10",
-)
-crate.spec(
-    package = "slotmap",
-    version = "1.0.7",
-)
-crate.spec(
-    features = ["derive"],
-    package = "serde",
-    version = "1.0.228",
-)
-crate.spec(
-    features = ["float_roundtrip"],
-    package = "serde_json",
-    version = "1.0.145",
-)
-crate.spec(
-    package = "serde-big-array",
-    version = "0.5.1",
-)
-crate.spec(
-    package = "base64",
-    version = "0.22.1",
-)
-crate.spec(
-    package = "futures",
-    version = "0.3.31",
-)
-crate.spec(
-    package = "serialport",
-    version = "2.1.0",
-)
-crate.spec(
-    package = "env_logger",
-    version = "0.8",
-)
-crate.spec(
-    features = ["derive"],
-    package = "clap",
-    version = "3.1.15",
-)
-crate.spec(
-    default_features = False,
-    package = "mimalloc",
-    version = "0.1",
-)
-crate.spec(
-    package = "vergen",
-    version = "3",
-)
-crate.spec(
-    package = "sha2",
-    version = "0.8",
-)
-crate.spec(
-    package = "hex",
-    version = "0.4",
-)
-crate.spec(
-    package = "assert_cmd",
-    version = "=1.0.8",
-)
-crate.spec(
-    package = "predicates",
-    version = "=2.1.1",
-)
-crate.spec(
-    package = "predicates-tree",
-    version = "=1.0.4",
-)
-crate.spec(
-    package = "predicates-core",
-    version = "=1.0.3",
-)
-crate.spec(
-    package = "assert-json-diff",
-    version = "2.0",
-)
-crate.from_specs(
+# Dependencies — own hub via from_cargo (per-module isolated hub, parity with the
+# previous isolated from_specs hub). Keep the hub named "crates" so existing
+# @crates//:foo labels are unchanged, and use explicit labels so a future switch to
+# crate.use_hub is a MODULE.bazel-only change.
+crate = use_extension("@rules_rs//rs:extensions.bzl", "crate")
+crate.from_cargo(
     name = "crates",
-    cargo_lockfile = "//:Cargo.bazel.lock",
-    strip_internal_dependencies_from_cargo_lockfile = True,
+    cargo_toml = "//:Cargo.toml",
+    cargo_lock = "//:Cargo.lock",
+    platform_triples = [
+        "x86_64-unknown-linux-gnu",
+        "aarch64-unknown-linux-gnu",
+        "x86_64-apple-darwin",
+        "aarch64-apple-darwin",
+    ],
 )
 use_repo(crate, "crates")
 
 bazel_dep(name = "lcov", version = "2.3.2", dev_dependency = True)
-bazel_dep(name = "googletest", version = "1.14.0.bcr.1", dev_dependency = True)
+bazel_dep(name = "googletest", version = "1.17.0.bcr.2", dev_dependency = True)
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 git_override(
     module_name = "hedron_compile_commands",

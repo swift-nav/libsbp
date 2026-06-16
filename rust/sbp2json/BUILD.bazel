@@ -1,5 +1,7 @@
-load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
-load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library", "rust_test")
+load("@rules_rs//rs:cargo_build_script.bzl", "cargo_build_script")
+load("@rules_rs//rs:rust_binary.bzl", "rust_binary")
+load("@rules_rs//rs:rust_library.bzl", "rust_library")
+load("@rules_rs//rs:rust_test.bzl", "rust_test")
 
 rust_library(
     name = "converters",
@@ -21,18 +23,18 @@ cargo_build_script(
     name = "build_script",
     srcs = ["build.rs"],
     build_script_env = {
-        "VERGEN_SEMVER_LIGHTWEIGHT": "0.0.0-bazel-no-version",
+        "VERGEN_GIT_DESCRIBE": "0.0.0-bazel-no-version",
     },
     edition = "2024",
     deps = [
-        "@crates//:vergen",
+        "@crates//:vergen-gitcl",
     ],
 )
 
 rust_binary(
     name = "sbp2json",
     srcs = ["src/bin/sbp2json.rs"],
-    edition = "2021",
+    edition = "2024",
     visibility = ["//visibility:public"],
     deps = [
         ":build_script",
@@ -49,7 +51,7 @@ rust_binary(
 rust_binary(
     name = "json2sbp",
     srcs = ["src/bin/json2sbp.rs"],
-    edition = "2021",
+    edition = "2024",
     visibility = ["//visibility:public"],
     deps = [
         ":build_script",
@@ -66,7 +68,7 @@ rust_binary(
 rust_binary(
     name = "json2json",
     srcs = ["src/bin/json2json.rs"],
-    edition = "2021",
+    edition = "2024",
     visibility = ["//visibility:public"],
     deps = [
         ":build_script",
@@ -87,9 +89,6 @@ rust_test(
         "@crates//:assert-json-diff",
         "@crates//:assert_cmd",
         "@crates//:hex",
-        "@crates//:predicates",
-        "@crates//:predicates-core",
-        "@crates//:predicates-tree",
         "@crates//:serde_json",
         "@crates//:sha2",
     ],

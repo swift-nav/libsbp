@@ -5,21 +5,17 @@
 
 use std::time::Duration;
 
-use serialport::prelude::*;
-
 use sbp::{Sbp, iter_messages};
 
 fn main() {
-    let s = SerialPortSettings {
-        baud_rate: BaudRate::Baud115200,
-        data_bits: DataBits::Eight,
-        flow_control: FlowControl::None,
-        parity: Parity::None,
-        stop_bits: StopBits::One,
-        timeout: Duration::from_millis(1000),
-    };
-
-    let mut port = serialport::open_with_settings("/dev/ttyUSB0", &s).expect("open failed");
+    let mut port = serialport::new("/dev/ttyUSB0", 115200)
+        .data_bits(serialport::DataBits::Eight)
+        .flow_control(serialport::FlowControl::None)
+        .parity(serialport::Parity::None)
+        .stop_bits(serialport::StopBits::One)
+        .timeout(Duration::from_millis(1000))
+        .open()
+        .expect("open failed");
 
     for msg in iter_messages(&mut port) {
         match msg {

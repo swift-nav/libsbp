@@ -73,9 +73,9 @@ sbp_out.*
 stack.yaml.lock
 
 # rust
-Cargo.lock
+# Cargo.lock is committed: it is the pinned dependency input for the Bazel
+# rules_rs `crate.from_cargo` hub (//:Cargo.lock).
 target/
-rust/sbp/Cargo.lock
 rust/sbp/target
 
 python/sbp/_version.py

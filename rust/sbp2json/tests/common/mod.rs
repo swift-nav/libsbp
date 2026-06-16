@@ -206,14 +206,21 @@ fn file_equals<P: AsRef<Path>>(input: P, output: P, json: bool) -> bool {
 }
 
 fn binary_file_equals(mut a: File, mut b: File) -> bool {
+    use std::io::Read;
+
     let mut input_file_hash = Sha256::new();
     let mut output_file_hash = Sha256::new();
 
-    std::io::copy(&mut a, &mut input_file_hash).unwrap();
-    std::io::copy(&mut b, &mut output_file_hash).unwrap();
+    let mut buf = Vec::new();
+    a.read_to_end(&mut buf).unwrap();
+    input_file_hash.update(&buf);
 
-    let input_digest = input_file_hash.result();
-    let output_digest = output_file_hash.result();
+    buf.clear();
+    b.read_to_end(&mut buf).unwrap();
+    output_file_hash.update(&buf);
+
+    let input_digest = input_file_hash.finalize();
+    let output_digest = output_file_hash.finalize();
 
     let input_hex_digest = hex::encode(&input_digest[..]);
     let output_hex_digest = hex::encode(&output_digest[..]);
