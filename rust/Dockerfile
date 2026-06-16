@@ -2,6 +2,12 @@ FROM rust:1.96.0-slim
 
 ARG DEBIAN_FRONTEND=noninterative
 
+# This (-slim) image has no git, so vergen-gitcl in sbp2json's build.rs can't
+# run `git describe`. Provide the version at build time instead; build.rs honours
+# a pre-set VERGEN_GIT_DESCRIBE and skips git. Overridable via --build-arg.
+ARG VERGEN_GIT_DESCRIBE=0.0.0-benchmark
+ENV VERGEN_GIT_DESCRIBE=${VERGEN_GIT_DESCRIBE}
+
 ARG SCCACHE_VER=0.2.12
 ARG SCCACHE_FILE=${SCCACHE_VER}/sccache-${SCCACHE_VER}-x86_64-unknown-linux-musl.tar.gz
 ARG SCCACHE_URL=https://github.com/mozilla/sccache/releases/download/${SCCACHE_FILE}

@@ -8,6 +8,7 @@ fn main() {
     // Hermetic/sandboxed builds (e.g. Bazel) have no git available and instead
     // inject the version directly via the VERGEN_GIT_DESCRIBE env var. Honour it
     // and skip running git entirely in that case.
+    println!("cargo:rerun-if-env-changed=VERGEN_GIT_DESCRIBE");
     if let Some(describe) = env::var_os("VERGEN_GIT_DESCRIBE") {
         println!(
             "cargo:rustc-env=VERGEN_GIT_DESCRIBE={}",

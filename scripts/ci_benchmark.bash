@@ -29,7 +29,9 @@ popd
 
 pushd rust
 
-docker build --tag rust-sbp2json .
+docker build \
+  --build-arg VERGEN_GIT_DESCRIBE="$(git describe --tags --always --dirty 2>/dev/null || echo 0.0.0-benchmark)" \
+  --tag rust-sbp2json .
 
 cp -r ../.git .
 cp sbp2json/Cargo.lock .
