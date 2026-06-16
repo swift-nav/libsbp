@@ -6,7 +6,7 @@ use std::path::PathBuf;
 use clap::Parser;
 use sbp::json::{CompactFormatter, HaskellishFloatFormatter};
 
-use converters::{json2json, ErrorHandlerOptions, Result};
+use converters::{ErrorHandlerOptions, Result, json2json};
 
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;

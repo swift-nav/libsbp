@@ -1,8 +1,8 @@
 use std::io::{Read, Write};
 
 use sbp::{
-    json::{Json2JsonEncoder, JsonEncoder},
     HandleParseError, SbpEncoder,
+    json::{Json2JsonEncoder, JsonEncoder},
 };
 use serde_json::ser::Formatter;
 

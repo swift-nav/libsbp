@@ -13,7 +13,7 @@ git_override(
     remote = "https://github.com/swift-nav/rules_swiftnav.git",
 )
 
-bazel_dep(name = "aspect_rules_lint", version = "2.5.0", dev_dependency = True)
+bazel_dep(name = "aspect_rules_lint", version = "2.6.0", dev_dependency = True)
 
 # Force a Bazel 9 compatible rules_go. It is pulled in transitively (dev-only)
 # via aspect_rules_lint -> rules_buf; the version that chain selects (0.42.0)
