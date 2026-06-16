@@ -1,4 +1,4 @@
-FROM rust:1.88.0-slim
+FROM rust:1.96.0-slim
 
 ARG DEBIAN_FRONTEND=noninterative
 
