@@ -66,11 +66,16 @@ register_toolchains(
     "@llvm//toolchain:all",
 )
 
-# Dependencies — own hub via from_cargo (per-module isolated hub, parity with the
-# previous isolated from_specs hub). Keep the hub named "crates" so existing
-# @crates//:foo labels are unchanged, and use explicit labels so a future switch to
-# crate.use_hub is a MODULE.bazel-only change.
-crate = use_extension("@rules_rs//rs:extensions.bzl", "crate")
+# Dependencies — dev-gated own hub. The crate usage is marked dev_dependency, so
+# it is honored only when libsbp is the ROOT module (standalone build), where it
+# creates libsbp's own complete "crates" hub. When libsbp is a DEPENDENCY (e.g. of
+# gnss-converters), the entire usage is ignored, so it does not create a second
+# "crates" hub that would collide with the owner's on the shared registry repo.
+# libsbp's Rust is not compiled by such parents (they vendor sbp themselves), so it
+# needs no hub there. Keep the hub named "crates" so @crates//:foo labels are
+# unchanged. (A parent that DID compile libsbp's Rust would instead use crate.use_hub
+# to share the owner's hub — not needed today.)
+crate = use_extension("@rules_rs//rs:extensions.bzl", "crate", dev_dependency = True)
 crate.from_cargo(
     name = "crates",
     cargo_toml = "//:Cargo.toml",
