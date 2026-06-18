@@ -37,15 +37,8 @@ register_toolchains(
     "@rules_swiftnav//cc/toolchains/llvm20/x86_64-darwin:cc-toolchain-x86_64-darwin",
 )
 
-# Rust toolchain (rules_rs is built on top of rules_rust; it reimplements the
-# compile path + dependency resolver but still defers to rules_rust for the rules
-# it does not wrap). platforms 1.1.0 is declared above.
-bazel_dep(name = "rules_rs", version = "0.0.86")
-git_override(
-    module_name = "rules_rs",
-    remote = "https://github.com/pcrumley/rules_rs.git",
-    commit = "1a308f2056f33fb52a79cb1f20e5cae3637d142b",  # dev tip — or use branch = "dev"
-)
+# Rust toolchain platforms 1.1.0 is declared above.
+bazel_dep(name = "rules_rs", version = "0.0.92")
 bazel_dep(name = "llvm", version = "0.8.3")
 
 # Make @rules_rust available for the rules rules_rs does NOT wrap
