@@ -67,7 +67,7 @@ version = "0.3"
 default-features = false
 
 [dev-dependencies]
-serialport = "2.1.0"
+serialport = "4"
 
 [package.metadata.docs.rs]
 # Whether to pass `--all-features` to Cargo when building docs for docs.rs

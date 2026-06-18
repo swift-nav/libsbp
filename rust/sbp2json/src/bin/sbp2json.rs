@@ -6,14 +6,14 @@ use std::path::PathBuf;
 use clap::Parser;
 use sbp::json::{CompactFormatter, HaskellishFloatFormatter};
 
-use converters::{sbp2json, ErrorHandlerOptions, Result};
+use converters::{ErrorHandlerOptions, Result, sbp2json};
 
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 /// Convert binary SBP data to JSON.
 #[derive(Debug, Parser)]
-#[structopt(name = "sbp2json", verbatim_doc_comment, version = env!("VERGEN_SEMVER_LIGHTWEIGHT"))]
+#[clap(name = "sbp2json", verbatim_doc_comment, version = env!("VERGEN_GIT_DESCRIBE"))]
 pub struct Options {
     /// Path to input file
     input: Option<PathBuf>,
@@ -40,11 +40,11 @@ pub struct Options {
 fn main() -> Result<()> {
     let options = Options::parse();
 
+    let mut log_builder = env_logger::Builder::from_default_env();
     if options.debug {
-        std::env::set_var("RUST_LOG", "debug");
+        log_builder.parse_filters("debug");
     }
-
-    env_logger::init();
+    log_builder.init();
 
     let stdin: Box<dyn Read> = match options.input {
         Some(path) => Box::new(File::open(path)?),

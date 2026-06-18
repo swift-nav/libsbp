@@ -202,7 +202,9 @@ jobs:
         generator: ["MinGW Makefiles", "Visual Studio 17 2022"]
         build_shared_libraries: [true, false]
     name: "Windows Latest (Generator: ${{ matrix.generator }}, Shared Library: ${{ matrix.build_shared_libraries }})"
-    runs-on: windows-latest
+    # Pinned to windows-2022: the "Visual Studio 17 2022" generator requires VS
+    # 2022, which the migrated windows-latest image no longer ships.
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v6
         with:
