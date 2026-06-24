@@ -24,10 +24,12 @@ CLASSIFIERS = [
   'Programming Language :: Python',
   'Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator',
   'Topic :: Software Development :: Libraries :: Python Modules',
-  'Programming Language :: Python :: 3.7',
   'Programming Language :: Python :: 3.8',
   'Programming Language :: Python :: 3.9',
   'Programming Language :: Python :: 3.10',
+  'Programming Language :: Python :: 3.11',
+  'Programming Language :: Python :: 3.12',
+  'Programming Language :: Python :: 3.13',
 ]
 
 PACKAGES = find_packages(exclude=["tests", "bench", "tests.*"])
@@ -180,9 +182,9 @@ if __name__ == "__main__":
         classifiers=CLASSIFIERS,
         packages=PACKAGES,
         platforms=PLATFORMS,
+        python_requires='>=3.8',
         install_requires=INSTALL_REQUIRES,
         tests_require=TEST_REQUIRES,
-        use_2to3=False,
         zip_safe=False,
         ext_modules=ext_modules,
         scripts=['bin/sbp2json'],

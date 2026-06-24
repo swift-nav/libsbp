@@ -1,17 +1,13 @@
 #!/usr/bin/env bash
-# This script prepares the environment for Python use in ubuntu 22.04 runners in CI.
+# This script prepares the environment for Python use in CI.
+# Python interpreters are provided by actions/setup-python in the workflow;
+# here we only install the system build dependencies and tox.
 
 set -ex
 
 sudo apt-get -qq update
 
-sudo apt-get install -y software-properties-common
-sudo add-apt-repository -y ppa:deadsnakes/ppa
-
-sudo apt-get -qq update
-
-# Install Python 3.7, 3.9, 3.10, and the default Python 3 version
-# (Note: distutils is deprecated for default python on Ubuntu 22.04)
+# System libraries needed to build native extensions / source dists.
 sudo apt-get install -y \
     build-essential \
     zlib1g-dev \
@@ -26,12 +22,7 @@ sudo apt-get install -y \
     libpcap-dev \
     liblzma-dev \
     libpcre3-dev \
-    python3.7 python3.7-dev python3.7-distutils \
-    python3.9 python3.9-dev python3.9-distutils \
-    python3.10 python3.10-dev python3.10-distutils \
-    python3 python3-dev python3-pip \
     musl-tools \
-    tox dpkg-dev wget
+    dpkg-dev wget
 
-
-pip3 install wheel setuptools
+pip3 install wheel setuptools tox
