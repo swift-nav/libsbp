@@ -249,12 +249,12 @@ are both valid. To see a list of all valid targets, run `make help`.
 
 1. By default the Python targets `make python` and `make test-python` (as well
    as `make all`) run tests on all Python versions officially supported by *the
-   libsbp Python bindings*, currently **3.8-3.13**, skipping any versions not
+   libsbp Python bindings*, currently **3.8-3.14**, skipping any versions not
    installed. To run tests on just specific Python version(s), specify the
    `TOXENV` environment variable, e.g., `TOXENV=py313 make python`. CI runs
    Python tests on all supported versions.
 2. By default *the code generators* are run on the system's (or virtual env's)
-   default Python interpreter. Currently Python versions **3.8 to 3.13** are
+   default Python interpreter. Currently Python versions **3.8 to 3.14** are
    officially supported, other versions may or may not work. The generated
    libsbp bindings should be the same on all supported Python versions. To use
    a different version than your default Python interpreter, specify the
