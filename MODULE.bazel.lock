@@ -1172,8 +1172,8 @@
     },
     "@@rules_swiftnav+//cc:extensions.bzl%swift_cc_toolchain_extension": {
       "general": {
-        "bzlTransitiveDigest": "RsF8sHHXc6ZZgh3R7L2QSEdkSNO2p45Yo1bkKHqjBWw=",
-        "usagesDigest": "HaY7baHjdVeZIr6mlx68hexdJlG7m0i4P3cynv17czg=",
+        "bzlTransitiveDigest": "LS0VF7klVv3uKgNzF7w5juh0eLqMf5RfufyCxD5bY3g=",
+        "usagesDigest": "2YI3RoL0Q3BSGKLPiIk7tmYvENEgau5xSdag2XLDoi4=",
         "recordedInputs": [
           "REPO_MAPPING:rules_swiftnav+,bazel_tools bazel_tools",
           "REPO_MAPPING:rules_swiftnav+,rules_swiftnav rules_swiftnav+"
