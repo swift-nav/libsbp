@@ -1,3 +1,5 @@
 sphinx
 numpydoc
 sphinxcontrib-spelling
+distro
+numpy
