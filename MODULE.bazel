@@ -5,12 +5,7 @@ module(
 
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 bazel_dep(name = "platforms", version = "1.1.0")
-bazel_dep(name = "rules_swiftnav", version = "0.20.0")
-git_override(
-    module_name = "rules_swiftnav",
-    commit = "d53aabb7388ab08bc059ed44602b38c0bed8e6aa",
-    remote = "https://github.com/swift-nav/rules_swiftnav.git",
-)
+bazel_dep(name = "rules_swiftnav", version = "0.21.0")
 
 bazel_dep(name = "aspect_rules_lint", version = "2.6.0", dev_dependency = True)
 
