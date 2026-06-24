@@ -1,3 +1,4 @@
 construct
 pylibftdi
 pyserial
+six
