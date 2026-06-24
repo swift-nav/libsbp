@@ -395,8 +395,8 @@ push this unintentionally) and/or make sure you're submodule are up-to-date with
 
 #### Tox error: `ERROR: FAIL could not package project`
 
-Tox needs to be run with the Python it was installed with (and apparently must
-run with Python 2) otherwise you'll get an error similar to:
+Tox needs to be run with the Python it was installed with, otherwise you'll get
+an error similar to:
 
 ```sh
     ERROR: FAIL could not package project - v = InvocationError('/home/ubuntu/dev/libsbp/python/.tox/.tox/bin/python setup.py sdist --formats=zip --dist-dir /home/ubuntu/dev/libsbp/python/.tox/dist', -11)
@@ -404,7 +404,7 @@ run with Python 2) otherwise you'll get an error similar to:
 
 Tox also seems to have issues interacting with conda environments.  The easiest
 way to work around this is to remove conda from your path and make sure tox is
-installed with a Python2 version of the interpreter.
+installed with a supported (3.8+) Python interpreter.
 
 #### Tox error: `ERROR: cowardly refusing to delete envdir`
 
@@ -414,11 +414,12 @@ Tox may fail with the following error:
     ERROR: cowardly refusing to delete `envdir` (it does not look like a virtualenv): /home/ubuntu/dev/libsbp/python/.tox/py38-nojit
 ```
 
-There's an open tox issue for this: <https://github.com/tox-dev/tox/issues/1354>
--- the only workaround that resolved this was to downgrade tox:
+This was a bug in old tox 3 releases
+(<https://github.com/tox-dev/tox/issues/1354>); upgrading to a current tox 4
+release resolves it:
 
 ```sh
-    pip install --upgrade --force-reinstall tox==3.12.1
+    pip install --upgrade tox
 ```
 
 ## Distributing Java

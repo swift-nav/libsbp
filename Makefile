@@ -231,7 +231,7 @@ gen-python:
 		       --python
 
 	$(call announce-begin,"Formatting Python code")
-	tox -e py --run-command="autoflake -i --remove-all-unused-imports -r python/sbp"
+	tox -e autoflake
 	$(call announce-end,"Finished formatting Python code")
 	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
 
@@ -517,7 +517,7 @@ html-c:
 
 html-python:
 	$(call announce-begin,"Generating Python documentation")
-	tox -e py --run-command="make -C python/docs spelling html"
+	tox -e docs
 	$(call announce-end,"Finished generating Python documentation at python/docs/build/html/index.html")
 
 release:
