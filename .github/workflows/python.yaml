@@ -46,6 +46,7 @@ jobs:
   legacy:
     name: Test (Python ${{ matrix.python }})
     runs-on: ubuntu-24.04
+    container: python:${{ matrix.python }}
     strategy:
       fail-fast: false
       matrix:
@@ -55,10 +56,5 @@ jobs:
         with:
           submodules: recursive
 
-      # EOL interpreters aren't available via setup-python on modern runners, so
-      # run the suite inside the official python:<ver> container instead.
-      - name: Run tests in python:${{ matrix.python }}
-        run: |
-          docker run --rm -v "$PWD":/work -w /work \
-            python:${{ matrix.python }} \
-            bash scripts/ci_test_python_legacy.bash
+      - name: Run tests
+        run: bash scripts/ci_test_python_legacy.bash
