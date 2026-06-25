@@ -14,6 +14,7 @@ on:
       - requirements.txt
       - tox.ini
       - scripts/ci_prepare_python.bash
+      - scripts/ci_test_python_legacy.bash
       - .github/workflows/python.yaml
 jobs:
   coverage:
@@ -41,3 +42,23 @@ jobs:
         run: make test-python
         env:
           TOX_PARALLEL_NO_SPINNER: 1
+
+  legacy:
+    name: Test (Python ${{ matrix.python }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["2.7", "3.7"]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      # EOL interpreters aren't available via setup-python on modern runners, so
+      # run the suite inside the official python:<ver> container instead.
+      - name: Run tests in python:${{ matrix.python }}
+        run: |
+          docker run --rm -v "$PWD":/work -w /work \
+            python:${{ matrix.python }} \
+            bash scripts/ci_test_python_legacy.bash
