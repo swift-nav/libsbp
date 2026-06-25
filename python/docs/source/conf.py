@@ -295,7 +295,7 @@ texinfo_documents = [(master_doc, project, _TITLE,
 spelling_word_list_filename='spelling_wordlist.txt'
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {'python': ('https://docs.python.org/', None)}
 
 from sphinx.ext.apidoc import main
 # --no-toc prevents creation of modules.rst
