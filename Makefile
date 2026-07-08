@@ -307,6 +307,12 @@ gen-rust:
 
 	$(call announce-end,"Finished formatting Rust code")
 
+	$(call announce-begin,"Syncing Cargo.lock to generated manifest versions")
+
+	cd $(SWIFTNAV_ROOT) && cargo update --workspace
+
+	$(call announce-end,"Finished syncing Cargo.lock")
+
 gen-protobuf:
 	$(call announce-begin,"Generating Protocol Buffers bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
