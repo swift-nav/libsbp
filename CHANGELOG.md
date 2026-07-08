@@ -1,5 +1,24 @@
 # Changelog
 
+## [v6.5.1](https://github.com/swift-nav/libsbp/tree/v6.5.1)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.5.0...v6.5.1)
+
+**Closed issues:**
+
+- Python 3.12 support [\#1583](https://github.com/swift-nav/libsbp/issues/1583)
+
+**Merged pull requests:**
+
+- Bump actions/setup-java from 5.3.0 to 5.4.0 [\#1593](https://github.com/swift-nav/libsbp/pull/1593) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/cache from 5 to 6 [\#1592](https://github.com/swift-nav/libsbp/pull/1592) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update rules\_swiftnav to v0.21.0 [\#1591](https://github.com/swift-nav/libsbp/pull/1591) ([pcrumley](https://github.com/pcrumley))
+- Modernize python environment [\#1590](https://github.com/swift-nav/libsbp/pull/1590) ([martin4861](https://github.com/martin4861))
+- Bump actions/setup-java from 5.2.0 to 5.3.0 [\#1588](https://github.com/swift-nav/libsbp/pull/1588) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/checkout from 6 to 7 [\#1587](https://github.com/swift-nav/libsbp/pull/1587) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump js-yaml from 4.1.1 to 4.2.0 [\#1586](https://github.com/swift-nav/libsbp/pull/1586) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Migrate to rules\_rs, modernize Rust toolchain/deps, and Bazel 9.1.1 [\#1584](https://github.com/swift-nav/libsbp/pull/1584) ([pcrumley](https://github.com/pcrumley))
+
 ## [v6.5.0](https://github.com/swift-nav/libsbp/tree/v6.5.0)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.4.0...v6.5.0)
