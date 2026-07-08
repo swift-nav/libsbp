@@ -872,7 +872,7 @@ checksum = "b39cdef0fa800fc44525c84ccb54a029961a8215f9619753635a9c0d2538d46d"
 
 [[package]]
 name = "sbp"
-version = "6.5.1"
+version = "6.5.2-alpha"
 dependencies = [
  "base64",
  "bytes",
@@ -890,7 +890,7 @@ dependencies = [
 
 [[package]]
 name = "sbp2json"
-version = "6.5.1-unreleased"
+version = "6.5.2-alpha"
 dependencies = [
  "assert-json-diff",
  "assert_cmd",
