@@ -294,6 +294,12 @@ and something needs to be repeated.
 
 7. Push the release to GitHub:
 
+    > (Optional) Before pushing, confirm everything builds, e.g.:
+    >
+    > ```sh
+    > bazel test //...
+    > ```
+
     ```sh
     git push origin master <INCREMENTED_TAG>
     ```
