@@ -48,9 +48,9 @@ fn test_auto_check_sbp_profiling_msg_measurement_point() {
                 );
                 assert_eq!(
                     msg.func.as_bytes(),
-                    &[114, 111, 117, 116, 101, 40, 41, 0],
+                    [114, 111, 117, 116, 101, 40, 41, 0],
                     "incorrect value for msg.func, expected string '{:?}', is '{:?}'",
-                    &[114, 111, 117, 116, 101, 40, 41, 0],
+                    [114, 111, 117, 116, 101, 40, 41, 0],
                     msg.func.as_bytes()
                 );
                 assert_eq!(
@@ -146,9 +146,9 @@ fn test_json2sbp_auto_check_sbp_profiling_msg_measurement_point() {
                 );
                 assert_eq!(
                     msg.func.as_bytes(),
-                    &[114, 111, 117, 116, 101, 40, 41, 0],
+                    [114, 111, 117, 116, 101, 40, 41, 0],
                     "incorrect value for msg.func, expected string '{:?}', is '{:?}'",
-                    &[114, 111, 117, 116, 101, 40, 41, 0],
+                    [114, 111, 117, 116, 101, 40, 41, 0],
                     msg.func.as_bytes()
                 );
                 assert_eq!(
@@ -253,9 +253,9 @@ fn test_sbp2json_auto_check_sbp_profiling_msg_measurement_point() {
                 );
                 assert_eq!(
                     msg.func.as_bytes(),
-                    &[114, 111, 117, 116, 101, 40, 41, 0],
+                    [114, 111, 117, 116, 101, 40, 41, 0],
                     "incorrect value for msg.func, expected string '{:?}', is '{:?}'",
-                    &[114, 111, 117, 116, 101, 40, 41, 0],
+                    [114, 111, 117, 116, 101, 40, 41, 0],
                     msg.func.as_bytes()
                 );
                 assert_eq!(

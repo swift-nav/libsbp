@@ -61,9 +61,9 @@ fn test_auto_check_sbp_system_msg_dgnss_status() {
                 );
                 assert_eq!(
                     msg.source.as_bytes(),
-                    &[83, 107, 121, 108, 97, 114, 107],
+                    [83, 107, 121, 108, 97, 114, 107],
                     "incorrect value for msg.source, expected string '{:?}', is '{:?}'",
-                    &[83, 107, 121, 108, 97, 114, 107],
+                    [83, 107, 121, 108, 97, 114, 107],
                     msg.source.as_bytes()
                 );
             }
@@ -134,9 +134,9 @@ fn test_json2sbp_auto_check_sbp_system_msg_dgnss_status() {
                 );
                 assert_eq!(
                     msg.source.as_bytes(),
-                    &[83, 107, 121, 108, 97, 114, 107],
+                    [83, 107, 121, 108, 97, 114, 107],
                     "incorrect value for msg.source, expected string '{:?}', is '{:?}'",
-                    &[83, 107, 121, 108, 97, 114, 107],
+                    [83, 107, 121, 108, 97, 114, 107],
                     msg.source.as_bytes()
                 );
             }
@@ -214,9 +214,9 @@ fn test_sbp2json_auto_check_sbp_system_msg_dgnss_status() {
                 );
                 assert_eq!(
                     msg.source.as_bytes(),
-                    &[83, 107, 121, 108, 97, 114, 107],
+                    [83, 107, 121, 108, 97, 114, 107],
                     "incorrect value for msg.source, expected string '{:?}', is '{:?}'",
-                    &[83, 107, 121, 108, 97, 114, 107],
+                    [83, 107, 121, 108, 97, 114, 107],
                     msg.source.as_bytes()
                 );
             }

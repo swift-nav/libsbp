@@ -52,12 +52,12 @@ fn test_auto_check_sbp_file_io_msg_fileio_read_req() {
                 );
                 assert_eq!(
                     msg.filename.as_bytes(),
-                    &[
+                    [
                         47, 112, 97, 116, 104, 47, 116, 111, 47, 115, 111, 109, 101, 47, 102, 105,
                         108, 101, 0
                     ],
                     "incorrect value for msg.filename, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         47, 112, 97, 116, 104, 47, 116, 111, 47, 115, 111, 109, 101, 47, 102, 105,
                         108, 101, 0
                     ],
@@ -131,12 +131,12 @@ fn test_json2sbp_auto_check_sbp_file_io_msg_fileio_read_req() {
                 );
                 assert_eq!(
                     msg.filename.as_bytes(),
-                    &[
+                    [
                         47, 112, 97, 116, 104, 47, 116, 111, 47, 115, 111, 109, 101, 47, 102, 105,
                         108, 101, 0
                     ],
                     "incorrect value for msg.filename, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         47, 112, 97, 116, 104, 47, 116, 111, 47, 115, 111, 109, 101, 47, 102, 105,
                         108, 101, 0
                     ],
@@ -218,12 +218,12 @@ fn test_sbp2json_auto_check_sbp_file_io_msg_fileio_read_req() {
                 );
                 assert_eq!(
                     msg.filename.as_bytes(),
-                    &[
+                    [
                         47, 112, 97, 116, 104, 47, 116, 111, 47, 115, 111, 109, 101, 47, 102, 105,
                         108, 101, 0
                     ],
                     "incorrect value for msg.filename, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         47, 112, 97, 116, 104, 47, 116, 111, 47, 115, 111, 109, 101, 47, 102, 105,
                         108, 101, 0
                     ],

@@ -47,12 +47,12 @@ fn test_auto_check_sbp_file_io_msg_fileio_read_dir_req() {
                 );
                 assert_eq!(
                     msg.dirname.as_bytes(),
-                    &[
+                    [
                         47, 115, 111, 109, 101, 47, 114, 97, 110, 100, 111, 109, 47, 112, 97, 116,
                         104, 0
                     ],
                     "incorrect value for msg.dirname, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         47, 115, 111, 109, 101, 47, 114, 97, 110, 100, 111, 109, 47, 112, 97, 116,
                         104, 0
                     ],
@@ -121,12 +121,12 @@ fn test_json2sbp_auto_check_sbp_file_io_msg_fileio_read_dir_req() {
                 );
                 assert_eq!(
                     msg.dirname.as_bytes(),
-                    &[
+                    [
                         47, 115, 111, 109, 101, 47, 114, 97, 110, 100, 111, 109, 47, 112, 97, 116,
                         104, 0
                     ],
                     "incorrect value for msg.dirname, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         47, 115, 111, 109, 101, 47, 114, 97, 110, 100, 111, 109, 47, 112, 97, 116,
                         104, 0
                     ],
@@ -203,12 +203,12 @@ fn test_sbp2json_auto_check_sbp_file_io_msg_fileio_read_dir_req() {
                 );
                 assert_eq!(
                     msg.dirname.as_bytes(),
-                    &[
+                    [
                         47, 115, 111, 109, 101, 47, 114, 97, 110, 100, 111, 109, 47, 112, 97, 116,
                         104, 0
                     ],
                     "incorrect value for msg.dirname, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         47, 115, 111, 109, 101, 47, 114, 97, 110, 100, 111, 109, 47, 112, 97, 116,
                         104, 0
                     ],

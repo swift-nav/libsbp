@@ -51,9 +51,9 @@ fn test_auto_check_sbp_system_msg_csac_telemetry() {
                 );
                 assert_eq!(
                     msg.telemetry.as_bytes(),
-                    &[115, 111, 109, 101, 32, 100, 97, 116, 97],
+                    [115, 111, 109, 101, 32, 100, 97, 116, 97],
                     "incorrect value for msg.telemetry, expected string '{:?}', is '{:?}'",
-                    &[115, 111, 109, 101, 32, 100, 97, 116, 97],
+                    [115, 111, 109, 101, 32, 100, 97, 116, 97],
                     msg.telemetry.as_bytes()
                 );
             }
@@ -114,9 +114,9 @@ fn test_json2sbp_auto_check_sbp_system_msg_csac_telemetry() {
                 );
                 assert_eq!(
                     msg.telemetry.as_bytes(),
-                    &[115, 111, 109, 101, 32, 100, 97, 116, 97],
+                    [115, 111, 109, 101, 32, 100, 97, 116, 97],
                     "incorrect value for msg.telemetry, expected string '{:?}', is '{:?}'",
-                    &[115, 111, 109, 101, 32, 100, 97, 116, 97],
+                    [115, 111, 109, 101, 32, 100, 97, 116, 97],
                     msg.telemetry.as_bytes()
                 );
             }
@@ -184,9 +184,9 @@ fn test_sbp2json_auto_check_sbp_system_msg_csac_telemetry() {
                 );
                 assert_eq!(
                     msg.telemetry.as_bytes(),
-                    &[115, 111, 109, 101, 32, 100, 97, 116, 97],
+                    [115, 111, 109, 101, 32, 100, 97, 116, 97],
                     "incorrect value for msg.telemetry, expected string '{:?}', is '{:?}'",
-                    &[115, 111, 109, 101, 32, 100, 97, 116, 97],
+                    [115, 111, 109, 101, 32, 100, 97, 116, 97],
                     msg.telemetry.as_bytes()
                 );
             }
