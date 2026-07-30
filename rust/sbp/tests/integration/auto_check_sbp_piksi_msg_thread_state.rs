@@ -52,11 +52,11 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -104,11 +104,11 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -156,11 +156,11 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -208,11 +208,11 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -260,11 +260,11 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -312,11 +312,11 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -364,11 +364,11 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -416,11 +416,11 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -468,11 +468,11 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -520,11 +520,11 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -572,12 +572,12 @@ fn test_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 116, 114, 97, 99, 107, 0, 0, 0, 0, 0, 0, 0,
                         0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 116, 114, 97, 99, 107, 0, 0, 0, 0, 0, 0, 0,
                         0
                     ],
@@ -646,11 +646,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -704,11 +704,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -762,11 +762,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -820,11 +820,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -878,11 +878,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -936,11 +936,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -994,11 +994,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1052,11 +1052,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1110,11 +1110,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1168,11 +1168,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1226,12 +1226,12 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 116, 114, 97, 99, 107, 0, 0, 0, 0, 0, 0, 0,
                         0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 116, 114, 97, 99, 107, 0, 0, 0, 0, 0, 0, 0,
                         0
                     ],
@@ -1308,11 +1308,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1379,11 +1379,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1450,11 +1450,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1521,11 +1521,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1592,11 +1592,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1663,11 +1663,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 105, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1734,11 +1734,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         105, 100, 108, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1805,11 +1805,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         78, 65, 80, 32, 73, 83, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1876,11 +1876,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         83, 66, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -1947,11 +1947,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 97, 99, 113, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     msg.name.as_bytes()
@@ -2018,12 +2018,12 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_thread_state() {
                 );
                 assert_eq!(
                     msg.name.as_bytes(),
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 116, 114, 97, 99, 107, 0, 0, 0, 0, 0, 0, 0,
                         0
                     ],
                     "incorrect value for msg.name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         109, 97, 110, 97, 103, 101, 32, 116, 114, 97, 99, 107, 0, 0, 0, 0, 0, 0, 0,
                         0
                     ],

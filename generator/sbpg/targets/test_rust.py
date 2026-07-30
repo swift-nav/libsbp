@@ -24,7 +24,7 @@ TEST_TEMPLATE_NAME = "rust/test/sbp_tests_template.rs"
 TEST_MAIN_TEMPLATE_NAME = "rust/test/sbp_tests_main_template.rs"
 
 def bytes_escape(value):
-    return "&{}".format(list(bytes(value, "ascii")))
+    return "{}".format(list(bytes(value, "ascii")))
 
 def mod_name(value):
     return value.split('.')[1]

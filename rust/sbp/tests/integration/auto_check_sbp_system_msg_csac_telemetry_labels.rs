@@ -52,9 +52,9 @@ fn test_auto_check_sbp_system_msg_csac_telemetry_labels() {
                 );
                 assert_eq!(
                     msg.telemetry_labels.as_bytes(),
-                    &[115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
+                    [115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
                     "incorrect value for msg.telemetry_labels, expected string '{:?}', is '{:?}'",
-                    &[115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
+                    [115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
                     msg.telemetry_labels.as_bytes()
                 );
             }
@@ -115,9 +115,9 @@ fn test_json2sbp_auto_check_sbp_system_msg_csac_telemetry_labels() {
                 );
                 assert_eq!(
                     msg.telemetry_labels.as_bytes(),
-                    &[115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
+                    [115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
                     "incorrect value for msg.telemetry_labels, expected string '{:?}', is '{:?}'",
-                    &[115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
+                    [115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
                     msg.telemetry_labels.as_bytes()
                 );
             }
@@ -186,9 +186,9 @@ fn test_sbp2json_auto_check_sbp_system_msg_csac_telemetry_labels() {
                 );
                 assert_eq!(
                     msg.telemetry_labels.as_bytes(),
-                    &[115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
+                    [115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
                     "incorrect value for msg.telemetry_labels, expected string '{:?}', is '{:?}'",
-                    &[115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
+                    [115, 111, 109, 101, 32, 108, 97, 98, 101, 108, 115],
                     msg.telemetry_labels.as_bytes()
                 );
             }

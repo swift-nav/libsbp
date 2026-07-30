@@ -115,12 +115,12 @@ fn test_auto_check_sbp_navigation_msg_reference_frame_param() {
                 );
                 assert_eq!(
                     msg.sn.as_bytes(),
-                    &[
+                    [
                         102, 111, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.sn, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         102, 111, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
@@ -148,12 +148,12 @@ fn test_auto_check_sbp_navigation_msg_reference_frame_param() {
                 );
                 assert_eq!(
                     msg.tn.as_bytes(),
-                    &[
+                    [
                         98, 97, 114, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.tn, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         98, 97, 114, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0
                     ],
@@ -282,12 +282,12 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_reference_frame_param() {
                 );
                 assert_eq!(
                     msg.sn.as_bytes(),
-                    &[
+                    [
                         102, 111, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.sn, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         102, 111, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
@@ -315,12 +315,12 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_reference_frame_param() {
                 );
                 assert_eq!(
                     msg.tn.as_bytes(),
-                    &[
+                    [
                         98, 97, 114, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.tn, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         98, 97, 114, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0
                     ],
@@ -460,12 +460,12 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_reference_frame_param() {
                 );
                 assert_eq!(
                     msg.sn.as_bytes(),
-                    &[
+                    [
                         102, 111, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.sn, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         102, 111, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
@@ -493,12 +493,12 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_reference_frame_param() {
                 );
                 assert_eq!(
                     msg.tn.as_bytes(),
-                    &[
+                    [
                         98, 97, 114, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.tn, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         98, 97, 114, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0
                     ],

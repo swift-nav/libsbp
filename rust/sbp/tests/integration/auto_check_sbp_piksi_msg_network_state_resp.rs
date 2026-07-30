@@ -53,9 +53,9 @@ fn test_auto_check_sbp_piksi_msg_network_state_resp() {
                 );
                 assert_eq!(
                     msg.interface_name.as_bytes(),
-                    &[105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.interface_name, expected string '{:?}', is '{:?}'",
-                    &[105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.interface_name.as_bytes()
                 );
                 assert_eq!(
@@ -236,9 +236,9 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_network_state_resp() {
                 );
                 assert_eq!(
                     msg.interface_name.as_bytes(),
-                    &[105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.interface_name, expected string '{:?}', is '{:?}'",
-                    &[105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.interface_name.as_bytes()
                 );
                 assert_eq!(
@@ -428,9 +428,9 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_network_state_resp() {
                 );
                 assert_eq!(
                     msg.interface_name.as_bytes(),
-                    &[105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     "incorrect value for msg.interface_name, expected string '{:?}', is '{:?}'",
-                    &[105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [105, 102, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     msg.interface_name.as_bytes()
                 );
                 assert_eq!(

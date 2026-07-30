@@ -193,7 +193,7 @@ fn file_equals<P: AsRef<Path>>(input: P, output: P, json: bool) -> bool {
     let input_path = input.as_ref();
     let output_path = output.as_ref();
 
-    eprintln!("input: {:?}, output: {:?}", &input_path, &output_path);
+    eprintln!("input: {:?}, output: {:?}", input_path, output_path);
 
     let input_file = File::open(input_path).unwrap();
     let output_file = File::open(output_path).unwrap();

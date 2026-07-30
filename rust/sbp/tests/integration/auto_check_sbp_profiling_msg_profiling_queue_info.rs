@@ -58,12 +58,12 @@ fn test_auto_check_sbp_profiling_msg_profiling_queue_info() {
                 );
                 assert_eq!(
                     msg.queues[0].name.as_bytes(),
-                    &[
+                    [
                         67, 111, 104, 101, 115, 105, 118, 101, 83, 98, 112, 77, 115, 103, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.queues[0].name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         67, 111, 104, 101, 115, 105, 118, 101, 83, 98, 112, 77, 115, 103, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
@@ -158,12 +158,12 @@ fn test_json2sbp_auto_check_sbp_profiling_msg_profiling_queue_info() {
                 );
                 assert_eq!(
                     msg.queues[0].name.as_bytes(),
-                    &[
+                    [
                         67, 111, 104, 101, 115, 105, 118, 101, 83, 98, 112, 77, 115, 103, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.queues[0].name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         67, 111, 104, 101, 115, 105, 118, 101, 83, 98, 112, 77, 115, 103, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
@@ -266,12 +266,12 @@ fn test_sbp2json_auto_check_sbp_profiling_msg_profiling_queue_info() {
                 );
                 assert_eq!(
                     msg.queues[0].name.as_bytes(),
-                    &[
+                    [
                         67, 111, 104, 101, 115, 105, 118, 101, 83, 98, 112, 77, 115, 103, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],
                     "incorrect value for msg.queues[0].name, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         67, 111, 104, 101, 115, 105, 118, 101, 83, 98, 112, 77, 115, 103, 0, 0, 0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                     ],

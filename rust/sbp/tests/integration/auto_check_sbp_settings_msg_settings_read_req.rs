@@ -47,12 +47,12 @@ fn test_auto_check_sbp_settings_msg_settings_read_req() {
                 );
                 assert_eq!(
                     msg.setting.as_bytes(),
-                    &[
+                    [
                         115, 101, 99, 116, 105, 111, 110, 45, 110, 97, 109, 101, 0, 115, 101, 116,
                         116, 105, 110, 103, 45, 110, 97, 109, 101, 0
                     ],
                     "incorrect value for msg.setting, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         115, 101, 99, 116, 105, 111, 110, 45, 110, 97, 109, 101, 0, 115, 101, 116,
                         116, 105, 110, 103, 45, 110, 97, 109, 101, 0
                     ],
@@ -111,12 +111,12 @@ fn test_json2sbp_auto_check_sbp_settings_msg_settings_read_req() {
                 );
                 assert_eq!(
                     msg.setting.as_bytes(),
-                    &[
+                    [
                         115, 101, 99, 116, 105, 111, 110, 45, 110, 97, 109, 101, 0, 115, 101, 116,
                         116, 105, 110, 103, 45, 110, 97, 109, 101, 0
                     ],
                     "incorrect value for msg.setting, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         115, 101, 99, 116, 105, 111, 110, 45, 110, 97, 109, 101, 0, 115, 101, 116,
                         116, 105, 110, 103, 45, 110, 97, 109, 101, 0
                     ],
@@ -183,12 +183,12 @@ fn test_sbp2json_auto_check_sbp_settings_msg_settings_read_req() {
                 );
                 assert_eq!(
                     msg.setting.as_bytes(),
-                    &[
+                    [
                         115, 101, 99, 116, 105, 111, 110, 45, 110, 97, 109, 101, 0, 115, 101, 116,
                         116, 105, 110, 103, 45, 110, 97, 109, 101, 0
                     ],
                     "incorrect value for msg.setting, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         115, 101, 99, 116, 105, 111, 110, 45, 110, 97, 109, 101, 0, 115, 101, 116,
                         116, 105, 110, 103, 45, 110, 97, 109, 101, 0
                     ],

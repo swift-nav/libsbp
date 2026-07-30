@@ -47,12 +47,12 @@ fn test_auto_check_sbp_linux_msg_linux_process_fd_summary() {
                 );
                 assert_eq!(
                     msg.most_opened.as_bytes(),
-                    &[
+                    [
                         102, 100, 49, 0, 102, 100, 50, 0, 102, 100, 51, 0, 102, 100, 52, 0, 102,
                         100, 53, 0, 102, 100, 54, 0, 0
                     ],
                     "incorrect value for msg.most_opened, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         102, 100, 49, 0, 102, 100, 50, 0, 102, 100, 51, 0, 102, 100, 52, 0, 102,
                         100, 53, 0, 102, 100, 54, 0, 0
                     ],
@@ -116,12 +116,12 @@ fn test_json2sbp_auto_check_sbp_linux_msg_linux_process_fd_summary() {
                 );
                 assert_eq!(
                     msg.most_opened.as_bytes(),
-                    &[
+                    [
                         102, 100, 49, 0, 102, 100, 50, 0, 102, 100, 51, 0, 102, 100, 52, 0, 102,
                         100, 53, 0, 102, 100, 54, 0, 0
                     ],
                     "incorrect value for msg.most_opened, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         102, 100, 49, 0, 102, 100, 50, 0, 102, 100, 51, 0, 102, 100, 52, 0, 102,
                         100, 53, 0, 102, 100, 54, 0, 0
                     ],
@@ -193,12 +193,12 @@ fn test_sbp2json_auto_check_sbp_linux_msg_linux_process_fd_summary() {
                 );
                 assert_eq!(
                     msg.most_opened.as_bytes(),
-                    &[
+                    [
                         102, 100, 49, 0, 102, 100, 50, 0, 102, 100, 51, 0, 102, 100, 52, 0, 102,
                         100, 53, 0, 102, 100, 54, 0, 0
                     ],
                     "incorrect value for msg.most_opened, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         102, 100, 49, 0, 102, 100, 50, 0, 102, 100, 51, 0, 102, 100, 52, 0, 102,
                         100, 53, 0, 102, 100, 54, 0, 0
                     ],

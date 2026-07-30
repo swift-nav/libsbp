@@ -47,11 +47,11 @@ fn test_auto_check_sbp_piksi_msg_command_output() {
                 );
                 assert_eq!(
                     msg.line.as_bytes(),
-                    &[
+                    [
                         83, 111, 109, 101, 32, 111, 117, 116, 112, 117, 116, 32, 116, 101, 120, 116
                     ],
                     "incorrect value for msg.line, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         83, 111, 109, 101, 32, 111, 117, 116, 112, 117, 116, 32, 116, 101, 120, 116
                     ],
                     msg.line.as_bytes()
@@ -114,11 +114,11 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_command_output() {
                 );
                 assert_eq!(
                     msg.line.as_bytes(),
-                    &[
+                    [
                         83, 111, 109, 101, 32, 111, 117, 116, 112, 117, 116, 32, 116, 101, 120, 116
                     ],
                     "incorrect value for msg.line, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         83, 111, 109, 101, 32, 111, 117, 116, 112, 117, 116, 32, 116, 101, 120, 116
                     ],
                     msg.line.as_bytes()
@@ -189,11 +189,11 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_command_output() {
                 );
                 assert_eq!(
                     msg.line.as_bytes(),
-                    &[
+                    [
                         83, 111, 109, 101, 32, 111, 117, 116, 112, 117, 116, 32, 116, 101, 120, 116
                     ],
                     "incorrect value for msg.line, expected string '{:?}', is '{:?}'",
-                    &[
+                    [
                         83, 111, 109, 101, 32, 111, 117, 116, 112, 117, 116, 32, 116, 101, 120, 116
                     ],
                     msg.line.as_bytes()
