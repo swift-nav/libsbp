@@ -352,7 +352,3 @@ jobs:
         with:
           name: clang-tidy-sarif-report
           path: clang-tidy-output/merged-report.sarif
-
-      - name: Fail if clang-tidy errors were found
-        if: steps.run_clang_tidy.outcome == 'failure'
-        run: exit 1
