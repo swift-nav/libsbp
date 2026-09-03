@@ -55,7 +55,7 @@ toolchains.toolchain(
 use_repo(toolchains, "default_rust_toolchains")
 
 register_toolchains(
-    "@default_rust_toolchains//:all",
+    "@default_rust_toolchains//...",
     "@llvm//toolchain:all",
 )
 
