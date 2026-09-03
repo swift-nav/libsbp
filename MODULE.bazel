@@ -17,7 +17,7 @@ bazel_dep(name = "aspect_rules_lint", version = "2.6.0", dev_dependency = True)
 # Force a Bazel 9 compatible rules_go. It is pulled in transitively (dev-only)
 # via aspect_rules_lint -> rules_buf; the version that chain selects (0.42.0)
 # uses CcInfo, which Bazel 9 removed. >=0.59.0 has the fix.
-bazel_dep(name = "rules_go", version = "0.61.1", dev_dependency = True)
+bazel_dep(name = "rules_go", version = "0.62.0", dev_dependency = True)
 
 swift_cc_toolchain_ext = use_extension("@rules_swiftnav//cc:extensions.bzl", "swift_cc_toolchain_extension")
 use_repo(
@@ -38,8 +38,8 @@ register_toolchains(
 )
 
 # Rust toolchain platforms 1.1.0 is declared above.
-bazel_dep(name = "rules_rs", version = "0.0.92")
-bazel_dep(name = "llvm", version = "0.8.3")
+bazel_dep(name = "rules_rs", version = "0.0.108")
+bazel_dep(name = "llvm", version = "0.8.18")
 
 # Make @rules_rust available for the rules rules_rs does NOT wrap
 # (rust_clippy / rust_doc / rust_doc_test / rustfmt_test / rust_test_suite + aspects).
