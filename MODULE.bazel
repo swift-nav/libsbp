@@ -8,7 +8,7 @@ bazel_dep(name = "platforms", version = "1.1.0")
 bazel_dep(name = "rules_swiftnav", version = "0.21.0")
 git_override(
     module_name = "rules_swiftnav",
-    tag = "v0.21.0",
+    commit = "f0747095fe3434d1458a1a9673b84185de7b2dde",  # v0.21.0
     remote = "https://github.com/swift-nav/rules_swiftnav.git",
 )
 
@@ -71,8 +71,8 @@ register_toolchains(
 crate = use_extension("@rules_rs//rs:extensions.bzl", "crate", dev_dependency = True)
 crate.from_cargo(
     name = "crates",
-    cargo_toml = "//:Cargo.toml",
     cargo_lock = "//:Cargo.lock",
+    cargo_toml = "//:Cargo.toml",
     platform_triples = [
         "x86_64-unknown-linux-gnu",
         "aarch64-unknown-linux-gnu",
