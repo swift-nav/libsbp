@@ -1,5 +1,36 @@
 # Changelog
 
+## [v6.5.2](https://github.com/swift-nav/libsbp/tree/v6.5.2)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.5.1...v6.5.2)
+
+**Closed issues:**
+
+- New release for Python 3.12 support [\#1594](https://github.com/swift-nav/libsbp/issues/1594)
+
+**Merged pull requests:**
+
+- Bump necojackarc/auto-request-review from 0.13.0 to 0.14.0 [\#1613](https://github.com/swift-nav/libsbp/pull/1613) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump js-yaml from 4.3.1 to 4.3.2 [\#1612](https://github.com/swift-nav/libsbp/pull/1612) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Change `rules\_rs` toolchain registration/Bump `rules\_rs` [\#1611](https://github.com/swift-nav/libsbp/pull/1611) ([martin4861](https://github.com/martin4861))
+- Bump browserslist from 4.28.1 to 4.28.8 [\#1610](https://github.com/swift-nav/libsbp/pull/1610) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump serialize-javascript, mocha and terser-webpack-plugin [\#1609](https://github.com/swift-nav/libsbp/pull/1609) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump fast-uri from 3.1.5 to 3.1.7 [\#1608](https://github.com/swift-nav/libsbp/pull/1608) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/setup-java from 5.7.0 to 6.0.1 [\#1607](https://github.com/swift-nav/libsbp/pull/1607) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump brace-expansion from 2.0.1 to 2.1.4 [\#1606](https://github.com/swift-nav/libsbp/pull/1606) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Remove clang-tidy CI gate [\#1605](https://github.com/swift-nav/libsbp/pull/1605) ([sbmueller](https://github.com/sbmueller))
+- Bump js-yaml from 4.3.0 to 4.3.1 [\#1604](https://github.com/swift-nav/libsbp/pull/1604) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump fast-uri from 3.1.4 to 3.1.5 [\#1603](https://github.com/swift-nav/libsbp/pull/1603) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/setup-java from 5.6.0 to 5.7.0 [\#1602](https://github.com/swift-nav/libsbp/pull/1602) ([dependabot[bot]](https://github.com/apps/dependabot))
+- fix\(lint\): clippy::useless\_borrows\_in\_formatting [\#1601](https://github.com/swift-nav/libsbp/pull/1601) ([jbangelo](https://github.com/jbangelo))
+- Bump fast-uri from 3.1.2 to 3.1.4 [\#1600](https://github.com/swift-nav/libsbp/pull/1600) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump js-yaml from 4.2.0 to 4.3.0 [\#1599](https://github.com/swift-nav/libsbp/pull/1599) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/setup-java from 5.5.0 to 5.6.0 [\#1598](https://github.com/swift-nav/libsbp/pull/1598) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/setup-python from 6 to 7 [\#1597](https://github.com/swift-nav/libsbp/pull/1597) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actions/setup-java from 5.4.0 to 5.5.0 [\#1596](https://github.com/swift-nav/libsbp/pull/1596) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Sync Cargo.lock during releases [\#1595](https://github.com/swift-nav/libsbp/pull/1595) ([Madhunika-atmakuri](https://github.com/Madhunika-atmakuri))
+- Bump bytes from 1.10.1 to 1.12.0 in /rust/sbp2json [\#1555](https://github.com/swift-nav/libsbp/pull/1555) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v6.5.1](https://github.com/swift-nav/libsbp/tree/v6.5.1)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v6.5.0...v6.5.1)
