@@ -23,10 +23,6 @@ SBP_VERSION = os.environ['SBP_VERSION']
 
 USE_TEST_PYPI = bool(os.environ.get('USE_TEST_PYPI', None))
 
-if not platform.machine().startswith("arm") and not shutil.which('conda'):
-    print("\n!!! Please install conda to deploy python !!!\n\n")
-    sys.exit(1)
-
 script_dir = os.path.dirname(os.path.abspath(__file__))
 repo_dir = os.path.join(script_dir, "..")
 
@@ -143,14 +139,9 @@ def run_bdist(deploy_dir):
 
 def build_wheel(deploy_dir):
     print(">>> Installing build deps in Python environment...")
-    subprocess.check_call([
-        "conda", "install", "--yes",
-        "wheel", "setuptools", "pip"
-    ])
     subprocess.check_call(
-        ["python", "-m", "pip", "install", "--upgrade", "pip"])
-    subprocess.check_call(
-        ["python", "-m", "pip", "install", "twine"])
+        ["python3", "-m", "pip", "install", "--upgrade",
+         "pip", "wheel", "setuptools", "twine"])
     print(">>> Installing setup deps in Python environment...")
     subprocess.check_call(
         ["python", "-m", "pip", "install",
