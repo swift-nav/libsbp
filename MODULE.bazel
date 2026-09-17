@@ -38,7 +38,7 @@ register_toolchains(
 )
 
 # Rust toolchain platforms 1.1.0 is declared above.
-bazel_dep(name = "rules_rs", version = "0.0.108")
+bazel_dep(name = "rules_rs", version = "0.0.111")
 bazel_dep(name = "llvm", version = "0.8.18")
 
 # Make @rules_rust available for the rules rules_rs does NOT wrap
@@ -66,8 +66,7 @@ register_toolchains(
 # "crates" hub that would collide with the owner's on the shared registry repo.
 # libsbp's Rust is not compiled by such parents (they vendor sbp themselves), so it
 # needs no hub there. Keep the hub named "crates" so @crates//:foo labels are
-# unchanged. (A parent that DID compile libsbp's Rust would instead use crate.use_hub
-# to share the owner's hub — not needed today.)
+# unchanged.
 crate = use_extension("@rules_rs//rs:extensions.bzl", "crate", dev_dependency = True)
 crate.from_cargo(
     name = "crates",
