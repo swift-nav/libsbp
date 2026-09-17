@@ -15,6 +15,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-24.04
+    outputs:
+      artifact_name: ${{ steps.build.outputs.artifact_name }}
     steps:
       - uses: actions/checkout@v7
 
@@ -55,7 +57,7 @@ jobs:
             json2sbp \
             json2json \
             sbp2nmea
-          echo "::set-output name=artifact_name::$ARTIFACT_NAME"
+          echo "artifact_name=$ARTIFACT_NAME" >> "$GITHUB_OUTPUT"
 
       - uses: actions/upload-artifact@v7
         with:
@@ -72,13 +74,17 @@ jobs:
 
       - uses: actions/download-artifact@v8
         with:
+          name: ${{ needs.build.outputs.artifact_name }}
           path: artifacts
+
+      - name: Check artifact
+        run: ls -l artifacts && test -s artifacts/${{ needs.build.outputs.artifact_name }}
 
       - name: Upload Release
         uses: svenstaro/upload-release-action@2.11.5
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "artifacts/*/*.zip"
+          file: "artifacts/*.zip"
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
