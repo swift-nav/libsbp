@@ -1730,6 +1730,174 @@ definitions:
           units: s
           desc: Inter-signal correction between L1 C/A and L5 Q5
 
+ - MSG_EPHEMERIS_BDS_CNAV:
+    id: 0x009A
+    short_desc: Satellite broadcast ephemeris for BDS from the B-CNAV1 or B-CNAV2 message
+    desc: >
+      The ephemeris message returns one BeiDou-3 civil navigation data set,
+      either from the B-CNAV1 message of the B1C signal (subframe 2 with the
+      health and integrity fields of subframe 3, BDS-SIS-ICD-B1C-1.0) or from
+      the B-CNAV2 message of the B2a signal (message types 10, 11 and 30,
+      BDS-SIS-ICD-B2a-1.0). MSG_EPHEMERIS_BDS cannot carry it losslessly: it
+      has no semi-major axis rate or mean motion rate and holds the D1/D2
+      group delays TGD1 and TGD2 instead of the B1C and B2a terms. The
+      satellite position follows from the user algorithm of Table 7-9 of
+      either ICD, the clock correction from section 7.5.2 and the group delay
+      corrections from section 7.6.2. Times are GPS time (BDT plus 14 s).
+      The common health_bits hold the satellite health status HS (0 healthy,
+      1 unhealthy or in test, section 7.14). The common ura is -1: the ICDs
+      do not yet define the signal in space accuracy values (section 7.16).
+    fields:
+      - common:
+          type: EphemerisCommonContent
+          desc: Values common for all ephemeris types
+      - iode:
+          type: u8
+          desc: Issue of data, ephemeris (section 7.4.1)
+      - iodc:
+          type: u16
+          desc: >
+            Issue of data, clock (section 7.4.2). Its 8 LSBs equal iode
+            (section 7.4.3).
+      - sismai:
+          type: u8
+          desc: Signal in space monitoring accuracy index (section 7.17)
+      - flags:
+          type: u8
+          desc: Source and status flags of the data set
+          fields:
+            - 6-7:
+                desc: Reserved
+            - 5:
+                desc: AIF
+                values:
+                  - 0: SISMAI valid
+                  - 1: SISMAI invalid
+            - 4:
+                desc: SIF
+                values:
+                  - 0: Signal normal
+                  - 1: Signal abnormal
+            - 3:
+                desc: DIF
+                values:
+                  - 0: Error within predicted accuracy
+                  - 1: Error exceeds predicted accuracy
+            - 1-2:
+                desc: Orbit type
+                values:
+                  - 0: Reserved
+                  - 1: GEO
+                  - 2: IGSO
+                  - 3: MEO
+            - 0:
+                desc: Message
+                values:
+                  - 0: B-CNAV1 on B1C
+                  - 1: B-CNAV2 on B2a
+      - a:
+          type: double
+          units: m
+          desc: Semi-major axis at reference time (A_ref of the orbit type plus delta A)
+      - a_dot:
+          type: double
+          units: m/s
+          desc: Change rate in semi-major axis
+      - dn:
+          type: double
+          units: rad/s
+          desc: Mean motion difference from computed value at reference time
+      - dn_dot:
+          type: double
+          units: rad/s^2
+          desc: Rate of mean motion difference from computed value
+      - m0:
+          type: double
+          units: rad
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination angle at reference time
+      - inc_dot:
+          type: double
+          units: rad/s
+          desc: Rate of inclination angle
+      - c_rs:
+          type: float
+          units: m
+          desc: Amplitude of the sine harmonic correction term to the orbit radius
+      - c_rc:
+          type: float
+          units: m
+          desc: Amplitude of the cosine harmonic correction term to the orbit radius
+      - c_uc:
+          type: float
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the argument of latitude
+      - c_us:
+          type: float
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the argument of latitude
+      - c_ic:
+          type: float
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the angle of inclination
+      - c_is:
+          type: float
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the angle of inclination
+      - af0:
+          type: double
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: float
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+      - af2:
+          type: float
+          units: s/s^2
+          desc: Polynomial clock correction coefficient (rate of clock drift)
+      - toc:
+          type: GPSTimeSec
+          desc: Clock reference
+      - tgd_b1cp:
+          type: float
+          units: s
+          desc: Group delay differential between the B1C pilot component and B3I
+      - tgd_b2ap:
+          type: float
+          units: s
+          desc: Group delay differential between the B2a pilot component and B3I
+      - isc_b1cd:
+          type: float
+          units: s
+          desc: >
+            Group delay differential between the B1C data and pilot
+            components. Broadcast in B-CNAV1 only, 0 in B-CNAV2 data sets.
+      - isc_b2ad:
+          type: float
+          units: s
+          desc: >
+            Group delay differential between the B2a data and pilot
+            components. Broadcast in B-CNAV2 only, 0 in B-CNAV1 data sets.
+
  - MSG_EPHEMERIS_DEP_D:
     id: 0x0080
     short_desc: Deprecated

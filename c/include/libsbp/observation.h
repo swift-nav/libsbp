@@ -32,6 +32,7 @@
 #include <libsbp/observation/MSG_BASE_POS_ECEF.h>
 #include <libsbp/observation/MSG_BASE_POS_LLH.h>
 #include <libsbp/observation/MSG_EPHEMERIS_BDS.h>
+#include <libsbp/observation/MSG_EPHEMERIS_BDS_CNAV.h>
 #include <libsbp/observation/MSG_EPHEMERIS_DEP_A.h>
 #include <libsbp/observation/MSG_EPHEMERIS_DEP_B.h>
 #include <libsbp/observation/MSG_EPHEMERIS_DEP_C.h>

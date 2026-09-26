@@ -30,6 +30,7 @@ pub use msg_almanac_gps_dep::MsgAlmanacGpsDep;
 pub use msg_base_pos_ecef::MsgBasePosEcef;
 pub use msg_base_pos_llh::MsgBasePosLlh;
 pub use msg_ephemeris_bds::MsgEphemerisBds;
+pub use msg_ephemeris_bds_cnav::MsgEphemerisBdsCnav;
 pub use msg_ephemeris_dep_a::MsgEphemerisDepA;
 pub use msg_ephemeris_dep_b::MsgEphemerisDepB;
 pub use msg_ephemeris_dep_c::MsgEphemerisDepC;
@@ -1687,6 +1688,542 @@ pub mod msg_ephemeris_bds {
                 toc: WireFormat::parse_unchecked(buf),
                 iode: WireFormat::parse_unchecked(buf),
                 iodc: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_ephemeris_bds_cnav {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Satellite broadcast ephemeris for BDS from the B-CNAV1 or B-CNAV2 message
+    ///
+    /// The ephemeris message returns one BeiDou-3 civil navigation data set,
+    /// either from the B-CNAV1 message of the B1C signal (subframe 2 with the
+    /// health and integrity fields of subframe 3, BDS-SIS-ICD-B1C-1.0) or from
+    /// the B-CNAV2 message of the B2a signal (message types 10, 11 and 30, BDS-
+    /// SIS-ICD-B2a-1.0). MSG_EPHEMERIS_BDS cannot carry it losslessly: it has no
+    /// semi-major axis rate or mean motion rate and holds the D1/D2 group delays
+    /// TGD1 and TGD2 instead of the B1C and B2a terms. The satellite position
+    /// follows from the user algorithm of Table 7-9 of either ICD, the clock
+    /// correction from section 7.5.2 and the group delay corrections from section
+    /// 7.6.2. Times are GPS time (BDT plus 14 s). The common health_bits hold the
+    /// satellite health status HS (0 healthy, 1 unhealthy or in test, section
+    /// 7.14). The common ura is -1: the ICDs do not yet define the signal in
+    /// space accuracy values (section 7.16).
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgEphemerisBdsCnav {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// Values common for all ephemeris types
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
+        pub common: EphemerisCommonContent,
+        /// Issue of data, ephemeris (section 7.4.1)
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
+        pub iode: u8,
+        /// Issue of data, clock (section 7.4.2). Its 8 LSBs equal iode (section
+        /// 7.4.3).
+        #[cfg_attr(feature = "serde", serde(rename = "iodc"))]
+        pub iodc: u16,
+        /// Signal in space monitoring accuracy index (section 7.17)
+        #[cfg_attr(feature = "serde", serde(rename = "sismai"))]
+        pub sismai: u8,
+        /// Source and status flags of the data set
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
+        pub flags: u8,
+        /// Semi-major axis at reference time (A_ref of the orbit type plus delta A)
+        #[cfg_attr(feature = "serde", serde(rename = "a"))]
+        pub a: f64,
+        /// Change rate in semi-major axis
+        #[cfg_attr(feature = "serde", serde(rename = "a_dot"))]
+        pub a_dot: f64,
+        /// Mean motion difference from computed value at reference time
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
+        pub dn: f64,
+        /// Rate of mean motion difference from computed value
+        #[cfg_attr(feature = "serde", serde(rename = "dn_dot"))]
+        pub dn_dot: f64,
+        /// Mean anomaly at reference time
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
+        pub m0: f64,
+        /// Eccentricity of satellite orbit
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
+        pub ecc: f64,
+        /// Argument of perigee
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
+        pub w: f64,
+        /// Longitude of ascending node of orbit plane at weekly epoch
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
+        pub omega0: f64,
+        /// Rate of right ascension
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
+        pub omegadot: f64,
+        /// Inclination angle at reference time
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
+        pub inc: f64,
+        /// Rate of inclination angle
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
+        pub inc_dot: f64,
+        /// Amplitude of the sine harmonic correction term to the orbit radius
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
+        pub c_rs: f32,
+        /// Amplitude of the cosine harmonic correction term to the orbit radius
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
+        pub c_rc: f32,
+        /// Amplitude of the cosine harmonic correction term to the argument of
+        /// latitude
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
+        pub c_uc: f32,
+        /// Amplitude of the sine harmonic correction term to the argument of
+        /// latitude
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
+        pub c_us: f32,
+        /// Amplitude of the cosine harmonic correction term to the angle of
+        /// inclination
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
+        pub c_ic: f32,
+        /// Amplitude of the sine harmonic correction term to the angle of
+        /// inclination
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
+        pub c_is: f32,
+        /// Polynomial clock correction coefficient (clock bias)
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
+        pub af0: f64,
+        /// Polynomial clock correction coefficient (clock drift)
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
+        pub af1: f32,
+        /// Polynomial clock correction coefficient (rate of clock drift)
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
+        pub af2: f32,
+        /// Clock reference
+        #[cfg_attr(feature = "serde", serde(rename = "toc"))]
+        pub toc: GpsTimeSec,
+        /// Group delay differential between the B1C pilot component and B3I
+        #[cfg_attr(feature = "serde", serde(rename = "tgd_b1cp"))]
+        pub tgd_b1cp: f32,
+        /// Group delay differential between the B2a pilot component and B3I
+        #[cfg_attr(feature = "serde", serde(rename = "tgd_b2ap"))]
+        pub tgd_b2ap: f32,
+        /// Group delay differential between the B1C data and pilot components.
+        /// Broadcast in B-CNAV1 only, 0 in B-CNAV2 data sets.
+        #[cfg_attr(feature = "serde", serde(rename = "isc_b1cd"))]
+        pub isc_b1cd: f32,
+        /// Group delay differential between the B2a data and pilot components.
+        /// Broadcast in B-CNAV2 only, 0 in B-CNAV1 data sets.
+        #[cfg_attr(feature = "serde", serde(rename = "isc_b2ad"))]
+        pub isc_b2ad: f32,
+    }
+
+    impl MsgEphemerisBdsCnav {
+        /// Gets the [Aif][self::Aif] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Aif` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Aif` were added.
+        pub fn aif(&self) -> Result<Aif, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [Aif][Aif] of the `flags` bitfield.
+        pub fn set_aif(&mut self, aif: Aif) {
+            set_bit_range!(&mut self.flags, aif, u8, u8, 5, 5);
+        }
+
+        /// Gets the [Sif][self::Sif] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Sif` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Sif` were added.
+        pub fn sif(&self) -> Result<Sif, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 4).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [Sif][Sif] of the `flags` bitfield.
+        pub fn set_sif(&mut self, sif: Sif) {
+            set_bit_range!(&mut self.flags, sif, u8, u8, 4, 4);
+        }
+
+        /// Gets the [Dif][self::Dif] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Dif` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Dif` were added.
+        pub fn dif(&self) -> Result<Dif, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 3).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [Dif][Dif] of the `flags` bitfield.
+        pub fn set_dif(&mut self, dif: Dif) {
+            set_bit_range!(&mut self.flags, dif, u8, u8, 3, 3);
+        }
+
+        /// Gets the [OrbitType][self::OrbitType] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `OrbitType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `OrbitType` were added.
+        pub fn orbit_type(&self) -> Result<OrbitType, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 1).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [OrbitType][OrbitType] of the `flags` bitfield.
+        pub fn set_orbit_type(&mut self, orbit_type: OrbitType) {
+            set_bit_range!(&mut self.flags, orbit_type, u8, u8, 2, 1);
+        }
+
+        /// Gets the [Message][self::Message] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Message` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Message` were added.
+        pub fn message(&self) -> Result<Message, u8> {
+            get_bit_range!(self.flags, u8, u8, 0, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [Message][Message] of the `flags` bitfield.
+        pub fn set_message(&mut self, message: Message) {
+            set_bit_range!(&mut self.flags, message, u8, u8, 0, 0);
+        }
+    }
+
+    impl ConcreteMessage for MsgEphemerisBdsCnav {
+        const MESSAGE_TYPE: u16 = 154;
+        const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_BDS_CNAV";
+    }
+
+    impl SbpMessage for MsgEphemerisBdsCnav {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisBdsCnav {
+        fn friendly_name() -> &'static str {
+            "EPH BDS CNAV"
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgEphemerisBdsCnav {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgEphemerisBdsCnav(m) => Ok(m),
+                _ => Err(TryFromSbpError(msg)),
+            }
+        }
+    }
+
+    impl WireFormat for MsgEphemerisBdsCnav {
+        const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <GpsTimeSec as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.common)
+                + WireFormat::len(&self.iode)
+                + WireFormat::len(&self.iodc)
+                + WireFormat::len(&self.sismai)
+                + WireFormat::len(&self.flags)
+                + WireFormat::len(&self.a)
+                + WireFormat::len(&self.a_dot)
+                + WireFormat::len(&self.dn)
+                + WireFormat::len(&self.dn_dot)
+                + WireFormat::len(&self.m0)
+                + WireFormat::len(&self.ecc)
+                + WireFormat::len(&self.w)
+                + WireFormat::len(&self.omega0)
+                + WireFormat::len(&self.omegadot)
+                + WireFormat::len(&self.inc)
+                + WireFormat::len(&self.inc_dot)
+                + WireFormat::len(&self.c_rs)
+                + WireFormat::len(&self.c_rc)
+                + WireFormat::len(&self.c_uc)
+                + WireFormat::len(&self.c_us)
+                + WireFormat::len(&self.c_ic)
+                + WireFormat::len(&self.c_is)
+                + WireFormat::len(&self.af0)
+                + WireFormat::len(&self.af1)
+                + WireFormat::len(&self.af2)
+                + WireFormat::len(&self.toc)
+                + WireFormat::len(&self.tgd_b1cp)
+                + WireFormat::len(&self.tgd_b2ap)
+                + WireFormat::len(&self.isc_b1cd)
+                + WireFormat::len(&self.isc_b2ad)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.common, buf);
+            WireFormat::write(&self.iode, buf);
+            WireFormat::write(&self.iodc, buf);
+            WireFormat::write(&self.sismai, buf);
+            WireFormat::write(&self.flags, buf);
+            WireFormat::write(&self.a, buf);
+            WireFormat::write(&self.a_dot, buf);
+            WireFormat::write(&self.dn, buf);
+            WireFormat::write(&self.dn_dot, buf);
+            WireFormat::write(&self.m0, buf);
+            WireFormat::write(&self.ecc, buf);
+            WireFormat::write(&self.w, buf);
+            WireFormat::write(&self.omega0, buf);
+            WireFormat::write(&self.omegadot, buf);
+            WireFormat::write(&self.inc, buf);
+            WireFormat::write(&self.inc_dot, buf);
+            WireFormat::write(&self.c_rs, buf);
+            WireFormat::write(&self.c_rc, buf);
+            WireFormat::write(&self.c_uc, buf);
+            WireFormat::write(&self.c_us, buf);
+            WireFormat::write(&self.c_ic, buf);
+            WireFormat::write(&self.c_is, buf);
+            WireFormat::write(&self.af0, buf);
+            WireFormat::write(&self.af1, buf);
+            WireFormat::write(&self.af2, buf);
+            WireFormat::write(&self.toc, buf);
+            WireFormat::write(&self.tgd_b1cp, buf);
+            WireFormat::write(&self.tgd_b2ap, buf);
+            WireFormat::write(&self.isc_b1cd, buf);
+            WireFormat::write(&self.isc_b2ad, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgEphemerisBdsCnav {
+                sender_id: None,
+                common: WireFormat::parse_unchecked(buf),
+                iode: WireFormat::parse_unchecked(buf),
+                iodc: WireFormat::parse_unchecked(buf),
+                sismai: WireFormat::parse_unchecked(buf),
+                flags: WireFormat::parse_unchecked(buf),
+                a: WireFormat::parse_unchecked(buf),
+                a_dot: WireFormat::parse_unchecked(buf),
+                dn: WireFormat::parse_unchecked(buf),
+                dn_dot: WireFormat::parse_unchecked(buf),
+                m0: WireFormat::parse_unchecked(buf),
+                ecc: WireFormat::parse_unchecked(buf),
+                w: WireFormat::parse_unchecked(buf),
+                omega0: WireFormat::parse_unchecked(buf),
+                omegadot: WireFormat::parse_unchecked(buf),
+                inc: WireFormat::parse_unchecked(buf),
+                inc_dot: WireFormat::parse_unchecked(buf),
+                c_rs: WireFormat::parse_unchecked(buf),
+                c_rc: WireFormat::parse_unchecked(buf),
+                c_uc: WireFormat::parse_unchecked(buf),
+                c_us: WireFormat::parse_unchecked(buf),
+                c_ic: WireFormat::parse_unchecked(buf),
+                c_is: WireFormat::parse_unchecked(buf),
+                af0: WireFormat::parse_unchecked(buf),
+                af1: WireFormat::parse_unchecked(buf),
+                af2: WireFormat::parse_unchecked(buf),
+                toc: WireFormat::parse_unchecked(buf),
+                tgd_b1cp: WireFormat::parse_unchecked(buf),
+                tgd_b2ap: WireFormat::parse_unchecked(buf),
+                isc_b1cd: WireFormat::parse_unchecked(buf),
+                isc_b2ad: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// AIF
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum Aif {
+        /// SISMAI valid
+        SismaiValid = 0,
+
+        /// SISMAI invalid
+        SismaiInvalid = 1,
+    }
+
+    impl std::fmt::Display for Aif {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                Aif::SismaiValid => f.write_str("SISMAI valid"),
+                Aif::SismaiInvalid => f.write_str("SISMAI invalid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for Aif {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(Aif::SismaiValid),
+                1 => Ok(Aif::SismaiInvalid),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// SIF
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum Sif {
+        /// Signal normal
+        SignalNormal = 0,
+
+        /// Signal abnormal
+        SignalAbnormal = 1,
+    }
+
+    impl std::fmt::Display for Sif {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                Sif::SignalNormal => f.write_str("Signal normal"),
+                Sif::SignalAbnormal => f.write_str("Signal abnormal"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for Sif {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(Sif::SignalNormal),
+                1 => Ok(Sif::SignalAbnormal),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// DIF
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum Dif {
+        /// Error within predicted accuracy
+        ErrorWithinPredictedAccuracy = 0,
+
+        /// Error exceeds predicted accuracy
+        ErrorExceedsPredictedAccuracy = 1,
+    }
+
+    impl std::fmt::Display for Dif {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                Dif::ErrorWithinPredictedAccuracy => f.write_str("Error within predicted accuracy"),
+                Dif::ErrorExceedsPredictedAccuracy => {
+                    f.write_str("Error exceeds predicted accuracy")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for Dif {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(Dif::ErrorWithinPredictedAccuracy),
+                1 => Ok(Dif::ErrorExceedsPredictedAccuracy),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Orbit type
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum OrbitType {
+        /// GEO
+        Geo = 1,
+
+        /// IGSO
+        Igso = 2,
+
+        /// MEO
+        Meo = 3,
+    }
+
+    impl std::fmt::Display for OrbitType {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                OrbitType::Geo => f.write_str("GEO"),
+                OrbitType::Igso => f.write_str("IGSO"),
+                OrbitType::Meo => f.write_str("MEO"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for OrbitType {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                1 => Ok(OrbitType::Geo),
+                2 => Ok(OrbitType::Igso),
+                3 => Ok(OrbitType::Meo),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Message
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum Message {
+        /// B-CNAV1 on B1C
+        BCnav1OnB1C = 0,
+
+        /// B-CNAV2 on B2a
+        BCnav2OnB2A = 1,
+    }
+
+    impl std::fmt::Display for Message {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                Message::BCnav1OnB1C => f.write_str("B-CNAV1 on B1C"),
+                Message::BCnav2OnB2A => f.write_str("B-CNAV2 on B2a"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for Message {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(Message::BCnav1OnB1C),
+                1 => Ok(Message::BCnav2OnB2A),
+                i => Err(i),
             }
         }
     }

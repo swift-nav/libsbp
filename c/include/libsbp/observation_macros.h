@@ -609,6 +609,87 @@
  */
 #define SBP_MSG_EPHEMERIS_QZSS_CNAV_ENCODED_LEN 183u
 
+#define SBP_EPHEMERIS_BDS_CNAV_AIF_MASK (0x1u)
+#define SBP_EPHEMERIS_BDS_CNAV_AIF_SHIFT (5u)
+#define SBP_EPHEMERIS_BDS_CNAV_AIF_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_BDS_CNAV_AIF_SHIFT) & \
+        SBP_EPHEMERIS_BDS_CNAV_AIF_MASK))
+#define SBP_EPHEMERIS_BDS_CNAV_AIF_SET(flags, val)                      \
+  do {                                                                  \
+    (flags) = (u8)((flags & (~(SBP_EPHEMERIS_BDS_CNAV_AIF_MASK          \
+                               << SBP_EPHEMERIS_BDS_CNAV_AIF_SHIFT))) | \
+                   (((val) & (SBP_EPHEMERIS_BDS_CNAV_AIF_MASK))         \
+                    << (SBP_EPHEMERIS_BDS_CNAV_AIF_SHIFT)));            \
+  } while (0)
+
+#define SBP_EPHEMERIS_BDS_CNAV_AIF_SISMAI_VALID (0)
+#define SBP_EPHEMERIS_BDS_CNAV_AIF_SISMAI_INVALID (1)
+#define SBP_EPHEMERIS_BDS_CNAV_SIF_MASK (0x1u)
+#define SBP_EPHEMERIS_BDS_CNAV_SIF_SHIFT (4u)
+#define SBP_EPHEMERIS_BDS_CNAV_SIF_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_BDS_CNAV_SIF_SHIFT) & \
+        SBP_EPHEMERIS_BDS_CNAV_SIF_MASK))
+#define SBP_EPHEMERIS_BDS_CNAV_SIF_SET(flags, val)                      \
+  do {                                                                  \
+    (flags) = (u8)((flags & (~(SBP_EPHEMERIS_BDS_CNAV_SIF_MASK          \
+                               << SBP_EPHEMERIS_BDS_CNAV_SIF_SHIFT))) | \
+                   (((val) & (SBP_EPHEMERIS_BDS_CNAV_SIF_MASK))         \
+                    << (SBP_EPHEMERIS_BDS_CNAV_SIF_SHIFT)));            \
+  } while (0)
+
+#define SBP_EPHEMERIS_BDS_CNAV_SIF_SIGNAL_NORMAL (0)
+#define SBP_EPHEMERIS_BDS_CNAV_SIF_SIGNAL_ABNORMAL (1)
+#define SBP_EPHEMERIS_BDS_CNAV_DIF_MASK (0x1u)
+#define SBP_EPHEMERIS_BDS_CNAV_DIF_SHIFT (3u)
+#define SBP_EPHEMERIS_BDS_CNAV_DIF_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_BDS_CNAV_DIF_SHIFT) & \
+        SBP_EPHEMERIS_BDS_CNAV_DIF_MASK))
+#define SBP_EPHEMERIS_BDS_CNAV_DIF_SET(flags, val)                      \
+  do {                                                                  \
+    (flags) = (u8)((flags & (~(SBP_EPHEMERIS_BDS_CNAV_DIF_MASK          \
+                               << SBP_EPHEMERIS_BDS_CNAV_DIF_SHIFT))) | \
+                   (((val) & (SBP_EPHEMERIS_BDS_CNAV_DIF_MASK))         \
+                    << (SBP_EPHEMERIS_BDS_CNAV_DIF_SHIFT)));            \
+  } while (0)
+
+#define SBP_EPHEMERIS_BDS_CNAV_DIF_ERROR_WITHIN_PREDICTED_ACCURACY (0)
+#define SBP_EPHEMERIS_BDS_CNAV_DIF_ERROR_EXCEEDS_PREDICTED_ACCURACY (1)
+#define SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_MASK (0x3u)
+#define SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_SHIFT (1u)
+#define SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_SHIFT) & \
+        SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_MASK))
+#define SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_SET(flags, val)                      \
+  do {                                                                         \
+    (flags) = (u8)((flags & (~(SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_MASK          \
+                               << SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_SHIFT))) | \
+                   (((val) & (SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_MASK))         \
+                    << (SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_SHIFT)));            \
+  } while (0)
+
+#define SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_GEO (1)
+#define SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_IGSO (2)
+#define SBP_EPHEMERIS_BDS_CNAV_ORBIT_TYPE_MEO (3)
+#define SBP_EPHEMERIS_BDS_CNAV_MESSAGE_MASK (0x1u)
+#define SBP_EPHEMERIS_BDS_CNAV_MESSAGE_SHIFT (0u)
+#define SBP_EPHEMERIS_BDS_CNAV_MESSAGE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_BDS_CNAV_MESSAGE_SHIFT) & \
+        SBP_EPHEMERIS_BDS_CNAV_MESSAGE_MASK))
+#define SBP_EPHEMERIS_BDS_CNAV_MESSAGE_SET(flags, val)                      \
+  do {                                                                      \
+    (flags) = (u8)((flags & (~(SBP_EPHEMERIS_BDS_CNAV_MESSAGE_MASK          \
+                               << SBP_EPHEMERIS_BDS_CNAV_MESSAGE_SHIFT))) | \
+                   (((val) & (SBP_EPHEMERIS_BDS_CNAV_MESSAGE_MASK))         \
+                    << (SBP_EPHEMERIS_BDS_CNAV_MESSAGE_SHIFT)));            \
+  } while (0)
+
+#define SBP_EPHEMERIS_BDS_CNAV_MESSAGE_B_CNAV1_ON_B1C (0)
+#define SBP_EPHEMERIS_BDS_CNAV_MESSAGE_B_CNAV2_ON_B2A (1)
+/**
+ * Encoded length of sbp_msg_ephemeris_bds_cnav_t
+ */
+#define SBP_MSG_EPHEMERIS_BDS_CNAV_ENCODED_LEN 173u
+
 /**
  * Encoded length of sbp_msg_ephemeris_dep_d_t
  */

@@ -99,6 +99,7 @@ typedef enum {
   SbpMsgEd25519CertificateDep = 0x0C02,
   SbpMsgEd25519SignatureDepA = 0x0C01,
   SbpMsgEd25519SignatureDepB = 0x0C03,
+  SbpMsgEphemerisBdsCnav = 0x009A,
   SbpMsgEphemerisBds = 0x0089,
   SbpMsgEphemerisDepA = 0x001A,
   SbpMsgEphemerisDepB = 0x0046,
@@ -397,6 +398,8 @@ static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
       return "MSG_ED25519_SIGNATURE_DEP_A";
     case SbpMsgEd25519SignatureDepB:
       return "MSG_ED25519_SIGNATURE_DEP_B";
+    case SbpMsgEphemerisBdsCnav:
+      return "MSG_EPHEMERIS_BDS_CNAV";
     case SbpMsgEphemerisBds:
       return "MSG_EPHEMERIS_BDS";
     case SbpMsgEphemerisDepA:
