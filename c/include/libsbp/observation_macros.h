@@ -548,6 +548,67 @@
  */
 #define SBP_MSG_EPHEMERIS_GPS_CNAV_ENCODED_LEN 183u
 
+#define SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_MASK (0x1u)
+#define SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_SHIFT (2u)
+#define SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_SHIFT) & \
+        SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_MASK))
+#define SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_SET(flags, val)                \
+  do {                                                                    \
+    (flags) =                                                             \
+        (u8)((flags & (~(SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_MASK          \
+                         << SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_SHIFT))) | \
+             (((val) & (SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_MASK))         \
+              << (SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_SHIFT)));            \
+  } while (0)
+
+#define SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_NO_MESSAGE_OF_THE_DATA_SET_RAISED_THE_ALERT_FLAG \
+  (0)
+#define SBP_EPHEMERIS_QZSS_CNAV_ALERT_FLAG_SIGNAL_MAY_BE_UNUSABLE_USE_AT_OWN_RISK \
+  (1)
+#define SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_MASK (0x1u)
+#define SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_SHIFT (1u)
+#define SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_SHIFT) & \
+        SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_MASK))
+#define SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_SET(flags, val)        \
+  do {                                                                       \
+    (flags) =                                                                \
+        (u8)((flags &                                                        \
+              (~(SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_MASK          \
+                 << SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_SHIFT))) | \
+             (((val) & (SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_MASK)) \
+              << (SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_SHIFT)));    \
+  } while (0)
+
+#define SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_EPHEMERIS_AND_CLOCK_UPLOADED_WITHIN_THE_LAST_HOUR \
+  (0)
+#define SBP_EPHEMERIS_QZSS_CNAV_EPHEMERIS_STATUS_FLAG_EPHEMERIS_AND_CLOCK_UPLOADED_MORE_THAN_AN_HOUR_AGO \
+  (1)
+#define SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_MASK (0x1u)
+#define SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_SHIFT (0u)
+#define SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_SHIFT) & \
+        SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_MASK))
+#define SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_SET(flags, val)        \
+  do {                                                                       \
+    (flags) =                                                                \
+        (u8)((flags &                                                        \
+              (~(SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_MASK          \
+                 << SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_SHIFT))) | \
+             (((val) & (SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_MASK)) \
+              << (SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_SHIFT)));    \
+  } while (0)
+
+#define SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_NOT_TO_EXCEED_TOLERANCE_IS_442_TIMES_URA \
+  (0)
+#define SBP_EPHEMERIS_QZSS_CNAV_INTEGRITY_STATUS_FLAG_NOT_TO_EXCEED_TOLERANCE_IS_573_TIMES_URA \
+  (1)
+/**
+ * Encoded length of sbp_msg_ephemeris_qzss_cnav_t
+ */
+#define SBP_MSG_EPHEMERIS_QZSS_CNAV_ENCODED_LEN 183u
+
 /**
  * Encoded length of sbp_msg_ephemeris_dep_d_t
  */

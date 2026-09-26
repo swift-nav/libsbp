@@ -48,6 +48,7 @@
 #include <libsbp/observation/MSG_EPHEMERIS_GPS_DEP_E.h>
 #include <libsbp/observation/MSG_EPHEMERIS_GPS_DEP_F.h>
 #include <libsbp/observation/MSG_EPHEMERIS_QZSS.h>
+#include <libsbp/observation/MSG_EPHEMERIS_QZSS_CNAV.h>
 #include <libsbp/observation/MSG_EPHEMERIS_SBAS.h>
 #include <libsbp/observation/MSG_EPHEMERIS_SBAS_DEP_A.h>
 #include <libsbp/observation/MSG_EPHEMERIS_SBAS_DEP_B.h>

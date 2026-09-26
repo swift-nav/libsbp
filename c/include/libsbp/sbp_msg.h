@@ -124,6 +124,7 @@ typedef union {
   sbp_msg_ephemeris_gps_dep_e_t ephemeris_gps_dep_e;
   sbp_msg_ephemeris_gps_dep_f_t ephemeris_gps_dep_f;
   sbp_msg_ephemeris_gps_t ephemeris_gps;
+  sbp_msg_ephemeris_qzss_cnav_t ephemeris_qzss_cnav;
   sbp_msg_ephemeris_qzss_t ephemeris_qzss;
   sbp_msg_ephemeris_sbas_dep_a_t ephemeris_sbas_dep_a;
   sbp_msg_ephemeris_sbas_dep_b_t ephemeris_sbas_dep_b;
@@ -505,6 +506,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgEphemerisGps:
       return sbp_msg_ephemeris_gps_encode(buf, len, n_written,
                                           &msg->ephemeris_gps);
+    case SbpMsgEphemerisQzssCnav:
+      return sbp_msg_ephemeris_qzss_cnav_encode(buf, len, n_written,
+                                                &msg->ephemeris_qzss_cnav);
     case SbpMsgEphemerisQzss:
       return sbp_msg_ephemeris_qzss_encode(buf, len, n_written,
                                            &msg->ephemeris_qzss);
@@ -1189,6 +1193,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgEphemerisGps:
       return sbp_msg_ephemeris_gps_decode(buf, len, n_read,
                                           &msg->ephemeris_gps);
+    case SbpMsgEphemerisQzssCnav:
+      return sbp_msg_ephemeris_qzss_cnav_decode(buf, len, n_read,
+                                                &msg->ephemeris_qzss_cnav);
     case SbpMsgEphemerisQzss:
       return sbp_msg_ephemeris_qzss_decode(buf, len, n_read,
                                            &msg->ephemeris_qzss);
@@ -1825,6 +1832,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_ephemeris_gps_dep_f_encoded_len(&msg->ephemeris_gps_dep_f);
     case SbpMsgEphemerisGps:
       return sbp_msg_ephemeris_gps_encoded_len(&msg->ephemeris_gps);
+    case SbpMsgEphemerisQzssCnav:
+      return sbp_msg_ephemeris_qzss_cnav_encoded_len(&msg->ephemeris_qzss_cnav);
     case SbpMsgEphemerisQzss:
       return sbp_msg_ephemeris_qzss_encoded_len(&msg->ephemeris_qzss);
     case SbpMsgEphemerisSbasDepA:
@@ -2418,6 +2427,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
                                              &b->ephemeris_gps_dep_f);
     case SbpMsgEphemerisGps:
       return sbp_msg_ephemeris_gps_cmp(&a->ephemeris_gps, &b->ephemeris_gps);
+    case SbpMsgEphemerisQzssCnav:
+      return sbp_msg_ephemeris_qzss_cnav_cmp(&a->ephemeris_qzss_cnav,
+                                             &b->ephemeris_qzss_cnav);
     case SbpMsgEphemerisQzss:
       return sbp_msg_ephemeris_qzss_cmp(&a->ephemeris_qzss, &b->ephemeris_qzss);
     case SbpMsgEphemerisSbasDepA:

@@ -1567,6 +1567,169 @@ definitions:
           units: s
           desc: Inter-signal correction between L1 P(Y) and L5 Q5
 
+ - MSG_EPHEMERIS_QZSS_CNAV:
+    id: 0x0099
+    short_desc: Satellite broadcast ephemeris for QZSS from the CNAV message
+    desc: >
+      The ephemeris message returns one QZSS civil navigation (CNAV) data
+      set of the L2C or L5 signal: the orbit parameters of message types 10
+      and 11, the clock correction and group delay parameters of message
+      type 30 or 61 (IS-QZSS-PNT-006 section 4.3). The layout follows
+      MSG_EPHEMERIS_GPS_CNAV; IS-QZSS-PNT-006 Table 4.3.2-16 lists where
+      the QZSS definitions differ. The satellite position follows from the
+      user algorithm of IS-QZSS-PNT-006 Table 5.6.2-3, whose reference
+      semi-major axis is 42164200 m, the clock correction from section 5.5
+      and the group delay corrections from section 5.8.2. The group delays
+      refer to L1 C/A (or L1C/B, whichever the satellite transmits). The
+      common toe equals the toc of the data set. The common ura is the root
+      sum square of the nominal URA_ED and URA_NED0 values, or -1 when
+      either index signals that no accuracy prediction is available. The
+      common health_bits hold the L1, L2 and L5 signal health bits of
+      message type 10 (bit 2 L1, bit 1 L2, bit 0 L5; 1 means the signal is
+      unhealthy).
+    fields:
+      - common:
+          type: EphemerisCommonContent
+          desc: Values common for all ephemeris types
+      - top:
+          type: GPSTimeSec
+          desc: Data predict time
+      - ura_ed_index:
+          type: s8
+          desc: Elevation-dependent accuracy index, IS-QZSS-PNT-006 5.4.3.2.1
+      - ura_ned0_index:
+          type: s8
+          desc: Non-elevation-dependent accuracy index, IS-QZSS-PNT-006 5.4.3.2.2
+      - ura_ned1_index:
+          type: u8
+          desc: Non-elevation-dependent accuracy change index
+      - ura_ned2_index:
+          type: u8
+          desc: Non-elevation-dependent accuracy change rate index
+      - flags:
+          type: u8
+          desc: Status flags of the data set
+          fields:
+            - 3-7:
+                desc: Reserved
+            - 2:
+                desc: Alert flag
+                values:
+                  - 0: No message of the data set raised the alert flag
+                  - 1: Signal may be unusable, use at own risk
+            - 1:
+                desc: Ephemeris status flag
+                values:
+                  - 0: Ephemeris and clock uploaded within the last hour
+                  - 1: Ephemeris and clock uploaded more than an hour ago
+            - 0:
+                desc: Integrity status flag
+                values:
+                  - 0: Not to exceed tolerance is 4.42 times URA
+                  - 1: Not to exceed tolerance is 5.73 times URA
+      - a:
+          type: double
+          units: m
+          desc: Semi-major axis at reference time (A_REF plus delta A)
+      - a_dot:
+          type: double
+          units: m/s
+          desc: Change rate in semi-major axis
+      - dn:
+          type: double
+          units: rad/s
+          desc: Mean motion difference from computed value at reference time
+      - dn_dot:
+          type: double
+          units: rad/s^2
+          desc: Rate of mean motion difference from computed value
+      - m0:
+          type: double
+          units: rad
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension (OMEGA_DOT_REF plus delta OMEGA_DOT)
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination angle at reference time
+      - inc_dot:
+          type: double
+          units: rad/s
+          desc: Rate of inclination angle
+      - c_rs:
+          type: float
+          units: m
+          desc: Amplitude of the sine harmonic correction term to the orbit radius
+      - c_rc:
+          type: float
+          units: m
+          desc: Amplitude of the cosine harmonic correction term to the orbit radius
+      - c_uc:
+          type: float
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the argument of latitude
+      - c_us:
+          type: float
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the argument of latitude
+      - c_ic:
+          type: float
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the angle of inclination
+      - c_is:
+          type: float
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the angle of inclination
+      - af0:
+          type: double
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: float
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+      - af2:
+          type: float
+          units: s/s^2
+          desc: Polynomial clock correction coefficient (rate of clock drift)
+      - toc:
+          type: GPSTimeSec
+          desc: Clock reference
+      - tgd:
+          type: float
+          units: s
+          desc: Group delay between the SV clock and L1 C/A
+      - isc_l1ca:
+          type: float
+          units: s
+          desc: Inter-signal correction between L1 C/A and L1 C/A, zero by definition
+      - isc_l2c:
+          type: float
+          units: s
+          desc: Inter-signal correction between L1 C/A and L2C
+      - isc_l5i5:
+          type: float
+          units: s
+          desc: Inter-signal correction between L1 C/A and L5 I5
+      - isc_l5q5:
+          type: float
+          units: s
+          desc: Inter-signal correction between L1 C/A and L5 Q5
+
  - MSG_EPHEMERIS_DEP_D:
     id: 0x0080
     short_desc: Deprecated

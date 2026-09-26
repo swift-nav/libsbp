@@ -168,6 +168,7 @@ use self::observation::msg_ephemeris_gps_cnav::MsgEphemerisGpsCnav;
 use self::observation::msg_ephemeris_gps_dep_e::MsgEphemerisGpsDepE;
 use self::observation::msg_ephemeris_gps_dep_f::MsgEphemerisGpsDepF;
 use self::observation::msg_ephemeris_qzss::MsgEphemerisQzss;
+use self::observation::msg_ephemeris_qzss_cnav::MsgEphemerisQzssCnav;
 use self::observation::msg_ephemeris_sbas::MsgEphemerisSbas;
 use self::observation::msg_ephemeris_sbas_dep_a::MsgEphemerisSbasDepA;
 use self::observation::msg_ephemeris_sbas_dep_b::MsgEphemerisSbasDepB;
@@ -527,6 +528,8 @@ pub enum Sbp {
     MsgSvAzEl(MsgSvAzEl),
     /// Satellite broadcast ephemeris for GPS from the CNAV message
     MsgEphemerisGpsCnav(MsgEphemerisGpsCnav),
+    /// Satellite broadcast ephemeris for QZSS from the CNAV message
+    MsgEphemerisQzssCnav(MsgEphemerisQzssCnav),
     /// Write device configuration settings (host => device)
     MsgSettingsWrite(MsgSettingsWrite),
     /// Save settings to flash (host => device)
@@ -1097,6 +1100,9 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             }
             Some(MsgEphemerisGpsCnav::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgEphemerisGpsCnav>(value).map(Sbp::MsgEphemerisGpsCnav)
+            }
+            Some(MsgEphemerisQzssCnav::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisQzssCnav>(value).map(Sbp::MsgEphemerisQzssCnav)
             }
             Some(MsgSettingsWrite::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgSettingsWrite>(value).map(Sbp::MsgSettingsWrite)
@@ -1908,6 +1914,9 @@ impl Sbp {
             MsgEphemerisGpsCnav::MESSAGE_TYPE => {
                 MsgEphemerisGpsCnav::parse(&mut payload).map(Sbp::MsgEphemerisGpsCnav)
             }
+            MsgEphemerisQzssCnav::MESSAGE_TYPE => {
+                MsgEphemerisQzssCnav::parse(&mut payload).map(Sbp::MsgEphemerisQzssCnav)
+            }
             MsgSettingsWrite::MESSAGE_TYPE => {
                 MsgSettingsWrite::parse(&mut payload).map(Sbp::MsgSettingsWrite)
             }
@@ -2466,6 +2475,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGnssCapb(msg) => msg.message_name(),
             Sbp::MsgSvAzEl(msg) => msg.message_name(),
             Sbp::MsgEphemerisGpsCnav(msg) => msg.message_name(),
+            Sbp::MsgEphemerisQzssCnav(msg) => msg.message_name(),
             Sbp::MsgSettingsWrite(msg) => msg.message_name(),
             Sbp::MsgSettingsSave(msg) => msg.message_name(),
             Sbp::MsgSettingsReadByIndexReq(msg) => msg.message_name(),
@@ -2716,6 +2726,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGnssCapb(msg) => msg.message_type(),
             Sbp::MsgSvAzEl(msg) => msg.message_type(),
             Sbp::MsgEphemerisGpsCnav(msg) => msg.message_type(),
+            Sbp::MsgEphemerisQzssCnav(msg) => msg.message_type(),
             Sbp::MsgSettingsWrite(msg) => msg.message_type(),
             Sbp::MsgSettingsSave(msg) => msg.message_type(),
             Sbp::MsgSettingsReadByIndexReq(msg) => msg.message_type(),
@@ -2966,6 +2977,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGnssCapb(msg) => msg.sender_id(),
             Sbp::MsgSvAzEl(msg) => msg.sender_id(),
             Sbp::MsgEphemerisGpsCnav(msg) => msg.sender_id(),
+            Sbp::MsgEphemerisQzssCnav(msg) => msg.sender_id(),
             Sbp::MsgSettingsWrite(msg) => msg.sender_id(),
             Sbp::MsgSettingsSave(msg) => msg.sender_id(),
             Sbp::MsgSettingsReadByIndexReq(msg) => msg.sender_id(),
@@ -3216,6 +3228,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGnssCapb(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSvAzEl(msg) => msg.set_sender_id(new_id),
             Sbp::MsgEphemerisGpsCnav(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgEphemerisQzssCnav(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSettingsWrite(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSettingsSave(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSettingsReadByIndexReq(msg) => msg.set_sender_id(new_id),
@@ -3466,6 +3479,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGnssCapb(msg) => msg.encoded_len(),
             Sbp::MsgSvAzEl(msg) => msg.encoded_len(),
             Sbp::MsgEphemerisGpsCnav(msg) => msg.encoded_len(),
+            Sbp::MsgEphemerisQzssCnav(msg) => msg.encoded_len(),
             Sbp::MsgSettingsWrite(msg) => msg.encoded_len(),
             Sbp::MsgSettingsSave(msg) => msg.encoded_len(),
             Sbp::MsgSettingsReadByIndexReq(msg) => msg.encoded_len(),
@@ -3719,6 +3733,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGnssCapb(msg) => msg.gps_time(),
             Sbp::MsgSvAzEl(msg) => msg.gps_time(),
             Sbp::MsgEphemerisGpsCnav(msg) => msg.gps_time(),
+            Sbp::MsgEphemerisQzssCnav(msg) => msg.gps_time(),
             Sbp::MsgSettingsWrite(msg) => msg.gps_time(),
             Sbp::MsgSettingsSave(msg) => msg.gps_time(),
             Sbp::MsgSettingsReadByIndexReq(msg) => msg.gps_time(),
@@ -3969,6 +3984,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGnssCapb(msg) => msg.friendly_name(),
             Sbp::MsgSvAzEl(msg) => msg.friendly_name(),
             Sbp::MsgEphemerisGpsCnav(msg) => msg.friendly_name(),
+            Sbp::MsgEphemerisQzssCnav(msg) => msg.friendly_name(),
             Sbp::MsgSettingsWrite(msg) => msg.friendly_name(),
             Sbp::MsgSettingsSave(msg) => msg.friendly_name(),
             Sbp::MsgSettingsReadByIndexReq(msg) => msg.friendly_name(),
@@ -4219,6 +4235,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGnssCapb(msg) => msg.is_valid(),
             Sbp::MsgSvAzEl(msg) => msg.is_valid(),
             Sbp::MsgEphemerisGpsCnav(msg) => msg.is_valid(),
+            Sbp::MsgEphemerisQzssCnav(msg) => msg.is_valid(),
             Sbp::MsgSettingsWrite(msg) => msg.is_valid(),
             Sbp::MsgSettingsSave(msg) => msg.is_valid(),
             Sbp::MsgSettingsReadByIndexReq(msg) => msg.is_valid(),
@@ -4474,6 +4491,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGnssCapb(msg) => Ok(Sbp::MsgGnssCapb(msg.into_valid_msg()?)),
             Sbp::MsgSvAzEl(msg) => Ok(Sbp::MsgSvAzEl(msg.into_valid_msg()?)),
             Sbp::MsgEphemerisGpsCnav(msg) => Ok(Sbp::MsgEphemerisGpsCnav(msg.into_valid_msg()?)),
+            Sbp::MsgEphemerisQzssCnav(msg) => Ok(Sbp::MsgEphemerisQzssCnav(msg.into_valid_msg()?)),
             Sbp::MsgSettingsWrite(msg) => Ok(Sbp::MsgSettingsWrite(msg.into_valid_msg()?)),
             Sbp::MsgSettingsSave(msg) => Ok(Sbp::MsgSettingsSave(msg.into_valid_msg()?)),
             Sbp::MsgSettingsReadByIndexReq(msg) => {
@@ -4833,6 +4851,7 @@ impl WireFormat for Sbp {
             Sbp::MsgGnssCapb(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSvAzEl(msg) => WireFormat::write(msg, buf),
             Sbp::MsgEphemerisGpsCnav(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEphemerisQzssCnav(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSettingsWrite(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSettingsSave(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSettingsReadByIndexReq(msg) => WireFormat::write(msg, buf),
@@ -5083,6 +5102,7 @@ impl WireFormat for Sbp {
             Sbp::MsgGnssCapb(msg) => WireFormat::len(msg),
             Sbp::MsgSvAzEl(msg) => WireFormat::len(msg),
             Sbp::MsgEphemerisGpsCnav(msg) => WireFormat::len(msg),
+            Sbp::MsgEphemerisQzssCnav(msg) => WireFormat::len(msg),
             Sbp::MsgSettingsWrite(msg) => WireFormat::len(msg),
             Sbp::MsgSettingsSave(msg) => WireFormat::len(msg),
             Sbp::MsgSettingsReadByIndexReq(msg) => WireFormat::len(msg),
@@ -5659,6 +5679,12 @@ impl From<MsgSvAzEl> for Sbp {
 impl From<MsgEphemerisGpsCnav> for Sbp {
     fn from(msg: MsgEphemerisGpsCnav) -> Self {
         Sbp::MsgEphemerisGpsCnav(msg)
+    }
+}
+
+impl From<MsgEphemerisQzssCnav> for Sbp {
+    fn from(msg: MsgEphemerisQzssCnav) -> Self {
+        Sbp::MsgEphemerisQzssCnav(msg)
     }
 }
 

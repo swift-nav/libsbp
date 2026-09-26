@@ -46,6 +46,7 @@ pub use msg_ephemeris_gps_cnav::MsgEphemerisGpsCnav;
 pub use msg_ephemeris_gps_dep_e::MsgEphemerisGpsDepE;
 pub use msg_ephemeris_gps_dep_f::MsgEphemerisGpsDepF;
 pub use msg_ephemeris_qzss::MsgEphemerisQzss;
+pub use msg_ephemeris_qzss_cnav::MsgEphemerisQzssCnav;
 pub use msg_ephemeris_sbas::MsgEphemerisSbas;
 pub use msg_ephemeris_sbas_dep_a::MsgEphemerisSbasDepA;
 pub use msg_ephemeris_sbas_dep_b::MsgEphemerisSbasDepB;
@@ -5407,6 +5408,478 @@ pub mod msg_ephemeris_qzss {
                 toc: WireFormat::parse_unchecked(buf),
                 iode: WireFormat::parse_unchecked(buf),
                 iodc: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_ephemeris_qzss_cnav {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Satellite broadcast ephemeris for QZSS from the CNAV message
+    ///
+    /// The ephemeris message returns one QZSS civil navigation (CNAV) data set of
+    /// the L2C or L5 signal: the orbit parameters of message types 10 and 11, the
+    /// clock correction and group delay parameters of message type 30 or 61 (IS-
+    /// QZSS-PNT-006 section 4.3). The layout follows MSG_EPHEMERIS_GPS_CNAV; IS-
+    /// QZSS-PNT-006 Table 4.3.2-16 lists where the QZSS definitions differ. The
+    /// satellite position follows from the user algorithm of IS-QZSS-PNT-006
+    /// Table 5.6.2-3, whose reference semi-major axis is 42164200 m, the clock
+    /// correction from section 5.5 and the group delay corrections from section
+    /// 5.8.2. The group delays refer to L1 C/A (or L1C/B, whichever the satellite
+    /// transmits). The common toe equals the toc of the data set. The common ura
+    /// is the root sum square of the nominal URA_ED and URA_NED0 values, or -1
+    /// when either index signals that no accuracy prediction is available. The
+    /// common health_bits hold the L1, L2 and L5 signal health bits of message
+    /// type 10 (bit 2 L1, bit 1 L2, bit 0 L5; 1 means the signal is unhealthy).
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgEphemerisQzssCnav {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// Values common for all ephemeris types
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
+        pub common: EphemerisCommonContent,
+        /// Data predict time
+        #[cfg_attr(feature = "serde", serde(rename = "top"))]
+        pub top: GpsTimeSec,
+        /// Elevation-dependent accuracy index, IS-QZSS-PNT-006 5.4.3.2.1
+        #[cfg_attr(feature = "serde", serde(rename = "ura_ed_index"))]
+        pub ura_ed_index: i8,
+        /// Non-elevation-dependent accuracy index, IS-QZSS-PNT-006 5.4.3.2.2
+        #[cfg_attr(feature = "serde", serde(rename = "ura_ned0_index"))]
+        pub ura_ned0_index: i8,
+        /// Non-elevation-dependent accuracy change index
+        #[cfg_attr(feature = "serde", serde(rename = "ura_ned1_index"))]
+        pub ura_ned1_index: u8,
+        /// Non-elevation-dependent accuracy change rate index
+        #[cfg_attr(feature = "serde", serde(rename = "ura_ned2_index"))]
+        pub ura_ned2_index: u8,
+        /// Status flags of the data set
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
+        pub flags: u8,
+        /// Semi-major axis at reference time (A_REF plus delta A)
+        #[cfg_attr(feature = "serde", serde(rename = "a"))]
+        pub a: f64,
+        /// Change rate in semi-major axis
+        #[cfg_attr(feature = "serde", serde(rename = "a_dot"))]
+        pub a_dot: f64,
+        /// Mean motion difference from computed value at reference time
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
+        pub dn: f64,
+        /// Rate of mean motion difference from computed value
+        #[cfg_attr(feature = "serde", serde(rename = "dn_dot"))]
+        pub dn_dot: f64,
+        /// Mean anomaly at reference time
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
+        pub m0: f64,
+        /// Eccentricity of satellite orbit
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
+        pub ecc: f64,
+        /// Argument of perigee
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
+        pub w: f64,
+        /// Longitude of ascending node of orbit plane at weekly epoch
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
+        pub omega0: f64,
+        /// Rate of right ascension (OMEGA_DOT_REF plus delta OMEGA_DOT)
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
+        pub omegadot: f64,
+        /// Inclination angle at reference time
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
+        pub inc: f64,
+        /// Rate of inclination angle
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
+        pub inc_dot: f64,
+        /// Amplitude of the sine harmonic correction term to the orbit radius
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
+        pub c_rs: f32,
+        /// Amplitude of the cosine harmonic correction term to the orbit radius
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
+        pub c_rc: f32,
+        /// Amplitude of the cosine harmonic correction term to the argument of
+        /// latitude
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
+        pub c_uc: f32,
+        /// Amplitude of the sine harmonic correction term to the argument of
+        /// latitude
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
+        pub c_us: f32,
+        /// Amplitude of the cosine harmonic correction term to the angle of
+        /// inclination
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
+        pub c_ic: f32,
+        /// Amplitude of the sine harmonic correction term to the angle of
+        /// inclination
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
+        pub c_is: f32,
+        /// Polynomial clock correction coefficient (clock bias)
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
+        pub af0: f64,
+        /// Polynomial clock correction coefficient (clock drift)
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
+        pub af1: f32,
+        /// Polynomial clock correction coefficient (rate of clock drift)
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
+        pub af2: f32,
+        /// Clock reference
+        #[cfg_attr(feature = "serde", serde(rename = "toc"))]
+        pub toc: GpsTimeSec,
+        /// Group delay between the SV clock and L1 C/A
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
+        pub tgd: f32,
+        /// Inter-signal correction between L1 C/A and L1 C/A, zero by definition
+        #[cfg_attr(feature = "serde", serde(rename = "isc_l1ca"))]
+        pub isc_l1ca: f32,
+        /// Inter-signal correction between L1 C/A and L2C
+        #[cfg_attr(feature = "serde", serde(rename = "isc_l2c"))]
+        pub isc_l2c: f32,
+        /// Inter-signal correction between L1 C/A and L5 I5
+        #[cfg_attr(feature = "serde", serde(rename = "isc_l5i5"))]
+        pub isc_l5i5: f32,
+        /// Inter-signal correction between L1 C/A and L5 Q5
+        #[cfg_attr(feature = "serde", serde(rename = "isc_l5q5"))]
+        pub isc_l5q5: f32,
+    }
+
+    impl MsgEphemerisQzssCnav {
+        /// Gets the [AlertFlag][self::AlertFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `AlertFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `AlertFlag` were added.
+        pub fn alert_flag(&self) -> Result<AlertFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 2).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [AlertFlag][AlertFlag] of the `flags` bitfield.
+        pub fn set_alert_flag(&mut self, alert_flag: AlertFlag) {
+            set_bit_range!(&mut self.flags, alert_flag, u8, u8, 2, 2);
+        }
+
+        /// Gets the [EphemerisStatusFlag][self::EphemerisStatusFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `EphemerisStatusFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `EphemerisStatusFlag` were added.
+        pub fn ephemeris_status_flag(&self) -> Result<EphemerisStatusFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 1).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [EphemerisStatusFlag][EphemerisStatusFlag] of the `flags` bitfield.
+        pub fn set_ephemeris_status_flag(&mut self, ephemeris_status_flag: EphemerisStatusFlag) {
+            set_bit_range!(&mut self.flags, ephemeris_status_flag, u8, u8, 1, 1);
+        }
+
+        /// Gets the [IntegrityStatusFlag][self::IntegrityStatusFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `IntegrityStatusFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `IntegrityStatusFlag` were added.
+        pub fn integrity_status_flag(&self) -> Result<IntegrityStatusFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 0, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [IntegrityStatusFlag][IntegrityStatusFlag] of the `flags` bitfield.
+        pub fn set_integrity_status_flag(&mut self, integrity_status_flag: IntegrityStatusFlag) {
+            set_bit_range!(&mut self.flags, integrity_status_flag, u8, u8, 0, 0);
+        }
+    }
+
+    impl ConcreteMessage for MsgEphemerisQzssCnav {
+        const MESSAGE_TYPE: u16 = 153;
+        const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_QZSS_CNAV";
+    }
+
+    impl SbpMessage for MsgEphemerisQzssCnav {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> Option<u16> {
+            Some(<Self as ConcreteMessage>::MESSAGE_TYPE)
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        fn is_valid(&self) -> bool {
+            true
+        }
+        fn into_valid_msg(self) -> Result<Self, crate::messages::invalid::Invalid> {
+            Ok(self)
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisQzssCnav {
+        fn friendly_name() -> &'static str {
+            "EPH QZSS CNAV"
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgEphemerisQzssCnav {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgEphemerisQzssCnav(m) => Ok(m),
+                _ => Err(TryFromSbpError(msg)),
+            }
+        }
+    }
+
+    impl WireFormat for MsgEphemerisQzssCnav {
+        const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
+            + <GpsTimeSec as WireFormat>::MIN_LEN
+            + <i8 as WireFormat>::MIN_LEN
+            + <i8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f64 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <GpsTimeSec as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.common)
+                + WireFormat::len(&self.top)
+                + WireFormat::len(&self.ura_ed_index)
+                + WireFormat::len(&self.ura_ned0_index)
+                + WireFormat::len(&self.ura_ned1_index)
+                + WireFormat::len(&self.ura_ned2_index)
+                + WireFormat::len(&self.flags)
+                + WireFormat::len(&self.a)
+                + WireFormat::len(&self.a_dot)
+                + WireFormat::len(&self.dn)
+                + WireFormat::len(&self.dn_dot)
+                + WireFormat::len(&self.m0)
+                + WireFormat::len(&self.ecc)
+                + WireFormat::len(&self.w)
+                + WireFormat::len(&self.omega0)
+                + WireFormat::len(&self.omegadot)
+                + WireFormat::len(&self.inc)
+                + WireFormat::len(&self.inc_dot)
+                + WireFormat::len(&self.c_rs)
+                + WireFormat::len(&self.c_rc)
+                + WireFormat::len(&self.c_uc)
+                + WireFormat::len(&self.c_us)
+                + WireFormat::len(&self.c_ic)
+                + WireFormat::len(&self.c_is)
+                + WireFormat::len(&self.af0)
+                + WireFormat::len(&self.af1)
+                + WireFormat::len(&self.af2)
+                + WireFormat::len(&self.toc)
+                + WireFormat::len(&self.tgd)
+                + WireFormat::len(&self.isc_l1ca)
+                + WireFormat::len(&self.isc_l2c)
+                + WireFormat::len(&self.isc_l5i5)
+                + WireFormat::len(&self.isc_l5q5)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.common, buf);
+            WireFormat::write(&self.top, buf);
+            WireFormat::write(&self.ura_ed_index, buf);
+            WireFormat::write(&self.ura_ned0_index, buf);
+            WireFormat::write(&self.ura_ned1_index, buf);
+            WireFormat::write(&self.ura_ned2_index, buf);
+            WireFormat::write(&self.flags, buf);
+            WireFormat::write(&self.a, buf);
+            WireFormat::write(&self.a_dot, buf);
+            WireFormat::write(&self.dn, buf);
+            WireFormat::write(&self.dn_dot, buf);
+            WireFormat::write(&self.m0, buf);
+            WireFormat::write(&self.ecc, buf);
+            WireFormat::write(&self.w, buf);
+            WireFormat::write(&self.omega0, buf);
+            WireFormat::write(&self.omegadot, buf);
+            WireFormat::write(&self.inc, buf);
+            WireFormat::write(&self.inc_dot, buf);
+            WireFormat::write(&self.c_rs, buf);
+            WireFormat::write(&self.c_rc, buf);
+            WireFormat::write(&self.c_uc, buf);
+            WireFormat::write(&self.c_us, buf);
+            WireFormat::write(&self.c_ic, buf);
+            WireFormat::write(&self.c_is, buf);
+            WireFormat::write(&self.af0, buf);
+            WireFormat::write(&self.af1, buf);
+            WireFormat::write(&self.af2, buf);
+            WireFormat::write(&self.toc, buf);
+            WireFormat::write(&self.tgd, buf);
+            WireFormat::write(&self.isc_l1ca, buf);
+            WireFormat::write(&self.isc_l2c, buf);
+            WireFormat::write(&self.isc_l5i5, buf);
+            WireFormat::write(&self.isc_l5q5, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgEphemerisQzssCnav {
+                sender_id: None,
+                common: WireFormat::parse_unchecked(buf),
+                top: WireFormat::parse_unchecked(buf),
+                ura_ed_index: WireFormat::parse_unchecked(buf),
+                ura_ned0_index: WireFormat::parse_unchecked(buf),
+                ura_ned1_index: WireFormat::parse_unchecked(buf),
+                ura_ned2_index: WireFormat::parse_unchecked(buf),
+                flags: WireFormat::parse_unchecked(buf),
+                a: WireFormat::parse_unchecked(buf),
+                a_dot: WireFormat::parse_unchecked(buf),
+                dn: WireFormat::parse_unchecked(buf),
+                dn_dot: WireFormat::parse_unchecked(buf),
+                m0: WireFormat::parse_unchecked(buf),
+                ecc: WireFormat::parse_unchecked(buf),
+                w: WireFormat::parse_unchecked(buf),
+                omega0: WireFormat::parse_unchecked(buf),
+                omegadot: WireFormat::parse_unchecked(buf),
+                inc: WireFormat::parse_unchecked(buf),
+                inc_dot: WireFormat::parse_unchecked(buf),
+                c_rs: WireFormat::parse_unchecked(buf),
+                c_rc: WireFormat::parse_unchecked(buf),
+                c_uc: WireFormat::parse_unchecked(buf),
+                c_us: WireFormat::parse_unchecked(buf),
+                c_ic: WireFormat::parse_unchecked(buf),
+                c_is: WireFormat::parse_unchecked(buf),
+                af0: WireFormat::parse_unchecked(buf),
+                af1: WireFormat::parse_unchecked(buf),
+                af2: WireFormat::parse_unchecked(buf),
+                toc: WireFormat::parse_unchecked(buf),
+                tgd: WireFormat::parse_unchecked(buf),
+                isc_l1ca: WireFormat::parse_unchecked(buf),
+                isc_l2c: WireFormat::parse_unchecked(buf),
+                isc_l5i5: WireFormat::parse_unchecked(buf),
+                isc_l5q5: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Alert flag
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum AlertFlag {
+        /// No message of the data set raised the alert flag
+        NoMessageOfTheDataSetRaisedTheAlertFlag = 0,
+
+        /// Signal may be unusable, use at own risk
+        SignalMayBeUnusableUseAtOwnRisk = 1,
+    }
+
+    impl std::fmt::Display for AlertFlag {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                AlertFlag::NoMessageOfTheDataSetRaisedTheAlertFlag => {
+                    f.write_str("No message of the data set raised the alert flag")
+                }
+                AlertFlag::SignalMayBeUnusableUseAtOwnRisk => {
+                    f.write_str("Signal may be unusable, use at own risk")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for AlertFlag {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(AlertFlag::NoMessageOfTheDataSetRaisedTheAlertFlag),
+                1 => Ok(AlertFlag::SignalMayBeUnusableUseAtOwnRisk),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Ephemeris status flag
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum EphemerisStatusFlag {
+        /// Ephemeris and clock uploaded within the last hour
+        EphemerisAndClockUploadedWithinTheLastHour = 0,
+
+        /// Ephemeris and clock uploaded more than an hour ago
+        EphemerisAndClockUploadedMoreThanAnHourAgo = 1,
+    }
+
+    impl std::fmt::Display for EphemerisStatusFlag {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                EphemerisStatusFlag::EphemerisAndClockUploadedWithinTheLastHour => {
+                    f.write_str("Ephemeris and clock uploaded within the last hour")
+                }
+                EphemerisStatusFlag::EphemerisAndClockUploadedMoreThanAnHourAgo => {
+                    f.write_str("Ephemeris and clock uploaded more than an hour ago")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for EphemerisStatusFlag {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(EphemerisStatusFlag::EphemerisAndClockUploadedWithinTheLastHour),
+                1 => Ok(EphemerisStatusFlag::EphemerisAndClockUploadedMoreThanAnHourAgo),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Integrity status flag
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum IntegrityStatusFlag {
+        /// Not to exceed tolerance is 4.42 times URA
+        NotToExceedToleranceIs442TimesUra = 0,
+
+        /// Not to exceed tolerance is 5.73 times URA
+        NotToExceedToleranceIs573TimesUra = 1,
+    }
+
+    impl std::fmt::Display for IntegrityStatusFlag {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                IntegrityStatusFlag::NotToExceedToleranceIs442TimesUra => {
+                    f.write_str("Not to exceed tolerance is 4.42 times URA")
+                }
+                IntegrityStatusFlag::NotToExceedToleranceIs573TimesUra => {
+                    f.write_str("Not to exceed tolerance is 5.73 times URA")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for IntegrityStatusFlag {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(IntegrityStatusFlag::NotToExceedToleranceIs442TimesUra),
+                1 => Ok(IntegrityStatusFlag::NotToExceedToleranceIs573TimesUra),
+                i => Err(i),
             }
         }
     }
