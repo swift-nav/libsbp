@@ -1408,6 +1408,165 @@ definitions:
           type: u8
           desc: Issue of data. Equal to the 7 bits of the immediate data word t_b
 
+ - MSG_EPHEMERIS_GPS_CNAV:
+    id: 0x0098
+    short_desc: Satellite broadcast ephemeris for GPS from the CNAV message
+    desc: >
+      The ephemeris message returns one GPS civil navigation (CNAV) data
+      set: the orbit parameters of message types 10 and 11, the clock
+      correction and group delay parameters of message type 30. The
+      satellite position follows from the user algorithm of IS-GPS-200N
+      Table 30-II, the clock correction from paragraph 20.3.3.3.3.1 and
+      the group delay corrections from paragraph 30.3.3.3.1.1. The
+      common toe equals the toc of the data set. The common ura is the
+      root sum square of the nominal URA_ED and URA_NED0 values, or -1
+      when either index signals that no accuracy prediction is available.
+      The common health_bits hold the L1, L2 and L5 signal health bits of
+      message type 10 (bit 2 L1, bit 1 L2, bit 0 L5; 1 means all codes and
+      data on that carrier are bad or unavailable).
+    fields:
+      - common:
+          type: EphemerisCommonContent
+          desc: Values common for all ephemeris types
+      - top:
+          type: GPSTimeSec
+          desc: CEI data sequence propagation time
+      - ura_ed_index:
+          type: s8
+          desc: Elevation-dependent accuracy index, IS-GPS-200N 30.3.3.1.1.4
+      - ura_ned0_index:
+          type: s8
+          desc: Non-elevation-dependent accuracy index, IS-GPS-200N 30.3.3.2.4
+      - ura_ned1_index:
+          type: u8
+          desc: Non-elevation-dependent accuracy change index
+      - ura_ned2_index:
+          type: u8
+          desc: Non-elevation-dependent accuracy change rate index
+      - flags:
+          type: u8
+          desc: Status flags of the data set
+          fields:
+            - 3-7:
+                desc: Reserved
+            - 2:
+                desc: Alert flag
+                values:
+                  - 0: No message of the data set raised the alert flag
+                  - 1: URA may be worse than indicated, use at own risk
+            - 1:
+                desc: L2C phasing
+                values:
+                  - 0: L2C and L2P(Y) in phase quadrature
+                  - 1: L2C and L2P(Y) in phase
+            - 0:
+                desc: Integrity status flag
+                values:
+                  - 0: Legacy level of integrity assurance
+                  - 1: Enhanced level of integrity assurance
+      - a:
+          type: double
+          units: m
+          desc: Semi-major axis at reference time (A_REF plus delta A)
+      - a_dot:
+          type: double
+          units: m/s
+          desc: Change rate in semi-major axis
+      - dn:
+          type: double
+          units: rad/s
+          desc: Mean motion difference from computed value at reference time
+      - dn_dot:
+          type: double
+          units: rad/s^2
+          desc: Rate of mean motion difference from computed value
+      - m0:
+          type: double
+          units: rad
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension (OMEGA_DOT_REF plus delta OMEGA_DOT)
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination angle at reference time
+      - inc_dot:
+          type: double
+          units: rad/s
+          desc: Rate of inclination angle
+      - c_rs:
+          type: float
+          units: m
+          desc: Amplitude of the sine harmonic correction term to the orbit radius
+      - c_rc:
+          type: float
+          units: m
+          desc: Amplitude of the cosine harmonic correction term to the orbit radius
+      - c_uc:
+          type: float
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the argument of latitude
+      - c_us:
+          type: float
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the argument of latitude
+      - c_ic:
+          type: float
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the angle of inclination
+      - c_is:
+          type: float
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the angle of inclination
+      - af0:
+          type: double
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: float
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+      - af2:
+          type: float
+          units: s/s^2
+          desc: Polynomial clock correction coefficient (rate of clock drift)
+      - toc:
+          type: GPSTimeSec
+          desc: Clock reference
+      - tgd:
+          type: float
+          units: s
+          desc: Group delay differential between L1 P(Y) and L2 P(Y)
+      - isc_l1ca:
+          type: float
+          units: s
+          desc: Inter-signal correction between L1 P(Y) and L1 C/A
+      - isc_l2c:
+          type: float
+          units: s
+          desc: Inter-signal correction between L1 P(Y) and L2C
+      - isc_l5i5:
+          type: float
+          units: s
+          desc: Inter-signal correction between L1 P(Y) and L5 I5
+      - isc_l5q5:
+          type: float
+          units: s
+          desc: Inter-signal correction between L1 P(Y) and L5 Q5
+
  - MSG_EPHEMERIS_DEP_D:
     id: 0x0080
     short_desc: Deprecated

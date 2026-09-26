@@ -120,6 +120,7 @@ typedef union {
   sbp_msg_ephemeris_glo_dep_c_t ephemeris_glo_dep_c;
   sbp_msg_ephemeris_glo_dep_d_t ephemeris_glo_dep_d;
   sbp_msg_ephemeris_glo_t ephemeris_glo;
+  sbp_msg_ephemeris_gps_cnav_t ephemeris_gps_cnav;
   sbp_msg_ephemeris_gps_dep_e_t ephemeris_gps_dep_e;
   sbp_msg_ephemeris_gps_dep_f_t ephemeris_gps_dep_f;
   sbp_msg_ephemeris_gps_t ephemeris_gps;
@@ -492,6 +493,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgEphemerisGlo:
       return sbp_msg_ephemeris_glo_encode(buf, len, n_written,
                                           &msg->ephemeris_glo);
+    case SbpMsgEphemerisGpsCnav:
+      return sbp_msg_ephemeris_gps_cnav_encode(buf, len, n_written,
+                                               &msg->ephemeris_gps_cnav);
     case SbpMsgEphemerisGpsDepE:
       return sbp_msg_ephemeris_gps_dep_e_encode(buf, len, n_written,
                                                 &msg->ephemeris_gps_dep_e);
@@ -1173,6 +1177,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgEphemerisGlo:
       return sbp_msg_ephemeris_glo_decode(buf, len, n_read,
                                           &msg->ephemeris_glo);
+    case SbpMsgEphemerisGpsCnav:
+      return sbp_msg_ephemeris_gps_cnav_decode(buf, len, n_read,
+                                               &msg->ephemeris_gps_cnav);
     case SbpMsgEphemerisGpsDepE:
       return sbp_msg_ephemeris_gps_dep_e_decode(buf, len, n_read,
                                                 &msg->ephemeris_gps_dep_e);
@@ -1810,6 +1817,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_ephemeris_glo_dep_d_encoded_len(&msg->ephemeris_glo_dep_d);
     case SbpMsgEphemerisGlo:
       return sbp_msg_ephemeris_glo_encoded_len(&msg->ephemeris_glo);
+    case SbpMsgEphemerisGpsCnav:
+      return sbp_msg_ephemeris_gps_cnav_encoded_len(&msg->ephemeris_gps_cnav);
     case SbpMsgEphemerisGpsDepE:
       return sbp_msg_ephemeris_gps_dep_e_encoded_len(&msg->ephemeris_gps_dep_e);
     case SbpMsgEphemerisGpsDepF:
@@ -2398,6 +2407,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
                                              &b->ephemeris_glo_dep_d);
     case SbpMsgEphemerisGlo:
       return sbp_msg_ephemeris_glo_cmp(&a->ephemeris_glo, &b->ephemeris_glo);
+    case SbpMsgEphemerisGpsCnav:
+      return sbp_msg_ephemeris_gps_cnav_cmp(&a->ephemeris_gps_cnav,
+                                            &b->ephemeris_gps_cnav);
     case SbpMsgEphemerisGpsDepE:
       return sbp_msg_ephemeris_gps_dep_e_cmp(&a->ephemeris_gps_dep_e,
                                              &b->ephemeris_gps_dep_e);

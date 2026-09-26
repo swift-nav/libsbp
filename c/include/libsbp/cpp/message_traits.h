@@ -2209,6 +2209,43 @@ struct MessageTraits<sbp_msg_ephemeris_glo_t> {
 };
 
 template <>
+struct MessageTraits<sbp_msg_ephemeris_gps_cnav_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgEphemerisGpsCnav;
+  static constexpr const char *name = "MSG_EPHEMERIS_GPS_CNAV";
+  static const sbp_msg_ephemeris_gps_cnav_t &get(const sbp_msg_t &msg) {
+    return msg.ephemeris_gps_cnav;
+  }
+  static sbp_msg_ephemeris_gps_cnav_t &get(sbp_msg_t &msg) {
+    return msg.ephemeris_gps_cnav;
+  }
+  static void to_sbp_msg(const sbp_msg_ephemeris_gps_cnav_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ephemeris_gps_cnav = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ephemeris_gps_cnav_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ephemeris_gps_cnav = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ephemeris_gps_cnav_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ephemeris_gps_cnav_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ephemeris_gps_cnav_t &msg) {
+    return sbp_msg_ephemeris_gps_cnav_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ephemeris_gps_cnav_t *msg) {
+    return sbp_msg_ephemeris_gps_cnav_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ephemeris_gps_cnav_t &msg) {
+    return sbp_msg_ephemeris_gps_cnav_encoded_len(&msg);
+  }
+};
+
+template <>
 struct MessageTraits<sbp_msg_ephemeris_gps_dep_e_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGpsDepE;
   static constexpr const char *name = "MSG_EPHEMERIS_GPS_DEP_E";

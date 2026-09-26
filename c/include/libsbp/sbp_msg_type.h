@@ -111,6 +111,7 @@ typedef enum {
   SbpMsgEphemerisGloDepC = 0x0087,
   SbpMsgEphemerisGloDepD = 0x0088,
   SbpMsgEphemerisGlo = 0x008B,
+  SbpMsgEphemerisGpsCnav = 0x0098,
   SbpMsgEphemerisGpsDepE = 0x0081,
   SbpMsgEphemerisGpsDepF = 0x0086,
   SbpMsgEphemerisGps = 0x008A,
@@ -419,6 +420,8 @@ static inline const char *sbp_msg_type_to_string(sbp_msg_type_t msg_type) {
       return "MSG_EPHEMERIS_GLO_DEP_D";
     case SbpMsgEphemerisGlo:
       return "MSG_EPHEMERIS_GLO";
+    case SbpMsgEphemerisGpsCnav:
+      return "MSG_EPHEMERIS_GPS_CNAV";
     case SbpMsgEphemerisGpsDepE:
       return "MSG_EPHEMERIS_GPS_DEP_E";
     case SbpMsgEphemerisGpsDepF:

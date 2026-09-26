@@ -533,6 +533,26 @@ bool sbp_msg_ephemeris_glo_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
+bool sbp_msg_ephemeris_gps_cnav_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ephemeris_gps_cnav_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ephemeris_gps_cnav_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ephemeris_gps_cnav_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_ephemeris_dep_d_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ephemeris_dep_d_t *msg);
 

@@ -492,6 +492,62 @@
  */
 #define SBP_MSG_EPHEMERIS_GLO_ENCODED_LEN 92u
 
+#define SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_MASK (0x1u)
+#define SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_SHIFT (2u)
+#define SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_SHIFT) & \
+        SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_MASK))
+#define SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_SET(flags, val)                      \
+  do {                                                                         \
+    (flags) = (u8)((flags & (~(SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_MASK          \
+                               << SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_SHIFT))) | \
+                   (((val) & (SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_MASK))         \
+                    << (SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_SHIFT)));            \
+  } while (0)
+
+#define SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_NO_MESSAGE_OF_THE_DATA_SET_RAISED_THE_ALERT_FLAG \
+  (0)
+#define SBP_EPHEMERIS_GPS_CNAV_ALERT_FLAG_URA_MAY_BE_WORSE_THAN_INDICATED_USE_AT_OWN_RISK \
+  (1)
+#define SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_MASK (0x1u)
+#define SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_SHIFT (1u)
+#define SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_SHIFT) & \
+        SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_MASK))
+#define SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_SET(flags, val)                \
+  do {                                                                    \
+    (flags) =                                                             \
+        (u8)((flags & (~(SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_MASK          \
+                         << SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_SHIFT))) | \
+             (((val) & (SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_MASK))         \
+              << (SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_SHIFT)));            \
+  } while (0)
+
+#define SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_L2C_AND_L2P_IN_PHASE_QUADRATURE (0)
+#define SBP_EPHEMERIS_GPS_CNAV_L2C_PHASING_L2C_AND_L2P_IN_PHASE (1)
+#define SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_MASK (0x1u)
+#define SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_SHIFT (0u)
+#define SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_SHIFT) & \
+        SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_MASK))
+#define SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_SET(flags, val)           \
+  do {                                                                         \
+    (flags) = (u8)(                                                            \
+        (flags & (~(SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_MASK          \
+                    << SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_SHIFT))) | \
+        (((val) & (SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_MASK))         \
+         << (SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_SHIFT)));            \
+  } while (0)
+
+#define SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_LEGACY_LEVEL_OF_INTEGRITY_ASSURANCE \
+  (0)
+#define SBP_EPHEMERIS_GPS_CNAV_INTEGRITY_STATUS_FLAG_ENHANCED_LEVEL_OF_INTEGRITY_ASSURANCE \
+  (1)
+/**
+ * Encoded length of sbp_msg_ephemeris_gps_cnav_t
+ */
+#define SBP_MSG_EPHEMERIS_GPS_CNAV_ENCODED_LEN 183u
+
 /**
  * Encoded length of sbp_msg_ephemeris_dep_d_t
  */
