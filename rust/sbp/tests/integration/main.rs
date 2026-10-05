@@ -268,15 +268,15 @@ pub trait AlmostEq {
 impl AlmostEq for f32 {
     fn almost_eq(self, rhs: Self) -> bool {
         const ULP: f32 = 5.0;
-        ((self - rhs).abs() <= (std::f32::EPSILON * (self + rhs).abs() * ULP))
-            || ((self - rhs).abs() < std::f32::MIN)
+        ((self - rhs).abs() <= (f32::EPSILON * (self + rhs).abs() * ULP))
+            || ((self - rhs).abs() < f32::MIN)
     }
 }
 
 impl AlmostEq for f64 {
     fn almost_eq(self, rhs: Self) -> bool {
         const ULP: f64 = 5.0;
-        ((self - rhs).abs() <= (std::f64::EPSILON * (self + rhs).abs() * ULP))
-            || ((self - rhs).abs() < std::f64::MIN)
+        ((self - rhs).abs() <= (f64::EPSILON * (self + rhs).abs() * ULP))
+            || ((self - rhs).abs() < f64::MIN)
     }
 }

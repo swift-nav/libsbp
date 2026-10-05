@@ -16,15 +16,21 @@ on:
       - scripts/ci_prepare_python.bash
       - scripts/ci_test_python_legacy.bash
       - .github/workflows/python.yaml
+
+permissions:
+  contents: read
+
 jobs:
   coverage:
     name: Test
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Install Python versions
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: |
             3.8
@@ -52,9 +58,10 @@ jobs:
       matrix:
         python: ["2.7", "3.7"]
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: recursive
+          persist-credentials: false
 
       - name: Run tests
         run: bash scripts/ci_test_python_legacy.bash

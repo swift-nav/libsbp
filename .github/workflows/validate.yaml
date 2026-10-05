@@ -14,18 +14,24 @@ on:
     paths:
       - "spec/**"
 
+permissions:
+  contents: read
+
 jobs:
   validation:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Current Spec
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Checkout Previous Spec
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: master
           path: previous
+          persist-credentials: false
 
       - name: Prepare YAML Comparison
         run: |

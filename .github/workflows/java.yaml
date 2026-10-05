@@ -11,14 +11,20 @@ on:
     paths:
       - "java/**"
       - .github/workflows/java.yaml
+
+permissions:
+  contents: read
+
 jobs:
   tests-java-1_8:
     name: Test
     runs-on: ubuntu-24.04
     container: ubuntu:20.04
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-java@v6.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           java-version: "11"
           distribution: "temurin"
@@ -27,7 +33,7 @@ jobs:
           apt-get update
           apt-get install -y unzip make
         shell: bash
-      - uses: gradle/gradle-build-action@v3
+      - uses: gradle/actions/setup-gradle@d9c87d481d55275bb5441eef3fe0e46805f9ef70 # v3.5.0
         with:
           gradle-version: 7.1.1
       - name: Run tests
