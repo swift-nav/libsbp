@@ -33,7 +33,7 @@ jobs:
           apt-get update
           apt-get install -y unzip make
         shell: bash
-      - uses: gradle/actions/setup-gradle@d9c87d481d55275bb5441eef3fe0e46805f9ef70 # v3.5.0
+      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
         with:
           gradle-version: 7.1.1
       - name: Run tests
