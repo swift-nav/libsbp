@@ -41,9 +41,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-stack-work-
 
-      - uses: haskell/actions/setup@ce6c3a6f8cbe3bd6ce51b635b3f32ee792f22f91 # v2.4.7
+      - uses: haskell-actions/setup@0f8e8c99d88aeb3fbfd523f1ef2c6f762d10d64d # v2.12.1
         with:
           enable-stack: true
+          stack-version: latest
 
       - name: Build binaries
         id: build
