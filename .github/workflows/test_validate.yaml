@@ -6,12 +6,17 @@ on:
       - "spec/validation/**"
       - "scripts/spec_validator.py"
 
+permissions:
+  contents: read
+
 jobs:
   test_validation:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Sources
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Run Tests
         run: |

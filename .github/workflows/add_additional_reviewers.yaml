@@ -4,6 +4,9 @@ on:
   pull_request:
     types: [opened, synchronize, ready_for_review, reopened]
 
+permissions:
+  contents: read
+
 jobs:
   auto-request-review:
     name: Add Additional Reviewers
@@ -11,7 +14,7 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - name: Request additional reviews based on supplied rules
-        uses: necojackarc/auto-request-review@v0.14.0
+        uses: necojackarc/auto-request-review@9a4b11888f2d60c79120c5413f13eb63febc2b68 # v0.14.0
         with:
           token: ${{ secrets.GH_TOKEN }}
           config: .github/additional_reviewers_config.yaml

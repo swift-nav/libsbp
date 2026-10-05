@@ -15,19 +15,24 @@ on:
       - scripts/ci_prepare_rust.bash
       - scripts/ci_build_rust.bash
       - .github/workflows/rust.yaml
+
+permissions:
+  contents: read
+
 jobs:
   bazel:
     name: Bazel
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: recursive
+          persist-credentials: false
 
-      - uses: bazelbuild/setup-bazelisk@v3
+      - uses: bazelbuild/setup-bazelisk@b39c379c82683a5f25d34f0d062761f62693e0b2 # v3.0.0
 
       - name: Mount bazel cache
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: "~/.cache/bazel"
           key: bazel
@@ -40,13 +45,15 @@ jobs:
     name: Format and lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - run: ./scripts/ci_prepare_rust.bash
         shell: bash
 
       - name: Install rust stable latest
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
         with:
           components: rustfmt,clippy
 
@@ -60,13 +67,15 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - run: ./scripts/ci_prepare_rust.bash
         shell: bash
 
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
 
       - name: Run tests
         run: make test-rust
@@ -74,6 +83,8 @@ jobs:
   build:
     name: Build binaries
     needs: [lint, test]
+    permissions:
+      contents: write
     strategy:
       matrix:
         include:
@@ -85,10 +96,12 @@ jobs:
             target: x86_64-pc-windows-msvc
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup cmake
-        uses: jwlawson/actions-setup-cmake@v2
+        uses: jwlawson/actions-setup-cmake@0d6a7d60b009d01c9e7523be22153ff8f19460d3 # v2.2.0
         with:
           cmake-version: "3.31.2"
 
@@ -96,7 +109,7 @@ jobs:
         shell: bash
 
       - name: Install rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@89b12181fb390509a0842a86cc55eeb8eb928c1d # stable
         with:
           targets: ${{ matrix.target }}
 
@@ -110,7 +123,7 @@ jobs:
 
       - name: Upload Release
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: svenstaro/upload-release-action@2.11.5
+        uses: svenstaro/upload-release-action@29e53e917877a24fad85510ded594ab3c9ca12de # 2.11.5
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: "*.zip"
@@ -129,7 +142,7 @@ jobs:
         run: echo "VERSION=${GITHUB_REF##refs/tags/}" >> $GITHUB_ENV
 
       - name: Hook into package registry
-        uses: swift-nav/swift-cli-publisher@v3
+        uses: swift-nav/swift-cli-publisher@db46f6d6bb5fcd3bd852140691420004c33b410a # v3
         env:
           DL_LINUX: "sbp_tools-${{ env.VERSION }}-x86_64-unknown-linux-musl.zip"
           DL_MAC: "sbp_tools-${{ env.VERSION }}-aarch64-apple-darwin.zip"
