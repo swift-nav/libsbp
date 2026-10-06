@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "assert": "^2.1.0",
-    "binary-parser": "^1.7.0",
+    "binary-parser": "^2.3.0",
     "cuint": "^0.2.2",
     "js-yaml": "^4.1.1",
     "node-int64": "^0.4.0",
