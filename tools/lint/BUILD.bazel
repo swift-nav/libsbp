@@ -10,12 +10,7 @@ package(default_visibility = ["//:__subpackages__"])
 
 native_binary(
     name = "clang_tidy",
-    src = select(
-        {
-            "@bazel_tools//src/conditions:linux_x86_64": "@x86_64-linux-llvm20//:clang-tidy",
-            "@bazel_tools//src/conditions:darwin_arm64": "@aarch64-darwin-llvm20//:clang-tidy",
-            "//conditions:default": "@x86_64-linux-llvm20//:clang-tidy",
-        },
-    ),
+    src = "@llvm//tools:clang-tidy",
     out = "clang_tidy",
+    tags = ["manual"],
 )
