@@ -19,27 +19,67 @@ bazel_dep(name = "aspect_rules_lint", version = "2.6.0", dev_dependency = True)
 # uses CcInfo, which Bazel 9 removed. >=0.59.0 has the fix.
 bazel_dep(name = "rules_go", version = "0.62.0", dev_dependency = True)
 
-swift_cc_toolchain_ext = use_extension("@rules_swiftnav//cc:extensions.bzl", "swift_cc_toolchain_extension")
-use_repo(
-    swift_cc_toolchain_ext,
-    "aarch64-darwin-llvm20",
-    "aarch64-linux-llvm20",
-    "aarch64-sysroot",
-    "x86_64-darwin-llvm20",
-    "x86_64-linux-llvm20",
-    "x86_64-sysroot",
-)
+bazel_dep(name = "llvm", version = "0.8.23")
 
-register_toolchains(
-    "@rules_swiftnav//cc/toolchains/llvm20/aarch64-darwin:cc-toolchain-aarch64-darwin",
-    "@rules_swiftnav//cc/toolchains/llvm20/x86_64-linux:cc-toolchain-x86_64-linux",
-    "@rules_swiftnav//cc/toolchains/llvm20/aarch64-linux:cc-toolchain-aarch64-linux",
-    "@rules_swiftnav//cc/toolchains/llvm20/x86_64-darwin:cc-toolchain-x86_64-darwin",
+llvm = use_extension("@llvm//extensions:llvm.bzl", "llvm")
+llvm.version(llvm_version = "22.1.8")
+use_repo(llvm, "llvm-project")
+
+osx = use_extension("@llvm//extensions:osx.bzl", "osx")
+osx.from_archive(
+    sha256 = "5f044578cd78a3a9b9c965a42d56bad609ee5d252e1d4e6aa7c42fc3f35fee7b",
+    strip_prefix = "Payload/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk",
+    type = "pkg",
+    urls = [
+        "https://swcdn.apple.com/content/downloads/09/08/047-91568-A_Y1CFZWQCD4/4xekpyz43i26dbp4enxfro8eb1q7wiujh5/CLTools_macOSNMOS_SDK.pkg",
+        "https://web.archive.org/web/20260512015547id_/https://swcdn.apple.com/content/downloads/09/08/047-91568-A_Y1CFZWQCD4/4xekpyz43i26dbp4enxfro8eb1q7wiujh5/CLTools_macOSNMOS_SDK.pkg",
+    ],
 )
+osx.frameworks(names = [
+    "Accelerate",
+    "ApplicationServices",
+    "AppKit",
+    "ColorSync",
+    "CoreFoundation",
+    "CoreGraphics",
+    "CoreImage",
+    "CoreMedia",
+    "CoreMIDI",
+    "CoreServices",
+    "CoreText",
+    "CoreVideo",
+    "DiskArbitration",
+    "AudioToolbox",
+    "AVFoundation",
+    "AVFAudio",
+    "AVRouting",
+    "CFNetwork",
+    "FontServices",
+    "AudioUnit",
+    "CoreAudio",
+    "CoreAudioTypes",
+    "Foundation",
+    "ImageIO",
+    "IOSurface",
+    "IOKit",
+    "Kernel",
+    "Metal",
+    "MetalKit",
+    "OpenGL",
+    "OSLog",
+    "QuartzCore",
+    "ScreenCaptureKit",
+    "Security",
+    "SystemConfiguration",
+    "UniformTypeIdentifiers",
+    "VideoToolbox",
+])
+use_repo(osx, "macos_sdk")
+
+register_toolchains("@llvm//toolchain:all")
 
 # Rust toolchain platforms 1.1.0 is declared above.
 bazel_dep(name = "rules_rs", version = "0.0.111")
-bazel_dep(name = "llvm", version = "0.8.18")
 
 # Make @rules_rust available for the rules rules_rs does NOT wrap
 # (rust_clippy / rust_doc / rust_doc_test / rustfmt_test / rust_test_suite + aspects).
@@ -54,10 +94,7 @@ toolchains.toolchain(
 )
 use_repo(toolchains, "default_rust_toolchains")
 
-register_toolchains(
-    "@default_rust_toolchains//...",
-    "@llvm//toolchain:all",
-)
+register_toolchains("@default_rust_toolchains//...")
 
 # Dependencies — dev-gated own hub. The crate usage is marked dev_dependency, so
 # it is honored only when libsbp is the ROOT module (standalone build), where it

@@ -22,7 +22,6 @@ common:sanitize --linkopt=-g3
 common:sanitize --cxxopt=-fno-omit-frame-pointer
 common:sanitize --copt=-fno-omit-frame-pointer
 common:sanitize --linkopt=-fno-omit-frame-pointer
-common:sanitize --@rules_swiftnav//cc:enable_symbolizer=true
 
 # Sanitizer overhead can cause some functions to become so large that
 # the compiler falls back to a linear register allocator.  This
@@ -35,12 +34,16 @@ common:sanitize --linkopt='-fsanitize-link-c++-runtime'
 common:sanitize --cxxopt=-fPIC
 common:sanitize --copt=-fPIC
 common:sanitize --linkopt=-fPIC
+# On macOS the sanitizer runtimes are dylibs, and the toolchain only places them
+# in the runfiles of dynamically linked targets, so force dynamic linking.
+common:sanitize --dynamic_mode=fully
 
 # Address sanitizer
 common:asan --config=sanitize
-common:asan --cxxopt=-fsanitize=address
-common:asan --copt=-fsanitize=address
-common:asan --linkopt=-fsanitize=address
+# The sanitizer must be enabled through the toolchain's build setting rather
+# than raw -fsanitize flags: that setting is what populates the toolchain
+# resource directory with the compiler-rt runtime archives.
+common:asan --@llvm//config:asan=true
 common:asan --cxxopt=-fno-optimize-sibling-calls
 common:asan --copt=-fno-optimize-sibling-calls
 common:asan --linkopt=-fno-optimize-sibling-calls
@@ -48,9 +51,7 @@ common:asan --platform_suffix=asan
 
 # Undefined behavior sanitizer
 common:ubsan --config=sanitize
-common:ubsan --cxxopt=-fsanitize=undefined
-common:ubsan --copt=-fsanitize=undefined
-common:ubsan --linkopt=-fsanitize=undefined
+common:ubsan --@llvm//config:ubsan=true
 common:ubsan --cxxopt=-fno-sanitize-recover=all
 common:ubsan --copt=-fno-sanitize-recover=all
 common:ubsan --linkopt=-fno-sanitize-recover=all
@@ -75,9 +76,7 @@ common:ubsan --platform_suffix=ubsan
 # Warning: takes an incredible amount of space!  Try testing only one
 # target at a time.
 common:msan --config=sanitize
-common:msan --cxxopt=-fsanitize=memory
-common:msan --copt=-fsanitize=memory
-common:msan --linkopt=-fsanitize=memory
+common:msan --@llvm//config:msan=true
 common:msan --cxxopt=-fsanitize-memory-track-origins=2
 common:msan --copt=-fsanitize-memory-track-origins=2
 common:msan --linkopt=-fsanitize-memory-track-origins=2
@@ -91,9 +90,7 @@ common:msan --platform_suffix=msan
 #
 # https://clang.llvm.org/docs/ThreadSanitizer.html#usage
 common:tsan --config=sanitize
-common:tsan --cxxopt=-fsanitize=thread
-common:tsan --copt=-fsanitize=thread
-common:tsan --linkopt=-fsanitize=thread
+common:tsan --@llvm//config:tsan=true
 common:tsan --platform_suffix=tsan
 
 # Helpful aliases
@@ -103,10 +100,7 @@ common:ubsan_asan --config=asan_ubsan
 
 common:lint --aspects=//tools/lint:linters.bzl%clang_tidy
 
-# Coverage on Linux with Bazel >=7
-coverage --experimental_generate_llvm_lcov
-coverage --combined_report=lcov
 coverage --test_tag_filters=unit
-
-# Work around for Mac: https://github.com/bazelbuild/bazel/issues/14970.
-build:macos --copt=-ffile-compilation-dir=.
+coverage --combined_report=lcov
+coverage --experimental_generate_llvm_lcov
+coverage --experimental_use_llvm_covmap
