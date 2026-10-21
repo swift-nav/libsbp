@@ -234,7 +234,7 @@ and something needs to be repeated.
     make java jsonschema protobuf
     ```
 
-   For C, Haskell and JavaScript (JavaScript, make needs to be run twice to update the package information):
+   For C, Haskell and Rust:
 
     ```sh
     make c haskell rust
