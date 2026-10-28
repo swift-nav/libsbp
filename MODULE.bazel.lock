@@ -352,7 +352,7 @@
   "moduleExtensions": {
     "@@aspect_rules_js+//npm:extensions.bzl%pnpm": {
       "general": {
-        "bzlTransitiveDigest": "fiC9VAVeCXFPSfQFY8VJ8XkWlROSTmUKSu+8Nr2/OJ4=",
+        "bzlTransitiveDigest": "A6s1hvUzyv3ZkyH1VSuERI9EPJuawzoNHrSubDQzgxw=",
         "usagesDigest": "ZYGEy1FrDUNPBzAzD+ujlHkMEsVPMYOvpHm9RhUexUE=",
         "recordedInputs": [
           "REPO_MAPPING:aspect_bazel_lib+,bazel_skylib bazel_skylib+",
@@ -601,69 +601,6 @@
         "usagesDigest": "WZExKK/BI4lqpUZfPpv4YARDE1Y7igQB+wYGKvNoCKs=",
         "recordedInputs": [],
         "generatedRepoSpecs": {}
-      }
-    },
-    "@@llvm+//3rd_party/gcc/extension:gcc.bzl%gcc": {
-      "general": {
-        "bzlTransitiveDigest": "XUWTels9SzO7xhmQBqYtaFYFMTjrFMSDFi/Q7hv4f34=",
-        "usagesDigest": "9IP/e++b81Ga1zICxzXu+yqfe5i4DX5F/SsrgV5a568=",
-        "recordedInputs": [
-          "REPO_MAPPING:llvm+,bazel_lib bazel_lib+",
-          "REPO_MAPPING:llvm+,bazel_tools bazel_tools"
-        ],
-        "generatedRepoSpecs": {
-          "gcc": {
-            "repoRuleId": "@@llvm+//:http_bsdtar_archive.bzl%http_bsdtar_archive",
-            "attributes": {
-              "build_file": "@@llvm+//3rd_party/gcc:gcc.BUILD.bazel",
-              "includes": [
-                "gcc/BASE-VER",
-                "gcc/DATESTAMP",
-                "gcc/ginclude/unwind-arm-common.h",
-                "config/acx.m4",
-                "config/cet.m4",
-                "config/futex.m4",
-                "config/gc++filt.m4",
-                "config/gthr.m4",
-                "config/hwcaps.m4",
-                "config/iconv.m4",
-                "config/lthostflags.m4",
-                "config/multi.m4",
-                "config/no-executables.m4",
-                "config/tls.m4",
-                "config/toolexeclibdir.m4",
-                "config/unwind_ipinfo.m4",
-                "include/ansidecl.h",
-                "include/demangle.h",
-                "include/dyn-string.h",
-                "include/getopt.h",
-                "include/libiberty.h",
-                "libgcc/gthr-posix.h",
-                "libgcc/gthr-single.h",
-                "libgcc/gthr.h",
-                "libgcc/config/arm/unwind-arm.h",
-                "libgcc/unwind-generic.h",
-                "libgcc/unwind-pe.h",
-                "libiberty/cp-demangle.c",
-                "libiberty/cp-demangle.h",
-                "libstdc++-v3/acinclude.m4",
-                "libstdc++-v3/config/**",
-                "libstdc++-v3/configure.ac",
-                "libstdc++-v3/configure.host",
-                "libstdc++-v3/crossconfig.m4",
-                "libstdc++-v3/linkage.m4",
-                "libstdc++-v3/include/**",
-                "libstdc++-v3/libsupc++/**",
-                "libstdc++-v3/src/**"
-              ],
-              "sha256": "dc033fdfd79caf199113446af6d082004534437b6ebd276f9732815d86cbe723",
-              "strip_prefix": "gcc-2bfd402f8569511901ec8fe7628f57471e6d240a",
-              "urls": [
-                "https://github.com/gcc-mirror/gcc/archive/2bfd402f8569511901ec8fe7628f57471e6d240a.tar.gz"
-              ]
-            }
-          }
-        }
       }
     },
     "@@pybind11_bazel+//:internal_configure.bzl%internal_configure_extension": {
@@ -1180,73 +1117,13 @@
     },
     "@@rules_swiftnav+//cc:extensions.bzl%swift_cc_toolchain_extension": {
       "general": {
-        "bzlTransitiveDigest": "LS0VF7klVv3uKgNzF7w5juh0eLqMf5RfufyCxD5bY3g=",
-        "usagesDigest": "2YI3RoL0Q3BSGKLPiIk7tmYvENEgau5xSdag2XLDoi4=",
+        "bzlTransitiveDigest": "PfHBW3b77D/I6D3fVyfQxbocDafeQhCpaMQ6foZ9NwM=",
+        "usagesDigest": "yN61+lqqrV1vvIZJww/KBydpx6PZksJ1ncGHtFg50R0=",
         "recordedInputs": [
           "REPO_MAPPING:rules_swiftnav+,bazel_tools bazel_tools",
           "REPO_MAPPING:rules_swiftnav+,rules_swiftnav rules_swiftnav+"
         ],
         "generatedRepoSpecs": {
-          "aarch64-darwin-llvm": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
-            "attributes": {
-              "build_file": "@@rules_swiftnav+//cc/toolchains/llvm:llvm.BUILD.bzl",
-              "patch_args": [
-                "-p1"
-              ],
-              "patches": [
-                "@@rules_swiftnav+//cc/toolchains/llvm:llvm.patch"
-              ],
-              "url": "https://github.com/swift-nav/swift-toolchains/releases/download/llvm-14.0.0/clang%2Bllvm-14.0.0-arm64-apple-darwin.tar.gz",
-              "strip_prefix": "clang+llvm-14.0.0-arm64-apple-darwin",
-              "sha256": "f826ee92c3fedb92bad2f9f834d96f6b9db3192871bfe434124bca848ba9a2a3"
-            }
-          },
-          "x86_64-darwin-llvm": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
-            "attributes": {
-              "patch_args": [
-                "-p1"
-              ],
-              "patches": [
-                "@@rules_swiftnav+//cc/toolchains/llvm:llvm.patch"
-              ],
-              "build_file": "@@rules_swiftnav+//cc/toolchains/llvm:llvm.BUILD.bzl",
-              "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-14.0.0/clang%2Bllvm-14.0.0-x86_64-apple-darwin.tar.xz",
-              "strip_prefix": "clang+llvm-14.0.0-x86_64-apple-darwin",
-              "sha256": "cf5af0f32d78dcf4413ef6966abbfd5b1445fe80bba57f2ff8a08f77e672b9b3"
-            }
-          },
-          "aarch64-linux-llvm": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
-            "attributes": {
-              "patch_args": [
-                "-p1"
-              ],
-              "patches": [
-                "@@rules_swiftnav+//cc/toolchains/llvm:llvm.patch"
-              ],
-              "build_file": "@@rules_swiftnav+//cc/toolchains/llvm:llvm.BUILD.bzl",
-              "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-14.0.0/clang%2Bllvm-14.0.0-aarch64-linux-gnu.tar.xz",
-              "strip_prefix": "clang+llvm-14.0.0-aarch64-linux-gnu",
-              "sha256": "1792badcd44066c79148ffeb1746058422cc9d838462be07e3cb19a4b724a1ee"
-            }
-          },
-          "x86_64-linux-llvm": {
-            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
-            "attributes": {
-              "build_file": "@@rules_swiftnav+//cc/toolchains/llvm:llvm.BUILD.bzl",
-              "patch_args": [
-                "-p1"
-              ],
-              "patches": [
-                "@@rules_swiftnav+//cc/toolchains/llvm:llvm.patch"
-              ],
-              "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-14.0.0/clang%2Bllvm-14.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz",
-              "strip_prefix": "clang+llvm-14.0.0-x86_64-linux-gnu-ubuntu-18.04",
-              "sha256": "61582215dafafb7b576ea30cc136be92c877ba1f1c31ddbbd372d6d65622fef5"
-            }
-          },
           "aarch64-darwin-llvm20": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
             "attributes": {
@@ -1368,13 +1245,153 @@
     "@@rules_swiftnav+//cc/toolchains/yocto_generic:yocto_generic_extension.bzl%yocto_generic_extension": {
       "general": {
         "bzlTransitiveDigest": "Q4v/HN5Wh/W0JsPpeExQzSqIslfepuWsd75kvW+25FI=",
-        "usagesDigest": "Zxze7HVxAXzAbHbpf7H2iIw89yL7/ShK0M1X/YDmlGA=",
+        "usagesDigest": "xO27XuxbdayiEPgkzUb69Ap/IcUeJhw19wYc9wYIXWM=",
         "recordedInputs": [],
         "generatedRepoSpecs": {
           "yocto_generic": {
             "repoRuleId": "@@rules_swiftnav+//cc/toolchains/yocto_generic:yocto_generic.bzl%yocto_generic",
             "attributes": {}
           }
+        }
+      }
+    },
+    "@@rules_swiftnav+//doxygen:extensions.bzl%doxygen_extension": {
+      "general": {
+        "bzlTransitiveDigest": "FpPcFCi/TMdMIYzhkBJQDLoL6L4vfaGhOA4TTyqW2zA=",
+        "usagesDigest": "fNj1quq3vTmf5dvJ4e4QXyiNjUZOM8XVKco4pszWOyw=",
+        "recordedInputs": [
+          "REPO_MAPPING:rules_swiftnav+,bazel_tools bazel_tools"
+        ],
+        "generatedRepoSpecs": {
+          "doxygen_linux_x86_64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/doxygen/doxygen/releases/download/Release_1_17_0/doxygen-1.17.0.linux.bin.tar.gz"
+              ],
+              "sha256": "75419ef4f446fc1c24ef12514b574e66e898ee6f527c6ae2ad84f91a905823c2",
+              "strip_prefix": "doxygen-1.17.0",
+              "build_file": "@@rules_swiftnav+//doxygen:doxygen_linux.BUILD"
+            }
+          },
+          "doxygen_macos_arm64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/doxygen/doxygen/releases/download/Release_1_17_0/doxygen-1.17.0-mac-arm.zip"
+              ],
+              "sha256": "e05a7f647f894d2d82ef26a1d231cda079d2d1d85cf1e1c6fd8072430d80d614",
+              "strip_prefix": "doxygen-1.17.0",
+              "build_file": "@@rules_swiftnav+//doxygen:doxygen_macos.BUILD"
+            }
+          }
+        }
+      }
+    },
+    "@@rules_swiftnav+//tools/compile_commands:extensions.bzl%bcc_extension": {
+      "general": {
+        "bzlTransitiveDigest": "7IQnHLMaD0GJhRWy4fUEzOAAz7PkERnA4sVAxLP0Yhc=",
+        "usagesDigest": "ttH/w640kTFvyTlnz3GCzS7FXhK+UkkGQvTHm+KFrMA=",
+        "recordedInputs": [
+          "REPO_MAPPING:rules_swiftnav+,bazel_tools bazel_tools"
+        ],
+        "generatedRepoSpecs": {
+          "bcc_linux_x86_64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/kiron1/bazel-compile-commands/releases/download/bazel-compile-commands-v0.22.4/bazel-compile-commands_0.22.4-linux_amd64.zip"
+              ],
+              "sha256": "bb162adaefb282a9e4f0f399fe6223d1d2fe3740518148c1ca8f6f81db4003f6",
+              "strip_prefix": "usr",
+              "build_file_content": "load(\"@bazel_skylib//rules:native_binary.bzl\", \"native_binary\")\n\npackage(default_visibility = [\"//visibility:public\"])\n\nnative_binary(\n    name = \"bcc_bin\",\n    src = \"bin/bazel-compile-commands\",\n    out = \"bazel-compile-commands\",\n)\n"
+            }
+          },
+          "bcc_macos_arm64": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/kiron1/bazel-compile-commands/releases/download/bazel-compile-commands-v0.22.4/bazel-compile-commands_0.22.4-macos_universal.zip"
+              ],
+              "sha256": "6183cbaec5d9667e4def8590e4558a4e8eb106da34e2cd8a16733f8becf1ce4e",
+              "strip_prefix": "usr",
+              "build_file_content": "load(\"@bazel_skylib//rules:native_binary.bzl\", \"native_binary\")\n\npackage(default_visibility = [\"//visibility:public\"])\n\nnative_binary(\n    name = \"bcc_bin\",\n    src = \"bin/bazel-compile-commands\",\n    out = \"bazel-compile-commands\",\n)\n"
+            }
+          }
+        }
+      }
+    },
+    "@@windows_support+//windows:extensions.bzl%msvc_runtime": {
+      "general": {
+        "bzlTransitiveDigest": "yv3gSwY6QneXA6YvHLn9tSmuOkNp2EPN5NFXHC48mdE=",
+        "usagesDigest": "m67sI6g3ruyNAyu/1PGe93zIaYYu657llz9tL/yw7DM=",
+        "recordedInputs": [
+          "REPO_MAPPING:windows_support+,bazel_tools bazel_tools"
+        ],
+        "generatedRepoSpecs": {
+          "msvc_runtime": {
+            "repoRuleId": "@@windows_support+//windows/private/extensions:msvc_runtime.bzl%_msvc_runtime_repository",
+            "attributes": {
+              "msvc_version": "14.50.35717",
+              "architectures": [
+                "x64",
+                "arm64"
+              ],
+              "installer_manifest_url": "https://download.visualstudio.microsoft.com/download/pr/fdc37f6e-59f6-4054-838a-b476eeaa6ec3/1d82370739911457e0a2f6be15d8b5f569531b352b2eabb961429eea1e99e356/VisualStudio.vsman",
+              "installer_manifest_integrity": "sha256-qOhU+p8/uurCfXME4pfxZg1xN0ATid61fPeYPzPBb+8="
+            }
+          }
+        },
+        "moduleExtensionMetadata": {
+          "explicitRootModuleDirectDeps": [],
+          "explicitRootModuleDirectDevDeps": [
+            "msvc_runtime"
+          ],
+          "useAllRepos": "NO",
+          "reproducible": false
+        }
+      }
+    },
+    "@@windows_support+//windows:extensions.bzl%windows_sdk": {
+      "general": {
+        "bzlTransitiveDigest": "yv3gSwY6QneXA6YvHLn9tSmuOkNp2EPN5NFXHC48mdE=",
+        "usagesDigest": "GjUMkGyQ3YMFaT/hnZciiR6YOXM+c2OgsWHa4rUWZXs=",
+        "recordedInputs": [
+          "REPO_MAPPING:windows_support+,bazel_tools bazel_tools"
+        ],
+        "generatedRepoSpecs": {
+          "windows_sdk": {
+            "repoRuleId": "@@windows_support+//windows/private/extensions:windows_sdk.bzl%_windows_sdk_repository",
+            "attributes": {
+              "windows_sdk_version": "10.0.26100.7705",
+              "windows_sdk_integrity": {
+                "Microsoft.Windows.SDK.CPP": "sha256-/0VWYL7gcadEcVqWZWZvopwHaBV509gVlZqe7FpVZCQ=",
+                "Microsoft.Windows.SDK.CPP.x64": "sha256-rWzpD/lAEGmdKVSLPCseUsieuBFD4hmRVdmlw4ABtSs=",
+                "Microsoft.Windows.SDK.CPP.arm64": "sha256-A7wMA9Q5zvhQdLvNQl+dXTptO0Z5Z6zSHaO6bf7q+mc="
+              },
+              "transformations": {
+                "base/c/Include/10.0.26100.0/shared/driverspecs.h": "base/c/Include/10.0.26100.0/shared/DriverSpecs.h",
+                "base/c/Include/10.0.26100.0/shared/specstrings.h": "base/c/Include/10.0.26100.0/shared/SpecStrings.h",
+                "base/c/Include/10.0.26100.0/um/ole2.h": "base/c/Include/10.0.26100.0/um/Ole2.h",
+                "base/c/Include/10.0.26100.0/um/olectl.h": "base/c/Include/10.0.26100.0/um/OleCtl.h",
+                "**/*.h": "lowercase",
+                "**/*.lib": "lowercase",
+                "**/*.Lib": "lowercase"
+              },
+              "architectures": [
+                "x64",
+                "arm64"
+              ]
+            }
+          }
+        },
+        "moduleExtensionMetadata": {
+          "explicitRootModuleDirectDeps": [],
+          "explicitRootModuleDirectDevDeps": [
+            "windows_sdk"
+          ],
+          "useAllRepos": "NO",
+          "reproducible": false
         }
       }
     }
@@ -2034,6 +2051,17 @@
       "rustfmt-1.96.0-x86_64-apple-darwin.tar.xz": "665d8977139cca07d75d5b491dbfea086109d7605167bc5b1e83ce5b80de1068",
       "rustfmt-1.96.0-x86_64-pc-windows-msvc.tar.xz": "7ae6d141dfb844355c4756a41f39ed45b74ff9295fff86bd0bf9b559a83c5d5d",
       "rustfmt-1.96.0-x86_64-unknown-linux-gnu.tar.xz": "9754ab68f1b8871f8a714548f66d8d44e91f6d904505882945b27e6e3eeb08e2"
+    },
+    "@@windows_support+//windows:extensions.bzl%msvc_runtime": {
+      "visual_studio_installer_manifest_v1": {
+        "integrity": "sha256-qOhU+p8/uurCfXME4pfxZg1xN0ATid61fPeYPzPBb+8=",
+        "request": {
+          "visual_studio_channel_url": "https://aka.ms/vs/stable/channel",
+          "visual_studio_installer_manifest_integrity": "sha256-qOhU+p8/uurCfXME4pfxZg1xN0ATid61fPeYPzPBb+8=",
+          "visual_studio_installer_manifest_url": "https://download.visualstudio.microsoft.com/download/pr/fdc37f6e-59f6-4054-838a-b476eeaa6ec3/1d82370739911457e0a2f6be15d8b5f569531b352b2eabb961429eea1e99e356/VisualStudio.vsman"
+        },
+        "url": "https://download.visualstudio.microsoft.com/download/pr/fdc37f6e-59f6-4054-838a-b476eeaa6ec3/1d82370739911457e0a2f6be15d8b5f569531b352b2eabb961429eea1e99e356/VisualStudio.vsman"
+      }
     }
   }
 }
