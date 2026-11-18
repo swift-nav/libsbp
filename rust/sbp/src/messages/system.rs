@@ -2072,7 +2072,11 @@ pub mod msg_sensor_aid_event {
     /// This diagnostic message contains state and update status information for
     /// all sensors that are being used by the fusion engine. This message will be
     /// generated asynchronously to the solution messages and will be emitted
-    /// anytime a sensor update is being processed.
+    /// anytime a sensor update is being processed. For sensor types 7 to 9 the
+    /// counts are per observation (signal) in one GNSS epoch: available
+    /// observations passed the pre-processing gates for that type, attempted
+    /// observations reached the outlier check, and accepted observations were
+    /// used in the filter update.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -2235,6 +2239,15 @@ pub mod msg_sensor_aid_event {
 
         /// Time differences of carrier phase
         TimeDifferencesOfCarrierPhase = 6,
+
+        /// Pseudorange
+        Pseudorange = 7,
+
+        /// Carrier phase
+        CarrierPhase = 8,
+
+        /// Doppler
+        Doppler = 9,
     }
 
     impl std::fmt::Display for TypeIdentifier {
@@ -2251,6 +2264,9 @@ pub mod msg_sensor_aid_event {
                 TypeIdentifier::TimeDifferencesOfCarrierPhase => {
                     f.write_str("Time differences of carrier phase")
                 }
+                TypeIdentifier::Pseudorange => f.write_str("Pseudorange"),
+                TypeIdentifier::CarrierPhase => f.write_str("Carrier phase"),
+                TypeIdentifier::Doppler => f.write_str("Doppler"),
             }
         }
     }
@@ -2266,6 +2282,9 @@ pub mod msg_sensor_aid_event {
                 4 => Ok(TypeIdentifier::WheelSpeed),
                 5 => Ok(TypeIdentifier::Imu),
                 6 => Ok(TypeIdentifier::TimeDifferencesOfCarrierPhase),
+                7 => Ok(TypeIdentifier::Pseudorange),
+                8 => Ok(TypeIdentifier::CarrierPhase),
+                9 => Ok(TypeIdentifier::Doppler),
                 i => Err(i),
             }
         }

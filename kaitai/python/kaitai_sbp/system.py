@@ -235,7 +235,11 @@ class System(KaitaiStruct):
         """This diagnostic message contains state and update status information for
         all sensors that are being used by the fusion engine. This message will
         be generated asynchronously to the solution messages and will be emitted
-        anytime a sensor update is being processed.
+        anytime a sensor update is being processed. For sensor types 7 to 9 the
+        counts are per observation (signal) in one GNSS epoch: available
+        observations passed the pre-processing gates for that type, attempted
+        observations reached the outlier check, and accepted observations were
+        used in the filter update.
         """
         def __init__(self, _io, _parent=None, _root=None):
             self._io = _io

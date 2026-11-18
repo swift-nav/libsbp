@@ -500,7 +500,10 @@ MsgPpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * This diagnostic message contains state and update status information for all
  * sensors that are being used by the fusion engine. This message will be generated
  * asynchronously to the solution messages and will be emitted anytime a sensor
- * update is being processed.
+ * update is being processed. For sensor types 7 to 9 the counts are per
+ * observation (signal) in one GNSS epoch: available observations passed the pre-
+ * processing gates for that type, attempted observations reached the outlier
+ * check, and accepted observations were used in the filter update.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time number (unsigned 32-bit int, 4 bytes) Update timestamp in milliseconds.
