@@ -26,10 +26,7 @@ import org.json.JSONObject;
  *
  * <p>This diagnostic message contains state and update status information for all sensors that are
  * being used by the fusion engine. This message will be generated asynchronously to the solution
- * messages and will be emitted anytime a sensor update is being processed. For sensor types 7 to 9
- * the counts are per observation (signal) in one GNSS epoch: available observations passed the
- * pre-processing gates for that type, attempted observations reached the outlier check, and
- * accepted observations were used in the filter update.
+ * messages and will be emitted anytime a sensor update is being processed.
  */
 public class MsgSensorAidEvent extends SBPMessage {
     public static final int TYPE = 0xFF09;
@@ -40,19 +37,31 @@ public class MsgSensorAidEvent extends SBPMessage {
     /** Sensor type */
     public int sensor_type;
 
-    /** Sensor identifier */
+    /**
+     * Sensor identifier. Always 0 for the GNSS observation types (pseudorange, carrier phase and
+     * Doppler).
+     */
     public int sensor_id;
 
     /** Reserved for future use */
     public int sensor_state;
 
-    /** Number of available measurements in this epoch */
+    /**
+     * Number of available measurements in this epoch. For the GNSS observation types, the number of
+     * signals that passed the quality checks for that observation type.
+     */
     public int n_available_meas;
 
-    /** Number of attempted measurements in this epoch */
+    /**
+     * Number of attempted measurements in this epoch. For the GNSS observation types, the number of
+     * signals that the filter accepted or rejected as an outlier.
+     */
     public int n_attempted_meas;
 
-    /** Number of accepted measurements in this epoch */
+    /**
+     * Number of accepted measurements in this epoch. For the GNSS observation types, the number of
+     * signals used in the filter update.
+     */
     public int n_accepted_meas;
 
     /** Reserved for future use */

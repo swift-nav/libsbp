@@ -309,11 +309,7 @@ types:
       This diagnostic message contains state and update status information for
       all sensors that are being used by the fusion engine. This message will
       be generated asynchronously to the solution messages and will be emitted
-      anytime a sensor update is being processed. For sensor types 7 to 9 the
-      counts are per observation (signal) in one GNSS epoch: available
-      observations passed the pre-processing gates for that type, attempted
-      observations reached the outlier check, and accepted observations were
-      used in the filter update.
+      anytime a sensor update is being processed.
     seq:
       - id: time
         doc: |
@@ -325,7 +321,8 @@ types:
         type: u1
       - id: sensor_id
         doc: |
-          Sensor identifier
+          Sensor identifier. Always 0 for the GNSS observation types
+          (pseudorange, carrier phase and Doppler).
         type: u2
       - id: sensor_state
         doc: |
@@ -333,15 +330,20 @@ types:
         type: u1
       - id: n_available_meas
         doc: |
-          Number of available measurements in this epoch
+          Number of available measurements in this epoch. For the GNSS
+          observation types, the number of signals that passed the quality
+          checks for that observation type.
         type: u1
       - id: n_attempted_meas
         doc: |
-          Number of attempted measurements in this epoch
+          Number of attempted measurements in this epoch. For the GNSS
+          observation types, the number of signals that the filter accepted or
+          rejected as an outlier.
         type: u1
       - id: n_accepted_meas
         doc: |
-          Number of accepted measurements in this epoch
+          Number of accepted measurements in this epoch. For the GNSS
+          observation types, the number of signals used in the filter update.
         type: u1
       - id: flags
         doc: |

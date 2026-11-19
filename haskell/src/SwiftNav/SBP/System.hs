@@ -493,26 +493,28 @@ msgSensorAidEvent = 0xFF09
 -- This diagnostic message contains state and update status information for
 -- all sensors that are being used by the fusion engine. This message will be
 -- generated asynchronously to the solution messages and will be emitted
--- anytime a sensor update is being processed. For sensor types 7 to 9 the
--- counts are per observation (signal) in one GNSS epoch: available
--- observations passed the pre-processing gates for that type, attempted
--- observations reached the outlier check, and accepted observations were used
--- in the filter update.
+-- anytime a sensor update is being processed.
 data MsgSensorAidEvent = MsgSensorAidEvent
   { _msgSensorAidEvent_time           :: !Word32
     -- ^ Update timestamp in milliseconds.
   , _msgSensorAidEvent_sensor_type    :: !Word8
     -- ^ Sensor type
   , _msgSensorAidEvent_sensor_id      :: !Word16
-    -- ^ Sensor identifier
+    -- ^ Sensor identifier. Always 0 for the GNSS observation types
+    -- (pseudorange, carrier phase and Doppler).
   , _msgSensorAidEvent_sensor_state   :: !Word8
     -- ^ Reserved for future use
   , _msgSensorAidEvent_n_available_meas :: !Word8
-    -- ^ Number of available measurements in this epoch
+    -- ^ Number of available measurements in this epoch. For the GNSS
+    -- observation types, the number of signals that passed the quality checks
+    -- for that observation type.
   , _msgSensorAidEvent_n_attempted_meas :: !Word8
-    -- ^ Number of attempted measurements in this epoch
+    -- ^ Number of attempted measurements in this epoch. For the GNSS
+    -- observation types, the number of signals that the filter accepted or
+    -- rejected as an outlier.
   , _msgSensorAidEvent_n_accepted_meas :: !Word8
-    -- ^ Number of accepted measurements in this epoch
+    -- ^ Number of accepted measurements in this epoch. For the GNSS observation
+    -- types, the number of signals used in the filter update.
   , _msgSensorAidEvent_flags          :: !Word32
     -- ^ Reserved for future use
   } deriving ( Show, Read, Eq )

@@ -500,19 +500,20 @@ MsgPpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * This diagnostic message contains state and update status information for all
  * sensors that are being used by the fusion engine. This message will be generated
  * asynchronously to the solution messages and will be emitted anytime a sensor
- * update is being processed. For sensor types 7 to 9 the counts are per
- * observation (signal) in one GNSS epoch: available observations passed the pre-
- * processing gates for that type, attempted observations reached the outlier
- * check, and accepted observations were used in the filter update.
+ * update is being processed.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time number (unsigned 32-bit int, 4 bytes) Update timestamp in milliseconds.
  * @field sensor_type number (unsigned 8-bit int, 1 byte) Sensor type
- * @field sensor_id number (unsigned 16-bit int, 2 bytes) Sensor identifier
+ * @field sensor_id number (unsigned 16-bit int, 2 bytes) Sensor identifier. Always 0 for the GNSS observation types (pseudorange, carrier
+ *   phase and Doppler).
  * @field sensor_state number (unsigned 8-bit int, 1 byte) Reserved for future use
- * @field n_available_meas number (unsigned 8-bit int, 1 byte) Number of available measurements in this epoch
- * @field n_attempted_meas number (unsigned 8-bit int, 1 byte) Number of attempted measurements in this epoch
- * @field n_accepted_meas number (unsigned 8-bit int, 1 byte) Number of accepted measurements in this epoch
+ * @field n_available_meas number (unsigned 8-bit int, 1 byte) Number of available measurements in this epoch. For the GNSS observation types,
+ *   the number of signals that passed the quality checks for that observation type.
+ * @field n_attempted_meas number (unsigned 8-bit int, 1 byte) Number of attempted measurements in this epoch. For the GNSS observation types,
+ *   the number of signals that the filter accepted or rejected as an outlier.
+ * @field n_accepted_meas number (unsigned 8-bit int, 1 byte) Number of accepted measurements in this epoch. For the GNSS observation types,
+ *   the number of signals used in the filter update.
  * @field flags number (unsigned 32-bit int, 4 bytes) Reserved for future use
  *
  * @param sbp An SBP object with a payload to be decoded.

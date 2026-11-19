@@ -43,10 +43,7 @@ extern "C" {
  * This diagnostic message contains state and update status information for all
  * sensors that are being used by the fusion engine. This message will be
  * generated asynchronously to the solution messages and will be emitted anytime
- * a sensor update is being processed. For sensor types 7 to 9 the counts are
- * per observation (signal) in one GNSS epoch: available observations passed the
- * pre-processing gates for that type, attempted observations reached the
- * outlier check, and accepted observations were used in the filter update.
+ * a sensor update is being processed.
  */
 typedef struct {
   /**
@@ -60,7 +57,8 @@ typedef struct {
   u8 sensor_type;
 
   /**
-   * Sensor identifier
+   * Sensor identifier. Always 0 for the GNSS observation types (pseudorange,
+   * carrier phase and Doppler).
    */
   u16 sensor_id;
 
@@ -70,17 +68,22 @@ typedef struct {
   u8 sensor_state;
 
   /**
-   * Number of available measurements in this epoch
+   * Number of available measurements in this epoch. For the GNSS observation
+   * types, the number of signals that passed the quality checks for that
+   * observation type.
    */
   u8 n_available_meas;
 
   /**
-   * Number of attempted measurements in this epoch
+   * Number of attempted measurements in this epoch. For the GNSS observation
+   * types, the number of signals that the filter accepted or rejected as an
+   * outlier.
    */
   u8 n_attempted_meas;
 
   /**
-   * Number of accepted measurements in this epoch
+   * Number of accepted measurements in this epoch. For the GNSS observation
+   * types, the number of signals used in the filter update.
    */
   u8 n_accepted_meas;
 

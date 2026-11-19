@@ -2072,11 +2072,7 @@ pub mod msg_sensor_aid_event {
     /// This diagnostic message contains state and update status information for
     /// all sensors that are being used by the fusion engine. This message will be
     /// generated asynchronously to the solution messages and will be emitted
-    /// anytime a sensor update is being processed. For sensor types 7 to 9 the
-    /// counts are per observation (signal) in one GNSS epoch: available
-    /// observations passed the pre-processing gates for that type, attempted
-    /// observations reached the outlier check, and accepted observations were
-    /// used in the filter update.
+    /// anytime a sensor update is being processed.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -2091,19 +2087,25 @@ pub mod msg_sensor_aid_event {
         /// Sensor type
         #[cfg_attr(feature = "serde", serde(rename = "sensor_type"))]
         pub sensor_type: u8,
-        /// Sensor identifier
+        /// Sensor identifier. Always 0 for the GNSS observation types (pseudorange,
+        /// carrier phase and Doppler).
         #[cfg_attr(feature = "serde", serde(rename = "sensor_id"))]
         pub sensor_id: u16,
         /// Reserved for future use
         #[cfg_attr(feature = "serde", serde(rename = "sensor_state"))]
         pub sensor_state: u8,
-        /// Number of available measurements in this epoch
+        /// Number of available measurements in this epoch. For the GNSS observation
+        /// types, the number of signals that passed the quality checks for that
+        /// observation type.
         #[cfg_attr(feature = "serde", serde(rename = "n_available_meas"))]
         pub n_available_meas: u8,
-        /// Number of attempted measurements in this epoch
+        /// Number of attempted measurements in this epoch. For the GNSS observation
+        /// types, the number of signals that the filter accepted or rejected as an
+        /// outlier.
         #[cfg_attr(feature = "serde", serde(rename = "n_attempted_meas"))]
         pub n_attempted_meas: u8,
-        /// Number of accepted measurements in this epoch
+        /// Number of accepted measurements in this epoch. For the GNSS observation
+        /// types, the number of signals used in the filter update.
         #[cfg_attr(feature = "serde", serde(rename = "n_accepted_meas"))]
         pub n_accepted_meas: u8,
         /// Reserved for future use

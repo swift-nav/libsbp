@@ -1331,11 +1331,7 @@ class MsgSensorAidEvent(SBP):
   This diagnostic message contains state and update status information for all
   sensors that are being used by the fusion engine. This message will be
   generated asynchronously to the solution messages and will be emitted
-  anytime a sensor update is being processed. For sensor types 7 to 9 the
-  counts are per observation (signal) in one GNSS epoch: available
-  observations passed the pre-processing gates for that type, attempted
-  observations reached the outlier check, and accepted observations were used
-  in the filter update.
+  anytime a sensor update is being processed.
 
   Parameters
   ----------
@@ -1346,15 +1342,21 @@ class MsgSensorAidEvent(SBP):
   sensor_type : int
     Sensor type
   sensor_id : int
-    Sensor identifier
+    Sensor identifier. Always 0 for the GNSS observation types (pseudorange,
+    carrier phase and Doppler).
   sensor_state : int
     Reserved for future use
   n_available_meas : int
-    Number of available measurements in this epoch
+    Number of available measurements in this epoch. For the GNSS observation
+    types, the number of signals that passed the quality checks for that
+    observation type.
   n_attempted_meas : int
-    Number of attempted measurements in this epoch
+    Number of attempted measurements in this epoch. For the GNSS observation
+    types, the number of signals that the filter accepted or rejected as an
+    outlier.
   n_accepted_meas : int
-    Number of accepted measurements in this epoch
+    Number of accepted measurements in this epoch. For the GNSS observation
+    types, the number of signals used in the filter update.
   flags : int
     Reserved for future use
   sender : int
