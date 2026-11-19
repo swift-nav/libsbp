@@ -28,7 +28,7 @@ MESSAGES_MOD_TEMPLATE_NAME = "rust/sbp_messages_mod.rs"
 
 GPS_TIME = """
 let tow_s = (self.tow as f64) / 1000.0;
-#[allow(clippy::useless_conversion)]
+#[allow(clippy::useless_conversion, unreachable_code)]
 let wn: i16 = match self.wn.try_into() {
     Ok(wn) => wn,
     Err(e) => return Some(Err(e.into())),
