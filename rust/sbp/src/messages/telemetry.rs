@@ -103,7 +103,7 @@ pub mod msg_tel_sv {
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
             let tow_s = (self.tow as f64) / 1000.0;
-            #[allow(clippy::useless_conversion)]
+            #[allow(clippy::useless_conversion, unreachable_code)]
             let wn: i16 = match self.wn.try_into() {
                 Ok(wn) => wn,
                 Err(e) => return Some(Err(e.into())),
