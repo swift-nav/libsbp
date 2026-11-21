@@ -1342,15 +1342,21 @@ class MsgSensorAidEvent(SBP):
   sensor_type : int
     Sensor type
   sensor_id : int
-    Sensor identifier
+    Sensor identifier. Always 0 for the GNSS observation types (pseudorange,
+    carrier phase and Doppler).
   sensor_state : int
     Reserved for future use
   n_available_meas : int
-    Number of available measurements in this epoch
+    Number of available measurements in this epoch. For the GNSS observation
+    types, the number of signals that passed the quality checks for that
+    observation type.
   n_attempted_meas : int
-    Number of attempted measurements in this epoch
+    Number of attempted measurements in this epoch. For the GNSS observation
+    types, the number of signals that the filter accepted or rejected as an
+    outlier.
   n_accepted_meas : int
-    Number of accepted measurements in this epoch
+    Number of accepted measurements in this epoch. For the GNSS observation
+    types, the number of signals used in the filter update.
   flags : int
     Reserved for future use
   sender : int

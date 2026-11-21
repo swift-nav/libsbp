@@ -518,21 +518,35 @@ definitions:
                         - 4: Wheel speed
                         - 5: IMU
                         - 6: Time differences of carrier phase
+                        - 7: Pseudorange
+                        - 8: Carrier phase
+                        - 9: Doppler
         - sensor_id:
             type: u16
-            desc: Sensor identifier
+            desc: >
+              Sensor identifier. Always 0 for the GNSS observation types
+              (pseudorange, carrier phase and Doppler).
         - sensor_state:
             type: u8
             desc: Reserved for future use
         - n_available_meas:
             type: u8
-            desc: Number of available measurements in this epoch
+            desc: >
+              Number of available measurements in this epoch. For the GNSS
+              observation types, the number of signals that passed the quality
+              checks for that observation type.
         - n_attempted_meas:
             type: u8
-            desc: Number of attempted measurements in this epoch
+            desc: >
+              Number of attempted measurements in this epoch. For the GNSS
+              observation types, the number of signals that the filter accepted
+              or rejected as an outlier.
         - n_accepted_meas:
             type: u8
-            desc: Number of accepted measurements in this epoch
+            desc: >
+              Number of accepted measurements in this epoch. For the GNSS
+              observation types, the number of signals used in the filter
+              update.
         - flags:
             type: u32
             desc: Reserved for future use
