@@ -34,7 +34,7 @@ crc16 = "0.4"
 log = "0.4.28"
 
 [dependencies.swiftnav]
-version = "0.10"
+version = "0.13"
 optional = true
 
 [dependencies.slotmap]
