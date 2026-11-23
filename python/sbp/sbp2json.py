@@ -120,7 +120,7 @@ def iter_messages_unbuffered(fp):
         crc_read, crc_expected = get_crcs(buf, payload_len)
         if crc_read == crc_expected:
             yield msg_type, sender, payload_len, buf[:SBP_HEADER_LEN + payload_len + 2], crc_read
-            buf = buf[SBP_HEADER_LEN + payload_len + 3:] # drop message
+            buf = buf[SBP_HEADER_LEN + payload_len + 2:] # drop message
         else:
             sys.stderr.write("CRC error: {} vs {} for msg type {}\n".format(crc_read, crc_expected, msg_type))
             buf = buf[1:] # drop first byte

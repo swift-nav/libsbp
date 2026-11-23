@@ -50,3 +50,25 @@ def test_sbp2json_buffered():
 def test_sbp2json_unbuffered():
     msg_count = get_message_count(True)
     assert msg_count == 150000
+
+
+def _heartbeat(sender, flags):
+    payload = flags.to_bytes(4, 'little')
+    return sbp.msg.SBP(0xFFFF, sender, len(payload), payload).to_binary()
+
+
+# A message cut short by a dropped connection, followed by complete messages.
+# Both parsers must skip the broken message and still find every complete one.
+@pytest.mark.parametrize("iter_fn", [
+    sbp.sbp2json.iter_messages_buffered,
+    sbp.sbp2json.iter_messages_unbuffered,
+])
+def test_sbp2json_resync_after_truncated_message(iter_fn):
+    import io
+    truncated = bytes([0x55, 0x02, 0x02, 0x42, 0x00, 50, 1, 2, 3, 4])
+    senders = list(range(0x100, 0x10A))
+    stream = truncated + b''.join(_heartbeat(s, 0x12) for s in senders)
+
+    msgs = list(iter_fn(io.BytesIO(stream)))
+
+    assert [sender for _, sender, _, _, _ in msgs] == senders
