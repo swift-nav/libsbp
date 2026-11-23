@@ -2087,19 +2087,25 @@ pub mod msg_sensor_aid_event {
         /// Sensor type
         #[cfg_attr(feature = "serde", serde(rename = "sensor_type"))]
         pub sensor_type: u8,
-        /// Sensor identifier
+        /// Sensor identifier. Always 0 for the GNSS observation types (pseudorange,
+        /// carrier phase and Doppler).
         #[cfg_attr(feature = "serde", serde(rename = "sensor_id"))]
         pub sensor_id: u16,
         /// Reserved for future use
         #[cfg_attr(feature = "serde", serde(rename = "sensor_state"))]
         pub sensor_state: u8,
-        /// Number of available measurements in this epoch
+        /// Number of available measurements in this epoch. For the GNSS observation
+        /// types, the number of signals that passed the quality checks for that
+        /// observation type.
         #[cfg_attr(feature = "serde", serde(rename = "n_available_meas"))]
         pub n_available_meas: u8,
-        /// Number of attempted measurements in this epoch
+        /// Number of attempted measurements in this epoch. For the GNSS observation
+        /// types, the number of signals that the filter accepted or rejected as an
+        /// outlier.
         #[cfg_attr(feature = "serde", serde(rename = "n_attempted_meas"))]
         pub n_attempted_meas: u8,
-        /// Number of accepted measurements in this epoch
+        /// Number of accepted measurements in this epoch. For the GNSS observation
+        /// types, the number of signals used in the filter update.
         #[cfg_attr(feature = "serde", serde(rename = "n_accepted_meas"))]
         pub n_accepted_meas: u8,
         /// Reserved for future use
@@ -2235,6 +2241,15 @@ pub mod msg_sensor_aid_event {
 
         /// Time differences of carrier phase
         TimeDifferencesOfCarrierPhase = 6,
+
+        /// Pseudorange
+        Pseudorange = 7,
+
+        /// Carrier phase
+        CarrierPhase = 8,
+
+        /// Doppler
+        Doppler = 9,
     }
 
     impl std::fmt::Display for TypeIdentifier {
@@ -2251,6 +2266,9 @@ pub mod msg_sensor_aid_event {
                 TypeIdentifier::TimeDifferencesOfCarrierPhase => {
                     f.write_str("Time differences of carrier phase")
                 }
+                TypeIdentifier::Pseudorange => f.write_str("Pseudorange"),
+                TypeIdentifier::CarrierPhase => f.write_str("Carrier phase"),
+                TypeIdentifier::Doppler => f.write_str("Doppler"),
             }
         }
     }
@@ -2266,6 +2284,9 @@ pub mod msg_sensor_aid_event {
                 4 => Ok(TypeIdentifier::WheelSpeed),
                 5 => Ok(TypeIdentifier::Imu),
                 6 => Ok(TypeIdentifier::TimeDifferencesOfCarrierPhase),
+                7 => Ok(TypeIdentifier::Pseudorange),
+                8 => Ok(TypeIdentifier::CarrierPhase),
+                9 => Ok(TypeIdentifier::Doppler),
                 i => Err(i),
             }
         }

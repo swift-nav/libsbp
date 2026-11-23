@@ -57,7 +57,8 @@ typedef struct {
   u8 sensor_type;
 
   /**
-   * Sensor identifier
+   * Sensor identifier. Always 0 for the GNSS observation types (pseudorange,
+   * carrier phase and Doppler).
    */
   u16 sensor_id;
 
@@ -67,17 +68,22 @@ typedef struct {
   u8 sensor_state;
 
   /**
-   * Number of available measurements in this epoch
+   * Number of available measurements in this epoch. For the GNSS observation
+   * types, the number of signals that passed the quality checks for that
+   * observation type.
    */
   u8 n_available_meas;
 
   /**
-   * Number of attempted measurements in this epoch
+   * Number of attempted measurements in this epoch. For the GNSS observation
+   * types, the number of signals that the filter accepted or rejected as an
+   * outlier.
    */
   u8 n_attempted_meas;
 
   /**
-   * Number of accepted measurements in this epoch
+   * Number of accepted measurements in this epoch. For the GNSS observation
+   * types, the number of signals used in the filter update.
    */
   u8 n_accepted_meas;
 
